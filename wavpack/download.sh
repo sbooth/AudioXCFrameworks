@@ -8,7 +8,7 @@ if ! [ -f "./$WAVPACK_ARCHIVE" ]; then
 	if ! [ -x "$(command -v curl)" ]; then
 		echo "Error: $WAVPACK_ARCHIVE not found and curl not present"
 		echo "Please download manually from"
-		echo WAVPACK_DOWNLOAD_URL
+		echo $WAVPACK_DOWNLOAD_URL
 		exit 1
 	fi
 
