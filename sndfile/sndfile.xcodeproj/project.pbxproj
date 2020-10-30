@@ -183,6 +183,10 @@
 		32677B85254C54C00041B063 /* dp_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677A56254C4F1F0041B063 /* dp_enc.c */; };
 		32677B86254C54C00041B063 /* ag_dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677A53254C4F1F0041B063 /* ag_dec.c */; };
 		32677B87254C54C00041B063 /* ag_enc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677A57254C4F1F0041B063 /* ag_enc.c */; };
+		32677C9F254CC71D0041B063 /* sndfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677AAE254C50220041B063 /* sndfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677CA2254CC71E0041B063 /* sndfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677AAE254C50220041B063 /* sndfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677CA7254CC73B0041B063 /* sndfile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 32677A5D254C4F1F0041B063 /* sndfile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677CAA254CC73C0041B063 /* sndfile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 32677A5D254C4F1F0041B063 /* sndfile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -499,6 +503,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32677CA2254CC71E0041B063 /* sndfile.h in Headers */,
+				32677CAA254CC73C0041B063 /* sndfile.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +512,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32677C9F254CC71D0041B063 /* sndfile.h in Headers */,
+				32677CA7254CC73B0041B063 /* sndfile.hh in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
