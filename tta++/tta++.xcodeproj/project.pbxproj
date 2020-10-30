@@ -17,40 +17,10 @@
 		32028D08254AE93F00A537DE /* tta++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "tta++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* tta++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "tta++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3267743E254BA2C70041B063 /* libtta.vcxproj.filters */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = libtta.vcxproj.filters; sourceTree = "<group>"; };
-		3267743F254BA2C70041B063 /* install-sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "install-sh"; sourceTree = "<group>"; };
-		32677440254BA2C70041B063 /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
-		32677441254BA2C70041B063 /* ltmain.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ltmain.sh; sourceTree = "<group>"; };
 		32677442254BA2C70041B063 /* libtta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libtta.h; sourceTree = "<group>"; };
 		32677443254BA2C70041B063 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		32677444254BA2C70041B063 /* configure */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
-		32677445254BA2C70041B063 /* Makefile.rm */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.rm; sourceTree = "<group>"; };
-		32677446254BA2C70041B063 /* libtta.vcxproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = libtta.vcxproj; sourceTree = "<group>"; };
-		32677447254BA2C70041B063 /* config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
-		32677448254BA2C70041B063 /* config.guess */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.guess; sourceTree = "<group>"; };
-		32677449254BA2C70041B063 /* depcomp */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = depcomp; sourceTree = "<group>"; };
-		3267744A254BA2C70041B063 /* missing */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = missing; sourceTree = "<group>"; };
-		3267744B254BA2C70041B063 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		3267744C254BA2C70041B063 /* Makefile.mipsel */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.mipsel; sourceTree = "<group>"; };
-		3267744D254BA2C70041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3267744E254BA2C70041B063 /* libtta.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = libtta.sln; sourceTree = "<group>"; };
-		3267744F254BA2C70041B063 /* config.sub */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.sub; sourceTree = "<group>"; };
-		32677450254BA2C70041B063 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		32677451254BA2C70041B063 /* libtta.vcxproj.user */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = libtta.vcxproj.user; sourceTree = "<group>"; };
 		32677452254BA2C70041B063 /* filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
-		32677453254BA2C70041B063 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32677454254BA2C70041B063 /* aclocal.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
-		32677456254BA2C70041B063 /* tta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tta.h; sourceTree = "<group>"; };
-		32677457254BA2C70041B063 /* console.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = console.sln; sourceTree = "<group>"; };
-		32677458254BA2C70041B063 /* console.vcxproj.filters */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = console.vcxproj.filters; sourceTree = "<group>"; };
-		32677459254BA2C70041B063 /* console.vcxproj.user */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = console.vcxproj.user; sourceTree = "<group>"; };
-		3267745A254BA2C70041B063 /* Makefile.mipsel */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.mipsel; sourceTree = "<group>"; };
-		3267745B254BA2C70041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3267745C254BA2C70041B063 /* tta.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tta.cpp; sourceTree = "<group>"; };
-		3267745D254BA2C70041B063 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		3267745E254BA2C70041B063 /* console.vcxproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = console.vcxproj; sourceTree = "<group>"; };
 		3267745F254BA2C70041B063 /* libtta.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = libtta.cpp; sourceTree = "<group>"; };
-		32677460254BA2C70041B063 /* filter_arm.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = filter_arm.S; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,50 +62,12 @@
 		3267743D254BA2C70041B063 /* libtta-cpp-2.3 */ = {
 			isa = PBXGroup;
 			children = (
-				32677454254BA2C70041B063 /* aclocal.m4 */,
-				32677448254BA2C70041B063 /* config.guess */,
 				32677443254BA2C70041B063 /* config.h */,
-				32677447254BA2C70041B063 /* config.h.in */,
-				3267744F254BA2C70041B063 /* config.sub */,
-				32677444254BA2C70041B063 /* configure */,
-				32677440254BA2C70041B063 /* configure.ac */,
-				32677455254BA2C70041B063 /* console */,
-				32677450254BA2C70041B063 /* COPYING */,
-				32677449254BA2C70041B063 /* depcomp */,
-				32677460254BA2C70041B063 /* filter_arm.S */,
 				32677452254BA2C70041B063 /* filter.h */,
-				3267743F254BA2C70041B063 /* install-sh */,
 				3267745F254BA2C70041B063 /* libtta.cpp */,
 				32677442254BA2C70041B063 /* libtta.h */,
-				3267744E254BA2C70041B063 /* libtta.sln */,
-				32677446254BA2C70041B063 /* libtta.vcxproj */,
-				3267743E254BA2C70041B063 /* libtta.vcxproj.filters */,
-				32677451254BA2C70041B063 /* libtta.vcxproj.user */,
-				32677441254BA2C70041B063 /* ltmain.sh */,
-				3267744D254BA2C70041B063 /* Makefile.am */,
-				32677453254BA2C70041B063 /* Makefile.in */,
-				3267744C254BA2C70041B063 /* Makefile.mipsel */,
-				32677445254BA2C70041B063 /* Makefile.rm */,
-				3267744A254BA2C70041B063 /* missing */,
-				3267744B254BA2C70041B063 /* README */,
 			);
 			path = "libtta-cpp-2.3";
-			sourceTree = "<group>";
-		};
-		32677455254BA2C70041B063 /* console */ = {
-			isa = PBXGroup;
-			children = (
-				32677456254BA2C70041B063 /* tta.h */,
-				32677457254BA2C70041B063 /* console.sln */,
-				32677458254BA2C70041B063 /* console.vcxproj.filters */,
-				32677459254BA2C70041B063 /* console.vcxproj.user */,
-				3267745A254BA2C70041B063 /* Makefile.mipsel */,
-				3267745B254BA2C70041B063 /* Makefile.am */,
-				3267745C254BA2C70041B063 /* tta.cpp */,
-				3267745D254BA2C70041B063 /* Makefile.in */,
-				3267745E254BA2C70041B063 /* console.vcxproj */,
-			);
-			path = console;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
