@@ -71,71 +71,7 @@
 		32028D08254AE93F00A537DE /* wavpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = wavpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* wavpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = wavpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3267711F254B5E560041B063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32677122254B5F000041B063 /* wvtag.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = wvtag.1; sourceTree = "<group>"; };
-		32677123254B5F000041B063 /* wavpack.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = wavpack.1; sourceTree = "<group>"; };
-		32677124254B5F000041B063 /* wvunpack.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = wvunpack.1; sourceTree = "<group>"; };
-		32677125254B5F000041B063 /* wvunpack.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = wvunpack.xml; sourceTree = "<group>"; };
-		32677126254B5F000041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32677127254B5F000041B063 /* wvtag.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = wvtag.xml; sourceTree = "<group>"; };
-		32677128254B5F000041B063 /* wavpack.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = wavpack.xml; sourceTree = "<group>"; };
-		32677129254B5F000041B063 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		3267712A254B5F000041B063 /* wvgain.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = wvgain.xml; sourceTree = "<group>"; };
-		3267712B254B5F000041B063 /* wvgain.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = wvgain.1; sourceTree = "<group>"; };
-		3267712C254B5F000041B063 /* acinclude.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = acinclude.m4; sourceTree = "<group>"; };
-		3267712D254B5F000041B063 /* install-sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "install-sh"; sourceTree = "<group>"; };
-		3267712E254B5F000041B063 /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
-		3267712F254B5F000041B063 /* ltmain.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ltmain.sh; sourceTree = "<group>"; };
-		32677130254B5F000041B063 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		32677132254B5F000041B063 /* CheckCLinkerFlag.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CheckCLinkerFlag.cmake; sourceTree = "<group>"; };
-		32677133254B5F000041B063 /* TestLargeFiles.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestLargeFiles.cmake; sourceTree = "<group>"; };
-		32677135254B5F000041B063 /* FindIconv.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = FindIconv.cmake; sourceTree = "<group>"; };
-		32677136254B5F000041B063 /* configure */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
-		32677137254B5F000041B063 /* ChangeLog */ = {isa = PBXFileReference; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
-		32677138254B5F000041B063 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		3267713A254B5F000041B063 /* wavpack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wavpack.h; sourceTree = "<group>"; };
-		3267713B254B5F000041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3267713C254B5F000041B063 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		3267713D254B5F000041B063 /* config.guess */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.guess; sourceTree = "<group>"; };
-		3267713E254B5F000041B063 /* depcomp */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = depcomp; sourceTree = "<group>"; };
-		32677140254B5F000041B063 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
-		32677141254B5F000041B063 /* dsdiff_write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dsdiff_write.c; sourceTree = "<group>"; };
-		32677142254B5F000041B063 /* dsf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dsf.c; sourceTree = "<group>"; };
-		32677143254B5F000041B063 /* win32_unicode_support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = win32_unicode_support.h; sourceTree = "<group>"; };
-		32677144254B5F000041B063 /* dsdiff.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dsdiff.c; sourceTree = "<group>"; };
-		32677145254B5F000041B063 /* caff_write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = caff_write.c; sourceTree = "<group>"; };
-		32677146254B5F000041B063 /* md5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
-		32677147254B5F000041B063 /* wvgain.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wvgain.c; sourceTree = "<group>"; };
-		32677148254B5F000041B063 /* wvtest.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wvtest.c; sourceTree = "<group>"; };
-		32677149254B5F000041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3267714A254B5F000041B063 /* wave64_write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wave64_write.c; sourceTree = "<group>"; };
-		3267714B254B5F000041B063 /* win32_unicode_support.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = win32_unicode_support.c; sourceTree = "<group>"; };
-		3267714C254B5F000041B063 /* utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = utils.c; sourceTree = "<group>"; };
-		3267714D254B5F000041B063 /* wvtag.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wvtag.c; sourceTree = "<group>"; };
-		3267714E254B5F000041B063 /* wave64.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wave64.c; sourceTree = "<group>"; };
-		3267714F254B5F000041B063 /* import_id3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = import_id3.c; sourceTree = "<group>"; };
-		32677150254B5F000041B063 /* dsf_write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dsf_write.c; sourceTree = "<group>"; };
-		32677151254B5F000041B063 /* caff.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = caff.c; sourceTree = "<group>"; };
-		32677152254B5F000041B063 /* wavpack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wavpack.c; sourceTree = "<group>"; };
-		32677153254B5F000041B063 /* md5.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
-		32677154254B5F000041B063 /* wvunpack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wvunpack.c; sourceTree = "<group>"; };
-		32677155254B5F000041B063 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32677156254B5F000041B063 /* riff_write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = riff_write.c; sourceTree = "<group>"; };
-		32677157254B5F000041B063 /* riff.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = riff.c; sourceTree = "<group>"; };
-		32677158254B5F000041B063 /* missing */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = missing; sourceTree = "<group>"; };
-		32677159254B5F000041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		3267715A254B5F000041B063 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		3267715B254B5F000041B063 /* config.sub */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.sub; sourceTree = "<group>"; };
-		3267715C254B5F000041B063 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		3267715D254B5F000041B063 /* compile */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = compile; sourceTree = "<group>"; };
-		3267715E254B5F000041B063 /* NEWS */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
-		32677160254B5F000041B063 /* WavPack5FileFormat.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = WavPack5FileFormat.pdf; sourceTree = "<group>"; };
-		32677161254B5F000041B063 /* WavPack5PortingGuide.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = WavPack5PortingGuide.pdf; sourceTree = "<group>"; };
-		32677162254B5F000041B063 /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		32677163254B5F000041B063 /* wavpack_doc.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = wavpack_doc.html; sourceTree = "<group>"; };
-		32677164254B5F000041B063 /* WavPack5LibraryDoc.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = WavPack5LibraryDoc.pdf; sourceTree = "<group>"; };
-		32677165254B5F000041B063 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32677166254B5F000041B063 /* aclocal.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
-		32677167254B5F000041B063 /* wavpack.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = wavpack.pc.in; sourceTree = "<group>"; };
 		32677169254B5F000041B063 /* wavpack_version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wavpack_version.h; sourceTree = "<group>"; };
 		3267716A254B5F000041B063 /* unpack3_open.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = unpack3_open.c; sourceTree = "<group>"; };
 		3267716B254B5F000041B063 /* pack_x86.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = pack_x86.S; sourceTree = "<group>"; };
@@ -214,122 +150,18 @@
 		32677120254B5F000041B063 /* wavpack-5.3.0 */ = {
 			isa = PBXGroup;
 			children = (
-				3267712C254B5F000041B063 /* acinclude.m4 */,
-				32677166254B5F000041B063 /* aclocal.m4 */,
-				32677138254B5F000041B063 /* AUTHORS */,
-				32677137254B5F000041B063 /* ChangeLog */,
-				3267713F254B5F000041B063 /* cli */,
-				32677131254B5F000041B063 /* cmake */,
-				32677130254B5F000041B063 /* CMakeLists.txt */,
-				3267715D254B5F000041B063 /* compile */,
-				3267713D254B5F000041B063 /* config.guess */,
-				3267715B254B5F000041B063 /* config.sub */,
-				32677136254B5F000041B063 /* configure */,
-				3267712E254B5F000041B063 /* configure.ac */,
-				3267715C254B5F000041B063 /* COPYING */,
-				3267713E254B5F000041B063 /* depcomp */,
-				3267715F254B5F000041B063 /* doc */,
 				32677139254B5F000041B063 /* include */,
-				3267712D254B5F000041B063 /* install-sh */,
-				3267712F254B5F000041B063 /* ltmain.sh */,
-				32677159254B5F000041B063 /* Makefile.am */,
-				32677165254B5F000041B063 /* Makefile.in */,
-				32677121254B5F000041B063 /* man */,
-				32677158254B5F000041B063 /* missing */,
-				3267715E254B5F000041B063 /* NEWS */,
-				3267715A254B5F000041B063 /* README.md */,
 				32677168254B5F000041B063 /* src */,
-				32677167254B5F000041B063 /* wavpack.pc.in */,
 			);
 			path = "wavpack-5.3.0";
-			sourceTree = "<group>";
-		};
-		32677121254B5F000041B063 /* man */ = {
-			isa = PBXGroup;
-			children = (
-				32677122254B5F000041B063 /* wvtag.1 */,
-				32677123254B5F000041B063 /* wavpack.1 */,
-				32677124254B5F000041B063 /* wvunpack.1 */,
-				32677125254B5F000041B063 /* wvunpack.xml */,
-				32677126254B5F000041B063 /* Makefile.am */,
-				32677127254B5F000041B063 /* wvtag.xml */,
-				32677128254B5F000041B063 /* wavpack.xml */,
-				32677129254B5F000041B063 /* Makefile.in */,
-				3267712A254B5F000041B063 /* wvgain.xml */,
-				3267712B254B5F000041B063 /* wvgain.1 */,
-			);
-			path = man;
-			sourceTree = "<group>";
-		};
-		32677131254B5F000041B063 /* cmake */ = {
-			isa = PBXGroup;
-			children = (
-				32677132254B5F000041B063 /* CheckCLinkerFlag.cmake */,
-				32677133254B5F000041B063 /* TestLargeFiles.cmake */,
-				32677134254B5F000041B063 /* modules */,
-			);
-			path = cmake;
-			sourceTree = "<group>";
-		};
-		32677134254B5F000041B063 /* modules */ = {
-			isa = PBXGroup;
-			children = (
-				32677135254B5F000041B063 /* FindIconv.cmake */,
-			);
-			path = modules;
 			sourceTree = "<group>";
 		};
 		32677139254B5F000041B063 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				3267713B254B5F000041B063 /* Makefile.am */,
-				3267713C254B5F000041B063 /* Makefile.in */,
 				3267713A254B5F000041B063 /* wavpack.h */,
 			);
 			path = include;
-			sourceTree = "<group>";
-		};
-		3267713F254B5F000041B063 /* cli */ = {
-			isa = PBXGroup;
-			children = (
-				32677140254B5F000041B063 /* utils.h */,
-				32677141254B5F000041B063 /* dsdiff_write.c */,
-				32677142254B5F000041B063 /* dsf.c */,
-				32677143254B5F000041B063 /* win32_unicode_support.h */,
-				32677144254B5F000041B063 /* dsdiff.c */,
-				32677145254B5F000041B063 /* caff_write.c */,
-				32677146254B5F000041B063 /* md5.h */,
-				32677147254B5F000041B063 /* wvgain.c */,
-				32677148254B5F000041B063 /* wvtest.c */,
-				32677149254B5F000041B063 /* Makefile.am */,
-				3267714A254B5F000041B063 /* wave64_write.c */,
-				3267714B254B5F000041B063 /* win32_unicode_support.c */,
-				3267714C254B5F000041B063 /* utils.c */,
-				3267714D254B5F000041B063 /* wvtag.c */,
-				3267714E254B5F000041B063 /* wave64.c */,
-				3267714F254B5F000041B063 /* import_id3.c */,
-				32677150254B5F000041B063 /* dsf_write.c */,
-				32677151254B5F000041B063 /* caff.c */,
-				32677152254B5F000041B063 /* wavpack.c */,
-				32677153254B5F000041B063 /* md5.c */,
-				32677154254B5F000041B063 /* wvunpack.c */,
-				32677155254B5F000041B063 /* Makefile.in */,
-				32677156254B5F000041B063 /* riff_write.c */,
-				32677157254B5F000041B063 /* riff.c */,
-			);
-			path = cli;
-			sourceTree = "<group>";
-		};
-		3267715F254B5F000041B063 /* doc */ = {
-			isa = PBXGroup;
-			children = (
-				32677160254B5F000041B063 /* WavPack5FileFormat.pdf */,
-				32677161254B5F000041B063 /* WavPack5PortingGuide.pdf */,
-				32677162254B5F000041B063 /* style.css */,
-				32677163254B5F000041B063 /* wavpack_doc.html */,
-				32677164254B5F000041B063 /* WavPack5LibraryDoc.pdf */,
-			);
-			path = doc;
 			sourceTree = "<group>";
 		};
 		32677168254B5F000041B063 /* src */ = {
