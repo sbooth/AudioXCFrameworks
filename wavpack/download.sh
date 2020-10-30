@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Copyright (c) 2020 Stephen F. Booth <me@sbooth.org>
+# See https://github.com/sbooth/AudioXCFrameworks/blob/master/LICENSE.txt for license information
+
 WAVPACK_ARCHIVE=wavpack-5.3.0.tar.xz
 WAVPACK_DOWNLOAD_URL=http://wavpack.com/$WAVPACK_ARCHIVE
 WAVPACK_DIR=$(basename "$WAVPACK_ARCHIVE" .tar.xz)

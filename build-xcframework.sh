@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Copyright (c) 2020 Stephen F. Booth <me@sbooth.org>
+# See https://github.com/sbooth/AudioXCFrameworks/blob/master/LICENSE.txt for license information
+
 if [ "$1" == "" ]; then
 	echo "Usage: $0 framework-name"
 	exit 1

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Copyright (c) 2020 Stephen F. Booth <me@sbooth.org>
+# See https://github.com/sbooth/AudioXCFrameworks/blob/master/LICENSE.txt for license information
+
 LIBOGG_ARCHIVE=libogg-1.3.4.tar.xz
 LIBOGG_DOWNLOAD_URL=https://downloads.xiph.org/releases/ogg/$LIBOGG_ARCHIVE
 LIBOGG_DIR=$(basename "$LIBOGG_ARCHIVE" .tar.xz)

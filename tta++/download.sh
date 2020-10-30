@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Copyright (c) 2020 Stephen F. Booth <me@sbooth.org>
+# See https://github.com/sbooth/AudioXCFrameworks/blob/master/LICENSE.txt for license information
+
 LIBTTA_CPP_ARCHIVE=libtta-cpp-2.3.tar.gz
 LIBTTA_CPP_DOWNLOAD_URL=https://master.dl.sourceforge.net/project/tta/tta/libtta%2B%2B/$LIBTTA_CPP_ARCHIVE
 LIBTTA_CPP_DIR=$(basename "$LIBTTA_CPP_ARCHIVE" .tar.gz)
