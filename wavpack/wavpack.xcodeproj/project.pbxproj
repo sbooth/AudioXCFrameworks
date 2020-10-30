@@ -244,7 +244,7 @@
 			dependencies = (
 			);
 			name = macOS;
-			productName = ogg;
+			productName = wavpack;
 			productReference = 32028D08254AE93F00A537DE /* wavpack.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -262,7 +262,7 @@
 			dependencies = (
 			);
 			name = iOS;
-			productName = ogg;
+			productName = wavpack;
 			productReference = 32028DD9254AFEA000A537DE /* wavpack.framework */;
 			productType = "com.apple.product-type.framework";
 		};

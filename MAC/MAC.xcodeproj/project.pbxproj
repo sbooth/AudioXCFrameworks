@@ -446,7 +446,7 @@
 			dependencies = (
 			);
 			name = macOS;
-			productName = ogg;
+			productName = MAC;
 			productReference = 32028D08254AE93F00A537DE /* MAC.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -464,7 +464,7 @@
 			dependencies = (
 			);
 			name = iOS;
-			productName = ogg;
+			productName = MAC;
 			productReference = 32028DD9254AFEA000A537DE /* MAC.framework */;
 			productType = "com.apple.product-type.framework";
 		};
