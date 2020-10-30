@@ -22,5 +22,4 @@ fi
 /bin/ln -s "./$LIBSNDFILE_DIR" "./libsndfile-src"
 /bin/cp -f "./config.h" "./libsndfile-src/src/"
 /bin/cp -f "./sndfile.h" "./libsndfile-src/src/"
-/usr/bin/patch "./libsndfile-src/src/ALAC/EndianPortable.h" < "./quoted_include.patch"
-/usr/bin/patch "./libsndfile-src/src/common.c" < "./quoted_include_2.patch"
+/usr/bin/patch -p0 < "./quoted_include.patch"
