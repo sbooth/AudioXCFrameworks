@@ -1,5 +1,5 @@
---- libtta-cpp-src/libtta.cpp	2015-02-19 01:05:00.000000000 -0600
-+++ libtta.cpp	2020-10-29 21:16:13.000000000 -0500
+--- libtta-cpp-src/libtta.cpp	2020-10-30 16:54:59.000000000 -0500
++++ libtta-cpp-src/libtta-malloc.cpp	2020-10-30 16:53:52.000000000 -0500
 @@ -27,7 +27,18 @@
  #else // GNUC
  #define tta_memclear(__dest,__length) memset(__dest,0,__length)
