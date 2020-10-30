@@ -462,9 +462,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		32028D07254AE93F00A537DE /* ogg (macOS) */ = {
+		32028D07254AE93F00A537DE /* macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "ogg (macOS)" */;
+			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
 				32028D04254AE93F00A537DE /* Sources */,
@@ -475,14 +475,14 @@
 			);
 			dependencies = (
 			);
-			name = "ogg (macOS)";
+			name = macOS;
 			productName = ogg;
 			productReference = 32028D08254AE93F00A537DE /* ogg.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		32028DCC254AFEA000A537DE /* ogg (iOS) */ = {
+		32028DCC254AFEA000A537DE /* iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "ogg (iOS)" */;
+			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
 			buildPhases = (
 				32028DCD254AFEA000A537DE /* Headers */,
 				32028DD1254AFEA000A537DE /* Sources */,
@@ -493,7 +493,7 @@
 			);
 			dependencies = (
 			);
-			name = "ogg (iOS)";
+			name = iOS;
 			productName = ogg;
 			productReference = 32028DD9254AFEA000A537DE /* ogg.framework */;
 			productType = "com.apple.product-type.framework";
@@ -530,8 +530,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				32028D07254AE93F00A537DE /* ogg (macOS) */,
-				32028DCC254AFEA000A537DE /* ogg (iOS) */,
+				32028D07254AE93F00A537DE /* macOS */,
+				32028DCC254AFEA000A537DE /* iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -808,7 +808,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "ogg (macOS)" */ = {
+		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D11254AE93F00A537DE /* Debug */,
@@ -817,7 +817,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "ogg (iOS)" */ = {
+		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028DD7254AFEA000A537DE /* Debug */,
