@@ -1,6 +1,6 @@
 --- libtta-cpp-src/libtta.cpp	2015-02-19 01:05:00.000000000 -0600
-+++ libtta.cpp	2020-10-29 21:06:06.000000000 -0500
-@@ -27,7 +27,16 @@
++++ libtta.cpp	2020-10-29 21:16:13.000000000 -0500
+@@ -27,7 +27,18 @@
  #else // GNUC
  #define tta_memclear(__dest,__length) memset(__dest,0,__length)
  #define tta_memcpy(__dest,__source,__length) memcpy(__dest,__source,__length)
@@ -14,7 +14,9 @@
 +//  seek_table = (TTAuint64 *) tta_malloc(frames * sizeof(TTAuint64));
 +// fails if frames is not even.
 +//
++// Instead of aligned_alloc() just use malloc()
 +//#define tta_malloc(__length) aligned_alloc(16,__length)
++#define tta_malloc(__length) malloc(__length)
  #define tta_free free
  #endif
  #else // MSVC
