@@ -1,0 +1,11 @@
+--- libsndfile-src/src/common.c	2017-04-02 01:33:16.000000000 -0500
++++ common.c	2020-10-30 11:29:33.000000000 -0500
+@@ -16,7 +16,7 @@
+ ** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+ 
+-#include <config.h>
++#include "config.h"
+ 
+ #include <stdarg.h>
+ #include <string.h>

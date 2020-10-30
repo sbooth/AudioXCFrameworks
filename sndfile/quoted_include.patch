@@ -1,0 +1,11 @@
+--- libsndfile-src/src/ALAC/EndianPortable.h	2016-04-01 16:08:52.000000000 -0500
++++ EndianPortable.h	2020-10-30 09:06:20.000000000 -0500
+@@ -28,7 +28,7 @@
+ #ifndef _EndianPortable_h
+ #define _EndianPortable_h
+ 
+-#include <sfendian.h>
++#include "sfendian.h"
+ 
+ #define Swap16NtoB(x)	H2BE_16 (x)
+ #define Swap16BtoN(x)	BE2H_16 (x)
