@@ -1,5 +1,5 @@
---- libsndfile-src/src/ALAC/EndianPortable.h	2016-04-01 16:08:52.000000000 -0500
-+++ EndianPortable.h	2020-10-30 09:06:20.000000000 -0500
+--- libsndfile-src/src/ALAC/EndianPortable.h	2020-10-30 16:49:21.000000000 -0500
++++ libsndfile-src/src/ALAC/EndianPortable-quoted-include.h	2020-10-30 16:50:10.000000000 -0500
 @@ -28,7 +28,7 @@
  #ifndef _EndianPortable_h
  #define _EndianPortable_h
@@ -9,8 +9,8 @@
  
  #define Swap16NtoB(x)	H2BE_16 (x)
  #define Swap16BtoN(x)	BE2H_16 (x)
---- libsndfile-src/src/common.c	2017-04-02 01:33:16.000000000 -0500
-+++ common.c	2020-10-30 11:29:33.000000000 -0500
+--- libsndfile-src/src/common.c	2020-10-30 16:49:35.000000000 -0500
++++ libsndfile-src/src/common-quoted-include.c	2020-10-30 16:50:36.000000000 -0500
 @@ -16,7 +16,7 @@
  ** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
