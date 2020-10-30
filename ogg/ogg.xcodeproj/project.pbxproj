@@ -17,154 +17,12 @@
 		32028DD3254AFEA000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3267719B254B5F3C0041B063 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 32028D36254AEB4700A537DE /* ogg.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D07F2C80486CC7A007CD1D0;
-			remoteInfo = Ogg;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* ogg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ogg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028D15254AEB4700A537DE /* install-sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "install-sh"; sourceTree = "<group>"; };
-		32028D16254AEB4700A537DE /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
-		32028D17254AEB4700A537DE /* ltmain.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ltmain.sh; sourceTree = "<group>"; };
-		32028D18254AEB4700A537DE /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		32028D1A254AEB4700A537DE /* CheckSizes.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CheckSizes.cmake; sourceTree = "<group>"; };
-		32028D1B254AEB4700A537DE /* OggConfig.cmake.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = OggConfig.cmake.in; sourceTree = "<group>"; };
-		32028D1C254AEB4700A537DE /* configure */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
-		32028D1D254AEB4700A537DE /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
-		32028D1E254AEB4700A537DE /* CHANGES */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGES; sourceTree = "<group>"; };
 		32028D21254AEB4700A537DE /* ogg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
-		32028D22254AEB4700A537DE /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32028D23254AEB4700A537DE /* config_types.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = config_types.h.in; sourceTree = "<group>"; };
-		32028D24254AEB4700A537DE /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		32028D25254AEB4700A537DE /* os_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
-		32028D26254AEB4700A537DE /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32028D27254AEB4700A537DE /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32028D28254AEB4700A537DE /* config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
-		32028D29254AEB4700A537DE /* config.guess */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.guess; sourceTree = "<group>"; };
-		32028D2A254AEB4700A537DE /* depcomp */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = depcomp; sourceTree = "<group>"; };
-		32028D2B254AEB4700A537DE /* missing */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = missing; sourceTree = "<group>"; };
-		32028D2C254AEB4700A537DE /* libogg.spec.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = libogg.spec.in; sourceTree = "<group>"; };
-		32028D2D254AEB4700A537DE /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32028D2E254AEB4700A537DE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		32028D2F254AEB4700A537DE /* config.sub */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.sub; sourceTree = "<group>"; };
-		32028D30254AEB4700A537DE /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		32028D31254AEB4700A537DE /* compile */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = compile; sourceTree = "<group>"; };
-		32028D35254AEB4700A537DE /* Ogg_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ogg_Prefix.pch; sourceTree = "<group>"; };
-		32028D36254AEB4700A537DE /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ogg.xcodeproj; sourceTree = "<group>"; };
-		32028D39254AEB4700A537DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32028D3A254AEB4700A537DE /* ogg.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = ogg.m4; sourceTree = "<group>"; };
-		32028D3C254AEB4700A537DE /* ltversion.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = ltversion.m4; sourceTree = "<group>"; };
-		32028D3D254AEB4700A537DE /* libtool.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = libtool.m4; sourceTree = "<group>"; };
-		32028D3E254AEB4700A537DE /* ltoptions.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = ltoptions.m4; sourceTree = "<group>"; };
-		32028D3F254AEB4700A537DE /* ltsugar.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = ltsugar.m4; sourceTree = "<group>"; };
-		32028D40254AEB4700A537DE /* lt~obsolete.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "lt~obsolete.m4"; sourceTree = "<group>"; };
-		32028D41254AEB4700A537DE /* libogg.spec */ = {isa = PBXFileReference; lastKnownFileType = text; path = libogg.spec; sourceTree = "<group>"; };
-		32028D43254AEB4700A537DE /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		32028D44254AEB4700A537DE /* vorbisword2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vorbisword2.png; sourceTree = "<group>"; };
-		32028D45254AEB4700A537DE /* framing.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = framing.html; sourceTree = "<group>"; };
-		32028D47254AEB4700A537DE /* oggpack_write.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_write.html; sourceTree = "<group>"; };
-		32028D48254AEB4700A537DE /* ogg_stream_reset_serialno.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_reset_serialno.html; sourceTree = "<group>"; };
-		32028D49254AEB4700A537DE /* oggpack_bits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_bits.html; sourceTree = "<group>"; };
-		32028D4A254AEB4700A537DE /* ogg_stream_clear.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_clear.html; sourceTree = "<group>"; };
-		32028D4B254AEB4700A537DE /* ogg_packet_clear.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_packet_clear.html; sourceTree = "<group>"; };
-		32028D4C254AEB4700A537DE /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		32028D4D254AEB4700A537DE /* ogg_stream_pageout_fill.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_pageout_fill.html; sourceTree = "<group>"; };
-		32028D4E254AEB4700A537DE /* ogg_page.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page.html; sourceTree = "<group>"; };
-		32028D4F254AEB4700A537DE /* ogg_sync_reset.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_reset.html; sourceTree = "<group>"; };
-		32028D50254AEB4700A537DE /* ogg_page_packets.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_packets.html; sourceTree = "<group>"; };
-		32028D51254AEB4700A537DE /* ogg_stream_iovecin.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_iovecin.html; sourceTree = "<group>"; };
-		32028D52254AEB4700A537DE /* bitpacking.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = bitpacking.html; sourceTree = "<group>"; };
-		32028D53254AEB4700A537DE /* ogg_packet.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_packet.html; sourceTree = "<group>"; };
-		32028D54254AEB4700A537DE /* oggpack_buffer.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_buffer.html; sourceTree = "<group>"; };
-		32028D55254AEB4700A537DE /* oggpack_writealign.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_writealign.html; sourceTree = "<group>"; };
-		32028D56254AEB4700A537DE /* ogg_page_continued.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_continued.html; sourceTree = "<group>"; };
-		32028D57254AEB4700A537DE /* oggpack_adv.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_adv.html; sourceTree = "<group>"; };
-		32028D58254AEB4700A537DE /* oggpack_look1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_look1.html; sourceTree = "<group>"; };
-		32028D59254AEB4700A537DE /* ogg_stream_destroy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_destroy.html; sourceTree = "<group>"; };
-		32028D5A254AEB4700A537DE /* oggpack_writeinit.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_writeinit.html; sourceTree = "<group>"; };
-		32028D5B254AEB4700A537DE /* ogg_sync_check.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_check.html; sourceTree = "<group>"; };
-		32028D5C254AEB4700A537DE /* oggpack_writeclear.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_writeclear.html; sourceTree = "<group>"; };
-		32028D5D254AEB4700A537DE /* ogg_page_bos.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_bos.html; sourceTree = "<group>"; };
-		32028D5E254AEB4700A537DE /* oggpack_get_buffer.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_get_buffer.html; sourceTree = "<group>"; };
-		32028D5F254AEB4700A537DE /* ogg_sync_pageout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_pageout.html; sourceTree = "<group>"; };
-		32028D60254AEB4700A537DE /* ogg_sync_init.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_init.html; sourceTree = "<group>"; };
-		32028D61254AEB4700A537DE /* ogg_sync_pageseek.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_pageseek.html; sourceTree = "<group>"; };
-		32028D62254AEB4700A537DE /* overview.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = overview.html; sourceTree = "<group>"; };
-		32028D63254AEB4700A537DE /* ogg_stream_state.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_state.html; sourceTree = "<group>"; };
-		32028D64254AEB4700A537DE /* ogg_page_serialno.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_serialno.html; sourceTree = "<group>"; };
-		32028D65254AEB4700A537DE /* reference.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = reference.html; sourceTree = "<group>"; };
-		32028D66254AEB4700A537DE /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32028D67254AEB4700A537DE /* oggpack_bytes.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_bytes.html; sourceTree = "<group>"; };
-		32028D68254AEB4700A537DE /* datastructures.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = datastructures.html; sourceTree = "<group>"; };
-		32028D69254AEB4700A537DE /* ogg_page_checksum_set.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_checksum_set.html; sourceTree = "<group>"; };
-		32028D6A254AEB4700A537DE /* ogg_stream_packetpeek.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_packetpeek.html; sourceTree = "<group>"; };
-		32028D6B254AEB4700A537DE /* ogg_sync_clear.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_clear.html; sourceTree = "<group>"; };
-		32028D6C254AEB4700A537DE /* ogg_sync_buffer.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_buffer.html; sourceTree = "<group>"; };
-		32028D6D254AEB4700A537DE /* decoding.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = decoding.html; sourceTree = "<group>"; };
-		32028D6E254AEB4700A537DE /* ogg_stream_reset.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_reset.html; sourceTree = "<group>"; };
-		32028D6F254AEB4700A537DE /* ogg_stream_init.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_init.html; sourceTree = "<group>"; };
-		32028D70254AEB4700A537DE /* ogg_page_granulepos.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_granulepos.html; sourceTree = "<group>"; };
-		32028D71254AEB4700A537DE /* ogg_page_eos.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_eos.html; sourceTree = "<group>"; };
-		32028D72254AEB4700A537DE /* ogg_page_pageno.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_pageno.html; sourceTree = "<group>"; };
-		32028D73254AEB4700A537DE /* oggpack_writecheck.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_writecheck.html; sourceTree = "<group>"; };
-		32028D74254AEB4700A537DE /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = style.css; sourceTree = "<group>"; };
-		32028D75254AEB4700A537DE /* ogg_stream_pagein.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_pagein.html; sourceTree = "<group>"; };
-		32028D76254AEB4700A537DE /* oggpack_writecopy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_writecopy.html; sourceTree = "<group>"; };
-		32028D77254AEB4700A537DE /* oggpack_read1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_read1.html; sourceTree = "<group>"; };
-		32028D78254AEB4700A537DE /* ogg_sync_wrote.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_wrote.html; sourceTree = "<group>"; };
-		32028D79254AEB4700A537DE /* oggpack_readinit.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_readinit.html; sourceTree = "<group>"; };
-		32028D7A254AEB4700A537DE /* ogg_stream_packetout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_packetout.html; sourceTree = "<group>"; };
-		32028D7B254AEB4700A537DE /* oggpack_read.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_read.html; sourceTree = "<group>"; };
-		32028D7C254AEB4700A537DE /* oggpack_reset.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_reset.html; sourceTree = "<group>"; };
-		32028D7D254AEB4700A537DE /* oggpack_writetrunc.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_writetrunc.html; sourceTree = "<group>"; };
-		32028D7E254AEB4700A537DE /* ogg_stream_packetin.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_packetin.html; sourceTree = "<group>"; };
-		32028D7F254AEB4700A537DE /* ogg_sync_destroy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_destroy.html; sourceTree = "<group>"; };
-		32028D80254AEB4700A537DE /* ogg_stream_flush.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_flush.html; sourceTree = "<group>"; };
-		32028D81254AEB4700A537DE /* encoding.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = encoding.html; sourceTree = "<group>"; };
-		32028D82254AEB4700A537DE /* ogg_stream_check.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_check.html; sourceTree = "<group>"; };
-		32028D83254AEB4700A537DE /* oggpack_adv1.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_adv1.html; sourceTree = "<group>"; };
-		32028D84254AEB4700A537DE /* ogg_page_version.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_page_version.html; sourceTree = "<group>"; };
-		32028D85254AEB4700A537DE /* ogg_stream_eos.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_eos.html; sourceTree = "<group>"; };
-		32028D86254AEB4700A537DE /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32028D87254AEB4700A537DE /* oggpack_look.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggpack_look.html; sourceTree = "<group>"; };
-		32028D88254AEB4700A537DE /* ogg_iovec_t.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_iovec_t.html; sourceTree = "<group>"; };
-		32028D89254AEB4700A537DE /* ogg_stream_flush_fill.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_flush_fill.html; sourceTree = "<group>"; };
-		32028D8A254AEB4700A537DE /* general.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = general.html; sourceTree = "<group>"; };
-		32028D8B254AEB4700A537DE /* ogg_stream_pageout.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_stream_pageout.html; sourceTree = "<group>"; };
-		32028D8C254AEB4700A537DE /* ogg_sync_state.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ogg_sync_state.html; sourceTree = "<group>"; };
-		32028D8D254AEB4700A537DE /* skeleton.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = skeleton.html; sourceTree = "<group>"; };
-		32028D8E254AEB4700A537DE /* packets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = packets.png; sourceTree = "<group>"; };
-		32028D8F254AEB4700A537DE /* fish_xiph_org.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fish_xiph_org.png; sourceTree = "<group>"; };
-		32028D90254AEB4700A537DE /* multiplex1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiplex1.png; sourceTree = "<group>"; };
-		32028D91254AEB4700A537DE /* oggstream.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = oggstream.html; sourceTree = "<group>"; };
-		32028D92254AEB4700A537DE /* stream.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stream.png; sourceTree = "<group>"; };
-		32028D93254AEB4700A537DE /* white-xifish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-xifish.png"; sourceTree = "<group>"; };
-		32028D94254AEB4700A537DE /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32028D95254AEB4700A537DE /* white-ogg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-ogg.png"; sourceTree = "<group>"; };
-		32028D96254AEB4700A537DE /* rfc3533.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rfc3533.txt; sourceTree = "<group>"; };
-		32028D97254AEB4700A537DE /* ogg-multiplex.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = "ogg-multiplex.html"; sourceTree = "<group>"; };
-		32028D98254AEB4700A537DE /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32028D99254AEB4700A537DE /* rfc5334.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = rfc5334.txt; sourceTree = "<group>"; };
-		32028D9A254AEB4700A537DE /* pages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pages.png; sourceTree = "<group>"; };
-		32028D9B254AEB4700A537DE /* ogg.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = ogg.pc.in; sourceTree = "<group>"; };
-		32028D9D254AEB4700A537DE /* ogg.def */ = {isa = PBXFileReference; lastKnownFileType = text; path = ogg.def; sourceTree = "<group>"; };
-		32028D9F254AEB4700A537DE /* libogg.vcxproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = libogg.vcxproj; sourceTree = "<group>"; };
-		32028DA0254AEB4700A537DE /* libogg.vcxproj.filters */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = libogg.vcxproj.filters; sourceTree = "<group>"; };
-		32028DA1254AEB4700A537DE /* libogg.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = libogg.sln; sourceTree = "<group>"; };
-		32028DA2254AEB4700A537DE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		32028DA3254AEB4700A537DE /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
-		32028DA4254AEB4700A537DE /* aclocal.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
-		32028DA5254AEB4700A537DE /* ogg-uninstalled.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ogg-uninstalled.pc.in"; sourceTree = "<group>"; };
 		32028DA7254AEB4700A537DE /* framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
 		32028DA8254AEB4700A537DE /* crctable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crctable.h; sourceTree = "<group>"; };
-		32028DA9254AEB4700A537DE /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32028DAA254AEB4700A537DE /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		32028DAB254AEB4700A537DE /* bitwise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
 		32028DD9254AFEA000A537DE /* ogg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ogg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -209,55 +67,16 @@
 		32028D14254AEB4700A537DE /* libogg-src */ = {
 			isa = PBXGroup;
 			children = (
-				32028DA4254AEB4700A537DE /* aclocal.m4 */,
-				32028D1D254AEB4700A537DE /* AUTHORS */,
-				32028D1E254AEB4700A537DE /* CHANGES */,
-				32028D19254AEB4700A537DE /* cmake */,
-				32028D18254AEB4700A537DE /* CMakeLists.txt */,
-				32028D31254AEB4700A537DE /* compile */,
-				32028D29254AEB4700A537DE /* config.guess */,
-				32028D28254AEB4700A537DE /* config.h.in */,
-				32028D2F254AEB4700A537DE /* config.sub */,
-				32028D1C254AEB4700A537DE /* configure */,
-				32028D16254AEB4700A537DE /* configure.ac */,
-				32028D30254AEB4700A537DE /* COPYING */,
-				32028D2A254AEB4700A537DE /* depcomp */,
-				32028D42254AEB4700A537DE /* doc */,
 				32028D1F254AEB4700A537DE /* include */,
-				32028D15254AEB4700A537DE /* install-sh */,
-				32028D41254AEB4700A537DE /* libogg.spec */,
-				32028D2C254AEB4700A537DE /* libogg.spec.in */,
-				32028D17254AEB4700A537DE /* ltmain.sh */,
-				32028D3B254AEB4700A537DE /* m4 */,
-				32028D32254AEB4700A537DE /* macosx */,
-				32028D2D254AEB4700A537DE /* Makefile.am */,
-				32028DA3254AEB4700A537DE /* Makefile.in */,
-				32028D2B254AEB4700A537DE /* missing */,
-				32028DA5254AEB4700A537DE /* ogg-uninstalled.pc.in */,
-				32028D3A254AEB4700A537DE /* ogg.m4 */,
-				32028D9B254AEB4700A537DE /* ogg.pc.in */,
-				32028D2E254AEB4700A537DE /* README.md */,
 				32028DA6254AEB4700A537DE /* src */,
-				32028D9C254AEB4700A537DE /* win32 */,
 			);
 			path = "libogg-src";
-			sourceTree = "<group>";
-		};
-		32028D19254AEB4700A537DE /* cmake */ = {
-			isa = PBXGroup;
-			children = (
-				32028D1A254AEB4700A537DE /* CheckSizes.cmake */,
-				32028D1B254AEB4700A537DE /* OggConfig.cmake.in */,
-			);
-			path = cmake;
 			sourceTree = "<group>";
 		};
 		32028D1F254AEB4700A537DE /* include */ = {
 			isa = PBXGroup;
 			children = (
 				32028D20254AEB4700A537DE /* ogg */,
-				32028D26254AEB4700A537DE /* Makefile.am */,
-				32028D27254AEB4700A537DE /* Makefile.in */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -265,157 +84,10 @@
 		32028D20254AEB4700A537DE /* ogg */ = {
 			isa = PBXGroup;
 			children = (
-				32028D23254AEB4700A537DE /* config_types.h.in */,
-				32028D22254AEB4700A537DE /* Makefile.am */,
-				32028D24254AEB4700A537DE /* Makefile.in */,
 				32028D21254AEB4700A537DE /* ogg.h */,
 				32028D25254AEB4700A537DE /* os_types.h */,
 			);
 			path = ogg;
-			sourceTree = "<group>";
-		};
-		32028D32254AEB4700A537DE /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-				32028D35254AEB4700A537DE /* Ogg_Prefix.pch */,
-				32028D36254AEB4700A537DE /* ogg.xcodeproj */,
-				32028D39254AEB4700A537DE /* Info.plist */,
-			);
-			path = macosx;
-			sourceTree = "<group>";
-		};
-		32028D3B254AEB4700A537DE /* m4 */ = {
-			isa = PBXGroup;
-			children = (
-				32028D3C254AEB4700A537DE /* ltversion.m4 */,
-				32028D3D254AEB4700A537DE /* libtool.m4 */,
-				32028D3E254AEB4700A537DE /* ltoptions.m4 */,
-				32028D3F254AEB4700A537DE /* ltsugar.m4 */,
-				32028D40254AEB4700A537DE /* lt~obsolete.m4 */,
-			);
-			path = m4;
-			sourceTree = "<group>";
-		};
-		32028D42254AEB4700A537DE /* doc */ = {
-			isa = PBXGroup;
-			children = (
-				32028D43254AEB4700A537DE /* index.html */,
-				32028D44254AEB4700A537DE /* vorbisword2.png */,
-				32028D45254AEB4700A537DE /* framing.html */,
-				32028D46254AEB4700A537DE /* libogg */,
-				32028D8D254AEB4700A537DE /* skeleton.html */,
-				32028D8E254AEB4700A537DE /* packets.png */,
-				32028D8F254AEB4700A537DE /* fish_xiph_org.png */,
-				32028D90254AEB4700A537DE /* multiplex1.png */,
-				32028D91254AEB4700A537DE /* oggstream.html */,
-				32028D92254AEB4700A537DE /* stream.png */,
-				32028D93254AEB4700A537DE /* white-xifish.png */,
-				32028D94254AEB4700A537DE /* Makefile.am */,
-				32028D95254AEB4700A537DE /* white-ogg.png */,
-				32028D96254AEB4700A537DE /* rfc3533.txt */,
-				32028D97254AEB4700A537DE /* ogg-multiplex.html */,
-				32028D98254AEB4700A537DE /* Makefile.in */,
-				32028D99254AEB4700A537DE /* rfc5334.txt */,
-				32028D9A254AEB4700A537DE /* pages.png */,
-			);
-			path = doc;
-			sourceTree = "<group>";
-		};
-		32028D46254AEB4700A537DE /* libogg */ = {
-			isa = PBXGroup;
-			children = (
-				32028D47254AEB4700A537DE /* oggpack_write.html */,
-				32028D48254AEB4700A537DE /* ogg_stream_reset_serialno.html */,
-				32028D49254AEB4700A537DE /* oggpack_bits.html */,
-				32028D4A254AEB4700A537DE /* ogg_stream_clear.html */,
-				32028D4B254AEB4700A537DE /* ogg_packet_clear.html */,
-				32028D4C254AEB4700A537DE /* index.html */,
-				32028D4D254AEB4700A537DE /* ogg_stream_pageout_fill.html */,
-				32028D4E254AEB4700A537DE /* ogg_page.html */,
-				32028D4F254AEB4700A537DE /* ogg_sync_reset.html */,
-				32028D50254AEB4700A537DE /* ogg_page_packets.html */,
-				32028D51254AEB4700A537DE /* ogg_stream_iovecin.html */,
-				32028D52254AEB4700A537DE /* bitpacking.html */,
-				32028D53254AEB4700A537DE /* ogg_packet.html */,
-				32028D54254AEB4700A537DE /* oggpack_buffer.html */,
-				32028D55254AEB4700A537DE /* oggpack_writealign.html */,
-				32028D56254AEB4700A537DE /* ogg_page_continued.html */,
-				32028D57254AEB4700A537DE /* oggpack_adv.html */,
-				32028D58254AEB4700A537DE /* oggpack_look1.html */,
-				32028D59254AEB4700A537DE /* ogg_stream_destroy.html */,
-				32028D5A254AEB4700A537DE /* oggpack_writeinit.html */,
-				32028D5B254AEB4700A537DE /* ogg_sync_check.html */,
-				32028D5C254AEB4700A537DE /* oggpack_writeclear.html */,
-				32028D5D254AEB4700A537DE /* ogg_page_bos.html */,
-				32028D5E254AEB4700A537DE /* oggpack_get_buffer.html */,
-				32028D5F254AEB4700A537DE /* ogg_sync_pageout.html */,
-				32028D60254AEB4700A537DE /* ogg_sync_init.html */,
-				32028D61254AEB4700A537DE /* ogg_sync_pageseek.html */,
-				32028D62254AEB4700A537DE /* overview.html */,
-				32028D63254AEB4700A537DE /* ogg_stream_state.html */,
-				32028D64254AEB4700A537DE /* ogg_page_serialno.html */,
-				32028D65254AEB4700A537DE /* reference.html */,
-				32028D66254AEB4700A537DE /* Makefile.am */,
-				32028D67254AEB4700A537DE /* oggpack_bytes.html */,
-				32028D68254AEB4700A537DE /* datastructures.html */,
-				32028D69254AEB4700A537DE /* ogg_page_checksum_set.html */,
-				32028D6A254AEB4700A537DE /* ogg_stream_packetpeek.html */,
-				32028D6B254AEB4700A537DE /* ogg_sync_clear.html */,
-				32028D6C254AEB4700A537DE /* ogg_sync_buffer.html */,
-				32028D6D254AEB4700A537DE /* decoding.html */,
-				32028D6E254AEB4700A537DE /* ogg_stream_reset.html */,
-				32028D6F254AEB4700A537DE /* ogg_stream_init.html */,
-				32028D70254AEB4700A537DE /* ogg_page_granulepos.html */,
-				32028D71254AEB4700A537DE /* ogg_page_eos.html */,
-				32028D72254AEB4700A537DE /* ogg_page_pageno.html */,
-				32028D73254AEB4700A537DE /* oggpack_writecheck.html */,
-				32028D74254AEB4700A537DE /* style.css */,
-				32028D75254AEB4700A537DE /* ogg_stream_pagein.html */,
-				32028D76254AEB4700A537DE /* oggpack_writecopy.html */,
-				32028D77254AEB4700A537DE /* oggpack_read1.html */,
-				32028D78254AEB4700A537DE /* ogg_sync_wrote.html */,
-				32028D79254AEB4700A537DE /* oggpack_readinit.html */,
-				32028D7A254AEB4700A537DE /* ogg_stream_packetout.html */,
-				32028D7B254AEB4700A537DE /* oggpack_read.html */,
-				32028D7C254AEB4700A537DE /* oggpack_reset.html */,
-				32028D7D254AEB4700A537DE /* oggpack_writetrunc.html */,
-				32028D7E254AEB4700A537DE /* ogg_stream_packetin.html */,
-				32028D7F254AEB4700A537DE /* ogg_sync_destroy.html */,
-				32028D80254AEB4700A537DE /* ogg_stream_flush.html */,
-				32028D81254AEB4700A537DE /* encoding.html */,
-				32028D82254AEB4700A537DE /* ogg_stream_check.html */,
-				32028D83254AEB4700A537DE /* oggpack_adv1.html */,
-				32028D84254AEB4700A537DE /* ogg_page_version.html */,
-				32028D85254AEB4700A537DE /* ogg_stream_eos.html */,
-				32028D86254AEB4700A537DE /* Makefile.in */,
-				32028D87254AEB4700A537DE /* oggpack_look.html */,
-				32028D88254AEB4700A537DE /* ogg_iovec_t.html */,
-				32028D89254AEB4700A537DE /* ogg_stream_flush_fill.html */,
-				32028D8A254AEB4700A537DE /* general.html */,
-				32028D8B254AEB4700A537DE /* ogg_stream_pageout.html */,
-				32028D8C254AEB4700A537DE /* ogg_sync_state.html */,
-			);
-			path = libogg;
-			sourceTree = "<group>";
-		};
-		32028D9C254AEB4700A537DE /* win32 */ = {
-			isa = PBXGroup;
-			children = (
-				32028D9D254AEB4700A537DE /* ogg.def */,
-				32028D9E254AEB4700A537DE /* VS2015 */,
-				32028DA2254AEB4700A537DE /* .gitignore */,
-			);
-			path = win32;
-			sourceTree = "<group>";
-		};
-		32028D9E254AEB4700A537DE /* VS2015 */ = {
-			isa = PBXGroup;
-			children = (
-				32028D9F254AEB4700A537DE /* libogg.vcxproj */,
-				32028DA0254AEB4700A537DE /* libogg.vcxproj.filters */,
-				32028DA1254AEB4700A537DE /* libogg.sln */,
-			);
-			path = VS2015;
 			sourceTree = "<group>";
 		};
 		32028DA6254AEB4700A537DE /* src */ = {
@@ -424,18 +96,8 @@
 				32028DAB254AEB4700A537DE /* bitwise.c */,
 				32028DA8254AEB4700A537DE /* crctable.h */,
 				32028DA7254AEB4700A537DE /* framing.c */,
-				32028DA9254AEB4700A537DE /* Makefile.am */,
-				32028DAA254AEB4700A537DE /* Makefile.in */,
 			);
 			path = src;
-			sourceTree = "<group>";
-		};
-		32677198254B5F3C0041B063 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3267719C254B5F3C0041B063 /* Ogg.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -522,12 +184,6 @@
 			mainGroup = 32028CFE254AE93F00A537DE;
 			productRefGroup = 32028D09254AE93F00A537DE /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 32677198254B5F3C0041B063 /* Products */;
-					ProjectRef = 32028D36254AEB4700A537DE /* ogg.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
@@ -535,16 +191,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		3267719C254B5F3C0041B063 /* Ogg.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Ogg.framework;
-			remoteRef = 3267719B254B5F3C0041B063 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
