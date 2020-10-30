@@ -61,6 +61,10 @@
 		326771D3254B5F840041B063 /* unpack_dsd.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677181254B5F000041B063 /* unpack_dsd.c */; };
 		326771D4254B5F840041B063 /* open_legacy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677176254B5F000041B063 /* open_legacy.c */; };
 		326771D5254B5F840041B063 /* pack_dns.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677170254B5F000041B063 /* pack_dns.c */; };
+		32677849254C2DEE0041B063 /* pack_x64.S in Sources */ = {isa = PBXBuildFile; fileRef = 32677187254B5F000041B063 /* pack_x64.S */; };
+		3267784B254C2DEE0041B063 /* unpack_x64.S in Sources */ = {isa = PBXBuildFile; fileRef = 32677185254B5F000041B063 /* unpack_x64.S */; };
+		3267784E254C2DEF0041B063 /* pack_x64.S in Sources */ = {isa = PBXBuildFile; fileRef = 32677187254B5F000041B063 /* pack_x64.S */; };
+		32677850254C2DEF0041B063 /* unpack_x64.S in Sources */ = {isa = PBXBuildFile; fileRef = 32677185254B5F000041B063 /* unpack_x64.S */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -487,6 +491,7 @@
 			files = (
 				326771B2254B5F830041B063 /* common_utils.c in Sources */,
 				326771AE254B5F830041B063 /* unpack.c in Sources */,
+				3267784B254C2DEE0041B063 /* unpack_x64.S in Sources */,
 				326771A5254B5F830041B063 /* open_raw.c in Sources */,
 				326771B8254B5F830041B063 /* open_legacy.c in Sources */,
 				326771A3254B5F830041B063 /* tag_utils.c in Sources */,
@@ -505,6 +510,7 @@
 				326771A7254B5F830041B063 /* pack_dsd.c in Sources */,
 				326771AD254B5F830041B063 /* open_filename.c in Sources */,
 				326771AB254B5F830041B063 /* extra2.c in Sources */,
+				32677849254C2DEE0041B063 /* pack_x64.S in Sources */,
 				326771B6254B5F830041B063 /* unpack_utils.c in Sources */,
 				326771A2254B5F830041B063 /* extra1.c in Sources */,
 				326771AA254B5F830041B063 /* read_words.c in Sources */,
@@ -520,6 +526,7 @@
 			files = (
 				326771CE254B5F840041B063 /* common_utils.c in Sources */,
 				326771CA254B5F840041B063 /* unpack.c in Sources */,
+				32677850254C2DEF0041B063 /* unpack_x64.S in Sources */,
 				326771C1254B5F840041B063 /* open_raw.c in Sources */,
 				326771D4254B5F840041B063 /* open_legacy.c in Sources */,
 				326771BF254B5F840041B063 /* tag_utils.c in Sources */,
@@ -538,6 +545,7 @@
 				326771C3254B5F840041B063 /* pack_dsd.c in Sources */,
 				326771C9254B5F840041B063 /* open_filename.c in Sources */,
 				326771C7254B5F840041B063 /* extra2.c in Sources */,
+				3267784E254C2DEF0041B063 /* pack_x64.S in Sources */,
 				326771D2254B5F840041B063 /* unpack_utils.c in Sources */,
 				326771BE254B5F840041B063 /* extra1.c in Sources */,
 				326771C6254B5F840041B063 /* read_words.c in Sources */,
@@ -589,6 +597,10 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					pack_x64.S,
+					unpack_x64.S,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -597,12 +609,21 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = (
+					OPT_ASM_X64,
+					"$(inherited)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INCLUDED_SOURCE_FILE_NAMES = "";
+				"INCLUDED_SOURCE_FILE_NAMES[arch=x86_64]" = (
+					pack_x64.S,
+					unpack_x64.S,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -653,14 +674,24 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_SOURCE_FILE_NAMES = (
+					pack_x64.S,
+					unpack_x64.S,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=x86_64]" = OPT_ASM_X64;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INCLUDED_SOURCE_FILE_NAMES = "";
+				"INCLUDED_SOURCE_FILE_NAMES[arch=x86_64]" = (
+					pack_x64.S,
+					unpack_x64.S,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
