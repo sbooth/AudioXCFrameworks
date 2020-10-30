@@ -18,3 +18,4 @@ fi
 /usr/bin/tar -xf "./$LIBTTA_CPP_ARCHIVE"
 /bin/ln -s "./$LIBTTA_CPP_DIR" "./libtta-cpp-src"
 /bin/cp -f "./config.h" "./libtta-cpp-src/"
+/usr/bin/patch "./libtta-cpp-src/libtta.cpp" < "aligned_alloc.patch"
