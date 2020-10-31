@@ -321,7 +321,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
-				32677CB5254D0EDC0041B063 /* dumb-2.0.3 */,
+				32677CB5254D0EDC0041B063 /* dumb-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -335,13 +335,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32677CB5254D0EDC0041B063 /* dumb-2.0.3 */ = {
+		32677CB5254D0EDC0041B063 /* dumb-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677CBE254D0EDC0041B063 /* include */,
 				32677CDD254D0EDC0041B063 /* src */,
 			);
-			path = "dumb-2.0.3";
+			path = "dumb-src";
 			sourceTree = "<group>";
 		};
 		32677CBE254D0EDC0041B063 /* include */ = {
