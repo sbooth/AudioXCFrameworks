@@ -20,5 +20,5 @@ fi
 
 /usr/bin/tar -xf "./$MPG123_ARCHIVE"
 /bin/ln -s "./$MPG123_DIR" "./mpg123-src"
-/bin/cp -f "./config.h" "./mpg123-src/libmpg123/"
+/bin/cp -f "./config.h" "./mpg123-src/src/"
 /bin/cp -f "./mpg123.h" "./mpg123-src/src/libmpg123/"
