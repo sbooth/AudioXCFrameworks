@@ -11,13 +11,13 @@
  #define ape_min(a,b)    (((a) < (b)) ? (a) : (b))
  
 -#include "SmartPtr.h"
-+#include <APE/SmartPtr.h>
++#include <MAC/SmartPtr.h>
  
  /*****************************************************************************************
  Version
  *****************************************************************************************/
 -#include "Version.h"
-+#include <APE/Version.h>
++#include <MAC/Version.h>
  
  // year in the copyright strings
  #define MAC_YEAR 2021
