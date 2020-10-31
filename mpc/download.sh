@@ -21,3 +21,4 @@ fi
 /usr/bin/tar -xf "./$MUSEPACK_ARCHIVE"
 /bin/ln -s "./$MUSEPACK_DIR" "./musepack-src"
 /usr/bin/patch -p0 < "./extern.patch"
+/usr/bin/patch -p0 < "./angle_bracket_include.patch"
