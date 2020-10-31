@@ -1,0 +1,23 @@
+--- MAC_SDK-src/Source/Shared/All.h	2020-10-23 09:12:20.000000000 -0500
++++ MAC_SDK-src/Source/Shared/All-angle-bracket-include.h	2020-10-31 07:02:52.000000000 -0500
+@@ -49,17 +49,17 @@
+     #include <sys/types.h>
+     #include <sys/stat.h>
+     #include <wchar.h>
+-    #include "NoWindows.h"
++    #include <MAC/NoWindows.h>
+ #endif
+ #define ape_max(a,b)    (((a) > (b)) ? (a) : (b))
+ #define ape_min(a,b)    (((a) < (b)) ? (a) : (b))
+ 
+-#include "SmartPtr.h"
++#include <APE/SmartPtr.h>
+ 
+ /*****************************************************************************************
+ Version
+ *****************************************************************************************/
+-#include "Version.h"
++#include <APE/Version.h>
+ 
+ // year in the copyright strings
+ #define MAC_YEAR 2021

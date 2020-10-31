@@ -20,3 +20,4 @@ fi
 
 /usr/bin/unzip "./$MAC_ARCHIVE" -d "./$MAC_DIR"
 /bin/ln -s "./$MAC_DIR" "./MAC_SDK-src"
+/usr/bin/patch -p0 < "./angle_bracket_include.patch"
