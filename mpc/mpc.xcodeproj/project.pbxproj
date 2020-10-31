@@ -41,6 +41,34 @@
 		32677C65254C7DF70041B063 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDD254C7D570041B063 /* reader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C66254C7DF70041B063 /* streaminfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE3254C7D570041B063 /* streaminfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C67254C7DF70041B063 /* mpcdec.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE2254C7D570041B063 /* mpcdec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677E39254DAEEA0041B063 /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BE5254C7D570041B063 /* bitstream.c */; };
+		32677E3A254DAEEA0041B063 /* huffsv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEA254C7D570041B063 /* huffsv7.c */; };
+		32677E3B254DAEEA0041B063 /* quant.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEB254C7D570041B063 /* quant.c */; };
+		32677E3C254DAEEA0041B063 /* encode_sv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEC254C7D570041B063 /* encode_sv7.c */; };
+		32677E3D254DAEEA0041B063 /* libmpcenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE8254C7D570041B063 /* libmpcenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677E3E254DAEEA0041B063 /* analy_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BE9254C7D570041B063 /* analy_filter.c */; };
+		32677E41254DAEEB0041B063 /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BE5254C7D570041B063 /* bitstream.c */; };
+		32677E42254DAEEB0041B063 /* huffsv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEA254C7D570041B063 /* huffsv7.c */; };
+		32677E43254DAEEB0041B063 /* quant.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEB254C7D570041B063 /* quant.c */; };
+		32677E44254DAEEB0041B063 /* encode_sv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEC254C7D570041B063 /* encode_sv7.c */; };
+		32677E45254DAEEB0041B063 /* libmpcenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE8254C7D570041B063 /* libmpcenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677E46254DAEEB0041B063 /* analy_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BE9254C7D570041B063 /* analy_filter.c */; };
+		32677E4B254DAFFC0041B063 /* fft_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0D254C7D570041B063 /* fft_routines.c */; };
+		32677E4C254DAFFC0041B063 /* fft4g.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0B254C7D570041B063 /* fft4g.c */; };
+		32677E4D254DAFFC0041B063 /* ans.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0E254C7D570041B063 /* ans.c */; };
+		32677E4E254DAFFC0041B063 /* cvd.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C11254C7D570041B063 /* cvd.c */; };
+		32677E4F254DAFFC0041B063 /* profile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C12254C7D570041B063 /* profile.c */; };
+		32677E50254DAFFC0041B063 /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677E51254DAFFC0041B063 /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
+		32677E52254DAFFC0041B063 /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
+		32677E55254DAFFD0041B063 /* fft_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0D254C7D570041B063 /* fft_routines.c */; };
+		32677E56254DAFFD0041B063 /* fft4g.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0B254C7D570041B063 /* fft4g.c */; };
+		32677E57254DAFFD0041B063 /* ans.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0E254C7D570041B063 /* ans.c */; };
+		32677E58254DAFFD0041B063 /* cvd.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C11254C7D570041B063 /* cvd.c */; };
+		32677E59254DAFFD0041B063 /* profile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C12254C7D570041B063 /* profile.c */; };
+		32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32677E5B254DAFFD0041B063 /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
+		32677E5C254DAFFD0041B063 /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,24 +103,17 @@
 		32677C00254C7D570041B063 /* mpcdec_math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mpcdec_math.h; sourceTree = "<group>"; };
 		32677C01254C7D570041B063 /* huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman.h; sourceTree = "<group>"; };
 		32677C09254C7D570041B063 /* libmpcpsy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libmpcpsy.h; sourceTree = "<group>"; };
-		32677C0A254C7D570041B063 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		32677C0B254C7D570041B063 /* fft4g.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fft4g.c; sourceTree = "<group>"; };
 		32677C0C254C7D570041B063 /* psy_tab.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = psy_tab.c; sourceTree = "<group>"; };
 		32677C0D254C7D570041B063 /* fft_routines.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fft_routines.c; sourceTree = "<group>"; };
 		32677C0E254C7D570041B063 /* ans.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ans.c; sourceTree = "<group>"; };
 		32677C0F254C7D570041B063 /* psy.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = psy.c; sourceTree = "<group>"; };
-		32677C10254C7D570041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		32677C11254C7D570041B063 /* cvd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cvd.c; sourceTree = "<group>"; };
 		32677C12254C7D570041B063 /* profile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = profile.c; sourceTree = "<group>"; };
 		32677C14254C7D570041B063 /* tags.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tags.c; sourceTree = "<group>"; };
 		32677C15254C7D570041B063 /* huffman-bcl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "huffman-bcl.c"; sourceTree = "<group>"; };
 		32677C16254C7D570041B063 /* crc32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		32677C17254C7D570041B063 /* fastmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fastmath.c; sourceTree = "<group>"; };
-		32677C1D254C7D570041B063 /* libwaveformat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libwaveformat.h; sourceTree = "<group>"; };
-		32677C1E254C7D570041B063 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		32677C1F254C7D570041B063 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		32677C20254C7D570041B063 /* input.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = input.c; sourceTree = "<group>"; };
-		32677C21254C7D570041B063 /* output.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = output.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,7 +160,6 @@
 				32677BED254C7D570041B063 /* libmpcdec */,
 				32677BE4254C7D570041B063 /* libmpcenc */,
 				32677C08254C7D570041B063 /* libmpcpsy */,
-				32677C1C254C7D570041B063 /* libwavformat */,
 			);
 			path = musepack_src_r475;
 			sourceTree = "<group>";
@@ -203,16 +223,14 @@
 		32677C08254C7D570041B063 /* libmpcpsy */ = {
 			isa = PBXGroup;
 			children = (
-				32677C09254C7D570041B063 /* libmpcpsy.h */,
-				32677C0A254C7D570041B063 /* CMakeLists.txt */,
-				32677C0B254C7D570041B063 /* fft4g.c */,
-				32677C0C254C7D570041B063 /* psy_tab.c */,
-				32677C0D254C7D570041B063 /* fft_routines.c */,
 				32677C0E254C7D570041B063 /* ans.c */,
-				32677C0F254C7D570041B063 /* psy.c */,
-				32677C10254C7D570041B063 /* Makefile.am */,
 				32677C11254C7D570041B063 /* cvd.c */,
+				32677C0D254C7D570041B063 /* fft_routines.c */,
+				32677C0B254C7D570041B063 /* fft4g.c */,
+				32677C09254C7D570041B063 /* libmpcpsy.h */,
 				32677C12254C7D570041B063 /* profile.c */,
+				32677C0C254C7D570041B063 /* psy_tab.c */,
+				32677C0F254C7D570041B063 /* psy.c */,
 			);
 			path = libmpcpsy;
 			sourceTree = "<group>";
@@ -228,18 +246,6 @@
 			path = common;
 			sourceTree = "<group>";
 		};
-		32677C1C254C7D570041B063 /* libwavformat */ = {
-			isa = PBXGroup;
-			children = (
-				32677C1D254C7D570041B063 /* libwaveformat.h */,
-				32677C1E254C7D570041B063 /* CMakeLists.txt */,
-				32677C1F254C7D570041B063 /* Makefile.am */,
-				32677C20254C7D570041B063 /* input.c */,
-				32677C21254C7D570041B063 /* output.c */,
-			);
-			path = libwavformat;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -251,8 +257,10 @@
 				32677C58254C7DF60041B063 /* minimax.h in Headers */,
 				32677C5E254C7DF60041B063 /* mpcdec.h in Headers */,
 				32677C59254C7DF60041B063 /* mpc_types.h in Headers */,
+				32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */,
 				32677C5C254C7DF60041B063 /* reader.h in Headers */,
 				32677C5D254C7DF60041B063 /* streaminfo.h in Headers */,
+				32677E3D254DAEEA0041B063 /* libmpcenc.h in Headers */,
 				32677C5A254C7DF60041B063 /* mpcmath.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,8 +273,10 @@
 				32677C61254C7DF70041B063 /* minimax.h in Headers */,
 				32677C67254C7DF70041B063 /* mpcdec.h in Headers */,
 				32677C62254C7DF70041B063 /* mpc_types.h in Headers */,
+				32677E50254DAFFC0041B063 /* libmpcpsy.h in Headers */,
 				32677C65254C7DF70041B063 /* reader.h in Headers */,
 				32677C66254C7DF70041B063 /* streaminfo.h in Headers */,
+				32677E45254DAEEB0041B063 /* libmpcenc.h in Headers */,
 				32677C63254C7DF70041B063 /* mpcmath.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -366,14 +376,26 @@
 			files = (
 				32677C3C254C7D920041B063 /* huffman-bcl.c in Sources */,
 				32677C48254C7DD90041B063 /* huffman.c in Sources */,
+				32677E5C254DAFFD0041B063 /* psy_tab.c in Sources */,
 				32677C45254C7DD90041B063 /* streaminfo.c in Sources */,
 				32677C46254C7DD90041B063 /* mpc_reader.c in Sources */,
+				32677E3E254DAEEA0041B063 /* analy_filter.c in Sources */,
+				32677E56254DAFFD0041B063 /* fft4g.c in Sources */,
+				32677E5B254DAFFD0041B063 /* psy.c in Sources */,
+				32677E39254DAEEA0041B063 /* bitstream.c in Sources */,
+				32677E58254DAFFD0041B063 /* cvd.c in Sources */,
 				32677C44254C7DD90041B063 /* mpc_decoder.c in Sources */,
+				32677E55254DAFFD0041B063 /* fft_routines.c in Sources */,
+				32677E3C254DAEEA0041B063 /* encode_sv7.c in Sources */,
 				32677C49254C7DD90041B063 /* mpc_bits_reader.c in Sources */,
+				32677E3A254DAEEA0041B063 /* huffsv7.c in Sources */,
+				32677E57254DAFFD0041B063 /* ans.c in Sources */,
 				32677C4B254C7DD90041B063 /* synth_filter.c in Sources */,
 				32677C47254C7DD90041B063 /* requant.c in Sources */,
 				32677C4A254C7DD90041B063 /* mpc_demux.c in Sources */,
+				32677E3B254DAEEA0041B063 /* quant.c in Sources */,
 				32677C3D254C7D920041B063 /* crc32.c in Sources */,
+				32677E59254DAFFD0041B063 /* profile.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,14 +405,26 @@
 			files = (
 				32677C40254C7D930041B063 /* huffman-bcl.c in Sources */,
 				32677C52254C7DD90041B063 /* huffman.c in Sources */,
+				32677E52254DAFFC0041B063 /* psy_tab.c in Sources */,
 				32677C4F254C7DD90041B063 /* streaminfo.c in Sources */,
 				32677C50254C7DD90041B063 /* mpc_reader.c in Sources */,
+				32677E46254DAEEB0041B063 /* analy_filter.c in Sources */,
+				32677E4C254DAFFC0041B063 /* fft4g.c in Sources */,
+				32677E51254DAFFC0041B063 /* psy.c in Sources */,
+				32677E41254DAEEB0041B063 /* bitstream.c in Sources */,
+				32677E4E254DAFFC0041B063 /* cvd.c in Sources */,
 				32677C4E254C7DD90041B063 /* mpc_decoder.c in Sources */,
+				32677E4B254DAFFC0041B063 /* fft_routines.c in Sources */,
+				32677E44254DAEEB0041B063 /* encode_sv7.c in Sources */,
 				32677C53254C7DD90041B063 /* mpc_bits_reader.c in Sources */,
+				32677E42254DAEEB0041B063 /* huffsv7.c in Sources */,
+				32677E4D254DAFFC0041B063 /* ans.c in Sources */,
 				32677C55254C7DD90041B063 /* synth_filter.c in Sources */,
 				32677C51254C7DD90041B063 /* requant.c in Sources */,
 				32677C54254C7DD90041B063 /* mpc_demux.c in Sources */,
+				32677E43254DAEEB0041B063 /* quant.c in Sources */,
 				32677C41254C7D930041B063 /* crc32.c in Sources */,
+				32677E4F254DAFFC0041B063 /* profile.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
