@@ -16,3 +16,9 @@
 [submodule "wavpack/wavpack-src"]
 	path = wavpack/wavpack-src
 	url = https://github.com/dbry/WavPack.git
+[submodule "vorbis/vorbis-src"]
+	path = vorbis/vorbis-src
+	url = https://github.com/xiph/vorbis.git
+[submodule "vorbis/ogg-src"]
+	path = vorbis/ogg-src
+	url = https://github.com/xiph/ogg.git
