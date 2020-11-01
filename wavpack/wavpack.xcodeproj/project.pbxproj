@@ -133,7 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				3267711F254B5E560041B063 /* Info.plist */,
-				32677120254B5F000041B063 /* wavpack-5.3.0 */,
+				32677120254B5F000041B063 /* wavpack-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -147,13 +147,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32677120254B5F000041B063 /* wavpack-5.3.0 */ = {
+		32677120254B5F000041B063 /* wavpack-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677139254B5F000041B063 /* include */,
 				32677168254B5F000041B063 /* src */,
 			);
-			path = "wavpack-5.3.0";
+			path = "wavpack-src";
 			sourceTree = "<group>";
 		};
 		32677139254B5F000041B063 /* include */ = {

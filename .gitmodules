@@ -13,3 +13,6 @@
 [submodule "flac/ogg-src"]
 	path = flac/ogg-src
 	url = https://github.com/xiph/ogg.git
+[submodule "wavpack/wavpack-src"]
+	path = wavpack/wavpack-src
+	url = https://github.com/dbry/WavPack.git
