@@ -7,3 +7,9 @@
 [submodule "ogg/ogg-src"]
 	path = ogg/ogg-src
 	url = https://github.com/xiph/ogg.git
+[submodule "flac/flac-src"]
+	path = flac/flac-src
+	url = https://github.com/xiph/flac.git
+[submodule "flac/ogg-src"]
+	path = flac/ogg-src
+	url = https://github.com/xiph/ogg.git
