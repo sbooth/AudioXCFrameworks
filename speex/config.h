@@ -185,7 +185,9 @@
 #endif
 
 /* Enable SSE support */
+#if __x86_64__
 #define _USE_SSE /**/
+#endif
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */
