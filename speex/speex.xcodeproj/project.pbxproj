@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32028DB5254AEB5700A537DE /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 32028D21254AEB4700A537DE /* ogg.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32028DB9254AEB7000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
 		32028DBA254AEB7000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DC3254AFDB500A537DE /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32028D25254AEB4700A537DE /* os_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32028DCE254AFEA000A537DE /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = 32028D21254AEB4700A537DE /* ogg.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32028DCF254AFEA000A537DE /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32028D25254AEB4700A537DE /* os_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32028DD2254AFEA000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
 		32028DD3254AFEA000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
 		327145D0254F21D200029BD7 /* speex_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A5254F21A100029BD7 /* speex_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -396,12 +392,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				327145D4254F21D200029BD7 /* speex_stereo.h in Headers */,
-				32028DB5254AEB5700A537DE /* ogg.h in Headers */,
 				327145D5254F21D200029BD7 /* speex.h in Headers */,
 				327145D1254F21D200029BD7 /* speex_header.h in Headers */,
 				327145F8254F231100029BD7 /* config.h in Headers */,
 				327145D0254F21D200029BD7 /* speex_types.h in Headers */,
-				32028DC3254AFDB500A537DE /* os_types.h in Headers */,
 				327145D2254F21D200029BD7 /* speex_bits.h in Headers */,
 				327145E5254F229F00029BD7 /* speex_config_types.h in Headers */,
 				327145D3254F21D200029BD7 /* speex_callbacks.h in Headers */,
@@ -413,12 +407,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				327145DC254F21D300029BD7 /* speex_stereo.h in Headers */,
-				32028DCE254AFEA000A537DE /* ogg.h in Headers */,
 				327145DD254F21D300029BD7 /* speex.h in Headers */,
 				327145D9254F21D300029BD7 /* speex_header.h in Headers */,
 				327145FB254F231200029BD7 /* config.h in Headers */,
 				327145D8254F21D300029BD7 /* speex_types.h in Headers */,
-				32028DCF254AFEA000A537DE /* os_types.h in Headers */,
 				327145DA254F21D300029BD7 /* speex_bits.h in Headers */,
 				327145E6254F229F00029BD7 /* speex_config_types.h in Headers */,
 				327145DB254F21D300029BD7 /* speex_callbacks.h in Headers */,
