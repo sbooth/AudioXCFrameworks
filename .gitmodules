@@ -4,3 +4,6 @@
 [submodule "taglib/taglib-src"]
 	path = taglib/taglib-src
 	url = git@github.com:taglib/taglib.git
+[submodule "ogg/ogg-src"]
+	path = ogg/ogg-src
+	url = https://github.com/xiph/ogg.git
