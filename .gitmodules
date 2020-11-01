@@ -1,3 +1,6 @@
 [submodule "dumb/dumb-src"]
 	path = dumb/dumb-src
 	url = https://github.com/kode54/dumb.git
+[submodule "taglib/taglib-src"]
+	path = taglib/taglib-src
+	url = git@github.com:taglib/taglib.git

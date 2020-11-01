@@ -1,0 +1,1042 @@
+diff -ur taglib-src/taglib/ape/apefile.cpp taglib-quoted-include/taglib/ape/apefile.cpp
+--- taglib-src/taglib/ape/apefile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ape/apefile.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -33,13 +33,13 @@
+ 
+ #include <tbytevector.h>
+ #include <tstring.h>
+-#include <tdebug.h>
+-#include <tagunion.h>
++#include "tdebug.h"
++#include "tagunion.h"
+ #include <id3v1tag.h>
+ #include <id3v2header.h>
+ #include <tpropertymap.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include "apefile.h"
+ #include "apetag.h"
+diff -ur taglib-src/taglib/ape/apefooter.cpp taglib-quoted-include/taglib/ape/apefooter.cpp
+--- taglib-src/taglib/ape/apefooter.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ape/apefooter.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -28,7 +28,7 @@
+ #include <bitset>
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "apefooter.h"
+ 
+diff -ur taglib-src/taglib/ape/apeitem.cpp taglib-quoted-include/taglib/ape/apeitem.cpp
+--- taglib-src/taglib/ape/apeitem.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ape/apeitem.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -24,8 +24,8 @@
+  ***************************************************************************/
+ 
+ #include <tbytevectorlist.h>
+-#include <tdebug.h>
+-#include <tsmartptr.h>
++#include "tdebug.h"
++#include "tsmartptr.h"
+ 
+ #include "apeitem.h"
+ 
+diff -ur taglib-src/taglib/ape/apeproperties.cpp taglib-quoted-include/taglib/ape/apeproperties.cpp
+--- taglib-src/taglib/ape/apeproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ape/apeproperties.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -28,7 +28,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "id3v2tag.h"
+ #include "apeproperties.h"
+diff -ur taglib-src/taglib/ape/apetag.cpp taglib-quoted-include/taglib/ape/apetag.cpp
+--- taglib-src/taglib/ape/apetag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ape/apetag.cpp	2020-10-31 22:48:50.000000000 -0500
+@@ -36,8 +36,8 @@
+ #include <tmap.h>
+ #include <tpicturemap.h>
+ #include <tpropertymap.h>
+-#include <tdebug.h>
+-#include <tutils.h>
++#include "tdebug.h"
++#include "tutils.h"
+ 
+ #include "apetag.h"
+ #include "apefooter.h"
+diff -ur taglib-src/taglib/asf/asfattribute.cpp taglib-quoted-include/taglib/asf/asfattribute.cpp
+--- taglib-src/taglib/asf/asfattribute.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/asf/asfattribute.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/**************************************************************************
++/**************************************************************************
+     copyright            : (C) 2005-2007 by Lukáš Lalinský
+     email                : lalinsky@gmail.com
+  **************************************************************************/
+@@ -24,8 +24,8 @@
+  ***************************************************************************/
+ 
+ #include <taglib.h>
+-#include <tdebug.h>
+-#include <tsmartptr.h>
++#include "tdebug.h"
++#include "tsmartptr.h"
+ 
+ #include "asfattribute.h"
+ #include "asffile.h"
+diff -ur taglib-src/taglib/asf/asffile.cpp taglib-quoted-include/taglib/asf/asffile.cpp
+--- taglib-src/taglib/asf/asffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/asf/asffile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -23,12 +23,12 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tbytevectorlist.h>
+ #include <tpropertymap.h>
+ #include <tstring.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include "asffile.h"
+ #include "asftag.h"
+diff -ur taglib-src/taglib/asf/asfpicture.cpp taglib-quoted-include/taglib/asf/asfpicture.cpp
+--- taglib-src/taglib/asf/asfpicture.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/asf/asfpicture.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -24,8 +24,8 @@
+  ***************************************************************************/
+ 
+ #include <taglib.h>
+-#include <tdebug.h>
+-#include <tsmartptr.h>
++#include "tdebug.h"
++#include "tsmartptr.h"
+ 
+ #include "asfattribute.h"
+ #include "asffile.h"
+diff -ur taglib-src/taglib/asf/asfproperties.cpp taglib-quoted-include/taglib/asf/asfproperties.cpp
+--- taglib-src/taglib/asf/asfproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/asf/asfproperties.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ #include "asfproperties.h"
+ 
+diff -ur taglib-src/taglib/dsdiff/dsdifffile.cpp taglib-quoted-include/taglib/dsdiff/dsdifffile.cpp
+--- taglib-src/taglib/dsdiff/dsdifffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/dsdiff/dsdifffile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -24,12 +24,12 @@
+  ***************************************************************************/
+ 
+ #include <tbytevector.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <id3v2tag.h>
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include "tagunion.h"
+ #include "dsdifffile.h"
+diff -ur taglib-src/taglib/dsdiff/dsdiffproperties.cpp taglib-quoted-include/taglib/dsdiff/dsdiffproperties.cpp
+--- taglib-src/taglib/dsdiff/dsdiffproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/dsdiff/dsdiffproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "dsdiffproperties.h"
+ 
+diff -ur taglib-src/taglib/dsf/dsffile.cpp taglib-quoted-include/taglib/dsf/dsffile.cpp
+--- taglib-src/taglib/dsf/dsffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/dsf/dsffile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -24,12 +24,12 @@
+  ***************************************************************************/
+ 
+ #include <tbytevector.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <id3v2tag.h>
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+-#include <tsmartptr.h>
+-#include <tagutils.h>
++#include "tsmartptr.h"
++#include "tagutils.h"
+ 
+ #include "dsffile.h"
+ 
+diff -ur taglib-src/taglib/dsf/dsfproperties.cpp taglib-quoted-include/taglib/dsf/dsfproperties.cpp
+--- taglib-src/taglib/dsf/dsfproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/dsf/dsfproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "dsfproperties.h"
+ 
+diff -ur taglib-src/taglib/fileref.cpp taglib-quoted-include/taglib/fileref.cpp
+--- taglib-src/taglib/fileref.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/fileref.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -30,8 +30,8 @@
+ #include <tfile.h>
+ #include <tfilestream.h>
+ #include <tstring.h>
+-#include <tdebug.h>
+-#include <tsmartptr.h>
++#include "tdebug.h"
++#include "tsmartptr.h"
+ 
+ #include "fileref.h"
+ #include "asffile.h"
+diff -ur taglib-src/taglib/flac/flacfile.cpp taglib-quoted-include/taglib/flac/flacfile.cpp
+--- taglib-src/taglib/flac/flacfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/flac/flacfile.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -26,11 +26,11 @@
+ #include <tbytevector.h>
+ #include <tstring.h>
+ #include <tlist.h>
+-#include <tdebug.h>
+-#include <tagunion.h>
++#include "tdebug.h"
++#include "tagunion.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include <id3v2header.h>
+ #include <id3v2tag.h>
+diff -ur taglib-src/taglib/flac/flacmetadatablock.cpp taglib-quoted-include/taglib/flac/flacmetadatablock.cpp
+--- taglib-src/taglib/flac/flacmetadatablock.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/flac/flacmetadatablock.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <taglib.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include "flacmetadatablock.h"
+ 
+ using namespace TagLib;
+diff -ur taglib-src/taglib/flac/flacpicture.cpp taglib-quoted-include/taglib/flac/flacpicture.cpp
+--- taglib-src/taglib/flac/flacpicture.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/flac/flacpicture.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <taglib.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include "flacpicture.h"
+ 
+ using namespace TagLib;
+diff -ur taglib-src/taglib/flac/flacproperties.cpp taglib-quoted-include/taglib/flac/flacproperties.cpp
+--- taglib-src/taglib/flac/flacproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/flac/flacproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "flacproperties.h"
+ #include "flacfile.h"
+diff -ur taglib-src/taglib/flac/flacunknownmetadatablock.cpp taglib-quoted-include/taglib/flac/flacunknownmetadatablock.cpp
+--- taglib-src/taglib/flac/flacunknownmetadatablock.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/flac/flacunknownmetadatablock.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <taglib.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ #include "flacunknownmetadatablock.h"
+ 
+diff -ur taglib-src/taglib/mp4/mp4atom.cpp taglib-quoted-include/taglib/mp4/mp4atom.cpp
+--- taglib-src/taglib/mp4/mp4atom.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mp4/mp4atom.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ 
+ #include "mp4atom.h"
+diff -ur taglib-src/taglib/mp4/mp4file.cpp taglib-quoted-include/taglib/mp4/mp4file.cpp
+--- taglib-src/taglib/mp4/mp4file.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mp4/mp4file.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -23,10 +23,10 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include "mp4atom.h"
+ #include "mp4tag.h"
+diff -ur taglib-src/taglib/mp4/mp4properties.cpp taglib-quoted-include/taglib/mp4/mp4properties.cpp
+--- taglib-src/taglib/mp4/mp4properties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mp4/mp4properties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ #include "mp4file.h"
+ #include "mp4atom.h"
+diff -ur taglib-src/taglib/mp4/mp4tag.cpp taglib-quoted-include/taglib/mp4/mp4tag.cpp
+--- taglib-src/taglib/mp4/mp4tag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mp4/mp4tag.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ #include <cstring>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ #include <tpicturemap.h>
+ #include <tpropertymap.h>
+diff -ur taglib-src/taglib/mpc/mpcfile.cpp taglib-quoted-include/taglib/mpc/mpcfile.cpp
+--- taglib-src/taglib/mpc/mpcfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpc/mpcfile.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -25,11 +25,11 @@
+ 
+ #include <tbytevector.h>
+ #include <tstring.h>
+-#include <tagunion.h>
+-#include <tdebug.h>
++#include "tagunion.h"
++#include "tdebug.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include "mpcfile.h"
+ #include "id3v1tag.h"
+diff -ur taglib-src/taglib/mpc/mpcproperties.cpp taglib-quoted-include/taglib/mpc/mpcproperties.cpp
+--- taglib-src/taglib/mpc/mpcproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpc/mpcproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <bitset>
+ #include <math.h>
+ 
+diff -ur taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp taglib-quoted-include/taglib/mpeg/id3v1/id3v1tag.cpp
+--- taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v1/id3v1tag.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tfile.h>
+ #include <tpicturemap.h>
+ 
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+ #include "attachedpictureframe.h"
+ 
+ #include <tstringlist.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ using namespace TagLib;
+ using namespace ID3v2;
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/chapterframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/chapterframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -25,7 +25,7 @@
+ 
+ #include <tbytevectorlist.h>
+ #include <tpropertymap.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <stdio.h>
+ 
+ #include "chapterframe.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/commentsframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/commentsframe.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -25,7 +25,7 @@
+ 
+ #include <tbytevectorlist.h>
+ #include <id3v2tag.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+ 
+ #include "commentsframe.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+ #include "eventtimingcodesframe.h"
+ #include <tbytevectorlist.h>
+ #include <id3v2tag.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+ 
+ using namespace TagLib;
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+ 
+ #include "generalencapsulatedobjectframe.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/ownershipframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/ownershipframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+ #include <id3v2tag.h>
+ 
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/popularimeterframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/popularimeterframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "popularimeterframe.h"
+ 
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/privateframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/privateframe.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -26,7 +26,7 @@
+ 
+ #include <tbytevectorlist.h>
+ #include <id3v2tag.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "privateframe.h"
+ 
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tmap.h>
+ 
+ #include "relativevolumeframe.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+ #include "synchronizedlyricsframe.h"
+ #include <tbytevectorlist.h>
+ #include <id3v2tag.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+ 
+ using namespace TagLib;
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -25,7 +25,7 @@
+ 
+ #include <tbytevectorlist.h>
+ #include <tpropertymap.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "tableofcontentsframe.h"
+ 
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -25,7 +25,7 @@
+ 
+ #include <tbytevectorlist.h>
+ #include <tpropertymap.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "id3v2tag.h"
+ #include "uniquefileidentifierframe.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -29,7 +29,7 @@
+ #include "unsynchronizedlyricsframe.h"
+ #include <tbytevectorlist.h>
+ #include <id3v2tag.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+ 
+ using namespace TagLib;
+diff -ur taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/urllinkframe.cpp
+--- taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/frames/urllinkframe.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -28,7 +28,7 @@
+ 
+ #include "urllinkframe.h"
+ #include "id3v2tag.h"
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+ 
+diff -ur taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2frame.cpp
+--- taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2frame.cpp	2020-10-31 22:50:37.000000000 -0500
+@@ -25,9 +25,9 @@
+ 
+ #include <bitset>
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+-#include <tzlib.h>
++#include "tzlib.h"
+ 
+ #include "id3v2tag.h"
+ #include "id3v2frame.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2framefactory.cpp
+--- taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2framefactory.cpp	2020-10-31 22:50:13.000000000 -0500
+@@ -23,8 +23,8 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
+-#include <tzlib.h>
++#include "tdebug.h"
++#include "tzlib.h"
+ 
+ #include "id3v2framefactory.h"
+ #include "id3v2synchdata.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/id3v2header.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2header.cpp
+--- taglib-src/taglib/mpeg/id3v2/id3v2header.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2header.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -27,7 +27,7 @@
+ #include <bitset>
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "id3v2header.h"
+ #include "id3v2footer.h"
+diff -ur taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2tag.cpp
+--- taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2tag.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -29,7 +29,7 @@
+ #include <tbytevector.h>
+ #include <tpropertymap.h>
+ #include <tpicturemap.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "id3v2tag.h"
+ #include "id3v2header.h"
+diff -ur taglib-src/taglib/mpeg/mpegfile.cpp taglib-quoted-include/taglib/mpeg/mpegfile.cpp
+--- taglib-src/taglib/mpeg/mpegfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/mpegfile.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2002 - 2008 by Scott Wheeler
+     email                : wheeler@kde.org
+  ***************************************************************************/
+@@ -23,14 +23,14 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tagunion.h>
+-#include <tagutils.h>
++#include "tagunion.h"
++#include "tagutils.h"
+ #include <id3v2tag.h>
+ #include <id3v2header.h>
+ #include <id3v1tag.h>
+ #include <apefooter.h>
+ #include <apetag.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "mpegfile.h"
+ #include "mpegheader.h"
+diff -ur taglib-src/taglib/mpeg/mpegheader.cpp taglib-quoted-include/taglib/mpeg/mpegheader.cpp
+--- taglib-src/taglib/mpeg/mpegheader.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/mpegheader.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -26,8 +26,8 @@
+ #include <tbytevector.h>
+ #include <tstring.h>
+ #include <tfile.h>
+-#include <tdebug.h>
+-#include <tsmartptr.h>
++#include "tdebug.h"
++#include "tsmartptr.h"
+ 
+ #include "mpegheader.h"
+ #include "mpegutils.h"
+diff -ur taglib-src/taglib/mpeg/mpegproperties.cpp taglib-quoted-include/taglib/mpeg/mpegproperties.cpp
+--- taglib-src/taglib/mpeg/mpegproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/mpegproperties.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2002 - 2008 by Scott Wheeler
+     email                : wheeler@kde.org
+  ***************************************************************************/
+@@ -23,9 +23,9 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+-#include <tsmartptr.h>
++#include "tsmartptr.h"
+ 
+ #include "mpegproperties.h"
+ #include "mpegfile.h"
+diff -ur taglib-src/taglib/mpeg/xingheader.cpp taglib-quoted-include/taglib/mpeg/xingheader.cpp
+--- taglib-src/taglib/mpeg/xingheader.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/mpeg/xingheader.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -25,7 +25,7 @@
+ 
+ #include <tbytevector.h>
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "xingheader.h"
+ #include "mpegfile.h"
+diff -ur taglib-src/taglib/ogg/flac/oggflacfile.cpp taglib-quoted-include/taglib/ogg/flac/oggflacfile.cpp
+--- taglib-src/taglib/ogg/flac/oggflacfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/flac/oggflacfile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2004-2005 by Allan Sandfeld Jensen
+     email                : kde@carewolf.org
+  ***************************************************************************/
+@@ -25,9 +25,9 @@
+ 
+ #include <tbytevector.h>
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include <xiphcomment.h>
+ #include "oggflacfile.h"
+diff -ur taglib-src/taglib/ogg/oggfile.cpp taglib-quoted-include/taglib/ogg/oggfile.cpp
+--- taglib-src/taglib/ogg/oggfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/oggfile.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+ #include <tbytevectorlist.h>
+ #include <tmap.h>
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "oggfile.h"
+ #include "oggpage.h"
+diff -ur taglib-src/taglib/ogg/oggpage.cpp taglib-quoted-include/taglib/ogg/oggpage.cpp
+--- taglib-src/taglib/ogg/oggpage.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/oggpage.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+ #include <algorithm>
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "oggpage.h"
+ #include "oggpageheader.h"
+diff -ur taglib-src/taglib/ogg/oggpageheader.cpp taglib-quoted-include/taglib/ogg/oggpageheader.cpp
+--- taglib-src/taglib/ogg/oggpageheader.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/oggpageheader.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -26,7 +26,7 @@
+ #include <bitset>
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <taglib.h>
+ 
+ #include "oggpageheader.h"
+diff -ur taglib-src/taglib/ogg/opus/opusfile.cpp taglib-quoted-include/taglib/ogg/opus/opusfile.cpp
+--- taglib-src/taglib/ogg/opus/opusfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/opus/opusfile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -28,9 +28,9 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include "opusfile.h"
+ 
+diff -ur taglib-src/taglib/ogg/opus/opusproperties.cpp taglib-quoted-include/taglib/ogg/opus/opusproperties.cpp
+--- taglib-src/taglib/ogg/opus/opusproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/opus/opusproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -28,7 +28,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <oggpageheader.h>
+ 
+ #include "opusproperties.h"
+diff -ur taglib-src/taglib/ogg/speex/speexfile.cpp taglib-quoted-include/taglib/ogg/speex/speexfile.cpp
+--- taglib-src/taglib/ogg/speex/speexfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/speex/speexfile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -28,9 +28,9 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include "speexfile.h"
+ 
+diff -ur taglib-src/taglib/ogg/speex/speexproperties.cpp taglib-quoted-include/taglib/ogg/speex/speexproperties.cpp
+--- taglib-src/taglib/ogg/speex/speexproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/speex/speexproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -28,7 +28,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <oggpageheader.h>
+ 
+ #include "speexproperties.h"
+diff -ur taglib-src/taglib/ogg/vorbis/vorbisfile.cpp taglib-quoted-include/taglib/ogg/vorbis/vorbisfile.cpp
+--- taglib-src/taglib/ogg/vorbis/vorbisfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/vorbis/vorbisfile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -26,9 +26,9 @@
+ #include <bitset>
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include "vorbisfile.h"
+ 
+diff -ur taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp taglib-quoted-include/taglib/ogg/vorbis/vorbisproperties.cpp
+--- taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/vorbis/vorbisproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include <oggpageheader.h>
+ 
+diff -ur taglib-src/taglib/ogg/xiphcomment.cpp taglib-quoted-include/taglib/ogg/xiphcomment.cpp
+--- taglib-src/taglib/ogg/xiphcomment.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/ogg/xiphcomment.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tbytevector.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include <flacpicture.h>
+ #include <xiphcomment.h>
+diff -ur taglib-src/taglib/riff/aiff/aifffile.cpp taglib-quoted-include/taglib/riff/aiff/aifffile.cpp
+--- taglib-src/taglib/riff/aiff/aifffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/riff/aiff/aifffile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -24,12 +24,12 @@
+  ***************************************************************************/
+ 
+ #include <tbytevector.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <id3v2tag.h>
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include "aifffile.h"
+ 
+diff -ur taglib-src/taglib/riff/aiff/aiffproperties.cpp taglib-quoted-include/taglib/riff/aiff/aiffproperties.cpp
+--- taglib-src/taglib/riff/aiff/aiffproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/riff/aiff/aiffproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include "aifffile.h"
+ #include "aiffproperties.h"
+ 
+diff -ur taglib-src/taglib/riff/rifffile.cpp taglib-quoted-include/taglib/riff/rifffile.cpp
+--- taglib-src/taglib/riff/rifffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/riff/rifffile.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -27,7 +27,7 @@
+ #include <vector>
+ 
+ #include <tbytevector.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstring.h>
+ 
+ #include "rifffile.h"
+diff -ur taglib-src/taglib/riff/wav/infotag.cpp taglib-quoted-include/taglib/riff/wav/infotag.cpp
+--- taglib-src/taglib/riff/wav/infotag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/riff/wav/infotag.cpp	2020-10-31 22:48:04.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tfile.h>
+ #include <tpicturemap.h>
+ 
+diff -ur taglib-src/taglib/riff/wav/wavfile.cpp taglib-quoted-include/taglib/riff/wav/wavfile.cpp
+--- taglib-src/taglib/riff/wav/wavfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/riff/wav/wavfile.cpp	2020-10-31 22:49:12.000000000 -0500
+@@ -24,11 +24,11 @@
+  ***************************************************************************/
+ 
+ #include <tbytevector.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+-#include <tagutils.h>
+-#include <tsmartptr.h>
++#include "tagutils.h"
++#include "tsmartptr.h"
+ 
+ #include "wavfile.h"
+ #include "id3v2tag.h"
+diff -ur taglib-src/taglib/riff/wav/wavproperties.cpp taglib-quoted-include/taglib/riff/wav/wavproperties.cpp
+--- taglib-src/taglib/riff/wav/wavproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/riff/wav/wavproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "wavfile.h"
+ #include "wavproperties.h"
+diff -ur taglib-src/taglib/tagunion.cpp taglib-quoted-include/taglib/tagunion.cpp
+--- taglib-src/taglib/tagunion.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/tagunion.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2002 - 2008 by Scott Wheeler
+     email                : wheeler@kde.org
+  ***************************************************************************/
+@@ -23,11 +23,11 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include <tagunion.h>
++#include "tagunion.h"
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+ #include <tpicturemap.h>
+-#include <tsmartptr.h>
++#include "tsmartptr.h"
+ 
+ #define stringUnion(method)                                               \
+   for(size_t j = 0; j < COUNT; ++j) {                                     \
+diff -ur taglib-src/taglib/toolkit/tbytevector.cpp taglib-quoted-include/taglib/toolkit/tbytevector.cpp
+--- taglib-src/taglib/toolkit/tbytevector.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/toolkit/tbytevector.cpp	2020-10-31 22:48:50.000000000 -0500
+@@ -31,9 +31,9 @@
+ #include <cstring>
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
+-#include <tsmartptr.h>
+-#include <tutils.h>
++#include "tdebug.h"
++#include "tsmartptr.h"
++#include "tutils.h"
+ 
+ #include "tbytevector.h"
+ 
+diff -ur taglib-src/taglib/toolkit/tpicture.cpp taglib-quoted-include/taglib/toolkit/tpicture.cpp
+--- taglib-src/taglib/toolkit/tpicture.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/toolkit/tpicture.cpp	2020-10-31 22:48:29.000000000 -0500
+@@ -24,7 +24,7 @@
+  ***************************************************************************/
+ 
+ #include <algorithm>
+-#include <tsmartptr.h>
++#include "tsmartptr.h"
+ #include "tpicture.h"
+ 
+ using namespace TagLib;
+diff -ur taglib-src/taglib/toolkit/tstring.cpp taglib-quoted-include/taglib/toolkit/tstring.cpp
+--- taglib-src/taglib/toolkit/tstring.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/toolkit/tstring.cpp	2020-10-31 22:49:51.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2002 - 2008 by Scott Wheeler
+     email                : wheeler@kde.org
+  ***************************************************************************/
+@@ -26,12 +26,12 @@
+ #include <cerrno>
+ #include <climits>
+ 
+-#include <utf8-cpp/checked.h>
++#include "utf8-cpp/checked.h"
+ 
+-#include <tdebug.h>
++#include "tdebug.h"
+ #include <tstringlist.h>
+-#include <tsmartptr.h>
+-#include <tutils.h>
++#include "tsmartptr.h"
++#include "tutils.h"
+ 
+ #include "tstring.h"
+ 
+diff -ur taglib-src/taglib/trueaudio/trueaudiofile.cpp taglib-quoted-include/taglib/trueaudio/trueaudiofile.cpp
+--- taglib-src/taglib/trueaudio/trueaudiofile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/trueaudio/trueaudiofile.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -29,11 +29,11 @@
+ 
+ #include <tbytevector.h>
+ #include <tstring.h>
+-#include <tdebug.h>
+-#include <tagunion.h>
++#include "tdebug.h"
++#include "tagunion.h"
+ #include <tstringlist.h>
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include "trueaudiofile.h"
+ #include "id3v1tag.h"
+diff -ur taglib-src/taglib/trueaudio/trueaudioproperties.cpp taglib-quoted-include/taglib/trueaudio/trueaudioproperties.cpp
+--- taglib-src/taglib/trueaudio/trueaudioproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/trueaudio/trueaudioproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -28,7 +28,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "trueaudioproperties.h"
+ #include "trueaudiofile.h"
+diff -ur taglib-src/taglib/wavpack/wavpackfile.cpp taglib-quoted-include/taglib/wavpack/wavpackfile.cpp
+--- taglib-src/taglib/wavpack/wavpackfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/wavpack/wavpackfile.cpp	2020-10-31 22:49:35.000000000 -0500
+@@ -29,10 +29,10 @@
+ 
+ #include <tbytevector.h>
+ #include <tstring.h>
+-#include <tdebug.h>
+-#include <tagunion.h>
++#include "tdebug.h"
++#include "tagunion.h"
+ #include <tpropertymap.h>
+-#include <tagutils.h>
++#include "tagutils.h"
+ 
+ #include "wavpackfile.h"
+ #include "id3v1tag.h"
+diff -ur taglib-src/taglib/wavpack/wavpackproperties.cpp taglib-quoted-include/taglib/wavpack/wavpackproperties.cpp
+--- taglib-src/taglib/wavpack/wavpackproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-quoted-include/taglib/wavpack/wavpackproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+@@ -28,7 +28,7 @@
+  ***************************************************************************/
+ 
+ #include <tstring.h>
+-#include <tdebug.h>
++#include "tdebug.h"
+ 
+ #include "wavpackproperties.h"
+ #include "wavpackfile.h"
