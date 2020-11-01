@@ -14,7 +14,9 @@
 #define ENABLE_64_BIT_WORDS 0
 
 /* define to align allocated memory on 32-byte boundaries */
+#if __x86_64__
 #define FLAC__ALIGN_MALLOC_DATA 1
+#endif
 
 /* define if building for ia32/i386 */
 /* #undef FLAC__CPU_IA32 */
@@ -29,7 +31,9 @@
 /* #undef FLAC__CPU_SPARC */
 
 /* define if building for x86_64 */
+#if __x86_64__
 #define FLAC__CPU_X86_64 1
+#endif
 
 /* define if you have docbook-to-man or docbook2man */
 /* #undef FLAC__HAS_DOCBOOK_TO_MAN */
@@ -47,7 +51,9 @@
 /* #undef FLAC__HAS_TARGET_POWER9 */
 
 /* Set to 1 if <x86intrin.h> is available. */
+#if __x86_64__
 #define FLAC__HAS_X86INTRIN 1
+#endif
 
 /* define to disable use of assembly code */
 /* #undef FLAC__NO_ASM */
@@ -80,7 +86,9 @@
 /* #undef HAVE_CLOCK_GETTIME */
 
 /* Define to 1 if you have the <cpuid.h> header file. */
+#if __x86_64__
 #define HAVE_CPUID_H 1
+#endif
 
 /* Define to 1 if C++ supports variable-length arrays. */
 #define HAVE_CXX_VARARRAYS 1
@@ -149,7 +157,9 @@
 #define HAVE_UNISTD_H 1
 
 /* Define to 1 if you have the <x86intrin.h> header file. */
+#if __x86_64__
 #define HAVE_X86INTRIN_H 1
+#endif
 
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST 
