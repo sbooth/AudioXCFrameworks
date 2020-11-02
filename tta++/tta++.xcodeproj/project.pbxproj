@@ -45,7 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
-				3267743D254BA2C70041B063 /* libtta-cpp-2.3 */,
+				3267743D254BA2C70041B063 /* libtta-cpp-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,7 +59,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3267743D254BA2C70041B063 /* libtta-cpp-2.3 */ = {
+		3267743D254BA2C70041B063 /* libtta-cpp-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677443254BA2C70041B063 /* config.h */,
@@ -67,7 +67,7 @@
 				3267745F254BA2C70041B063 /* libtta.cpp */,
 				32677442254BA2C70041B063 /* libtta.h */,
 			);
-			path = "libtta-cpp-2.3";
+			path = "libtta-cpp-src";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
