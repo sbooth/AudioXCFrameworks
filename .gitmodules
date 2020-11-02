@@ -22,3 +22,21 @@
 [submodule "vorbis/ogg-src"]
 	path = vorbis/ogg-src
 	url = https://github.com/xiph/ogg.git
+[submodule "speex/ogg-src"]
+	path = speex/ogg-src
+	url = https://github.com/xiph/ogg.git
+[submodule "opus/ogg-src"]
+	path = opus/ogg-src
+	url = https://github.com/xiph/ogg.git
+[submodule "opus/opus-src"]
+	path = opus/opus-src
+	url = https://github.com/xiph/opus.git
+[submodule "speex/speex-src"]
+	path = speex/speex-src
+	url = https://github.com/xiph/speex.git
+[submodule "speex/speexdsp-src"]
+	path = speex/speexdsp-src
+	url = https://github.com/xiph/speexdsp.git
+[submodule "opus/opusfile-src"]
+	path = opus/opusfile-src
+	url = https://github.com/xiph/opusfile.git
