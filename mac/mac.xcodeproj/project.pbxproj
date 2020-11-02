@@ -223,7 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				3267711F254B5E560041B063 /* Info.plist */,
-				32677253254B73150041B063 /* MAC_SDK_558 */,
+				32677253254B73150041B063 /* MAC_SDK-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -237,12 +237,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32677253254B73150041B063 /* MAC_SDK_558 */ = {
+		32677253254B73150041B063 /* MAC_SDK-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677261254B73150041B063 /* Source */,
 			);
-			path = MAC_SDK_558;
+			path = "MAC_SDK-src";
 			sourceTree = "<group>";
 		};
 		32677261254B73150041B063 /* Source */ = {
@@ -481,7 +481,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 32028D02254AE93F00A537DE /* Build configuration list for PBXProject "MAC" */;
+			buildConfigurationList = 32028D02254AE93F00A537DE /* Build configuration list for PBXProject "mac" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -817,7 +817,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		32028D02254AE93F00A537DE /* Build configuration list for PBXProject "MAC" */ = {
+		32028D02254AE93F00A537DE /* Build configuration list for PBXProject "mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D0E254AE93F00A537DE /* Debug */,
