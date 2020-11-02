@@ -22,12 +22,15 @@ download: $(SRC_ARCHIVE)
 extract: download $(SRC_DIR)
 .PHONY: extract
 
-patch: extract $(PATCH_FILES)
+patch: extract $(PATCH_FILES:.patch=.patched)
 .PHONY: patch
 
-*.patch:
-	patch -p0 < $@
+%.patched: %.patch
+	if [ -e $@ ]; then patch -p0 -R < $@; fi
+	patch -p0 < $<
+	cp -f $< $@
 
 realclean:: clean
+	rm -f $(PATCH_FILES:.patch=.patched)
 	rm -f $(SRC_ARCHIVE)
 	rm -Rf $(SRC_DIR)
