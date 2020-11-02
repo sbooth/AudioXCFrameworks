@@ -330,7 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
-				32677941254C4F1E0041B063 /* libsndfile-1.0.28 */,
+				32677941254C4F1E0041B063 /* libsndfile-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -344,12 +344,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32677941254C4F1E0041B063 /* libsndfile-1.0.28 */ = {
+		32677941254C4F1E0041B063 /* libsndfile-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677A18254C4F1E0041B063 /* src */,
 			);
-			path = "libsndfile-1.0.28";
+			path = "libsndfile-src";
 			sourceTree = "<group>";
 		};
 		32677A18254C4F1E0041B063 /* src */ = {
