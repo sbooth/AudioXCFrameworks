@@ -138,7 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				3267711F254B5E560041B063 /* Info.plist */,
-				32677BB5254C7D570041B063 /* musepack_src_r475 */,
+				32677BB5254C7D570041B063 /* musepack-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -152,7 +152,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32677BB5254C7D570041B063 /* musepack_src_r475 */ = {
+		32677BB5254C7D570041B063 /* musepack-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677C13254C7D570041B063 /* common */,
@@ -161,7 +161,7 @@
 				32677BE4254C7D570041B063 /* libmpcenc */,
 				32677C08254C7D570041B063 /* libmpcpsy */,
 			);
-			path = musepack_src_r475;
+			path = "musepack-src";
 			sourceTree = "<group>";
 		};
 		32677BD9254C7D570041B063 /* include */ = {
