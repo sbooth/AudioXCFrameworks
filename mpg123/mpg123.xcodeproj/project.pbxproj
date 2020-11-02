@@ -389,7 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
-				326774C3254BBEED0041B063 /* mpg123-1.26.3 */,
+				326774C3254BBEED0041B063 /* mpg123-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -403,12 +403,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		326774C3254BBEED0041B063 /* mpg123-1.26.3 */ = {
+		326774C3254BBEED0041B063 /* mpg123-src */ = {
 			isa = PBXGroup;
 			children = (
 				32677588254BBEED0041B063 /* src */,
 			);
-			path = "mpg123-1.26.3";
+			path = "mpg123-src";
 			sourceTree = "<group>";
 		};
 		32677588254BBEED0041B063 /* src */ = {
