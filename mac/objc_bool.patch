@@ -1,0 +1,17 @@
+--- MAC_SDK-src/Source/Shared/NoWindows.h	2020-07-21 14:27:22.000000000 -0500
++++ MAC_SDK-src/Source/Shared/NoWindows-objc-bool.h	2020-11-02 09:00:42.000000000 -0600
+@@ -6,7 +6,13 @@
+ #ifdef _MSC_VER
+     typedef int BOOL;
+ #elif defined(PLATFORM_APPLE)
+-    typedef signed char BOOL;  // this is the way it's defined in Obj-C
++    #ifndef OBJC_BOOL_DEFINED
++        #if OBJC_BOOL_IS_BOOL
++            typedef bool BOOL;
++        #else
++            typedef signed char BOOL;
++        #endif
++    #endif
+ #else
+     typedef unsigned char BOOL; // this is the way it's defined in X11
+ #endif
