@@ -1,2 +1,3 @@
 *.patched
-MAC_SDK*
+MAC_SDK*.zip
+MAC_SDK-src
