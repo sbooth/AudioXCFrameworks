@@ -14,7 +14,7 @@ Each subfolder will contain the built XCFramework at its top level.
 
 ## Installation
 
-`make install` may be used to copy the XCFrameworks into `PREFIX`:
+`make install` may be used from the top level Makefile to copy the XCFrameworks into `PREFIX`:
 
 1. `make install PREFIX=`*destination_folder*
 
