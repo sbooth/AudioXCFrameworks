@@ -17,5 +17,8 @@ $(SPEEX_SRC_DIR)/include/speex/speex_config_types.h: speex_config_types.h
 $(SPEEXDSP_SRC_DIR)/config.h: speexdsp-config.h
 	cp -f $< $@
 
-copy: $(SPEEX_SRC_DIR)/config.h $(SPEEX_SRC_DIR)/include/speex/speex_config_types.h $(SPEEXDSP_SRC_DIR)/config.h
+$(SPEEXDSP_SRC_DIR)/include/speex/speexdsp_config_types.h: speexdsp_config_types.h
+	cp -f $< $@
+
+copy: $(SPEEX_SRC_DIR)/config.h $(SPEEX_SRC_DIR)/include/speex/speex_config_types.h $(SPEEXDSP_SRC_DIR)/config.h $(SPEEXDSP_SRC_DIR)/include/speex/speexdsp_config_types.h
 .PHONY: copy
