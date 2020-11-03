@@ -1,14 +1,7 @@
-ARCHIVE_DIR=archive
+ARCHIVE_DIR := archive
 
 xcframework: $(FRAMEWORK_NAME).xcframework
 .PHONY: xcframework
-
-install: xcframework
-ifndef PREFIX
-$(error PREFIX is not set)
-endif
-	install -c "$(PREFIX)/$(FRAMEWORK_NAME).xcframework"
-.PHONY: install
 
 clean:
 	rm -Rf "$(ARCHIVE_DIR)/macOS.xcarchive"
@@ -17,6 +10,16 @@ clean:
 	rm -Rf "$(ARCHIVE_DIR)/iOS-Simulator.xcarchive"
 	rm -Rf "$(FRAMEWORK_NAME).xcframework"
 .PHONY: clean
+
+ifneq (0,$(MAKELEVEL))
+install: xcframework
+	cp -R "$(FRAMEWORK_NAME).xcframework" "$(PREFIX)"
+.PHONY: install
+
+cleaninstall:
+	rm -Rf "$(PREFIX)/$(FRAMEWORK_NAME).xcframework"
+.PHONY: cleaninstall
+endif
 
 $(ARCHIVE_DIR)/macOS.xcarchive: $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme macOS -destination generic/platform=macOS -archivePath "$(ARCHIVE_DIR)/macOS"
