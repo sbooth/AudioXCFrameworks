@@ -4,9 +4,9 @@ xcframework: $(FRAMEWORK_NAME).xcframework
 .PHONY: xcframework
 
 install: xcframework
-	ifndef PREFIX
-		$(error PREFIX is not set)
-	endif
+ifndef PREFIX
+$(error PREFIX is not set)
+endif
 	install -c "$(PREFIX)/$(FRAMEWORK_NAME).xcframework"
 .PHONY: install
 
