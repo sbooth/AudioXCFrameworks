@@ -1,12 +1,12 @@
-FRAMEWORK_NAME=speex
-XCODEPROJ=speex.xcodeproj
+FRAMEWORK_NAME := speex
+XCODEPROJ := speex.xcodeproj
 
 xcframework: copy
 
 include ../xcframework.mk
 
-SPEEX_SRC_DIR=speex-src
-SPEEXDSP_SRC_DIR=speexdsp-src
+SPEEX_SRC_DIR := speex-src
+SPEEXDSP_SRC_DIR := speexdsp-src
 
 $(SPEEX_SRC_DIR)/config.h: config.h
 	cp -f $< $@

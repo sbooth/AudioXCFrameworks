@@ -1,4 +1,4 @@
-FRAMEWORK_NAME=ogg
-XCODEPROJ=ogg.xcodeproj
+FRAMEWORK_NAME := ogg
+XCODEPROJ := ogg.xcodeproj
 
 include ../xcframework.mk

@@ -1,14 +1,14 @@
-FRAMEWORK_NAME=MAC
-XCODEPROJ=mac.xcodeproj
+FRAMEWORK_NAME := MAC
+XCODEPROJ := mac.xcodeproj
 
 xcframework: patch
 
 include ../xcframework.mk
 
-SRC_ARCHIVE=MAC_SDK_558.zip
-SRC_DOWNLOAD_URL=https://monkeysaudio.com/files/$(SRC_ARCHIVE)
-SRC_DIR=MAC_SDK-src
-PATCH_FILES=angle_bracket_include.patch objc_bool.patch
+SRC_ARCHIVE := MAC_SDK_558.zip
+SRC_DOWNLOAD_URL := https://monkeysaudio.com/files/$(SRC_ARCHIVE)
+SRC_DIR := MAC_SDK-src
+PATCH_FILES := angle_bracket_include.patch objc_bool.patch
 
 $(SRC_ARCHIVE):
 	curl $(SRC_DOWNLOAD_URL) -o $@

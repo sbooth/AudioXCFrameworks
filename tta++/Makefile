@@ -1,14 +1,14 @@
-FRAMEWORK_NAME=tta++
-XCODEPROJ=tta++.xcodeproj
+FRAMEWORK_NAME := tta++
+XCODEPROJ := tta++.xcodeproj
 
 xcframework: patch
 
 include ../xcframework.mk
 
-SRC_ARCHIVE=libtta-cpp-2.3.tar.gz
-SRC_DOWNLOAD_URL=https://master.dl.sourceforge.net/project/tta/tta/libtta%2B%2B/$(SRC_ARCHIVE)
-SRC_DIR=libtta-cpp-src
-PATCH_FILES=aligned_alloc.patch
+SRC_ARCHIVE := libtta-cpp-2.3.tar.gz
+SRC_DOWNLOAD_URL := https://master.dl.sourceforge.net/project/tta/tta/libtta%2B%2B/$(SRC_ARCHIVE)
+SRC_DIR := libtta-cpp-src
+PATCH_FILES := aligned_alloc.patch
 
 $(SRC_ARCHIVE):
 	curl $(SRC_DOWNLOAD_URL) -o $@

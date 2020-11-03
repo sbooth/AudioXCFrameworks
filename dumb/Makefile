@@ -1,4 +1,4 @@
-FRAMEWORK_NAME=dumb
-XCODEPROJ=dumb.xcodeproj
+FRAMEWORK_NAME := dumb
+XCODEPROJ := dumb.xcodeproj
 
 include ../xcframework.mk

@@ -1,14 +1,14 @@
-FRAMEWORK_NAME=sndfile
-XCODEPROJ=sndfile.xcodeproj
+FRAMEWORK_NAME := sndfile
+XCODEPROJ := sndfile.xcodeproj
 
 xcframework: patch
 
 include ../xcframework.mk
 
-SRC_ARCHIVE=libsndfile-1.0.28.tar.gz
-SRC_DOWNLOAD_URL=http://www.mega-nerd.com/libsndfile/files/$(SRC_ARCHIVE)
-SRC_DIR=libsndfile-src
-PATCH_FILES=quoted_include.patch
+SRC_ARCHIVE := libsndfile-1.0.28.tar.gz
+SRC_DOWNLOAD_URL := http://www.mega-nerd.com/libsndfile/files/$(SRC_ARCHIVE)
+SRC_DIR := libsndfile-src
+PATCH_FILES := quoted_include.patch
 
 $(SRC_ARCHIVE):
 	curl $(SRC_DOWNLOAD_URL) -o $@

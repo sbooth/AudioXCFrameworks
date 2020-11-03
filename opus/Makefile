@@ -1,13 +1,13 @@
-FRAMEWORK_NAME=opus
-XCODEPROJ=opus.xcodeproj
+FRAMEWORK_NAME := opus
+XCODEPROJ := opus.xcodeproj
 
 xcframework: patch
 
 include ../xcframework.mk
 
-OPUS_SRC_DIR=opus-src
-OPUSFILE_SRC_DIR=opusfile-src
-PATCH_FILES=quoted_include.patch
+OPUS_SRC_DIR := opus-src
+OPUSFILE_SRC_DIR := opusfile-src
+PATCH_FILES := quoted_include.patch
 
 $(OPUS_SRC_DIR)/config.h: config.h
 	cp -f $< $@

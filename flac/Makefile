@@ -1,11 +1,11 @@
-FRAMEWORK_NAME=flac
-XCODEPROJ=flac.xcodeproj
+FRAMEWORK_NAME := flac
+XCODEPROJ := flac.xcodeproj
 
 xcframework: copy
 
 include ../xcframework.mk
 
-SRC_DIR=flac-src
+SRC_DIR := flac-src
 
 $(SRC_DIR)/config.h: config.h
 	cp -f $< $@

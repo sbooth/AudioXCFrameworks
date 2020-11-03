@@ -1,11 +1,11 @@
-FRAMEWORK_NAME=taglib
-XCODEPROJ=taglib.xcodeproj
+FRAMEWORK_NAME := taglib
+XCODEPROJ := taglib.xcodeproj
 
 xcframework: patch
 
 include ../xcframework.mk
 
-PATCH_FILES=quoted_include.patch
+PATCH_FILES := quoted_include.patch
 
 patch: $(PATCH_FILES:.patch=.patched)
 .PHONY: patch
