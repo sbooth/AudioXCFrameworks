@@ -17,10 +17,14 @@
 /* #undef ENABLE_FRW */
 
 /* Define to use SSE2 instructions */
-/* #undef ENABLE_SSE2 */
+#if __x86_64__
+#define ENABLE_SSE2 1
+#endif
 
 /* Define to use SSE4 instructions */
-/* #undef ENABLE_SSE4 */
+#if __x86_64__
+#define ENABLE_SSE4 1
+#endif
 
 /* Define to 1 if you have the `aligned_alloc' function. */
 #define HAVE_ALIGNED_ALLOC 1
