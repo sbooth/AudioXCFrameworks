@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32028DB9254AEB7000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
-		32028DBA254AEB7000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DD2254AFEA000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DD3254AFEA000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
 		327145D0254F21D200029BD7 /* speex_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A5254F21A100029BD7 /* speex_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D1254F21D200029BD7 /* speex_header.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A2254F21A100029BD7 /* speex_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D2254F21D200029BD7 /* speex_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A8254F21A100029BD7 /* speex_bits.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -125,11 +121,6 @@
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028D21254AEB4700A537DE /* ogg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
-		32028D25254AEB4700A537DE /* os_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
-		32028DA7254AEB4700A537DE /* framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
-		32028DA8254AEB4700A537DE /* crctable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crctable.h; sourceTree = "<group>"; };
-		32028DAB254AEB4700A537DE /* bitwise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
 		32028DD9254AFEA000A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		327144A2254F21A100029BD7 /* speex_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
@@ -297,7 +288,6 @@
 				3267710F254B5D670041B063 /* Info.plist */,
 				32714491254F21A100029BD7 /* speex-src */,
 				32714659254F29CF00029BD7 /* speexdsp-src */,
-				32028D14254AEB4700A537DE /* ogg-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -309,42 +299,6 @@
 				32028DD9254AFEA000A537DE /* speex.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		32028D14254AEB4700A537DE /* ogg-src */ = {
-			isa = PBXGroup;
-			children = (
-				32028D1F254AEB4700A537DE /* include */,
-				32028DA6254AEB4700A537DE /* src */,
-			);
-			path = "ogg-src";
-			sourceTree = "<group>";
-		};
-		32028D1F254AEB4700A537DE /* include */ = {
-			isa = PBXGroup;
-			children = (
-				32028D20254AEB4700A537DE /* ogg */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		32028D20254AEB4700A537DE /* ogg */ = {
-			isa = PBXGroup;
-			children = (
-				32028D21254AEB4700A537DE /* ogg.h */,
-				32028D25254AEB4700A537DE /* os_types.h */,
-			);
-			path = ogg;
-			sourceTree = "<group>";
-		};
-		32028DA6254AEB4700A537DE /* src */ = {
-			isa = PBXGroup;
-			children = (
-				32028DAB254AEB4700A537DE /* bitwise.c */,
-				32028DA8254AEB4700A537DE /* crctable.h */,
-				32028DA7254AEB4700A537DE /* framing.c */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		32714491254F21A100029BD7 /* speex-src */ = {
@@ -693,7 +647,6 @@
 			files = (
 				3271462F254F240A00029BD7 /* filters.c in Sources */,
 				3271474F254F2B0E00029BD7 /* jitter.c in Sources */,
-				32028DBA254AEB7000A537DE /* framing.c in Sources */,
 				3271461D254F240A00029BD7 /* lsp_tables_nb.c in Sources */,
 				32714750254F2B0E00029BD7 /* resample.c in Sources */,
 				32714639254F240A00029BD7 /* exc_10_16_table.c in Sources */,
@@ -709,7 +662,6 @@
 				32714620254F240A00029BD7 /* nb_celp.c in Sources */,
 				32714626254F240A00029BD7 /* ltp.c in Sources */,
 				32714637254F240A00029BD7 /* high_lsp_tables.c in Sources */,
-				32028DB9254AEB7000A537DE /* bitwise.c in Sources */,
 				32714622254F240A00029BD7 /* cb_search.c in Sources */,
 				3271462A254F240A00029BD7 /* exc_8_128_table.c in Sources */,
 				32714634254F240A00029BD7 /* bits.c in Sources */,
@@ -741,7 +693,6 @@
 			files = (
 				32714610254F240900029BD7 /* filters.c in Sources */,
 				32714759254F2B0F00029BD7 /* jitter.c in Sources */,
-				32028DD2254AFEA000A537DE /* framing.c in Sources */,
 				327145FE254F240900029BD7 /* lsp_tables_nb.c in Sources */,
 				3271475A254F2B0F00029BD7 /* resample.c in Sources */,
 				3271461A254F240900029BD7 /* exc_10_16_table.c in Sources */,
@@ -757,7 +708,6 @@
 				32714601254F240900029BD7 /* nb_celp.c in Sources */,
 				32714607254F240900029BD7 /* ltp.c in Sources */,
 				32714618254F240900029BD7 /* high_lsp_tables.c in Sources */,
-				32028DD3254AFEA000A537DE /* bitwise.c in Sources */,
 				32714603254F240900029BD7 /* cb_search.c in Sources */,
 				3271460B254F240900029BD7 /* exc_8_128_table.c in Sources */,
 				32714615254F240900029BD7 /* bits.c in Sources */,
@@ -846,7 +796,6 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ogg-src/include/";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -905,7 +854,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/ogg-src/include/";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
