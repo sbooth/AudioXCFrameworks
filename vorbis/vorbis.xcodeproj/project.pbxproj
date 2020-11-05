@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32028DB9254AEB7000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
-		32028DBA254AEB7000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DD2254AFEA000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DD3254AFEA000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
+		3260C69425545E5600E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C6582554592B00E8C286 /* ogg.framework */; };
+		3260C69725545E5E00E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C65A2554592B00E8C286 /* ogg.framework */; };
 		32714433254F166200029BD7 /* vorbisenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714277254F163600029BD7 /* vorbisenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714434254F166200029BD7 /* codec.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714276254F163600029BD7 /* codec.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714435254F166200029BD7 /* vorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714274254F163600029BD7 /* vorbisfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,14 +63,29 @@
 		32714487254F1E5D00029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714483254F1E5900029BD7 /* config.h */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3260C6572554592B00E8C286 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3260C6522554592B00E8C286 /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028D08254AE93F00A537DE;
+			remoteInfo = macOS;
+		};
+		3260C6592554592B00E8C286 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3260C6522554592B00E8C286 /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028DD9254AFEA000A537DE;
+			remoteInfo = iOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* vorbis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = vorbis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028D21254AEB4700A537DE /* ogg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
-		32028D25254AEB4700A537DE /* os_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
-		32028DA7254AEB4700A537DE /* framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
-		32028DA8254AEB4700A537DE /* crctable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crctable.h; sourceTree = "<group>"; };
-		32028DAB254AEB4700A537DE /* bitwise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
 		32028DD9254AFEA000A537DE /* vorbis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = vorbis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3260C6392554572700E8C286 /* ogg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ogg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3260C63D2554577F00E8C286 /* ogg.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ogg.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3260C6522554592B00E8C286 /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ogg.xcodeproj; path = ../ogg/ogg.xcodeproj; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32714274254F163600029BD7 /* vorbisfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vorbisfile.h; sourceTree = "<group>"; };
 		32714276254F163600029BD7 /* codec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codec.h; sourceTree = "<group>"; };
@@ -159,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3260C69425545E5600E8C286 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3260C69725545E5E00E8C286 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,10 +190,11 @@
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
+				3260C6522554592B00E8C286 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
 				32714256254F163600029BD7 /* vorbis-src */,
-				32028D14254AEB4700A537DE /* ogg-src */,
 				32028D09254AE93F00A537DE /* Products */,
+				3260C5F525544E0A00E8C286 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -191,40 +207,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32028D14254AEB4700A537DE /* ogg-src */ = {
+		3260C5F525544E0A00E8C286 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				32028D1F254AEB4700A537DE /* include */,
-				32028DA6254AEB4700A537DE /* src */,
+				3260C63D2554577F00E8C286 /* ogg.framework */,
+				3260C6392554572700E8C286 /* ogg.framework */,
 			);
-			path = "ogg-src";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		32028D1F254AEB4700A537DE /* include */ = {
+		3260C6532554592B00E8C286 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				32028D20254AEB4700A537DE /* ogg */,
+				3260C6582554592B00E8C286 /* ogg.framework */,
+				3260C65A2554592B00E8C286 /* ogg.framework */,
 			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		32028D20254AEB4700A537DE /* ogg */ = {
-			isa = PBXGroup;
-			children = (
-				32028D21254AEB4700A537DE /* ogg.h */,
-				32028D25254AEB4700A537DE /* os_types.h */,
-			);
-			path = ogg;
-			sourceTree = "<group>";
-		};
-		32028DA6254AEB4700A537DE /* src */ = {
-			isa = PBXGroup;
-			children = (
-				32028DAB254AEB4700A537DE /* bitwise.c */,
-				32028DA8254AEB4700A537DE /* crctable.h */,
-				32028DA7254AEB4700A537DE /* framing.c */,
-			);
-			path = src;
+			name = Products;
 			sourceTree = "<group>";
 		};
 		32714256254F163600029BD7 /* vorbis-src */ = {
@@ -465,6 +463,12 @@
 			mainGroup = 32028CFE254AE93F00A537DE;
 			productRefGroup = 32028D09254AE93F00A537DE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3260C6532554592B00E8C286 /* Products */;
+					ProjectRef = 3260C6522554592B00E8C286 /* ogg.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
@@ -472,6 +476,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3260C6582554592B00E8C286 /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 3260C6572554592B00E8C286 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3260C65A2554592B00E8C286 /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 3260C6592554592B00E8C286 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
@@ -496,8 +517,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32714448254F1D6800029BD7 /* psy.c in Sources */,
-				32028DBA254AEB7000A537DE /* framing.c in Sources */,
-				32028DB9254AEB7000A537DE /* bitwise.c in Sources */,
 				32714450254F1D6800029BD7 /* lsp.c in Sources */,
 				32714454254F1D6800029BD7 /* vorbisfile.c in Sources */,
 				32714456254F1D6800029BD7 /* res0.c in Sources */,
@@ -527,8 +546,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32714460254F1D6900029BD7 /* psy.c in Sources */,
-				32028DD2254AFEA000A537DE /* framing.c in Sources */,
-				32028DD3254AFEA000A537DE /* bitwise.c in Sources */,
 				32714468254F1D6900029BD7 /* lsp.c in Sources */,
 				3271446C254F1D6900029BD7 /* vorbisfile.c in Sources */,
 				3271446E254F1D6900029BD7 /* res0.c in Sources */,
