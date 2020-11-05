@@ -10,18 +10,12 @@
 [submodule "flac/flac-src"]
 	path = flac/flac-src
 	url = https://github.com/xiph/flac.git
-[submodule "flac/ogg-src"]
-	path = flac/ogg-src
-	url = https://github.com/xiph/ogg.git
 [submodule "wavpack/wavpack-src"]
 	path = wavpack/wavpack-src
 	url = https://github.com/dbry/WavPack.git
 [submodule "vorbis/vorbis-src"]
 	path = vorbis/vorbis-src
 	url = https://github.com/xiph/vorbis.git
-[submodule "vorbis/ogg-src"]
-	path = vorbis/ogg-src
-	url = https://github.com/xiph/ogg.git
 [submodule "opus/ogg-src"]
 	path = opus/ogg-src
 	url = https://github.com/xiph/ogg.git

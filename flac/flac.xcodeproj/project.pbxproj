@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3260C67E25545B0600E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C67625545AFB00E8C286 /* ogg.framework */; };
+		3260C68125545B0F00E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C67825545AFB00E8C286 /* ogg.framework */; };
 		32714059254EEFDA00029BD7 /* callback.h in Headers */ = {isa = PBXBuildFile; fileRef = 32713E4A254EEF7600029BD7 /* callback.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3271405A254EEFDA00029BD7 /* export.h in Headers */ = {isa = PBXBuildFile; fileRef = 32713E41254EEF7600029BD7 /* export.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3271405B254EEFDA00029BD7 /* ordinals.h in Headers */ = {isa = PBXBuildFile; fileRef = 32713E44254EEF7600029BD7 /* ordinals.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -88,16 +90,30 @@
 		327140B3254EF0CB00029BD7 /* bitreader.c in Sources */ = {isa = PBXBuildFile; fileRef = 32713F76254EEF7600029BD7 /* bitreader.c */; };
 		327140B4254EF0CB00029BD7 /* bitmath.c in Sources */ = {isa = PBXBuildFile; fileRef = 32713F74254EEF7600029BD7 /* bitmath.c */; };
 		32714191254F08E300029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714190254F08E300029BD7 /* config.h */; };
-		3271421C254F0A1700029BD7 /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 3271421B254F09E900029BD7 /* bitwise.c */; };
-		3271421D254F0A1700029BD7 /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714218254F09E900029BD7 /* framing.c */; };
-		32714220254F0A1800029BD7 /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 3271421B254F09E900029BD7 /* bitwise.c */; };
-		32714221254F0A1800029BD7 /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714218254F09E900029BD7 /* framing.c */; };
 		32714236254F0B1B00029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714190254F08E300029BD7 /* config.h */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3260C67525545AFB00E8C286 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3260C67025545AFB00E8C286 /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028D08254AE93F00A537DE;
+			remoteInfo = macOS;
+		};
+		3260C67725545AFB00E8C286 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3260C67025545AFB00E8C286 /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028DD9254AFEA000A537DE;
+			remoteInfo = iOS;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* FLAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* FLAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FLAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3260C67025545AFB00E8C286 /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ogg.xcodeproj; path = ../ogg/ogg.xcodeproj; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32713E41254EEF7600029BD7 /* export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = export.h; sourceTree = "<group>"; };
 		32713E42254EEF7600029BD7 /* stream_encoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
@@ -230,11 +246,6 @@
 		32714057254EEF7600029BD7 /* replaygain_analysis_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = replaygain_analysis_static.vcproj; sourceTree = "<group>"; };
 		32714058254EEF7600029BD7 /* replaygain_analysis_static.vcxproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = replaygain_analysis_static.vcxproj; sourceTree = "<group>"; };
 		32714190254F08E300029BD7 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		327141A3254F09E900029BD7 /* ogg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
-		327141A6254F09E900029BD7 /* os_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
-		32714218254F09E900029BD7 /* framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
-		32714219254F09E900029BD7 /* crctable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crctable.h; sourceTree = "<group>"; };
-		3271421B254F09E900029BD7 /* bitwise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3260C67E25545B0600E8C286 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +261,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3260C68125545B0F00E8C286 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,10 +271,11 @@
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
+				3260C67025545AFB00E8C286 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
 				32713D75254EEF7500029BD7 /* flac-src */,
-				32714198254F09E900029BD7 /* ogg-src */,
 				32028D09254AE93F00A537DE /* Products */,
+				3260C67D25545B0600E8C286 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -272,6 +286,22 @@
 				32028DD9254AFEA000A537DE /* FLAC.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3260C67125545AFB00E8C286 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3260C67625545AFB00E8C286 /* ogg.framework */,
+				3260C67825545AFB00E8C286 /* ogg.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3260C67D25545B0600E8C286 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		32713D75254EEF7500029BD7 /* flac-src */ = {
@@ -532,42 +562,6 @@
 			path = replaygain_analysis;
 			sourceTree = "<group>";
 		};
-		32714198254F09E900029BD7 /* ogg-src */ = {
-			isa = PBXGroup;
-			children = (
-				327141A1254F09E900029BD7 /* include */,
-				32714217254F09E900029BD7 /* src */,
-			);
-			path = "ogg-src";
-			sourceTree = "<group>";
-		};
-		327141A1254F09E900029BD7 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				327141A2254F09E900029BD7 /* ogg */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		327141A2254F09E900029BD7 /* ogg */ = {
-			isa = PBXGroup;
-			children = (
-				327141A3254F09E900029BD7 /* ogg.h */,
-				327141A6254F09E900029BD7 /* os_types.h */,
-			);
-			path = ogg;
-			sourceTree = "<group>";
-		};
-		32714217254F09E900029BD7 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				3271421B254F09E900029BD7 /* bitwise.c */,
-				32714219254F09E900029BD7 /* crctable.h */,
-				32714218254F09E900029BD7 /* framing.c */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -669,6 +663,12 @@
 			mainGroup = 32028CFE254AE93F00A537DE;
 			productRefGroup = 32028D09254AE93F00A537DE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3260C67125545AFB00E8C286 /* Products */;
+					ProjectRef = 3260C67025545AFB00E8C286 /* ogg.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
@@ -676,6 +676,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3260C67625545AFB00E8C286 /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 3260C67525545AFB00E8C286 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3260C67825545AFB00E8C286 /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 3260C67725545AFB00E8C286 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
@@ -716,7 +733,6 @@
 				327140A5254EF0CB00029BD7 /* ogg_helper.c in Sources */,
 				327140AC254EF0CB00029BD7 /* window.c in Sources */,
 				3271409A254EF0CB00029BD7 /* metadata_object.c in Sources */,
-				32714220254F0A1800029BD7 /* bitwise.c in Sources */,
 				32714096254EF0CB00029BD7 /* format.c in Sources */,
 				327140AA254EF0CB00029BD7 /* lpc_intrin_sse.c in Sources */,
 				327140B4254EF0CB00029BD7 /* bitmath.c in Sources */,
@@ -731,7 +747,6 @@
 				32714095254EF0CB00029BD7 /* stream_encoder_intrin_sse2.c in Sources */,
 				327140B2254EF0CB00029BD7 /* float.c in Sources */,
 				327140A0254EF0CB00029BD7 /* lpc_intrin_sse41.c in Sources */,
-				32714221254F0A1800029BD7 /* framing.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,7 +771,6 @@
 				32714083254EF0CB00029BD7 /* ogg_helper.c in Sources */,
 				3271408A254EF0CB00029BD7 /* window.c in Sources */,
 				32714078254EF0CB00029BD7 /* metadata_object.c in Sources */,
-				3271421C254F0A1700029BD7 /* bitwise.c in Sources */,
 				32714074254EF0CB00029BD7 /* format.c in Sources */,
 				32714088254EF0CB00029BD7 /* lpc_intrin_sse.c in Sources */,
 				32714092254EF0CB00029BD7 /* bitmath.c in Sources */,
@@ -771,7 +785,6 @@
 				32714073254EF0CA00029BD7 /* stream_encoder_intrin_sse2.c in Sources */,
 				32714090254EF0CB00029BD7 /* float.c in Sources */,
 				3271407E254EF0CB00029BD7 /* lpc_intrin_sse41.c in Sources */,
-				3271421D254F0A1700029BD7 /* framing.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
