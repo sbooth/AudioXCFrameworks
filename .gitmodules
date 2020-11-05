@@ -16,9 +16,6 @@
 [submodule "vorbis/vorbis-src"]
 	path = vorbis/vorbis-src
 	url = https://github.com/xiph/vorbis.git
-[submodule "opus/ogg-src"]
-	path = opus/ogg-src
-	url = https://github.com/xiph/ogg.git
 [submodule "opus/opus-src"]
 	path = opus/opus-src
 	url = https://github.com/xiph/opus.git
