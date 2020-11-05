@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32028DB9254AEB7000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
-		32028DBA254AEB7000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DD2254AFEA000A537DE /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DA7254AEB4700A537DE /* framing.c */; };
-		32028DD3254AFEA000A537DE /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = 32028DAB254AEB4700A537DE /* bitwise.c */; };
+		3260C6C6255461F000E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C6B9255461BD00E8C286 /* ogg.framework */; };
+		3260C6C9255461F900E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C6BB255461BD00E8C286 /* ogg.framework */; };
 		32714926254F367500029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327147EF254F365D00029BD7 /* config.h */; };
 		32714929254F367500029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327147EF254F365D00029BD7 /* config.h */; };
 		32714934254F36A000029BD7 /* opus_defines.h in Headers */ = {isa = PBXBuildFile; fileRef = 327147FE254F365D00029BD7 /* opus_defines.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -351,14 +349,27 @@
 		32714BA52550455600029BD7 /* opus_projection_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 3271491F254F365E00029BD7 /* opus_projection_encoder.c */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3260C6B8255461BD00E8C286 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3260C6B3255461BD00E8C286 /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028D08254AE93F00A537DE;
+			remoteInfo = macOS;
+		};
+		3260C6BA255461BD00E8C286 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3260C6B3255461BD00E8C286 /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028DD9254AFEA000A537DE;
+			remoteInfo = iOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* opus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = opus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028D21254AEB4700A537DE /* ogg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
-		32028D25254AEB4700A537DE /* os_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
-		32028DA7254AEB4700A537DE /* framing.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = framing.c; sourceTree = "<group>"; };
-		32028DA8254AEB4700A537DE /* crctable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crctable.h; sourceTree = "<group>"; };
-		32028DAB254AEB4700A537DE /* bitwise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bitwise.c; sourceTree = "<group>"; };
 		32028DD9254AFEA000A537DE /* opus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = opus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3260C6B3255461BD00E8C286 /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ogg.xcodeproj; path = ../ogg/ogg.xcodeproj; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32714781254F365D00029BD7 /* celt_lpc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = celt_lpc.h; sourceTree = "<group>"; };
 		32714782254F365D00029BD7 /* static_modes_fixed_arm_ne10.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = static_modes_fixed_arm_ne10.h; sourceTree = "<group>"; };
@@ -690,6 +701,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3260C6C6255461F000E8C286 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +709,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3260C6C9255461F900E8C286 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,11 +719,12 @@
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
+				3260C6B3255461BD00E8C286 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
 				3271477E254F365D00029BD7 /* opus-src */,
 				32714B2A2550439700029BD7 /* opusfile-src */,
-				32028D14254AEB4700A537DE /* ogg-src */,
 				32028D09254AE93F00A537DE /* Products */,
+				3260C6C3255461F000E8C286 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -723,40 +737,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		32028D14254AEB4700A537DE /* ogg-src */ = {
+		3260C6B4255461BD00E8C286 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				32028D1F254AEB4700A537DE /* include */,
-				32028DA6254AEB4700A537DE /* src */,
+				3260C6B9255461BD00E8C286 /* ogg.framework */,
+				3260C6BB255461BD00E8C286 /* ogg.framework */,
 			);
-			path = "ogg-src";
+			name = Products;
 			sourceTree = "<group>";
 		};
-		32028D1F254AEB4700A537DE /* include */ = {
+		3260C6C3255461F000E8C286 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				32028D20254AEB4700A537DE /* ogg */,
 			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		32028D20254AEB4700A537DE /* ogg */ = {
-			isa = PBXGroup;
-			children = (
-				32028D21254AEB4700A537DE /* ogg.h */,
-				32028D25254AEB4700A537DE /* os_types.h */,
-			);
-			path = ogg;
-			sourceTree = "<group>";
-		};
-		32028DA6254AEB4700A537DE /* src */ = {
-			isa = PBXGroup;
-			children = (
-				32028DAB254AEB4700A537DE /* bitwise.c */,
-				32028DA8254AEB4700A537DE /* crctable.h */,
-				32028DA7254AEB4700A537DE /* framing.c */,
-			);
-			path = src;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		3271477E254F365D00029BD7 /* opus-src */ = {
@@ -1342,6 +1336,12 @@
 			mainGroup = 32028CFE254AE93F00A537DE;
 			productRefGroup = 32028D09254AE93F00A537DE /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3260C6B4255461BD00E8C286 /* Products */;
+					ProjectRef = 3260C6B3255461BD00E8C286 /* ogg.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
@@ -1349,6 +1349,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3260C6B9255461BD00E8C286 /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 3260C6B8255461BD00E8C286 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3260C6BB255461BD00E8C286 /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 3260C6BA255461BD00E8C286 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
@@ -1484,7 +1501,6 @@
 				32714A21254F58AF00029BD7 /* resampler_private_down_FIR.c in Sources */,
 				327149A1254F57AF00029BD7 /* enc_API.c in Sources */,
 				32714A77254F72E900029BD7 /* NSQ_del_dec_sse4_1.c in Sources */,
-				32028DBA254AEB7000A537DE /* framing.c in Sources */,
 				327149E9254F588100029BD7 /* bwexpander_32.c in Sources */,
 				327149AA254F57AF00029BD7 /* PLC.c in Sources */,
 				32714A74254F72E900029BD7 /* VAD_sse4_1.c in Sources */,
@@ -1523,7 +1539,6 @@
 				32714BA52550455600029BD7 /* opus_projection_encoder.c in Sources */,
 				32714BA32550455600029BD7 /* analysis.c in Sources */,
 				32714A52254F598700029BD7 /* process_gains_FLP.c in Sources */,
-				32028DB9254AEB7000A537DE /* bitwise.c in Sources */,
 				32714999254F57AF00029BD7 /* decode_indices.c in Sources */,
 				32714A1E254F58AF00029BD7 /* sort.c in Sources */,
 				32714AAB254F779D00029BD7 /* bands.c in Sources */,
@@ -1655,7 +1670,6 @@
 				32714A13254F58AE00029BD7 /* resampler_private_down_FIR.c in Sources */,
 				3271498A254F57AF00029BD7 /* enc_API.c in Sources */,
 				32714A70254F72E800029BD7 /* NSQ_del_dec_sse4_1.c in Sources */,
-				32028DD2254AFEA000A537DE /* framing.c in Sources */,
 				327149F9254F588100029BD7 /* bwexpander_32.c in Sources */,
 				32714993254F57AF00029BD7 /* PLC.c in Sources */,
 				32714A6D254F72E800029BD7 /* VAD_sse4_1.c in Sources */,
@@ -1694,7 +1708,6 @@
 				32714B972550455500029BD7 /* opus_projection_encoder.c in Sources */,
 				32714B952550455500029BD7 /* analysis.c in Sources */,
 				32714A35254F598600029BD7 /* process_gains_FLP.c in Sources */,
-				32028DD3254AFEA000A537DE /* bitwise.c in Sources */,
 				32714982254F57AF00029BD7 /* decode_indices.c in Sources */,
 				32714A10254F58AE00029BD7 /* sort.c in Sources */,
 				32714A98254F779D00029BD7 /* bands.c in Sources */,
