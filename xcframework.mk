@@ -12,13 +12,13 @@ clean:
 .PHONY: clean
 
 ifneq (0,$(MAKELEVEL))
-install: xcframework
+install: xcframework uninstall
 	cp -R "$(FRAMEWORK_NAME).xcframework" "$(PREFIX)"
 .PHONY: install
 
-cleaninstall:
+uninstall:
 	rm -Rf "$(PREFIX)/$(FRAMEWORK_NAME).xcframework"
-.PHONY: cleaninstall
+.PHONY: uninstall
 endif
 
 $(ARCHIVE_DIR)/macOS.xcarchive: $(XCODEPROJ)
