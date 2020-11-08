@@ -1,37 +1,43 @@
 ARCHIVE_DIR := archive
 
-xcframework: $(FRAMEWORK_NAME).xcframework
+MACOS_ARCHIVE := $(ARCHIVE_DIR)/macOS.xcarchive
+MACOS_CATALYST_ARCHIVE := $(ARCHIVE_DIR)/macOS-Catalyst.xcarchive
+IOS_ARCHIVE := $(ARCHIVE_DIR)/iOS.xcarchive
+IOS_SIMULATOR_ARCHIVE := $(ARCHIVE_DIR)/iOS-Simulator.xcarchive
+
+ARCHIVES := $(MACOS_ARCHIVE) $(MACOS_CATALYST_ARCHIVE) $(IOS_ARCHIVE) $(IOS_SIMULATOR_ARCHIVE)
+
+XCFRAMEWORK := $(FRAMEWORK_NAME).xcframework
+
+xcframework: $(XCFRAMEWORK)
 .PHONY: xcframework
 
 clean:
-	rm -Rf "$(ARCHIVE_DIR)/macOS.xcarchive"
-	rm -Rf "$(ARCHIVE_DIR)/macOS-Catalyst.xcarchive"
-	rm -Rf "$(ARCHIVE_DIR)/iOS.xcarchive"
-	rm -Rf "$(ARCHIVE_DIR)/iOS-Simulator.xcarchive"
-	rm -Rf "$(FRAMEWORK_NAME).xcframework"
+	rm -Rf "$(MACOS_ARCHIVE)" "$(MACOS_CATALYST_ARCHIVE)" "$(IOS_ARCHIVE)" "$(IOS_SIMULATOR_ARCHIVE)" "$(XCFRAMEWORK)"
 .PHONY: clean
 
 ifneq (0,$(MAKELEVEL))
 install: xcframework uninstall
-	cp -R "$(FRAMEWORK_NAME).xcframework" "$(PREFIX)"
+	cp -R "$(XCFRAMEWORK)" "$(PREFIX)"
 .PHONY: install
 
 uninstall:
-	rm -Rf "$(PREFIX)/$(FRAMEWORK_NAME).xcframework"
+	rm -Rf "$(PREFIX)/$(XCFRAMEWORK)"
 .PHONY: uninstall
 endif
 
-$(ARCHIVE_DIR)/macOS.xcarchive: $(XCODEPROJ)
-	xcodebuild archive -project "$(XCODEPROJ)" -scheme macOS -destination generic/platform=macOS -archivePath "$(ARCHIVE_DIR)/macOS"
+$(MACOS_ARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme macOS -destination generic/platform=macOS -archivePath "$(basename $@)"
 
-$(ARCHIVE_DIR)/macOS-Catalyst.xcarchive: $(XCODEPROJ)
-	xcodebuild archive -project "$(XCODEPROJ)" -scheme iOS -destination "platform=macOS,variant=Mac Catalyst" -archivePath "$(ARCHIVE_DIR)/macOS-Catalyst"
+$(MACOS_CATALYST_ARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme iOS -destination "platform=macOS,variant=Mac Catalyst" -archivePath "$(basename $@)"
 
-$(ARCHIVE_DIR)/iOS.xcarchive: $(XCODEPROJ)
-	xcodebuild archive -project "$(XCODEPROJ)" -scheme iOS -destination generic/platform=iOS -archivePath "$(ARCHIVE_DIR)/iOS"
+$(IOS_ARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme iOS -destination generic/platform=iOS -archivePath "$(basename $@)"
 
-$(ARCHIVE_DIR)/iOS-Simulator.xcarchive: $(XCODEPROJ)
-	xcodebuild archive -project "$(XCODEPROJ)" -scheme iOS -destination "generic/platform=iOS Simulator" -archivePath "$(ARCHIVE_DIR)/iOS-Simulator"
+$(IOS_SIMULATOR_ARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme iOS -destination "generic/platform=iOS Simulator" -archivePath "$(basename $@)"
 
-$(FRAMEWORK_NAME).xcframework: $(ARCHIVE_DIR)/macOS.xcarchive $(ARCHIVE_DIR)/macOS-Catalyst.xcarchive $(ARCHIVE_DIR)/iOS.xcarchive $(ARCHIVE_DIR)/iOS-Simulator.xcarchive
+$(XCFRAMEWORK): $(ARCHIVES)
+	rm -Rf "$@"
 	xcodebuild -create-xcframework $(foreach xcarchive,$^,-framework "$(xcarchive)/Products/Library/Frameworks/$(FRAMEWORK_NAME).framework" ) -output "$@"
