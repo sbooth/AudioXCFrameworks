@@ -6,12 +6,12 @@ xcframework: patch
 include ../xcframework.mk
 
 SRC_ARCHIVE := libtta-cpp-2.3.tar.gz
-SRC_DOWNLOAD_URL := https://master.dl.sourceforge.net/project/tta/tta/libtta%2B%2B/$(SRC_ARCHIVE)
+SRC_DOWNLOAD_URL := https://sourceforge.net/projects/tta/files/tta/libtta%2B%2B/libtta-cpp-2.3.tar.gz/download
 SRC_DIR := libtta-cpp-src
 PATCH_FILES := aligned_alloc.patch
 
 $(SRC_ARCHIVE):
-	curl $(SRC_DOWNLOAD_URL) -o $@
+	curl -L $(SRC_DOWNLOAD_URL) -o $@
 
 $(SRC_DIR):
 	mkdir $(SRC_DIR) && tar -xf $(SRC_ARCHIVE) --directory $(SRC_DIR) --strip-components 1
