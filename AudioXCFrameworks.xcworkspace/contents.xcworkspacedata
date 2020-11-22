@@ -8,6 +8,9 @@
       location = "group:flac/flac.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:lame/lame.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:mac/mac.xcodeproj">
    </FileRef>
    <FileRef
