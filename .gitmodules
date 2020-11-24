@@ -28,3 +28,6 @@
 [submodule "opus/opusfile-src"]
 	path = opus/opusfile-src
 	url = https://github.com/xiph/opusfile.git
+[submodule "opus/libopusenc-src"]
+	path = opus/libopusenc-src
+	url = https://github.com/xiph/libopusenc.git
