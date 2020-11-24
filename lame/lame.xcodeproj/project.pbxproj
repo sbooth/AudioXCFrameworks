@@ -77,7 +77,6 @@
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32850000256A954F009140DE /* layer3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = layer3.c; sourceTree = "<group>"; };
 		3285003E256A954F009140DE /* lame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
-		328500A8256A9550009140DE /* logoe.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = logoe.ico; sourceTree = "<group>"; };
 		328500A9256A9550009140DE /* quantize_pvt.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = quantize_pvt.c; sourceTree = "<group>"; };
 		328500AA256A9550009140DE /* fft.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fft.h; sourceTree = "<group>"; };
 		328500AB256A9550009140DE /* quantize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quantize.h; sourceTree = "<group>"; };
@@ -90,7 +89,6 @@
 		328500B2256A9550009140DE /* reservoir.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reservoir.h; sourceTree = "<group>"; };
 		328500B3256A9550009140DE /* vbrquantize.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vbrquantize.c; sourceTree = "<group>"; };
 		328500B4256A9550009140DE /* util.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
-		328500B5256A9550009140DE /* lame.rc */ = {isa = PBXFileReference; lastKnownFileType = text; path = lame.rc; sourceTree = "<group>"; };
 		328500B6256A9550009140DE /* encoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = encoder.c; sourceTree = "<group>"; };
 		328500B7256A9550009140DE /* machine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = machine.h; sourceTree = "<group>"; };
 		328500B8256A9550009140DE /* newmdct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = newmdct.h; sourceTree = "<group>"; };
@@ -207,9 +205,7 @@
 				328500DC256A9550009140DE /* lame_global_flags.h */,
 				328500D5256A9550009140DE /* lame-analysis.h */,
 				328500C6256A9550009140DE /* lame.c */,
-				328500B5256A9550009140DE /* lame.rc */,
 				328500DD256A9550009140DE /* lameerror.h */,
-				328500A8256A9550009140DE /* logoe.ico */,
 				328500B7256A9550009140DE /* machine.h */,
 				328500DE256A9550009140DE /* mpglib_interface.c */,
 				328500D6256A9550009140DE /* newmdct.c */,
