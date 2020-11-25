@@ -8,7 +8,7 @@ include ../xcframework.mk
 OPUS_SRC_DIR := opus-src
 OPUSFILE_SRC_DIR := opusfile-src
 LIBOPUSENC_SRC_DIR := libopusenc-src
-PATCH_FILES := quoted_include.patch
+PATCH_FILES := quoted_include.patch quoted_include_2.patch
 
 $(OPUS_SRC_DIR)/config.h: config.h
 	cp -f $< $@
