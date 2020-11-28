@@ -1,23 +1,29 @@
 /* src/config.h.  Generated from config.h.in by configure.  */
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define if building universal (internal helper macro) */
+/* #undef AC_APPLE_UNIVERSAL_BUILD */
+
 /* Set to 1 if the compile is GNU GCC. */
 #define COMPILER_IS_GCC 0
 
-/* Target processor clips on negative float to int conversion. */
+/* Host processor clips on negative float to int conversion. */
 #define CPU_CLIPS_NEGATIVE 0
 
-/* Target processor clips on positive float to int conversion. */
+/* Host processor clips on positive float to int conversion. */
 #define CPU_CLIPS_POSITIVE 0
 
-/* Target processor is big endian. */
+/* Host processor is big endian. */
 #define CPU_IS_BIG_ENDIAN 0
 
-/* Target processor is little endian. */
+/* Host processor is little endian. */
 #define CPU_IS_LITTLE_ENDIAN 1
 
 /* Set to 1 to enable experimental code. */
 #define ENABLE_EXPERIMENTAL_CODE 0
+
+/* Set to 1 if you have alsa */
+/* #undef HAVE_ALSA */
 
 /* Define to 1 if you have the <alsa/asoundlib.h> header file. */
 /* #undef HAVE_ALSA_ASOUNDLIB_H */
@@ -31,7 +37,7 @@
 /* Define to 1 if you have the `ceil' function. */
 #define HAVE_CEIL 1
 
-/* Set to 1 if S_IRGRP is defined. */
+/* Set to 0 if S_IRGRP is not defined. */
 #define HAVE_DECL_S_IRGRP 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
@@ -40,7 +46,7 @@
 /* Define to 1 if you have the <endian.h> header file. */
 /* #undef HAVE_ENDIAN_H */
 
-/* Will be set to 1 if flac, ogg and vorbis are available. */
+/* Will be set to 1 if flac, ogg, vorbis, and opus are available. */
 #define HAVE_EXTERNAL_XIPH_LIBS 0
 
 /* Define to 1 if you have the `floor' function. */
@@ -79,9 +85,6 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Define to 1 if you have the `m' library (-lm). */
-#define HAVE_LIBM 1
-
 /* Define to 1 if you have the <locale.h> header file. */
 #define HAVE_LOCALE_H 1
 
@@ -91,14 +94,11 @@
 /* Define to 1 if you have the `localtime_r' function. */
 #define HAVE_LOCALTIME_R 1
 
-/* Define if you have C99's lrint function. */
+/* Define to 1 if you have the `lrint' function. */
 #define HAVE_LRINT 1
 
-/* Define if you have C99's lrintf function. */
+/* Define to 1 if you have the `lrintf' function. */
 #define HAVE_LRINTF 1
-
-/* Define to 1 if you have the `lround' function. */
-#define HAVE_LROUND 1
 
 /* Define to 1 if you have the `lseek' function. */
 #define HAVE_LSEEK 1
@@ -166,10 +166,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Define to 1 or 0, depending whether the compiler supports simple visibility
-   declarations. */
-#define HAVE_VISIBILITY 1
-
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
 
@@ -180,7 +176,7 @@
 #define HAVE_WRITE 1
 
 /* The host triplet of the compiled binary. */
-#define HOST_TRIPLET "x86_64-apple-darwin19.6.0"
+#define HOST_TRIPLET x86_64-apple-darwin20.1.0
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
@@ -201,7 +197,7 @@
 #define PACKAGE_NAME "libsndfile"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libsndfile 1.0.28"
+#define PACKAGE_STRING "libsndfile 1.0.30"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libsndfile"
@@ -210,7 +206,7 @@
 #define PACKAGE_URL "http://www.mega-nerd.com/libsndfile/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.0.28"
+#define PACKAGE_VERSION "1.0.30"
 
 /* Set to maximum allowed value of sf_count_t type. */
 #define SF_COUNT_MAX 0x7FFFFFFFFFFFFFFFLL
@@ -283,13 +279,22 @@
 #define USE_WINDOWS_API 0
 
 /* Version number of package */
-#define VERSION "1.0.28"
+#define VERSION "1.0.30"
 
 /* Set to 1 if windows DLL is being built. */
 #define WIN32_TARGET_DLL 0
 
-/* Target processor is big endian. */
-#define WORDS_BIGENDIAN 0
+/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+   significant byte first (like Motorola and SPARC, unlike Intel). */
+#if defined AC_APPLE_UNIVERSAL_BUILD
+# if defined __BIG_ENDIAN__
+#  define WORDS_BIGENDIAN 1
+# endif
+#else
+# ifndef WORDS_BIGENDIAN
+/* #  undef WORDS_BIGENDIAN */
+# endif
+#endif
 
 /* Enable large inode numbers on Mac OS X 10.5.  */
 #ifndef _DARWIN_USE_64_BIT_INODE
