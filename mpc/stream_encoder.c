@@ -557,7 +557,7 @@ mpc_status mpc_stream_encoder_set_frames_block_power(mpc_stream_encoder *enc, un
 {
 	if(enc == NULL)
 		return MPC_STATUS_FAIL;
-	if(frames_block_power % 2)
+	if(frames_block_power % 2 == 0)
 		enc->FramesBlockPwr = frames_block_power;
 	return MPC_STATUS_OK;
 }
