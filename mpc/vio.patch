@@ -1,0 +1,110 @@
+diff -u musepack_src_r475/libmpcenc/bitstream.c musepack-src/libmpcenc/bitstream.c
+--- musepack_src_r475/libmpcenc/bitstream.c	2009-06-24 15:22:00.000000000 -0500
++++ musepack-src/libmpcenc/bitstream.c	2020-11-30 06:14:15.000000000 -0600
+@@ -173,14 +173,13 @@
+ 
+ void writeMagic(mpc_encoder_t * e)
+ {
+-	fwrite("MPCK", sizeof(char), 4, e->outputFile);
++	e->vio_write("MPCK", sizeof(char), 4, e->vio_context);
+ 	e->outputBits += 32;
+ 	e->framesInBlock = 0;
+ }
+ 
+ mpc_uint32_t writeBlock ( mpc_encoder_t * e, const char * key, const mpc_bool_t addCRC, mpc_uint32_t min_size)
+ {
+-	FILE * fp = e->outputFile;
+ 	mpc_uint32_t written = 0;
+ 	mpc_uint8_t * datas = e->buffer;
+ 	char blockSize[10];
+@@ -200,8 +199,8 @@
+ 		emptyBits(e);
+ 	}
+ 	len = encodeSize(min_size + 2, blockSize, MPC_TRUE);
+-	fwrite(key, sizeof(char), 2, fp);
+-	fwrite(blockSize, sizeof(char), len, fp);
++	e->vio_write(key, sizeof(char), 2, e->vio_context);
++	e->vio_write(blockSize, sizeof(char), len, e->vio_context);
+ 	e->outputBits += (len + 2) * 8;
+ 
+ 	if (addCRC) {
+@@ -211,13 +210,13 @@
+ 		tmp[1] = (char) (CRC32 >> 16);
+ 		tmp[2] = (char) (CRC32 >> 8);
+ 		tmp[3] = (char) CRC32;
+-		fwrite(tmp, sizeof(char), 4, fp);
++		e->vio_write(tmp, sizeof(char), 4, e->vio_context);
+ 		e->outputBits += 32;
+ 	}
+ 
+ 	// write datas
+ 	while ( e->pos != 0 ) {
+-		written = fwrite ( datas, sizeof(*e->buffer), e->pos, fp );
++		written = e->vio_write ( datas, sizeof(*e->buffer), e->pos, e->vio_context );
+ 		if ( written == 0 ) {
+ 			fprintf(stderr, "\b\n WARNING: Disk full?, retry after 10 sec ...\a");
+             sleep (10);
+@@ -239,11 +238,11 @@
+ 	mpc_uint8_t tmp[10];
+ 
+ 	// write the position to header
+-	i = ftell(e->outputFile); // get the seek table position
++	i = e->vio_tell(e->vio_context); // get the seek table position
+ 	len = encodeSize(i - e->seek_ptr, (char*)tmp, MPC_FALSE);
+-	fseek(e->outputFile, e->seek_ptr + 3, SEEK_SET);
+-	fwrite(tmp, sizeof(mpc_uint8_t), len, e->outputFile);
+-	fseek(e->outputFile, i, SEEK_SET);
++	e->vio_seek(e->vio_context, e->seek_ptr + 3, SEEK_SET);
++	e->vio_write(tmp, sizeof(mpc_uint8_t), len, e->vio_context);
++	e->vio_seek(e->vio_context, i, SEEK_SET);
+ 
+ 	// write the seek table datas
+ 	len = encodeSize(e->seek_pos, (char*)tmp, MPC_FALSE);
+diff -u musepack_src_r475/libmpcenc/encode_sv7.c musepack-src/libmpcenc/encode_sv7.c
+--- musepack_src_r475/libmpcenc/encode_sv7.c	2009-02-23 12:15:46.000000000 -0600
++++ musepack-src/libmpcenc/encode_sv7.c	2020-11-30 06:30:33.000000000 -0600
+@@ -384,7 +384,7 @@
+ 	e->framesInBlock++;
+ 	if (e->framesInBlock == (1 << e->frames_per_block_pwr)) {
+ 		if ((e->block_cnt & ((1 << e->seek_pwr) - 1)) == 0) {
+-			e->seek_table[e->seek_pos] = ftell(e->outputFile);
++			e->seek_table[e->seek_pos] = e->vio_tell(e->vio_context);
+ 			e->seek_pos++;
+ 		}
+ 		e->block_cnt++;
+diff -u musepack_src_r475/libmpcenc/libmpcenc.h musepack-src/libmpcenc/libmpcenc.h
+--- musepack_src_r475/libmpcenc/libmpcenc.h	2007-05-10 05:01:20.000000000 -0500
++++ musepack-src/libmpcenc/libmpcenc.h	2020-11-30 06:14:10.000000000 -0600
+@@ -19,7 +19,6 @@
+ #pragma once
+ 
+ #include <mpc/mpc_types.h>
+-#include <stdio.h>
+ 
+ // FIXME : define this somewhere else
+ #ifndef NULL
+@@ -29,6 +28,11 @@
+ #define MPC_FRAME_LENGTH (36 * 32)
+ #define MAX_FRAME_SIZE 4352
+ 
++// virtual IO, same conventions as fwrite/fseeko/ftello
++typedef size_t (*mpc_write_callback_t)(const void * restrict ptr, size_t size, size_t nitems, void *context);
++typedef int (*mpc_seek_callback_t)(void *context, off_t offset, int whence);
++typedef off_t (*mpc_tell_callback_t)(void *context);
++
+ typedef struct {
+ 	mpc_uint16_t	Code;        // >= 14 bit
+ 	mpc_uint16_t	Length;      // >=  4 bit
+@@ -51,7 +55,11 @@
+ 	mpc_uint32_t seek_pwr; /// keep a seek table entry every 2^seek_pwr block
+ 	mpc_uint32_t block_cnt; /// number of encoded blocks
+ 
+-	FILE * outputFile; // ouput file
++	// virtual IO
++	void *vio_context;
++	mpc_write_callback_t vio_write;
++	mpc_seek_callback_t vio_seek;
++	mpc_tell_callback_t vio_tell;
+ 
+ 	mpc_uint32_t MS_Channelmode;
+ 	mpc_uint32_t Overflows; //       = 0;      // number of internal (filterbank) clippings

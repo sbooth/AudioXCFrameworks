@@ -69,6 +69,10 @@
 		32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677E5B254DAFFD0041B063 /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
 		32677E5C254DAFFD0041B063 /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
+		32EB2DF4257AA3BC006330CC /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
+		32EB2DF5257AA3BC006330CC /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
+		32EB2DF6257AA3BC006330CC /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EB2DF3257AA3BC006330CC /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		32EB2DF7257AA3BC006330CC /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EB2DF3257AA3BC006330CC /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +118,8 @@
 		32677C15254C7D570041B063 /* huffman-bcl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "huffman-bcl.c"; sourceTree = "<group>"; };
 		32677C16254C7D570041B063 /* crc32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		32677C17254C7D570041B063 /* fastmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fastmath.c; sourceTree = "<group>"; };
+		32EB2DF2257AA3BC006330CC /* stream_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
+		32EB2DF3257AA3BC006330CC /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +143,8 @@
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
+				32EB2DF3257AA3BC006330CC /* stream_encoder.h */,
+				32EB2DF2257AA3BC006330CC /* stream_encoder.c */,
 				3267711F254B5E560041B063 /* Info.plist */,
 				32677BB5254C7D570041B063 /* musepack-src */,
 				32028D09254AE93F00A537DE /* Products */,
@@ -256,6 +264,7 @@
 				32677C5B254C7DF60041B063 /* datatypes.h in Headers */,
 				32677C58254C7DF60041B063 /* minimax.h in Headers */,
 				32677C5E254C7DF60041B063 /* mpcdec.h in Headers */,
+				32EB2DF6257AA3BC006330CC /* stream_encoder.h in Headers */,
 				32677C59254C7DF60041B063 /* mpc_types.h in Headers */,
 				32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */,
 				32677C5C254C7DF60041B063 /* reader.h in Headers */,
@@ -272,6 +281,7 @@
 				32677C64254C7DF70041B063 /* datatypes.h in Headers */,
 				32677C61254C7DF70041B063 /* minimax.h in Headers */,
 				32677C67254C7DF70041B063 /* mpcdec.h in Headers */,
+				32EB2DF7257AA3BC006330CC /* stream_encoder.h in Headers */,
 				32677C62254C7DF70041B063 /* mpc_types.h in Headers */,
 				32677E50254DAFFC0041B063 /* libmpcpsy.h in Headers */,
 				32677C65254C7DF70041B063 /* reader.h in Headers */,
@@ -385,6 +395,7 @@
 				32677E39254DAEEA0041B063 /* bitstream.c in Sources */,
 				32677E58254DAFFD0041B063 /* cvd.c in Sources */,
 				32677C44254C7DD90041B063 /* mpc_decoder.c in Sources */,
+				32EB2DF4257AA3BC006330CC /* stream_encoder.c in Sources */,
 				32677E55254DAFFD0041B063 /* fft_routines.c in Sources */,
 				32677E3C254DAEEA0041B063 /* encode_sv7.c in Sources */,
 				32677C49254C7DD90041B063 /* mpc_bits_reader.c in Sources */,
@@ -414,6 +425,7 @@
 				32677E41254DAEEB0041B063 /* bitstream.c in Sources */,
 				32677E4E254DAFFC0041B063 /* cvd.c in Sources */,
 				32677C4E254C7DD90041B063 /* mpc_decoder.c in Sources */,
+				32EB2DF5257AA3BC006330CC /* stream_encoder.c in Sources */,
 				32677E4B254DAFFC0041B063 /* fft_routines.c in Sources */,
 				32677E44254DAEEB0041B063 /* encode_sv7.c in Sources */,
 				32677C53254C7DD90041B063 /* mpc_bits_reader.c in Sources */,
