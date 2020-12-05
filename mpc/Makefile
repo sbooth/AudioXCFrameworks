@@ -8,7 +8,7 @@ include ../xcframework.mk
 SRC_ARCHIVE := musepack_src_r475.tar.gz
 SRC_DOWNLOAD_URL := https://files.musepack.net/source/$(SRC_ARCHIVE)
 SRC_DIR := musepack-src
-PATCH_FILES := angle_bracket_include.patch extern.patch
+PATCH_FILES := angle_bracket_include.patch extern.patch vio.patch
 
 $(SRC_ARCHIVE):
 	curl $(SRC_DOWNLOAD_URL) -o $@
