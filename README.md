@@ -26,4 +26,4 @@ This is useful from a `Run Script` build phase when `AudioXCFrameworks` is a sub
 
 The Xcode project files and overall build system are distributed under the MIT license.
 
-Each individual project is subject to its own license terms. See `README.md` in each folder for licensing information for that particular project.
+Each individual open source project is subject to its own licensing terms. See the README in each folder for that particular project's license.
