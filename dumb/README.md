@@ -1,5 +1,6 @@
 ## License
 
+```
 /*  _______         ____    __         ___    ___
  * \    _  \       \    /  \  /       \   \  /   /       '   '  '
  *  |  | \  \       |  |    ||         |   \/   |         .      .
@@ -87,3 +88,4 @@ of merchantability or fitness for a particular purpose.
 Some files generated or copied by automake, autoconf and friends are
 available in an extra download. These fall under separate licences but are
 all free to distribute. Please check their licences as necessary.
+```
