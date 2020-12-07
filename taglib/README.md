@@ -1,5 +1,3 @@
-## Notes
-
 This project builds the `taglib2` branch of TagLib.
 
 ## License
