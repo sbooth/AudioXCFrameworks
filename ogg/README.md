@@ -1,4 +1,4 @@
-## ogg license
+## License
 
 Copyright (c) 2002, Xiph.org Foundation
 
