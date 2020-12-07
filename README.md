@@ -21,3 +21,9 @@ Each subfolder will contain the built XCFramework at its top level.
 This is useful from a `Run Script` build phase when `AudioXCFrameworks` is a submodule of your project:
 
 `make -C "$SRCROOT/AudioXCFrameworks" install PREFIX="$SRCROOT/XCFrameworks"`
+
+## Licensing
+
+The Xcode project files and overall build system are distributed under the MIT license.
+
+Each individual project is subject to its own license terms. See `README.md` in each folder for licensing information for that particular project.
