@@ -19,6 +19,7 @@
  * Information in [brackets] is provided to aid         |  ' /
  * interpretation of the licence.                        \__/
  */
+```
 
 
 Dynamic Universal Music Bibliotheque, Version 0.9.3
@@ -88,4 +89,3 @@ of merchantability or fitness for a particular purpose.
 Some files generated or copied by automake, autoconf and friends are
 available in an extra download. These fall under separate licences but are
 all free to distribute. Please check their licences as necessary.
-```
