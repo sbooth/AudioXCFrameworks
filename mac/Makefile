@@ -5,7 +5,7 @@ xcframework: patch
 
 include ../xcframework.mk
 
-SRC_ARCHIVE := MAC_SDK_559c.zip
+SRC_ARCHIVE := MAC_SDK_569.zip
 SRC_DOWNLOAD_URL := https://monkeysaudio.com/files/$(SRC_ARCHIVE)
 SRC_DIR := MAC_SDK-src
 PATCH_FILES := angle_bracket_include.patch
