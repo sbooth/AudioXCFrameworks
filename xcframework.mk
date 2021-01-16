@@ -40,4 +40,4 @@ $(IOS_SIMULATOR_ARCHIVE): $(XCODEPROJ)
 
 $(XCFRAMEWORK): $(ARCHIVES)
 	rm -Rf "$@"
-	xcodebuild -create-xcframework $(foreach xcarchive,$^,-framework "$(xcarchive)/Products/Library/Frameworks/$(FRAMEWORK_NAME).framework" ) -output "$@"
+	xcodebuild -create-xcframework $(foreach xcarchive,$^,-framework "$(xcarchive)/Products/Library/Frameworks/$(FRAMEWORK_NAME).framework" -debug-symbols "$(realpath $(xcarchive)/dSYMs/$(FRAMEWORK_NAME).framework.dSYM)" ) -output "$@"
