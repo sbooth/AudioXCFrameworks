@@ -34,3 +34,6 @@
 [submodule "sndfile/libsndfile-src"]
 	path = sndfile/libsndfile-src
 	url = https://github.com/libsndfile/libsndfile.git
+[submodule "ebur128/libebur128-src"]
+	path = ebur128/libebur128-src
+	url = https://github.com/jiixyj/libebur128.git
