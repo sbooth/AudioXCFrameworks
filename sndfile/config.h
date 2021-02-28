@@ -82,6 +82,9 @@
 /* Define to 1 if you have the `gmtime_r' function. */
 #define HAVE_GMTIME_R 1
 
+/* Define to 1 if you have the <immintrin.h> header file. */
+#define HAVE_IMMINTRIN_H 1
+
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
@@ -137,7 +140,7 @@
 #define HAVE_SNPRINTF 1
 
 /* Set to 1 if you have libsqlite3. */
-#define HAVE_SQLITE3 0
+#define HAVE_SQLITE3 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -176,7 +179,7 @@
 #define HAVE_WRITE 1
 
 /* The host triplet of the compiled binary. */
-#define HOST_TRIPLET x86_64-apple-darwin20.1.0
+#define HOST_TRIPLET x86_64-apple-darwin20.3.0
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
@@ -197,16 +200,16 @@
 #define PACKAGE_NAME "libsndfile"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libsndfile 1.0.30"
+#define PACKAGE_STRING "libsndfile 1.0.31"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libsndfile"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL "http://www.mega-nerd.com/libsndfile/"
+#define PACKAGE_URL "http://libsndfile.github.io/libsndfile/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.0.30"
+#define PACKAGE_VERSION "1.0.31"
 
 /* Set to maximum allowed value of sf_count_t type. */
 #define SF_COUNT_MAX 0x7FFFFFFFFFFFFFFFLL
@@ -279,7 +282,7 @@
 #define USE_WINDOWS_API 0
 
 /* Version number of package */
-#define VERSION "1.0.30"
+#define VERSION "1.0.31"
 
 /* Set to 1 if windows DLL is being built. */
 #define WIN32_TARGET_DLL 0
