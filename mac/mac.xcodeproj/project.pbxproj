@@ -188,14 +188,12 @@
 		326772E3254B73160041B063 /* WAVInfoDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WAVInfoDialog.cpp; sourceTree = "<group>"; };
 		326772E4254B73160041B063 /* ID3Genres.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ID3Genres.h; sourceTree = "<group>"; };
 		326772E5254B73160041B063 /* APEInfoDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APEInfoDialog.h; sourceTree = "<group>"; };
-		326772E6254B73160041B063 /* Timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Timer.h; sourceTree = "<group>"; };
 		326772E7254B73160041B063 /* APEInfoDialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = APEInfoDialog.cpp; sourceTree = "<group>"; };
 		326772E8254B73160041B063 /* IO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IO.h; sourceTree = "<group>"; };
 		326772E9254B73160041B063 /* CircleBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleBuffer.h; sourceTree = "<group>"; };
 		326772EA254B73160041B063 /* CircleBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CircleBuffer.cpp; sourceTree = "<group>"; };
 		326772EB254B73160041B063 /* CharacterHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CharacterHelper.h; sourceTree = "<group>"; };
 		326772EC254B73160041B063 /* WAVInfoDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WAVInfoDialog.h; sourceTree = "<group>"; };
-		326772ED254B73160041B063 /* StdString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StdString.h; sourceTree = "<group>"; };
 		326772EE254B73160041B063 /* GlobalFunctions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlobalFunctions.cpp; sourceTree = "<group>"; };
 		326772EF254B73160041B063 /* GlobalFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalFunctions.h; sourceTree = "<group>"; };
 		326772F0254B73160041B063 /* WinFileIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WinFileIO.h; sourceTree = "<group>"; };
@@ -380,8 +378,6 @@
 				326772E2254B73160041B063 /* SmartPtr.h */,
 				326772D7254B73160041B063 /* StdLibFileIO.cpp */,
 				326772DD254B73160041B063 /* StdLibFileIO.h */,
-				326772ED254B73160041B063 /* StdString.h */,
-				326772E6254B73160041B063 /* Timer.h */,
 				326772DB254B73160041B063 /* Version.h */,
 				326772E3254B73160041B063 /* WAVInfoDialog.cpp */,
 				326772EC254B73160041B063 /* WAVInfoDialog.h */,
