@@ -5,10 +5,10 @@ xcframework: patch
 
 include ../xcframework.mk
 
-SRC_ARCHIVE := MAC_SDK_620.zip
+SRC_ARCHIVE := MAC_SDK_621.zip
 SRC_DOWNLOAD_URL := https://monkeysaudio.com/files/$(SRC_ARCHIVE)
 SRC_DIR := MAC_SDK-src
-PATCH_FILES := angle_bracket_include.patch ape_namespace.patch
+PATCH_FILES := angle_bracket_include.patch
 
 $(SRC_ARCHIVE):
 	curl $(SRC_DOWNLOAD_URL) -o $@
