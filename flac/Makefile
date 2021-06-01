@@ -1,4 +1,4 @@
-FRAMEWORK_NAME := flac
+FRAMEWORK_NAME := FLAC
 XCODEPROJ := flac.xcodeproj
 
 xcframework: copy
