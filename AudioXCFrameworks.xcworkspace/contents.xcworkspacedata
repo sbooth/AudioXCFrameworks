@@ -38,7 +38,7 @@
       location = "group:taglib/taglib.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:tta++/tta++.xcodeproj">
+      location = "group:tta-cpp/tta-cpp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:vorbis/vorbis.xcodeproj">
