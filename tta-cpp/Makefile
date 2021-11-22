@@ -1,5 +1,5 @@
-FRAMEWORK_NAME := tta++
-XCODEPROJ := tta++.xcodeproj
+FRAMEWORK_NAME := tta-cpp
+XCODEPROJ := tta-cpp.xcodeproj
 
 xcframework: patch
 
