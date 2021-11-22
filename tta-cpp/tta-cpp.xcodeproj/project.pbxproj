@@ -106,7 +106,7 @@
 			dependencies = (
 			);
 			name = macOS;
-			productName = "tta++";
+			productName = "tta-cpp";
 			productReference = 32028D08254AE93F00A537DE /* tta-cpp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
@@ -124,7 +124,7 @@
 			dependencies = (
 			);
 			name = iOS;
-			productName = "tta++";
+			productName = "tta-cpp";
 			productReference = 32028DD9254AFEA000A537DE /* tta-cpp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
