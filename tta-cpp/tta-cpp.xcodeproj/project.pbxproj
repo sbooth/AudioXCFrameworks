@@ -14,8 +14,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		32028D08254AE93F00A537DE /* tta++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "tta++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028DD9254AFEA000A537DE /* tta++.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "tta++.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		32028D08254AE93F00A537DE /* tta-cpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "tta-cpp.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		32028DD9254AFEA000A537DE /* tta-cpp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "tta-cpp.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32677442254BA2C70041B063 /* libtta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libtta.h; sourceTree = "<group>"; };
 		32677443254BA2C70041B063 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -53,8 +53,8 @@
 		32028D09254AE93F00A537DE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				32028D08254AE93F00A537DE /* tta++.framework */,
-				32028DD9254AFEA000A537DE /* tta++.framework */,
+				32028D08254AE93F00A537DE /* tta-cpp.framework */,
+				32028DD9254AFEA000A537DE /* tta-cpp.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,8 +106,8 @@
 			dependencies = (
 			);
 			name = macOS;
-			productName = "tta++";
-			productReference = 32028D08254AE93F00A537DE /* tta++.framework */;
+			productName = "tta-cpp";
+			productReference = 32028D08254AE93F00A537DE /* tta-cpp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		32028DCC254AFEA000A537DE /* iOS */ = {
@@ -124,8 +124,8 @@
 			dependencies = (
 			);
 			name = iOS;
-			productName = "tta++";
-			productReference = 32028DD9254AFEA000A537DE /* tta++.framework */;
+			productName = "tta-cpp";
+			productReference = 32028DD9254AFEA000A537DE /* tta-cpp.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -141,7 +141,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 32028D02254AE93F00A537DE /* Build configuration list for PBXProject "tta++" */;
+			buildConfigurationList = 32028D02254AE93F00A537DE /* Build configuration list for PBXProject "tta-cpp" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -352,8 +352,8 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tausoft.tta;
-				PRODUCT_NAME = "tta++";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tausoft.tta-cpp";
+				PRODUCT_NAME = "tta-cpp";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
@@ -374,8 +374,8 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tausoft.tta;
-				PRODUCT_NAME = "tta++";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tausoft.tta-cpp";
+				PRODUCT_NAME = "tta-cpp";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
@@ -396,8 +396,8 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tausoft.tta;
-				PRODUCT_NAME = "tta++";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tausoft.tta-cpp";
+				PRODUCT_NAME = "tta-cpp";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
@@ -420,8 +420,8 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.tausoft.tta;
-				PRODUCT_NAME = "tta++";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tausoft.tta-cpp";
+				PRODUCT_NAME = "tta-cpp";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
@@ -431,7 +431,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		32028D02254AE93F00A537DE /* Build configuration list for PBXProject "tta++" */ = {
+		32028D02254AE93F00A537DE /* Build configuration list for PBXProject "tta-cpp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D0E254AE93F00A537DE /* Debug */,

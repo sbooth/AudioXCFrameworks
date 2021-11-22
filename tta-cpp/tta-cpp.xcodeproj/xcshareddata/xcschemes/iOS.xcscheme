@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1310"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "tta++.framework"
+               BuildableName = "tta-cpp.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:tta++.xcodeproj">
+               ReferencedContainer = "container:tta-cpp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-            BuildableName = "tta++.framework"
+            BuildableName = "tta-cpp.framework"
             BlueprintName = "iOS"
-            ReferencedContainer = "container:tta++.xcodeproj">
+            ReferencedContainer = "container:tta-cpp.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
