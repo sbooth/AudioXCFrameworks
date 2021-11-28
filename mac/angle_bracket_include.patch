@@ -1,0 +1,23 @@
+--- MAC_SDK-src/Source/Shared/All-orig.h	2021-11-28 11:24:32.000000000 -0600
++++ MAC_SDK-src/Source/Shared/All.h	2021-11-28 11:25:32.000000000 -0600
+@@ -49,17 +49,17 @@
+     #include <sys/types.h>
+     #include <sys/stat.h>
+     #include <wchar.h>
+-    #include "NoWindows.h"
++    #include <MAC/NoWindows.h>
+ #endif
+ #define ape_max(a,b)    (((a) > (b)) ? (a) : (b))
+ #define ape_min(a,b)    (((a) < (b)) ? (a) : (b))
+ 
+-#include "SmartPtr.h"
++#include <MAC/SmartPtr.h>
+ 
+ /**************************************************************************************************
+ Version
+ **************************************************************************************************/
+-#include "Version.h"
++#include <MAC/Version.h>
+ 
+ // year in the copyright strings
+ #define MAC_YEAR 2022
