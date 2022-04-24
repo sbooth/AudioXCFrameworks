@@ -13,6 +13,16 @@
 /* Set FLAC__BYTES_PER_WORD to 8 (4 is the default) */
 #define ENABLE_64_BIT_WORDS 0
 
+/* libtool defines DLL_EXPORT for windows dll builds,
+   but flac code relies on FLAC_API_EXPORTS instead. */
+#ifdef DLL_EXPORT
+#ifdef __cplusplus
+# define FLACPP_API_EXPORTS
+#else
+# define FLAC_API_EXPORTS
+#endif
+#endif
+
 /* define to align allocated memory on 32-byte boundaries */
 #if __x86_64__
 #define FLAC__ALIGN_MALLOC_DATA 1
@@ -180,7 +190,7 @@
 #define PACKAGE_NAME "flac"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "flac 1.3.3"
+#define PACKAGE_STRING "flac 1.3.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "flac"
@@ -189,7 +199,7 @@
 #define PACKAGE_URL "https://www.xiph.org/flac/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.3.3"
+#define PACKAGE_VERSION "1.3.4"
 
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8
@@ -223,7 +233,7 @@
 
 
 /* Version number of package */
-#define VERSION "1.3.3"
+#define VERSION "1.3.4"
 
 /* Target processor is big endian. */
 #define WORDS_BIGENDIAN 0
