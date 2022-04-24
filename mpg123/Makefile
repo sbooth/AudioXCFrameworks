@@ -5,8 +5,8 @@ xcframework: extract
 
 include ../xcframework.mk
 
-SRC_ARCHIVE := mpg123-1.29.2.tar.bz2
-SRC_DOWNLOAD_URL := https://sourceforge.net/projects/mpg123/files/mpg123/1.29.2/mpg123-1.29.2.tar.bz2/download
+SRC_ARCHIVE := mpg123-1.29.3.tar.bz2
+SRC_DOWNLOAD_URL := https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2/download
 SRC_DIR := mpg123-src
 
 $(SRC_ARCHIVE):
