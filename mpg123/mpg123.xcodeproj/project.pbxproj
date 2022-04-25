@@ -171,7 +171,6 @@
 		326775B5254BBEED0041B063 /* synth_stereo_sse_s32.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = synth_stereo_sse_s32.S; sourceTree = "<group>"; };
 		326775B6254BBEED0041B063 /* icy2utf8.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = icy2utf8.c; sourceTree = "<group>"; };
 		326775B7254BBEED0041B063 /* getbits.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = getbits.h; sourceTree = "<group>"; };
-		326775B8254BBEED0041B063 /* l12_integer_tables.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = l12_integer_tables.h; sourceTree = "<group>"; };
 		326775B9254BBEED0041B063 /* synth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = synth.h; sourceTree = "<group>"; };
 		326775BA254BBEED0041B063 /* dct64_sse_float.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = dct64_sse_float.S; sourceTree = "<group>"; };
 		326775BB254BBEED0041B063 /* synth_stereo_avx.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = synth_stereo_avx.S; sourceTree = "<group>"; };
@@ -200,7 +199,6 @@
 		326775D2254BBEED0041B063 /* synth_stereo_neon64_accurate.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = synth_stereo_neon64_accurate.S; sourceTree = "<group>"; };
 		326775D3254BBEED0041B063 /* synth_neon.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = synth_neon.S; sourceTree = "<group>"; };
 		326775D4254BBEED0041B063 /* synth_sse_s32.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = synth_sse_s32.S; sourceTree = "<group>"; };
-		326775D5254BBEED0041B063 /* l3_integer_tables.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = l3_integer_tables.h; sourceTree = "<group>"; };
 		326775D6254BBEED0041B063 /* layer1.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = layer1.c; sourceTree = "<group>"; };
 		326775D7254BBEED0041B063 /* dct64_neon64.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = dct64_neon64.S; sourceTree = "<group>"; };
 		326775D8254BBEED0041B063 /* synth_stereo_avx_s32.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = synth_stereo_avx_s32.S; sourceTree = "<group>"; };
@@ -282,7 +280,6 @@
 		32677625254BBEED0041B063 /* pinknoise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = pinknoise.c; sourceTree = "<group>"; };
 		32677626254BBEED0041B063 /* volume.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = volume.c; sourceTree = "<group>"; };
 		32677627254BBEED0041B063 /* sampleconv.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = sampleconv.c; sourceTree = "<group>"; };
-		32677628254BBEED0041B063 /* syn123.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = syn123.h; sourceTree = "<group>"; };
 		32677629254BBEED0041B063 /* filter.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = filter.c; sourceTree = "<group>"; };
 		3267762A254BBEED0041B063 /* geiger.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = geiger.c; sourceTree = "<group>"; };
 		3267762B254BBEED0041B063 /* resample.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = resample.c; sourceTree = "<group>"; };
@@ -365,6 +362,15 @@
 		3267768E254BBEEE0041B063 /* playlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = playlist.h; sourceTree = "<group>"; };
 		326776A5254BC27A0041B063 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		326776A6254BC28F0041B063 /* mpg123.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mpg123.h; sourceTree = "<group>"; };
+		3287D1BB2816DCC4009EA035 /* l3bandgain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = l3bandgain.h; sourceTree = "<group>"; };
+		3287D1BC2816DCC4009EA035 /* l12tabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = l12tabs.h; sourceTree = "<group>"; };
+		3287D1BD2816DCC4009EA035 /* l3tabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = l3tabs.h; sourceTree = "<group>"; };
+		3287D1BE2816DCC4009EA035 /* costabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = costabs.h; sourceTree = "<group>"; };
+		3287D1BF2816DCC4009EA035 /* init_layer12.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = init_layer12.h; sourceTree = "<group>"; };
+		3287D1C02816DCC4009EA035 /* init_layer3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = init_layer3.h; sourceTree = "<group>"; };
+		3287D1C12816DCC4009EA035 /* init_costabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = init_costabs.h; sourceTree = "<group>"; };
+		3287D2122816DDE1009EA035 /* win32_support.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = win32_support.c; sourceTree = "<group>"; };
+		3287D2132816DDE1009EA035 /* win32_support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = win32_support.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +459,8 @@
 				32677597254BBEED0041B063 /* sysutil.h */,
 				3267758E254BBEED0041B063 /* term.c */,
 				3267764E254BBEED0041B063 /* term.h */,
+				3287D2122816DDE1009EA035 /* win32_support.c */,
+				3287D2132816DDE1009EA035 /* win32_support.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -474,6 +482,7 @@
 			children = (
 				3267761C254BBEED0041B063 /* abi_align.h */,
 				32677619254BBEED0041B063 /* check_neon.S */,
+				3287D1BE2816DCC4009EA035 /* costabs.h */,
 				326775F3254BBEED0041B063 /* dct36_3dnow.S */,
 				32677616254BBEED0041B063 /* dct36_3dnowext.S */,
 				326775AA254BBEED0041B063 /* dct36_avx.S */,
@@ -525,9 +534,13 @@
 				32677620254BBEED0041B063 /* id3.h */,
 				326775E2254BBEED0041B063 /* index.c */,
 				3267759C254BBEED0041B063 /* index.h */,
+				3287D1C12816DCC4009EA035 /* init_costabs.h */,
+				3287D1C02816DCC4009EA035 /* init_layer3.h */,
+				3287D1BF2816DCC4009EA035 /* init_layer12.h */,
 				32677606254BBEED0041B063 /* l2tables.h */,
-				326775D5254BBEED0041B063 /* l3_integer_tables.h */,
-				326775B8254BBEED0041B063 /* l12_integer_tables.h */,
+				3287D1BB2816DCC4009EA035 /* l3bandgain.h */,
+				3287D1BD2816DCC4009EA035 /* l3tabs.h */,
+				3287D1BC2816DCC4009EA035 /* l12tabs.h */,
 				326775D6254BBEED0041B063 /* layer1.c */,
 				326775B4254BBEED0041B063 /* layer2.c */,
 				3267761F254BBEED0041B063 /* layer3.c */,
@@ -625,7 +638,6 @@
 				3267762B254BBEED0041B063 /* resample.c */,
 				32677627254BBEED0041B063 /* sampleconv.c */,
 				3267762D254BBEED0041B063 /* syn123_int.h */,
-				32677628254BBEED0041B063 /* syn123.h */,
 				32677624254BBEED0041B063 /* syn123.h.in */,
 				32677626254BBEED0041B063 /* volume.c */,
 			);
