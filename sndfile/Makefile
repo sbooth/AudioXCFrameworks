@@ -6,7 +6,7 @@ xcframework: patch
 include ../xcframework.mk
 
 SRC_DIR := libsndfile-src
-PATCH_FILES := quoted_include.patch
+PATCH_FILES := quoted_include.patch mpg123_include.patch
 
 $(SRC_DIR)/src/config.h: config.h
 	cp -f $< $@

@@ -1,0 +1,11 @@
+--- libsndfile-src/src/mpeg_decode.c	2022-04-25 09:20:55.000000000 -0500
++++ libsndfile-src/src/mpeg_decode-mpg123-include.c	2022-04-25 09:20:41.000000000 -0500
+@@ -30,7 +30,7 @@
+ #include	"sfendian.h"
+ #include	"id3.h"
+ 
+-#include <mpg123.h>
++#include <mpg123/mpg123.h>
+ 
+ typedef struct
+ {	mpg123_handle *pmh ;
