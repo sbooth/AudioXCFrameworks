@@ -10,7 +10,7 @@
 		325695A4256DC9DC003F09C5 /* opusenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32569578256DC9AD003F09C5 /* opusenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325695A7256DC9DD003F09C5 /* opusenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32569578256DC9AD003F09C5 /* opusenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325695AE256DC9EB003F09C5 /* opus_header.c in Sources */ = {isa = PBXBuildFile; fileRef = 32569598256DC9AE003F09C5 /* opus_header.c */; };
-		325695AF256DC9EB003F09C5 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 3256959B256DC9AE003F09C5 /* resample.c */; settings = {COMPILER_FLAGS = "-DRANDOM_PREFIX=libopusenc -DOUTSIDE_SPEEX"; }; };
+		325695AF256DC9EB003F09C5 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 3256959B256DC9AE003F09C5 /* resample.c */; settings = {COMPILER_FLAGS = "-DRANDOM_PREFIX=libopusenc -DOUTSIDE_SPEEX -msse"; }; };
 		325695B0256DC9EB003F09C5 /* ogg_packer.c in Sources */ = {isa = PBXBuildFile; fileRef = 32569599256DC9AE003F09C5 /* ogg_packer.c */; };
 		325695B1256DC9EB003F09C5 /* opusenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32569597256DC9AE003F09C5 /* opusenc.c */; settings = {COMPILER_FLAGS = "-DRANDOM_PREFIX=libopusenc -DOUTSIDE_SPEEX"; }; };
 		325695B2256DC9EB003F09C5 /* picture.c in Sources */ = {isa = PBXBuildFile; fileRef = 3256959C256DC9AE003F09C5 /* picture.c */; };
