@@ -15,6 +15,7 @@
 ##
 ##   xcframework       Builds the XCFramework.
 ##   clean             Deletes the XCFramework and build products.
+##   zip               Builds the XCFramework and compresses it.
 ##
 ## The following variables are optional:
 ##
@@ -22,6 +23,8 @@
 ##                     If not set the default is "macOS".
 ##   IOS_SCHEME        The scheme building the isOS framework target.
 ##                     If not set the default is "iOS".
+##   BUILD_DIR         The directory where the build products should
+##                     be written. If not set the default is "build".
 ##
 ## The following targets are provided when MAKELEVEL is not 0:
 ##
@@ -50,25 +53,33 @@ MACOS_SCHEME ?= macOS
 # The default name of the scheme that builds the framework for iOS
 IOS_SCHEME ?= iOS
 
-# The name of the output XCFramework
-XCFRAMEWORK := $(FRAMEWORK_NAME).xcframework
-
 # Build products directory
-ARCHIVE_DIR := archive
+BUILD_DIR ?= build
 
-MACOS_ARCHIVE := $(ARCHIVE_DIR)/macOS.xcarchive
-MACOS_CATALYST_ARCHIVE := $(ARCHIVE_DIR)/macOS-Catalyst.xcarchive
-IOS_ARCHIVE := $(ARCHIVE_DIR)/iOS.xcarchive
-IOS_SIMULATOR_ARCHIVE := $(ARCHIVE_DIR)/iOS-Simulator.xcarchive
+# The directory for intermediate .xcarchives
+XCARCHIVE_DIR := $(BUILD_DIR)/xcarchives
 
-ARCHIVES := $(MACOS_ARCHIVE) $(MACOS_CATALYST_ARCHIVE) $(IOS_ARCHIVE) $(IOS_SIMULATOR_ARCHIVE)
+# The name of the output XCFramework
+XCFRAMEWORK := $(BUILD_DIR)/$(FRAMEWORK_NAME).xcframework
+
+ZIP_FILE := $(XCFRAMEWORK).zip
+
+MACOS_XCARCHIVE := $(XCARCHIVE_DIR)/macOS.xcarchive
+MACOS_CATALYST_XCARCHIVE := $(XCARCHIVE_DIR)/macOS-Catalyst.xcarchive
+IOS_XCARCHIVE := $(XCARCHIVE_DIR)/iOS.xcarchive
+IOS_SIMULATOR_XCARCHIVE := $(XCARCHIVE_DIR)/iOS-Simulator.xcarchive
+
+XCARCHIVES := $(MACOS_XCARCHIVE) $(MACOS_CATALYST_XCARCHIVE) $(IOS_XCARCHIVE) $(IOS_SIMULATOR_XCARCHIVE)
 
 xcframework: $(XCFRAMEWORK)
 .PHONY: xcframework
 
 clean:
-	rm -Rf "$(MACOS_ARCHIVE)" "$(MACOS_CATALYST_ARCHIVE)" "$(IOS_ARCHIVE)" "$(IOS_SIMULATOR_ARCHIVE)" "$(XCFRAMEWORK)"
+	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(ZIP_FILE)"
 .PHONY: clean
+
+zip: $(ZIP_FILE)
+.PHONY: zip
 
 ifneq (0,$(MAKELEVEL))
 install: xcframework uninstall
@@ -80,18 +91,22 @@ uninstall:
 .PHONY: uninstall
 endif
 
-$(MACOS_ARCHIVE): $(XCODEPROJ)
+$(MACOS_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(MACOS_SCHEME)" -destination generic/platform=macOS -archivePath "$(basename $@)"
 
-$(MACOS_CATALYST_ARCHIVE): $(XCODEPROJ)
+$(MACOS_CATALYST_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "platform=macOS,variant=Mac Catalyst" -archivePath "$(basename $@)"
 
-$(IOS_ARCHIVE): $(XCODEPROJ)
+$(IOS_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination generic/platform=iOS -archivePath "$(basename $@)"
 
-$(IOS_SIMULATOR_ARCHIVE): $(XCODEPROJ)
+$(IOS_SIMULATOR_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "generic/platform=iOS Simulator" -archivePath "$(basename $@)"
 
-$(XCFRAMEWORK): $(ARCHIVES)
+$(XCFRAMEWORK): $(XCARCHIVES)
 	rm -Rf "$@"
 	xcodebuild -create-xcframework $(foreach xcarchive,$^,-framework "$(xcarchive)/Products/Library/Frameworks/$(FRAMEWORK_NAME).framework" -debug-symbols "$(realpath $(xcarchive)/dSYMs/$(FRAMEWORK_NAME).framework.dSYM)" ) -output "$@"
+
+$(ZIP_FILE): $(XCFRAMEWORK)
+#	rm -f "$@"
+	ditto -c -k --sequesterRsrc --keepParent "$^" "$@"
