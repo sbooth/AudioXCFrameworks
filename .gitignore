@@ -1,6 +1,7 @@
 .DS_Store
 
 xcuserdata/
+build/
 
 *.xcarchive/
 *.xcframework/
