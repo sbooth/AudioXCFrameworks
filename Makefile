@@ -3,9 +3,10 @@ export PREFIX ?= $(CURDIR)
 
 all: $(SUBDIRS)
 install: $(SUBDIRS)
+zip: $(SUBDIRS)
 clean: $(SUBDIRS)
 uninstall: $(SUBDIRS)
-.PHONY: all install clean uninstall
+.PHONY: all install zip clean uninstall
 
 $(SUBDIRS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
