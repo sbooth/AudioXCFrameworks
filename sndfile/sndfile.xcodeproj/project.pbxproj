@@ -11,8 +11,6 @@
 		322A916D2572DDE3006795AA /* sndfile.hh in Headers */ = {isa = PBXBuildFile; fileRef = 322A91692572DDE3006795AA /* sndfile.hh */; settings = {ATTRIBUTES = (Public, ); }; };
 		322A916E2572DDE3006795AA /* sndfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 322A916A2572DDE3006795AA /* sndfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		322A916F2572DDE3006795AA /* sndfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 322A916A2572DDE3006795AA /* sndfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		322A91802572DE27006795AA /* new.c in Sources */ = {isa = PBXBuildFile; fileRef = 322A917C2572DE27006795AA /* new.c */; };
-		322A91812572DE27006795AA /* new.c in Sources */ = {isa = PBXBuildFile; fileRef = 322A917C2572DE27006795AA /* new.c */; };
 		322A91822572DE27006795AA /* ogg_vcomment.c in Sources */ = {isa = PBXBuildFile; fileRef = 322A917D2572DE27006795AA /* ogg_vcomment.c */; };
 		322A91832572DE27006795AA /* ogg_vcomment.c in Sources */ = {isa = PBXBuildFile; fileRef = 322A917D2572DE27006795AA /* ogg_vcomment.c */; };
 		322A91842572DE27006795AA /* nms_adpcm.c in Sources */ = {isa = PBXBuildFile; fileRef = 322A917E2572DE27006795AA /* nms_adpcm.c */; };
@@ -207,7 +205,6 @@
 		322A91692572DDE3006795AA /* sndfile.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sndfile.hh; sourceTree = "<group>"; };
 		322A916A2572DDE3006795AA /* sndfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sndfile.h; sourceTree = "<group>"; };
 		322A916B2572DDE3006795AA /* sndfile.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sndfile.h.in; sourceTree = "<group>"; };
-		322A917C2572DE27006795AA /* new.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = new.c; sourceTree = "<group>"; };
 		322A917D2572DE27006795AA /* ogg_vcomment.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ogg_vcomment.c; sourceTree = "<group>"; };
 		322A917E2572DE27006795AA /* nms_adpcm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nms_adpcm.c; sourceTree = "<group>"; };
 		322A917F2572DE27006795AA /* ogg_vcomment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg_vcomment.h; sourceTree = "<group>"; };
@@ -433,7 +430,6 @@
 				3287D2172816E3D5009EA035 /* mpeg.c */,
 				3287D2182816E3D5009EA035 /* mpeg.h */,
 				32677AA2254C4F1F0041B063 /* ms_adpcm.c */,
-				322A917C2572DE27006795AA /* new.c */,
 				32677A9B254C4F1F0041B063 /* nist.c */,
 				322A917E2572DE27006795AA /* nms_adpcm.c */,
 				32677A96254C4F1F0041B063 /* ogg_opus.c */,
@@ -680,7 +676,6 @@
 				32677AD1254C51D00041B063 /* command.c in Sources */,
 				32677B27254C51DE0041B063 /* gsm610.c in Sources */,
 				32677ACF254C51D00041B063 /* dither.c in Sources */,
-				322A91802572DE27006795AA /* new.c in Sources */,
 				32677B50254C51E80041B063 /* gsm_decode.c in Sources */,
 				32677AE3254C51D60041B063 /* g72x.c in Sources */,
 				32677B4C254C51E80041B063 /* gsm_create.c in Sources */,
@@ -781,7 +776,6 @@
 				32677ABC254C51CF0041B063 /* command.c in Sources */,
 				32677AFE254C51DD0041B063 /* gsm610.c in Sources */,
 				32677ABA254C51CF0041B063 /* dither.c in Sources */,
-				322A91812572DE27006795AA /* new.c in Sources */,
 				32677B40254C51E70041B063 /* gsm_decode.c in Sources */,
 				32677AE0254C51D50041B063 /* g72x.c in Sources */,
 				32677B3C254C51E70041B063 /* gsm_create.c in Sources */,
