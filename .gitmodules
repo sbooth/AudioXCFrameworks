@@ -31,6 +31,3 @@
 [submodule "sndfile/libsndfile-src"]
 	path = sndfile/libsndfile-src
 	url = https://github.com/libsndfile/libsndfile.git
-[submodule "mac/MAC_SDK-src"]
-	path = mac/MAC_SDK-src
-	url = https://github.com/sbooth/MAC_SDK

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample 1", "Sample 1.vcxproj", "{61D17812-25B7-4A75-AC83-3AAF0AA354FD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21BF980F-C022-4DCC-9250-7C73528E422B} = {21BF980F-C022-4DCC-9250-7C73528E422B}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MACLib", "..\..\Source\Projects\VS2022\MACLib\MACLib.vcxproj", "{21BF980F-C022-4DCC-9250-7C73528E422B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61D17812-25B7-4A75-AC83-3AAF0AA354FD}.Debug|x86.ActiveCfg = Debug|Win32
+		{61D17812-25B7-4A75-AC83-3AAF0AA354FD}.Debug|x86.Build.0 = Debug|Win32
+		{61D17812-25B7-4A75-AC83-3AAF0AA354FD}.Release|x86.ActiveCfg = Release|Win32
+		{61D17812-25B7-4A75-AC83-3AAF0AA354FD}.Release|x86.Build.0 = Release|Win32
+		{21BF980F-C022-4DCC-9250-7C73528E422B}.Debug|x86.ActiveCfg = Debug|Win32
+		{21BF980F-C022-4DCC-9250-7C73528E422B}.Debug|x86.Build.0 = Debug|Win32
+		{21BF980F-C022-4DCC-9250-7C73528E422B}.Release|x86.ActiveCfg = Release|Win32
+		{21BF980F-C022-4DCC-9250-7C73528E422B}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB71E8EF-0271-494C-BBD8-68EDC173AC3D}
+	EndGlobalSection
+EndGlobal

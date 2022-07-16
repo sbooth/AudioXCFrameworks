@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\DirectShow Filter\main.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\RegistryUtils.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\arithutil.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\dllentry.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\source.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\strmctl.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\winutil.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\mtype.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\ctlutil.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\wxlist.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\transfrm.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\wxutil.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\ddmm.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\dllsetup.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\amfilter.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\videoctl.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\amextra.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\combase.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\cprop.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\outputq.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\perflog.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\pstream.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\pullpin.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\refclock.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\renbase.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\schedule.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\seekpt.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\sysclock.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\transip.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\vtrans.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\winctrl.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\wxdebug.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectX SDK\amvideo.cpp">
+      <Filter>DirectX Code</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\DirectShow Filter\main.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\RegistryUtils.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\cache.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\checkbmi.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\dxmperf.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\fourcc.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\measure.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\msgthrd.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\perfstruct.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\reftime.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\source.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\streams.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\strmctl.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\winutil.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\mtype.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\ctlutil.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\wxlist.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\transfrm.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\wxutil.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\ddmm.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\dllsetup.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\amfilter.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\videoctl.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\amextra.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\combase.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\cprop.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\outputq.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\perflog.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\pstream.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\pullpin.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\refclock.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\renbase.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\schedule.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\seekpt.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\sysclock.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\transip.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\vtrans.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\winctrl.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectX SDK\wxdebug.h">
+      <Filter>DirectX Code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DirectShow Filter\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\DirectShow Filter\DirectShow Filter.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\DirectShow Filter\APE Decoder.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DirectX Code">
+      <UniqueIdentifier>{1d415fea-d169-4662-96e8-4bb3f7369fcd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
