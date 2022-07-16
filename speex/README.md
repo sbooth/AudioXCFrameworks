@@ -1,9 +1,8 @@
 ## Version
 
-| Package |
-| --- |
-| [Speex 1.2.1](https://gitlab.xiph.org/xiph/speex/-/releases/Speex-1.2.1) |
-| [SpeexDSP 1.2.1](https://gitlab.xiph.org/xiph/speexdsp/-/releases/SpeexDSP-1.2.1) |
+[Speex 1.2.1](https://gitlab.xiph.org/xiph/speex/-/releases/Speex-1.2.1)
+
+[SpeexDSP 1.2.1](https://gitlab.xiph.org/xiph/speexdsp/-/releases/SpeexDSP-1.2.1)
 
 ## License
 
