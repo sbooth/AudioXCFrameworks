@@ -7,6 +7,3 @@
 [submodule "opus/libopusenc-src"]
 	path = opus/libopusenc-src
 	url = https://github.com/xiph/libopusenc.git
-[submodule "sndfile/libsndfile-src"]
-	path = sndfile/libsndfile-src
-	url = https://github.com/libsndfile/libsndfile.git
