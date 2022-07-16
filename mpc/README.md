@@ -1,6 +1,6 @@
 ## Version
 
-(r475+)[https://www.musepack.net/]
+[r475+](https://www.musepack.net/)
 
 ## libmpcdec License
 
