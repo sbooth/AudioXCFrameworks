@@ -1,3 +1,7 @@
+## Version
+
+[1.3.7](https://gitlab.xiph.org/xiph/vorbis/-/releases/v1.3.7)
+
 ## License
 
 Copyright (c) 2002-2020 Xiph.org Foundation
