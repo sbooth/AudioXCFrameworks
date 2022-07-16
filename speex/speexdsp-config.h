@@ -16,9 +16,6 @@
 /* Disable all parts of the API that are using floats */
 /* #undef DISABLE_FLOAT_API */
 
-/* Enable valgrind extra checks */
-/* #undef ENABLE_VALGRIND */
-
 /* Symbol visibility prefix */
 #define EXPORT __attribute__((visibility("default")))
 
@@ -31,23 +28,17 @@
 /* Compile as floating-point */
 #define FLOATING_POINT /**/
 
-/* Define to 1 if you have the <alloca.h> header file. */
-#define HAVE_ALLOCA_H 1
-
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
-
-/* Define to 1 if you have the <getopt.h> header file. */
-#define HAVE_GETOPT_H 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -83,7 +74,7 @@
 #define PACKAGE_NAME "speexdsp"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "speexdsp 1.2.0"
+#define PACKAGE_STRING "speexdsp 1.2.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "speexdsp"
@@ -92,7 +83,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.2.0"
+#define PACKAGE_VERSION "1.2.1"
 
 /* Resample with full SINC table (no interpolation) */
 /* #undef RESAMPLE_FULL_SINC_TABLE */
@@ -124,14 +115,13 @@
 /* The size of `u_int32_t', as computed by sizeof. */
 #define SIZEOF_U_INT32_T 4
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Enable support for TI C55X DSP */
 /* #undef TI_C55X */
-
-/* Make use of alloca */
-/* #undef USE_ALLOCA */
 
 /* Use FFTW3 for FFT */
 /* #undef USE_GPL_FFTW3 */
@@ -143,22 +133,16 @@
 /* #undef USE_KISS_FFT */
 
 /* Enable NEON support */
-#if __arm64__
-#define USE_NEON /**/
-#endif
+/* #undef USE_NEON */
 
 /* Use FFT from OggVorbis */
 #define USE_SMALLFT /**/
 
 /* Enable SSE support */
-#if __x86_64__
 #define USE_SSE /**/
-#endif
 
 /* Enable SSE2 support */
-#if __x86_64__
 #define USE_SSE2 /**/
-#endif
 
 /* Use C99 variable-size arrays */
 #define VAR_ARRAYS /**/
@@ -186,14 +170,15 @@
 
 /* Define to the equivalent of the C99 'restrict' keyword, or to
    nothing if this is not supported.  Do not define if restrict is
-   supported directly.  */
-#define restrict __restrict
-/* Work around a bug in Sun C++: it does not support _Restrict or
-   __restrict__, even though the corresponding Sun C compiler ends up with
-   "#define restrict _Restrict" or "#define restrict __restrict__" in the
-   previous line.  Perhaps some future version of Sun C++ will work with
-   restrict; if so, hopefully it defines __RESTRICT like Sun C does.  */
-#if defined __SUNPRO_CC && !defined __RESTRICT
+   supported only directly.  */
+#define restrict __restrict__
+/* Work around a bug in older versions of Sun C++, which did not
+   #define __restrict__ or support _Restrict or __restrict__
+   even though the corresponding Sun C compiler ended up with
+   "#define restrict _Restrict" or "#define restrict __restrict__"
+   in the previous line.  This workaround can be removed once
+   we assume Oracle Developer Studio 12.5 (2016) or later.  */
+#if defined __SUNPRO_CC && !defined __RESTRICT && !defined __restrict__
 # define _Restrict
 # define __restrict__
 #endif
