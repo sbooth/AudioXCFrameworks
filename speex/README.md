@@ -1,4 +1,4 @@
-## Version
+## Versions
 
 [Speex 1.2.1](https://gitlab.xiph.org/xiph/speex/-/releases/Speex-1.2.1)
 
