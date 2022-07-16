@@ -1,9 +1,6 @@
 [submodule "taglib/taglib-src"]
 	path = taglib/taglib-src
 	url = https://github.com/taglib/taglib.git
-[submodule "ogg/ogg-src"]
-	path = ogg/ogg-src
-	url = https://github.com/xiph/ogg.git
 [submodule "flac/flac-src"]
 	path = flac/flac-src
 	url = https://github.com/xiph/flac.git
