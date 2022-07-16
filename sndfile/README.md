@@ -14,6 +14,10 @@ int      au_open(void)
 
 Rather than trying to figure out a cause I disabled modules for this project.
 
+## Version
+
+[1.1.0](https://github.com/libsndfile/libsndfile/releases/tag/1.1.0)
+
 ## License
 
                   GNU LESSER GENERAL PUBLIC LICENSE

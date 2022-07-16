@@ -1,3 +1,7 @@
+## Version
+
+[r475+](https://www.musepack.net/)
+
 ## libmpcdec License
 
 Copyright (c) 2005, The Musepack Development Team

@@ -6,7 +6,7 @@ The built XCFrameworks target macOS 10.15+ and iOS 14.0+ for all supported 64-bi
 
 ## Building
 
-1. `git clone git@github.com:sbooth/AudioXCFrameworks.git --recurse-submodules`
+1. `git clone git@github.com:sbooth/AudioXCFrameworks.git`
 2. `cd AudioXCFrameworks`
 3. `make`
 

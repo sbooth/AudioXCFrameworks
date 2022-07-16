@@ -1,3 +1,11 @@
+## Versions
+
+[libopus 1.3.1](https://opus-codec.org/release/stable/2019/04/12/libopus-1_3_1.html) 
+
+[opusfile 0.12](https://opus-codec.org/release/dev/2020/06/27/opusfile_0_12.html)
+
+[libopusenc f51c3aa4](https://gitlab.xiph.org/xiph/libopusenc/-/tree/f51c3aa431c2f0f8fccd8926628b5f330292489f)
+
 ## License
 
 Copyright 2001-2011 Xiph.Org, Skype Limited, Octasic,

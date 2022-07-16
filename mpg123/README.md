@@ -1,3 +1,7 @@
+## Version
+
+[1.30.1](https://www.mpg123.de)
+
 ## License
 
 This is the file that contains the terms of use, copying, etc. for the mpg123 distribution package.

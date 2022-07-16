@@ -1,0 +1,324 @@
+/////////////////////////////////////////////////////////////////////////////
+////////////// THE LOSSLESS TRUE AUDIO CODEC C++ LIBRARY V2.3 ///////////////
+/////////////////////////////////////////////////////////////////////////////
+
+This package contains a full-futured codec library for realtime encoding and
+decoding of True Audio (TTA) files.
+
+The library has a 3 interface classes, which provides a possibility to work
+in applications of any complexity.
+
+For maintenance of namespace wholeness, all functions and library classes are
+transferred out to the separate namespace, named tta.
+
+For using this library in advanced applications the tta_encoder, tta_decoder
+and tta_exception interface classes can be used.
+
+//////////////////////////// TTA decoder class //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+The tta_decoder class is intended for decoding of the TTA audio files.
+The tta_decoder class constructor accepts the 'iocb' callbacks structure as a
+function parameter. The 'iocb' structure must be initialized before use.
+Good sample code of this library usage can be found in 'console' folder of
+the source code package.
+
+	tta_decoder(TTA_io_callback *iocb);
+
+The 'init_get_info' function initializes the decoder and fills the info
+structure retrieving the data from the file header. The 'init_set_info'
+function will initialize the decoder with stream parameters from previously
+filled "info" structure.
+
+	void init_get_info(TTA_info *info, TTAuint64 pos);
+	void init_set_info(TTA_info *info);
+
+The 'set_password' function can be used to decode password protected data.
+The encrypted data will be decoded correctly only if the right password is
+set.
+
+	void set_password(void const *pstr, TTAuint32 len);
+
+The 'frame_reset' function is intended to reinitialize the decoder for
+reading data from new data source e.g. for decoding the frame data directly
+from the memory buffer. The 'iocb' structure must be initialized before use.
+
+	void frame_reset(TTAuint32 frame, TTA_io_callback *iocb);
+
+The 'process_stream' function can be used to get a chunk of the decompressed
+data. This function accepts requested count of samples as a parameter and
+returns the decompressed data into the 'output' buffer. The count of actually
+decoded samples is returned as a function value. The 'tta_callback' is a
+function parameter, intended for the extension of possibilities of the user
+program. It can be used to get a statistics of the decoding process.
+
+	int process_stream(TTAuint8 *output, TTAuint32 req_count,
+		TTA_CALLBACK tta_callback);
+
+The 'process_frame' function can be used to decode one TTA frame of
+'in_bytes' size into the 'output' buffer of 'out_bytes' size.
+
+	int process_frame(TTAuint32 in_bytes, TTAuint8 *output,
+		TTAuint32 out_bytes);
+
+The 'set_position' function allows to jump to different parts of the audio
+track playback. Function accepts the time position in seconds where playback
+has to start, and returns the actual time position of start of the next
+audio frame as a 'new_pos' parameter.
+
+	void set_position(TTAuint32 seconds, TTAuint32 *new_pos);
+
+The 'get_rate' function returns the dynamic bit-rate of compressed data
+stream in Kbps. This function can be used in case of separate processing of
+each data frame. In other cases it's better to use the tta_callback function.
+
+	int get_rate();
+
+//////////////////////////// TTA encoder class //////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+The tta_encoder class is intended for coding PCM data with into the output
+TTA file.
+
+The tta_encoder class constructor accepts the 'iocb' callbacks structure as a
+function parameter. The 'iocb' structure must be initialized before use.
+
+	tta_encoder(TTA_io_callback *iocb);
+
+The 'init_set_info' function will initialize the encoder with stream
+parameters from previously filled "info" structure. The 'pos' parameter of
+this function specifies the count of bytes to skip from the beginning of the
+output file if required.
+
+	void init_set_info(TTA_info *info, TTAuint64 pos);
+
+The 'set_password' function can be used to enable password protection feature
+for encoder. The output data will be password protection.
+
+	void set_password(void const *pstr, TTAuint32 len);
+
+The 'frame_reset' function is intended to reinitialize the encoder for
+reading from new data source e.g. for encoding the frame data directly from
+the memory buffer. The 'iocb' structure must be initialized before use.
+
+	void frame_reset(TTAuint32 frame, TTA_io_callback *iocb);
+
+The 'process_stream' function can be used to compress a chunk of the input
+data. The function accepts the chunk of PCM audio data of 'in_bytes' size
+from 'input' buffer. The 'tta_callback' is a function parameter, intended for
+the extension of possibilities of the user program. It can be used to get
+a statistics of the decoding process.
+
+	void process_stream(TTAuint8 *input, TTAuint32 in_bytes,
+		TTA_CALLBACK tta_callback);
+
+The 'process_frame' function can be used to produce one TTA frame. The
+function accepts the chunk of PCM audio data of 'in_bytes' size from 'input'
+buffer.
+
+	void process_frame(TTAuint8 *input, TTAuint32 in_bytes);
+
+The 'finalize' function is intended to finalize the encoding
+process. This function must be called when you're finished encoding.
+
+	void finalize();
+
+The 'get_rate' function returns the dynamic bit-rate of compressed data
+stream in Kbps. This function can be used in case of separate processing of
+each data frame. In other cases it's better to use the tta_callback function.
+
+	int get_rate();
+
+////////////////////////////// TTA exceptions ///////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+
+If an error occurs, the both of tta_encoder and tta_decoder classes generates
+exceptions of the tta_exception type. The error code can be retrieved by
+code() function of the exception value. This function returns the code which
+has a TTA_CODEC_STATUS type.
+
+Description of the TTA error codes:
+
+	TTA_NO_ERROR		- no known errors found
+	TTA_OPEN_ERROR		- can't open file
+	TTA_FORMAT_ERROR	- not compatible file format
+	TTA_FILE_ERROR		- file is corrupted
+	TTA_READ_ERROR		- can't read from input file
+	TTA_WRITE_ERROR		- can't write to output file
+	TTA_SEEK_ERROR		- file seek error
+	TTA_MEMORY_ERROR	- insufficient memory available
+	TTA_PASSWORD_ERROR	- password protected file
+	TTA_NOT_SUPPORTED	- unsupported architecture
+
+//////// Sample for building the TTA decoder on Sigma Designs EM86XX ////////
+/////////////////////////////////////////////////////////////////////////////
+
+#include "./libtta/libtta.h"
+
+using namespace std;
+using namespace tta;
+
+typedef struct {
+	RMuint32 number_of_channels;
+	RMuint32 sample_rate;
+	RMuint32 bits_per_sample;
+	RMuint32 bytes_per_sample;
+	RMuint32 total_count_of_samples;
+	RMuint32 sample_size;
+	RMuint64 track_duration;
+} tta_context;
+
+typedef struct {
+	TTA_io_callback iocb;
+	RMfile f_handle;
+} TTA_io_callback_wrapper;
+
+static TTA_io_callback_wrapper iowr;
+static tta_decoder *TTA;
+static tta_context t_info;
+static RMuint32 seek_skip = 0; // count of samples to skip after seek
+
+//////////////////////// 1. Defining codec callbacks ////////////////////////
+
+RMint32 CALLBACK read_callback(TTA_io_callback *io,
+	RMuint8 *buffer, RMuint32 size) {
+	TTA_io_callback_wrapper *iocb = (TTA_io_callback_wrapper *)io;
+	RMuint32 result;
+	if (RMReadFile(iocb->f_handle, buffer, size, &result) == RM_OK)
+		return result;
+	return 0;
+}
+
+RMint64 CALLBACK seek_callback(TTA_io_callback *io, RMint64 offset) {
+	TTA_io_callback_wrapper *iocb = (TTA_io_callback_wrapper *)io;
+	if (RMSeekFile(iocb->f_handle, offset, RM_FILE_SEEK_START) == RM_OK)
+		return 0;
+	return -1;
+}
+
+///////////////////////// 2. Decoder initialization /////////////////////////
+
+RMstatus rmtta_file_init(RMfile f_handle) {
+	TTA_info info;
+
+	if (!f_handle)
+		return RM_ERROR;
+
+	RMMemset(&t_info, 0, sizeof(tta_context));
+
+	iowr.iocb.read = &read_callback;
+	iowr.iocb.seek = &seek_callback;
+	iowr.iocb.write = NULL;
+	iowr.handle = f_handle;
+
+	try {
+		TTA = new tta_decoder((TTA_io_callback *) &iowr);
+		TTA->init_get_info(&info, 0);
+	} catch (tta_exception ex) {
+		RMDBGLOG((ENABLE, "rmtta_error: %d\n", ex.code());
+		if (TTA) delete TTA; // cleanup
+		return RM_ERROR;
+	}
+
+	// TTA->info structure contains now all of required information:
+
+	t_info.number_of_channels = info.nch;
+	t_info.sample_rate = info.sps;
+	t_info.bits_per_sample = info.bps;
+	t_info.total_count_of_samples = info.samples;
+	t_info.bytes_per_sample = (info.bps + 7) / 8;
+	t_info.sample_size = t_info.bytes_per_sample *
+		t_info.number_of_channels;
+
+	// The track duration (in ms) can be easily calculated as
+	t_info.track_duration = RMuint64(t_info.total_count_of_samples /
+		t_info.sample_rate * 1000);
+
+	return RM_OK;
+}
+
+///////////////////////////// 3. File seeking ///////////////////////////////
+
+RMstatus rmtta_file_seek(RMuint32 seconds) {
+	if (!TTA->seek_allowed) return RM_ERROR;
+
+	RMuint32 frame_start = 0;
+
+	try {
+		TTA->set_position(seconds, &frame_start);
+	} catch (tta_exception ex) {
+		RMDBGLOG((ENABLE, "rmtta_error: %d\n", ex.code());
+		return RM_ERROR;
+	}
+
+	// We need to skip some samples from start of the frame if required
+	seek_skip = RMuint32((seconds - frame_start) *
+		t_info.sample_rate + 0.5);
+
+	return RM_OK;
+}
+
+/////////////////////// 4. Reading the data from file ///////////////////////
+
+RMstatus rmtta_file_read(RMuint8 *buffer, RMuint32 length,
+	RMuint32 *size_returned) {
+
+	if (!TTA)
+		return RM_ERROR;
+
+	RMuint32 buffer_length = length / t_info.sample_size;
+	RMuint32 samples_returned = 0;
+	RMuint32 eos_flag = 0; // end of stream flag
+
+	try {
+		while (seek_skip && !eos_flag) {
+			if (seek_skip >= buffer_length) {
+				samples_returned = TTA->process_stream(buffer,
+					buffer_length);
+				seek_skip -= samples_returned;
+			} else {
+				samples_returned = TTA->process_stream(buffer,
+					seek_skip);
+				seek_skip = 0;
+			}
+			if (!samples_returned) eos_flag = 1;
+		}
+
+		if (!eos_flag) {
+			samples_returned = TTA->process_stream(buffer,
+				buffer_length);
+			if (!samples_returned) eos_flag = 1;
+		}
+	} catch (tta_exception ex) {
+		RMDBGLOG((ENABLE, "rmtta_error: %d\n", ex.code());
+		delete TTA; // cleanup
+		return RM_ERROR;
+	}
+
+	*size_returned = samples_returned * t_info.sample_size;
+
+	if (eos_flag)
+		return RM_ERRORENDOFFILE;
+
+	return RM_OK;
+}
+
+////////////////////////////// Contributors /////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+Listed in chronological order:
+
+Aleksander Djuric, Pavel Zhilin, Tamir Barak, Noam Koenigstein,
+Kazuki Oikawa, Christophe Paris, Eugene Okhotsky, Yoshihisa Uchida,
+LM Poh, Scott Watson.
+
+/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+Copyright (c) 1999-2015 Aleksander Djuric. All rights reserved.
+
+For the latest in news and downloads, please visit the official True Audio
+project site:
+
+http://www.true-audio.com/

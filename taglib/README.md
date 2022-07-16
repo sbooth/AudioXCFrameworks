@@ -1,5 +1,9 @@
 This project builds the `taglib2` branch of TagLib.
 
+## Version
+
+[65a6a4e](https://github.com/taglib/taglib/tree/65a6a4e225fff1288148de92721418e1c634713b)
+
 ## License
 
                           MOZILLA PUBLIC LICENSE

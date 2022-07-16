@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcommon_2005", "libcommon_2005.vcproj", "{0B4DF6B1-30B1-42E1-BC54-B62A178609C0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmpcdec_2005", "libmpcdec_2005.vcproj", "{7E82CFCF-1B5F-496D-8A1D-863CF574C7AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0B4DF6B1-30B1-42E1-BC54-B62A178609C0} = {0B4DF6B1-30B1-42E1-BC54-B62A178609C0}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B4DF6B1-30B1-42E1-BC54-B62A178609C0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0B4DF6B1-30B1-42E1-BC54-B62A178609C0}.Debug|Win32.Build.0 = Debug|Win32
+		{0B4DF6B1-30B1-42E1-BC54-B62A178609C0}.Release|Win32.ActiveCfg = Release|Win32
+		{0B4DF6B1-30B1-42E1-BC54-B62A178609C0}.Release|Win32.Build.0 = Release|Win32
+		{7E82CFCF-1B5F-496D-8A1D-863CF574C7AF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7E82CFCF-1B5F-496D-8A1D-863CF574C7AF}.Debug|Win32.Build.0 = Debug|Win32
+		{7E82CFCF-1B5F-496D-8A1D-863CF574C7AF}.Release|Win32.ActiveCfg = Release|Win32
+		{7E82CFCF-1B5F-496D-8A1D-863CF574C7AF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

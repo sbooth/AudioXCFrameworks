@@ -1,3 +1,7 @@
+## Version
+
+[1.2.6](https://github.com/jiixyj/libebur128/releases/tag/v1.2.6)
+
 ## License
 
 Copyright (c) 2011 Jan Kokemüller

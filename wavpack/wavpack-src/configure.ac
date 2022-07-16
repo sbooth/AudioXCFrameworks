@@ -1,0 +1,170 @@
+dnl wavpack 5.5.0 configure.ac
+
+AC_INIT([wavpack], [5.5.0], [bryant@wavpack.com])
+AC_CONFIG_SRCDIR([src/pack.c])
+AM_INIT_AUTOMAKE([-Wall 1.15 serial-tests subdir-objects foreign no-dist-gzip dist-xz])
+AM_MAINTAINER_MODE
+
+LIBWAVPACK_MAJOR=5
+LIBWAVPACK_MINOR=5
+LIBWAVPACK_MICRO=0
+LIBWAVPACK_VERSION_STRING="${LIBWAVPACK_MAJOR}.${LIBWAVPACK_MINOR}.${LIBWAVPACK_MICRO}"
+
+AC_DEFINE_UNQUOTED([LIBWAVPACK_MAJOR], [${LIBWAVPACK_MAJOR}], [libwavpack major version])
+AC_DEFINE_UNQUOTED([LIBWAVPACK_MINOR], [${LIBWAVPACK_MINOR}], [libwavpack minor version])
+AC_DEFINE_UNQUOTED([LIBWAVPACK_MICRO], [${LIBWAVPACK_MICRO}], [libwavpack micro version])
+AC_DEFINE_UNQUOTED([LIBWAVPACK_VERSION_STRING], ["${LIBWAVPACK_VERSION_STRING}"], [libwavpack version string])
+
+dnl set libtool versioning
+dnl +1 :  0 : +1   == new interface that does not break old one.
+dnl +1 :  0 :  0   == changed/removed an interface. Breaks old apps.
+dnl  ? : +1 :  ?   == internal changes that doesn't break anything.
+dnl CURRENT : REVISION : AGE
+LT_CURRENT=3
+LT_REVISION=4
+LT_AGE=2
+
+AC_SUBST([LT_CURRENT])
+AC_SUBST([LT_REVISION])
+AC_SUBST([LT_AGE])
+
+dnl Check for os version
+AC_CANONICAL_HOST
+AC_DEFINE_UNQUOTED([VERSION_OS], ["${host_os}"], [os version])
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AM_PROG_AR
+AM_PROG_AS
+
+LT_INIT([win32-dll disable-static])
+
+dnl Checks for libraries.
+LT_LIB_M
+
+dnl Check for large files support
+AC_SYS_LARGEFILE
+AC_FUNC_FSEEKO
+
+AC_ARG_ENABLE([libcrypto],
+  [AS_HELP_STRING([--enable-libcrypto], [use libcrypto MD5 if available (breaks Mac build)])])
+
+AC_ARG_ENABLE([apps],
+  [AS_HELP_STRING([--disable-apps], [build only libwavpack (removes ICONV dependency)])])
+AM_CONDITIONAL([ENABLE_APPS], [test "x${enable_apps}" != "xno"])
+
+AC_MSG_CHECKING([if we are building for a Windows host])
+AS_CASE([${host_os}],
+  [*mingw*], [windows_host=yes],
+  [windows_host=no])
+AC_MSG_RESULT([${windows_host}])
+
+AM_CONDITIONAL([WINDOWS_HOST], [test "x${windows_host}" = "xyes"])
+
+AS_IF([test "x${enable_apps}" != "xno" && test "x${windows_host}" != "xyes"], [
+  AM_ICONV
+  AS_IF([test "x${am_cv_func_iconv}" != "xyes"], [
+    AC_MSG_ERROR([iconv is required for apps, use --disable-apps to build only libwavpack])
+  ])
+])
+
+AS_IF([test "x${enable_libcrypto}" = "xyes"], [
+  AC_CHECK_LIB([crypto],[MD5_Init])
+])
+
+AC_ARG_ENABLE([legacy],
+  [AS_HELP_STRING([--enable-legacy], [decode legacy (< 4.0) WavPack files])])
+AS_IF([test "x${enable_legacy}" = "xyes"], [
+  AC_DEFINE([ENABLE_LEGACY])
+])
+AM_CONDITIONAL([ENABLE_LEGACY], [test "x${enable_legacy}" = "xyes"])
+
+AC_ARG_ENABLE([dsd],
+  [AS_HELP_STRING([--disable-dsd], [disable support for WavPack DSD files])])
+AS_IF([test "x${enable_dsd}" != "xno"], [
+  AC_DEFINE([ENABLE_DSD])
+])
+AM_CONDITIONAL([ENABLE_DSD], [test "x${enable_dsd}" != "xno"])
+
+AC_ARG_ENABLE([rpath],
+  [AS_HELP_STRING([--enable-rpath], [hardcode library path in executables])])
+AM_CONDITIONAL([ENABLE_RPATH], [test "x${enable_rpath}" = "xyes"])
+
+AC_ARG_ENABLE([asm],
+  [AS_HELP_STRING([--disable-asm], [disable assembly optimizations])], [
+  ], [
+  enable_asm=check
+])
+asm_selected=none
+
+AS_IF([test "x${enable_asm}" != "xno"],[
+  AC_MSG_CHECKING([if assembly optimizations are available])
+  AS_CASE([${host_cpu}],
+    [i386|i486|i586|i686|i786], [
+      AC_DEFINE([OPT_ASM_X86])
+      asm_selected=x86],
+    [x86_64], [
+      AC_DEFINE([OPT_ASM_X64])
+      asm_selected=x64],
+    [arm64*], [
+      AS_IF([test "x${enable_asm}" = "xyes"], [
+        AC_MSG_ERROR([no assembly code for CPU ${host_cpu}])
+      ])],
+    [arm*], [
+      AC_DEFINE([OPT_ASM_ARM])
+      asm_selected=arm],
+    [AS_IF([test "x${enable_asm}" = "xyes"], [
+      AC_MSG_ERROR([no assembly code for CPU ${host_cpu}])])
+  ])
+  AC_MSG_RESULT([${asm_selected}])
+])
+
+AM_CONDITIONAL([ENABLE_X86ASM], [test "x${asm_selected}" = "xx86"])
+AM_CONDITIONAL([ENABLE_X64ASM], [test "x${asm_selected}" = "xx64"])
+AM_CONDITIONAL([ENABLE_ARMASM], [test "x${asm_selected}" = "xarm"])
+
+dnl Check for __builtin_clz
+AC_CACHE_CHECK([for __builtin_clz], [ac_cv_have___builtin_clz],
+               AC_LINK_IFELSE([AC_LANG_PROGRAM(,[[return __builtin_clz(1)]])],
+               [ac_cv_have___builtin_clz="yes"], [ac_cv_have___builtin_clz="no"]))
+AS_IF([test "x${ac_cv_have___builtin_clz}" = "xyes"], [
+  AC_DEFINE([HAVE___BUILTIN_CLZ])
+])
+
+dnl Check for __builtin_ctz
+AC_CACHE_CHECK([for __builtin_ctz], [ac_cv_have___builtin_ctz],
+               AC_LINK_IFELSE([AC_LANG_PROGRAM(,[[return __builtin_ctz(1)]])],
+               [ac_cv_have___builtin_ctz="yes"], [ac_cv_have___builtin_ctz="no"]))
+AS_IF([test "x${ac_cv_have___builtin_ctz}" = "xyes"], [
+  AC_DEFINE([HAVE___BUILTIN_CTZ])
+])
+
+AC_ARG_ENABLE([man],
+  [AS_HELP_STRING([--enable-man], [regenerate man pages from Docbook [default=no]])])
+
+AS_IF([test "x${enable_man}" = "xyes"], [
+  dnl
+  dnl Check for xsltproc
+  dnl
+  AC_PATH_PROG([XSLTPROC], [xsltproc])
+  AS_IF([test -z "${XSLTPROC}"], [enable_man=no])
+
+  dnl check for DocBook DTD and stylesheets in the local catalog.
+  JH_CHECK_XML_CATALOG([-//OASIS//DTD DocBook XML V4.1.2//EN],
+    [DocBook XML DTD V4.1.2], [], [enable_man=no])
+  JH_CHECK_XML_CATALOG([http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl],
+    [DocBook XSL Stylesheets], [],[enable_man=no])
+])
+
+AM_CONDITIONAL([ENABLE_MAN], [test "x${enable_man}" != "xno"])
+
+AC_CONFIG_LINKS([
+  cli/all-tests:cli/all-tests
+  cli/fast-tests:cli/fast-tests
+])
+AC_CONFIG_FILES([
+  Makefile
+  wavpack.pc
+])
+AC_OUTPUT

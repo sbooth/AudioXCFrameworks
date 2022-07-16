@@ -1,3 +1,7 @@
+## Version
+
+[3.100](https://lame.sourceforge.io)
+
 ## License
 
 		  GNU LIBRARY GENERAL PUBLIC LICENSE

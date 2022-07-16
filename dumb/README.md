@@ -1,3 +1,7 @@
+## Version
+
+[396caa4](https://github.com/kode54/dumb/tree/396caa4d31859045ccb5ef943fd430ca4026cce8)
+
 ## License
 
 ```

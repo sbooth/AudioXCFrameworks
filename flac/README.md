@@ -1,3 +1,7 @@
+## Version
+
+[1.3.4](https://gitlab.xiph.org/xiph/flac/-/releases/1.3.4)
+
 ## License
 
 Copyright (C) 2000-2009  Josh Coalson

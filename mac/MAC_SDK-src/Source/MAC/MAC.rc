@@ -1,0 +1,623 @@
+// Microsoft Visual C++ generated resource script.
+//
+#pragma code_page(65001)
+
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\MAC.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\MAC.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAC_DIALOG DIALOGEX 0, 0, 320, 200
+STYLE DS_SETFONT | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Monkey's Audio"
+MENU IDR_MAIN_MENU
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "List1",IDC_LIST,"SysListView32",LVS_REPORT | LVS_OWNERDATA | WS_BORDER | WS_TABSTOP,7,7,306,186
+END
+
+IDD_OPTIONS DIALOGEX 0, 0, 587, 360
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Options"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,316,104,17
+    PUSHBUTTON      "Cancel",IDCANCEL,7,336,103,17
+    CONTROL         "List1",IDC_PAGE_LIST,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,103,302
+    GROUPBOX        "",IDC_PAGE_FRAME,118,7,462,346
+END
+
+IDD_OPTIONS_OUTPUT DIALOGEX 0, 0, 381, 304
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "Location",IDC_TITLE1,7,7,71,12
+    CONTROL         "",IDC_DIVIDER1,"Static",SS_ETCHEDHORZ,84,11,293,1
+    ICON            "",IDC_OUTPUT_LOCATION_PICTURE,17,24,20,20
+    CONTROL         "Output to same directory as source files",IDC_OUTPUT_LOCATION_SAME_DIRECTORY,
+                    "Button",BS_AUTORADIOBUTTON,65,21,309,13
+    CONTROL         "Output to specified directory",IDC_OUTPUT_LOCATION_SPECIFIED_DIRECTORY,
+                    "Button",BS_AUTORADIOBUTTON,65,37,309,13
+    COMBOBOX        IDC_OUTPUT_LOCATION_DIRECTORY_COMBO,73,52,238,68,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Browse...",IDC_OUTPUT_LOCATION_DIRECTORY_BROWSE,73,66,68,12
+    COMBOBOX        IDC_OUTPUT_LOCATION_DIRECTORY_RECREATE,73,82,238,68,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Behavior",IDC_TITLE2,7,106,57,14
+    CONTROL         "",IDC_DIVIDER2,"Static",SS_ETCHEDHORZ,70,111,305,1
+    ICON            "",IDC_BEHAVIOR_PICTURE,17,122,20,20
+    LTEXT           "Output Exists:",IDC_STATICB1,65,122,309,15
+    COMBOBOX        IDC_OUTPUT_EXISTS_COMBO,65,141,309,103,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "After Success:",IDC_STATICB2,65,173,307,14
+    COMBOBOX        IDC_DELETE_AFTER_SUCCESS_COMBO,65,194,309,94,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Other",IDC_TITLE3,7,223,52,15
+    CONTROL         "",IDC_DIVIDER3,"Static",SS_ETCHEDHORZ,65,226,309,1
+    ICON            "",IDC_OTHER_PICTURE,17,245,20,20
+    CONTROL         "Use source file's time stamp for new file",IDC_MIRROR_TIME_STAMP_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,65,249,307,10
+    LTEXT           "Naming APL's:",IDC_STATICO1,65,269,307,15
+    COMBOBOX        IDC_APL_FILENAME_TEMPLATE_COMBO,65,284,264,110,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "?",IDC_APL_FILENAME_TEMPLATE_HELP,335,285,28,12
+END
+
+IDD_OPTIONS_PROCESSING DIALOGEX 0, 0, 381, 322
+STYLE DS_SETFONT | WS_CHILD
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "General",IDC_TITLE1,7,7,53,13
+    CONTROL         "",IDC_DIVIDER1,"Static",SS_ETCHEDHORZ,64,11,310,1
+    ICON            "",IDC_GENERAL_PICTURE,17,27,20,20
+    LTEXT           "Simultaneous Files:",IDC_STATIC1,65,30,309,16
+    COMBOBOX        IDC_SIMULTANEOUS_FILES_COMBO,65,47,309,93,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Processing Priority:",IDC_STATIC2,66,65,308,15
+    COMBOBOX        IDC_PRIORITY_COMBO,65,82,309,93,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Verify",IDC_TITLE2,7,107,61,13
+    CONTROL         "",IDC_DIVIDER2,"Static",SS_ETCHEDHORZ,64,111,310,1
+    ICON            "",IDC_VERIFY_PICTURE,17,128,20,20
+    LTEXT           "Mode:",IDC_STATIC3,65,129,309,14
+    COMBOBOX        IDC_VERIFY_MODE_COMBO,65,149,309,93,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Automatic 'Verify' on creation of all APE files",IDC_AUTO_VERIFY_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,65,173,309,18
+    LTEXT           "Error Behavior",IDC_TITLE3,9,207,102,13
+    CONTROL         "",IDC_DIVIDER3,"Static",SS_ETCHEDHORZ,110,211,264,1
+    ICON            "",IDC_ERROR_BEHAVIOR_PICTURE,17,223,20,20
+    CONTROL         "Stop processing after encountering an error",IDC_STOP_ON_ERROR_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,65,227,309,19
+    LTEXT           "Other",IDC_TITLE4,7,257,67,13
+    CONTROL         "",IDC_DIVIDER4,"Static",SS_ETCHEDHORZ,71,261,303,1
+    ICON            "",IDC_OTHER_PICTURE,17,275,20,20
+    CONTROL         "Play sound on completion",IDC_COMPLETION_SOUND_CHECK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,65,274,308,18
+    CONTROL         "Show popup windows for external plugins",IDC_SHOW_EXTERNAL_WINDOWS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,65,297,307,18
+END
+
+IDD_FORMAT_PLUGIN_CONFIGURE DIALOGEX 0, 0, 489, 188
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Configure Format Plugin"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,376,167,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,432,167,50,14
+    LTEXT           "Configure 1:",IDC_CONFIGURE_STATIC_1,7,7,475,16
+    EDITTEXT        IDC_CONFIGURE_EDIT_1,7,31,475,22,ES_AUTOHSCROLL
+    LTEXT           "Configure 2:",IDC_CONFIGURE_STATIC_2,7,63,475,16
+    EDITTEXT        IDC_CONFIGURE_EDIT_2,7,83,475,22,ES_AUTOHSCROLL
+    LTEXT           "Configure 3:",IDC_CONFIGURE_STATIC_3,7,113,475,17
+    EDITTEXT        IDC_CONFIGURE_EDIT_3,7,132,475,21,ES_AUTOHSCROLL
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,159,475,1
+END
+
+IDD_FORMAT_PLUGIN_INFO DIALOGEX 0, 0, 265, 133
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Format Plugin Information"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,208,112,50,14
+    CTEXT           "Description 1...",IDC_DESCRIPTION_1,7,7,251,23,SS_CENTERIMAGE | SS_SUNKEN
+    LTEXT           "Description 2...",IDC_DESCRIPTION_2,7,34,251,32
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,70,251,1
+    LTEXT           "--- URL ---",IDC_URL,7,76,251,28
+END
+
+IDD_APE_INFO DIALOGEX 0, 0, 631, 234
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "APE Info"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,574,213,50,14
+    CONTROL         "",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_EDITLABELS | WS_BORDER | WS_TABSTOP,7,7,170,201
+    PUSHBUTTON      "Select All",IDC_FILES_SELECT_ALL,7,213,84,14
+    PUSHBUTTON      "Select None",IDC_FILES_SELECT_NONE,94,213,84,14
+    CONTROL         "",IDC_TABS,"SysTabControl32",0x0,190,7,434,201
+END
+
+IDD_ABOUT DIALOGEX 0, 0, 363, 79
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Monkey's Audio"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+END
+
+IDD_APE_INFO_FORMAT DIALOGEX 0, 0, 199, 116
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_FORMAT,"RichEdit20W",WS_BORDER | WS_VSCROLL | WS_TABSTOP | 0x884,0,0,199,116
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 8,1,0,0
+ PRODUCTVERSION 8,1,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Windows program for Monkey's Audio"
+            VALUE "CompanyName", "Matthew T. Ashland"
+            VALUE "FileVersion", "8.01.0.0"
+            VALUE "FileDescription", "Monkey's Audio windows program"
+            VALUE "InternalName", "Monkey's Audio"
+            VALUE "LegalCopyright", "Copyright (c) 2000-2022 Matthew T. Ashland"
+            VALUE "OriginalFilename", "Monkey's Audio.exe"
+            VALUE "ProductName", "Monkey's Audio"
+            VALUE "ProductVersion", "8.01.0.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_MAC_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
+    END
+
+    IDD_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 580
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 353
+    END
+
+    IDD_OPTIONS_OUTPUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 374
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 297
+    END
+
+    IDD_OPTIONS_PROCESSING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 374
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 315
+    END
+
+    IDD_FORMAT_PLUGIN_CONFIGURE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 482
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 181
+    END
+
+    IDD_FORMAT_PLUGIN_INFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 258
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 126
+    END
+
+    IDD_APE_INFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 624
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 227
+    END
+
+    IDD_ABOUT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 356
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_APE_INFO_FORMAT, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Process File(s)\tEnter",     ID_FILE_PROCESS_FILES
+        MENUITEM SEPARATOR
+        MENUITEM "Add &File(s)...\tCtrl+F",     ID_FILE_ADD_FILES
+        MENUITEM "Add F&older\tCtrl+D",         ID_FILE_ADD_FOLDER
+        MENUITEM SEPARATOR
+        MENUITEM "Remove File(s)\tCtrl+R",      ID_FILE_REMOVE_FILES
+        MENUITEM "&Clear Files\tCtrl+E",        ID_FILE_CLEAR_FILES
+        MENUITEM "Select All\tCtrl+A",          ID_FILE_SELECTALL
+        MENUITEM SEPARATOR
+        MENUITEM "File I&nfo...\tCtrl+I",       ID_FILE_FILE_INFO
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tCtrl+W",               ID_FILE_EXIT
+    END
+    POPUP "&Mode"
+    BEGIN
+        MENUITEM "&Compress\tCtrl+1",           ID_MODE_COMPRESS
+        MENUITEM "&Decompress\tCtrl+2",         ID_MODE_DECOMPRESS
+        MENUITEM "&Verify\tCtrl+3",             ID_MODE_VERIFY
+        MENUITEM "Con&vert\tCtrl+4",            ID_MODE_CONVERT
+        MENUITEM "&Make APL's\tCtrl+5",         ID_MODE_MAKE_APL
+        MENUITEM SEPARATOR
+        POPUP "C&ompression"
+        BEGIN
+            MENUITEM "n/a",                         ID_COMPRESSION_NA, GRAYED
+        END
+    END
+    POPUP "&Tools"
+    BEGIN
+        MENUITEM "&Options...\tCtrl+O",         ID_TOOLS_OPTIONS
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help...\tF1",                ID_HELP_HELP
+        MENUITEM SEPARATOR
+        MENUITEM "Monkey's Audio &Website...",  ID_HELP_WEBSITE_MONKEYS_AUDIO
+        MENUITEM SEPARATOR
+        MENUITEM "&Media Center Website...",    ID_HELP_WEBSITE_MEDIA_JUKEBOX
+        MENUITEM "&Winamp Website...",          ID_HELP_WEBSITE_WINAMP
+        MENUITEM "&EAC Website...",             ID_HELP_WEBSITE_EAC
+        MENUITEM SEPARATOR
+        MENUITEM "&About Monkey's Audio...",    ID_HELP_ABOUT
+    END
+END
+
+IDR_STOP_MENU MENU
+BEGIN
+    POPUP "&Stop"
+    BEGIN
+        MENUITEM "&Immediately\tCtrl+S",        ID_STOP_IMMEDIATELY
+        MENUITEM "&After Current File\tCtrl+Shift+S", ID_STOP_AFTER_CURRENT_FILE
+    END
+    MENUITEM "&Pause",                      ID_PAUSE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "1",            ID_MODE_COMPRESS,       VIRTKEY, CONTROL, NOINVERT
+    "2",            ID_MODE_DECOMPRESS,     VIRTKEY, CONTROL, NOINVERT
+    "3",            ID_MODE_VERIFY,         VIRTKEY, CONTROL, NOINVERT
+    "4",            ID_MODE_CONVERT,        VIRTKEY, CONTROL, NOINVERT
+    "5",            ID_MODE_MAKE_APL,       VIRTKEY, CONTROL, NOINVERT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    "D",            ID_FILE_ADD_FOLDER,     VIRTKEY, CONTROL, NOINVERT
+    "E",            ID_FILE_CLEAR_FILES,    VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_FILE_ADD_FILES,      VIRTKEY, CONTROL, NOINVERT
+    "A",            ID_FILE_SELECTALL,      VIRTKEY, CONTROL, NOINVERT
+    "I",            ID_FILE_FILE_INFO,      VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_TOOLS_OPTIONS,       VIRTKEY, CONTROL, NOINVERT
+    "R",            ID_FILE_REMOVE_FILES,   VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    VK_DELETE,      ID_FILE_REMOVE_FILES,   VIRTKEY, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_RETURN,      ID_FILE_PROCESS_FILES,  VIRTKEY, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "W",            ID_FILE_EXIT,           VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_STOP_AFTER_CURRENT_FILE, VIRTKEY, SHIFT, CONTROL, NOINVERT
+    "S",            ID_STOP_IMMEDIATELY,    VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_OPTIONS_OUTPUT DLGINIT
+BEGIN
+    IDC_OUTPUT_LOCATION_DIRECTORY_RECREATE, 0x403, 49, 0
+0x6552, 0x7263, 0x6165, 0x6574, 0x6e20, 0x206f, 0x656c, 0x6576, 0x736c, 
+0x6f20, 0x2066, 0x756f, 0x7074, 0x7475, 0x6420, 0x7269, 0x6365, 0x6f74, 
+0x7972, 0x7320, 0x7274, 0x6375, 0x7574, 0x6572, "\000" 
+    IDC_OUTPUT_LOCATION_DIRECTORY_RECREATE, 0x403, 47, 0
+0x6552, 0x7263, 0x6165, 0x6574, 0x3120, 0x6c20, 0x7665, 0x6c65, 0x6f20, 
+0x2066, 0x756f, 0x7074, 0x7475, 0x6420, 0x7269, 0x6365, 0x6f74, 0x7972, 
+0x7320, 0x7274, 0x6375, 0x7574, 0x6572, "\000" 
+    IDC_OUTPUT_LOCATION_DIRECTORY_RECREATE, 0x403, 48, 0
+0x6552, 0x7263, 0x6165, 0x6574, 0x3220, 0x6c20, 0x7665, 0x6c65, 0x2073, 
+0x666f, 0x6f20, 0x7475, 0x7570, 0x2074, 0x6964, 0x6572, 0x7463, 0x726f, 
+0x2079, 0x7473, 0x7572, 0x7463, 0x7275, 0x0065, 
+    IDC_OUTPUT_LOCATION_DIRECTORY_RECREATE, 0x403, 48, 0
+0x6552, 0x7263, 0x6165, 0x6574, 0x3320, 0x6c20, 0x7665, 0x6c65, 0x2073, 
+0x666f, 0x6f20, 0x7475, 0x7570, 0x2074, 0x6964, 0x6572, 0x7463, 0x726f, 
+0x2079, 0x7473, 0x7572, 0x7463, 0x7275, 0x0065, 
+    IDC_OUTPUT_LOCATION_DIRECTORY_RECREATE, 0x403, 48, 0
+0x6552, 0x7263, 0x6165, 0x6574, 0x3420, 0x6c20, 0x7665, 0x6c65, 0x2073, 
+0x666f, 0x6f20, 0x7475, 0x7570, 0x2074, 0x6964, 0x6572, 0x7463, 0x726f, 
+0x2079, 0x7473, 0x7572, 0x7463, 0x7275, 0x0065, 
+    IDC_OUTPUT_EXISTS_COMBO, 0x403, 10, 0
+0x6b53, 0x7069, 0x6620, 0x6c69, 0x0065, 
+    IDC_OUTPUT_EXISTS_COMBO, 0x403, 19, 0
+0x6552, 0x616e, 0x656d, 0x6f20, 0x7475, 0x7570, 0x2074, 0x6966, 0x656c, 
+"\000" 
+    IDC_OUTPUT_EXISTS_COMBO, 0x403, 22, 0
+0x764f, 0x7265, 0x7277, 0x7469, 0x2065, 0x756f, 0x7074, 0x7475, 0x6620, 
+0x6c69, 0x0065, 
+    IDC_DELETE_AFTER_SUCCESS_COMBO, 0x403, 25, 0
+0x654c, 0x7661, 0x2065, 0x6f73, 0x7275, 0x6563, 0x6620, 0x6c69, 0x2065, 
+0x6e69, 0x6174, 0x7463, "\000" 
+    IDC_DELETE_AFTER_SUCCESS_COMBO, 0x403, 20, 0
+0x6552, 0x7963, 0x6c63, 0x2065, 0x6f73, 0x7275, 0x6563, 0x6620, 0x6c69, 
+0x0065, 
+    IDC_DELETE_AFTER_SUCCESS_COMBO, 0x403, 31, 0
+0x6550, 0x6d72, 0x6e61, 0x6e65, 0x6c74, 0x2079, 0x6564, 0x656c, 0x6574, 
+0x7320, 0x756f, 0x6372, 0x2065, 0x6966, 0x656c, "\000" 
+    IDC_APL_FILENAME_TEMPLATE_COMBO, 0x403, 32, 0
+0x5241, 0x4954, 0x5453, 0x2d20, 0x4120, 0x424c, 0x4d55, 0x2d20, 0x5420, 
+0x4152, 0x4b43, 0x2023, 0x202d, 0x4954, 0x4c54, 0x0045, 
+    IDC_APL_FILENAME_TEMPLATE_COMBO, 0x403, 15, 0
+0x5241, 0x4954, 0x5453, 0x2d20, 0x5420, 0x5449, 0x454c, "\000" 
+    IDC_APL_FILENAME_TEMPLATE_COMBO, 0x403, 15, 0
+0x5428, 0x4152, 0x4b43, 0x2923, 0x5420, 0x5449, 0x454c, "\000" 
+    0
+END
+
+IDD_OPTIONS_PROCESSING DLGINIT
+BEGIN
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0031, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0032, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0033, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0034, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0035, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0036, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0037, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0038, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 2, 0
+0x0039, 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3031, "\000" 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3131, "\000" 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3231, "\000" 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3331, "\000" 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3431, "\000" 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3531, "\000" 
+    IDC_SIMULTANEOUS_FILES_COMBO, 0x403, 3, 0
+0x3631, "\000" 
+    IDC_PRIORITY_COMBO, 0x403, 5, 0
+0x6449, 0x656c, "\000" 
+    IDC_PRIORITY_COMBO, 0x403, 4, 0
+0x6f4c, 0x0077, 
+    IDC_PRIORITY_COMBO, 0x403, 21, 0
+0x6f4e, 0x6d72, 0x6c61, 0x2820, 0x6572, 0x6f63, 0x6d6d, 0x6e65, 0x6564, 
+0x2964, "\000" 
+    IDC_PRIORITY_COMBO, 0x403, 5, 0
+0x6948, 0x6867, "\000" 
+    IDC_VERIFY_MODE_COMBO, 0x403, 53, 0
+0x4627, 0x6c75, 0x206c, 0x6556, 0x6972, 0x7966, 0x2027, 0x6c61, 0x6177, 
+0x7379, 0x2820, 0x6570, 0x6672, 0x726f, 0x736d, 0x6120, 0x6620, 0x6c75, 
+0x206c, 0x6564, 0x6f63, 0x706d, 0x6572, 0x7373, 0x6f69, 0x296e, "\000" 
+    IDC_VERIFY_MODE_COMBO, 0x403, 49, 0
+0x5127, 0x6975, 0x6b63, 0x5620, 0x7265, 0x6669, 0x2779, 0x6920, 0x2066, 
+0x6f70, 0x7373, 0x6269, 0x656c, 0x2820, 0x6863, 0x6365, 0x736b, 0x4d20, 
+0x3544, 0x6320, 0x6568, 0x6b63, 0x7573, 0x296d, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// WAVE
+//
+
+IDR_COMPLETION_WAVE     WAVE                    "res\\Completion Sound.wav"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_OPTIONS_PROCESSING AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ABOUT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_APE_INFO AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_OPTIONS_OUTPUT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_OPTIONS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_FORMAT_PLUGIN_INFO AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_FORMAT_PLUGIN_CONFIGURE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_APE_INFO_FORMAT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif //_WIN32
+#include "res\MAC.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
