@@ -1,0 +1,16 @@
+#
+# $Id: Makefile,v 1.2 2010/05/25 00:00:00 root Exp $
+#
+
+G++     = $(ROOTFS)/host/bin/mipsel-linux-g++
+CFLAGS  = -Wall -mips32r2 -mtune=24kf -O2 -funroll-loops -fomit-frame-pointer
+LIBS    = -ltta++
+SRC	= tta.cpp
+
+all:	$(SRC)
+	$(G++) -c $(CFLAGS) $(SRC)
+	$(G++) -o tta tta.o -L.. $(LIBS)
+
+clean:
+	rm -f tta *.o *.lo *.a
+

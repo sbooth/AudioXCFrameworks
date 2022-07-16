@@ -1,0 +1,17 @@
+base_dir=../../../
+vpath %.h $(base_dir)/rmtta/src/libtta
+vpath %.c $(base_dir)/rmtta/src/libtta
+
+TARGET_TYPE = OBJECT_LIBRARY
+TARGET = libtta++.a
+
+SRC= libtta.cpp
+
+USE_STD_LIB=1
+
+TEMP :=  $(filter-out -Werror,$(CFLAGS))
+CFLAGS := $(TEMP)
+RMCFLAGS += -DCARIBBEAN=1 -fPIC
+
+include $(base_dir)/scripts/inc.Makefile
+
