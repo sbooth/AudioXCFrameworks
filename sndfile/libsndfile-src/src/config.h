@@ -47,7 +47,7 @@
 /* #undef HAVE_ENDIAN_H */
 
 /* Will be set to 1 if flac, ogg, vorbis, and opus are available. */
-#define HAVE_EXTERNAL_XIPH_LIBS 0
+#define HAVE_EXTERNAL_XIPH_LIBS 1
 
 /* Define to 1 if you have the `floor' function. */
 #define HAVE_FLOOR 1
