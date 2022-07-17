@@ -1,0 +1,13 @@
+Only in libopusenc-src: config.h
+diff -ur libopusenc-f51c3aa431c2f0f8fccd8926628b5f330292489f/include/opusenc.h libopusenc-src/include/opusenc.h
+--- libopusenc-f51c3aa431c2f0f8fccd8926628b5f330292489f/include/opusenc.h	2022-02-01 19:50:18.000000000 -0600
++++ libopusenc-src/include/opusenc.h	2022-07-16 21:40:45.000000000 -0500
+@@ -55,7 +55,7 @@
+ # endif
+ 
+ #include <stddef.h>
+-#include <opus.h>
++#include <opus/opus.h>
+ 
+ #ifndef OPE_EXPORT
+ # if defined(WIN32)

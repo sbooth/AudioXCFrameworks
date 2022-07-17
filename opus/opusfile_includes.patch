@@ -1,0 +1,13 @@
+Only in opusfile-src: config.h
+diff -ur opusfile-0.12/include/opusfile.h opusfile-src/include/opusfile.h
+--- opusfile-0.12/include/opusfile.h	2020-06-26 19:44:15.000000000 -0500
++++ opusfile-src/include/opusfile.h	2022-07-16 21:40:30.000000000 -0500
+@@ -107,7 +107,7 @@
+ # include <stdarg.h>
+ # include <stdio.h>
+ # include <ogg/ogg.h>
+-# include <opus_multistream.h>
++# include <opus/opus_multistream.h>
+ 
+ /**@cond PRIVATE*/
+ 

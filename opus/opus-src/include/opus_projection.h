@@ -33,7 +33,7 @@
 #ifndef OPUS_PROJECTION_H
 #define OPUS_PROJECTION_H
 
-#include "opus_multistream.h"
+#include <opus/opus_multistream.h>
 
 #ifdef __cplusplus
 extern "C" {
