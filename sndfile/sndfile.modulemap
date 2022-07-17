@@ -1,0 +1,11 @@
+framework module sndfile {
+	module sndfile {
+		header "sndfile.h"
+		export *
+	}
+
+	module cpp {
+		requires cplusplus
+		header "sndfile.hh"
+	}
+}

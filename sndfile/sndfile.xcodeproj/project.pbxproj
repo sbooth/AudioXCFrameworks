@@ -395,6 +395,7 @@
 		3287D2162816E3D5009EA035 /* mpeg_l3_encode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mpeg_l3_encode.c; sourceTree = "<group>"; };
 		3287D2172816E3D5009EA035 /* mpeg.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mpeg.c; sourceTree = "<group>"; };
 		3287D2182816E3D5009EA035 /* mpeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mpeg.h; sourceTree = "<group>"; };
+		3295D90D28845FF3006AA170 /* sndfile.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = sndfile.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,6 +432,7 @@
 				326EE35028835FF200ADC2A8 /* vorbis.xcodeproj */,
 				326EE34628835FDE00ADC2A8 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
+				3295D90D28845FF3006AA170 /* sndfile.modulemap */,
 				32677941254C4F1E0041B063 /* libsndfile-src */,
 				32028D09254AE93F00A537DE /* Products */,
 				3287D2202816E48E009EA035 /* Frameworks */,
@@ -1171,6 +1173,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1182,6 +1185,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = sndfile.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mega-nerd.libsndfile";
 				PRODUCT_NAME = sndfile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1193,6 +1197,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1204,6 +1209,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = sndfile.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mega-nerd.libsndfile";
 				PRODUCT_NAME = sndfile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1215,6 +1221,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1226,6 +1233,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = sndfile.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mega-nerd.libsndfile";
 				PRODUCT_NAME = sndfile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1239,6 +1247,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1250,6 +1259,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = sndfile.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mega-nerd.libsndfile";
 				PRODUCT_NAME = sndfile;
 				PROVISIONING_PROFILE_SPECIFIER = "";
