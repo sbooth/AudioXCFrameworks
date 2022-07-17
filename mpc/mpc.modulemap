@@ -1,0 +1,23 @@
+framework module mpc {
+	module dec {
+		header "datatypes.h"
+		header "minimax.h"
+		header "mpc_types.h"
+		header "mpcdec.h"
+		header "mpcmath.h"
+		header "reader.h"
+		header "streaminfo.h"
+		export *
+	}
+
+	module enc {
+		header "libmpcenc.h"
+		header "stream_encoder.h"
+		export *
+	}
+
+	module psy {
+		header "libmpcpsy.h"
+		export *
+	}
+}

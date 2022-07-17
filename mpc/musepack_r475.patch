@@ -1,6 +1,60 @@
-diff -u musepack_src_r475/libmpcenc/bitstream.c musepack-src/libmpcenc/bitstream.c
+Only in musepack-src: .DS_Store
+Only in musepack-src/include: .DS_Store
+diff -ur musepack_src_r475/include/mpc/mpc_types.h musepack-src/include/mpc/mpc_types.h
+--- musepack_src_r475/include/mpc/mpc_types.h	2011-07-28 13:52:38.000000000 -0500
++++ musepack-src/include/mpc/mpc_types.h	2022-07-17 11:03:23.000000000 -0500
+@@ -38,7 +38,6 @@
+ #endif
+ 
+ #include <stdlib.h>
+-#include <memory.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ur musepack_src_r475/include/mpc/mpcdec.h musepack-src/include/mpc/mpcdec.h
+--- musepack_src_r475/include/mpc/mpcdec.h	2009-02-23 12:44:04.000000000 -0600
++++ musepack-src/include/mpc/mpcdec.h	2022-07-16 16:27:26.000000000 -0500
+@@ -39,8 +39,8 @@
+ #pragma once
+ #endif
+ 
+-#include "reader.h"
+-#include "streaminfo.h"
++#include <mpc/reader.h>
++#include <mpc/streaminfo.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ur musepack_src_r475/libmpcdec/mpc_reader.c musepack-src/libmpcdec/mpc_reader.c
+--- musepack_src_r475/libmpcdec/mpc_reader.c	2011-07-28 13:51:30.000000000 -0500
++++ musepack-src/libmpcdec/mpc_reader.c	2022-07-17 11:02:25.000000000 -0500
+@@ -36,6 +36,7 @@
+ #include <mpc/reader.h>
+ #include "internal.h"
+ #include <stdio.h>
++#include <memory.h>
+ 
+ #define STDIO_MAGIC 0xF34B963C ///< Just a random safe-check value...
+ typedef struct mpc_reader_stdio_t {
+diff -ur musepack_src_r475/libmpcdec/requant.h musepack-src/libmpcdec/requant.h
+--- musepack_src_r475/libmpcdec/requant.h	2009-02-23 12:44:04.000000000 -0600
++++ musepack-src/libmpcdec/requant.h	2022-07-16 16:27:26.000000000 -0500
+@@ -47,9 +47,9 @@
+ 
+ 
+ /* C O N S T A N T S */
+-const mpc_uint8_t      Res_bit [18];     ///< Bits per sample for chosen quantizer
+-const MPC_SAMPLE_FORMAT __Cc    [1 + 18]; ///< Requantization coefficients
+-const mpc_int16_t       __Dc    [1 + 18]; ///< Requantization offset
++extern const mpc_uint8_t      Res_bit [18];     ///< Bits per sample for chosen quantizer
++extern const MPC_SAMPLE_FORMAT __Cc    [1 + 18]; ///< Requantization coefficients
++extern const mpc_int16_t       __Dc    [1 + 18]; ///< Requantization offset
+ 
+ #define Cc (__Cc + 1)
+ #define Dc (__Dc + 1)
+diff -ur musepack_src_r475/libmpcenc/bitstream.c musepack-src/libmpcenc/bitstream.c
 --- musepack_src_r475/libmpcenc/bitstream.c	2009-06-24 15:22:00.000000000 -0500
-+++ musepack-src/libmpcenc/bitstream.c	2020-11-30 06:14:15.000000000 -0600
++++ musepack-src/libmpcenc/bitstream.c	2022-07-16 16:27:26.000000000 -0500
 @@ -173,14 +173,13 @@
  
  void writeMagic(mpc_encoder_t * e)
@@ -60,10 +114,18 @@ diff -u musepack_src_r475/libmpcenc/bitstream.c musepack-src/libmpcenc/bitstream
  
  	// write the seek table datas
  	len = encodeSize(e->seek_pos, (char*)tmp, MPC_FALSE);
-diff -u musepack_src_r475/libmpcenc/encode_sv7.c musepack-src/libmpcenc/encode_sv7.c
+diff -ur musepack_src_r475/libmpcenc/encode_sv7.c musepack-src/libmpcenc/encode_sv7.c
 --- musepack_src_r475/libmpcenc/encode_sv7.c	2009-02-23 12:15:46.000000000 -0600
-+++ musepack-src/libmpcenc/encode_sv7.c	2020-11-30 06:30:33.000000000 -0600
-@@ -384,7 +384,7 @@
++++ musepack-src/libmpcenc/encode_sv7.c	2022-07-17 11:02:41.000000000 -0500
+@@ -20,6 +20,7 @@
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
++#include <memory.h>
+ 
+ #include "libmpcenc.h"
+ #include <mpc/minimax.h>
+@@ -384,7 +385,7 @@
  	e->framesInBlock++;
  	if (e->framesInBlock == (1 << e->frames_per_block_pwr)) {
  		if ((e->block_cnt & ((1 << e->seek_pwr) - 1)) == 0) {
@@ -72,9 +134,9 @@ diff -u musepack_src_r475/libmpcenc/encode_sv7.c musepack-src/libmpcenc/encode_s
  			e->seek_pos++;
  		}
  		e->block_cnt++;
-diff -u musepack_src_r475/libmpcenc/libmpcenc.h musepack-src/libmpcenc/libmpcenc.h
+diff -ur musepack_src_r475/libmpcenc/libmpcenc.h musepack-src/libmpcenc/libmpcenc.h
 --- musepack_src_r475/libmpcenc/libmpcenc.h	2007-05-10 05:01:20.000000000 -0500
-+++ musepack-src/libmpcenc/libmpcenc.h	2020-11-30 06:14:10.000000000 -0600
++++ musepack-src/libmpcenc/libmpcenc.h	2022-07-16 16:27:26.000000000 -0500
 @@ -19,7 +19,6 @@
  #pragma once
  
@@ -108,3 +170,14 @@ diff -u musepack_src_r475/libmpcenc/libmpcenc.h musepack-src/libmpcenc/libmpcenc
  
  	mpc_uint32_t MS_Channelmode;
  	mpc_uint32_t Overflows; //       = 0;      // number of internal (filterbank) clippings
+diff -ur musepack_src_r475/libmpcenc/quant.c musepack-src/libmpcenc/quant.c
+--- musepack_src_r475/libmpcenc/quant.c	2009-07-31 07:37:44.000000000 -0500
++++ musepack-src/libmpcenc/quant.c	2022-07-17 11:02:01.000000000 -0500
+@@ -21,6 +21,7 @@
+ #include "libmpcenc.h"
+ #include <mpc/minimax.h>
+ #include <mpc/mpcmath.h>
++#include <memory.h>
+ 
+ /* V A R I A B L E S */
+ float  __SCF    [128 + 6];   // tabulated scalefactors

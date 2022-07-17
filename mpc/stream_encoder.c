@@ -27,6 +27,7 @@
 #import <mpc/minimax.h>
 
 #import <stdio.h>
+#import <memory.h>
 
 #pragma mark - config.h
 

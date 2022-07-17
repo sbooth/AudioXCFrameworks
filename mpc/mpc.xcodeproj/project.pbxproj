@@ -118,6 +118,7 @@
 		32677C15254C7D570041B063 /* huffman-bcl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "huffman-bcl.c"; sourceTree = "<group>"; };
 		32677C16254C7D570041B063 /* crc32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		32677C17254C7D570041B063 /* fastmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fastmath.c; sourceTree = "<group>"; };
+		3295D9232884673E006AA170 /* mpc.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = mpc.modulemap; sourceTree = "<group>"; };
 		32EB2DF2257AA3BC006330CC /* stream_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
 		32EB2DF3257AA3BC006330CC /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +147,7 @@
 				32EB2DF3257AA3BC006330CC /* stream_encoder.h */,
 				32EB2DF2257AA3BC006330CC /* stream_encoder.c */,
 				3267711F254B5E560041B063 /* Info.plist */,
+				3295D9232884673E006AA170 /* mpc.modulemap */,
 				32677BB5254C7D570041B063 /* musepack-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
@@ -581,6 +583,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpc.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -604,6 +607,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpc.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -627,6 +631,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpc.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -652,6 +657,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpc.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";

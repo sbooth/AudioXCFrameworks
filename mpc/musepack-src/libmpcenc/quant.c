@@ -21,6 +21,7 @@
 #include "libmpcenc.h"
 #include <mpc/minimax.h>
 #include <mpc/mpcmath.h>
+#include <memory.h>
 
 /* V A R I A B L E S */
 float  __SCF    [128 + 6];   // tabulated scalefactors
