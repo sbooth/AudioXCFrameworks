@@ -26,7 +26,7 @@
 #ifndef TAGLIB_STRING_H
 #define TAGLIB_STRING_H
 
-#include "tbytevector.h"
+#include <taglib/tbytevector.h>
 #include <string>
 
 /*!

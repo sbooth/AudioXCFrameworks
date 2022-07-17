@@ -26,11 +26,11 @@
 #ifndef TAGLIB_FILEREF_H
 #define TAGLIB_FILEREF_H
 
-#include "taglib_export.h"
-#include "tfile.h"
-#include "tstringlist.h"
-#include "tpropertymap.h"
-#include "audioproperties.h"
+#include <taglib/taglib_export.h>
+#include <taglib/tfile.h>
+#include <taglib/tstringlist.h>
+#include <taglib/tpropertymap.h>
+#include <taglib/audioproperties.h>
 
 namespace TagLib {
 

@@ -26,9 +26,9 @@
 #ifndef TAGLIB_STRINGHANDLER_H
 #define TAGLIB_STRINGHANDLER_H
 
-#include "tstring.h"
-#include "tbytevector.h"
-#include "taglib_export.h"
+#include <taglib/tstring.h>
+#include <taglib/tbytevector.h>
+#include <taglib/taglib_export.h>
 
 namespace TagLib 
 {

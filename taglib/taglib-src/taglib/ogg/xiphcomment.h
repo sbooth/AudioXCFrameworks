@@ -26,14 +26,14 @@
 #ifndef TAGLIB_VORBISCOMMENT_H
 #define TAGLIB_VORBISCOMMENT_H
 
-#include "tag.h"
-#include "tlist.h"
-#include "tmap.h"
-#include "tstring.h"
-#include "tstringlist.h"
-#include "tbytevector.h"
-#include "flacpicture.h"
-#include "taglib_export.h"
+#include <taglib/tag.h>
+#include <taglib/tlist.h>
+#include <taglib/tmap.h>
+#include <taglib/tstring.h>
+#include <taglib/tstringlist.h>
+#include <taglib/tbytevector.h>
+#include <taglib/flacpicture.h>
+#include <taglib/taglib_export.h>
 
 namespace TagLib {
 

@@ -26,8 +26,8 @@
 #ifndef TAGLIB_AUDIOPROPERTIES_H
 #define TAGLIB_AUDIOPROPERTIES_H
 
-#include "taglib_export.h"
-#include "tstring.h"
+#include <taglib/taglib_export.h>
+#include <taglib/tstring.h>
 
 namespace TagLib {
 

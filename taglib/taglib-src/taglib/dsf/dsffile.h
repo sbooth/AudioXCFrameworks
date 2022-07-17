@@ -26,9 +26,9 @@
 #ifndef TAGLIB_DSFFILE_H
 #define TAGLIB_DSFFILE_H
 
-#include "tfile.h"
-#include "id3v2tag.h"
-#include "dsfproperties.h"
+#include <taglib/tfile.h>
+#include <taglib/id3v2tag.h>
+#include <taglib/dsfproperties.h>
 
 namespace TagLib {
 

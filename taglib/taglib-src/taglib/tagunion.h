@@ -28,7 +28,7 @@
 
 // This file is not a part of TagLib public interface. This is not installed.
 
-#include "tag.h"
+#include <taglib/tag.h>
 
 #ifndef DO_NOT_DOCUMENT
 

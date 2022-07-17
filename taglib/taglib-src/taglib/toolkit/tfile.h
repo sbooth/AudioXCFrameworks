@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
     copyright            : (C) 2002 - 2008 by Scott Wheeler
     email                : wheeler@kde.org
  ***************************************************************************/
@@ -26,9 +26,9 @@
 #ifndef TAGLIB_FILE_H
 #define TAGLIB_FILE_H
 
-#include "tbytevector.h"
-#include "tag.h"
-#include "tiostream.h"
+#include <taglib/tbytevector.h>
+#include <taglib/tag.h>
+#include <taglib/tiostream.h>
 
 namespace TagLib {
 

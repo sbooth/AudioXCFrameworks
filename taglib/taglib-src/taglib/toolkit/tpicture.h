@@ -26,10 +26,10 @@
 #ifndef TAGLIB_PICTURE_H
 #define TAGLIB_PICTURE_H
 
-#include "taglib_export.h"
-#include "tbytevector.h"
-#include "tmap.h"
-#include "tstring.h"
+#include <taglib/taglib_export.h>
+#include <taglib/tbytevector.h>
+#include <taglib/tmap.h>
+#include <taglib/tstring.h>
 
 namespace TagLib {
 

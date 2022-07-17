@@ -26,13 +26,13 @@
 #ifndef TAGLIB_APETAG_H
 #define TAGLIB_APETAG_H
 
-#include "tag.h"
-#include "tbytevector.h"
-#include "tmap.h"
-#include "tstring.h"
-#include "taglib_export.h"
+#include <taglib/tag.h>
+#include <taglib/tbytevector.h>
+#include <taglib/tmap.h>
+#include <taglib/tstring.h>
+#include <taglib/taglib_export.h>
 
-#include "apeitem.h"
+#include <taglib/apeitem.h>
 
 #define FRONT_COVER "COVER ART (FRONT)"
 #define BACK_COVER "COVER ART (BACK)"

@@ -26,10 +26,10 @@
 #ifndef TAGLIB_EBMLFILE_H
 #define TAGLIB_EBMLFILE_H
 
-#include "taglib_export.h"
-#include "tfile.h"
+#include <taglib/taglib_export.h>
+#include <taglib/tfile.h>
 
-#include "ebmlconstants.h"
+#include <taglib/ebmlconstants.h>
 
 namespace TagLib {
 

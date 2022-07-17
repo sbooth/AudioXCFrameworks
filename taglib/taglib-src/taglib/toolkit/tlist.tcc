@@ -25,7 +25,7 @@
  ***************************************************************************/
 
 #include <algorithm>
-#include "trefcounter.h"
+#include <taglib/trefcounter.h>
 
 namespace TagLib {
 

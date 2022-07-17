@@ -22,12 +22,12 @@
 #ifndef TAGLIB_ITFILE_H
 #define TAGLIB_ITFILE_H
 
-#include "tfile.h"
-#include "audioproperties.h"
-#include "taglib_export.h"
-#include "modfilebase.h"
-#include "modtag.h"
-#include "itproperties.h"
+#include <taglib/tfile.h>
+#include <taglib/audioproperties.h>
+#include <taglib/taglib_export.h>
+#include <taglib/modfilebase.h>
+#include <taglib/modtag.h>
+#include <taglib/itproperties.h>
 
 namespace TagLib {
 

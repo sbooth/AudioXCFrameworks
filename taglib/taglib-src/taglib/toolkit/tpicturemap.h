@@ -26,10 +26,10 @@
 #ifndef TAGLIB_PICTUREMAP_H
 #define TAGLIB_PICTUREMAP_H
 
-#include "tlist.h"
-#include "tmap.h"
-#include "taglib_export.h"
-#include "tpicture.h"
+#include <taglib/tlist.h>
+#include <taglib/tmap.h>
+#include <taglib/taglib_export.h>
+#include <taglib/tpicture.h>
 
 namespace TagLib {
 

@@ -26,10 +26,10 @@
 #ifndef TAGLIB_WAVFILE_H
 #define TAGLIB_WAVFILE_H
 
-#include "rifffile.h"
-#include "id3v2tag.h"
-#include "infotag.h"
-#include "wavproperties.h"
+#include <taglib/rifffile.h>
+#include <taglib/id3v2tag.h>
+#include <taglib/infotag.h>
+#include <taglib/wavproperties.h>
 
 namespace TagLib {
 

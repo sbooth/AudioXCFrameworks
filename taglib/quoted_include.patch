@@ -1,6 +1,6 @@
-diff -ur taglib-src/taglib/ape/apefile.cpp taglib-quoted-include/taglib/ape/apefile.cpp
---- taglib-src/taglib/ape/apefile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ape/apefile.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefile.cpp taglib-src/taglib/ape/apefile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apefile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -33,13 +33,13 @@
  
  #include <tbytevector.h>
@@ -19,9 +19,25 @@ diff -ur taglib-src/taglib/ape/apefile.cpp taglib-quoted-include/taglib/ape/apef
  
  #include "apefile.h"
  #include "apetag.h"
-diff -ur taglib-src/taglib/ape/apefooter.cpp taglib-quoted-include/taglib/ape/apefooter.cpp
---- taglib-src/taglib/ape/apefooter.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ape/apefooter.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefile.h taglib-src/taglib/ape/apefile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apefile.h	2022-07-16 22:27:20.000000000 -0500
+@@ -34,9 +34,9 @@
+ #ifndef TAGLIB_APEFILE_H
+ #define TAGLIB_APEFILE_H
+ 
+-#include "tfile.h"
+-#include "taglib_export.h"
+-#include "apeproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/taglib_export.h>
++#include <taglib/apeproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefooter.cpp taglib-src/taglib/ape/apefooter.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefooter.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apefooter.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
  #include <bitset>
  
@@ -31,9 +47,23 @@ diff -ur taglib-src/taglib/ape/apefooter.cpp taglib-quoted-include/taglib/ape/ap
  
  #include "apefooter.h"
  
-diff -ur taglib-src/taglib/ape/apeitem.cpp taglib-quoted-include/taglib/ape/apeitem.cpp
---- taglib-src/taglib/ape/apeitem.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ape/apeitem.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefooter.h taglib-src/taglib/ape/apefooter.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apefooter.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apefooter.h	2022-07-16 22:27:52.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_APEFOOTER_H
+ #define TAGLIB_APEFOOTER_H
+ 
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeitem.cpp taglib-src/taglib/ape/apeitem.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeitem.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apeitem.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,8 +24,8 @@
   ***************************************************************************/
  
@@ -45,9 +75,25 @@ diff -ur taglib-src/taglib/ape/apeitem.cpp taglib-quoted-include/taglib/ape/apei
  
  #include "apeitem.h"
  
-diff -ur taglib-src/taglib/ape/apeproperties.cpp taglib-quoted-include/taglib/ape/apeproperties.cpp
---- taglib-src/taglib/ape/apeproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ape/apeproperties.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeitem.h taglib-src/taglib/ape/apeitem.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeitem.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apeitem.h	2022-07-16 22:28:12.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_APEITEM_H
+ #define TAGLIB_APEITEM_H
+ 
+-#include "tbytevector.h"
+-#include "tstring.h"
+-#include "tstringlist.h"
++#include <taglib/tbytevector.h>
++#include <taglib/tstring.h>
++#include <taglib/tstringlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeproperties.cpp taglib-src/taglib/ape/apeproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apeproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
   ***************************************************************************/
  
@@ -57,9 +103,23 @@ diff -ur taglib-src/taglib/ape/apeproperties.cpp taglib-quoted-include/taglib/ap
  
  #include "id3v2tag.h"
  #include "apeproperties.h"
-diff -ur taglib-src/taglib/ape/apetag.cpp taglib-quoted-include/taglib/ape/apetag.cpp
---- taglib-src/taglib/ape/apetag.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ape/apetag.cpp	2020-10-31 22:48:50.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeproperties.h taglib-src/taglib/ape/apeproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apeproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apeproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -30,8 +30,8 @@
+ #ifndef TAGLIB_APEPROPERTIES_H
+ #define TAGLIB_APEPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apetag.cpp taglib-src/taglib/ape/apetag.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apetag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apetag.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -36,8 +36,8 @@
  #include <tmap.h>
  #include <tpicturemap.h>
@@ -71,9 +131,32 @@ diff -ur taglib-src/taglib/ape/apetag.cpp taglib-quoted-include/taglib/ape/apeta
  
  #include "apetag.h"
  #include "apefooter.h"
-diff -ur taglib-src/taglib/asf/asfattribute.cpp taglib-quoted-include/taglib/asf/asfattribute.cpp
---- taglib-src/taglib/asf/asfattribute.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/asf/asfattribute.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apetag.h taglib-src/taglib/ape/apetag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ape/apetag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ape/apetag.h	2022-07-16 22:28:48.000000000 -0500
+@@ -26,13 +26,13 @@
+ #ifndef TAGLIB_APETAG_H
+ #define TAGLIB_APETAG_H
+ 
+-#include "tag.h"
+-#include "tbytevector.h"
+-#include "tmap.h"
+-#include "tstring.h"
+-#include "taglib_export.h"
++#include <taglib/tag.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tmap.h>
++#include <taglib/tstring.h>
++#include <taglib/taglib_export.h>
+ 
+-#include "apeitem.h"
++#include <taglib/apeitem.h>
+ 
+ #define FRONT_COVER "COVER ART (FRONT)"
+ #define BACK_COVER "COVER ART (BACK)"
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfattribute.cpp taglib-src/taglib/asf/asfattribute.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfattribute.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asfattribute.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -1,4 +1,4 @@
 -﻿/**************************************************************************
 +/**************************************************************************
@@ -91,9 +174,27 @@ diff -ur taglib-src/taglib/asf/asfattribute.cpp taglib-quoted-include/taglib/asf
  
  #include "asfattribute.h"
  #include "asffile.h"
-diff -ur taglib-src/taglib/asf/asffile.cpp taglib-quoted-include/taglib/asf/asffile.cpp
---- taglib-src/taglib/asf/asffile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/asf/asffile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfattribute.h taglib-src/taglib/asf/asfattribute.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfattribute.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asfattribute.h	2022-07-16 22:29:45.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_ASFATTRIBUTE_H
+ #define TAGLIB_ASFATTRIBUTE_H
+ 
+-#include "tstring.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
+-#include "asfpicture.h"
++#include <taglib/tstring.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
++#include <taglib/asfpicture.h>
+ 
+ namespace TagLib
+ {
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asffile.cpp taglib-src/taglib/asf/asffile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asffile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,12 +23,12 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -110,9 +211,29 @@ diff -ur taglib-src/taglib/asf/asffile.cpp taglib-quoted-include/taglib/asf/asff
  
  #include "asffile.h"
  #include "asftag.h"
-diff -ur taglib-src/taglib/asf/asfpicture.cpp taglib-quoted-include/taglib/asf/asfpicture.cpp
---- taglib-src/taglib/asf/asfpicture.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/asf/asfpicture.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asffile.h taglib-src/taglib/asf/asffile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asffile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asffile.h	2022-07-16 22:29:38.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_ASFFILE_H
+ #define TAGLIB_ASFFILE_H
+ 
+-#include "tag.h"
+-#include "tfile.h"
+-#include "taglib_export.h"
+-#include "asfproperties.h"
+-#include "asftag.h"
++#include <taglib/tag.h>
++#include <taglib/tfile.h>
++#include <taglib/taglib_export.h>
++#include <taglib/asfproperties.h>
++#include <taglib/asftag.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfpicture.cpp taglib-src/taglib/asf/asfpicture.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfpicture.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asfpicture.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,8 +24,8 @@
   ***************************************************************************/
  
@@ -124,9 +245,27 @@ diff -ur taglib-src/taglib/asf/asfpicture.cpp taglib-quoted-include/taglib/asf/a
  
  #include "asfattribute.h"
  #include "asffile.h"
-diff -ur taglib-src/taglib/asf/asfproperties.cpp taglib-quoted-include/taglib/asf/asfproperties.cpp
---- taglib-src/taglib/asf/asfproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/asf/asfproperties.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfpicture.h taglib-src/taglib/asf/asfpicture.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfpicture.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asfpicture.h	2022-07-16 22:29:15.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef ASFPICTURE_H
+ #define ASFPICTURE_H
+ 
+-#include "tstring.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
+-#include "attachedpictureframe.h"
++#include <taglib/tstring.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
++#include <taglib/attachedpictureframe.h>
+ 
+ namespace TagLib
+ {
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfproperties.cpp taglib-src/taglib/asf/asfproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asfproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -136,9 +275,71 @@ diff -ur taglib-src/taglib/asf/asfproperties.cpp taglib-quoted-include/taglib/as
  #include <tstring.h>
  #include "asfproperties.h"
  
-diff -ur taglib-src/taglib/dsdiff/dsdifffile.cpp taglib-quoted-include/taglib/dsdiff/dsdifffile.cpp
---- taglib-src/taglib/dsdiff/dsdifffile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/dsdiff/dsdifffile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfproperties.h taglib-src/taglib/asf/asfproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asfproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asfproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_ASFPROPERTIES_H
+ #define TAGLIB_ASFPROPERTIES_H
+ 
+-#include "audioproperties.h"
+-#include "tstring.h"
+-#include "taglib_export.h"
++#include <taglib/audioproperties.h>
++#include <taglib/tstring.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asftag.h taglib-src/taglib/asf/asftag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/asf/asftag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/asf/asftag.h	2022-07-16 22:29:25.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_ASFTAG_H
+ #define TAGLIB_ASFTAG_H
+ 
+-#include "tag.h"
+-#include "tlist.h"
+-#include "tmap.h"
+-#include "taglib_export.h"
+-#include "asfattribute.h"
++#include <taglib/tag.h>
++#include <taglib/tlist.h>
++#include <taglib/tmap.h>
++#include <taglib/taglib_export.h>
++#include <taglib/asfattribute.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/audioproperties.h taglib-src/taglib/audioproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/audioproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/audioproperties.h	2022-07-16 22:28:02.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_AUDIOPROPERTIES_H
+ #define TAGLIB_AUDIOPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "tstring.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tstring.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdiffdiintag.h taglib-src/taglib/dsdiff/dsdiffdiintag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdiffdiintag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsdiff/dsdiffdiintag.h	2022-07-16 22:28:42.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_DSDIFFDIINTAG_H
+ #define TAGLIB_DSDIFFDIINTAG_H
+ 
+-#include "tag.h"
++#include <taglib/tag.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdifffile.cpp taglib-src/taglib/dsdiff/dsdifffile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdifffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsdiff/dsdifffile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,12 +24,12 @@
   ***************************************************************************/
  
@@ -155,9 +356,27 @@ diff -ur taglib-src/taglib/dsdiff/dsdifffile.cpp taglib-quoted-include/taglib/ds
  
  #include "tagunion.h"
  #include "dsdifffile.h"
-diff -ur taglib-src/taglib/dsdiff/dsdiffproperties.cpp taglib-quoted-include/taglib/dsdiff/dsdiffproperties.cpp
---- taglib-src/taglib/dsdiff/dsdiffproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/dsdiff/dsdiffproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdifffile.h taglib-src/taglib/dsdiff/dsdifffile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdifffile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsdiff/dsdifffile.h	2022-07-16 22:30:23.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_DSDIFFFILE_H
+ #define TAGLIB_DSDIFFFILE_H
+ 
+-#include "rifffile.h"
+-#include "id3v2tag.h"
+-#include "dsdiffproperties.h"
+-#include "dsdiffdiintag.h"
++#include <taglib/rifffile.h>
++#include <taglib/id3v2tag.h>
++#include <taglib/dsdiffproperties.h>
++#include <taglib/dsdiffdiintag.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdiffproperties.cpp taglib-src/taglib/dsdiff/dsdiffproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdiffproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsdiff/dsdiffproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -167,9 +386,21 @@ diff -ur taglib-src/taglib/dsdiff/dsdiffproperties.cpp taglib-quoted-include/tag
  
  #include "dsdiffproperties.h"
  
-diff -ur taglib-src/taglib/dsf/dsffile.cpp taglib-quoted-include/taglib/dsf/dsffile.cpp
---- taglib-src/taglib/dsf/dsffile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/dsf/dsffile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdiffproperties.h taglib-src/taglib/dsdiff/dsdiffproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsdiff/dsdiffproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsdiff/dsdiffproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_DSDIFFPROPERTIES_H
+ #define TAGLIB_DSDIFFPROPERTIES_H
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsffile.cpp taglib-src/taglib/dsf/dsffile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsf/dsffile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,12 +24,12 @@
   ***************************************************************************/
  
@@ -186,9 +417,25 @@ diff -ur taglib-src/taglib/dsf/dsffile.cpp taglib-quoted-include/taglib/dsf/dsff
  
  #include "dsffile.h"
  
-diff -ur taglib-src/taglib/dsf/dsfproperties.cpp taglib-quoted-include/taglib/dsf/dsfproperties.cpp
---- taglib-src/taglib/dsf/dsfproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/dsf/dsfproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsffile.h taglib-src/taglib/dsf/dsffile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsffile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsf/dsffile.h	2022-07-16 22:30:33.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_DSFFILE_H
+ #define TAGLIB_DSFFILE_H
+ 
+-#include "tfile.h"
+-#include "id3v2tag.h"
+-#include "dsfproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/id3v2tag.h>
++#include <taglib/dsfproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsfproperties.cpp taglib-src/taglib/dsf/dsfproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsfproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsf/dsfproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -198,9 +445,100 @@ diff -ur taglib-src/taglib/dsf/dsfproperties.cpp taglib-quoted-include/taglib/ds
  
  #include "dsfproperties.h"
  
-diff -ur taglib-src/taglib/fileref.cpp taglib-quoted-include/taglib/fileref.cpp
---- taglib-src/taglib/fileref.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/fileref.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsfproperties.h taglib-src/taglib/dsf/dsfproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/dsf/dsfproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/dsf/dsfproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_DSFPROPERTIES_H
+ #define TAGLIB_DSFPROPERTIES_H
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/ebmlelement.h taglib-src/taglib/ebml/ebmlelement.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/ebmlelement.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ebml/ebmlelement.h	2022-07-16 22:30:51.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_EBMLELEMENT_H
+ #define TAGLIB_EBMLELEMENT_H
+ 
+-#include "tlist.h"
+-#include "tbytevector.h"
+-#include "tstring.h"
++#include <taglib/tlist.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tstring.h>
+ 
+-#include "ebmlfile.h"
++#include <taglib/ebmlfile.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/ebmlfile.h taglib-src/taglib/ebml/ebmlfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/ebmlfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ebml/ebmlfile.h	2022-07-16 22:30:44.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_EBMLFILE_H
+ #define TAGLIB_EBMLFILE_H
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
+ 
+-#include "ebmlconstants.h"
++#include <taglib/ebmlconstants.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/matroska/ebmlmatroskaaudio.h taglib-src/taglib/ebml/matroska/ebmlmatroskaaudio.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/matroska/ebmlmatroskaaudio.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ebml/matroska/ebmlmatroskaaudio.h	2022-07-16 22:30:58.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_EBMLMATROSKAAUDIO_H
+ #define TAGLIB_EBMLMATROSKAAUDIO_H
+ 
+-#include "ebmlmatroskafile.h"
++#include <taglib/ebmlmatroskafile.h>
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/matroska/ebmlmatroskaconstants.h taglib-src/taglib/ebml/matroska/ebmlmatroskaconstants.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/matroska/ebmlmatroskaconstants.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ebml/matroska/ebmlmatroskaconstants.h	2022-07-16 22:31:04.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_EBMLMATROSKACONSTANTS_H
+ #define TAGLIB_EBMLMATROSKACONSTANTS_H
+ 
+-#include "ebmlconstants.h"
+-#include "tstring.h"
++#include <taglib/ebmlconstants.h>
++#include <taglib/tstring.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/matroska/ebmlmatroskafile.h taglib-src/taglib/ebml/matroska/ebmlmatroskafile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ebml/matroska/ebmlmatroskafile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ebml/matroska/ebmlmatroskafile.h	2022-07-16 22:31:09.000000000 -0500
+@@ -27,8 +27,8 @@
+ #ifndef TAGLIB_EBMLMATROSKAFILE_H
+ #define TAGLIB_EBMLMATROSKAFILE_H
+ 
+-#include "ebmlelement.h"
+-#include "audioproperties.h"
++#include <taglib/ebmlelement.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/fileref.cpp taglib-src/taglib/fileref.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/fileref.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/fileref.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -30,8 +30,8 @@
  #include <tfile.h>
  #include <tfilestream.h>
@@ -212,9 +550,29 @@ diff -ur taglib-src/taglib/fileref.cpp taglib-quoted-include/taglib/fileref.cpp
  
  #include "fileref.h"
  #include "asffile.h"
-diff -ur taglib-src/taglib/flac/flacfile.cpp taglib-quoted-include/taglib/flac/flacfile.cpp
---- taglib-src/taglib/flac/flacfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/flac/flacfile.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/fileref.h taglib-src/taglib/fileref.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/fileref.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/fileref.h	2022-07-16 22:32:15.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_FILEREF_H
+ #define TAGLIB_FILEREF_H
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
+-#include "tstringlist.h"
+-#include "tpropertymap.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
++#include <taglib/tstringlist.h>
++#include <taglib/tpropertymap.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacfile.cpp taglib-src/taglib/flac/flacfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,11 +26,11 @@
  #include <tbytevector.h>
  #include <tstring.h>
@@ -231,9 +589,32 @@ diff -ur taglib-src/taglib/flac/flacfile.cpp taglib-quoted-include/taglib/flac/f
  
  #include <id3v2header.h>
  #include <id3v2tag.h>
-diff -ur taglib-src/taglib/flac/flacmetadatablock.cpp taglib-quoted-include/taglib/flac/flacmetadatablock.cpp
---- taglib-src/taglib/flac/flacmetadatablock.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/flac/flacmetadatablock.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacfile.h taglib-src/taglib/flac/flacfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacfile.h	2022-07-16 22:31:58.000000000 -0500
+@@ -26,13 +26,13 @@
+ #ifndef TAGLIB_FLACFILE_H
+ #define TAGLIB_FLACFILE_H
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
+-#include "tlist.h"
+-#include "tag.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
++#include <taglib/tlist.h>
++#include <taglib/tag.h>
+ 
+-#include "flacpicture.h"
+-#include "flacproperties.h"
++#include <taglib/flacpicture.h>
++#include <taglib/flacproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacmetadatablock.cpp taglib-src/taglib/flac/flacmetadatablock.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacmetadatablock.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacmetadatablock.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -243,9 +624,25 @@ diff -ur taglib-src/taglib/flac/flacmetadatablock.cpp taglib-quoted-include/tagl
  #include "flacmetadatablock.h"
  
  using namespace TagLib;
-diff -ur taglib-src/taglib/flac/flacpicture.cpp taglib-quoted-include/taglib/flac/flacpicture.cpp
---- taglib-src/taglib/flac/flacpicture.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/flac/flacpicture.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacmetadatablock.h taglib-src/taglib/flac/flacmetadatablock.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacmetadatablock.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacmetadatablock.h	2022-07-16 22:30:03.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_FLACMETADATABLOCK_H
+ #define TAGLIB_FLACMETADATABLOCK_H
+ 
+-#include "tlist.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tlist.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacpicture.cpp taglib-src/taglib/flac/flacpicture.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacpicture.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacpicture.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -255,9 +652,29 @@ diff -ur taglib-src/taglib/flac/flacpicture.cpp taglib-quoted-include/taglib/fla
  #include "flacpicture.h"
  
  using namespace TagLib;
-diff -ur taglib-src/taglib/flac/flacproperties.cpp taglib-quoted-include/taglib/flac/flacproperties.cpp
---- taglib-src/taglib/flac/flacproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/flac/flacproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacpicture.h taglib-src/taglib/flac/flacpicture.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacpicture.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacpicture.h	2022-07-16 22:31:40.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_FLACPICTURE_H
+ #define TAGLIB_FLACPICTURE_H
+ 
+-#include "tlist.h"
+-#include "tstring.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
+-#include "flacmetadatablock.h"
++#include <taglib/tlist.h>
++#include <taglib/tstring.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
++#include <taglib/flacmetadatablock.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacproperties.cpp taglib-src/taglib/flac/flacproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -267,9 +684,23 @@ diff -ur taglib-src/taglib/flac/flacproperties.cpp taglib-quoted-include/taglib/
  
  #include "flacproperties.h"
  #include "flacfile.h"
-diff -ur taglib-src/taglib/flac/flacunknownmetadatablock.cpp taglib-quoted-include/taglib/flac/flacunknownmetadatablock.cpp
---- taglib-src/taglib/flac/flacunknownmetadatablock.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/flac/flacunknownmetadatablock.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacproperties.h taglib-src/taglib/flac/flacproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_FLACPROPERTIES_H
+ #define TAGLIB_FLACPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacunknownmetadatablock.cpp taglib-src/taglib/flac/flacunknownmetadatablock.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacunknownmetadatablock.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacunknownmetadatablock.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -279,9 +710,131 @@ diff -ur taglib-src/taglib/flac/flacunknownmetadatablock.cpp taglib-quoted-inclu
  #include <tstring.h>
  #include "flacunknownmetadatablock.h"
  
-diff -ur taglib-src/taglib/mp4/mp4atom.cpp taglib-quoted-include/taglib/mp4/mp4atom.cpp
---- taglib-src/taglib/mp4/mp4atom.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mp4/mp4atom.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacunknownmetadatablock.h taglib-src/taglib/flac/flacunknownmetadatablock.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/flac/flacunknownmetadatablock.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/flac/flacunknownmetadatablock.h	2022-07-16 22:31:47.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_FLACUNKNOWNMETADATABLOCK_H
+ #define TAGLIB_FLACUNKNOWNMETADATABLOCK_H
+ 
+-#include "tlist.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
+-#include "flacmetadatablock.h"
++#include <taglib/tlist.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
++#include <taglib/flacmetadatablock.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/it/itfile.h taglib-src/taglib/it/itfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/it/itfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/it/itfile.h	2022-07-16 22:32:10.000000000 -0500
+@@ -22,12 +22,12 @@
+ #ifndef TAGLIB_ITFILE_H
+ #define TAGLIB_ITFILE_H
+ 
+-#include "tfile.h"
+-#include "audioproperties.h"
+-#include "taglib_export.h"
+-#include "modfilebase.h"
+-#include "modtag.h"
+-#include "itproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/audioproperties.h>
++#include <taglib/taglib_export.h>
++#include <taglib/modfilebase.h>
++#include <taglib/modtag.h>
++#include <taglib/itproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/it/itproperties.h taglib-src/taglib/it/itproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/it/itproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/it/itproperties.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_ITPROPERTIES_H
+ #define TAGLIB_ITPROPERTIES_H
+ 
+-#include "taglib.h"
+-#include "audioproperties.h"
++#include <taglib/taglib.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modfile.h taglib-src/taglib/mod/modfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mod/modfile.h	2022-07-16 22:32:49.000000000 -0500
+@@ -26,12 +26,12 @@
+ #ifndef TAGLIB_MODFILE_H
+ #define TAGLIB_MODFILE_H
+ 
+-#include "tfile.h"
+-#include "audioproperties.h"
+-#include "taglib_export.h"
+-#include "modfilebase.h"
+-#include "modtag.h"
+-#include "modproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/audioproperties.h>
++#include <taglib/taglib_export.h>
++#include <taglib/modfilebase.h>
++#include <taglib/modtag.h>
++#include <taglib/modproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modfilebase.h taglib-src/taglib/mod/modfilebase.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modfilebase.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mod/modfilebase.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_MODFILEBASE_H
+ #define TAGLIB_MODFILEBASE_H
+ 
+-#include "taglib.h"
+-#include "tfile.h"
+-#include "tstring.h"
+-#include "tlist.h"
+-#include "taglib_export.h"
++#include <taglib/taglib.h>
++#include <taglib/tfile.h>
++#include <taglib/tstring.h>
++#include <taglib/tlist.h>
++#include <taglib/taglib_export.h>
+ 
+ #include <algorithm>
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modproperties.h taglib-src/taglib/mod/modproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mod/modproperties.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_MODPROPERTIES_H
+ #define TAGLIB_MODPROPERTIES_H
+ 
+-#include "taglib.h"
+-#include "audioproperties.h"
++#include <taglib/taglib.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modtag.h taglib-src/taglib/mod/modtag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mod/modtag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mod/modtag.h	2022-07-16 22:28:42.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_MODTAG_H
+ #define TAGLIB_MODTAG_H
+ 
+-#include "tag.h"
++#include <taglib/tag.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4atom.cpp taglib-src/taglib/mp4/mp4atom.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4atom.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4atom.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -291,9 +844,41 @@ diff -ur taglib-src/taglib/mp4/mp4atom.cpp taglib-quoted-include/taglib/mp4/mp4a
  #include <tstring.h>
  
  #include "mp4atom.h"
-diff -ur taglib-src/taglib/mp4/mp4file.cpp taglib-quoted-include/taglib/mp4/mp4file.cpp
---- taglib-src/taglib/mp4/mp4file.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mp4/mp4file.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4atom.h taglib-src/taglib/mp4/mp4atom.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4atom.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4atom.h	2022-07-16 22:30:03.000000000 -0500
+@@ -30,8 +30,8 @@
+ #ifndef TAGLIB_MP4ATOM_H
+ #define TAGLIB_MP4ATOM_H
+ 
+-#include "tfile.h"
+-#include "tlist.h"
++#include <taglib/tfile.h>
++#include <taglib/tlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4coverart.h taglib-src/taglib/mp4/mp4coverart.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4coverart.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4coverart.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_MP4COVERART_H
+ #define TAGLIB_MP4COVERART_H
+ 
+-#include "tlist.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
+-#include "mp4atom.h"
++#include <taglib/tlist.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
++#include <taglib/mp4atom.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4file.cpp taglib-src/taglib/mp4/mp4file.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4file.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4file.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,10 +23,10 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -307,9 +892,45 @@ diff -ur taglib-src/taglib/mp4/mp4file.cpp taglib-quoted-include/taglib/mp4/mp4f
  
  #include "mp4atom.h"
  #include "mp4tag.h"
-diff -ur taglib-src/taglib/mp4/mp4properties.cpp taglib-quoted-include/taglib/mp4/mp4properties.cpp
---- taglib-src/taglib/mp4/mp4properties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mp4/mp4properties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4file.h taglib-src/taglib/mp4/mp4file.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4file.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4file.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_MP4FILE_H
+ #define TAGLIB_MP4FILE_H
+ 
+-#include "tag.h"
+-#include "tfile.h"
+-#include "taglib_export.h"
+-#include "mp4properties.h"
+-#include "mp4tag.h"
++#include <taglib/tag.h>
++#include <taglib/tfile.h>
++#include <taglib/taglib_export.h>
++#include <taglib/mp4properties.h>
++#include <taglib/mp4tag.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4item.h taglib-src/taglib/mp4/mp4item.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4item.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4item.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_MP4ITEM_H
+ #define TAGLIB_MP4ITEM_H
+ 
+-#include "tstringlist.h"
+-#include "mp4coverart.h"
+-#include "taglib_export.h"
++#include <taglib/tstringlist.h>
++#include <taglib/mp4coverart.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4properties.cpp taglib-src/taglib/mp4/mp4properties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4properties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4properties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -319,9 +940,23 @@ diff -ur taglib-src/taglib/mp4/mp4properties.cpp taglib-quoted-include/taglib/mp
  #include <tstring.h>
  #include "mp4file.h"
  #include "mp4atom.h"
-diff -ur taglib-src/taglib/mp4/mp4tag.cpp taglib-quoted-include/taglib/mp4/mp4tag.cpp
---- taglib-src/taglib/mp4/mp4tag.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mp4/mp4tag.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4properties.h taglib-src/taglib/mp4/mp4properties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4properties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4properties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_MP4PROPERTIES_H
+ #define TAGLIB_MP4PROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4tag.cpp taglib-src/taglib/mp4/mp4tag.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4tag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4tag.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -331,9 +966,35 @@ diff -ur taglib-src/taglib/mp4/mp4tag.cpp taglib-quoted-include/taglib/mp4/mp4ta
  #include <tstring.h>
  #include <tpicturemap.h>
  #include <tpropertymap.h>
-diff -ur taglib-src/taglib/mpc/mpcfile.cpp taglib-quoted-include/taglib/mpc/mpcfile.cpp
---- taglib-src/taglib/mpc/mpcfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpc/mpcfile.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4tag.h taglib-src/taglib/mp4/mp4tag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mp4/mp4tag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mp4/mp4tag.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,14 +26,14 @@
+ #ifndef TAGLIB_MP4TAG_H
+ #define TAGLIB_MP4TAG_H
+ 
+-#include "tag.h"
+-#include "tbytevectorlist.h"
+-#include "tfile.h"
+-#include "tmap.h"
+-#include "tstringlist.h"
+-#include "taglib_export.h"
+-#include "mp4atom.h"
+-#include "mp4item.h"
++#include <taglib/tag.h>
++#include <taglib/tbytevectorlist.h>
++#include <taglib/tfile.h>
++#include <taglib/tmap.h>
++#include <taglib/tstringlist.h>
++#include <taglib/taglib_export.h>
++#include <taglib/mp4atom.h>
++#include <taglib/mp4item.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcfile.cpp taglib-src/taglib/mpc/mpcfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpc/mpcfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,11 +25,11 @@
  
  #include <tbytevector.h>
@@ -350,9 +1011,31 @@ diff -ur taglib-src/taglib/mpc/mpcfile.cpp taglib-quoted-include/taglib/mpc/mpcf
  
  #include "mpcfile.h"
  #include "id3v1tag.h"
-diff -ur taglib-src/taglib/mpc/mpcproperties.cpp taglib-quoted-include/taglib/mpc/mpcproperties.cpp
---- taglib-src/taglib/mpc/mpcproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpc/mpcproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcfile.h taglib-src/taglib/mpc/mpcfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpc/mpcfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,13 +26,13 @@
+ #ifndef TAGLIB_MPCFILE_H
+ #define TAGLIB_MPCFILE_H
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
+-#include "tag.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
++#include <taglib/tag.h>
+ 
+-#include "mpcproperties.h"
++#include <taglib/mpcproperties.h>
+ 
+-#include "tlist.h"
++#include <taglib/tlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcproperties.cpp taglib-src/taglib/mpc/mpcproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpc/mpcproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -362,9 +1045,39 @@ diff -ur taglib-src/taglib/mpc/mpcproperties.cpp taglib-quoted-include/taglib/mp
  #include <bitset>
  #include <math.h>
  
-diff -ur taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp taglib-quoted-include/taglib/mpeg/id3v1/id3v1tag.cpp
---- taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v1/id3v1tag.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcproperties.h taglib-src/taglib/mpc/mpcproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpc/mpcproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpc/mpcproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_MPCPROPERTIES_H
+ #define TAGLIB_MPCPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v1/id3v1genres.h taglib-src/taglib/mpeg/id3v1/id3v1genres.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v1/id3v1genres.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v1/id3v1genres.h	2022-07-16 22:29:01.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_ID3V1GENRE_H
+ #define TAGLIB_ID3V1GENRE_H
+ 
+-#include "tmap.h"
+-#include "tstringlist.h"
+-#include "taglib_export.h"
++#include <taglib/tmap.h>
++#include <taglib/tstringlist.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+   namespace ID3v1 {
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v1/id3v1tag.cpp taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v1/id3v1tag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -374,9 +1087,27 @@ diff -ur taglib-src/taglib/mpeg/id3v1/id3v1tag.cpp taglib-quoted-include/taglib/
  #include <tfile.h>
  #include <tpicturemap.h>
  
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v1/id3v1tag.h taglib-src/taglib/mpeg/id3v1/id3v1tag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v1/id3v1tag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v1/id3v1tag.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_ID3V1TAG_H
+ #define TAGLIB_ID3V1TAG_H
+ 
+-#include "tag.h"
+-#include "tbytevector.h"
+-#include "tstringhandler.h"
+-#include "taglib_export.h"
++#include <taglib/tag.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tstringhandler.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  #include "attachedpictureframe.h"
  
@@ -386,9 +1117,25 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.cpp taglib-quo
  
  using namespace TagLib;
  using namespace ID3v2;
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/chapterframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/chapterframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/attachedpictureframe.h taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/attachedpictureframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_ATTACHEDPICTUREFRAME_H
+ #define TAGLIB_ATTACHEDPICTUREFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "id3v2header.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/id3v2header.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/chapterframe.cpp taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/chapterframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,7 +25,7 @@
  
  #include <tbytevectorlist.h>
@@ -398,9 +1145,25 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/chapterframe.cpp taglib-quoted-incl
  #include <stdio.h>
  
  #include "chapterframe.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/commentsframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/commentsframe.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/chapterframe.h taglib-src/taglib/mpeg/id3v2/frames/chapterframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/chapterframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/chapterframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_CHAPTERFRAME
+ #define TAGLIB_CHAPTERFRAME
+ 
+-#include "id3v2tag.h"
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2tag.h>
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/commentsframe.cpp taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/commentsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,7 +25,7 @@
  
  #include <tbytevectorlist.h>
@@ -410,9 +1173,23 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/commentsframe.cpp taglib-quoted-inc
  #include <tstringlist.h>
  
  #include "commentsframe.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/commentsframe.h taglib-src/taglib/mpeg/id3v2/frames/commentsframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/commentsframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/commentsframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_COMMENTSFRAME_H
+ #define TAGLIB_COMMENTSFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  #include "eventtimingcodesframe.h"
  #include <tbytevectorlist.h>
@@ -422,9 +1199,23 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.cpp taglib-qu
  #include <tpropertymap.h>
  
  using namespace TagLib;
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_EVENTTIMINGCODESFRAME_H
+ #define TAGLIB_EVENTTIMINGCODESFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "tlist.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/tlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -434,9 +1225,25 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.cpp 
  #include <tstringlist.h>
  
  #include "generalencapsulatedobjectframe.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/ownershipframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/ownershipframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -29,9 +29,9 @@
+ #ifndef TAGLIB_GENERALENCAPSULATEDOBJECT_H
+ #define TAGLIB_GENERALENCAPSULATEDOBJECT_H
+ 
+-#include "id3v2frame.h"
+-#include "id3v2header.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/id3v2header.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/ownershipframe.cpp taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/ownershipframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -446,9 +1253,37 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.cpp taglib-quoted-in
  #include <tstringlist.h>
  #include <id3v2tag.h>
  
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/popularimeterframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/popularimeterframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/ownershipframe.h taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/ownershipframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_OWNERSHIPFRAME_H
+ #define TAGLIB_OWNERSHIPFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/podcastframe.h taglib-src/taglib/mpeg/id3v2/frames/podcastframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/podcastframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/podcastframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_PODCASTFRAME_H
+ #define TAGLIB_PODCASTFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/popularimeterframe.cpp taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/popularimeterframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -458,9 +1293,23 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.cpp taglib-quote
  
  #include "popularimeterframe.h"
  
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/privateframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/privateframe.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/popularimeterframe.h taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/popularimeterframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_POPULARIMETERFRAME_H
+ #define TAGLIB_POPULARIMETERFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/privateframe.cpp taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/privateframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  
  #include <tbytevectorlist.h>
@@ -470,9 +1319,23 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/privateframe.cpp taglib-quoted-incl
  
  #include "privateframe.h"
  
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/privateframe.h taglib-src/taglib/mpeg/id3v2/frames/privateframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/privateframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/privateframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -27,8 +27,8 @@
+ #ifndef TAGLIB_PRIVATEFRAME_H
+ #define TAGLIB_PRIVATEFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -482,9 +1345,25 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.cpp taglib-quot
  #include <tmap.h>
  
  #include "relativevolumeframe.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/relativevolumeframe.h taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/relativevolumeframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_RELATIVEVOLUMEFRAME_H
+ #define TAGLIB_RELATIVEVOLUMEFRAME_H
+ 
+-#include "tlist.h"
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/tlist.h>
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  #include "synchronizedlyricsframe.h"
  #include <tbytevectorlist.h>
@@ -494,9 +1373,23 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.cpp taglib-
  #include <tpropertymap.h>
  
  using namespace TagLib;
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_SYNCHRONIZEDLYRICSFRAME_H
+ #define TAGLIB_SYNCHRONIZEDLYRICSFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "tlist.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/tlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,7 +25,7 @@
  
  #include <tbytevectorlist.h>
@@ -506,9 +1399,45 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.cpp taglib-quo
  
  #include "tableofcontentsframe.h"
  
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/tableofcontentsframe.h taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/tableofcontentsframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_TABLEOFCONTENTSFRAME
+ #define TAGLIB_TABLEOFCONTENTSFRAME
+ 
+-#include "id3v2tag.h"
+-#include "id3v2frame.h"
++#include <taglib/id3v2tag.h>
++#include <taglib/id3v2frame.h>
+ 
+-#include "tbytevectorlist.h"
++#include <taglib/tbytevectorlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/textidentificationframe.h taglib-src/taglib/mpeg/id3v2/frames/textidentificationframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/textidentificationframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/textidentificationframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_TEXTIDENTIFICATIONFRAME_H
+ #define TAGLIB_TEXTIDENTIFICATIONFRAME_H
+ 
+-#include "tstringlist.h"
+-#include "tmap.h"
+-#include "taglib_export.h"
++#include <taglib/tstringlist.h>
++#include <taglib/tmap.h>
++#include <taglib/taglib_export.h>
+ 
+-#include "id3v2frame.h"
++#include <taglib/id3v2frame.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,7 +25,7 @@
  
  #include <tbytevectorlist.h>
@@ -518,9 +1447,35 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.cpp tagli
  
  #include "id3v2tag.h"
  #include "uniquefileidentifierframe.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_UNIQUEFILEIDENTIFIERFRAME
+ #define TAGLIB_UNIQUEFILEIDENTIFIERFRAME
+ 
+-#include "id3v2frame.h"
++#include <taglib/id3v2frame.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/unknownframe.h taglib-src/taglib/mpeg/id3v2/frames/unknownframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/unknownframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/unknownframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_UNKNOWNFRAME_H
+ #define TAGLIB_UNKNOWNFRAME_H
+ 
+-#include "id3v2frame.h"
+-#include "taglib_export.h"
++#include <taglib/id3v2frame.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -29,7 +29,7 @@
  #include "unsynchronizedlyricsframe.h"
  #include <tbytevectorlist.h>
@@ -530,9 +1485,21 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.cpp tagli
  #include <tpropertymap.h>
  
  using namespace TagLib;
-diff -ur taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp taglib-quoted-include/taglib/mpeg/id3v2/frames/urllinkframe.cpp
---- taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/frames/urllinkframe.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -28,7 +28,7 @@
+ #ifndef TAGLIB_UNSYNCHRONIZEDLYRICSFRAME_H
+ #define TAGLIB_UNSYNCHRONIZEDLYRICSFRAME_H
+ 
+-#include "id3v2frame.h"
++#include <taglib/id3v2frame.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/urllinkframe.cpp taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/urllinkframe.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
  
  #include "urllinkframe.h"
@@ -542,9 +1509,51 @@ diff -ur taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.cpp taglib-quoted-incl
  #include <tstringlist.h>
  #include <tpropertymap.h>
  
-diff -ur taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2frame.cpp
---- taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2frame.cpp	2020-10-31 22:50:37.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/urllinkframe.h taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/frames/urllinkframe.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.h	2022-07-16 22:34:51.000000000 -0500
+@@ -29,7 +29,7 @@
+ #ifndef TAGLIB_URLLINKFRAME_H
+ #define TAGLIB_URLLINKFRAME_H
+ 
+-#include "id3v2frame.h"
++#include <taglib/id3v2frame.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2extendedheader.h taglib-src/taglib/mpeg/id3v2/id3v2extendedheader.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2extendedheader.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2extendedheader.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_ID3V2EXTENDEDHEADER_H
+ #define TAGLIB_ID3V2EXTENDEDHEADER_H
+ 
+-#include "taglib_export.h"
+-#include "tbytevector.h"
+-#include "taglib.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2footer.h taglib-src/taglib/mpeg/id3v2/id3v2footer.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2footer.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2footer.h	2022-07-16 22:27:52.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_ID3V2FOOTER_H
+ #define TAGLIB_ID3V2FOOTER_H
+ 
+-#include "taglib_export.h"
+-#include "tbytevector.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tbytevector.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2frame.cpp taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2frame.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,9 +25,9 @@
  
  #include <bitset>
@@ -557,9 +1566,25 @@ diff -ur taglib-src/taglib/mpeg/id3v2/id3v2frame.cpp taglib-quoted-include/tagli
  
  #include "id3v2tag.h"
  #include "id3v2frame.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2framefactory.cpp
---- taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2framefactory.cpp	2020-10-31 22:50:13.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2frame.h taglib-src/taglib/mpeg/id3v2/id3v2frame.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2frame.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2frame.h	2022-07-16 22:28:02.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_ID3V2FRAME_H
+ #define TAGLIB_ID3V2FRAME_H
+ 
+-#include "tstring.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tstring.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2framefactory.cpp taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2framefactory.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,8 +23,8 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -571,9 +1596,27 @@ diff -ur taglib-src/taglib/mpeg/id3v2/id3v2framefactory.cpp taglib-quoted-includ
  
  #include "id3v2framefactory.h"
  #include "id3v2synchdata.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/id3v2header.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2header.cpp
---- taglib-src/taglib/mpeg/id3v2/id3v2header.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2header.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2framefactory.h taglib-src/taglib/mpeg/id3v2/id3v2framefactory.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2framefactory.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2framefactory.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_ID3V2FRAMEFACTORY_H
+ #define TAGLIB_ID3V2FRAMEFACTORY_H
+ 
+-#include "taglib_export.h"
+-#include "tbytevector.h"
+-#include "id3v2frame.h"
+-#include "id3v2header.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tbytevector.h>
++#include <taglib/id3v2frame.h>
++#include <taglib/id3v2header.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2header.cpp taglib-src/taglib/mpeg/id3v2/id3v2header.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2header.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2header.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -27,7 +27,7 @@
  #include <bitset>
  
@@ -583,9 +1626,37 @@ diff -ur taglib-src/taglib/mpeg/id3v2/id3v2header.cpp taglib-quoted-include/tagl
  
  #include "id3v2header.h"
  #include "id3v2footer.h"
-diff -ur taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp taglib-quoted-include/taglib/mpeg/id3v2/id3v2tag.cpp
---- taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/id3v2/id3v2tag.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2header.h taglib-src/taglib/mpeg/id3v2/id3v2header.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2header.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2header.h	2022-07-16 22:27:53.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_ID3V2HEADER_H
+ #define TAGLIB_ID3V2HEADER_H
+ 
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2synchdata.h taglib-src/taglib/mpeg/id3v2/id3v2synchdata.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2synchdata.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2synchdata.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_ID3V2SYNCHDATA_H
+ #define TAGLIB_ID3V2SYNCHDATA_H
+ 
+-#include "tbytevector.h"
+-#include "taglib.h"
++#include <taglib/tbytevector.h>
++#include <taglib/taglib.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2tag.cpp taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2tag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -29,7 +29,7 @@
  #include <tbytevector.h>
  #include <tpropertymap.h>
@@ -595,9 +1666,36 @@ diff -ur taglib-src/taglib/mpeg/id3v2/id3v2tag.cpp taglib-quoted-include/taglib/
  
  #include "id3v2tag.h"
  #include "id3v2header.h"
-diff -ur taglib-src/taglib/mpeg/mpegfile.cpp taglib-quoted-include/taglib/mpeg/mpegfile.cpp
---- taglib-src/taglib/mpeg/mpegfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/mpegfile.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2tag.h taglib-src/taglib/mpeg/id3v2/id3v2tag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/id3v2/id3v2tag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/id3v2/id3v2tag.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,15 +26,15 @@
+ #ifndef TAGLIB_ID3V2TAG_H
+ #define TAGLIB_ID3V2TAG_H
+ 
+-#include "tag.h"
+-#include "tbytevector.h"
+-#include "tstring.h"
+-#include "tstringhandler.h"
+-#include "tlist.h"
+-#include "tmap.h"
+-#include "taglib_export.h"
++#include <taglib/tag.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tstring.h>
++#include <taglib/tstringhandler.h>
++#include <taglib/tlist.h>
++#include <taglib/tmap.h>
++#include <taglib/taglib_export.h>
+ 
+-#include "id3v2framefactory.h"
++#include <taglib/id3v2framefactory.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegfile.cpp taglib-src/taglib/mpeg/mpegfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/mpegfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -1,4 +1,4 @@
 -﻿/***************************************************************************
 +/***************************************************************************
@@ -622,9 +1720,28 @@ diff -ur taglib-src/taglib/mpeg/mpegfile.cpp taglib-quoted-include/taglib/mpeg/m
  
  #include "mpegfile.h"
  #include "mpegheader.h"
-diff -ur taglib-src/taglib/mpeg/mpegheader.cpp taglib-quoted-include/taglib/mpeg/mpegheader.cpp
---- taglib-src/taglib/mpeg/mpegheader.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/mpegheader.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegfile.h taglib-src/taglib/mpeg/mpegfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/mpegfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_MPEGFILE_H
+ #define TAGLIB_MPEGFILE_H
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
+-#include "tag.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
++#include <taglib/tag.h>
+ 
+-#include "mpegproperties.h"
++#include <taglib/mpegproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegheader.cpp taglib-src/taglib/mpeg/mpegheader.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegheader.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/mpegheader.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,8 +26,8 @@
  #include <tbytevector.h>
  #include <tstring.h>
@@ -636,9 +1753,21 @@ diff -ur taglib-src/taglib/mpeg/mpegheader.cpp taglib-quoted-include/taglib/mpeg
  
  #include "mpegheader.h"
  #include "mpegutils.h"
-diff -ur taglib-src/taglib/mpeg/mpegproperties.cpp taglib-quoted-include/taglib/mpeg/mpegproperties.cpp
---- taglib-src/taglib/mpeg/mpegproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/mpegproperties.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegheader.h taglib-src/taglib/mpeg/mpegheader.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegheader.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/mpegheader.h	2022-07-16 22:27:14.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_MPEGHEADER_H
+ #define TAGLIB_MPEGHEADER_H
+ 
+-#include "taglib_export.h"
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegproperties.cpp taglib-src/taglib/mpeg/mpegproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/mpegproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -1,4 +1,4 @@
 -﻿/***************************************************************************
 +/***************************************************************************
@@ -657,9 +1786,26 @@ diff -ur taglib-src/taglib/mpeg/mpegproperties.cpp taglib-quoted-include/taglib/
  
  #include "mpegproperties.h"
  #include "mpegfile.h"
-diff -ur taglib-src/taglib/mpeg/xingheader.cpp taglib-quoted-include/taglib/mpeg/xingheader.cpp
---- taglib-src/taglib/mpeg/xingheader.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/mpeg/xingheader.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegproperties.h taglib-src/taglib/mpeg/mpegproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/mpegproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/mpegproperties.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_MPEGPROPERTIES_H
+ #define TAGLIB_MPEGPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+-#include "mpegheader.h"
++#include <taglib/mpegheader.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/xingheader.cpp taglib-src/taglib/mpeg/xingheader.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/xingheader.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/xingheader.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -25,7 +25,7 @@
  
  #include <tbytevector.h>
@@ -669,9 +1815,23 @@ diff -ur taglib-src/taglib/mpeg/xingheader.cpp taglib-quoted-include/taglib/mpeg
  
  #include "xingheader.h"
  #include "mpegfile.h"
-diff -ur taglib-src/taglib/ogg/flac/oggflacfile.cpp taglib-quoted-include/taglib/ogg/flac/oggflacfile.cpp
---- taglib-src/taglib/ogg/flac/oggflacfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/flac/oggflacfile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/xingheader.h taglib-src/taglib/mpeg/xingheader.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/mpeg/xingheader.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/mpeg/xingheader.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_XINGHEADER_H
+ #define TAGLIB_XINGHEADER_H
+ 
+-#include "mpegheader.h"
+-#include "taglib_export.h"
++#include <taglib/mpegheader.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/flac/oggflacfile.cpp taglib-src/taglib/ogg/flac/oggflacfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/flac/oggflacfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/flac/oggflacfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -1,4 +1,4 @@
 -﻿/***************************************************************************
 +/***************************************************************************
@@ -690,9 +1850,28 @@ diff -ur taglib-src/taglib/ogg/flac/oggflacfile.cpp taglib-quoted-include/taglib
  
  #include <xiphcomment.h>
  #include "oggflacfile.h"
-diff -ur taglib-src/taglib/ogg/oggfile.cpp taglib-quoted-include/taglib/ogg/oggfile.cpp
---- taglib-src/taglib/ogg/oggfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/oggfile.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/flac/oggflacfile.h taglib-src/taglib/ogg/flac/oggflacfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/flac/oggflacfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/flac/oggflacfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_OGGFLACFILE_H
+ #define TAGLIB_OGGFLACFILE_H
+ 
+-#include "taglib_export.h"
+-#include "oggfile.h"
+-#include "xiphcomment.h"
++#include <taglib/taglib_export.h>
++#include <taglib/oggfile.h>
++#include <taglib/xiphcomment.h>
+ 
+-#include "flacproperties.h"
++#include <taglib/flacproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggfile.cpp taglib-src/taglib/ogg/oggfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/oggfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  #include <tbytevectorlist.h>
  #include <tmap.h>
@@ -702,9 +1881,25 @@ diff -ur taglib-src/taglib/ogg/oggfile.cpp taglib-quoted-include/taglib/ogg/oggf
  
  #include "oggfile.h"
  #include "oggpage.h"
-diff -ur taglib-src/taglib/ogg/oggpage.cpp taglib-quoted-include/taglib/ogg/oggpage.cpp
---- taglib-src/taglib/ogg/oggpage.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/oggpage.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggfile.h taglib-src/taglib/ogg/oggfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/oggfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -23,9 +23,9 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
+-#include "tbytevectorlist.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
++#include <taglib/tbytevectorlist.h>
+ 
+ #ifndef TAGLIB_OGGFILE_H
+ #define TAGLIB_OGGFILE_H
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpage.cpp taglib-src/taglib/ogg/oggpage.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpage.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/oggpage.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  #include <algorithm>
  
@@ -714,9 +1909,23 @@ diff -ur taglib-src/taglib/ogg/oggpage.cpp taglib-quoted-include/taglib/ogg/oggp
  
  #include "oggpage.h"
  #include "oggpageheader.h"
-diff -ur taglib-src/taglib/ogg/oggpageheader.cpp taglib-quoted-include/taglib/ogg/oggpageheader.cpp
---- taglib-src/taglib/ogg/oggpageheader.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/oggpageheader.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpage.h taglib-src/taglib/ogg/oggpage.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpage.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/oggpage.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_OGGPAGE_H
+ #define TAGLIB_OGGPAGE_H
+ 
+-#include "taglib_export.h"
+-#include "tbytevectorlist.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tbytevectorlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpageheader.cpp taglib-src/taglib/ogg/oggpageheader.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpageheader.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/oggpageheader.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,7 +26,7 @@
  #include <bitset>
  
@@ -726,9 +1935,25 @@ diff -ur taglib-src/taglib/ogg/oggpageheader.cpp taglib-quoted-include/taglib/og
  #include <taglib.h>
  
  #include "oggpageheader.h"
-diff -ur taglib-src/taglib/ogg/opus/opusfile.cpp taglib-quoted-include/taglib/ogg/opus/opusfile.cpp
---- taglib-src/taglib/ogg/opus/opusfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/opus/opusfile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpageheader.h taglib-src/taglib/ogg/oggpageheader.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/oggpageheader.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/oggpageheader.h	2022-07-16 22:30:03.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_OGGPAGEHEADER_H
+ #define TAGLIB_OGGPAGEHEADER_H
+ 
+-#include "tlist.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tlist.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusfile.cpp taglib-src/taglib/ogg/opus/opusfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/opus/opusfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,9 +28,9 @@
   ***************************************************************************/
  
@@ -741,9 +1966,26 @@ diff -ur taglib-src/taglib/ogg/opus/opusfile.cpp taglib-quoted-include/taglib/og
  
  #include "opusfile.h"
  
-diff -ur taglib-src/taglib/ogg/opus/opusproperties.cpp taglib-quoted-include/taglib/ogg/opus/opusproperties.cpp
---- taglib-src/taglib/ogg/opus/opusproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/opus/opusproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusfile.h taglib-src/taglib/ogg/opus/opusfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/opus/opusfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -30,10 +30,10 @@
+ #ifndef TAGLIB_OPUSFILE_H
+ #define TAGLIB_OPUSFILE_H
+ 
+-#include "oggfile.h"
+-#include "xiphcomment.h"
++#include <taglib/oggfile.h>
++#include <taglib/xiphcomment.h>
+ 
+-#include "opusproperties.h"
++#include <taglib/opusproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusproperties.cpp taglib-src/taglib/ogg/opus/opusproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/opus/opusproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
   ***************************************************************************/
  
@@ -753,9 +1995,21 @@ diff -ur taglib-src/taglib/ogg/opus/opusproperties.cpp taglib-quoted-include/tag
  #include <oggpageheader.h>
  
  #include "opusproperties.h"
-diff -ur taglib-src/taglib/ogg/speex/speexfile.cpp taglib-quoted-include/taglib/ogg/speex/speexfile.cpp
---- taglib-src/taglib/ogg/speex/speexfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/speex/speexfile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusproperties.h taglib-src/taglib/ogg/opus/opusproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/opus/opusproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/opus/opusproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -30,7 +30,7 @@
+ #ifndef TAGLIB_OPUSPROPERTIES_H
+ #define TAGLIB_OPUSPROPERTIES_H
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexfile.cpp taglib-src/taglib/ogg/speex/speexfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/speex/speexfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,9 +28,9 @@
   ***************************************************************************/
  
@@ -768,9 +2022,26 @@ diff -ur taglib-src/taglib/ogg/speex/speexfile.cpp taglib-quoted-include/taglib/
  
  #include "speexfile.h"
  
-diff -ur taglib-src/taglib/ogg/speex/speexproperties.cpp taglib-quoted-include/taglib/ogg/speex/speexproperties.cpp
---- taglib-src/taglib/ogg/speex/speexproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/speex/speexproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexfile.h taglib-src/taglib/ogg/speex/speexfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/speex/speexfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -30,10 +30,10 @@
+ #ifndef TAGLIB_SPEEXFILE_H
+ #define TAGLIB_SPEEXFILE_H
+ 
+-#include "oggfile.h"
+-#include "xiphcomment.h"
++#include <taglib/oggfile.h>
++#include <taglib/xiphcomment.h>
+ 
+-#include "speexproperties.h"
++#include <taglib/speexproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexproperties.cpp taglib-src/taglib/ogg/speex/speexproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/speex/speexproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
   ***************************************************************************/
  
@@ -780,9 +2051,21 @@ diff -ur taglib-src/taglib/ogg/speex/speexproperties.cpp taglib-quoted-include/t
  #include <oggpageheader.h>
  
  #include "speexproperties.h"
-diff -ur taglib-src/taglib/ogg/vorbis/vorbisfile.cpp taglib-quoted-include/taglib/ogg/vorbis/vorbisfile.cpp
---- taglib-src/taglib/ogg/vorbis/vorbisfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/vorbis/vorbisfile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexproperties.h taglib-src/taglib/ogg/speex/speexproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/speex/speexproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/speex/speexproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -30,7 +30,7 @@
+ #ifndef TAGLIB_SPEEXPROPERTIES_H
+ #define TAGLIB_SPEEXPROPERTIES_H
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisfile.cpp taglib-src/taglib/ogg/vorbis/vorbisfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/vorbis/vorbisfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -26,9 +26,9 @@
  #include <bitset>
  
@@ -795,9 +2078,28 @@ diff -ur taglib-src/taglib/ogg/vorbis/vorbisfile.cpp taglib-quoted-include/tagli
  
  #include "vorbisfile.h"
  
-diff -ur taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp taglib-quoted-include/taglib/ogg/vorbis/vorbisproperties.cpp
---- taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/vorbis/vorbisproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisfile.h taglib-src/taglib/ogg/vorbis/vorbisfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/vorbis/vorbisfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,11 +26,11 @@
+ #ifndef TAGLIB_VORBISFILE_H
+ #define TAGLIB_VORBISFILE_H
+ 
+-#include "taglib_export.h"
+-#include "oggfile.h"
+-#include "xiphcomment.h"
++#include <taglib/taglib_export.h>
++#include <taglib/oggfile.h>
++#include <taglib/xiphcomment.h>
+ 
+-#include "vorbisproperties.h"
++#include <taglib/vorbisproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisproperties.cpp taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -807,9 +2109,23 @@ diff -ur taglib-src/taglib/ogg/vorbis/vorbisproperties.cpp taglib-quoted-include
  
  #include <oggpageheader.h>
  
-diff -ur taglib-src/taglib/ogg/xiphcomment.cpp taglib-quoted-include/taglib/ogg/xiphcomment.cpp
---- taglib-src/taglib/ogg/xiphcomment.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/ogg/xiphcomment.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisproperties.h taglib-src/taglib/ogg/vorbis/vorbisproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/vorbis/vorbisproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/vorbis/vorbisproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_VORBISPROPERTIES_H
+ #define TAGLIB_VORBISPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/xiphcomment.cpp taglib-src/taglib/ogg/xiphcomment.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/xiphcomment.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/xiphcomment.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -819,9 +2135,35 @@ diff -ur taglib-src/taglib/ogg/xiphcomment.cpp taglib-quoted-include/taglib/ogg/
  
  #include <flacpicture.h>
  #include <xiphcomment.h>
-diff -ur taglib-src/taglib/riff/aiff/aifffile.cpp taglib-quoted-include/taglib/riff/aiff/aifffile.cpp
---- taglib-src/taglib/riff/aiff/aifffile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/riff/aiff/aifffile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/xiphcomment.h taglib-src/taglib/ogg/xiphcomment.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/ogg/xiphcomment.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/ogg/xiphcomment.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,14 +26,14 @@
+ #ifndef TAGLIB_VORBISCOMMENT_H
+ #define TAGLIB_VORBISCOMMENT_H
+ 
+-#include "tag.h"
+-#include "tlist.h"
+-#include "tmap.h"
+-#include "tstring.h"
+-#include "tstringlist.h"
+-#include "tbytevector.h"
+-#include "flacpicture.h"
+-#include "taglib_export.h"
++#include <taglib/tag.h>
++#include <taglib/tlist.h>
++#include <taglib/tmap.h>
++#include <taglib/tstring.h>
++#include <taglib/tstringlist.h>
++#include <taglib/tbytevector.h>
++#include <taglib/flacpicture.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aifffile.cpp taglib-src/taglib/riff/aiff/aifffile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aifffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/aiff/aifffile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,12 +24,12 @@
   ***************************************************************************/
  
@@ -838,9 +2180,25 @@ diff -ur taglib-src/taglib/riff/aiff/aifffile.cpp taglib-quoted-include/taglib/r
  
  #include "aifffile.h"
  
-diff -ur taglib-src/taglib/riff/aiff/aiffproperties.cpp taglib-quoted-include/taglib/riff/aiff/aiffproperties.cpp
---- taglib-src/taglib/riff/aiff/aiffproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/riff/aiff/aiffproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aifffile.h taglib-src/taglib/riff/aiff/aifffile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aifffile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/aiff/aifffile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_AIFFFILE_H
+ #define TAGLIB_AIFFFILE_H
+ 
+-#include "rifffile.h"
+-#include "id3v2tag.h"
+-#include "aiffproperties.h"
++#include <taglib/rifffile.h>
++#include <taglib/id3v2tag.h>
++#include <taglib/aiffproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aiffproperties.cpp taglib-src/taglib/riff/aiff/aiffproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aiffproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/aiff/aiffproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -850,9 +2208,21 @@ diff -ur taglib-src/taglib/riff/aiff/aiffproperties.cpp taglib-quoted-include/ta
  #include "aifffile.h"
  #include "aiffproperties.h"
  
-diff -ur taglib-src/taglib/riff/rifffile.cpp taglib-quoted-include/taglib/riff/rifffile.cpp
---- taglib-src/taglib/riff/rifffile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/riff/rifffile.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aiffproperties.h taglib-src/taglib/riff/aiff/aiffproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/aiff/aiffproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/aiff/aiffproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_AIFFPROPERTIES_H
+ #define TAGLIB_AIFFPROPERTIES_H
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/rifffile.cpp taglib-src/taglib/riff/rifffile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/rifffile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/rifffile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -27,7 +27,7 @@
  #include <vector>
  
@@ -862,9 +2232,23 @@ diff -ur taglib-src/taglib/riff/rifffile.cpp taglib-quoted-include/taglib/riff/r
  #include <tstring.h>
  
  #include "rifffile.h"
-diff -ur taglib-src/taglib/riff/wav/infotag.cpp taglib-quoted-include/taglib/riff/wav/infotag.cpp
---- taglib-src/taglib/riff/wav/infotag.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/riff/wav/infotag.cpp	2020-10-31 22:48:04.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/rifffile.h taglib-src/taglib/riff/rifffile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/rifffile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/rifffile.h	2022-07-16 22:27:14.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_RIFFFILE_H
+ #define TAGLIB_RIFFFILE_H
+ 
+-#include "taglib_export.h"
+-#include "tfile.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tfile.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/infotag.cpp taglib-src/taglib/riff/wav/infotag.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/infotag.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/wav/infotag.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -23,7 +23,7 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -874,9 +2258,33 @@ diff -ur taglib-src/taglib/riff/wav/infotag.cpp taglib-quoted-include/taglib/rif
  #include <tfile.h>
  #include <tpicturemap.h>
  
-diff -ur taglib-src/taglib/riff/wav/wavfile.cpp taglib-quoted-include/taglib/riff/wav/wavfile.cpp
---- taglib-src/taglib/riff/wav/wavfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/riff/wav/wavfile.cpp	2020-10-31 22:49:12.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/infotag.h taglib-src/taglib/riff/wav/infotag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/infotag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/wav/infotag.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,13 +26,13 @@
+ #ifndef TAGLIB_INFOTAG_H
+ #define TAGLIB_INFOTAG_H
+ 
+-#include "tag.h"
+-#include "tmap.h"
+-#include "tstring.h"
+-#include "tstringlist.h"
+-#include "tstringhandler.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tag.h>
++#include <taglib/tmap.h>
++#include <taglib/tstring.h>
++#include <taglib/tstringlist.h>
++#include <taglib/tstringhandler.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavfile.cpp taglib-src/taglib/riff/wav/wavfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/wav/wavfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,11 +24,11 @@
   ***************************************************************************/
  
@@ -892,9 +2300,27 @@ diff -ur taglib-src/taglib/riff/wav/wavfile.cpp taglib-quoted-include/taglib/rif
  
  #include "wavfile.h"
  #include "id3v2tag.h"
-diff -ur taglib-src/taglib/riff/wav/wavproperties.cpp taglib-quoted-include/taglib/riff/wav/wavproperties.cpp
---- taglib-src/taglib/riff/wav/wavproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/riff/wav/wavproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavfile.h taglib-src/taglib/riff/wav/wavfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/wav/wavfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_WAVFILE_H
+ #define TAGLIB_WAVFILE_H
+ 
+-#include "rifffile.h"
+-#include "id3v2tag.h"
+-#include "infotag.h"
+-#include "wavproperties.h"
++#include <taglib/rifffile.h>
++#include <taglib/id3v2tag.h>
++#include <taglib/infotag.h>
++#include <taglib/wavproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavproperties.cpp taglib-src/taglib/riff/wav/wavproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/wav/wavproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -904,9 +2330,74 @@ diff -ur taglib-src/taglib/riff/wav/wavproperties.cpp taglib-quoted-include/tagl
  
  #include "wavfile.h"
  #include "wavproperties.h"
-diff -ur taglib-src/taglib/tagunion.cpp taglib-quoted-include/taglib/tagunion.cpp
---- taglib-src/taglib/tagunion.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/tagunion.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavproperties.h taglib-src/taglib/riff/wav/wavproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/riff/wav/wavproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/riff/wav/wavproperties.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_WAVPROPERTIES_H
+ #define TAGLIB_WAVPROPERTIES_H
+ 
+-#include "taglib.h"
+-#include "audioproperties.h"
++#include <taglib/taglib.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/s3m/s3mfile.h taglib-src/taglib/s3m/s3mfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/s3m/s3mfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/s3m/s3mfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,12 +26,12 @@
+ #ifndef TAGLIB_S3MFILE_H
+ #define TAGLIB_S3MFILE_H
+ 
+-#include "tfile.h"
+-#include "audioproperties.h"
+-#include "taglib_export.h"
+-#include "modfilebase.h"
+-#include "modtag.h"
+-#include "s3mproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/audioproperties.h>
++#include <taglib/taglib_export.h>
++#include <taglib/modfilebase.h>
++#include <taglib/modtag.h>
++#include <taglib/s3mproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/s3m/s3mproperties.h taglib-src/taglib/s3m/s3mproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/s3m/s3mproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/s3m/s3mproperties.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_S3MPROPERTIES_H
+ #define TAGLIB_S3MPROPERTIES_H
+ 
+-#include "taglib.h"
+-#include "audioproperties.h"
++#include <taglib/taglib.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/tag.h taglib-src/taglib/tag.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/tag.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/tag.h	2022-07-16 22:28:02.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_TAG_H
+ #define TAGLIB_TAG_H
+ 
+-#include "taglib_export.h"
++#include <taglib/taglib_export.h>
+ 
+-#include "tstring.h"
++#include <taglib/tstring.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/tagunion.cpp taglib-src/taglib/tagunion.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/tagunion.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/tagunion.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -1,4 +1,4 @@
 -﻿/***************************************************************************
 +/***************************************************************************
@@ -927,9 +2418,21 @@ diff -ur taglib-src/taglib/tagunion.cpp taglib-quoted-include/taglib/tagunion.cp
  
  #define stringUnion(method)                                               \
    for(size_t j = 0; j < COUNT; ++j) {                                     \
-diff -ur taglib-src/taglib/toolkit/tbytevector.cpp taglib-quoted-include/taglib/toolkit/tbytevector.cpp
---- taglib-src/taglib/toolkit/tbytevector.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/toolkit/tbytevector.cpp	2020-10-31 22:48:50.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/tagunion.h taglib-src/taglib/tagunion.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/tagunion.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/tagunion.h	2022-07-16 22:28:42.000000000 -0500
+@@ -28,7 +28,7 @@
+ 
+ // This file is not a part of TagLib public interface. This is not installed.
+ 
+-#include "tag.h"
++#include <taglib/tag.h>
+ 
+ #ifndef DO_NOT_DOCUMENT
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevector.cpp taglib-src/taglib/toolkit/tbytevector.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevector.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tbytevector.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -31,9 +31,9 @@
  #include <cstring>
  
@@ -943,9 +2446,183 @@ diff -ur taglib-src/taglib/toolkit/tbytevector.cpp taglib-quoted-include/taglib/
  
  #include "tbytevector.h"
  
-diff -ur taglib-src/taglib/toolkit/tpicture.cpp taglib-quoted-include/taglib/toolkit/tpicture.cpp
---- taglib-src/taglib/toolkit/tpicture.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/toolkit/tpicture.cpp	2020-10-31 22:48:29.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevector.h taglib-src/taglib/toolkit/tbytevector.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevector.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tbytevector.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_BYTEVECTOR_H
+ #define TAGLIB_BYTEVECTOR_H
+ 
+-#include "taglib_export.h"
+-#include "taglib.h"
++#include <taglib/taglib_export.h>
++#include <taglib/taglib.h>
+ #include <vector>
+ #include <iostream>
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevectorlist.h taglib-src/taglib/toolkit/tbytevectorlist.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevectorlist.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tbytevectorlist.h	2022-07-16 22:30:03.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_BYTEVECTORLIST_H
+ #define TAGLIB_BYTEVECTORLIST_H
+ 
+-#include "taglib_export.h"
+-#include "tbytevector.h"
+-#include "tlist.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevectorstream.h taglib-src/taglib/toolkit/tbytevectorstream.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tbytevectorstream.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tbytevectorstream.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_BYTEVECTORSTREAM_H
+ #define TAGLIB_BYTEVECTORSTREAM_H
+ 
+-#include "taglib_export.h"
+-#include "taglib.h"
+-#include "tbytevector.h"
+-#include "tiostream.h"
++#include <taglib/taglib_export.h>
++#include <taglib/taglib.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tiostream.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tdebuglistener.h taglib-src/taglib/toolkit/tdebuglistener.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tdebuglistener.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tdebuglistener.h	2022-07-16 22:28:02.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_DEBUGLISTENER_H
+ #define TAGLIB_DEBUGLISTENER_H
+ 
+-#include "taglib_export.h"
+-#include "tstring.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tstring.h>
+ 
+ namespace TagLib
+ {
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tfile.h taglib-src/taglib/toolkit/tfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2002 - 2008 by Scott Wheeler
+     email                : wheeler@kde.org
+  ***************************************************************************/
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_FILE_H
+ #define TAGLIB_FILE_H
+ 
+-#include "tbytevector.h"
+-#include "tag.h"
+-#include "tiostream.h"
++#include <taglib/tbytevector.h>
++#include <taglib/tag.h>
++#include <taglib/tiostream.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tfilestream.h taglib-src/taglib/toolkit/tfilestream.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tfilestream.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tfilestream.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_FILESTREAM_H
+ #define TAGLIB_FILESTREAM_H
+ 
+-#include "tbytevector.h"
+-#include "tiostream.h"
++#include <taglib/tbytevector.h>
++#include <taglib/tiostream.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tiostream.h taglib-src/taglib/toolkit/tiostream.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tiostream.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tiostream.h	2022-07-16 22:27:52.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_IOSTREAM_H
+ #define TAGLIB_IOSTREAM_H
+ 
+-#include "tbytevector.h"
++#include <taglib/tbytevector.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tlist.h taglib-src/taglib/toolkit/tlist.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tlist.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tlist.h	2022-07-16 22:41:07.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_LIST_H
+ #define TAGLIB_LIST_H
+ 
+-#include "taglib.h"
++#include <taglib/taglib.h>
+ #include <cstddef>
+ #include <list>
+ 
+@@ -268,6 +268,6 @@
+ // Since GCC doesn't support the "export" keyword, we have to include the
+ // implementation.
+ 
+-#include "tlist.tcc"
++#include <taglib/tlist.tcc>
+ 
+ #endif
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tlist.tcc taglib-src/taglib/toolkit/tlist.tcc
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tlist.tcc	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tlist.tcc	2022-07-16 22:41:37.000000000 -0500
+@@ -25,7 +25,7 @@
+  ***************************************************************************/
+ 
+ #include <algorithm>
+-#include "trefcounter.h"
++#include <taglib/trefcounter.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tmap.h taglib-src/taglib/toolkit/tmap.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tmap.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tmap.h	2022-07-16 22:45:42.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_MAP_H
+ #define TAGLIB_MAP_H
+ 
+-#include "taglib.h"
++#include <taglib/taglib.h>
+ #include <cstddef>
+ #include <map>
+ 
+@@ -202,6 +202,6 @@
+ // Since GCC doesn't support the "export" keyword, we have to include the
+ // implementation.
+ 
+-#include "tmap.tcc"
++#include <taglib/tmap.tcc>
+ 
+ #endif
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tmap.tcc taglib-src/taglib/toolkit/tmap.tcc
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tmap.tcc	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tmap.tcc	2022-07-16 22:41:42.000000000 -0500
+@@ -23,7 +23,7 @@
+  *   http://www.mozilla.org/MPL/                                           *
+  ***************************************************************************/
+ 
+-#include "trefcounter.h"
++#include <taglib/trefcounter.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpicture.cpp taglib-src/taglib/toolkit/tpicture.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpicture.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tpicture.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -24,7 +24,7 @@
   ***************************************************************************/
  
@@ -955,9 +2632,79 @@ diff -ur taglib-src/taglib/toolkit/tpicture.cpp taglib-quoted-include/taglib/too
  #include "tpicture.h"
  
  using namespace TagLib;
-diff -ur taglib-src/taglib/toolkit/tstring.cpp taglib-quoted-include/taglib/toolkit/tstring.cpp
---- taglib-src/taglib/toolkit/tstring.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/toolkit/tstring.cpp	2020-10-31 22:49:51.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpicture.h taglib-src/taglib/toolkit/tpicture.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpicture.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tpicture.h	2022-07-16 22:29:01.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_PICTURE_H
+ #define TAGLIB_PICTURE_H
+ 
+-#include "taglib_export.h"
+-#include "tbytevector.h"
+-#include "tmap.h"
+-#include "tstring.h"
++#include <taglib/taglib_export.h>
++#include <taglib/tbytevector.h>
++#include <taglib/tmap.h>
++#include <taglib/tstring.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpicturemap.h taglib-src/taglib/toolkit/tpicturemap.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpicturemap.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tpicturemap.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_PICTUREMAP_H
+ #define TAGLIB_PICTUREMAP_H
+ 
+-#include "tlist.h"
+-#include "tmap.h"
+-#include "taglib_export.h"
+-#include "tpicture.h"
++#include <taglib/tlist.h>
++#include <taglib/tmap.h>
++#include <taglib/taglib_export.h>
++#include <taglib/tpicture.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpropertymap.h taglib-src/taglib/toolkit/tpropertymap.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tpropertymap.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tpropertymap.h	2022-07-16 22:29:01.000000000 -0500
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_PROPERTYMAP_H_
+ #define TAGLIB_PROPERTYMAP_H_
+ 
+-#include "tmap.h"
+-#include "tstringlist.h"
++#include <taglib/tmap.h>
++#include <taglib/tstringlist.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/trefcounter.h taglib-src/taglib/toolkit/trefcounter.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/trefcounter.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/trefcounter.h	2022-07-16 22:33:35.000000000 -0500
+@@ -1,4 +1,4 @@
+-﻿/***************************************************************************
++/***************************************************************************
+     copyright            : (C) 2013 by Tsuda Kageyu
+     email                : tsuda.kageyu@gmail.com
+  ***************************************************************************/
+@@ -26,8 +26,8 @@
+ #ifndef TAGLIB_REFCOUNTER_H
+ #define TAGLIB_REFCOUNTER_H
+ 
+-#include "taglib_export.h"
+-#include "taglib.h"
++#include <taglib/taglib_export.h>
++#include <taglib/taglib.h>
+ 
+ #ifndef DO_NOT_DOCUMENT // Tell Doxygen to skip this class.
+ /*!
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstring.cpp taglib-src/taglib/toolkit/tstring.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstring.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tstring.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -1,4 +1,4 @@
 -﻿/***************************************************************************
 +/***************************************************************************
@@ -981,9 +2728,55 @@ diff -ur taglib-src/taglib/toolkit/tstring.cpp taglib-quoted-include/taglib/tool
  
  #include "tstring.h"
  
-diff -ur taglib-src/taglib/trueaudio/trueaudiofile.cpp taglib-quoted-include/taglib/trueaudio/trueaudiofile.cpp
---- taglib-src/taglib/trueaudio/trueaudiofile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/trueaudio/trueaudiofile.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstring.h taglib-src/taglib/toolkit/tstring.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstring.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tstring.h	2022-07-16 22:27:52.000000000 -0500
+@@ -26,7 +26,7 @@
+ #ifndef TAGLIB_STRING_H
+ #define TAGLIB_STRING_H
+ 
+-#include "tbytevector.h"
++#include <taglib/tbytevector.h>
+ #include <string>
+ 
+ /*!
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstringhandler.h taglib-src/taglib/toolkit/tstringhandler.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstringhandler.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tstringhandler.h	2022-07-16 22:28:02.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_STRINGHANDLER_H
+ #define TAGLIB_STRINGHANDLER_H
+ 
+-#include "tstring.h"
+-#include "tbytevector.h"
+-#include "taglib_export.h"
++#include <taglib/tstring.h>
++#include <taglib/tbytevector.h>
++#include <taglib/taglib_export.h>
+ 
+ namespace TagLib 
+ {
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstringlist.h taglib-src/taglib/toolkit/tstringlist.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/toolkit/tstringlist.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/toolkit/tstringlist.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,10 +26,10 @@
+ #ifndef TAGLIB_STRINGLIST_H
+ #define TAGLIB_STRINGLIST_H
+ 
+-#include "tstring.h"
+-#include "tlist.h"
+-#include "tbytevectorlist.h"
+-#include "taglib_export.h"
++#include <taglib/tstring.h>
++#include <taglib/tlist.h>
++#include <taglib/tbytevectorlist.h>
++#include <taglib/taglib_export.h>
+ 
+ #include <iostream>
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudiofile.cpp taglib-src/taglib/trueaudio/trueaudiofile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudiofile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/trueaudio/trueaudiofile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -29,11 +29,11 @@
  
  #include <tbytevector.h>
@@ -999,9 +2792,23 @@ diff -ur taglib-src/taglib/trueaudio/trueaudiofile.cpp taglib-quoted-include/tag
  
  #include "trueaudiofile.h"
  #include "id3v1tag.h"
-diff -ur taglib-src/taglib/trueaudio/trueaudioproperties.cpp taglib-quoted-include/taglib/trueaudio/trueaudioproperties.cpp
---- taglib-src/taglib/trueaudio/trueaudioproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/trueaudio/trueaudioproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudiofile.h taglib-src/taglib/trueaudio/trueaudiofile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudiofile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/trueaudio/trueaudiofile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -30,8 +30,8 @@
+ #ifndef TAGLIB_TRUEAUDIOFILE_H
+ #define TAGLIB_TRUEAUDIOFILE_H
+ 
+-#include "tfile.h"
+-#include "trueaudioproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/trueaudioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudioproperties.cpp taglib-src/taglib/trueaudio/trueaudioproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudioproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/trueaudio/trueaudioproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
   ***************************************************************************/
  
@@ -1011,9 +2818,21 @@ diff -ur taglib-src/taglib/trueaudio/trueaudioproperties.cpp taglib-quoted-inclu
  
  #include "trueaudioproperties.h"
  #include "trueaudiofile.h"
-diff -ur taglib-src/taglib/wavpack/wavpackfile.cpp taglib-quoted-include/taglib/wavpack/wavpackfile.cpp
---- taglib-src/taglib/wavpack/wavpackfile.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/wavpack/wavpackfile.cpp	2020-10-31 22:49:35.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudioproperties.h taglib-src/taglib/trueaudio/trueaudioproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/trueaudio/trueaudioproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/trueaudio/trueaudioproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -30,7 +30,7 @@
+ #ifndef TAGLIB_TRUEAUDIOPROPERTIES_H
+ #define TAGLIB_TRUEAUDIOPROPERTIES_H
+ 
+-#include "audioproperties.h"
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackfile.cpp taglib-src/taglib/wavpack/wavpackfile.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackfile.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/wavpack/wavpackfile.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -29,10 +29,10 @@
  
  #include <tbytevector.h>
@@ -1028,9 +2847,25 @@ diff -ur taglib-src/taglib/wavpack/wavpackfile.cpp taglib-quoted-include/taglib/
  
  #include "wavpackfile.h"
  #include "id3v1tag.h"
-diff -ur taglib-src/taglib/wavpack/wavpackproperties.cpp taglib-quoted-include/taglib/wavpack/wavpackproperties.cpp
---- taglib-src/taglib/wavpack/wavpackproperties.cpp	2019-03-17 08:20:08.000000000 -0500
-+++ taglib-quoted-include/taglib/wavpack/wavpackproperties.cpp	2020-10-31 22:48:05.000000000 -0500
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackfile.h taglib-src/taglib/wavpack/wavpackfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/wavpack/wavpackfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -30,9 +30,9 @@
+ #ifndef TAGLIB_WVFILE_H
+ #define TAGLIB_WVFILE_H
+ 
+-#include "tfile.h"
+-#include "taglib_export.h"
+-#include "wavpackproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/taglib_export.h>
++#include <taglib/wavpackproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackproperties.cpp taglib-src/taglib/wavpack/wavpackproperties.cpp
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackproperties.cpp	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/wavpack/wavpackproperties.cpp	2022-07-16 22:24:53.000000000 -0500
 @@ -28,7 +28,7 @@
   ***************************************************************************/
  
@@ -1040,3 +2875,55 @@ diff -ur taglib-src/taglib/wavpack/wavpackproperties.cpp taglib-quoted-include/t
  
  #include "wavpackproperties.h"
  #include "wavpackfile.h"
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackproperties.h taglib-src/taglib/wavpack/wavpackproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/wavpack/wavpackproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/wavpack/wavpackproperties.h	2022-07-16 22:28:32.000000000 -0500
+@@ -30,8 +30,8 @@
+ #ifndef TAGLIB_WVPROPERTIES_H
+ #define TAGLIB_WVPROPERTIES_H
+ 
+-#include "taglib_export.h"
+-#include "audioproperties.h"
++#include <taglib/taglib_export.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/xm/xmfile.h taglib-src/taglib/xm/xmfile.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/xm/xmfile.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/xm/xmfile.h	2022-07-16 22:34:51.000000000 -0500
+@@ -26,12 +26,12 @@
+ #ifndef TAGLIB_XMFILE_H
+ #define TAGLIB_XMFILE_H
+ 
+-#include "tfile.h"
+-#include "audioproperties.h"
+-#include "taglib_export.h"
+-#include "modfilebase.h"
+-#include "modtag.h"
+-#include "xmproperties.h"
++#include <taglib/tfile.h>
++#include <taglib/audioproperties.h>
++#include <taglib/taglib_export.h>
++#include <taglib/modfilebase.h>
++#include <taglib/modtag.h>
++#include <taglib/xmproperties.h>
+ 
+ namespace TagLib {
+ 
+diff -ru taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/xm/xmproperties.h taglib-src/taglib/xm/xmproperties.h
+--- taglib-65a6a4e225fff1288148de92721418e1c634713b/taglib/xm/xmproperties.h	2019-03-17 08:20:08.000000000 -0500
++++ taglib-src/taglib/xm/xmproperties.h	2022-07-16 22:33:35.000000000 -0500
+@@ -26,9 +26,9 @@
+ #ifndef TAGLIB_XMPROPERTIES_H
+ #define TAGLIB_XMPROPERTIES_H
+ 
+-#include "taglib.h"
+-#include "tstring.h"
+-#include "audioproperties.h"
++#include <taglib/taglib.h>
++#include <taglib/tstring.h>
++#include <taglib/audioproperties.h>
+ 
+ namespace TagLib {
+ 

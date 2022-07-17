@@ -26,11 +26,11 @@
 #ifndef TAGLIB_TEXTIDENTIFICATIONFRAME_H
 #define TAGLIB_TEXTIDENTIFICATIONFRAME_H
 
-#include "tstringlist.h"
-#include "tmap.h"
-#include "taglib_export.h"
+#include <taglib/tstringlist.h>
+#include <taglib/tmap.h>
+#include <taglib/taglib_export.h>
 
-#include "id3v2frame.h"
+#include <taglib/id3v2frame.h>
 
 namespace TagLib {
 

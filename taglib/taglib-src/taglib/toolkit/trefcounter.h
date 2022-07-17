@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
     copyright            : (C) 2013 by Tsuda Kageyu
     email                : tsuda.kageyu@gmail.com
  ***************************************************************************/
@@ -26,8 +26,8 @@
 #ifndef TAGLIB_REFCOUNTER_H
 #define TAGLIB_REFCOUNTER_H
 
-#include "taglib_export.h"
-#include "taglib.h"
+#include <taglib/taglib_export.h>
+#include <taglib/taglib.h>
 
 #ifndef DO_NOT_DOCUMENT // Tell Doxygen to skip this class.
 /*!

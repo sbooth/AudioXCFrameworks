@@ -27,8 +27,8 @@
 #ifndef TAGLIB_EBMLMATROSKAFILE_H
 #define TAGLIB_EBMLMATROSKAFILE_H
 
-#include "ebmlelement.h"
-#include "audioproperties.h"
+#include <taglib/ebmlelement.h>
+#include <taglib/audioproperties.h>
 
 namespace TagLib {
 

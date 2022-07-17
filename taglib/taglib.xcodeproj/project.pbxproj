@@ -1554,10 +1554,10 @@
 			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
+				326782E6254E65BE0041B063 /* CopyFiles */,
 				32028D04254AE93F00A537DE /* Sources */,
 				32028D05254AE93F00A537DE /* Frameworks */,
 				32028D06254AE93F00A537DE /* Resources */,
-				326782E6254E65BE0041B063 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1573,10 +1573,10 @@
 			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
 			buildPhases = (
 				32028DCD254AFEA000A537DE /* Headers */,
+				326782DD254E652A0041B063 /* CopyFiles */,
 				32028DD1254AFEA000A537DE /* Sources */,
 				32028DD4254AFEA000A537DE /* Frameworks */,
 				32028DD5254AFEA000A537DE /* Resources */,
-				326782DD254E652A0041B063 /* CopyFiles */,
 			);
 			buildRules = (
 			);

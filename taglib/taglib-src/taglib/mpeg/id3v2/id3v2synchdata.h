@@ -26,8 +26,8 @@
 #ifndef TAGLIB_ID3V2SYNCHDATA_H
 #define TAGLIB_ID3V2SYNCHDATA_H
 
-#include "tbytevector.h"
-#include "taglib.h"
+#include <taglib/tbytevector.h>
+#include <taglib/taglib.h>
 
 namespace TagLib {
 

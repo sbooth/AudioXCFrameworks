@@ -26,10 +26,10 @@
 #ifndef TAGLIB_ID3V1TAG_H
 #define TAGLIB_ID3V1TAG_H
 
-#include "tag.h"
-#include "tbytevector.h"
-#include "tstringhandler.h"
-#include "taglib_export.h"
+#include <taglib/tag.h>
+#include <taglib/tbytevector.h>
+#include <taglib/tstringhandler.h>
+#include <taglib/taglib_export.h>
 
 namespace TagLib {
 

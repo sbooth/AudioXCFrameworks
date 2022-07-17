@@ -26,10 +26,10 @@
 #ifndef TAGLIB_TABLEOFCONTENTSFRAME
 #define TAGLIB_TABLEOFCONTENTSFRAME
 
-#include "id3v2tag.h"
-#include "id3v2frame.h"
+#include <taglib/id3v2tag.h>
+#include <taglib/id3v2frame.h>
 
-#include "tbytevectorlist.h"
+#include <taglib/tbytevectorlist.h>
 
 namespace TagLib {
 

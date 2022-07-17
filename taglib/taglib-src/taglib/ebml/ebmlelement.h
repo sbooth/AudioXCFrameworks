@@ -26,11 +26,11 @@
 #ifndef TAGLIB_EBMLELEMENT_H
 #define TAGLIB_EBMLELEMENT_H
 
-#include "tlist.h"
-#include "tbytevector.h"
-#include "tstring.h"
+#include <taglib/tlist.h>
+#include <taglib/tbytevector.h>
+#include <taglib/tstring.h>
 
-#include "ebmlfile.h"
+#include <taglib/ebmlfile.h>
 
 namespace TagLib {
 

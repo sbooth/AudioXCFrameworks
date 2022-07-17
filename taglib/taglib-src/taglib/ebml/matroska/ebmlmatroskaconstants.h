@@ -26,8 +26,8 @@
 #ifndef TAGLIB_EBMLMATROSKACONSTANTS_H
 #define TAGLIB_EBMLMATROSKACONSTANTS_H
 
-#include "ebmlconstants.h"
-#include "tstring.h"
+#include <taglib/ebmlconstants.h>
+#include <taglib/tstring.h>
 
 namespace TagLib {
 

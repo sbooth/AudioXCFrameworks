@@ -26,7 +26,7 @@
 #ifndef TAGLIB_MAP_H
 #define TAGLIB_MAP_H
 
-#include "taglib.h"
+#include <taglib/taglib.h>
 #include <cstddef>
 #include <map>
 
@@ -202,6 +202,6 @@ namespace TagLib {
 // Since GCC doesn't support the "export" keyword, we have to include the
 // implementation.
 
-#include "tmap.tcc"
+#include <taglib/tmap.tcc>
 
 #endif

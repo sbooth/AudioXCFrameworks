@@ -26,8 +26,8 @@
 #ifndef TAGLIB_FILESTREAM_H
 #define TAGLIB_FILESTREAM_H
 
-#include "tbytevector.h"
-#include "tiostream.h"
+#include <taglib/tbytevector.h>
+#include <taglib/tiostream.h>
 
 namespace TagLib {
 

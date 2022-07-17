@@ -26,8 +26,8 @@
 #ifndef TAGLIB_PROPERTYMAP_H_
 #define TAGLIB_PROPERTYMAP_H_
 
-#include "tmap.h"
-#include "tstringlist.h"
+#include <taglib/tmap.h>
+#include <taglib/tstringlist.h>
 
 namespace TagLib {
 

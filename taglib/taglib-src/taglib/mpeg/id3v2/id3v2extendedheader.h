@@ -26,9 +26,9 @@
 #ifndef TAGLIB_ID3V2EXTENDEDHEADER_H
 #define TAGLIB_ID3V2EXTENDEDHEADER_H
 
-#include "taglib_export.h"
-#include "tbytevector.h"
-#include "taglib.h"
+#include <taglib/taglib_export.h>
+#include <taglib/tbytevector.h>
+#include <taglib/taglib.h>
 
 namespace TagLib {
 
