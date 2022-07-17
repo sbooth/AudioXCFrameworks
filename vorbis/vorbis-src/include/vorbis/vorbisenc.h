@@ -28,7 +28,7 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-#include "codec.h"
+#include <vorbis/codec.h>
 
 /**
  * This is the primary function within libvorbisenc for setting up managed

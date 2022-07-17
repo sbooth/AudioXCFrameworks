@@ -1,0 +1,25 @@
+Only in vorbis-src: config.h
+diff -ru vorbis-v1.3.7/include/vorbis/vorbisenc.h vorbis-src/include/vorbis/vorbisenc.h
+--- vorbis-v1.3.7/include/vorbis/vorbisenc.h	2020-07-04 01:12:30.000000000 -0500
++++ vorbis-src/include/vorbis/vorbisenc.h	2022-07-16 22:15:31.000000000 -0500
+@@ -28,7 +28,7 @@
+ {
+ #endif /* __cplusplus */
+ 
+-#include "codec.h"
++#include <vorbis/codec.h>
+ 
+ /**
+  * This is the primary function within libvorbisenc for setting up managed
+diff -ru vorbis-v1.3.7/include/vorbis/vorbisfile.h vorbis-src/include/vorbis/vorbisfile.h
+--- vorbis-v1.3.7/include/vorbis/vorbisfile.h	2020-07-04 01:12:30.000000000 -0500
++++ vorbis-src/include/vorbis/vorbisfile.h	2022-07-16 22:15:23.000000000 -0500
+@@ -23,7 +23,7 @@
+ #endif /* __cplusplus */
+ 
+ #include <stdio.h>
+-#include "codec.h"
++#include <vorbis/codec.h>
+ 
+ /* The function prototypes for the callbacks are basically the same as for
+  * the stdio functions fread, fseek, fclose, ftell.
