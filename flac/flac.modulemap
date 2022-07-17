@@ -1,4 +1,5 @@
 framework module FLAC {
 	umbrella header "all.h"
 	export *
+	module * { export * }
 }
