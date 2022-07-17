@@ -165,6 +165,7 @@
 		3271431E254F163600029BD7 /* codec_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codec_internal.h; sourceTree = "<group>"; };
 		3271431F254F163600029BD7 /* codebook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codebook.h; sourceTree = "<group>"; };
 		32714483254F1E5900029BD7 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		3295D92528846C04006AA170 /* vorbis.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = vorbis.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +193,7 @@
 			children = (
 				3260C6522554592B00E8C286 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
+				3295D92528846C04006AA170 /* vorbis.modulemap */,
 				32714256254F163600029BD7 /* vorbis-src */,
 				32028D09254AE93F00A537DE /* Products */,
 				3260C5F525544E0A00E8C286 /* Frameworks */,
@@ -720,6 +722,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = vorbis.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.vorbis;
 				PRODUCT_NAME = vorbis;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -743,6 +746,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = vorbis.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.vorbis;
 				PRODUCT_NAME = vorbis;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -766,6 +770,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = vorbis.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.vorbis;
 				PRODUCT_NAME = vorbis;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -791,6 +796,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = vorbis.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.vorbis;
 				PRODUCT_NAME = vorbis;
 				PROVISIONING_PROFILE_SPECIFIER = "";
