@@ -1,0 +1,62 @@
+Only in speexdsp-src: config.h
+diff -ru speexdsp-SpeexDSP-1.2.1/include/speex/speex_buffer.h speexdsp-src/include/speex/speex_buffer.h
+--- speexdsp-SpeexDSP-1.2.1/include/speex/speex_buffer.h	2022-06-13 07:55:27.000000000 -0500
++++ speexdsp-src/include/speex/speex_buffer.h	2022-07-16 21:59:21.000000000 -0500
+@@ -34,7 +34,7 @@
+ #ifndef SPEEX_BUFFER_H
+ #define SPEEX_BUFFER_H
+ 
+-#include "speexdsp_types.h"
++#include <speex/speexdsp_types.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ru speexdsp-SpeexDSP-1.2.1/include/speex/speex_echo.h speexdsp-src/include/speex/speex_echo.h
+--- speexdsp-SpeexDSP-1.2.1/include/speex/speex_echo.h	2022-06-13 07:55:27.000000000 -0500
++++ speexdsp-src/include/speex/speex_echo.h	2022-07-16 21:59:30.000000000 -0500
+@@ -37,7 +37,7 @@
+  *  This is the acoustic echo canceller module.
+  *  @{
+  */
+-#include "speexdsp_types.h"
++#include <speex/speexdsp_types.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ru speexdsp-SpeexDSP-1.2.1/include/speex/speex_jitter.h speexdsp-src/include/speex/speex_jitter.h
+--- speexdsp-SpeexDSP-1.2.1/include/speex/speex_jitter.h	2022-06-13 07:55:27.000000000 -0500
++++ speexdsp-src/include/speex/speex_jitter.h	2022-07-16 21:59:36.000000000 -0500
+@@ -41,7 +41,7 @@
+  *  @{
+  */
+ 
+-#include "speexdsp_types.h"
++#include <speex/speexdsp_types.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ru speexdsp-SpeexDSP-1.2.1/include/speex/speex_preprocess.h speexdsp-src/include/speex/speex_preprocess.h
+--- speexdsp-SpeexDSP-1.2.1/include/speex/speex_preprocess.h	2022-06-13 07:55:27.000000000 -0500
++++ speexdsp-src/include/speex/speex_preprocess.h	2022-07-16 21:59:41.000000000 -0500
+@@ -43,7 +43,7 @@
+  *  @{
+  */
+ 
+-#include "speexdsp_types.h"
++#include <speex/speexdsp_types.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ru speexdsp-SpeexDSP-1.2.1/include/speex/speex_resampler.h speexdsp-src/include/speex/speex_resampler.h
+--- speexdsp-SpeexDSP-1.2.1/include/speex/speex_resampler.h	2022-06-13 07:55:27.000000000 -0500
++++ speexdsp-src/include/speex/speex_resampler.h	2022-07-16 21:59:54.000000000 -0500
+@@ -86,7 +86,7 @@
+ 
+ #else /* OUTSIDE_SPEEX */
+ 
+-#include "speexdsp_types.h"
++#include <speex/speexdsp_types.h>
+ 
+ #endif /* OUTSIDE_SPEEX */
+ 
+Only in speexdsp-src/include/speex: speexdsp_config_types.h

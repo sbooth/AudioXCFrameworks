@@ -1,0 +1,54 @@
+Only in speex-src: config.h
+diff -ru speex-Speex-1.2.1/include/speex/speex.h speex-src/include/speex/speex.h
+--- speex-Speex-1.2.1/include/speex/speex.h	2022-06-11 14:39:11.000000000 -0500
++++ speex-src/include/speex/speex.h	2022-07-16 22:01:44.000000000 -0500
+@@ -40,8 +40,8 @@
+  *  @{
+  */
+ 
+-#include "speex_types.h"
+-#include "speex_bits.h"
++#include <speex/speex_types.h>
++#include <speex/speex_bits.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ru speex-Speex-1.2.1/include/speex/speex_callbacks.h speex-src/include/speex/speex_callbacks.h
+--- speex-Speex-1.2.1/include/speex/speex_callbacks.h	2022-06-11 14:39:11.000000000 -0500
++++ speex-src/include/speex/speex_callbacks.h	2022-07-16 22:01:24.000000000 -0500
+@@ -39,7 +39,7 @@
+  *  @{
+  */
+ 
+-#include "speex.h"
++#include <speex/speex.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+Only in speex-src/include/speex: speex_config_types.h
+diff -ru speex-Speex-1.2.1/include/speex/speex_header.h speex-src/include/speex/speex_header.h
+--- speex-Speex-1.2.1/include/speex/speex_header.h	2022-06-11 14:39:11.000000000 -0500
++++ speex-src/include/speex/speex_header.h	2022-07-16 22:01:33.000000000 -0500
+@@ -41,7 +41,7 @@
+  *  @{
+  */
+ 
+-#include "speex_types.h"
++#include <speex/speex_types.h>
+ 
+ #ifdef __cplusplus
+ extern "C" {
+diff -ru speex-Speex-1.2.1/include/speex/speex_stereo.h speex-src/include/speex/speex_stereo.h
+--- speex-Speex-1.2.1/include/speex/speex_stereo.h	2022-06-11 14:39:11.000000000 -0500
++++ speex-src/include/speex/speex_stereo.h	2022-07-16 22:01:40.000000000 -0500
+@@ -39,8 +39,8 @@
+  *  @{
+  */
+ 
+-#include "speex_types.h"
+-#include "speex_bits.h"
++#include <speex/speex_types.h>
++#include <speex/speex_bits.h>
+ 
+ 
+ #ifdef __cplusplus

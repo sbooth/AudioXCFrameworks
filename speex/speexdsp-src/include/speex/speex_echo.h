@@ -37,7 +37,7 @@
  *  This is the acoustic echo canceller module.
  *  @{
  */
-#include "speexdsp_types.h"
+#include <speex/speexdsp_types.h>
 
 #ifdef __cplusplus
 extern "C" {
