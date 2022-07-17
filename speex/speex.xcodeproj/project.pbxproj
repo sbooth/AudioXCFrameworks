@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		322C402C2883C383009E2B59 /* speex_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322C40292883C2A3009E2B59 /* speex_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		322C402D2883C384009E2B59 /* speex_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322C40292883C2A3009E2B59 /* speex_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D0254F21D200029BD7 /* speex_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A5254F21A100029BD7 /* speex_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D1254F21D200029BD7 /* speex_header.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A2254F21A100029BD7 /* speex_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D2254F21D200029BD7 /* speex_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A8254F21A100029BD7 /* speex_bits.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -124,7 +122,6 @@
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		322C40292883C2A3009E2B59 /* speex_umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_umbrella.h; sourceTree = "<group>"; };
 		322C402A2883C2A3009E2B59 /* speex.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = speex.modulemap; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		327144A2254F21A100029BD7 /* speex_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
@@ -229,7 +226,6 @@
 		32714680254F29CF00029BD7 /* os_support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = os_support.h; sourceTree = "<group>"; };
 		32714681254F29CF00029BD7 /* filterbank.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filterbank.h; sourceTree = "<group>"; };
 		32714682254F29CF00029BD7 /* kiss_fft.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = kiss_fft.c; sourceTree = "<group>"; };
-		32714683254F29CF00029BD7 /* stack_alloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stack_alloc.h; sourceTree = "<group>"; };
 		32714684254F29CF00029BD7 /* fixed_arm4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed_arm4.h; sourceTree = "<group>"; };
 		32714685254F29CF00029BD7 /* buffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
 		32714686254F29CF00029BD7 /* fixed_generic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed_generic.h; sourceTree = "<group>"; };
@@ -259,7 +255,6 @@
 		3271469E254F29CF00029BD7 /* testdenoise.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = testdenoise.c; sourceTree = "<group>"; };
 		3271469F254F29CF00029BD7 /* fixed_bfin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed_bfin.h; sourceTree = "<group>"; };
 		327146A0254F29CF00029BD7 /* fixed_debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed_debug.h; sourceTree = "<group>"; };
-		327146A1254F29CF00029BD7 /* .cvsignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .cvsignore; sourceTree = "<group>"; };
 		327146A2254F29CF00029BD7 /* testresample.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = testresample.c; sourceTree = "<group>"; };
 		327146A3254F29CF00029BD7 /* scal.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scal.c; sourceTree = "<group>"; };
 		327146A4254F29CF00029BD7 /* resample_sse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resample_sse.h; sourceTree = "<group>"; };
@@ -290,7 +285,6 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
-				322C40292883C2A3009E2B59 /* speex_umbrella.h */,
 				322C402A2883C2A3009E2B59 /* speex.modulemap */,
 				32714491254F21A100029BD7 /* speex-src */,
 				32714659254F29CF00029BD7 /* speexdsp-src */,
@@ -465,7 +459,6 @@
 			isa = PBXGroup;
 			children = (
 				3271468B254F29CF00029BD7 /* _kiss_fft_guts.h */,
-				327146A1254F29CF00029BD7 /* .cvsignore */,
 				327146A5254F29CF00029BD7 /* arch.h */,
 				3271469C254F29CF00029BD7 /* bfin.h */,
 				32714685254F29CF00029BD7 /* buffer.c */,
@@ -497,7 +490,6 @@
 				327146A3254F29CF00029BD7 /* scal.c */,
 				32714694254F29CF00029BD7 /* smallft.c */,
 				3271467F254F29CF00029BD7 /* smallft.h */,
-				32714683254F29CF00029BD7 /* stack_alloc.h */,
 				3271469E254F29CF00029BD7 /* testdenoise.c */,
 				32714697254F29CF00029BD7 /* testecho.c */,
 				32714691254F29CF00029BD7 /* testjitter.c */,
@@ -521,7 +513,6 @@
 				327145D5254F21D200029BD7 /* speex.h in Headers */,
 				3271475E254F2B7000029BD7 /* config.h in Headers */,
 				32714728254F2A0500029BD7 /* speex_echo.h in Headers */,
-				322C402C2883C383009E2B59 /* speex_umbrella.h in Headers */,
 				327145D1254F21D200029BD7 /* speex_header.h in Headers */,
 				32714725254F2A0500029BD7 /* speexdsp_types.h in Headers */,
 				32714727254F2A0500029BD7 /* speex_preprocess.h in Headers */,
@@ -545,7 +536,6 @@
 				327145DD254F21D300029BD7 /* speex.h in Headers */,
 				3271475F254F2B7000029BD7 /* config.h in Headers */,
 				3271472F254F2A0500029BD7 /* speex_echo.h in Headers */,
-				322C402D2883C384009E2B59 /* speex_umbrella.h in Headers */,
 				327145D9254F21D300029BD7 /* speex_header.h in Headers */,
 				3271472C254F2A0500029BD7 /* speexdsp_types.h in Headers */,
 				3271472E254F2A0500029BD7 /* speex_preprocess.h in Headers */,

@@ -1,6 +1,22 @@
 framework module speex {
-	umbrella header "speex_umbrella.h"
+	module speex {
+		header "speex_bits.h"
+		header "speex_callbacks.h"
+		header "speex_config_types.h"
+		header "speex_header.h"
+		header "speex_stereo.h"
+		header "speex_types.h"
+		header "speex.h"
+		export *
+	}
 
-	export *
-	module * { export * }
+	module dsp {
+		header "speex_echo.h"
+		header "speex_jitter.h"
+		header "speex_preprocess.h"
+		header "speex_resampler.h"
+		header "speexdsp_config_types.h"
+		header "speexdsp_types.h"
+		export *
+	}
 }
