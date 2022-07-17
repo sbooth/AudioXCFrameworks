@@ -108,4 +108,4 @@ $(XCFRAMEWORK): $(XCARCHIVES)
 	xcodebuild -create-xcframework $(foreach xcarchive,$^,-framework "$(xcarchive)/Products/Library/Frameworks/$(FRAMEWORK_NAME).framework" -debug-symbols "$(realpath $(xcarchive)/dSYMs/$(FRAMEWORK_NAME).framework.dSYM)" ) -output "$@"
 
 $(XZ_FILE): $(XCFRAMEWORK)
-	tar cJf "$@" "$<"
+	cd $(BUILD_DIR) && tar cJf "$(notdir $@)" "$(notdir $<)"
