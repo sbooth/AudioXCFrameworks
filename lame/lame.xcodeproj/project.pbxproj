@@ -141,6 +141,7 @@
 		3285FFFC256A954F009140DE /* huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman.h; sourceTree = "<group>"; };
 		3285FFFE256A954F009140DE /* layer1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = layer1.h; sourceTree = "<group>"; };
 		3285FFFF256A954F009140DE /* dct64_i386.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dct64_i386.h; sourceTree = "<group>"; };
+		3295D92228846580006AA170 /* lame.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = lame.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
+				3295D92228846580006AA170 /* lame.modulemap */,
 				3285FFD4256A954F009140DE /* lame-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
@@ -610,6 +612,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = lame.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.sourceforge.lame;
 				PRODUCT_NAME = lame;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -633,6 +636,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = lame.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.sourceforge.lame;
 				PRODUCT_NAME = lame;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -656,6 +660,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = lame.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.sourceforge.lame;
 				PRODUCT_NAME = lame;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -681,6 +686,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = lame.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = io.sourceforge.lame;
 				PRODUCT_NAME = lame;
 				PROVISIONING_PROFILE_SPECIFIER = "";
