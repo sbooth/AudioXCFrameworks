@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		322C402E2883C391009E2B59 /* opus_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322C40282883C195009E2B59 /* opus_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		322C40312883C391009E2B59 /* opus_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322C40282883C195009E2B59 /* opus_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325695A4256DC9DC003F09C5 /* opusenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32569578256DC9AD003F09C5 /* opusenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325695A7256DC9DD003F09C5 /* opusenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32569578256DC9AD003F09C5 /* opusenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325695AE256DC9EB003F09C5 /* opus_header.c in Sources */ = {isa = PBXBuildFile; fileRef = 32569598256DC9AE003F09C5 /* opus_header.c */; };
@@ -385,6 +387,8 @@
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* opus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = opus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* opus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = opus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		322C40272883C195009E2B59 /* opus.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = opus.modulemap; sourceTree = "<group>"; };
+		322C40282883C195009E2B59 /* opus_umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opus_umbrella.h; sourceTree = "<group>"; };
 		32569578256DC9AD003F09C5 /* opusenc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opusenc.h; sourceTree = "<group>"; };
 		32569595256DC9AE003F09C5 /* picture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picture.h; sourceTree = "<group>"; };
 		32569596256DC9AE003F09C5 /* speex_resampler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_resampler.h; sourceTree = "<group>"; };
@@ -752,6 +756,8 @@
 			children = (
 				3260C6B3255461BD00E8C286 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
+				322C40282883C195009E2B59 /* opus_umbrella.h */,
+				322C40272883C195009E2B59 /* opus.modulemap */,
 				3271477E254F365D00029BD7 /* opus-src */,
 				32714B2A2550439700029BD7 /* opusfile-src */,
 				32569573256DC9AD003F09C5 /* libopusenc-src */,
@@ -1328,6 +1334,7 @@
 				32714938254F36A000029BD7 /* opus_projection.h in Headers */,
 				32714935254F36A000029BD7 /* opus_multistream.h in Headers */,
 				32714939254F36A000029BD7 /* opus.h in Headers */,
+				322C402E2883C391009E2B59 /* opus_umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1344,6 +1351,7 @@
 				32714940254F36A100029BD7 /* opus_projection.h in Headers */,
 				3271493D254F36A100029BD7 /* opus_multistream.h in Headers */,
 				32714941254F36A100029BD7 /* opus.h in Headers */,
+				322C40312883C391009E2B59 /* opus_umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2057,6 +2065,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2068,6 +2077,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = opus.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.opus-codec";
 				PRODUCT_NAME = opus;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2079,6 +2089,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2090,6 +2101,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = opus.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.opus-codec";
 				PRODUCT_NAME = opus;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2101,6 +2113,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2112,6 +2125,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = opus.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.opus-codec";
 				PRODUCT_NAME = opus;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2125,6 +2139,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -2136,6 +2151,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = opus.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.opus-codec";
 				PRODUCT_NAME = opus;
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		322C402C2883C383009E2B59 /* speex_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322C40292883C2A3009E2B59 /* speex_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		322C402D2883C384009E2B59 /* speex_umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 322C40292883C2A3009E2B59 /* speex_umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D0254F21D200029BD7 /* speex_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A5254F21A100029BD7 /* speex_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D1254F21D200029BD7 /* speex_header.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A2254F21A100029BD7 /* speex_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D2254F21D200029BD7 /* speex_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A8254F21A100029BD7 /* speex_bits.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -122,6 +124,8 @@
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		322C40292883C2A3009E2B59 /* speex_umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_umbrella.h; sourceTree = "<group>"; };
+		322C402A2883C2A3009E2B59 /* speex.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = speex.modulemap; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		327144A2254F21A100029BD7 /* speex_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
 		327144A3254F21A100029BD7 /* speex_stereo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_stereo.h; sourceTree = "<group>"; };
@@ -286,6 +290,8 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
+				322C40292883C2A3009E2B59 /* speex_umbrella.h */,
+				322C402A2883C2A3009E2B59 /* speex.modulemap */,
 				32714491254F21A100029BD7 /* speex-src */,
 				32714659254F29CF00029BD7 /* speexdsp-src */,
 				32028D09254AE93F00A537DE /* Products */,
@@ -515,6 +521,7 @@
 				327145D5254F21D200029BD7 /* speex.h in Headers */,
 				3271475E254F2B7000029BD7 /* config.h in Headers */,
 				32714728254F2A0500029BD7 /* speex_echo.h in Headers */,
+				322C402C2883C383009E2B59 /* speex_umbrella.h in Headers */,
 				327145D1254F21D200029BD7 /* speex_header.h in Headers */,
 				32714725254F2A0500029BD7 /* speexdsp_types.h in Headers */,
 				32714727254F2A0500029BD7 /* speex_preprocess.h in Headers */,
@@ -538,6 +545,7 @@
 				327145DD254F21D300029BD7 /* speex.h in Headers */,
 				3271475F254F2B7000029BD7 /* config.h in Headers */,
 				3271472F254F2A0500029BD7 /* speex_echo.h in Headers */,
+				322C402D2883C384009E2B59 /* speex_umbrella.h in Headers */,
 				327145D9254F21D300029BD7 /* speex_header.h in Headers */,
 				3271472C254F2A0500029BD7 /* speexdsp_types.h in Headers */,
 				3271472E254F2A0500029BD7 /* speex_preprocess.h in Headers */,
@@ -863,6 +871,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -874,6 +883,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = speex.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
 				PRODUCT_NAME = speex;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -885,6 +895,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -896,6 +907,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = speex.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
 				PRODUCT_NAME = speex;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -907,6 +919,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -918,6 +931,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = speex.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
 				PRODUCT_NAME = speex;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -931,6 +945,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -942,6 +957,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = speex.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
 				PRODUCT_NAME = speex;
 				PROVISIONING_PROFILE_SPECIFIER = "";
