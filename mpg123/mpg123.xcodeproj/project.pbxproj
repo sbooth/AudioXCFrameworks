@@ -371,6 +371,7 @@
 		3287D1C12816DCC4009EA035 /* init_costabs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = init_costabs.h; sourceTree = "<group>"; };
 		3287D2122816DDE1009EA035 /* win32_support.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = win32_support.c; sourceTree = "<group>"; };
 		3287D2132816DDE1009EA035 /* win32_support.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = win32_support.h; sourceTree = "<group>"; };
+		3295D920288464D8006AA170 /* mpg123.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = mpg123.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -395,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
+				3295D920288464D8006AA170 /* mpg123.modulemap */,
 				326774C3254BBEED0041B063 /* mpg123-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
@@ -1244,6 +1246,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpg123.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mpg123;
 				PRODUCT_NAME = mpg123;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1267,6 +1270,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpg123.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mpg123;
 				PRODUCT_NAME = mpg123;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1290,6 +1294,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpg123.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mpg123;
 				PRODUCT_NAME = mpg123;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1315,6 +1320,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = mpg123.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = de.mpg123;
 				PRODUCT_NAME = mpg123;
 				PROVISIONING_PROFILE_SPECIFIER = "";
