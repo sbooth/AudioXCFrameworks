@@ -246,6 +246,7 @@
 		32714057254EEF7600029BD7 /* replaygain_analysis_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = replaygain_analysis_static.vcproj; sourceTree = "<group>"; };
 		32714058254EEF7600029BD7 /* replaygain_analysis_static.vcxproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = replaygain_analysis_static.vcxproj; sourceTree = "<group>"; };
 		32714190254F08E300029BD7 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		3295D92B28846DB6006AA170 /* flac.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = flac.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +274,7 @@
 			children = (
 				3260C67025545AFB00E8C286 /* ogg.xcodeproj */,
 				3267710F254B5D670041B063 /* Info.plist */,
+				3295D92B28846DB6006AA170 /* flac.modulemap */,
 				32713D75254EEF7500029BD7 /* flac-src */,
 				32028D09254AE93F00A537DE /* Products */,
 				3260C67D25545B0600E8C286 /* Frameworks */,
@@ -940,6 +942,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.flac;
 				PRODUCT_NAME = FLAC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -963,6 +966,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.flac;
 				PRODUCT_NAME = FLAC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -986,6 +990,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.flac;
 				PRODUCT_NAME = FLAC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1011,6 +1016,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = flac.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.flac;
 				PRODUCT_NAME = FLAC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
