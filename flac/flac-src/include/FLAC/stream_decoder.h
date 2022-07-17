@@ -34,8 +34,8 @@
 #define FLAC__STREAM_DECODER_H
 
 #include <stdio.h> /* for FILE */
-#include "export.h"
-#include "format.h"
+#include <FLAC/export.h>
+#include <FLAC/format.h>
 
 #ifdef __cplusplus
 extern "C" {

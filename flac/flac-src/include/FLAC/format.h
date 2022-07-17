@@ -33,8 +33,8 @@
 #ifndef FLAC__FORMAT_H
 #define FLAC__FORMAT_H
 
-#include "export.h"
-#include "ordinals.h"
+#include <FLAC/export.h>
+#include <FLAC/ordinals.h>
 
 #ifdef __cplusplus
 extern "C" {
