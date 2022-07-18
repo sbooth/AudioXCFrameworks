@@ -1,0 +1,16 @@
+framework module oggz {
+	header "oggz.h"
+	header "oggz_comments.h"
+	header "oggz_constants.h"
+	header "oggz_deprecated.h"
+	header "oggz_io.h"
+	header "oggz_off_t.h"
+	header "oggz_off_t_generated.h"
+	header "oggz_packet.h"
+	header "oggz_read.h"
+	header "oggz_seek.h"
+	header "oggz_stream.h"
+	header "oggz_table.h"
+	header "oggz_write.h"
+	export *
+}

@@ -1,0 +1,1522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		325A43E52885C0F000DD12AC /* oggz_constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CD2885C0DA00DD12AC /* oggz_constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43E62885C0F000DD12AC /* oggz_write.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CE2885C0DA00DD12AC /* oggz_write.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43E72885C0F000DD12AC /* oggz_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D22885C0DA00DD12AC /* oggz_stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43E82885C0F000DD12AC /* oggz_comments.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D42885C0DA00DD12AC /* oggz_comments.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43E92885C0F000DD12AC /* oggz_seek.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CB2885C0DA00DD12AC /* oggz_seek.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43EA2885C0F000DD12AC /* oggz_read.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D32885C0DA00DD12AC /* oggz_read.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43EB2885C0F000DD12AC /* oggz_table.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D12885C0DA00DD12AC /* oggz_table.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43EC2885C0F000DD12AC /* oggz_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CF2885C0DA00DD12AC /* oggz_packet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43ED2885C0F000DD12AC /* oggz_off_t.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D52885C0DA00DD12AC /* oggz_off_t.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43EE2885C0F000DD12AC /* oggz_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D62885C0DA00DD12AC /* oggz_io.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43EF2885C0F000DD12AC /* oggz.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42C92885C0DA00DD12AC /* oggz.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F02885C0F000DD12AC /* oggz_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CC2885C0DA00DD12AC /* oggz_deprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F12885C0F100DD12AC /* oggz_constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CD2885C0DA00DD12AC /* oggz_constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F22885C0F100DD12AC /* oggz_write.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CE2885C0DA00DD12AC /* oggz_write.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F32885C0F100DD12AC /* oggz_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D22885C0DA00DD12AC /* oggz_stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F42885C0F100DD12AC /* oggz_comments.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D42885C0DA00DD12AC /* oggz_comments.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F52885C0F100DD12AC /* oggz_seek.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CB2885C0DA00DD12AC /* oggz_seek.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F62885C0F100DD12AC /* oggz_read.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D32885C0DA00DD12AC /* oggz_read.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F72885C0F100DD12AC /* oggz_table.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D12885C0DA00DD12AC /* oggz_table.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F82885C0F100DD12AC /* oggz_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CF2885C0DA00DD12AC /* oggz_packet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43F92885C0F100DD12AC /* oggz_off_t.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D52885C0DA00DD12AC /* oggz_off_t.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43FA2885C0F100DD12AC /* oggz_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D62885C0DA00DD12AC /* oggz_io.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43FB2885C0F100DD12AC /* oggz.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42C92885C0DA00DD12AC /* oggz.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43FC2885C0F100DD12AC /* oggz_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CC2885C0DA00DD12AC /* oggz_deprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A43FD2885C15A00DD12AC /* oggz_write.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43872885C0DA00DD12AC /* oggz_write.c */; };
+		325A43FE2885C15A00DD12AC /* oggz_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43722885C0DA00DD12AC /* oggz_table.c */; };
+		325A43FF2885C15A00DD12AC /* dirac.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43762885C0DA00DD12AC /* dirac.c */; };
+		325A44002885C15A00DD12AC /* oggz_dlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43892885C0DA00DD12AC /* oggz_dlist.c */; };
+		325A44012885C15A00DD12AC /* oggz_seek.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43842885C0DA00DD12AC /* oggz_seek.c */; };
+		325A44022885C15A00DD12AC /* oggz_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437B2885C0DA00DD12AC /* oggz_io.c */; };
+		325A44032885C15A00DD12AC /* oggz_vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43812885C0DA00DD12AC /* oggz_vector.c */; };
+		325A44042885C15A00DD12AC /* oggz_stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43772885C0DA00DD12AC /* oggz_stream.c */; };
+		325A44052885C15A00DD12AC /* oggz_auto.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43792885C0DA00DD12AC /* oggz_auto.c */; };
+		325A44062885C15A00DD12AC /* oggz_comments.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437F2885C0DA00DD12AC /* oggz_comments.c */; };
+		325A44072885C15A00DD12AC /* oggz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43822885C0DA00DD12AC /* oggz.c */; };
+		325A44082885C15A00DD12AC /* oggz_read.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437A2885C0DA00DD12AC /* oggz_read.c */; };
+		325A44092885C15A00DD12AC /* metric_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43742885C0DA00DD12AC /* metric_internal.c */; };
+		325A440A2885C15B00DD12AC /* oggz_write.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43872885C0DA00DD12AC /* oggz_write.c */; };
+		325A440B2885C15B00DD12AC /* oggz_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43722885C0DA00DD12AC /* oggz_table.c */; };
+		325A440C2885C15B00DD12AC /* dirac.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43762885C0DA00DD12AC /* dirac.c */; };
+		325A440D2885C15B00DD12AC /* oggz_dlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43892885C0DA00DD12AC /* oggz_dlist.c */; };
+		325A440E2885C15B00DD12AC /* oggz_seek.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43842885C0DA00DD12AC /* oggz_seek.c */; };
+		325A440F2885C15B00DD12AC /* oggz_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437B2885C0DA00DD12AC /* oggz_io.c */; };
+		325A44102885C15B00DD12AC /* oggz_vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43812885C0DA00DD12AC /* oggz_vector.c */; };
+		325A44112885C15B00DD12AC /* oggz_stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43772885C0DA00DD12AC /* oggz_stream.c */; };
+		325A44122885C15B00DD12AC /* oggz_auto.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43792885C0DA00DD12AC /* oggz_auto.c */; };
+		325A44132885C15B00DD12AC /* oggz_comments.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437F2885C0DA00DD12AC /* oggz_comments.c */; };
+		325A44142885C15B00DD12AC /* oggz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43822885C0DA00DD12AC /* oggz.c */; };
+		325A44152885C15B00DD12AC /* oggz_read.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437A2885C0DA00DD12AC /* oggz_read.c */; };
+		325A44162885C15B00DD12AC /* metric_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43742885C0DA00DD12AC /* metric_internal.c */; };
+		325A44212885C18500DD12AC /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 325A441D2885C17500DD12AC /* ogg.framework */; };
+		325A44242885C18D00DD12AC /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 325A441F2885C17500DD12AC /* ogg.framework */; };
+		325A44302885C25100DD12AC /* oggz_off_t_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A442B2885C25100DD12AC /* oggz_off_t_generated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		325A44312885C25100DD12AC /* oggz_off_t_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A442B2885C25100DD12AC /* oggz_off_t_generated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		325A43E12885C0DA00DD12AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 325A42EB2885C0DA00DD12AC /* oggz.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = Oggz;
+		};
+		325A43E32885C0DA00DD12AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 325A42EB2885C0DA00DD12AC /* oggz.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E7C3C2A810476CC400911CD9;
+			remoteInfo = oggz;
+		};
+		325A441C2885C17500DD12AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 325A44172885C17500DD12AC /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028D08254AE93F00A537DE;
+			remoteInfo = macOS;
+		};
+		325A441E2885C17500DD12AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 325A44172885C17500DD12AC /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32028DD9254AFEA000A537DE;
+			remoteInfo = iOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		32028D08254AE93F00A537DE /* oggz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = oggz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32028DD9254AFEA000A537DE /* oggz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = oggz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		325A42AC2885C0DA00DD12AC /* acinclude.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = acinclude.m4; sourceTree = "<group>"; };
+		325A42AD2885C0DA00DD12AC /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		325A42AF2885C0DA00DD12AC /* liboggz-1.0.1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-1.0.1.txt"; sourceTree = "<group>"; };
+		325A42B02885C0DA00DD12AC /* liboggz-1.0.0.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-1.0.0.txt"; sourceTree = "<group>"; };
+		325A42B12885C0DA00DD12AC /* liboggz-1.1.1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-1.1.1.txt"; sourceTree = "<group>"; };
+		325A42B22885C0DA00DD12AC /* liboggz-1.1.0.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-1.1.0.txt"; sourceTree = "<group>"; };
+		325A42B32885C0DA00DD12AC /* liboggz-0.9.8.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.8.txt"; sourceTree = "<group>"; };
+		325A42B42885C0DA00DD12AC /* liboggz-0.9.9.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.9.txt"; sourceTree = "<group>"; };
+		325A42B52885C0DA00DD12AC /* liboggz-0.9.7.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.7.txt"; sourceTree = "<group>"; };
+		325A42B62885C0DA00DD12AC /* liboggz-0.9.6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.6.txt"; sourceTree = "<group>"; };
+		325A42B72885C0DA00DD12AC /* liboggz-0.9.4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.4.txt"; sourceTree = "<group>"; };
+		325A42B82885C0DA00DD12AC /* liboggz-0.9.5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.5.txt"; sourceTree = "<group>"; };
+		325A42B92885C0DA00DD12AC /* liboggz-0.9.1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.1.txt"; sourceTree = "<group>"; };
+		325A42BA2885C0DA00DD12AC /* liboggz-0.9.0.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.0.txt"; sourceTree = "<group>"; };
+		325A42BB2885C0DA00DD12AC /* liboggz-0.9.2.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.2.txt"; sourceTree = "<group>"; };
+		325A42BC2885C0DA00DD12AC /* liboggz-0.9.3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.9.3.txt"; sourceTree = "<group>"; };
+		325A42BD2885C0DA00DD12AC /* liboggz-0.8.4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.8.4.txt"; sourceTree = "<group>"; };
+		325A42BE2885C0DA00DD12AC /* liboggz-0.8.5.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.8.5.txt"; sourceTree = "<group>"; };
+		325A42BF2885C0DA00DD12AC /* liboggz-0.8.6.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.8.6.txt"; sourceTree = "<group>"; };
+		325A42C02885C0DA00DD12AC /* liboggz-0.8.3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-0.8.3.txt"; sourceTree = "<group>"; };
+		325A42C12885C0DA00DD12AC /* INSTALL */ = {isa = PBXFileReference; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
+		325A42C22885C0DA00DD12AC /* SConstruct */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConstruct; sourceTree = "<group>"; };
+		325A42C32885C0DA00DD12AC /* ChangeLog */ = {isa = PBXFileReference; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		325A42C42885C0DA00DD12AC /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
+		325A42C52885C0DA00DD12AC /* PATCHES */ = {isa = PBXFileReference; lastKnownFileType = text; path = PATCHES; sourceTree = "<group>"; };
+		325A42C72885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A42C92885C0DA00DD12AC /* oggz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz.h; sourceTree = "<group>"; };
+		325A42CA2885C0DA00DD12AC /* oggz_off_t_generated.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggz_off_t_generated.h.in; sourceTree = "<group>"; };
+		325A42CB2885C0DA00DD12AC /* oggz_seek.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_seek.h; sourceTree = "<group>"; };
+		325A42CC2885C0DA00DD12AC /* oggz_deprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_deprecated.h; sourceTree = "<group>"; };
+		325A42CD2885C0DA00DD12AC /* oggz_constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_constants.h; sourceTree = "<group>"; };
+		325A42CE2885C0DA00DD12AC /* oggz_write.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_write.h; sourceTree = "<group>"; };
+		325A42CF2885C0DA00DD12AC /* oggz_packet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_packet.h; sourceTree = "<group>"; };
+		325A42D02885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A42D12885C0DA00DD12AC /* oggz_table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_table.h; sourceTree = "<group>"; };
+		325A42D22885C0DA00DD12AC /* oggz_stream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_stream.h; sourceTree = "<group>"; };
+		325A42D32885C0DA00DD12AC /* oggz_read.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_read.h; sourceTree = "<group>"; };
+		325A42D42885C0DA00DD12AC /* oggz_comments.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_comments.h; sourceTree = "<group>"; };
+		325A42D52885C0DA00DD12AC /* oggz_off_t.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_off_t.h; sourceTree = "<group>"; };
+		325A42D62885C0DA00DD12AC /* oggz_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_io.h; sourceTree = "<group>"; };
+		325A42D82885C0DA00DD12AC /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		325A42D92885C0DA00DD12AC /* bld.inf */ = {isa = PBXFileReference; lastKnownFileType = text; path = bld.inf; sourceTree = "<group>"; };
+		325A42DA2885C0DA00DD12AC /* liboggz.mmp */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz.mmp; sourceTree = "<group>"; };
+		325A42DC2885C0DA00DD12AC /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		325A42DD2885C0DA00DD12AC /* SConsTest */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConsTest; sourceTree = "<group>"; };
+		325A42DE2885C0DA00DD12AC /* phony.test */ = {isa = PBXFileReference; lastKnownFileType = text; path = phony.test; sourceTree = "<group>"; };
+		325A42DF2885C0DA00DD12AC /* apache-install.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "apache-install.sh"; sourceTree = "<group>"; };
+		325A42E02885C0DA00DD12AC /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		325A42E12885C0DA00DD12AC /* TODO */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
+		325A42E22885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A42E32885C0DA00DD12AC /* oggz.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggz.pc.in; sourceTree = "<group>"; };
+		325A42E42885C0DA00DD12AC /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		325A42E52885C0DA00DD12AC /* NEWS */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
+		325A42E82885C0DA00DD12AC /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		325A42E92885C0DA00DD12AC /* oggz_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_Prefix.pch; sourceTree = "<group>"; };
+		325A42EA2885C0DA00DD12AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		325A42EB2885C0DA00DD12AC /* oggz.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = oggz.xcodeproj; sourceTree = "<group>"; };
+		325A42EE2885C0DA00DD12AC /* version.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = version.plist; sourceTree = "<group>"; };
+		325A42EF2885C0DA00DD12AC /* README.symbian */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.symbian; sourceTree = "<group>"; };
+		325A42F02885C0DA00DD12AC /* oggz-uninstalled.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "oggz-uninstalled.pc.in"; sourceTree = "<group>"; };
+		325A42F22885C0DA00DD12AC /* as-ac-expand.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "as-ac-expand.m4"; sourceTree = "<group>"; };
+		325A42F32885C0DA00DD12AC /* ac-sys-extra-largefile.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ac-sys-extra-largefile.m4"; sourceTree = "<group>"; };
+		325A42F52885C0DA00DD12AC /* oggz-known-codecs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-known-codecs.1"; sourceTree = "<group>"; };
+		325A42F62885C0DA00DD12AC /* oggz-diff.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-diff.1"; sourceTree = "<group>"; };
+		325A42F72885C0DA00DD12AC /* oggz.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = oggz.1; sourceTree = "<group>"; };
+		325A42F82885C0DA00DD12AC /* oggz-validate.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-validate.1"; sourceTree = "<group>"; };
+		325A42F92885C0DA00DD12AC /* forcefeed.eps */ = {isa = PBXFileReference; lastKnownFileType = text; path = forcefeed.eps; sourceTree = "<group>"; };
+		325A42FA2885C0DA00DD12AC /* oggz-merge.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-merge.1"; sourceTree = "<group>"; };
+		325A42FB2885C0DA00DD12AC /* oggz-info.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-info.1"; sourceTree = "<group>"; };
+		325A42FC2885C0DA00DD12AC /* oggz-sort.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-sort.1"; sourceTree = "<group>"; };
+		325A42FD2885C0DA00DD12AC /* hungry.eps */ = {isa = PBXFileReference; lastKnownFileType = text; path = hungry.eps; sourceTree = "<group>"; };
+		325A42FE2885C0DA00DD12AC /* Doxyfile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Doxyfile.in; sourceTree = "<group>"; };
+		325A42FF2885C0DA00DD12AC /* oggz-comment.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-comment.1"; sourceTree = "<group>"; };
+		325A43002885C0DA00DD12AC /* oggz-scan.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-scan.1"; sourceTree = "<group>"; };
+		325A43012885C0DA00DD12AC /* oggz-rip.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-rip.1"; sourceTree = "<group>"; };
+		325A43022885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43032885C0DA00DD12AC /* hungry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hungry.png; sourceTree = "<group>"; };
+		325A43042885C0DA00DD12AC /* oggz-dump.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-dump.1"; sourceTree = "<group>"; };
+		325A43052885C0DA00DD12AC /* forcefeed.fig */ = {isa = PBXFileReference; lastKnownFileType = text; path = forcefeed.fig; sourceTree = "<group>"; };
+		325A43062885C0DA00DD12AC /* hungry.fig */ = {isa = PBXFileReference; lastKnownFileType = text; path = hungry.fig; sourceTree = "<group>"; };
+		325A43072885C0DA00DD12AC /* oggz-codecs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-codecs.1"; sourceTree = "<group>"; };
+		325A43082885C0DA00DD12AC /* forcefeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = forcefeed.png; sourceTree = "<group>"; };
+		325A43092885C0DA00DD12AC /* oggz-chop.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = "oggz-chop.1"; sourceTree = "<group>"; };
+		325A430B2885C0DA00DD12AC /* liboggz.dsw */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz.dsw; sourceTree = "<group>"; };
+		325A430C2885C0DA00DD12AC /* liboggz.dsp */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz.dsp; sourceTree = "<group>"; };
+		325A430D2885C0DA00DD12AC /* strsep.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = strsep.c; sourceTree = "<group>"; };
+		325A430E2885C0DA00DD12AC /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		325A430F2885C0DA00DD12AC /* oggzed.dsp */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggzed.dsp; sourceTree = "<group>"; };
+		325A43102885C0DA00DD12AC /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		325A43112885C0DA00DD12AC /* attgetopt.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = attgetopt.c; sourceTree = "<group>"; };
+		325A43122885C0DA00DD12AC /* oggzinfo.dsp */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggzinfo.dsp; sourceTree = "<group>"; };
+		325A43152885C0DA00DD12AC /* liboggz_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = liboggz_static.vcproj; sourceTree = "<group>"; };
+		325A43162885C0DA00DD12AC /* liboggz_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = liboggz_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43172885C0DA00DD12AC /* liboggz_static.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_static.sln; sourceTree = "<group>"; };
+		325A43182885C0DA00DD12AC /* liboggz_dynamic.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_dynamic.sln; sourceTree = "<group>"; };
+		325A431A2885C0DA00DD12AC /* oggzinfo_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzinfo_static.vcproj; sourceTree = "<group>"; };
+		325A431B2885C0DA00DD12AC /* oggzinfo_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzinfo_dynamic.vcproj; sourceTree = "<group>"; };
+		325A431D2885C0DA00DD12AC /* oggzmerge_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzmerge_static.vcproj; sourceTree = "<group>"; };
+		325A431E2885C0DA00DD12AC /* oggzmerge_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzmerge_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43202885C0DA00DD12AC /* oggzrip_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzrip_static.vcproj; sourceTree = "<group>"; };
+		325A43212885C0DA00DD12AC /* oggzrip_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzrip_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43232885C0DA00DD12AC /* oggzdump_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzdump_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43242885C0DA00DD12AC /* oggzdump_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzdump_static.vcproj; sourceTree = "<group>"; };
+		325A43262885C0DA00DD12AC /* oggzscan_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzscan_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43272885C0DA00DD12AC /* oggzscan_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzscan_static.vcproj; sourceTree = "<group>"; };
+		325A43292885C0DA00DD12AC /* oggzvalidate_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzvalidate_static.vcproj; sourceTree = "<group>"; };
+		325A432A2885C0DA00DD12AC /* oggzvalidate_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzvalidate_dynamic.vcproj; sourceTree = "<group>"; };
+		325A432B2885C0DA00DD12AC /* liboggz.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz.suo; sourceTree = "<group>"; };
+		325A432C2885C0DA00DD12AC /* liboggz_static.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz_static.suo; sourceTree = "<group>"; };
+		325A432D2885C0DA00DD12AC /* liboggz_dynamic.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz_dynamic.suo; sourceTree = "<group>"; };
+		325A432E2885C0DA00DD12AC /* oggzdump.dsp */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggzdump.dsp; sourceTree = "<group>"; };
+		325A43312885C0DA00DD12AC /* liboggz_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = liboggz_static.vcproj; sourceTree = "<group>"; };
+		325A43322885C0DA00DD12AC /* liboggz_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = liboggz_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43332885C0DA00DD12AC /* liboggz_static.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_static.sln; sourceTree = "<group>"; };
+		325A43342885C0DA00DD12AC /* liboggz_dynamic.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_dynamic.sln; sourceTree = "<group>"; };
+		325A43362885C0DA00DD12AC /* oggzinfo_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzinfo_static.vcproj; sourceTree = "<group>"; };
+		325A43372885C0DA00DD12AC /* oggzinfo_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzinfo_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43392885C0DA00DD12AC /* oggzmerge_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzmerge_static.vcproj; sourceTree = "<group>"; };
+		325A433A2885C0DA00DD12AC /* oggzmerge_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzmerge_dynamic.vcproj; sourceTree = "<group>"; };
+		325A433C2885C0DA00DD12AC /* oggzrip_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzrip_static.vcproj; sourceTree = "<group>"; };
+		325A433D2885C0DA00DD12AC /* oggzrip_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzrip_dynamic.vcproj; sourceTree = "<group>"; };
+		325A433F2885C0DA00DD12AC /* oggzdump_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzdump_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43402885C0DA00DD12AC /* oggzdump_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzdump_static.vcproj; sourceTree = "<group>"; };
+		325A43422885C0DA00DD12AC /* oggzscan_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzscan_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43432885C0DA00DD12AC /* oggzscan_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzscan_static.vcproj; sourceTree = "<group>"; };
+		325A43452885C0DA00DD12AC /* oggzvalidate_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzvalidate_static.vcproj; sourceTree = "<group>"; };
+		325A43462885C0DA00DD12AC /* oggzvalidate_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzvalidate_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43472885C0DA00DD12AC /* liboggz.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz.suo; sourceTree = "<group>"; };
+		325A43482885C0DA00DD12AC /* liboggz_static.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz_static.suo; sourceTree = "<group>"; };
+		325A43492885C0DA00DD12AC /* liboggz_dynamic.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz_dynamic.suo; sourceTree = "<group>"; };
+		325A434A2885C0DA00DD12AC /* getopt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = getopt.h; sourceTree = "<group>"; };
+		325A434B2885C0DA00DD12AC /* oggzmerge.dsp */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggzmerge.dsp; sourceTree = "<group>"; };
+		325A434D2885C0DA00DD12AC /* liboggz_bin_installer.vdproj */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_bin_installer.vdproj; sourceTree = "<group>"; };
+		325A434E2885C0DA00DD12AC /* liboggz.def */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz.def; sourceTree = "<group>"; };
+		325A43512885C0DA00DD12AC /* liboggz_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = liboggz_static.vcproj; sourceTree = "<group>"; };
+		325A43522885C0DA00DD12AC /* liboggz_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = liboggz_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43532885C0DA00DD12AC /* liboggz_static.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_static.sln; sourceTree = "<group>"; };
+		325A43542885C0DA00DD12AC /* liboggz_dynamic.sln */ = {isa = PBXFileReference; lastKnownFileType = text; path = liboggz_dynamic.sln; sourceTree = "<group>"; };
+		325A43562885C0DA00DD12AC /* oggzinfo_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzinfo_static.vcproj; sourceTree = "<group>"; };
+		325A43572885C0DA00DD12AC /* oggzinfo_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzinfo_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43592885C0DA00DD12AC /* oggzmerge_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzmerge_static.vcproj; sourceTree = "<group>"; };
+		325A435A2885C0DA00DD12AC /* oggzmerge_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzmerge_dynamic.vcproj; sourceTree = "<group>"; };
+		325A435C2885C0DA00DD12AC /* oggzrip_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzrip_static.vcproj; sourceTree = "<group>"; };
+		325A435D2885C0DA00DD12AC /* oggzrip_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzrip_dynamic.vcproj; sourceTree = "<group>"; };
+		325A435F2885C0DA00DD12AC /* oggzdump_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzdump_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43602885C0DA00DD12AC /* oggzdump_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzdump_static.vcproj; sourceTree = "<group>"; };
+		325A43622885C0DA00DD12AC /* oggzscan_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzscan_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43632885C0DA00DD12AC /* oggzscan_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzscan_static.vcproj; sourceTree = "<group>"; };
+		325A43652885C0DA00DD12AC /* oggzvalidate_static.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzvalidate_static.vcproj; sourceTree = "<group>"; };
+		325A43662885C0DA00DD12AC /* oggzvalidate_dynamic.vcproj */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = oggzvalidate_dynamic.vcproj; sourceTree = "<group>"; };
+		325A43672885C0DA00DD12AC /* liboggz.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz.suo; sourceTree = "<group>"; };
+		325A43682885C0DA00DD12AC /* liboggz_static.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz_static.suo; sourceTree = "<group>"; };
+		325A43692885C0DA00DD12AC /* liboggz_dynamic.suo */ = {isa = PBXFileReference; lastKnownFileType = file; path = liboggz_dynamic.suo; sourceTree = "<group>"; };
+		325A436B2885C0DA00DD12AC /* oggz */ = {isa = PBXFileReference; lastKnownFileType = text; path = oggz; sourceTree = "<group>"; };
+		325A436D2885C0DA00DD12AC /* oggz-chop.conf.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "oggz-chop.conf.in"; sourceTree = "<group>"; };
+		325A436E2885C0DA00DD12AC /* README.win32 */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.win32; sourceTree = "<group>"; };
+		325A436F2885C0DA00DD12AC /* autogen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		325A43722885C0DA00DD12AC /* oggz_table.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_table.c; sourceTree = "<group>"; };
+		325A43732885C0DA00DD12AC /* oggz_vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_vector.h; sourceTree = "<group>"; };
+		325A43742885C0DA00DD12AC /* metric_internal.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = metric_internal.c; sourceTree = "<group>"; };
+		325A43752885C0DA00DD12AC /* debug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
+		325A43762885C0DA00DD12AC /* dirac.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dirac.c; sourceTree = "<group>"; };
+		325A43772885C0DA00DD12AC /* oggz_stream.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_stream.c; sourceTree = "<group>"; };
+		325A43782885C0DA00DD12AC /* oggz_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_private.h; sourceTree = "<group>"; };
+		325A43792885C0DA00DD12AC /* oggz_auto.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_auto.c; sourceTree = "<group>"; };
+		325A437A2885C0DA00DD12AC /* oggz_read.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_read.c; sourceTree = "<group>"; };
+		325A437B2885C0DA00DD12AC /* oggz_io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_io.c; sourceTree = "<group>"; };
+		325A437C2885C0DA00DD12AC /* oggz_macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_macros.h; sourceTree = "<group>"; };
+		325A437D2885C0DA00DD12AC /* oggz_compat.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_compat.h; sourceTree = "<group>"; };
+		325A437E2885C0DA00DD12AC /* oggz_dlist.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_dlist.h; sourceTree = "<group>"; };
+		325A437F2885C0DA00DD12AC /* oggz_comments.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_comments.c; sourceTree = "<group>"; };
+		325A43802885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43812885C0DA00DD12AC /* oggz_vector.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_vector.c; sourceTree = "<group>"; };
+		325A43822885C0DA00DD12AC /* oggz.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz.c; sourceTree = "<group>"; };
+		325A43832885C0DA00DD12AC /* Version_script.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Version_script.in; sourceTree = "<group>"; };
+		325A43842885C0DA00DD12AC /* oggz_seek.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_seek.c; sourceTree = "<group>"; };
+		325A43852885C0DA00DD12AC /* dirac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dirac.h; sourceTree = "<group>"; };
+		325A43862885C0DA00DD12AC /* oggz_stream_private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_stream_private.h; sourceTree = "<group>"; };
+		325A43872885C0DA00DD12AC /* oggz_write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_write.c; sourceTree = "<group>"; };
+		325A43882885C0DA00DD12AC /* oggz_auto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_auto.h; sourceTree = "<group>"; };
+		325A43892885C0DA00DD12AC /* oggz_dlist.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_dlist.c; sourceTree = "<group>"; };
+		325A438A2885C0DA00DD12AC /* oggz_byteorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_byteorder.h; sourceTree = "<group>"; };
+		325A438C2885C0DA00DD12AC /* oggz-dump.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-dump.c"; sourceTree = "<group>"; };
+		325A438D2885C0DA00DD12AC /* oggz_tools.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz_tools.c; sourceTree = "<group>"; };
+		325A438E2885C0DA00DD12AC /* mimetypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimetypes.h; sourceTree = "<group>"; };
+		325A438F2885C0DA00DD12AC /* skeleton.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = skeleton.c; sourceTree = "<group>"; };
+		325A43902885C0DA00DD12AC /* oggz-codecs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-codecs.c"; sourceTree = "<group>"; };
+		325A43912885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43922885C0DA00DD12AC /* skeleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = skeleton.h; sourceTree = "<group>"; };
+		325A43932885C0DA00DD12AC /* oggz_tools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_tools.h; sourceTree = "<group>"; };
+		325A43942885C0DA00DD12AC /* mimetypes.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mimetypes.c; sourceTree = "<group>"; };
+		325A43952885C0DA00DD12AC /* oggz-known-codecs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-known-codecs.c"; sourceTree = "<group>"; };
+		325A43962885C0DA00DD12AC /* oggz-validate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-validate.c"; sourceTree = "<group>"; };
+		325A43972885C0DA00DD12AC /* oggz.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = oggz.c; sourceTree = "<group>"; };
+		325A43982885C0DA00DD12AC /* oggz-diff.in */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "oggz-diff.in"; sourceTree = "<group>"; };
+		325A43992885C0DA00DD12AC /* oggz-merge.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-merge.c"; sourceTree = "<group>"; };
+		325A439A2885C0DA00DD12AC /* oggz-comment.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-comment.c"; sourceTree = "<group>"; };
+		325A439B2885C0DA00DD12AC /* SConscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConscript; sourceTree = "<group>"; };
+		325A439C2885C0DA00DD12AC /* oggz-info.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-info.c"; sourceTree = "<group>"; };
+		325A439D2885C0DA00DD12AC /* oggz-basetime.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-basetime.c"; sourceTree = "<group>"; };
+		325A439E2885C0DA00DD12AC /* oggz-sort.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-sort.c"; sourceTree = "<group>"; };
+		325A439F2885C0DA00DD12AC /* oggz-rip.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-rip.c"; sourceTree = "<group>"; };
+		325A43A02885C0DA00DD12AC /* oggz-scan.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-scan.c"; sourceTree = "<group>"; };
+		325A43A22885C0DA00DD12AC /* header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = header.h; sourceTree = "<group>"; };
+		325A43A32885C0DA00DD12AC /* httpdate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = httpdate.c; sourceTree = "<group>"; };
+		325A43A42885C0DA00DD12AC /* timespec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = timespec.c; sourceTree = "<group>"; };
+		325A43A52885C0DA00DD12AC /* cgi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cgi.c; sourceTree = "<group>"; };
+		325A43A62885C0DA00DD12AC /* oggz-chop.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "oggz-chop.c"; sourceTree = "<group>"; };
+		325A43A72885C0DA00DD12AC /* httpdate_test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = httpdate_test.c; sourceTree = "<group>"; };
+		325A43A82885C0DA00DD12AC /* cmd.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = cmd.c; sourceTree = "<group>"; };
+		325A43A92885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43AA2885C0DA00DD12AC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		325A43AB2885C0DA00DD12AC /* httpdate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = httpdate.h; sourceTree = "<group>"; };
+		325A43AC2885C0DA00DD12AC /* timespec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = timespec.h; sourceTree = "<group>"; };
+		325A43AD2885C0DA00DD12AC /* header.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = header.c; sourceTree = "<group>"; };
+		325A43AE2885C0DA00DD12AC /* cmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmd.h; sourceTree = "<group>"; };
+		325A43AF2885C0DA00DD12AC /* cgi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cgi.h; sourceTree = "<group>"; };
+		325A43B02885C0DA00DD12AC /* oggz-chop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "oggz-chop.h"; sourceTree = "<group>"; };
+		325A43B12885C0DA00DD12AC /* oggz_tools_dirac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_tools_dirac.h; sourceTree = "<group>"; };
+		325A43B32885C0DA00DD12AC /* seek-stress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "seek-stress.c"; sourceTree = "<group>"; };
+		325A43B42885C0DA00DD12AC /* oggz_tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = oggz_tests.h; sourceTree = "<group>"; };
+		325A43B52885C0DA00DD12AC /* io-write.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-write.c"; sourceTree = "<group>"; };
+		325A43B62885C0DA00DD12AC /* comment-test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "comment-test.c"; sourceTree = "<group>"; };
+		325A43B72885C0DA00DD12AC /* io-write-flush.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-write-flush.c"; sourceTree = "<group>"; };
+		325A43B82885C0DA00DD12AC /* io-read.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-read.c"; sourceTree = "<group>"; };
+		325A43B92885C0DA00DD12AC /* write-suffix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-suffix.c"; sourceTree = "<group>"; };
+		325A43BA2885C0DA00DD12AC /* write-unmarked-guard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-unmarked-guard.c"; sourceTree = "<group>"; };
+		325A43BB2885C0DA00DD12AC /* read-stop-ok.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "read-stop-ok.c"; sourceTree = "<group>"; };
+		325A43BC2885C0DA00DD12AC /* write-prefix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-prefix.c"; sourceTree = "<group>"; };
+		325A43BD2885C0DA00DD12AC /* io-count.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-count.c"; sourceTree = "<group>"; };
+		325A43BE2885C0DA00DD12AC /* write-bad-bytes.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-bytes.c"; sourceTree = "<group>"; };
+		325A43BF2885C0DA00DD12AC /* write-bad-packetno.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-packetno.c"; sourceTree = "<group>"; };
+		325A43C02885C0DA00DD12AC /* write-bad-guard.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-guard.c"; sourceTree = "<group>"; };
+		325A43C12885C0DA00DD12AC /* seek-units.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "seek-units.c"; sourceTree = "<group>"; };
+		325A43C22885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43C32885C0DA00DD12AC /* read-stop-err.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "read-stop-err.c"; sourceTree = "<group>"; };
+		325A43C42885C0DA00DD12AC /* io-run.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-run.c"; sourceTree = "<group>"; };
+		325A43C52885C0DA00DD12AC /* write-bad-granulepos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-granulepos.c"; sourceTree = "<group>"; };
+		325A43C62885C0DA00DD12AC /* write-bad-serialno.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-serialno.c"; sourceTree = "<group>"; };
+		325A43C72885C0DA00DD12AC /* io-read-single.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-read-single.c"; sourceTree = "<group>"; };
+		325A43C82885C0DA00DD12AC /* read-generated.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "read-generated.c"; sourceTree = "<group>"; };
+		325A43C92885C0DA00DD12AC /* comment-test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "comment-test.h"; sourceTree = "<group>"; };
+		325A43CA2885C0DA00DD12AC /* io-seek.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "io-seek.c"; sourceTree = "<group>"; };
+		325A43CB2885C0DA00DD12AC /* write-recursive.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-recursive.c"; sourceTree = "<group>"; };
+		325A43CC2885C0DA00DD12AC /* SConscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConscript; sourceTree = "<group>"; };
+		325A43CD2885C0DA00DD12AC /* write-bad-eos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-eos.c"; sourceTree = "<group>"; };
+		325A43CE2885C0DA00DD12AC /* seek-stress-test.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "seek-stress-test.sh"; sourceTree = "<group>"; };
+		325A43CF2885C0DA00DD12AC /* write-dup-bos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-dup-bos.c"; sourceTree = "<group>"; };
+		325A43D02885C0DA00DD12AC /* write-bad-bos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-bad-bos.c"; sourceTree = "<group>"; };
+		325A43D12885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43D32885C0DA00DD12AC /* identity.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = identity.c; sourceTree = "<group>"; };
+		325A43D42885C0DA00DD12AC /* rewrite-pages.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "rewrite-pages.c"; sourceTree = "<group>"; };
+		325A43D52885C0DA00DD12AC /* modify-headers.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "modify-headers.c"; sourceTree = "<group>"; };
+		325A43D62885C0DA00DD12AC /* fix-eos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "fix-eos.c"; sourceTree = "<group>"; };
+		325A43D72885C0DA00DD12AC /* read-io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "read-io.c"; sourceTree = "<group>"; };
+		325A43D82885C0DA00DD12AC /* write-hungry.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-hungry.c"; sourceTree = "<group>"; };
+		325A43D92885C0DA00DD12AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		325A43DA2885C0DA00DD12AC /* dump-comments.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "dump-comments.c"; sourceTree = "<group>"; };
+		325A43DB2885C0DA00DD12AC /* SConscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConscript; sourceTree = "<group>"; };
+		325A43DC2885C0DA00DD12AC /* write-feed.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "write-feed.c"; sourceTree = "<group>"; };
+		325A43DD2885C0DA00DD12AC /* read-file.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "read-file.c"; sourceTree = "<group>"; };
+		325A43DE2885C0DA00DD12AC /* SConscript */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConscript; sourceTree = "<group>"; };
+		325A44172885C17500DD12AC /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ogg.xcodeproj; path = ../ogg/ogg.xcodeproj; sourceTree = "<group>"; };
+		325A442B2885C25100DD12AC /* oggz_off_t_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oggz_off_t_generated.h; sourceTree = "<group>"; };
+		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3295D90E288461F7006AA170 /* oggz.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = oggz.modulemap; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		32028D05254AE93F00A537DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325A44212885C18500DD12AC /* ogg.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32028DD4254AFEA000A537DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325A44242885C18D00DD12AC /* ogg.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		32028CFE254AE93F00A537DE = {
+			isa = PBXGroup;
+			children = (
+				325A44172885C17500DD12AC /* ogg.xcodeproj */,
+				3267710F254B5D670041B063 /* Info.plist */,
+				3295D90E288461F7006AA170 /* oggz.modulemap */,
+				325A42AB2885C0DA00DD12AC /* liboggz-src */,
+				32028D09254AE93F00A537DE /* Products */,
+				325A44202885C18500DD12AC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		32028D09254AE93F00A537DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				32028D08254AE93F00A537DE /* oggz.framework */,
+				32028DD9254AFEA000A537DE /* oggz.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		325A42AB2885C0DA00DD12AC /* liboggz-src */ = {
+			isa = PBXGroup;
+			children = (
+				325A42AC2885C0DA00DD12AC /* acinclude.m4 */,
+				325A42AD2885C0DA00DD12AC /* configure.ac */,
+				325A42AE2885C0DA00DD12AC /* release_notes */,
+				325A42C12885C0DA00DD12AC /* INSTALL */,
+				325A42C22885C0DA00DD12AC /* SConstruct */,
+				325A42C32885C0DA00DD12AC /* ChangeLog */,
+				325A42C42885C0DA00DD12AC /* AUTHORS */,
+				325A42C52885C0DA00DD12AC /* PATCHES */,
+				325A42C62885C0DA00DD12AC /* include */,
+				325A42D72885C0DA00DD12AC /* symbian */,
+				325A42DB2885C0DA00DD12AC /* scons */,
+				325A42DF2885C0DA00DD12AC /* apache-install.sh */,
+				325A42E02885C0DA00DD12AC /* README */,
+				325A42E12885C0DA00DD12AC /* TODO */,
+				325A42E22885C0DA00DD12AC /* Makefile.am */,
+				325A42E32885C0DA00DD12AC /* oggz.pc.in */,
+				325A42E42885C0DA00DD12AC /* COPYING */,
+				325A42E52885C0DA00DD12AC /* NEWS */,
+				325A42E62885C0DA00DD12AC /* macosx */,
+				325A42EF2885C0DA00DD12AC /* README.symbian */,
+				325A42F02885C0DA00DD12AC /* oggz-uninstalled.pc.in */,
+				325A42F12885C0DA00DD12AC /* m4 */,
+				325A42F42885C0DA00DD12AC /* doc */,
+				325A430A2885C0DA00DD12AC /* win32 */,
+				325A436A2885C0DA00DD12AC /* bash-completion */,
+				325A436C2885C0DA00DD12AC /* apache */,
+				325A436E2885C0DA00DD12AC /* README.win32 */,
+				325A436F2885C0DA00DD12AC /* autogen.sh */,
+				325A43702885C0DA00DD12AC /* src */,
+			);
+			path = "liboggz-src";
+			sourceTree = "<group>";
+		};
+		325A42AE2885C0DA00DD12AC /* release_notes */ = {
+			isa = PBXGroup;
+			children = (
+				325A42AF2885C0DA00DD12AC /* liboggz-1.0.1.txt */,
+				325A42B02885C0DA00DD12AC /* liboggz-1.0.0.txt */,
+				325A42B12885C0DA00DD12AC /* liboggz-1.1.1.txt */,
+				325A42B22885C0DA00DD12AC /* liboggz-1.1.0.txt */,
+				325A42B32885C0DA00DD12AC /* liboggz-0.9.8.txt */,
+				325A42B42885C0DA00DD12AC /* liboggz-0.9.9.txt */,
+				325A42B52885C0DA00DD12AC /* liboggz-0.9.7.txt */,
+				325A42B62885C0DA00DD12AC /* liboggz-0.9.6.txt */,
+				325A42B72885C0DA00DD12AC /* liboggz-0.9.4.txt */,
+				325A42B82885C0DA00DD12AC /* liboggz-0.9.5.txt */,
+				325A42B92885C0DA00DD12AC /* liboggz-0.9.1.txt */,
+				325A42BA2885C0DA00DD12AC /* liboggz-0.9.0.txt */,
+				325A42BB2885C0DA00DD12AC /* liboggz-0.9.2.txt */,
+				325A42BC2885C0DA00DD12AC /* liboggz-0.9.3.txt */,
+				325A42BD2885C0DA00DD12AC /* liboggz-0.8.4.txt */,
+				325A42BE2885C0DA00DD12AC /* liboggz-0.8.5.txt */,
+				325A42BF2885C0DA00DD12AC /* liboggz-0.8.6.txt */,
+				325A42C02885C0DA00DD12AC /* liboggz-0.8.3.txt */,
+			);
+			path = release_notes;
+			sourceTree = "<group>";
+		};
+		325A42C62885C0DA00DD12AC /* include */ = {
+			isa = PBXGroup;
+			children = (
+				325A42C72885C0DA00DD12AC /* Makefile.am */,
+				325A42C82885C0DA00DD12AC /* oggz */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		325A42C82885C0DA00DD12AC /* oggz */ = {
+			isa = PBXGroup;
+			children = (
+				325A42D02885C0DA00DD12AC /* Makefile.am */,
+				325A42D42885C0DA00DD12AC /* oggz_comments.h */,
+				325A42CD2885C0DA00DD12AC /* oggz_constants.h */,
+				325A42CC2885C0DA00DD12AC /* oggz_deprecated.h */,
+				325A42D62885C0DA00DD12AC /* oggz_io.h */,
+				325A442B2885C25100DD12AC /* oggz_off_t_generated.h */,
+				325A42CA2885C0DA00DD12AC /* oggz_off_t_generated.h.in */,
+				325A42D52885C0DA00DD12AC /* oggz_off_t.h */,
+				325A42CF2885C0DA00DD12AC /* oggz_packet.h */,
+				325A42D32885C0DA00DD12AC /* oggz_read.h */,
+				325A42CB2885C0DA00DD12AC /* oggz_seek.h */,
+				325A42D22885C0DA00DD12AC /* oggz_stream.h */,
+				325A42D12885C0DA00DD12AC /* oggz_table.h */,
+				325A42CE2885C0DA00DD12AC /* oggz_write.h */,
+				325A42C92885C0DA00DD12AC /* oggz.h */,
+			);
+			path = oggz;
+			sourceTree = "<group>";
+		};
+		325A42D72885C0DA00DD12AC /* symbian */ = {
+			isa = PBXGroup;
+			children = (
+				325A42D82885C0DA00DD12AC /* config.h */,
+				325A42D92885C0DA00DD12AC /* bld.inf */,
+				325A42DA2885C0DA00DD12AC /* liboggz.mmp */,
+			);
+			path = symbian;
+			sourceTree = "<group>";
+		};
+		325A42DB2885C0DA00DD12AC /* scons */ = {
+			isa = PBXGroup;
+			children = (
+				325A42DC2885C0DA00DD12AC /* config.h */,
+				325A42DD2885C0DA00DD12AC /* SConsTest */,
+				325A42DE2885C0DA00DD12AC /* phony.test */,
+			);
+			path = scons;
+			sourceTree = "<group>";
+		};
+		325A42E62885C0DA00DD12AC /* macosx */ = {
+			isa = PBXGroup;
+			children = (
+				325A42E72885C0DA00DD12AC /* InfoPlist.strings */,
+				325A42E92885C0DA00DD12AC /* oggz_Prefix.pch */,
+				325A42EA2885C0DA00DD12AC /* Info.plist */,
+				325A42EB2885C0DA00DD12AC /* oggz.xcodeproj */,
+				325A42EE2885C0DA00DD12AC /* version.plist */,
+			);
+			path = macosx;
+			sourceTree = "<group>";
+		};
+		325A42EC2885C0DA00DD12AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				325A43E22885C0DA00DD12AC /* oggz.framework */,
+				325A43E42885C0DA00DD12AC /* liboggz.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		325A42F12885C0DA00DD12AC /* m4 */ = {
+			isa = PBXGroup;
+			children = (
+				325A42F22885C0DA00DD12AC /* as-ac-expand.m4 */,
+				325A42F32885C0DA00DD12AC /* ac-sys-extra-largefile.m4 */,
+			);
+			path = m4;
+			sourceTree = "<group>";
+		};
+		325A42F42885C0DA00DD12AC /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				325A42F52885C0DA00DD12AC /* oggz-known-codecs.1 */,
+				325A42F62885C0DA00DD12AC /* oggz-diff.1 */,
+				325A42F72885C0DA00DD12AC /* oggz.1 */,
+				325A42F82885C0DA00DD12AC /* oggz-validate.1 */,
+				325A42F92885C0DA00DD12AC /* forcefeed.eps */,
+				325A42FA2885C0DA00DD12AC /* oggz-merge.1 */,
+				325A42FB2885C0DA00DD12AC /* oggz-info.1 */,
+				325A42FC2885C0DA00DD12AC /* oggz-sort.1 */,
+				325A42FD2885C0DA00DD12AC /* hungry.eps */,
+				325A42FE2885C0DA00DD12AC /* Doxyfile.in */,
+				325A42FF2885C0DA00DD12AC /* oggz-comment.1 */,
+				325A43002885C0DA00DD12AC /* oggz-scan.1 */,
+				325A43012885C0DA00DD12AC /* oggz-rip.1 */,
+				325A43022885C0DA00DD12AC /* Makefile.am */,
+				325A43032885C0DA00DD12AC /* hungry.png */,
+				325A43042885C0DA00DD12AC /* oggz-dump.1 */,
+				325A43052885C0DA00DD12AC /* forcefeed.fig */,
+				325A43062885C0DA00DD12AC /* hungry.fig */,
+				325A43072885C0DA00DD12AC /* oggz-codecs.1 */,
+				325A43082885C0DA00DD12AC /* forcefeed.png */,
+				325A43092885C0DA00DD12AC /* oggz-chop.1 */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		325A430A2885C0DA00DD12AC /* win32 */ = {
+			isa = PBXGroup;
+			children = (
+				325A430B2885C0DA00DD12AC /* liboggz.dsw */,
+				325A430C2885C0DA00DD12AC /* liboggz.dsp */,
+				325A430D2885C0DA00DD12AC /* strsep.c */,
+				325A430E2885C0DA00DD12AC /* config.h */,
+				325A430F2885C0DA00DD12AC /* oggzed.dsp */,
+				325A43102885C0DA00DD12AC /* Makefile */,
+				325A43112885C0DA00DD12AC /* attgetopt.c */,
+				325A43122885C0DA00DD12AC /* oggzinfo.dsp */,
+				325A43132885C0DA00DD12AC /* VS2005 */,
+				325A432E2885C0DA00DD12AC /* oggzdump.dsp */,
+				325A432F2885C0DA00DD12AC /* VS2003 */,
+				325A434A2885C0DA00DD12AC /* getopt.h */,
+				325A434B2885C0DA00DD12AC /* oggzmerge.dsp */,
+				325A434C2885C0DA00DD12AC /* liboggz_bin_installer */,
+				325A434E2885C0DA00DD12AC /* liboggz.def */,
+				325A434F2885C0DA00DD12AC /* VS2008 */,
+			);
+			path = win32;
+			sourceTree = "<group>";
+		};
+		325A43132885C0DA00DD12AC /* VS2005 */ = {
+			isa = PBXGroup;
+			children = (
+				325A43142885C0DA00DD12AC /* liboggz */,
+				325A43172885C0DA00DD12AC /* liboggz_static.sln */,
+				325A43182885C0DA00DD12AC /* liboggz_dynamic.sln */,
+				325A43192885C0DA00DD12AC /* oggzinfo */,
+				325A431C2885C0DA00DD12AC /* oggzmerge */,
+				325A431F2885C0DA00DD12AC /* oggzrip */,
+				325A43222885C0DA00DD12AC /* oggzdump */,
+				325A43252885C0DA00DD12AC /* oggzscan */,
+				325A43282885C0DA00DD12AC /* oggzvalidate */,
+				325A432B2885C0DA00DD12AC /* liboggz.suo */,
+				325A432C2885C0DA00DD12AC /* liboggz_static.suo */,
+				325A432D2885C0DA00DD12AC /* liboggz_dynamic.suo */,
+			);
+			path = VS2005;
+			sourceTree = "<group>";
+		};
+		325A43142885C0DA00DD12AC /* liboggz */ = {
+			isa = PBXGroup;
+			children = (
+				325A43152885C0DA00DD12AC /* liboggz_static.vcproj */,
+				325A43162885C0DA00DD12AC /* liboggz_dynamic.vcproj */,
+			);
+			path = liboggz;
+			sourceTree = "<group>";
+		};
+		325A43192885C0DA00DD12AC /* oggzinfo */ = {
+			isa = PBXGroup;
+			children = (
+				325A431A2885C0DA00DD12AC /* oggzinfo_static.vcproj */,
+				325A431B2885C0DA00DD12AC /* oggzinfo_dynamic.vcproj */,
+			);
+			path = oggzinfo;
+			sourceTree = "<group>";
+		};
+		325A431C2885C0DA00DD12AC /* oggzmerge */ = {
+			isa = PBXGroup;
+			children = (
+				325A431D2885C0DA00DD12AC /* oggzmerge_static.vcproj */,
+				325A431E2885C0DA00DD12AC /* oggzmerge_dynamic.vcproj */,
+			);
+			path = oggzmerge;
+			sourceTree = "<group>";
+		};
+		325A431F2885C0DA00DD12AC /* oggzrip */ = {
+			isa = PBXGroup;
+			children = (
+				325A43202885C0DA00DD12AC /* oggzrip_static.vcproj */,
+				325A43212885C0DA00DD12AC /* oggzrip_dynamic.vcproj */,
+			);
+			path = oggzrip;
+			sourceTree = "<group>";
+		};
+		325A43222885C0DA00DD12AC /* oggzdump */ = {
+			isa = PBXGroup;
+			children = (
+				325A43232885C0DA00DD12AC /* oggzdump_dynamic.vcproj */,
+				325A43242885C0DA00DD12AC /* oggzdump_static.vcproj */,
+			);
+			path = oggzdump;
+			sourceTree = "<group>";
+		};
+		325A43252885C0DA00DD12AC /* oggzscan */ = {
+			isa = PBXGroup;
+			children = (
+				325A43262885C0DA00DD12AC /* oggzscan_dynamic.vcproj */,
+				325A43272885C0DA00DD12AC /* oggzscan_static.vcproj */,
+			);
+			path = oggzscan;
+			sourceTree = "<group>";
+		};
+		325A43282885C0DA00DD12AC /* oggzvalidate */ = {
+			isa = PBXGroup;
+			children = (
+				325A43292885C0DA00DD12AC /* oggzvalidate_static.vcproj */,
+				325A432A2885C0DA00DD12AC /* oggzvalidate_dynamic.vcproj */,
+			);
+			path = oggzvalidate;
+			sourceTree = "<group>";
+		};
+		325A432F2885C0DA00DD12AC /* VS2003 */ = {
+			isa = PBXGroup;
+			children = (
+				325A43302885C0DA00DD12AC /* liboggz */,
+				325A43332885C0DA00DD12AC /* liboggz_static.sln */,
+				325A43342885C0DA00DD12AC /* liboggz_dynamic.sln */,
+				325A43352885C0DA00DD12AC /* oggzinfo */,
+				325A43382885C0DA00DD12AC /* oggzmerge */,
+				325A433B2885C0DA00DD12AC /* oggzrip */,
+				325A433E2885C0DA00DD12AC /* oggzdump */,
+				325A43412885C0DA00DD12AC /* oggzscan */,
+				325A43442885C0DA00DD12AC /* oggzvalidate */,
+				325A43472885C0DA00DD12AC /* liboggz.suo */,
+				325A43482885C0DA00DD12AC /* liboggz_static.suo */,
+				325A43492885C0DA00DD12AC /* liboggz_dynamic.suo */,
+			);
+			path = VS2003;
+			sourceTree = "<group>";
+		};
+		325A43302885C0DA00DD12AC /* liboggz */ = {
+			isa = PBXGroup;
+			children = (
+				325A43312885C0DA00DD12AC /* liboggz_static.vcproj */,
+				325A43322885C0DA00DD12AC /* liboggz_dynamic.vcproj */,
+			);
+			path = liboggz;
+			sourceTree = "<group>";
+		};
+		325A43352885C0DA00DD12AC /* oggzinfo */ = {
+			isa = PBXGroup;
+			children = (
+				325A43362885C0DA00DD12AC /* oggzinfo_static.vcproj */,
+				325A43372885C0DA00DD12AC /* oggzinfo_dynamic.vcproj */,
+			);
+			path = oggzinfo;
+			sourceTree = "<group>";
+		};
+		325A43382885C0DA00DD12AC /* oggzmerge */ = {
+			isa = PBXGroup;
+			children = (
+				325A43392885C0DA00DD12AC /* oggzmerge_static.vcproj */,
+				325A433A2885C0DA00DD12AC /* oggzmerge_dynamic.vcproj */,
+			);
+			path = oggzmerge;
+			sourceTree = "<group>";
+		};
+		325A433B2885C0DA00DD12AC /* oggzrip */ = {
+			isa = PBXGroup;
+			children = (
+				325A433C2885C0DA00DD12AC /* oggzrip_static.vcproj */,
+				325A433D2885C0DA00DD12AC /* oggzrip_dynamic.vcproj */,
+			);
+			path = oggzrip;
+			sourceTree = "<group>";
+		};
+		325A433E2885C0DA00DD12AC /* oggzdump */ = {
+			isa = PBXGroup;
+			children = (
+				325A433F2885C0DA00DD12AC /* oggzdump_dynamic.vcproj */,
+				325A43402885C0DA00DD12AC /* oggzdump_static.vcproj */,
+			);
+			path = oggzdump;
+			sourceTree = "<group>";
+		};
+		325A43412885C0DA00DD12AC /* oggzscan */ = {
+			isa = PBXGroup;
+			children = (
+				325A43422885C0DA00DD12AC /* oggzscan_dynamic.vcproj */,
+				325A43432885C0DA00DD12AC /* oggzscan_static.vcproj */,
+			);
+			path = oggzscan;
+			sourceTree = "<group>";
+		};
+		325A43442885C0DA00DD12AC /* oggzvalidate */ = {
+			isa = PBXGroup;
+			children = (
+				325A43452885C0DA00DD12AC /* oggzvalidate_static.vcproj */,
+				325A43462885C0DA00DD12AC /* oggzvalidate_dynamic.vcproj */,
+			);
+			path = oggzvalidate;
+			sourceTree = "<group>";
+		};
+		325A434C2885C0DA00DD12AC /* liboggz_bin_installer */ = {
+			isa = PBXGroup;
+			children = (
+				325A434D2885C0DA00DD12AC /* liboggz_bin_installer.vdproj */,
+			);
+			path = liboggz_bin_installer;
+			sourceTree = "<group>";
+		};
+		325A434F2885C0DA00DD12AC /* VS2008 */ = {
+			isa = PBXGroup;
+			children = (
+				325A43502885C0DA00DD12AC /* liboggz */,
+				325A43532885C0DA00DD12AC /* liboggz_static.sln */,
+				325A43542885C0DA00DD12AC /* liboggz_dynamic.sln */,
+				325A43552885C0DA00DD12AC /* oggzinfo */,
+				325A43582885C0DA00DD12AC /* oggzmerge */,
+				325A435B2885C0DA00DD12AC /* oggzrip */,
+				325A435E2885C0DA00DD12AC /* oggzdump */,
+				325A43612885C0DA00DD12AC /* oggzscan */,
+				325A43642885C0DA00DD12AC /* oggzvalidate */,
+				325A43672885C0DA00DD12AC /* liboggz.suo */,
+				325A43682885C0DA00DD12AC /* liboggz_static.suo */,
+				325A43692885C0DA00DD12AC /* liboggz_dynamic.suo */,
+			);
+			path = VS2008;
+			sourceTree = "<group>";
+		};
+		325A43502885C0DA00DD12AC /* liboggz */ = {
+			isa = PBXGroup;
+			children = (
+				325A43512885C0DA00DD12AC /* liboggz_static.vcproj */,
+				325A43522885C0DA00DD12AC /* liboggz_dynamic.vcproj */,
+			);
+			path = liboggz;
+			sourceTree = "<group>";
+		};
+		325A43552885C0DA00DD12AC /* oggzinfo */ = {
+			isa = PBXGroup;
+			children = (
+				325A43562885C0DA00DD12AC /* oggzinfo_static.vcproj */,
+				325A43572885C0DA00DD12AC /* oggzinfo_dynamic.vcproj */,
+			);
+			path = oggzinfo;
+			sourceTree = "<group>";
+		};
+		325A43582885C0DA00DD12AC /* oggzmerge */ = {
+			isa = PBXGroup;
+			children = (
+				325A43592885C0DA00DD12AC /* oggzmerge_static.vcproj */,
+				325A435A2885C0DA00DD12AC /* oggzmerge_dynamic.vcproj */,
+			);
+			path = oggzmerge;
+			sourceTree = "<group>";
+		};
+		325A435B2885C0DA00DD12AC /* oggzrip */ = {
+			isa = PBXGroup;
+			children = (
+				325A435C2885C0DA00DD12AC /* oggzrip_static.vcproj */,
+				325A435D2885C0DA00DD12AC /* oggzrip_dynamic.vcproj */,
+			);
+			path = oggzrip;
+			sourceTree = "<group>";
+		};
+		325A435E2885C0DA00DD12AC /* oggzdump */ = {
+			isa = PBXGroup;
+			children = (
+				325A435F2885C0DA00DD12AC /* oggzdump_dynamic.vcproj */,
+				325A43602885C0DA00DD12AC /* oggzdump_static.vcproj */,
+			);
+			path = oggzdump;
+			sourceTree = "<group>";
+		};
+		325A43612885C0DA00DD12AC /* oggzscan */ = {
+			isa = PBXGroup;
+			children = (
+				325A43622885C0DA00DD12AC /* oggzscan_dynamic.vcproj */,
+				325A43632885C0DA00DD12AC /* oggzscan_static.vcproj */,
+			);
+			path = oggzscan;
+			sourceTree = "<group>";
+		};
+		325A43642885C0DA00DD12AC /* oggzvalidate */ = {
+			isa = PBXGroup;
+			children = (
+				325A43652885C0DA00DD12AC /* oggzvalidate_static.vcproj */,
+				325A43662885C0DA00DD12AC /* oggzvalidate_dynamic.vcproj */,
+			);
+			path = oggzvalidate;
+			sourceTree = "<group>";
+		};
+		325A436A2885C0DA00DD12AC /* bash-completion */ = {
+			isa = PBXGroup;
+			children = (
+				325A436B2885C0DA00DD12AC /* oggz */,
+			);
+			path = "bash-completion";
+			sourceTree = "<group>";
+		};
+		325A436C2885C0DA00DD12AC /* apache */ = {
+			isa = PBXGroup;
+			children = (
+				325A436D2885C0DA00DD12AC /* oggz-chop.conf.in */,
+			);
+			path = apache;
+			sourceTree = "<group>";
+		};
+		325A43702885C0DA00DD12AC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				325A43712885C0DA00DD12AC /* liboggz */,
+				325A438B2885C0DA00DD12AC /* tools */,
+				325A43B22885C0DA00DD12AC /* tests */,
+				325A43D12885C0DA00DD12AC /* Makefile.am */,
+				325A43D22885C0DA00DD12AC /* examples */,
+				325A43DE2885C0DA00DD12AC /* SConscript */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		325A43712885C0DA00DD12AC /* liboggz */ = {
+			isa = PBXGroup;
+			children = (
+				325A43722885C0DA00DD12AC /* oggz_table.c */,
+				325A43732885C0DA00DD12AC /* oggz_vector.h */,
+				325A43742885C0DA00DD12AC /* metric_internal.c */,
+				325A43752885C0DA00DD12AC /* debug.h */,
+				325A43762885C0DA00DD12AC /* dirac.c */,
+				325A43772885C0DA00DD12AC /* oggz_stream.c */,
+				325A43782885C0DA00DD12AC /* oggz_private.h */,
+				325A43792885C0DA00DD12AC /* oggz_auto.c */,
+				325A437A2885C0DA00DD12AC /* oggz_read.c */,
+				325A437B2885C0DA00DD12AC /* oggz_io.c */,
+				325A437C2885C0DA00DD12AC /* oggz_macros.h */,
+				325A437D2885C0DA00DD12AC /* oggz_compat.h */,
+				325A437E2885C0DA00DD12AC /* oggz_dlist.h */,
+				325A437F2885C0DA00DD12AC /* oggz_comments.c */,
+				325A43802885C0DA00DD12AC /* Makefile.am */,
+				325A43812885C0DA00DD12AC /* oggz_vector.c */,
+				325A43822885C0DA00DD12AC /* oggz.c */,
+				325A43832885C0DA00DD12AC /* Version_script.in */,
+				325A43842885C0DA00DD12AC /* oggz_seek.c */,
+				325A43852885C0DA00DD12AC /* dirac.h */,
+				325A43862885C0DA00DD12AC /* oggz_stream_private.h */,
+				325A43872885C0DA00DD12AC /* oggz_write.c */,
+				325A43882885C0DA00DD12AC /* oggz_auto.h */,
+				325A43892885C0DA00DD12AC /* oggz_dlist.c */,
+				325A438A2885C0DA00DD12AC /* oggz_byteorder.h */,
+			);
+			path = liboggz;
+			sourceTree = "<group>";
+		};
+		325A438B2885C0DA00DD12AC /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				325A438C2885C0DA00DD12AC /* oggz-dump.c */,
+				325A438D2885C0DA00DD12AC /* oggz_tools.c */,
+				325A438E2885C0DA00DD12AC /* mimetypes.h */,
+				325A438F2885C0DA00DD12AC /* skeleton.c */,
+				325A43902885C0DA00DD12AC /* oggz-codecs.c */,
+				325A43912885C0DA00DD12AC /* Makefile.am */,
+				325A43922885C0DA00DD12AC /* skeleton.h */,
+				325A43932885C0DA00DD12AC /* oggz_tools.h */,
+				325A43942885C0DA00DD12AC /* mimetypes.c */,
+				325A43952885C0DA00DD12AC /* oggz-known-codecs.c */,
+				325A43962885C0DA00DD12AC /* oggz-validate.c */,
+				325A43972885C0DA00DD12AC /* oggz.c */,
+				325A43982885C0DA00DD12AC /* oggz-diff.in */,
+				325A43992885C0DA00DD12AC /* oggz-merge.c */,
+				325A439A2885C0DA00DD12AC /* oggz-comment.c */,
+				325A439B2885C0DA00DD12AC /* SConscript */,
+				325A439C2885C0DA00DD12AC /* oggz-info.c */,
+				325A439D2885C0DA00DD12AC /* oggz-basetime.c */,
+				325A439E2885C0DA00DD12AC /* oggz-sort.c */,
+				325A439F2885C0DA00DD12AC /* oggz-rip.c */,
+				325A43A02885C0DA00DD12AC /* oggz-scan.c */,
+				325A43A12885C0DA00DD12AC /* oggz-chop */,
+				325A43B12885C0DA00DD12AC /* oggz_tools_dirac.h */,
+			);
+			path = tools;
+			sourceTree = "<group>";
+		};
+		325A43A12885C0DA00DD12AC /* oggz-chop */ = {
+			isa = PBXGroup;
+			children = (
+				325A43A22885C0DA00DD12AC /* header.h */,
+				325A43A32885C0DA00DD12AC /* httpdate.c */,
+				325A43A42885C0DA00DD12AC /* timespec.c */,
+				325A43A52885C0DA00DD12AC /* cgi.c */,
+				325A43A62885C0DA00DD12AC /* oggz-chop.c */,
+				325A43A72885C0DA00DD12AC /* httpdate_test.c */,
+				325A43A82885C0DA00DD12AC /* cmd.c */,
+				325A43A92885C0DA00DD12AC /* Makefile.am */,
+				325A43AA2885C0DA00DD12AC /* main.c */,
+				325A43AB2885C0DA00DD12AC /* httpdate.h */,
+				325A43AC2885C0DA00DD12AC /* timespec.h */,
+				325A43AD2885C0DA00DD12AC /* header.c */,
+				325A43AE2885C0DA00DD12AC /* cmd.h */,
+				325A43AF2885C0DA00DD12AC /* cgi.h */,
+				325A43B02885C0DA00DD12AC /* oggz-chop.h */,
+			);
+			path = "oggz-chop";
+			sourceTree = "<group>";
+		};
+		325A43B22885C0DA00DD12AC /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				325A43B32885C0DA00DD12AC /* seek-stress.c */,
+				325A43B42885C0DA00DD12AC /* oggz_tests.h */,
+				325A43B52885C0DA00DD12AC /* io-write.c */,
+				325A43B62885C0DA00DD12AC /* comment-test.c */,
+				325A43B72885C0DA00DD12AC /* io-write-flush.c */,
+				325A43B82885C0DA00DD12AC /* io-read.c */,
+				325A43B92885C0DA00DD12AC /* write-suffix.c */,
+				325A43BA2885C0DA00DD12AC /* write-unmarked-guard.c */,
+				325A43BB2885C0DA00DD12AC /* read-stop-ok.c */,
+				325A43BC2885C0DA00DD12AC /* write-prefix.c */,
+				325A43BD2885C0DA00DD12AC /* io-count.c */,
+				325A43BE2885C0DA00DD12AC /* write-bad-bytes.c */,
+				325A43BF2885C0DA00DD12AC /* write-bad-packetno.c */,
+				325A43C02885C0DA00DD12AC /* write-bad-guard.c */,
+				325A43C12885C0DA00DD12AC /* seek-units.c */,
+				325A43C22885C0DA00DD12AC /* Makefile.am */,
+				325A43C32885C0DA00DD12AC /* read-stop-err.c */,
+				325A43C42885C0DA00DD12AC /* io-run.c */,
+				325A43C52885C0DA00DD12AC /* write-bad-granulepos.c */,
+				325A43C62885C0DA00DD12AC /* write-bad-serialno.c */,
+				325A43C72885C0DA00DD12AC /* io-read-single.c */,
+				325A43C82885C0DA00DD12AC /* read-generated.c */,
+				325A43C92885C0DA00DD12AC /* comment-test.h */,
+				325A43CA2885C0DA00DD12AC /* io-seek.c */,
+				325A43CB2885C0DA00DD12AC /* write-recursive.c */,
+				325A43CC2885C0DA00DD12AC /* SConscript */,
+				325A43CD2885C0DA00DD12AC /* write-bad-eos.c */,
+				325A43CE2885C0DA00DD12AC /* seek-stress-test.sh */,
+				325A43CF2885C0DA00DD12AC /* write-dup-bos.c */,
+				325A43D02885C0DA00DD12AC /* write-bad-bos.c */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		325A43D22885C0DA00DD12AC /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				325A43D32885C0DA00DD12AC /* identity.c */,
+				325A43D42885C0DA00DD12AC /* rewrite-pages.c */,
+				325A43D52885C0DA00DD12AC /* modify-headers.c */,
+				325A43D62885C0DA00DD12AC /* fix-eos.c */,
+				325A43D72885C0DA00DD12AC /* read-io.c */,
+				325A43D82885C0DA00DD12AC /* write-hungry.c */,
+				325A43D92885C0DA00DD12AC /* Makefile.am */,
+				325A43DA2885C0DA00DD12AC /* dump-comments.c */,
+				325A43DB2885C0DA00DD12AC /* SConscript */,
+				325A43DC2885C0DA00DD12AC /* write-feed.c */,
+				325A43DD2885C0DA00DD12AC /* read-file.c */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		325A44182885C17500DD12AC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				325A441D2885C17500DD12AC /* ogg.framework */,
+				325A441F2885C17500DD12AC /* ogg.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		325A44202885C18500DD12AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		32028D03254AE93F00A537DE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325A43E52885C0F000DD12AC /* oggz_constants.h in Headers */,
+				325A43EC2885C0F000DD12AC /* oggz_packet.h in Headers */,
+				325A43ED2885C0F000DD12AC /* oggz_off_t.h in Headers */,
+				325A43EA2885C0F000DD12AC /* oggz_read.h in Headers */,
+				325A43E82885C0F000DD12AC /* oggz_comments.h in Headers */,
+				325A44302885C25100DD12AC /* oggz_off_t_generated.h in Headers */,
+				325A43EE2885C0F000DD12AC /* oggz_io.h in Headers */,
+				325A43EB2885C0F000DD12AC /* oggz_table.h in Headers */,
+				325A43EF2885C0F000DD12AC /* oggz.h in Headers */,
+				325A43E72885C0F000DD12AC /* oggz_stream.h in Headers */,
+				325A43E62885C0F000DD12AC /* oggz_write.h in Headers */,
+				325A43F02885C0F000DD12AC /* oggz_deprecated.h in Headers */,
+				325A43E92885C0F000DD12AC /* oggz_seek.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32028DCD254AFEA000A537DE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325A43F12885C0F100DD12AC /* oggz_constants.h in Headers */,
+				325A43F82885C0F100DD12AC /* oggz_packet.h in Headers */,
+				325A43F92885C0F100DD12AC /* oggz_off_t.h in Headers */,
+				325A43F62885C0F100DD12AC /* oggz_read.h in Headers */,
+				325A43F42885C0F100DD12AC /* oggz_comments.h in Headers */,
+				325A44312885C25100DD12AC /* oggz_off_t_generated.h in Headers */,
+				325A43FA2885C0F100DD12AC /* oggz_io.h in Headers */,
+				325A43F72885C0F100DD12AC /* oggz_table.h in Headers */,
+				325A43FB2885C0F100DD12AC /* oggz.h in Headers */,
+				325A43F32885C0F100DD12AC /* oggz_stream.h in Headers */,
+				325A43F22885C0F100DD12AC /* oggz_write.h in Headers */,
+				325A43FC2885C0F100DD12AC /* oggz_deprecated.h in Headers */,
+				325A43F52885C0F100DD12AC /* oggz_seek.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		32028D07254AE93F00A537DE /* macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
+			buildPhases = (
+				32028D03254AE93F00A537DE /* Headers */,
+				32028D04254AE93F00A537DE /* Sources */,
+				32028D05254AE93F00A537DE /* Frameworks */,
+				32028D06254AE93F00A537DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = macOS;
+			productName = ogg;
+			productReference = 32028D08254AE93F00A537DE /* oggz.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		32028DCC254AFEA000A537DE /* iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
+			buildPhases = (
+				32028DCD254AFEA000A537DE /* Headers */,
+				32028DD1254AFEA000A537DE /* Sources */,
+				32028DD4254AFEA000A537DE /* Frameworks */,
+				32028DD5254AFEA000A537DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iOS;
+			productName = ogg;
+			productReference = 32028DD9254AFEA000A537DE /* oggz.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		32028CFF254AE93F00A537DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					32028D07254AE93F00A537DE = {
+						CreatedOnToolsVersion = 12.2;
+					};
+				};
+			};
+			buildConfigurationList = 32028D02254AE93F00A537DE /* Build configuration list for PBXProject "oggz" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				English,
+			);
+			mainGroup = 32028CFE254AE93F00A537DE;
+			productRefGroup = 32028D09254AE93F00A537DE /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 325A44182885C17500DD12AC /* Products */;
+					ProjectRef = 325A44172885C17500DD12AC /* ogg.xcodeproj */;
+				},
+				{
+					ProductGroup = 325A42EC2885C0DA00DD12AC /* Products */;
+					ProjectRef = 325A42EB2885C0DA00DD12AC /* oggz.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				32028D07254AE93F00A537DE /* macOS */,
+				32028DCC254AFEA000A537DE /* iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		325A43E22885C0DA00DD12AC /* oggz.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = oggz.framework;
+			remoteRef = 325A43E12885C0DA00DD12AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		325A43E42885C0DA00DD12AC /* liboggz.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liboggz.a;
+			remoteRef = 325A43E32885C0DA00DD12AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		325A441D2885C17500DD12AC /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 325A441C2885C17500DD12AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		325A441F2885C17500DD12AC /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 325A441E2885C17500DD12AC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		32028D06254AE93F00A537DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32028DD5254AFEA000A537DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		32028D04254AE93F00A537DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325A44042885C15A00DD12AC /* oggz_stream.c in Sources */,
+				325A44072885C15A00DD12AC /* oggz.c in Sources */,
+				325A44092885C15A00DD12AC /* metric_internal.c in Sources */,
+				325A44052885C15A00DD12AC /* oggz_auto.c in Sources */,
+				325A44062885C15A00DD12AC /* oggz_comments.c in Sources */,
+				325A43FF2885C15A00DD12AC /* dirac.c in Sources */,
+				325A43FD2885C15A00DD12AC /* oggz_write.c in Sources */,
+				325A43FE2885C15A00DD12AC /* oggz_table.c in Sources */,
+				325A44002885C15A00DD12AC /* oggz_dlist.c in Sources */,
+				325A44022885C15A00DD12AC /* oggz_io.c in Sources */,
+				325A44032885C15A00DD12AC /* oggz_vector.c in Sources */,
+				325A44082885C15A00DD12AC /* oggz_read.c in Sources */,
+				325A44012885C15A00DD12AC /* oggz_seek.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32028DD1254AFEA000A537DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				325A44112885C15B00DD12AC /* oggz_stream.c in Sources */,
+				325A44142885C15B00DD12AC /* oggz.c in Sources */,
+				325A44162885C15B00DD12AC /* metric_internal.c in Sources */,
+				325A44122885C15B00DD12AC /* oggz_auto.c in Sources */,
+				325A44132885C15B00DD12AC /* oggz_comments.c in Sources */,
+				325A440C2885C15B00DD12AC /* dirac.c in Sources */,
+				325A440A2885C15B00DD12AC /* oggz_write.c in Sources */,
+				325A440B2885C15B00DD12AC /* oggz_table.c in Sources */,
+				325A440D2885C15B00DD12AC /* oggz_dlist.c in Sources */,
+				325A440F2885C15B00DD12AC /* oggz_io.c in Sources */,
+				325A44102885C15B00DD12AC /* oggz_vector.c in Sources */,
+				325A44152885C15B00DD12AC /* oggz_read.c in Sources */,
+				325A440E2885C15B00DD12AC /* oggz_seek.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		325A42E72885C0DA00DD12AC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				325A42E82885C0DA00DD12AC /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		32028D0E254AE93F00A537DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		32028D0F254AE93F00A537DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		32028D11254AE93F00A537DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = oggz.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
+				PRODUCT_NAME = oggz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Debug;
+		};
+		32028D12254AE93F00A537DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = oggz.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
+				PRODUCT_NAME = oggz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Release;
+		};
+		32028DD7254AFEA000A537DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = oggz.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
+				PRODUCT_NAME = oggz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		32028DD8254AFEA000A537DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = oggz.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
+				PRODUCT_NAME = oggz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32028D02254AE93F00A537DE /* Build configuration list for PBXProject "oggz" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32028D0E254AE93F00A537DE /* Debug */,
+				32028D0F254AE93F00A537DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32028D11254AE93F00A537DE /* Debug */,
+				32028D12254AE93F00A537DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32028DD7254AFEA000A537DE /* Debug */,
+				32028DD8254AFEA000A537DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 32028CFF254AE93F00A537DE /* Project object */;
+}
