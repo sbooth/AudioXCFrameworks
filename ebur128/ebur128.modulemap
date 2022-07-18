@@ -1,0 +1,4 @@
+framework module ebur128 {
+	header "ebur128.h"
+	export *
+}

@@ -16,6 +16,7 @@
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* ebur128.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ebur128.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* ebur128.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ebur128.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		321294612886077C007B56EC /* ebur128.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = ebur128.modulemap; sourceTree = "<group>"; };
 		326087B525B330000077127C /* ebur128.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ebur128.h; sourceTree = "<group>"; };
 		326087B825B330000077127C /* ebur128.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ebur128.c; sourceTree = "<group>"; };
 		326087BD25B330000077127C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -44,6 +45,7 @@
 			isa = PBXGroup;
 			children = (
 				3267710F254B5D670041B063 /* Info.plist */,
+				321294612886077C007B56EC /* ebur128.modulemap */,
 				326087AB25B330000077127C /* libebur128-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
@@ -341,6 +343,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = ebur128.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.jiixyj.libebur128;
 				PRODUCT_NAME = ebur128;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -364,6 +367,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = ebur128.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.jiixyj.libebur128;
 				PRODUCT_NAME = ebur128;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -387,6 +391,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = ebur128.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.jiixyj.libebur128;
 				PRODUCT_NAME = ebur128;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -412,6 +417,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MODULEMAP_FILE = ebur128.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.jiixyj.libebur128;
 				PRODUCT_NAME = ebur128;
 				PROVISIONING_PROFILE_SPECIFIER = "";
