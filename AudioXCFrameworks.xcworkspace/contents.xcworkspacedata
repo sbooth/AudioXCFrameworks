@@ -26,6 +26,9 @@
       location = "group:ogg/ogg.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:oggz/oggz.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:opus/opus.xcodeproj">
    </FileRef>
    <FileRef
