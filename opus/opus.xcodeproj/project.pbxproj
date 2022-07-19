@@ -1931,7 +1931,6 @@
 					"$(SRCROOT)/opus-src/",
 					"$(SRCROOT)/opus-src/celt/",
 					"$(SRCROOT)/opus-src/silk/",
-					"$(SRCROOT)/ogg-src/include/",
 				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2047,7 +2046,6 @@
 					"$(SRCROOT)/opus-src/",
 					"$(SRCROOT)/opus-src/celt/",
 					"$(SRCROOT)/opus-src/silk/",
-					"$(SRCROOT)/ogg-src/include/",
 				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
