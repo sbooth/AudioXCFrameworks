@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		321657B328872452003BBB50 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 321657B228872441003BBB50 /* config.h */; };
+		321657B428872453003BBB50 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 321657B228872441003BBB50 /* config.h */; };
 		325A43E52885C0F000DD12AC /* oggz_constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CD2885C0DA00DD12AC /* oggz_constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325A43E62885C0F000DD12AC /* oggz_write.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CE2885C0DA00DD12AC /* oggz_write.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325A43E72885C0F000DD12AC /* oggz_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D22885C0DA00DD12AC /* oggz_stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -97,6 +99,7 @@
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* oggz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = oggz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32028DD9254AFEA000A537DE /* oggz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = oggz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		321657B228872441003BBB50 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		325A42AC2885C0DA00DD12AC /* acinclude.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = acinclude.m4; sourceTree = "<group>"; };
 		325A42AD2885C0DA00DD12AC /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
 		325A42AF2885C0DA00DD12AC /* liboggz-1.0.1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "liboggz-1.0.1.txt"; sourceTree = "<group>"; };
@@ -409,6 +412,7 @@
 		325A42AB2885C0DA00DD12AC /* liboggz-src */ = {
 			isa = PBXGroup;
 			children = (
+				321657B228872441003BBB50 /* config.h */,
 				325A42AC2885C0DA00DD12AC /* acinclude.m4 */,
 				325A42AD2885C0DA00DD12AC /* configure.ac */,
 				325A42AE2885C0DA00DD12AC /* release_notes */,
@@ -1050,6 +1054,7 @@
 				325A43EA2885C0F000DD12AC /* oggz_read.h in Headers */,
 				325A43E82885C0F000DD12AC /* oggz_comments.h in Headers */,
 				325A44302885C25100DD12AC /* oggz_off_t_generated.h in Headers */,
+				321657B328872452003BBB50 /* config.h in Headers */,
 				325A43EE2885C0F000DD12AC /* oggz_io.h in Headers */,
 				325A43EB2885C0F000DD12AC /* oggz_table.h in Headers */,
 				325A43EF2885C0F000DD12AC /* oggz.h in Headers */,
@@ -1070,6 +1075,7 @@
 				325A43F62885C0F100DD12AC /* oggz_read.h in Headers */,
 				325A43F42885C0F100DD12AC /* oggz_comments.h in Headers */,
 				325A44312885C25100DD12AC /* oggz_off_t_generated.h in Headers */,
+				321657B428872453003BBB50 /* config.h in Headers */,
 				325A43FA2885C0F100DD12AC /* oggz_io.h in Headers */,
 				325A43F72885C0F100DD12AC /* oggz_table.h in Headers */,
 				325A43FB2885C0F100DD12AC /* oggz.h in Headers */,
