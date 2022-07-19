@@ -1,0 +1,85 @@
+FishSound 0.7.0 Release
+-----------------------
+
+libfishsound provides a simple programming interface for decoding and
+encoding audio data using Xiph.Org codecs (Vorbis and Speex).
+
+This release is available as a source tarball at:
+
+http://www.annodex.net/software/libfishsound/download/libfishsound-0.7.0.tar.gz
+
+New in this release
+-------------------
+
+This release includes features backported from the development trunk:
+
+	* Added typesafe encoding and decoding interfaces. Some existing
+	interfaces are marked as deprecated, but source and binary
+	compatibility with previous versions has been maintained.
+	(Backported from changesets 282, 283, 285, 289, 290, 304)
+
+	* Valgrind-clean: Removed memory leaks and other errors exposed by
+	running the entire suite of unit tests under valgrind.
+	(Changeset 1398, and Backported changesets:
+	285:322 src/libfishsound/comments.c
+	304:323 src/libfishsound/fishsound.c 
+	332:328, 337:515, 568 src/libfishsound/vorbis.c 
+	308, 316, 333:514 src/libfishsound/speex.c
+	274:516 src/tests/encdec-comments.c
+
+	* Added compatibility with and detection of Speex 1.1
+	(Changeset 1391, and Backported changesets 306, 307)
+
+	* Add support for compilation under MinGW (Erik de Castro Lopo)
+	(Backported changeset 602)
+
+	* Various build system improvements (Thomas Vander Stichele)
+	(Backported changesets 536, 1337, 1355)
+
+	* Various minor backports (Backported changesets 294, 300, 301,
+	302, 303, 341, 511, 518, 532, 535, 568, 607, 666, 1356, 1396)
+
+	* Updated shared version info to 2:0:1
+
+For details, see:
+  http://trac.annodex.net/log/libfishsound/branches/1.0-stable/
+
+
+About libfishsound
+------------------
+
+libfishsound by itself is designed to handle raw codec streams from a
+lower level layer such as UDP datagrams. When these codecs are used in
+files, they are commonly encapsulated in Ogg to produce Ogg Vorbis
+and Speex files.
+
+libfishsound is a wrapper around the existing codec libraries and provides
+a consistent, higher-level programming interface. It has been designed for
+use in a wide variety of applications; it has no direct dependencies on
+Ogg encapsulation, though it is most commonly used in conjunction with
+liboggz to decode or encode Vorbis or Speex audio tracks in Ogg files,
+including Ogg Theora and Annodex.
+
+FishSound has been developed and tested on GNU/Linux, Darwin/MacOSX and
+Win32. It probably also works on other Unix-like systems via GNU autoconf.
+For Win32: nmake Makefiles, Visual Studio .NET 2003 solution files and
+Visual C++ 6.0 workspace files are all provided in the source distribution.
+
+Full documentation of the FishSound API, customization and installation,
+and complete examples of Ogg Vorbis and Speex decoding and encoding are
+provided in the source tarball, and can be read online at:
+
+    http://www.annodex.net/software/libfishsound/html/
+
+FishSound is Free Software, available under a BSD-style license.
+
+More information is available online at the FishSound homepage:
+
+    http://www.annodex.net/software/libfishsound/
+
+enjoy :)
+
+--
+Conrad Parker
+Senior Software Engineer, Continuous Media Web, CSIRO Australia
+http://www.annodex.net/   http://www.ict.csiro.au/cmweb/

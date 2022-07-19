@@ -1,0 +1,57 @@
+FishSound 0.6.2 Release
+-----------------------
+
+libfishsound provides a simple programming interface for decoding and
+encoding audio data using Xiph.Org codecs (Vorbis and Speex).
+
+This release is available as a source tarball at:
+
+http://www.annodex.net/software/libfishsound/download/libfishsound-0.6.2.tar.gz
+
+This release includes improved handling of first and last blocks of data
+(bos and eos packets in Ogg):
+
+        * new fish_sound_prepare_truncation() API call
+        * improved encdec-audio test to keep track of frames in and out,
+          and warn if unequal. (Currently not set to FAIL on this condition
+          as it appears to be common for Speex)
+
+It also includes updates to the Win32 nmake build files.
+
+About libfishsound
+------------------
+
+libfishsound by itself is designed to handle raw codec streams from a
+lower level layer such as UDP datagrams. When these codecs are used in
+files, they are commonly encapsulated in Ogg to produce Ogg Vorbis
+and Speex files.
+
+libfishsound is a wrapper around the existing codec libraries and provides
+a consistent, higher-level programming interface. It has been designed for
+use in a wide variety of applications; it has no direct dependencies on
+Annodex or Ogg encapsulation, though it is most commonly used in conjunction
+with liboggz to decode or encode Ogg encapsulated Vorbis or Speex files.
+
+FishSound has been developed and tested on GNU/Linux, Darwin/MacOSX and
+Win32. It probably also works on other Unix-like systems via GNU autoconf.
+For Win32: nmake Makefiles, Visual Studio .NET 2003 solution files and
+Visual C++ 6.0 workspace files are all provided in the source distribution.
+
+Full documentation of the FishSound API, customization and installation,
+and complete examples of Ogg Vorbis and Speex decoding and encoding are
+provided in the source tarball, and can be read online at:
+
+    http://www.annodex.net/software/libfishsound/html/
+
+FishSound is Free Software, available under a BSD-style license.
+
+More information is available online at the FishSound homepage:
+
+    http://www.annodex.net/software/libfishsound/
+
+enjoy :)
+
+--
+Conrad Parker
+Senior Software Engineer, Continuous Media Web, CSIRO Australia
+http://www.annodex.net/   http://www.ict.csiro.au/cmweb/
