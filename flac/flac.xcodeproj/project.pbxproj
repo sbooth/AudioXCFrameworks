@@ -855,7 +855,6 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/flac-src/include/",
 					"$(SRCROOT)/flac-src/src/libFLAC/include/",
-					"$(SRCROOT)/ogg-src/include/",
 				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -918,7 +917,6 @@
 				USER_HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/flac-src/include/",
 					"$(SRCROOT)/flac-src/src/libFLAC/include/",
-					"$(SRCROOT)/ogg-src/include/",
 				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
