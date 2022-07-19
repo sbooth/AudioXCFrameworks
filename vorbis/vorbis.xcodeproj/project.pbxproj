@@ -634,10 +634,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/vorbis-src/lib/",
-					"$(SRCROOT)/ogg-src/include/",
-				);
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/vorbis-src/lib/";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -696,10 +693,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/vorbis-src/lib/",
-					"$(SRCROOT)/ogg-src/include/",
-				);
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/vorbis-src/lib/";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
