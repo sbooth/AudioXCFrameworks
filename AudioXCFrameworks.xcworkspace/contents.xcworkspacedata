@@ -8,6 +8,9 @@
       location = "group:ebur128/ebur128.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:fishsound/fishsound.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:flac/flac.xcodeproj">
    </FileRef>
    <FileRef
