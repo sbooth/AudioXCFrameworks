@@ -1,7 +1,7 @@
-Only in flac-src: config.h
-diff -ur flac-1.3.4/include/FLAC/all.h flac-src/include/FLAC/all.h
---- flac-1.3.4/include/FLAC/all.h	2022-02-20 11:46:15.000000000 -0600
-+++ flac-src/include/FLAC/all.h	2022-07-16 22:11:35.000000000 -0500
+Only in flac-1.4.2/include/FLAC: Makefile
+diff -ur flac-1.4.2/include/FLAC/all.h flac-src/include/FLAC/all.h
+--- flac-1.4.2/include/FLAC/all.h	2022-10-21 12:13:45
++++ flac-src/include/FLAC/all.h	2023-02-10 11:02:39
 @@ -33,15 +33,15 @@
  #ifndef FLAC__ALL_H
  #define FLAC__ALL_H
@@ -26,9 +26,9 @@ diff -ur flac-1.3.4/include/FLAC/all.h flac-src/include/FLAC/all.h
  
  /** \mainpage
   *
-diff -ur flac-1.3.4/include/FLAC/callback.h flac-src/include/FLAC/callback.h
---- flac-1.3.4/include/FLAC/callback.h	2022-02-20 11:46:15.000000000 -0600
-+++ flac-src/include/FLAC/callback.h	2022-07-16 22:11:25.000000000 -0500
+diff -ur flac-1.4.2/include/FLAC/callback.h flac-src/include/FLAC/callback.h
+--- flac-1.4.2/include/FLAC/callback.h	2022-10-21 12:13:31
++++ flac-src/include/FLAC/callback.h	2023-02-10 11:02:56
 @@ -33,7 +33,7 @@
  #ifndef FLAC__CALLBACK_H
  #define FLAC__CALLBACK_H
@@ -38,9 +38,9 @@ diff -ur flac-1.3.4/include/FLAC/callback.h flac-src/include/FLAC/callback.h
  #include <stdlib.h> /* for size_t */
  
  /** \file include/FLAC/callback.h
-diff -ur flac-1.3.4/include/FLAC/format.h flac-src/include/FLAC/format.h
---- flac-1.3.4/include/FLAC/format.h	2022-02-20 11:46:15.000000000 -0600
-+++ flac-src/include/FLAC/format.h	2022-07-16 22:11:21.000000000 -0500
+diff -ur flac-1.4.2/include/FLAC/format.h flac-src/include/FLAC/format.h
+--- flac-1.4.2/include/FLAC/format.h	2022-10-21 12:13:45
++++ flac-src/include/FLAC/format.h	2023-02-10 11:03:16
 @@ -33,8 +33,8 @@
  #ifndef FLAC__FORMAT_H
  #define FLAC__FORMAT_H
@@ -52,9 +52,9 @@ diff -ur flac-1.3.4/include/FLAC/format.h flac-src/include/FLAC/format.h
  
  #ifdef __cplusplus
  extern "C" {
-diff -ur flac-1.3.4/include/FLAC/metadata.h flac-src/include/FLAC/metadata.h
---- flac-1.3.4/include/FLAC/metadata.h	2022-02-20 11:46:15.000000000 -0600
-+++ flac-src/include/FLAC/metadata.h	2022-07-16 22:11:14.000000000 -0500
+diff -ur flac-1.4.2/include/FLAC/metadata.h flac-src/include/FLAC/metadata.h
+--- flac-1.4.2/include/FLAC/metadata.h	2022-10-21 12:13:46
++++ flac-src/include/FLAC/metadata.h	2023-02-10 11:03:26
 @@ -34,9 +34,9 @@
  #define FLAC__METADATA_H
  
@@ -68,9 +68,9 @@ diff -ur flac-1.3.4/include/FLAC/metadata.h flac-src/include/FLAC/metadata.h
  
  /* --------------------------------------------------------------------
     (For an example of how all these routines are used, see the source
-diff -ur flac-1.3.4/include/FLAC/stream_decoder.h flac-src/include/FLAC/stream_decoder.h
---- flac-1.3.4/include/FLAC/stream_decoder.h	2022-02-20 11:46:15.000000000 -0600
-+++ flac-src/include/FLAC/stream_decoder.h	2022-07-16 22:11:48.000000000 -0500
+diff -ur flac-1.4.2/include/FLAC/stream_decoder.h flac-src/include/FLAC/stream_decoder.h
+--- flac-1.4.2/include/FLAC/stream_decoder.h	2022-10-21 12:13:46
++++ flac-src/include/FLAC/stream_decoder.h	2023-02-10 11:03:37
 @@ -34,8 +34,8 @@
  #define FLAC__STREAM_DECODER_H
  
@@ -82,9 +82,9 @@ diff -ur flac-1.3.4/include/FLAC/stream_decoder.h flac-src/include/FLAC/stream_d
  
  #ifdef __cplusplus
  extern "C" {
-diff -ur flac-1.3.4/include/FLAC/stream_encoder.h flac-src/include/FLAC/stream_encoder.h
---- flac-1.3.4/include/FLAC/stream_encoder.h	2022-02-20 11:46:15.000000000 -0600
-+++ flac-src/include/FLAC/stream_encoder.h	2022-07-16 22:12:14.000000000 -0500
+diff -ur flac-1.4.2/include/FLAC/stream_encoder.h flac-src/include/FLAC/stream_encoder.h
+--- flac-1.4.2/include/FLAC/stream_encoder.h	2022-10-21 12:13:46
++++ flac-src/include/FLAC/stream_encoder.h	2023-02-10 11:03:46
 @@ -34,9 +34,9 @@
  #define FLAC__STREAM_ENCODER_H
  
