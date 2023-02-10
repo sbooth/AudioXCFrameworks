@@ -1,11 +1,11 @@
 ## Version
 
-[1.3.4](https://gitlab.xiph.org/xiph/flac/-/releases/1.3.4)
+[1.4.2](https://github.com/xiph/flac/releases/tag/1.4.2)
 
 ## License
 
 Copyright (C) 2000-2009  Josh Coalson
-Copyright (C) 2011-2016  Xiph.Org Foundation
+Copyright (C) 2011-2022  Xiph.Org Foundation
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions

@@ -1,6 +1,6 @@
 /* test_libFLAC - Unit tester for libFLAC
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2016  Xiph.Org Foundation
+ * Copyright (C) 2011-2022  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -199,10 +199,14 @@ static void vc_resize_(FLAC__StreamMetadata *block, uint32_t num)
 		}
 	}
 	else {
+		uint32_t i;
 		vc->comments = realloc(vc->comments, sizeof(FLAC__StreamMetadata_VorbisComment_Entry)*num);
 		FLAC__ASSERT(0 != vc->comments);
-		if(num > vc->num_comments)
-			memset(vc->comments+vc->num_comments, 0, sizeof(FLAC__StreamMetadata_VorbisComment_Entry)*(num-vc->num_comments));
+		for(i = vc->num_comments; i < num; i++) {
+			vc->comments[i].length = 0;
+			vc->comments[i].entry = malloc(1);
+			vc->comments[i].entry[0] = '\0';
+		}
 	}
 
 	vc->num_comments = num;
