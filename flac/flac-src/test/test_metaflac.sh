@@ -2,7 +2,7 @@
 
 #  FLAC - Free Lossless Audio Codec
 #  Copyright (C) 2002-2009  Josh Coalson
-#  Copyright (C) 2011-2022  Xiph.Org Foundation
+#  Copyright (C) 2011-2023  Xiph.Org Foundation
 #
 #  This file is part the FLAC project.  FLAC is comprised of several
 #  components distributed under different licenses.  The codec libraries
@@ -30,7 +30,7 @@ if echo a | (grep -E '(a|b)') >/dev/null 2>&1
 fi
 
 testdir="metaflac-test-files"
-flacfile="metaflac.flac"
+flacfile="metaflac1.flac"
 
 flac${EXE} --help 1>/dev/null 2>/dev/null || die "ERROR can't find flac executable"
 metaflac${EXE} --help 1>/dev/null 2>/dev/null || die "ERROR can't find metaflac executable"
@@ -68,6 +68,17 @@ run_metaflac_silent ()
 		fi
 	fi
 }
+
+run_metaflac_to_metaflac_silent ()
+{
+	if [ "$FLAC__TEST_WITH_VALGRIND" = yes ] ; then
+		echo "valgrind --leak-check=yes --show-reachable=yes --num-callers=50 metaflac $*" >>test_metaflac.valgrind.log
+		valgrind --leak-check=yes --show-reachable=yes --num-callers=50 --log-fd=4 metaflac${EXE} $* 2>/dev/null 4>>test_metaflac.valgrind.log
+	else
+		metaflac${EXE} $1 | metaflac${EXE} $2 2>/dev/null
+	fi
+}
+
 
 check_flac ()
 {
@@ -110,6 +121,30 @@ metaflac_test ()
 	sed "s/length:.*/length: XXX/" $testdir/out1.meta > $testdir/out.meta
 	diff -w $expect $testdir/out.meta > /dev/null 2>&1 || die "ERROR: metadata does not match expected $expect"
 	# To blindly accept (and check later): cp -f $testdir/out.meta $expect
+	echo OK
+}
+
+metaflac_test_nofilter ()
+{
+	case="$testdatadir/$1"
+	desc="$2"
+	args="$3"
+	expect="$case-expect.meta"
+	echo $ECHO_N "test $1: $desc... " $ECHO_C
+	run_metaflac $args $flacfile > $testdir/out.meta || die "ERROR running metaflac"
+	diff -w $expect $testdir/out.meta || die "ERROR: metadata does not match expected $expect"
+	echo OK
+}
+
+metaflac_test_binary ()
+{
+	case="$testdatadir/$1"
+	desc="$2"
+	args="$3"
+	expect="$case-expect.meta"
+	echo $ECHO_N "test $1: $desc... " $ECHO_C
+	run_metaflac $args $flacfile > $testdir/out.meta || die "ERROR running metaflac"
+	cmp $expect $testdir/out.meta || die "ERROR: metadata does not match expected $expect"
 	echo OK
 }
 
@@ -369,13 +404,75 @@ metaflac_test case61 "--import-picture-from" "--list"
 run_metaflac --import-picture-from="2|image/png|icon|64x64x24|${top_srcdir}/test/pictures/1.png" $flacfile
 check_flac
 metaflac_test case62 "--import-picture-from" "--list"
+run_metaflac --remove-all-tags-except=artist=title $flacfile
+check_flac
+metaflac_test case63 "--remove-all-tags-except=artist=title" "--list"
+metaflac_test case64 "--export-tags-to=-" "--export-tags-to=-"
+metaflac_test case64 "--show-all-tags" "--show-all-tags"
+
+run_flac ${top_srcdir}/test/foreign-metadata-test-files/AIFF-ID3.aiff --keep-foreign-metadata -f -o $flacfile
+metaflac_test_binary case65 "--data-format=binary" "--list --data-format=binary-headerless --block-type=APPLICATION:aiff"
 
 # UNKNOWN blocks
+flacfile=metaflac2.flac
 echo $ECHO_N "Testing FLAC file with unknown metadata... " $ECHO_C
 cp -p ${top_srcdir}/test/metaflac.flac.in $flacfile
 # remove the VORBIS_COMMENT block so vendor string changes don't interfere with the comparison:
 run_metaflac --remove --block-type=VORBIS_COMMENT --dont-use-padding $flacfile
 cmp $flacfile ${top_srcdir}/test/metaflac.flac.ok || die "ERROR, $flacfile and metaflac.flac.ok differ"
 echo OK
+
+flacfile=metaflac3.flac
+cp -p ${top_srcdir}/test/metaflac.flac.in $flacfile
+
+flacfile2=metaflac4.flac
+cp $flacfile $flacfile2
+run_metaflac --remove-all --dont-use-padding $flacfile
+
+echo $ECHO_N "Appending a streaminfo metadata block... " $ECHO_C
+if run_metaflac_to_metaflac_silent "--list --data-format=binary $flacfile2" "--append $flacfile" ; then
+        die "ERROR: it should have failed but didn't"
+else
+        echo "OK, it failed as it should"
+fi
+
+echo $ECHO_N "Appending a seektable metadata block... " $ECHO_C
+if run_metaflac_to_metaflac_silent "--list --data-format=binary --except-block-type=STREAMINFO $flacfile2" "--append $flacfile" ; then
+        die "ERROR: it should have failed but didn't"
+else
+        echo "OK, it failed as it should"
+fi
+
+run_metaflac --add-seekpoint=0 $flacfile
+
+echo $ECHO_N "Appending a vorbis comment metadata block... " $ECHO_C
+if run_metaflac_to_metaflac_silent "--list --data-format=binary --block-type=VORBIS_COMMENT $flacfile2" "--append $flacfile" ; then
+        echo "OK"
+else
+        die "ERROR, couldn't add vorbis comment metadata block"
+fi
+
+echo $ECHO_N "Appending another vorbis comment metadata block... " $ECHO_C
+if run_metaflac_to_metaflac_silent "--list --data-format=binary --block-type=VORBIS_COMMENT $flacfile2" "--append $flacfile" ; then
+        die "ERROR: it should have failed but didn't"
+else
+        echo "OK, it failed as it should"
+fi
+
+if run_metaflac_to_metaflac_silent "--list --data-format=binary --except-block-type=STREAMINFO,SEEKTABLE,VORBIS_COMMENT $flacfile2" "--append $flacfile" ; then
+		:
+else
+        die "ERROR, couldn't add vorbis comment metadata block"
+fi
+
+metaflac_test_nofilter case66 "--append" "--list"
+
+if run_metaflac_to_metaflac_silent "--list --data-format=binary --except-block-type=STREAMINFO,SEEKTABLE,VORBIS_COMMENT $flacfile2" "--append --block-number=0 $flacfile" ; then
+		:
+else
+        die "ERROR, couldn't add vorbis comment metadata block"
+fi
+
+metaflac_test_nofilter case67 "--append --block-number=0" "--list"
 
 rm -f metaflac-test-files/out.meta  metaflac-test-files/out1.meta

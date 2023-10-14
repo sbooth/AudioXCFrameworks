@@ -1,6 +1,6 @@
 /* grabbag - Convenience lib for various routines common to several tools
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -61,8 +61,7 @@ FLAC__bool grabbag__seektable_convert_specification_to_template(const char *spec
 				}
 			}
 			else if(q[-1] == 's') { /* -S #s */
-				if(total_samples_to_encode > 0) { /* we can only do these if we know the number of samples to encode up front */
-					FLAC__ASSERT(sample_rate > 0);
+				if(total_samples_to_encode > 0 && sample_rate > 0) { /* we can only do these if we know the number of samples and sample rate to encode up front */
 					if(0 != spec_has_real_points)
 						*spec_has_real_points = true;
 					if(!only_explicit_placeholders) {

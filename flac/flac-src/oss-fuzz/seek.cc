@@ -1,5 +1,5 @@
 /* fuzzer_seek
- * Copyright (C) 2022  Xiph.Org Foundation
+ * Copyright (C) 2022-2023  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,7 +32,7 @@
 #include <cstdlib>
 #include <cstring> /* for memcpy */
 #include "FLAC/stream_decoder.h"
-#include "fuzzer_common.h"
+#include "common.h"
 
 int write_abort_check_counter = -1;
 

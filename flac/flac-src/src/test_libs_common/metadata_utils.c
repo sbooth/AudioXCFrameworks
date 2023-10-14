@@ -1,6 +1,6 @@
 /* test_libFLAC - Unit tester for libFLAC
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -511,7 +511,8 @@ void mutils__init_metadata_blocks(
 		vorbiscomment->data.vorbis_comment.comments[0].entry = malloc_or_die_(5+1);
 		memcpy(vorbiscomment->data.vorbis_comment.comments[0].entry, "ab=cd", 5+1);
 		vorbiscomment->data.vorbis_comment.comments[1].length = 0;
-		vorbiscomment->data.vorbis_comment.comments[1].entry = 0;
+		vorbiscomment->data.vorbis_comment.comments[1].entry = malloc_or_die_(1);
+		vorbiscomment->data.vorbis_comment.comments[1].entry[0] = '\0';
 	}
 
 	cuesheet->is_last = false;

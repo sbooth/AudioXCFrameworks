@@ -1,6 +1,6 @@
 /* test_libFLAC - Unit tester for libFLAC
  * Copyright (C) 2004-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -33,7 +33,7 @@ static struct {
 	FLAC__bool valid;
 	FLAC__bool subset;
 } SAMPLE_RATES[] = {
-	{ 0      , false, false },
+	{ 0      , true , true  },
 	{ 1      , true , true  },
 	{ 9      , true , true  },
 	{ 10     , true , true  },

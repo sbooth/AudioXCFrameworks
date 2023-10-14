@@ -1,6 +1,6 @@
 /* test_libFLAC++ - Unit tester for libFLAC++
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -958,6 +958,9 @@ static bool test_level_1_()
 		return die_("iterator.set_block() returned true but shouldn't have");
 	}
 
+        if(iterator.status() != FLAC__METADATA_SIMPLE_ITERATOR_STATUS_ILLEGAL_INPUT)
+                return die_("iterator.status() should have been FLAC__METADATA_SIMPLE_ITERATOR_STATUS_ILLEGAL_INPUT");
+
 	printf("[S]VP\tnext\n");
 	if(!iterator.next()) {
 		delete app;
@@ -1014,6 +1017,9 @@ static bool test_level_1_()
 	printf("[S]VPPP\tdelete (STREAMINFO block), must fail\n");
 	if(iterator.delete_block(false))
 		return die_ss_("iterator.delete_block(false) should have returned false", iterator);
+
+        if(iterator.status() != FLAC__METADATA_SIMPLE_ITERATOR_STATUS_ILLEGAL_INPUT)
+                return die_("iterator.status() should have been FLAC__METADATA_SIMPLE_ITERATOR_STATUS_ILLEGAL_INPUT");
 
 	if(!test_file_(/*is_ogg=*/false, /*ignore_metadata=*/false))
 		return false;

@@ -1,7 +1,8 @@
 add_library(FLAC++
     metadata.cpp
     stream_decoder.cpp
-    stream_encoder.cpp)
+    stream_encoder.cpp
+	version.rc)
 set_property(TARGET FLAC++ PROPERTY PROJECT_LABEL "libFLAC++")
 target_compile_definitions(FLAC++
     PRIVATE $<$<BOOL:${BUILD_SHARED_LIBS}>:FLACPP_API_EXPORTS>
@@ -15,7 +16,7 @@ target_include_directories(FLAC++ INTERFACE
 target_link_libraries(FLAC++ PUBLIC FLAC)
 if(BUILD_SHARED_LIBS)
     set_target_properties(FLAC++ PROPERTIES
-        VERSION 10.0.0
+        VERSION 10.0.1
         SOVERSION 10)
     if(NOT WIN32)
         set_target_properties(FLAC++ PROPERTIES CXX_VISIBILITY_PRESET hidden)

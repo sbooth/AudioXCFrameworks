@@ -1,6 +1,6 @@
 #  libFLAC - Free Lossless Audio Codec library
 #  Copyright (C) 2001-2009  Josh Coalson
-#  Copyright (C) 2011-2022  Xiph.Org Foundation
+#  Copyright (C) 2011-2023  Xiph.Org Foundation
 #
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions
@@ -40,21 +40,7 @@ ASSOCMATHCFLAGS = -fassociative-math -fno-signed-zeros -fno-trapping-math -freci
 endif
 endif
 
-# FIXME: The following logic should be part of configure, not of Makefile.am
-
-if FLaC__CPU_PPC
-if FLaC__SYS_DARWIN
-CPUCFLAGS = -faltivec
-else
-CPUCFLAGS =
-if FLaC__USE_ALTIVEC
-CPUCFLAGS += -maltivec -mabi=altivec
-endif
-endif
-endif
-
-
-AM_CFLAGS = $(DEBUGCFLAGS) $(CPUCFLAGS) ${ASSOCMATHCFLAGS} @OGG_CFLAGS@
+AM_CFLAGS = $(DEBUGCFLAGS) ${ASSOCMATHCFLAGS} @OGG_CFLAGS@
 
 libFLAC_la_LIBADD = @OGG_LIBS@ -lm
 
@@ -70,13 +56,18 @@ EXTRA_DIST = \
 	CMakeLists.txt \
 	flac.pc.in \
 	libFLAC.m4 \
+	version.rc \
+	deduplication/bitreader_read_rice_signed_block.c \
 	deduplication/lpc_compute_autocorrelation_intrin.c \
 	deduplication/lpc_compute_autocorrelation_intrin_sse2.c \
-	deduplication/lpc_compute_autocorrelation_intrin_vsx.c \
 	deduplication/lpc_compute_autocorrelation_intrin_neon.c
 
 if OS_IS_WINDOWS
 windows_unicode_compat = ../share/win_utf8_io/win_utf8_io.c
+if HAVE_WINDRES
+libFLAC_la_DEPENDENCIES = version.o
+windows_resource_link = -Wl,version.o
+endif
 endif
 
 if FLaC__HAS_OGG
@@ -88,7 +79,7 @@ extra_ogg_sources = \
 endif
 
 # see 'http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning' for numbering convention
-libFLAC_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined -version-info 12:0:0
+libFLAC_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined -version-info 13:0:1 $(windows_resource_link)
 
 libFLAC_sources = \
 	bitmath.c \
@@ -99,6 +90,8 @@ libFLAC_sources = \
 	fixed.c \
 	fixed_intrin_sse2.c \
 	fixed_intrin_ssse3.c \
+	fixed_intrin_sse42.c \
+	fixed_intrin_avx2.c \
 	float.c \
 	format.c \
 	lpc.c \
@@ -106,7 +99,6 @@ libFLAC_sources = \
 	lpc_intrin_sse41.c \
 	lpc_intrin_avx2.c \
 	lpc_intrin_fma.c \
-	lpc_intrin_vsx.c \
 	lpc_intrin_neon.c \
 	md5.c \
 	memory.c \
@@ -126,3 +118,6 @@ libFLAC_la_SOURCES = $(libFLAC_sources)
 
 # needed for test_libFLAC
 libFLAC_static_la_SOURCES = $(libFLAC_sources)
+
+.rc.o:
+	$(RC) $(AM_CPPFLAGS) $< $@

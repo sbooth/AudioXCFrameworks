@@ -1,6 +1,6 @@
 /* grabbag - Convenience lib for various routines common to several tools
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -640,6 +640,8 @@ FLAC__bool grabbag__replaygain_load_from_vorbiscomment(const FLAC__StreamMetadat
 	if(res && !parse_double_(block->data.vorbis_comment.comments + gain_offset, gain))
 		res = false;
 	if(res && !parse_double_(block->data.vorbis_comment.comments + peak_offset, peak))
+		res = false;
+	if(res && *peak < 0.0)
 		res = false;
 
 	setlocale(LC_ALL, saved_locale);

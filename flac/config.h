@@ -10,8 +10,8 @@
 /* Target processor is little endian. */
 #define CPU_IS_LITTLE_ENDIAN 1
 
-/* Set FLAC__BYTES_PER_WORD to 8 (4 is the default) */
-#define ENABLE_64_BIT_WORDS 0
+/* Set FLAC__BYTES_PER_WORD to 8 (this is the default) */
+#define ENABLE_64_BIT_WORDS 1
 
 /* libtool defines DLL_EXPORT for windows dll builds,
    but flac code relies on FLAC_API_EXPORTS instead. */
@@ -32,15 +32,6 @@
 /* define if building for ia32/i386 */
 /* #undef FLAC__CPU_IA32 */
 
-/* define if building for PowerPC */
-/* #undef FLAC__CPU_PPC */
-
-/* define if building for PowerPC64 */
-/* #undef FLAC__CPU_PPC64 */
-
-/* define if building for SPARC */
-/* #undef FLAC__CPU_SPARC */
-
 /* define if building for x86_64 */
 #if __x86_64__
 #define FLAC__CPU_X86_64 1
@@ -58,12 +49,6 @@
 /* define if you have pandoc */
 /* #undef FLAC__HAS_PANDOC */
 
-/* define if compiler has __attribute__((target("cpu=power8"))) support */
-/* #undef FLAC__HAS_TARGET_POWER8 */
-
-/* define if compiler has __attribute__((target("cpu=power9"))) support */
-/* #undef FLAC__HAS_TARGET_POWER9 */
-
 /* Set to 1 if <x86intrin.h> is available. */
 #if __x86_64__
 #define FLAC__HAS_X86INTRIN 1
@@ -78,14 +63,8 @@
 /* define if building for Linux */
 /* #undef FLAC__SYS_LINUX */
 
-/* define to enable use of Altivec instructions */
-#define FLAC__USE_ALTIVEC 1
-
 /* define to enable use of AVX instructions */
 #define FLAC__USE_AVX 1
-
-/* define to enable use of VSX instructions */
-/* #undef FLAC__USE_VSX */
 
 /* "Define to the commit date of the current git HEAD" */
 /* #undef GIT_COMMIT_DATE */
@@ -112,9 +91,7 @@
 /* #undef HAVE_CLOCK_GETTIME */
 
 /* Define to 1 if you have the <cpuid.h> header file. */
-#if __x86_64__
 #define HAVE_CPUID_H 1
-#endif
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
@@ -129,7 +106,7 @@
 #define HAVE_GETOPT_LONG 1
 
 /* Define if you have the iconv() function and it works. */
-#define HAVE_ICONV 1
+/* #undef HAVE_ICONV */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -142,6 +119,9 @@
 
 /* Define to 1 if you have the <minix/config.h> header file. */
 /* #undef HAVE_MINIX_CONFIG_H */
+
+/* Define to 1 if you have the <stdbool.h> header file. */
+#define HAVE_STDBOOL_H 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -207,7 +187,7 @@
 #define PACKAGE_NAME "flac"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "flac 1.4.2"
+#define PACKAGE_STRING "flac 1.4.3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "flac"
@@ -216,7 +196,7 @@
 #define PACKAGE_URL "https://www.xiph.org/flac/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.4.2"
+#define PACKAGE_VERSION "1.4.3"
 
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8
@@ -318,7 +298,7 @@
 
 
 /* Version number of package */
-#define VERSION "1.4.2"
+#define VERSION "1.4.3"
 
 /* Target processor is big endian. */
 #define WORDS_BIGENDIAN 0

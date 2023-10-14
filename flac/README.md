@@ -1,6 +1,6 @@
 ## Version
 
-[1.4.2](https://github.com/xiph/flac/releases/tag/1.4.2)
+[1.4.3](https://github.com/xiph/flac/releases/tag/1.4.3)
 
 ## License
 

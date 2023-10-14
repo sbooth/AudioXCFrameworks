@@ -1,4 +1,4 @@
-% metaflac(1) Version 1.4.2 | Free Lossless Audio Codec metadata tool
+% metaflac(1) Version 1.4.3 | Free Lossless Audio Codec metadata tool
 
 # NAME
 
@@ -58,7 +58,8 @@ modification time is set to the current time):
 
 **\--with-filename**  
 :	Prefix each output line with the FLAC file name (the default if more
-	than one FLAC file is specified).
+	than one FLAC file is specified). This option has no effect for
+	options exporting to a file, like --export-tags-to.
 
 **\--no-filename**  
 :	Do not prefix each output line with the FLAC file name (the default
@@ -109,6 +110,9 @@ modification time is set to the current time):
 **\--show-tag=name**  
 :	Show all tags where the field name matches 'name'.
 
+**\--show-all-tags**  
+:	Show all tags. This is an alias for --export-tags-to=-.
+
 **\--remove-tag=name**  
 :	Remove all tags whose field name is 'name'.
 
@@ -117,6 +121,10 @@ modification time is set to the current time):
 
 **\--remove-all-tags**  
 :	Remove all tags, leaving only the vendor string.
+
+**\--remove-all-tags-except=NAME1\[=NAME2\[=...\]\]**  
+:   Remove all tags, except the vendor string and the tag names
+    specified. Tag names must be separated by an = character.
 
 **\--set-tag=field**  
 :	Add a tag. The field must comply with the Vorbis comment spec, of the
@@ -179,9 +187,10 @@ modification time is set to the current time):
 	requires two passes, it is always executed last, after all other
 	operations have been completed and written to disk. All FLAC files
 	specified must have the same resolution, sample rate, and number of
-	channels. The sample rate must be one of 8, 11.025, 12, 16, 18.9,
-	22.05, 24, 28, 32, 37.8, 44.1, 48, 56, 64, 88.2, 96, 112, 128, 144,
-	176.4, or 192kHz.
+	channels. Only mono and stereo files are allowed, and the sample
+	rate must be 8, 11.025, 12, 16, 18.9, 22.05, 24, 28, 32, 36, 37.8,
+	44.1, 48, 56, 64, 72, 75.6, 88.2, 96, 112, 128, 144, 151.2, 176.4,
+	192, 224, 256, 288, 302.4, 352.8, 384, 448, 512, 576, or 604.8 kHz.
 
 **\--scan-replay-gain**  
 :	Like \--add-replay-gain, but only analyzes the files rather than
@@ -252,6 +261,26 @@ modification time is set to the current time):
 	your \--data-format=text, you can display a hex dump of the
 	application data contents instead using
 	\--application-data-format=hexdump.
+
+**\--data-format=binary\|binary-headerless\|text**  
+:	For use with --list. By default a human-readable text
+	representation of the data is isplayed. You may specify
+	--data-format=binary to dump the raw binary form of each metadata
+	block. Specify --data-format=binary-headerless to omit output of
+	metadata block headers, including the id of APPLICATION metadata
+	blocks.
+
+**\--append**  
+:	Insert a metadata block from a file. This must be a binary block as
+	exported with --list --data-format=binary. The insertion point is
+	defined with --block-number=#.  The new block will be added after the
+	given block number.  This prevents the illegal insertion of a block
+	before the first STREAMINFO block.  You may not --append another
+	STREAMINFO block. It is possible to copy a metadata block from one
+	file to another with this option. For example use
+	`metaflac --list --data-format=binary --block-number=6 file.flac > block`
+	to export the block, and then import it with
+	`metaflac --append anotherfile.flac < block`
 
 **\--remove-all**  
 :	Remove all metadata blocks (except the STREAMINFO block) from the
