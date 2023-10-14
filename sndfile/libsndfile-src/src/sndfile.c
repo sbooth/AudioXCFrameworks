@@ -439,7 +439,6 @@ sf_open	(const char *path, int mode, SF_INFO *sfinfo)
 SNDFILE*
 sf_open_fd	(int fd, int mode, SF_INFO *sfinfo, int close_desc)
 {	SF_PRIVATE 	*psf ;
-	SNDFILE		*result ;
 
 	if ((SF_CONTAINER (sfinfo->format)) == SF_FORMAT_SD2)
 	{	sf_errno = SFE_SD2_FD_DISALLOWED ;
@@ -461,15 +460,12 @@ sf_open_fd	(int fd, int mode, SF_INFO *sfinfo, int close_desc)
 	psf_copy_filename (psf, "") ;
 
 	psf->file.mode = mode ;
+	psf->file.do_not_close_descriptor = !close_desc;
 	psf_set_file (psf, fd) ;
 	psf->is_pipe = psf_is_pipe (psf) ;
 	psf->fileoffset = psf_ftell (psf) ;
 
-	result = psf_open_file (psf, sfinfo) ;
-	if (result != NULL && ! close_desc)
-			psf->file.do_not_close_descriptor = SF_TRUE ;
-
-	return result ;
+	return psf_open_file (psf, sfinfo) ;
 } /* sf_open_fd */
 
 SNDFILE*
@@ -2772,6 +2768,17 @@ format_from_extension (SF_PRIVATE *psf)
 } /* format_from_extension */
 
 static int
+identify_mpeg (uint32_t marker)
+{	if ((marker & MAKE_MARKER (0xFF, 0xE0, 0, 0)) == MAKE_MARKER (0xFF, 0xE0, 0, 0) && /* Frame sync */
+		(marker & MAKE_MARKER (0, 0x18, 0, 0)) != MAKE_MARKER (0, 0x08, 0, 0) && /* Valid MPEG version */
+		(marker & MAKE_MARKER (0, 0x06, 0, 0)) != MAKE_MARKER (0, 0, 0, 0) && /* Valid layer description */
+		(marker & MAKE_MARKER (0, 0, 0xF0, 0)) != MAKE_MARKER (0, 0, 0xF0, 0) && /* Valid bitrate */
+		(marker & MAKE_MARKER (0, 0, 0x0C, 0)) != MAKE_MARKER (0, 0, 0x0C, 0)) /* Valid samplerate */
+		return SF_FORMAT_MPEG ;
+	return 0 ;
+} /* identify_mpeg */
+
+static int
 guess_file_type (SF_PRIVATE *psf)
 {	uint32_t buffer [3], format ;
 
@@ -2872,13 +2879,6 @@ retry:
 	if (buffer [0] == MAKE_MARKER ('R', 'F', '6', '4') && buffer [2] == MAKE_MARKER ('W', 'A', 'V', 'E'))
 		return SF_FORMAT_RF64 ;
 
-	if ((buffer [0] & MAKE_MARKER (0xFF, 0xE0, 0, 0)) == MAKE_MARKER (0xFF, 0xE0, 0, 0) && /* Frame sync */
-		(buffer [0] & MAKE_MARKER (0, 0x18, 0, 0)) != MAKE_MARKER (0, 0x08, 0, 0) && /* Valid MPEG version */
-		(buffer [0] & MAKE_MARKER (0, 0x06, 0, 0)) != MAKE_MARKER (0, 0, 0, 0) && /* Valid layer description */
-		(buffer [0] & MAKE_MARKER (0, 0, 0xF0, 0)) != MAKE_MARKER (0, 0, 0xF0, 0) && /* Valid bitrate */
-		(buffer [0] & MAKE_MARKER (0, 0, 0x0C, 0)) != MAKE_MARKER (0, 0, 0x0C, 0)) /* Valid samplerate */
-		return SF_FORMAT_MPEG ;
-
 	if (buffer [0] == MAKE_MARKER ('I', 'D', '3', 2) || buffer [0] == MAKE_MARKER ('I', 'D', '3', 3)
 			|| buffer [0] == MAKE_MARKER ('I', 'D', '3', 4))
 	{	psf_log_printf (psf, "Found 'ID3' marker.\n") ;
@@ -2886,6 +2886,10 @@ retry:
 			goto retry ;
 		return 0 ;
 		} ;
+
+	/* ID3v2 tags + MPEG */
+	if (psf->id3_header.len > 0 && (format = identify_mpeg (buffer [0])) != 0)
+		return format ;
 
 	/* Turtle Beach SMP 16-bit */
 	if (buffer [0] == MAKE_MARKER ('S', 'O', 'U', 'N') && buffer [1] == MAKE_MARKER ('D', ' ', 'S', 'A'))
@@ -2898,8 +2902,14 @@ retry:
 	if (buffer [0] == MAKE_MARKER ('a', 'j', 'k', 'g'))
 		return 0 /*-SF_FORMAT_SHN-*/ ;
 
-	/* This must be the last one. */
+	/* This must be (almost) the last one. */
 	if (psf->filelength > 0 && (format = try_resource_fork (psf)) != 0)
+		return format ;
+
+	/* MPEG with no ID3v2 tags. Only have the MPEG sync header for
+	 * identification and it is quite brief, and prone to false positives.
+	 * Check for this last, even after resource forks. */
+	if (psf->id3_header.len == 0 && (format = identify_mpeg (buffer [0])) != 0)
 		return format ;
 
 	return 0 ;
@@ -2908,7 +2918,7 @@ retry:
 
 static int
 validate_sfinfo (SF_INFO *sfinfo)
-{	if ((sfinfo->samplerate < 1) || (sfinfo->samplerate > SF_MAX_SAMPLERATE))
+{	if (sfinfo->samplerate < 1)
 		return 0 ;
 	if (sfinfo->frames < 0)
 		return 0 ;

@@ -220,8 +220,11 @@ enum
 
 	SFC_SET_VBR_ENCODING_QUALITY	= 0x1300,
 	SFC_SET_COMPRESSION_LEVEL		= 0x1301,
+
+	/* Ogg format commands */
 	SFC_SET_OGG_PAGE_LATENCY_MS		= 0x1302,
 	SFC_SET_OGG_PAGE_LATENCY		= 0x1303,
+	SFC_GET_OGG_STREAM_SERIALNO		= 0x1306,
 
 	SFC_GET_BITRATE_MODE			= 0x1304,
 	SFC_SET_BITRATE_MODE			= 0x1305,
@@ -362,9 +365,9 @@ typedef	struct sf_private_tag	SNDFILE ;
 ** and the Microsoft compiler.
 */
 
-typedef int64_t	sf_count_t ;
+typedef int64_t			sf_count_t ;
 #ifndef SF_COUNT_MAX
-#define SF_COUNT_MAX		0x7FFFFFFFFFFFFFFFLL
+#define SF_COUNT_MAX	INT64_MAX
 #endif
 
 

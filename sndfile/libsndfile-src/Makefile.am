@@ -12,7 +12,7 @@ SUBDIRS = Octave
 endif
 endif
 
-EXTRA_DIST = libsndfile.spec.in sndfile.pc.in Scripts/android-configure.sh \
+EXTRA_DIST = sndfile.pc.in Scripts/android-configure.sh \
 	NEWS.OLD CHANGELOG.md Scripts/linux-to-win-cross-configure.sh \
 	CMakeLists.txt $(cmake_files) Win32 SECURITY.md
 
@@ -24,6 +24,7 @@ cmake_files = cmake/ClipMode.cmake cmake/FindFLAC.cmake \
 	cmake/TestLargeFiles.cmake cmake/TestInline.c.in \
 	cmake/FindOpus.cmake cmake/SndFileConfig.cmake.in \
 	cmake/CheckCPUArch.cmake cmake/CheckCPUArch.c.in \
+	cmake/Findmp3lame.cmake cmake/Findmpg123.cmake \
 	cmake/SetupABIVersions.cmake
 
 pkgconfig_DATA = sndfile.pc
@@ -45,7 +46,7 @@ BUILT_SOURCES = src/test_endswap.c
 
 SYMBOL_FILES = src/Symbols.gnu-binutils src/Symbols.darwin src/libsndfile-1.def src/Symbols.os2 src/Symbols.static
 
-EXTRA_DIST += include/sndfile.h.in src/config.h.in src/test_endswap.tpl src/test_endswap.def \
+EXTRA_DIST += src/config.h.in src/test_endswap.tpl src/test_endswap.def \
 	$(SYMBOL_FILES) src/create_symbols_file.py src/binheader_writef_check.py \
 	src/GSM610/README src/GSM610/COPYRIGHT src/GSM610/ChangeLog \
 	src/G72x/README src/G72x/README.original src/G72x/ChangeLog \
@@ -61,8 +62,7 @@ endif
 #===============================================================================
 
 lib_LTLIBRARIES = src/libsndfile.la
-include_HEADERS = include/sndfile.hh
-nodist_include_HEADERS = include/sndfile.h
+include_HEADERS = include/sndfile.h include/sndfile.hh
 src_libsndfile_la_CFLAGS = $(EXTERNAL_XIPH_CFLAGS) $(MPEG_CFLAGS)
 # MinGW requires -no-undefined if a DLL is to be built.
 src_libsndfile_la_LDFLAGS = -no-undefined -version-info $(SHARED_VERSION_INFO) $(SHLIB_VERSION_ARG)

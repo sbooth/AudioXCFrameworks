@@ -505,7 +505,7 @@ psf_is_pipe (SF_PRIVATE *psf)
 static sf_count_t
 psf_get_filelen_fd (int fd)
 {
-#if (SIZEOF_OFF_T == 4 && SIZEOF_SF_COUNT_T == 8 && HAVE_FSTAT64)
+#if (SIZEOF_OFF_T == 4 && HAVE_FSTAT64)
 	struct stat64 statbuf ;
 
 	if (fstat64 (fd, &statbuf) == -1)
@@ -827,9 +827,6 @@ psf_open_handle (PSF_FILE * pfile)
 		} ;
 
 #if defined (WINAPI_FAMILY_PARTITION) && !WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
-	if (!pfile->use_wchar)
-		return INVALID_HANDLE_VALUE ;
-
 	CREATEFILE2_EXTENDED_PARAMETERS cfParams = { 0 } ;
 	cfParams.dwSize = sizeof (CREATEFILE2_EXTENDED_PARAMETERS) ;
 	cfParams.dwFileAttributes = FILE_ATTRIBUTE_NORMAL ;

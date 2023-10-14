@@ -271,7 +271,6 @@
 		32028DD9254AFEA000A537DE /* sndfile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = sndfile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		322A91692572DDE3006795AA /* sndfile.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = sndfile.hh; sourceTree = "<group>"; };
 		322A916A2572DDE3006795AA /* sndfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sndfile.h; sourceTree = "<group>"; };
-		322A916B2572DDE3006795AA /* sndfile.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sndfile.h.in; sourceTree = "<group>"; };
 		322A917D2572DE27006795AA /* ogg_vcomment.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ogg_vcomment.c; sourceTree = "<group>"; };
 		322A917E2572DE27006795AA /* nms_adpcm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = nms_adpcm.c; sourceTree = "<group>"; };
 		322A917F2572DE27006795AA /* ogg_vcomment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg_vcomment.h; sourceTree = "<group>"; };
@@ -453,7 +452,6 @@
 			children = (
 				322A91692572DDE3006795AA /* sndfile.hh */,
 				322A916A2572DDE3006795AA /* sndfile.h */,
-				322A916B2572DDE3006795AA /* sndfile.h.in */,
 			);
 			path = include;
 			sourceTree = "<group>";

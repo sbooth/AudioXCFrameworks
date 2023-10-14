@@ -35,7 +35,7 @@ if (BUILD_REGTEST)
 	list (APPEND VCPKG_MANIFEST_FEATURES "regtest")
 endif ()
 
-project(libsndfile VERSION 1.1.0)
+project(libsndfile VERSION 1.2.2)
 
 #
 # Variables
@@ -174,13 +174,13 @@ set_package_properties (FLAC PROPERTIES
 	DESCRIPTION "Free Lossless Audio Codec Library"
 	PURPOSE "Enables FLAC support"
 	)
-set_package_properties (Lame PROPERTIES
+set_package_properties (mp3lame PROPERTIES
 	TYPE RECOMMENDED
 	URL "https://lame.sourceforge.io/"
 	DESCRIPTION "High quality MPEG Audio Layer III (MP3) encoder"
 	PURPOSE "Enables MPEG layer III (MP3) writing support"
 	)
-set_package_properties (MPG123 PROPERTIES
+set_package_properties (mpg123 PROPERTIES
 	TYPE RECOMMENDED
 	URL "https://www.mpg123.de/"
 	DESCRIPTION "MPEG Audio Layer I/II/III decoder"
@@ -220,14 +220,12 @@ feature_summary (WHAT ALL)
 
 configure_file (src/config.h.cmake src/config.h)
 
-configure_file (include/sndfile.h.in include/sndfile.h)
-
 if (INSTALL_PKGCONFIG_MODULE)
 
 	set (prefix ${CMAKE_INSTALL_PREFIX})
 	set (exec_prefix "\$\{prefix\}")
-	set (libdir "\$\{prefix\}/${CMAKE_INSTALL_LIBDIR}")
-	set (includedir "\$\{prefix\}/${CMAKE_INSTALL_INCLUDEDIR}")
+	set (libdir "${CMAKE_INSTALL_FULL_LIBDIR}")
+	set (includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}")
 	set (VERSION ${PROJECT_VERSION})
 	if (ENABLE_EXTERNAL_LIBS)
 		set (EXTERNAL_XIPH_REQUIRE "flac ogg vorbis vorbisenc opus")
@@ -237,20 +235,7 @@ if (INSTALL_PKGCONFIG_MODULE)
 	endif ()
 	if (ENABLE_MPEG)
 		set (EXTERNAL_MPEG_REQUIRE "libmpg123")
-		get_filename_component(LAME_WE ${LAME_LIBRARY} NAME_WE)
-		if (LAME_HIP_LIBRARY)
-			get_filename_component(LAME_HIP_WE ${LAME_HIP_LIBRARY} NAME_WE)
-		endif ()
-		if (CMAKE_IMPORT_LIBRARY_PREFIX)
-			string (REGEX REPLACE "^${CMAKE_IMPORT_LIBRARY_PREFIX}" "" LAME_WE_NO_PREFIX ${LAME_WE})
-			if (LAME_HIP_LIBRARY)
-				string (REGEX REPLACE "^${CMAKE_IMPORT_LIBRARY_PREFIX}" "" LAME_HIP_WE_NO_PREFIX ${LAME_HIP_WE})
-			endif ()
-		endif ()
-		set (EXTERNAL_MPEG_LIBS "-l${LAME_WE_NO_PREFIX}")
-		if (LAME_HIP_LIBRARY)
-			set (EXTERNAL_MPEG_LIBS "${MPEG_LIBS} -l${LAME_HIP_WE}")
-		endif ()
+		set (EXTERNAL_MPEG_LIBS "-lmp3lame")
 	endif ()
 
 	configure_file (sndfile.pc.in sndfile.pc @ONLY)
@@ -263,8 +248,8 @@ endif ()
 
 # Public libsndfile headers
 set (sndfile_HDRS
+	include/sndfile.h
 	include/sndfile.hh
-	${CMAKE_CURRENT_BINARY_DIR}/include/sndfile.h
 	)
 
 #
@@ -406,12 +391,13 @@ target_include_directories (sndfile
 target_link_libraries (sndfile
 	PRIVATE
 		$<$<BOOL:${LIBM_REQUIRED}>:m>
+		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:Ogg::ogg>
 		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:Vorbis::vorbisenc>
 		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:FLAC::FLAC>
 		$<$<AND:$<BOOL:${ENABLE_EXPERIMENTAL}>,$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>,$<BOOL:${HAVE_SPEEX}>>:Speex::Speex>
 		$<$<BOOL:${HAVE_EXTERNAL_XIPH_LIBS}>:Opus::opus>
 		$<$<BOOL:${HAVE_MPEG}>:MPG123::libmpg123>
-		$<$<BOOL:${HAVE_MPEG}>:Lame::Lame>
+		$<$<BOOL:${HAVE_MPEG}>:mp3lame::mp3lame>
 	)
 set_target_properties (sndfile PROPERTIES
 	PUBLIC_HEADER "${sndfile_HDRS}"
@@ -825,12 +811,20 @@ if (ENABLE_PACKAGE_CONFIG)
 
 	if (ENABLE_EXTERNAL_LIBS)
 		set (SndFile_WITH_EXTERNAL_LIBS 1)
+		list (APPEND FIND_MODULES_INSTALL_LIST 
+			${CMAKE_CURRENT_LIST_DIR}/cmake/FindFLAC.cmake
+			${CMAKE_CURRENT_LIST_DIR}/cmake/FindOgg.cmake
+			${CMAKE_CURRENT_LIST_DIR}/cmake/FindOpus.cmake
+			${CMAKE_CURRENT_LIST_DIR}/cmake/FindVorbis.cmake)
 	else ()
 		set (SndFile_WITH_EXTERNAL_LIBS 0)
 	endif ()
 
 	if(ENABLE_MPEG)
 		set (SndFile_WITH_MPEG 1)
+		list (APPEND FIND_MODULES_INSTALL_LIST 
+			${CMAKE_CURRENT_LIST_DIR}/cmake/Findmpg123.cmake
+			${CMAKE_CURRENT_LIST_DIR}/cmake/Findmp3lame.cmake)
 	else ()
 		set (SndFile_WITH_MPEG 0)
 	endif ()
@@ -862,6 +856,10 @@ if (ENABLE_PACKAGE_CONFIG)
 		DESTINATION	${CMAKE_INSTALL_PACKAGEDIR}
 		)
 
+		if (NOT BUILD_SHARED_LIBS AND FIND_MODULES_INSTALL_LIST)
+			file(COPY ${FIND_MODULES_INSTALL_LIST} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+			install(FILES ${FIND_MODULES_INSTALL_LIST} DESTINATION ${CMAKE_INSTALL_PACKAGEDIR})
+		endif ()
 else ()
 
 	install (TARGETS sndfile ${sdnfile_PROGRAMS}

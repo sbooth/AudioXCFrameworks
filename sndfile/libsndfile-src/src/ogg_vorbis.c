@@ -264,9 +264,9 @@ vorbis_read_header (SF_PRIVATE *psf)
 		ogg_sync_fseek (psf, saved_offset, SEEK_SET) ;
 		}
 
-	psf_log_printf (psf, "PCM offset  : %d\n", vdata->pcm_start) ;
+	psf_log_printf (psf, "PCM offset  : %D\n", vdata->pcm_start) ;
 	if (vdata->pcm_end != (uint64_t) -1)
-		psf_log_printf (psf, "PCM end     : %d\n", vdata->pcm_end) ;
+		psf_log_printf (psf, "PCM end     : %D\n", vdata->pcm_end) ;
 	else
 		psf_log_printf (psf, "PCM end     : unknown\n") ;
 
@@ -511,7 +511,8 @@ ogg_vorbis_open (SF_PRIVATE *psf)
 
 static int
 vorbis_command (SF_PRIVATE *psf, int command, void * data, int datasize)
-{	VORBIS_PRIVATE *vdata = (VORBIS_PRIVATE *) psf->codec_data ;
+{	OGG_PRIVATE* odata = psf->container_data ;
+	VORBIS_PRIVATE *vdata = (VORBIS_PRIVATE *) psf->codec_data ;
 
 	switch (command)
 	{	case SFC_SET_COMPRESSION_LEVEL :
@@ -527,6 +528,13 @@ vorbis_command (SF_PRIVATE *psf, int command, void * data, int datasize)
 			vdata->quality = SF_MAX (0.0, SF_MIN (1.0, vdata->quality)) ;
 
 			psf_log_printf (psf, "%s : Setting SFC_SET_VBR_ENCODING_QUALITY to %f.\n", __func__, vdata->quality) ;
+			return SF_TRUE ;
+
+		case SFC_GET_OGG_STREAM_SERIALNO :
+			if (data == NULL || datasize != sizeof (int32_t))
+				return SF_FALSE ;
+
+			*((int32_t *) data) = odata->ostream.serialno ;
 			return SF_TRUE ;
 
 		default :
@@ -891,7 +899,7 @@ vorbis_seek_trysearch (SF_PRIVATE *psf, uint64_t target_gp)
 	search_target_gp = search_target_gp < target_gp ? target_gp - search_target_gp : 0 ;
 
 	ret = ogg_stream_seek_page_search (psf, odata, search_target_gp, vdata->pcm_start,
-			vdata->pcm_end, &best_gp, psf->dataoffset, vdata->last_page) ;
+			vdata->pcm_end, &best_gp, psf->dataoffset, vdata->last_page, vdata->vinfo.rate) ;
 	if (ret < 0)
 		return ret ;
 

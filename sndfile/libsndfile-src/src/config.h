@@ -191,7 +191,7 @@
 #define HAVE_WRITE 1
 
 /* The host triplet of the compiled binary. */
-#define HOST_TRIPLET x86_64-apple-darwin21.4.0
+#define HOST_TRIPLET x86_64-apple-darwin23.0.0
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #define LT_OBJDIR ".libs/"
@@ -212,7 +212,7 @@
 #define PACKAGE_NAME "libsndfile"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libsndfile 1.1.0"
+#define PACKAGE_STRING "libsndfile 1.2.2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "libsndfile"
@@ -221,10 +221,7 @@
 #define PACKAGE_URL "http://libsndfile.github.io/libsndfile/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.1.0"
-
-/* Set to maximum allowed value of sf_count_t type. */
-#define SF_COUNT_MAX 0x7FFFFFFFFFFFFFFFLL
+#define PACKAGE_VERSION "1.2.2"
 
 /* The size of `double', as computed by sizeof. */
 #define SIZEOF_DOUBLE 8
@@ -247,9 +244,6 @@
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8
 
-/* Set to sizeof (long) if unknown. */
-#define SIZEOF_SF_COUNT_T 8
-
 /* The size of `short', as computed by sizeof. */
 #define SIZEOF_SHORT 2
 
@@ -266,9 +260,6 @@
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
-
-/* Set to long if unknown. */
-#define TYPEOF_SF_COUNT_T int64_t
 
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
@@ -362,7 +353,7 @@
 #define USE_WINDOWS_API 0
 
 /* Version number of package */
-#define VERSION "1.1.0"
+#define VERSION "1.2.2"
 
 /* Set to 1 if windows DLL is being built. */
 #define WIN32_TARGET_DLL 0

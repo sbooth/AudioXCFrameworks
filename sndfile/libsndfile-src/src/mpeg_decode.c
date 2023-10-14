@@ -91,11 +91,8 @@ mpeg_dec_decode (SF_PRIVATE *psf, float *ptr, sf_count_t len)
 
 	error = mpg123_read (pmp3d->pmh, (unsigned char *) ptr, len * sizeof (float), &done) ;
 
-	if (error == MPG123_OK)
+	if (error == MPG123_OK || error == MPG123_DONE)
 		return done / sizeof (float) ;
-
-	if (error == MPG123_DONE)
-		return 0 ;
 
 	if (error == MPG123_NEW_FORMAT)
 	{	psf->error = SFE_MALFORMED_FILE ;
@@ -206,7 +203,7 @@ mpeg_dec_seek (SF_PRIVATE *psf, int mode, sf_count_t count)
 } /* mpeg_dec_seek */
 
 static int
-mpeg_dec_fill_sfinfo (mpg123_handle *mh, SF_INFO *info)
+mpeg_dec_fill_sfinfo (SF_PRIVATE* psf, mpg123_handle *mh, SF_INFO *info)
 {	int error ;
 	int channels ;
 	int encoding ;
@@ -221,6 +218,12 @@ mpeg_dec_fill_sfinfo (mpg123_handle *mh, SF_INFO *info)
 	info->channels = channels ;
 
 	length = mpg123_length (mh) ;
+	if (length <= 0 && !psf->is_pipe)
+	{	if ((error = mpg123_scan (mh)) != MPG123_OK)
+			return error ;
+		length = mpg123_length (mh) ;
+		}
+
 	if (length >= 0)
 	{	info->frames = length ;
 		info->seekable = SF_TRUE ;
@@ -580,7 +583,7 @@ mpeg_decoder_init (SF_PRIVATE *psf)
 		return SFE_BAD_FILE ;
 		} ;
 
-	if (mpeg_dec_fill_sfinfo (pmp3d->pmh, &psf->sf) != MPG123_OK)
+	if (mpeg_dec_fill_sfinfo (psf, pmp3d->pmh, &psf->sf) != MPG123_OK)
 	{	psf_log_printf (psf, "Cannot get MPEG decoder configuration: %s\n", mpg123_plain_strerror (error)) ;
 		return SFE_BAD_FILE ;
 		} ;

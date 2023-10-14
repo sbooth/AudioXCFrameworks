@@ -3,7 +3,7 @@ dnl Copyright (C) 1999-2022  Erik de Castro Lopo <erikd@mega-nerd.com>.
 dnl Require autoconf version >= 2.69
 AC_PREREQ([2.69])
 
-AC_INIT([libsndfile],[1.1.0],[sndfile@mega-nerd.com],
+AC_INIT([libsndfile],[1.2.2],[sndfile@mega-nerd.com],
 		[libsndfile],[http://libsndfile.github.io/libsndfile/])
 
 dnl Check whether we want to set defaults for CFLAGS, CXXFLAGS, CPPFLAGS and LDFLAGS
@@ -88,7 +88,7 @@ dnl      to 0.
 dnl   This is libtool version of library, we add it to `--version-info` property.
 
 m4_define([lt_current], [1])
-m4_define([lt_revision], [34])
+m4_define([lt_revision], [37])
 m4_define([lt_age], [0])
 
 dnl This is ABI version for linker scripts, CMake uses the same format for
@@ -171,10 +171,8 @@ AC_ARG_ENABLE([test-coverage],
 AM_CONDITIONAL([ENABLE_TEST_COVERAGE], [test "x$enable_test_coverage" = "xyes"])
 
 AC_ARG_ENABLE([ossfuzzers],
-  [AS_HELP_STRING([--enable-ossfuzzers],
-    [Whether to generate the fuzzers for OSS-Fuzz])],
-  [have_ossfuzzers=yes], [have_ossfuzzers=no])
-AM_CONDITIONAL([USE_OSSFUZZERS], [test "x$have_ossfuzzers" = "xyes"])
+	[AS_HELP_STRING([--enable-ossfuzzers], [Whether to generate the fuzzers for OSS-Fuzz])])
+AM_CONDITIONAL([USE_OSSFUZZERS], [test "x$enable_ossfuzzers" = "xyes"])
 
 AC_SUBST([LIB_FUZZING_ENGINE])
 AM_CONDITIONAL([USE_OSSFUZZ_FLAG], [test "x$LIB_FUZZING_ENGINE" = "x-fsanitize=fuzzer"])
@@ -194,12 +192,6 @@ AC_CHECK_SIZEOF([size_t], [4])
 AC_CHECK_SIZEOF([int64_t], [8])
 AC_CHECK_SIZEOF([long long], [8])
 
-dnl ====================================================================================
-dnl  Find an appropriate type for sf_count_t.
-dnl  On systems supporting files larger than 2 Gig, sf_count_t must be a 64 bit value.
-dnl  Unfortunately there is more than one way of ensuring this so need to do some
-dnl  pretty rigourous testing here.
-
 dnl  Check for common 64 bit file offset types.
 AC_CHECK_SIZEOF([off_t], [1])
 
@@ -209,25 +201,12 @@ AS_IF([test "x$enable_largefile:$ac_cv_sizeof_off_t" = "xno:8"], [
 
 AS_CASE([$host_os],
 	[mingw32*], [
-		TYPEOF_SF_COUNT_T="__int64"
-		SF_COUNT_MAX="0x7FFFFFFFFFFFFFFFLL"
-		SIZEOF_SF_COUNT_T=8
 		AC_DEFINE([__USE_MINGW_ANSI_STDIO], [1], [Set to 1 to use C99 printf/snprintf in MinGW.])
 		],
 
-	[linux-android*], [
-		TYPEOF_SF_COUNT_T="int64_t"
-		SF_COUNT_MAX="0x7FFFFFFFFFFFFFFFLL"
-		SIZEOF_SF_COUNT_T=8
-		],
-
 	[
-		SIZEOF_SF_COUNT_T=0
 		AS_IF([test "x$ac_cv_sizeof_off_t" = "x8"], [
 				dnl If sizeof (off_t) is 8, no further checking is needed.
-				TYPEOF_SF_COUNT_T="int64_t"
-				SF_COUNT_MAX="0x7FFFFFFFFFFFFFFFLL"
-				SIZEOF_SF_COUNT_T=8
 			], [
 				dnl Save the old sizeof (off_t) value  and then unset it to see if it
 				dnl changes when Large File Support is enabled.
@@ -246,42 +225,8 @@ AS_CASE([$host_os],
 					])
 
 				AC_CHECK_SIZEOF(off_t,1)
-
-				AS_IF([test "x$ac_cv_sizeof_off_t" = "x8"], [
-						TYPEOF_SF_COUNT_T="int64_t"
-						SF_COUNT_MAX="0x7FFFFFFFFFFFFFFFLL"
-						SIZEOF_SF_COUNT_T=8
-					], [test "x$TYPEOF_SF_COUNT_T" = "xunknown"], [
-						AS_ECHO([""])
-						AS_ECHO(["*** The configure process has determined that this system is capable"])
-						AS_ECHO(["*** of Large File Support but has not been able to find a type which"])
-						AS_ECHO(["*** is an unambiguous 64 bit file offset."])
-						AS_ECHO(["*** Please contact the author to help resolve this problem."])
-						AS_ECHO([""])
-						AC_MSG_ERROR([[Bad file offset type.]])
-					])
 			])
 	])
-
-AS_CASE([$host_vendor],
-	[vita], [
-		TYPEOF_SF_COUNT_T="int64_t"
-		SF_COUNT_MAX="0x7FFFFFFFFFFFFFFFLL"
-		SIZEOF_SF_COUNT_T=8
-	])
-
-AS_IF([test "x$SIZEOF_SF_COUNT_T" = "x4"], [
-		SF_COUNT_MAX="0x7FFFFFFF"
-	])
-
-AC_DEFINE_UNQUOTED([TYPEOF_SF_COUNT_T], [${TYPEOF_SF_COUNT_T}], [Set to long if unknown.])
-AC_SUBST(TYPEOF_SF_COUNT_T)
-
-AC_DEFINE_UNQUOTED([SIZEOF_SF_COUNT_T], [${SIZEOF_SF_COUNT_T}], [Set to sizeof (long) if unknown.])
-AC_SUBST(SIZEOF_SF_COUNT_T)
-
-AC_DEFINE_UNQUOTED([SF_COUNT_MAX], [${SF_COUNT_MAX}], [Set to maximum allowed value of sf_count_t type.])
-AC_SUBST(SF_COUNT_MAX)
 
 AC_TYPE_SSIZE_T
 
@@ -739,6 +684,7 @@ AC_SUBST(SNDIO_LIBS)
 AC_SUBST(EXTERNAL_XIPH_CFLAGS)
 AC_SUBST(EXTERNAL_XIPH_LIBS)
 AC_SUBST(EXTERNAL_XIPH_REQUIRE)
+AC_SUBST(EXTERNAL_MPEG_LIBS)
 AC_SUBST(EXTERNAL_MPEG_REQUIRE)
 AC_SUBST(MPG123_CFLAGS)
 AC_SUBST(MPG123_LIBS)
@@ -749,9 +695,9 @@ AC_SUBST(TEST_BINDIR)
 
 AC_CONFIG_FILES([
 	Makefile Octave/Makefile
-	src/version-metadata.rc include/sndfile.h
+	src/version-metadata.rc
 	tests/test_wrapper.sh tests/pedantic-header-test.sh
-	libsndfile.spec sndfile.pc
+	sndfile.pc
 	Scripts/build-test-tarball.mk
 	])
 AC_OUTPUT

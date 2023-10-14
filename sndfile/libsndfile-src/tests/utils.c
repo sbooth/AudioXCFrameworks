@@ -43,6 +43,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <float.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 
@@ -64,6 +65,28 @@
 #ifndef O_BINARY
 #define O_BINARY 0
 #endif
+
+
+/*
+**      Compare for equality, with epsilon
+*/
+static inline int
+equals_short (const short a, const short b)
+{        return (a == b);
+} /* equals_short */
+static inline int
+equals_int (const int a, const int b)
+{        return (a == b);
+} /* equals_int */
+static inline int
+equals_float (const float a, const float b)
+{        return (fabsf(a - b) <= FLT_EPSILON);
+} /* equals_float */
+static inline int
+equals_double (const double a, const double b)
+{       return (fabs(a - b) <= DBL_EPSILON);
+} /* equals_double */
+
 
 
 void
@@ -958,8 +981,8 @@ compare_short_or_die (const short *expected, const short *actual, unsigned count
 	unsigned k ;
 
 	for (k = 0 ; k < count ; k++)
-		if (expected [k] != actual [k])
-		{	printf ("\n\nLine %d : Error at index %d, got " "% d" ", should be " "% d" ".\n\n", line_num, k, actual [k], expected [k]) ;
+		if (!equals_short(expected [k], actual [k]))
+		{	printf ("\n\nLine %d : Error at index %d, got " "% d" ", should be " "% d" "(delta=" "% d" " ).\n\n", line_num, k, actual [k], expected [k], actual [k] - expected [k]) ;
 			exit (1) ;
 			} ;
 
@@ -971,8 +994,8 @@ compare_int_or_die (const int *expected, const int *actual, unsigned count, int 
 	unsigned k ;
 
 	for (k = 0 ; k < count ; k++)
-		if (expected [k] != actual [k])
-		{	printf ("\n\nLine %d : Error at index %d, got " "% d" ", should be " "% d" ".\n\n", line_num, k, actual [k], expected [k]) ;
+		if (!equals_int(expected [k], actual [k]))
+		{	printf ("\n\nLine %d : Error at index %d, got " "% d" ", should be " "% d" "(delta=" "% d" " ).\n\n", line_num, k, actual [k], expected [k], actual [k] - expected [k]) ;
 			exit (1) ;
 			} ;
 
@@ -984,8 +1007,8 @@ compare_float_or_die (const float *expected, const float *actual, unsigned count
 	unsigned k ;
 
 	for (k = 0 ; k < count ; k++)
-		if (expected [k] != actual [k])
-		{	printf ("\n\nLine %d : Error at index %d, got " "% g" ", should be " "% g" ".\n\n", line_num, k, actual [k], expected [k]) ;
+		if (!equals_float(expected [k], actual [k]))
+		{	printf ("\n\nLine %d : Error at index %d, got " "% g" ", should be " "% g" "(delta=" "% g" " ).\n\n", line_num, k, actual [k], expected [k], actual [k] - expected [k]) ;
 			exit (1) ;
 			} ;
 
@@ -997,8 +1020,8 @@ compare_double_or_die (const double *expected, const double *actual, unsigned co
 	unsigned k ;
 
 	for (k = 0 ; k < count ; k++)
-		if (expected [k] != actual [k])
-		{	printf ("\n\nLine %d : Error at index %d, got " "% g" ", should be " "% g" ".\n\n", line_num, k, actual [k], expected [k]) ;
+		if (!equals_double(expected [k], actual [k]))
+		{	printf ("\n\nLine %d : Error at index %d, got " "% g" ", should be " "% g" "(delta=" "% g" " ).\n\n", line_num, k, actual [k], expected [k], actual [k] - expected [k]) ;
 			exit (1) ;
 			} ;
 
