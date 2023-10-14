@@ -1,0 +1,98 @@
+FishSound 1.0.0 Release
+-----------------------
+
+libfishsound provides a simple programming interface for decoding and
+encoding audio data using Xiph.org codecs (FLAC, Speex and Vorbis).
+
+This release is available as a source tarball at:
+
+http://downloads.xiph.org/releases/libfishsound/libfishsound-1.0.0.tar.gz
+
+New in this release
+-------------------
+
+This is a stable maintenance release including the result of security review
+and bug fixes included in the Mozilla Firefox 3.5 release.
+It is API and ABI backwards-compatible with all libfishsound releases since
+0.6.0 (released Mar 23 2004).
+
+This release contains security and other bugfixes:
+
+Conrad Parker (19):
+      use debug_printf() for debugging
+      update ChangeLog with notes from 0.9.1, 0.9.2
+      disable debug_printf for MSVC, no variadic macros
+      update README with current text from release notes
+      update debug_printf for MSVC
+      Mozilla 506875: fish_sound_comments_decode leaks
+      Debian #534744, Mozilla #487519
+      Mozilla #516323: reset packetno after seek(0)
+      Mozilla 520500, Mozilla 521863
+      Mozilla 520500: test for (len > 0)
+      update configure.ac: use -Werror, SHLIB
+      Revert ac2015db, 46faa6b4
+      tests: allow NULL-valued comments
+      Mozilla #520500: Allow NULL-value comments
+      Annodex #493: Handle comments of form "KEY="
+      Annodex #497: Fix compile warnings when encoder is disabled
+      Update config.h.in for Apple universal build
+      Fix compile warnings throughout
+      Release 1.0.0
+
+timeless (1):
+      Fix warnings found while building mozilla
+
+ ChangeLog                            |   39 ++++++++++
+ README                               |   18 ++++-
+ config.h.in                          |   17 ++++-
+ configure.ac                         |   94 +++++++++++++++++++++----
+ release_notes/libfishsound-1.0.0.txt |   96 +++++++++++++++++++++++++
+ src/libfishsound/Makefile.am         |    1 +
+ src/libfishsound/comments.c          |  110 ++++++++++++++++------------
+ src/libfishsound/debug.h             |   92 ++++++++++++++++++++++++
+ src/libfishsound/encode.c            |    2 +-
+ src/libfishsound/flac.c              |  129 +++++++++++-----------------------
+ src/libfishsound/speex.c             |   21 +++---
+ src/libfishsound/vorbis.c            |   37 ++++------
+ src/tests/comment-test.c             |   22 +++---
+ 13 files changed, 478 insertions(+), 200 deletions(-)
+ create mode 100644 release_notes/libfishsound-1.0.0.txt
+ create mode 100644 src/libfishsound/debug.h
+
+About libfishsound
+------------------
+
+libfishsound by itself is designed to handle raw codec streams from a
+lower level layer such as UDP datagrams. When these codecs are used in
+files, they are commonly encapsulated in Ogg to produce Ogg FLAC, Speex
+and Ogg Vorbis files.
+
+libfishsound is a wrapper around the existing codec libraries and provides
+a consistent, higher-level programming interface. It has been designed for
+use in a wide variety of applications; it has no direct dependencies on
+Ogg encapsulation, though it is most commonly used in conjunction with
+liboggz to decode or encode FLAC, Speex or Vorbis audio tracks in Ogg files,
+including Ogg Theora and Annodex.
+
+FishSound has been developed and tested on GNU/Linux, Darwin/MacOSX and
+Win32. It probably also works on other Unix-like systems via GNU autoconf.
+For Win32: nmake Makefiles, Visual Studio .NET 2003 solution files and
+Visual C++ 6.0 workspace files are all provided in the source distribution.
+
+Full documentation of the FishSound API, customization and installation,
+and complete examples of Ogg FLAC, Speex and Ogg Vorbis decoding and encoding
+are provided in the source tarball, and can be read online at:
+
+    http://www.xiph.org/fishsound/doc/
+
+FishSound is Free Software, available under a BSD-style license.
+
+More information is available online at the FishSound homepage:
+
+    http://www.xiph.org/fishsound/
+
+enjoy :)
+
+--
+Conrad Parker, Annodex Association
+http://www.annodex.net/

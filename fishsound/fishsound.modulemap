@@ -1,0 +1,9 @@
+framework module fishsound {
+	header "comments.h"
+	header "constants.h"
+	header "decode.h"
+	header "deprecated.h"
+	header "encode.h"
+	header "fishsound.h"
+	export *
+}
