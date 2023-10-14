@@ -27,7 +27,9 @@
 #define FLAC__ALIGN_MALLOC_DATA 1
 
 /* define if building for ARM */
-/* #undef FLAC__CPU_ARM64 */
+#if __aarch64__
+#define FLAC__CPU_ARM64 1
+#endif
 
 /* define if building for ia32/i386 */
 /* #undef FLAC__CPU_IA32 */
@@ -91,7 +93,9 @@
 /* #undef HAVE_CLOCK_GETTIME */
 
 /* Define to 1 if you have the <cpuid.h> header file. */
+#if __x86_64__
 #define HAVE_CPUID_H 1
+#endif
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
@@ -166,7 +170,9 @@
 #define HAVE_WCHAR_H 1
 
 /* Define to 1 if you have the <x86intrin.h> header file. */
+#if __x86_64__
 #define HAVE_X86INTRIN_H 1
+#endif
 
 /* Define as const if the declaration of iconv() needs const. */
 #define ICONV_CONST 
