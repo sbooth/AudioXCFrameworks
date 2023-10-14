@@ -12,7 +12,7 @@ In module 'Darwin' imported from /Users/sbooth/Development/AudioXCFrameworks/snd
 int      au_open(void)
 ```
 
-Rather than trying to figure out a cause I disabled modules for this project.
+Rather than renaming the sndfile function I disabled modules for this project.
 
 ## Version
 
