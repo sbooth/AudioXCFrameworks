@@ -3,11 +3,11 @@
 void CALLBACK MACProgressCallback(int nPercentageDone);
 
 #include "MACFileArray.h"
+#include <thread>
 
-class CMACProcessFiles  
+class CMACProcessFiles
 {
 public:
-
     CMACProcessFiles();
     virtual ~CMACProcessFiles();
 
@@ -15,7 +15,7 @@ public:
     BOOL ProcessFile(int nIndex);
 
     BOOL UpdateProgress(double dPercentageDone);
-    
+
     BOOL Pause(BOOL bPause);
     BOOL Stop(BOOL bImmediately);
 
@@ -24,7 +24,6 @@ public:
     int GetPausedTotalMS();
 
 protected:
-
     // helpers
     void Destroy();
 
@@ -33,8 +32,8 @@ protected:
     BOOL m_bStopped;
     BOOL m_bPaused;
     unsigned long long m_nPausedStartTickCount;
-    int64 m_nPausedTotalMS;
+    APE::int64 m_nPausedTotalMS;
 
     // thread for processing
-    static void ProcessFileThread(void * pVoid);
+    static void ProcessFileThread(MAC_FILE * pInfo);
 };

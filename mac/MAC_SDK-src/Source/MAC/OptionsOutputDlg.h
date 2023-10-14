@@ -6,7 +6,6 @@ class OPTIONS_PAGE;
 class COptionsOutputDlg : public CDialog
 {
 public:
-
     COptionsOutputDlg(CMACDlg * pMACDlg, OPTIONS_PAGE * pPage, CWnd * pParent = NULL);
 
     enum { IDD = IDD_OPTIONS_OUTPUT };
@@ -22,7 +21,6 @@ public:
     BOOL    m_bMirrorTimeStamp;
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
     virtual BOOL OnInitDialog();
 

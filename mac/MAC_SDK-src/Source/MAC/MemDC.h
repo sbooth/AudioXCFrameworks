@@ -10,7 +10,7 @@
 //WITH FIX FROM Feng Yuan
 // explanation here:
 // The return value from MFC's SelectObject is a pointer to a temporary CBitmap object,
-// but GDI's SelectObject always return a handle. 
+// but GDI's SelectObject always return a handle.
 // Just save the GDI Handle and select it back.
 
 
@@ -38,7 +38,12 @@ public:
         // Some initialization
         m_pDC = pDC;
 
+        m_hOldBitmap = NULL;
+        m_hBitmap = NULL;
+
+        m_pbitmap = NULL;
         m_poldBitmap = NULL;
+
         m_bMemDC = !pDC->IsPrinting();
 
         // Get the rectangle to draw
@@ -77,7 +82,7 @@ public:
 
         }
         else {
-            // Make a copy of the relevent parts of the current 
+            // Make a copy of the relevent parts of the current
             // DC for printing
             m_bPrinting = pDC->m_bPrinting;
             m_hDC = pDC->m_hDC;
@@ -104,21 +109,21 @@ public:
         }
         else {
             // All we need to do is replace the DC with an illegal
-            // value, this keeps us from accidentally deleting the 
-            // handles associated with the CDC that was passed to 
-            // the constructor.              
+            // value, this keeps us from accidentally deleting the
+            // handles associated with the CDC that was passed to
+            // the constructor.
             m_hDC = m_hAttribDC = NULL;
         }
 
     }
 
-    // Allow usage as a pointer    
+    // Allow usage as a pointer
     CMemoryDC* operator->()
     {
         return this;
     }
 
-    // Allow usage as a pointer    
+    // Allow usage as a pointer
     operator CMemoryDC* ()
     {
         return this;

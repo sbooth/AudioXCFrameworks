@@ -4,6 +4,8 @@
 #include "MACFile.h"
 #include "APEInfo.h"
 
+using namespace APE;
+
 CFormatAPE::CFormatAPE(int nIndex)
 {
     m_nIndex = nIndex;
@@ -29,16 +31,16 @@ int CFormatAPE::Process(MAC_FILE * pInfo)
     }
     else if (pInfo->Mode == MODE_DECOMPRESS)
     {
-        nRetVal = DecompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag, &pInfo->m_cFileType[0]);
+        nRetVal = DecompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag);
     }
     else if (pInfo->Mode == MODE_VERIFY)
     {
-        nRetVal = VerifyFileW(pInfo->strInputFilename, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag, 
+        nRetVal = VerifyFileW(pInfo->strInputFilename, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag,
             (theApp.GetSettings()->m_nProcessingVerifyMode == PROCESSING_VERIFY_MODE_QUICK) ? TRUE : FALSE);
     }
     else if (pInfo->Mode == MODE_CONVERT)
     {
-        nRetVal = ConvertFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel, 
+        nRetVal = ConvertFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel,
             &pInfo->nStageProgress, NULL, &pInfo->nKillFlag);
     }
 
@@ -49,42 +51,42 @@ BOOL CFormatAPE::BuildMenu(CMenu * pMenu, int nBaseID)
 {
     BOOL bCheck = (theApp.GetSettings()->GetFormat() == COMPRESSION_APE);
 
-    pMenu->AppendMenu(MF_STRING | 
-        ((bCheck && (theApp.GetSettings()->GetLevel() == MAC_COMPRESSION_LEVEL_FAST)) ? MF_CHECKED : MF_UNCHECKED), 
-        nBaseID + 0, _T("&Fast"));
-    pMenu->AppendMenu(MF_STRING | 
-        ((bCheck && (theApp.GetSettings()->GetLevel() == MAC_COMPRESSION_LEVEL_NORMAL)) ? MF_CHECKED : MF_UNCHECKED),
-        nBaseID + 1, _T("&Normal"));
-    pMenu->AppendMenu(MF_STRING | 
-        ((bCheck && (theApp.GetSettings()->GetLevel() == MAC_COMPRESSION_LEVEL_HIGH)) ? MF_CHECKED : MF_UNCHECKED),
-        nBaseID + 2, _T("&High"));
-    pMenu->AppendMenu(MF_STRING | 
-        ((bCheck && (theApp.GetSettings()->GetLevel() == MAC_COMPRESSION_LEVEL_EXTRA_HIGH)) ? MF_CHECKED : MF_UNCHECKED),
-        nBaseID + 3, _T("&Extra High"));
-    pMenu->AppendMenu(MF_STRING | 
-        ((bCheck && (theApp.GetSettings()->GetLevel() == MAC_COMPRESSION_LEVEL_INSANE)) ? MF_CHECKED : MF_UNCHECKED),
-        nBaseID + 4, _T("&Insane"));
+    pMenu->AppendMenu(MF_STRING |
+        ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_FAST)) ? MF_CHECKED : MF_UNCHECKED),
+        UINT_PTR(nBaseID) + 0, _T("&Fast"));
+    pMenu->AppendMenu(MF_STRING |
+        ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_NORMAL)) ? MF_CHECKED : MF_UNCHECKED),
+        UINT_PTR(nBaseID) + 1, _T("&Normal"));
+    pMenu->AppendMenu(MF_STRING |
+        ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_HIGH)) ? MF_CHECKED : MF_UNCHECKED),
+        UINT_PTR(nBaseID) + 2, _T("&High"));
+    pMenu->AppendMenu(MF_STRING |
+        ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_EXTRA_HIGH)) ? MF_CHECKED : MF_UNCHECKED),
+        UINT_PTR(nBaseID) + 3, _T("&Extra High"));
+    pMenu->AppendMenu(MF_STRING |
+        ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_INSANE)) ? MF_CHECKED : MF_UNCHECKED),
+        UINT_PTR(nBaseID) + 4, _T("&Insane"));
 
     return TRUE;
 }
 
 BOOL CFormatAPE::ProcessMenuCommand(int nCommand)
 {
-    int nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL;
+    int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL;
     switch (nCommand)
     {
-        case 0: nCompressionLevel = MAC_COMPRESSION_LEVEL_FAST; break;
-        case 1: nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL; break;
-        case 2: nCompressionLevel = MAC_COMPRESSION_LEVEL_HIGH; break;
-        case 3: nCompressionLevel = MAC_COMPRESSION_LEVEL_EXTRA_HIGH; break;
-        case 4: nCompressionLevel = MAC_COMPRESSION_LEVEL_INSANE; break;
+        case 0: nCompressionLevel = APE_COMPRESSION_LEVEL_FAST; break;
+        case 1: nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL; break;
+        case 2: nCompressionLevel = APE_COMPRESSION_LEVEL_HIGH; break;
+        case 3: nCompressionLevel = APE_COMPRESSION_LEVEL_EXTRA_HIGH; break;
+        case 4: nCompressionLevel = APE_COMPRESSION_LEVEL_INSANE; break;
     }
     theApp.GetSettings()->SetCompression(GetName(), nCompressionLevel);
 
     return TRUE;
 }
 
-CString CFormatAPE::GetInputExtensions(MAC_MODES Mode)
+CString CFormatAPE::GetInputExtensions(APE_MODES Mode)
 {
     CString strRetVal;
 
@@ -108,7 +110,7 @@ CString CFormatAPE::GetInputExtensions(MAC_MODES Mode)
     return strRetVal;
 }
 
-CString CFormatAPE::GetOutputExtension(MAC_MODES Mode, const CString &, int)
+CString CFormatAPE::GetOutputExtension(APE_MODES Mode, const CString & strInputFilename, int)
 {
     CString strExtension;
 
@@ -118,7 +120,9 @@ CString CFormatAPE::GetOutputExtension(MAC_MODES Mode, const CString &, int)
     }
     else if (Mode == MODE_DECOMPRESS)
     {
-        strExtension = _T(".wav");
+        APE::str_ansi cFileType[8] = { 0 };
+        GetAPEFileType(strInputFilename, cFileType);
+        strExtension = cFileType;
     }
     else if (Mode == MODE_MAKE_APL)
     {

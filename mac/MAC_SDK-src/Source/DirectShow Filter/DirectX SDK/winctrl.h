@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 // File: WinCtrl.h
 //
-// Desc: DirectShow base classes - defines classes for video control 
+// Desc: DirectShow base classes - defines classes for video control
 //       interfaces.
 //
 // Copyright (c) 1992-2001 Microsoft Corporation.  All rights reserved.
@@ -221,4 +221,3 @@ public:
 };
 
 #endif // __WINCTRL__
-

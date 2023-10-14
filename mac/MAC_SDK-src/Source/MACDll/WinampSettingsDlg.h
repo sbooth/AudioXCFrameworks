@@ -8,7 +8,6 @@ class CWinampSettingsDlg : public CDialog
     DECLARE_DYNAMIC(CWinampSettingsDlg)
 
 public:
-
     CWinampSettingsDlg(CWnd * pParent = NULL);
     virtual ~CWinampSettingsDlg();
 
@@ -24,7 +23,6 @@ public:
     int m_nThreadPriority;
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
     virtual void OnOK();
     DECLARE_MESSAGE_MAP()

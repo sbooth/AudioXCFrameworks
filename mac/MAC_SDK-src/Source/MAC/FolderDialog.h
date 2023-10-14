@@ -7,14 +7,13 @@
 
 #include <shlobj.h>
 
-class CFolderDialog  
+class CFolderDialog
 {
-friend static int CALLBACK BrowseDirectoryCallback(
-                HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData);
-
 public:
-    CFolderDialog(    LPCTSTR lpszFolderName = NULL, 
-                    DWORD dwFlags = NULL/*BIF_RETURNONLYFSDIRS*/, 
+    static int CALLBACK BrowseDirectoryCallback(HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData);
+
+    CFolderDialog(    LPCTSTR lpszFolderName = NULL,
+                    DWORD dwFlags = NULL/*BIF_RETURNONLYFSDIRS*/,
                     CWnd* pParentWnd = NULL);
     virtual ~CFolderDialog();
     virtual int DoModal();
@@ -23,7 +22,7 @@ public:
 protected:
     virtual void OnInitDialog();
     virtual void OnSelChanged(ITEMIDLIST* pIdl);
-    virtual void CallbackFunction(HWND hWnd, UINT uMsg,    LPARAM lParam);
+    virtual void CallbackFunction(HWND hWnd, UINT uMsg, LPARAM lParam);
 
     void EnableOK(BOOL bEnable = TRUE);
     void SetSelection(LPCTSTR pszSelection);
@@ -38,8 +37,8 @@ protected:
     CString m_strInitialFolderName;
     CString m_strFinalFolderName;
 
-    TCHAR m_szDisplayName[MAX_PATH];
-    TCHAR m_szPath[MAX_PATH];
+    TCHAR m_szDisplayName[APE_MAX_PATH];
+    TCHAR m_szPath[APE_MAX_PATH];
 
     HWND m_hDialogBox;
 

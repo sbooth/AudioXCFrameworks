@@ -9,23 +9,25 @@ namespace APE
 
 class IAPEProgressCallback;
 
-class CMACProgressHelper  
+#pragma pack(push, 1)
+
+class CMACProgressHelper
 {
 public:
-    
     CMACProgressHelper(int64 nTotalSteps, IAPEProgressCallback * pProgressCallback);
-    virtual ~CMACProgressHelper();
 
     void UpdateProgress(int64 nCurrentStep = -1, bool bForceUpdate = false);
-    void UpdateProgressComplete() { UpdateProgress(m_nTotalSteps, true); }
+    void UpdateProgressComplete();
 
-    int ProcessKillFlag(bool bSleep = true);
-    
+    int ProcessKillFlag();
+
 private:
-    IAPEProgressCallback * m_pProgressCallback;
     int64 m_nTotalSteps;
     int64 m_nCurrentStep;
     int m_nLastCallbackFiredPercentageDone;
+    IAPEProgressCallback * m_pProgressCallback;
 };
+
+#pragma pack(pop)
 
 }

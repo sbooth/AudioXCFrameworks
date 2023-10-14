@@ -475,4 +475,3 @@ public:
 };
 
 #endif // __RENBASE__
-

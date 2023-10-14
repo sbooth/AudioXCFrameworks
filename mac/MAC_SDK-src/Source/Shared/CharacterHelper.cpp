@@ -14,13 +14,14 @@ str_ansi * CAPECharacterHelper::GetANSIFromUTF8(const str_utf8 * pUTF8)
 
 str_ansi * CAPECharacterHelper::GetANSIFromUTF16(const str_utfn * pUTF16)
 {
-    const int nCharacters = pUTF16 ? int(wcslen(pUTF16)) : 0;
+    const int nCharacters = pUTF16 ? static_cast<int>(wcslen(pUTF16)) : 0;
     #ifdef _WIN32
-        int nANSICharacters = (2 * nCharacters);
-        str_ansi * pANSI = new str_ansi [nANSICharacters + 1];
-        memset(pANSI, 0, (nANSICharacters + 1) * sizeof(str_ansi));
+        const int nANSICharacters = (2 * nCharacters);
+        str_ansi * pANSI = new str_ansi [static_cast<size_t>(nANSICharacters) + 1];
+        const size_t nBufferBytes = (sizeof(str_ansi) * static_cast<size_t>(nCharacters)) + sizeof(str_ansi);
+        memset(pANSI, 0, nBufferBytes);
         if (pUTF16)
-            WideCharToMultiByte(CP_ACP, 0, pUTF16, -1, pANSI, nANSICharacters, NULL, NULL);
+            WideCharToMultiByte(CP_ACP, 0, pUTF16, -1, pANSI, nANSICharacters, APE_NULL, APE_NULL);
     #else
         str_utf8 * pANSI = new str_utf8 [nCharacters + 1];
         for (int z = 0; z < nCharacters; z++)
@@ -28,16 +29,17 @@ str_ansi * CAPECharacterHelper::GetANSIFromUTF16(const str_utfn * pUTF16)
         pANSI[nCharacters] = 0;
     #endif
 
-    return (str_ansi *) pANSI;
+    return reinterpret_cast<str_ansi *>(pANSI);
 }
 
 str_utfn * CAPECharacterHelper::GetUTF16FromANSI(const str_ansi * pANSI)
 {
-    const int nCharacters = pANSI ? int(strlen(pANSI)) : 0;
-    str_utfn * pUTF16 = new str_utfn [nCharacters + 1];
+    const int nCharacters = pANSI ? static_cast<int>(strlen(pANSI)) : 0;
+    str_utfn * pUTF16 = new str_utfn [static_cast<size_t>(nCharacters) + 1];
 
     #ifdef _WIN32
-        memset(pUTF16, 0, sizeof(str_utfn) * (nCharacters + 1));
+        const size_t nBufferBytes = (sizeof(str_utfn) * static_cast<size_t>(nCharacters)) + sizeof(str_utfn);
+        memset(pUTF16, 0, nBufferBytes);
         if (pANSI)
             MultiByteToWideChar(CP_ACP, 0, pANSI, -1, pUTF16, nCharacters);
     #else
@@ -66,31 +68,30 @@ str_utfn * CAPECharacterHelper::GetUTF16FromUTF8(const str_utf8 * pUTF8)
     }
 
     // make a UTF-16 string
-    str_utfn * pUTF16 = new str_utfn [nCharacters + 1];
-    nIndex = 0; nCharacters = 0;
+    str_utfn * pUTF16 = new str_utfn[static_cast<size_t>(nCharacters) + 1];
+    str_utfn * pOutput = pUTF16;
+    nIndex = 0;
     while (pUTF8[nIndex] != 0)
     {
         if ((pUTF8[nIndex] & 0x80) == 0)
         {
-            pUTF16[nCharacters] = pUTF8[nIndex];
+            *pOutput++ = pUTF8[nIndex];
             nIndex += 1;
         }
         else if ((pUTF8[nIndex] & 0xE0) == 0xE0)
         {
-            pUTF16[nCharacters] = ((pUTF8[nIndex] & 0x1F) << 12) | ((pUTF8[nIndex + 1] & 0x3F) << 6) | (pUTF8[nIndex + 2] & 0x3F);
+            *pOutput++ = static_cast<str_utfn>(((pUTF8[nIndex] & 0x1F) << 12) | ((pUTF8[nIndex + 1] & 0x3F) << 6) | (pUTF8[nIndex + 2] & 0x3F));
             nIndex += 3;
         }
         else
         {
-            pUTF16[nCharacters] = ((pUTF8[nIndex] & 0x3F) << 6) | (pUTF8[nIndex + 1] & 0x3F);
+            *pOutput++ = static_cast<str_utfn>(((pUTF8[nIndex] & 0x3F) << 6) | (pUTF8[nIndex + 1] & 0x3F));
             nIndex += 2;
         }
-
-        nCharacters += 1;
     }
-    pUTF16[nCharacters] = 0;
+    *pOutput++ = 0; // NULL terminate
 
-    return pUTF16; 
+    return pUTF16;
 }
 
 str_utf8 * CAPECharacterHelper::GetUTF8FromANSI(const str_ansi * pANSI)
@@ -104,7 +105,7 @@ str_utf8 * CAPECharacterHelper::GetUTF8FromANSI(const str_ansi * pANSI)
 str_utf8 * CAPECharacterHelper::GetUTF8FromUTF16(const str_utfn * pUTF16)
 {
     // get the size(s)
-    int nCharacters = int(wcslen(pUTF16));
+    const int nCharacters = static_cast<int>(wcslen(pUTF16));
     int nUTF8Bytes = 0;
     for (int z = 0; z < nCharacters; z++)
     {
@@ -117,29 +118,29 @@ str_utf8 * CAPECharacterHelper::GetUTF8FromUTF16(const str_utfn * pUTF16)
     }
 
     // allocate a UTF-8 string
-    str_utf8 * pUTF8 = new str_utf8 [nUTF8Bytes + 1];
+    str_utf8 * pUTF8 = new str_utf8 [static_cast<size_t>(nUTF8Bytes) + 1];
 
     // create the UTF-8 string
-    int nUTF8Index = 0;
+    str_utf8 * pOutput = pUTF8;
     for (int z = 0; z < nCharacters; z++)
     {
         if (pUTF16[z] < 0x0080)
         {
-            pUTF8[nUTF8Index++] = (str_utf8) pUTF16[z];
+            *pOutput++ = static_cast<str_utf8>(pUTF16[z]);
         }
         else if (pUTF16[z] < 0x0800)
         {
-            pUTF8[nUTF8Index++] = str_utf8(0xC0 | (pUTF16[z] >> 6));
-            pUTF8[nUTF8Index++] = 0x80 | (pUTF16[z] & 0x3F);
+            *pOutput++ = static_cast<str_utf8>(0xC0 | (pUTF16[z] >> 6));
+            *pOutput++ = static_cast<str_utf8>(0x80 | (pUTF16[z] & 0x3F));
         }
         else
         {
-            pUTF8[nUTF8Index++] = 0xE0 | (pUTF16[z] >> 12);
-            pUTF8[nUTF8Index++] = 0x80 | ((pUTF16[z] >> 6) & 0x3F);
-            pUTF8[nUTF8Index++] = 0x80 | (pUTF16[z] & 0x3F);
+            *pOutput++ = static_cast<str_utf8>(0xE0 | (pUTF16[z] >> 12));
+            *pOutput++ = static_cast<str_utf8>(0x80 | ((pUTF16[z] >> 6) & 0x3F));
+            *pOutput++ = static_cast<str_utf8>(0x80 | (pUTF16[z] & 0x3F));
         }
     }
-    pUTF8[nUTF8Index++] = 0;
+    *pOutput++ = 0;
 
     // return the UTF-8 string
     return pUTF8;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../BitArray.h"
-#include "../UnBitArrayBase.h"
+#include "BitArray.h"
+#include "UnBitArrayBase.h"
 
 namespace APE
 {
@@ -16,10 +16,12 @@ class IAPEDecompress;
 /**************************************************************************************************
 CUnMAC class... a class that allows decoding on a frame-by-frame basis
 **************************************************************************************************/
-class CUnMAC 
+
+#pragma pack(push, 1)
+
+class CUnMAC
 {
 public:
-    
     // construction / destruction
     CUnMAC();
     ~CUnMAC();
@@ -30,16 +32,13 @@ public:
     intn DecompressFrame(unsigned char * pOutputData, int32 FrameIndex);
 
     int SeekToFrame(intn FrameIndex);
-    
-private:
 
+private:
     // data members
-    bool m_bInitialized;
-    int m_LastDecodedFrameIndex;
     IAPEDecompress * m_pAPEDecompress;
     CPrepare * m_pPrepare;
-
     CAPEDecompressCore * m_pAPEDecompressCore;
+    int m_LastDecodedFrameIndex;
 
     // functions
     void GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes, intn nFrameIndex);
@@ -48,14 +47,18 @@ private:
     int CreateAntiPredictors(int nCompressionLevel, int nVersion);
 
     intn DecompressFrameOld(unsigned char * pOutputData, int32 FrameIndex);
-    uint32 CalculateOldChecksum(int * pDataX, int * pDataY, intn nChannels, intn nBlocks);
+    uint32 CalculateOldChecksum(const int * pDataX, const int * pDataY, intn nChannels, intn nBlocks);
 
 public:
-    
     int m_nBlocksProcessed;
     unsigned int m_nCRC;
     unsigned int m_nStoredCRC;
     WAVEFORMATEX m_wfeInput;
+
+private:
+    bool m_bInitialized;
 };
+
+#pragma pack(pop)
 
 }

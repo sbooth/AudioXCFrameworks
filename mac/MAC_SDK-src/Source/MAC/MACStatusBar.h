@@ -6,7 +6,6 @@ class CMACDlg;
 class CMACStatusBar : public CStatusBar
 {
 public:
-    
     CMACStatusBar(CMACDlg * pMACDlg);
     virtual ~CMACStatusBar();
 
@@ -17,7 +16,6 @@ public:
     void EndProcessing();
 
 protected:
-
     afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
     afx_msg void OnSize(UINT nType, int cx, int cy);
     afx_msg void OnLButtonUp(UINT nFlags, CPoint pt);

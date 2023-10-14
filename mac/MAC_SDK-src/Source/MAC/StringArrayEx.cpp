@@ -54,11 +54,11 @@ void CStringArrayEx::InitFromList(const CString & strList, const CString strDeli
 {
     RemoveAll();
 
-    LPCTSTR pHead = (LPCTSTR) strList;
+    LPCTSTR pHead = strList.GetString();
     LPCTSTR pTail = _tcsstr(pHead, strDelimiter);
     while (pTail != NULL)
     {
-        Add(CString(pHead, int(pTail - pHead)));
+        Add(CString(pHead, static_cast<int>(pTail - pHead)));
         pHead = pTail + strDelimiter.GetLength();
         pTail = _tcsstr(pHead, strDelimiter);
     }
@@ -72,7 +72,7 @@ CString CStringArrayEx::GetList(const CString strDelimiter)
     // allocate a memory block for the total length
     const int nTotalCharacters = GetTotalCharacterLength(FALSE);
     CString strRetVal;
-    LPTSTR pBuffer = strRetVal.GetBuffer(nTotalCharacters + 1 + int(strDelimiter.GetLength() * GetSize()));
+    LPTSTR pBuffer = strRetVal.GetBuffer(nTotalCharacters + 1 + static_cast<int>(strDelimiter.GetLength() * GetSize()));
 
     // copy in the strings (with delimiters)
     LPTSTR pCurrent = pBuffer;
@@ -80,11 +80,11 @@ CString CStringArrayEx::GetList(const CString strDelimiter)
     {
         // string
         int nCharacters = ElementAt(z).GetLength();
-        memcpy(pCurrent, (LPCTSTR) ElementAt(z), nCharacters * sizeof(TCHAR));
+        memcpy(pCurrent, ElementAt(z).GetString(), static_cast<size_t>(nCharacters) * sizeof(TCHAR));
         pCurrent += nCharacters;
 
         // delimiter
-        memcpy(pCurrent, strDelimiter, strDelimiter.GetLength() * sizeof(TCHAR));
+        memcpy(pCurrent, strDelimiter, static_cast<size_t>(strDelimiter.GetLength()) * sizeof(TCHAR));
         pCurrent += strDelimiter.GetLength();
     }
 
@@ -101,9 +101,9 @@ int CStringArrayEx::GetTotalCharacterLength(BOOL bAccountForNullTerminators)
     int nCharacters = 0;
     for (int z = 0; z < GetSize(); z++)
         nCharacters += ElementAt(z).GetLength();
-    
+
     if (bAccountForNullTerminators)
-        nCharacters += (int) GetSize();
+        nCharacters += static_cast<int>(GetSize());
 
     return nCharacters;
 }
@@ -119,7 +119,7 @@ void CStringArrayEx::Append(CStringArrayEx & aryAppend, BOOL bRemoveDuplicates, 
     // add the new items
     for (int z = 0; z < aryAppend.GetSize(); z++)
         Add(aryAppend[z]);
-    
+
     // remove duplicates (if specified)
     if (bRemoveDuplicates)
         RemoveDuplicates(bMatchCase);
@@ -129,7 +129,7 @@ void CStringArrayEx::SortAscending()
 {
     if (GetSize() > 1)
     {
-        qsort(GetData(), GetSize(), sizeof(CString *), SortAscendingCallback);
+        qsort(GetData(), static_cast<size_t>(GetSize()), sizeof(CString *), SortAscendingCallback);
     }
 }
 
@@ -137,17 +137,16 @@ void CStringArrayEx::SortDescending()
 {
     if (GetSize() > 1)
     {
-        qsort(GetData(), GetSize(), sizeof(CString *), SortDescendingCallback);
+        qsort(GetData(), static_cast<size_t>(GetSize()), sizeof(CString *), SortDescendingCallback);
     }
 }
 
 int CStringArrayEx::SortAscendingCallback(const void * pStringA, const void * pStringB)
 {
-    return ((CString *) pStringA)->Compare((LPCTSTR) (*((CString *) pStringB)));
+    return (static_cast<const CString *>(pStringA))->Compare((*(static_cast<const CString *>(pStringB))).GetString());
 }
 
 int CStringArrayEx::SortDescendingCallback(const void * pStringA, const void * pStringB)
 {
-    return ((CString *) pStringB)->Compare((LPCTSTR) (*((CString *) pStringA)));
+    return (static_cast<const CString *>(pStringB))->Compare((*(static_cast<const CString *>(pStringA))).GetString());
 }
-

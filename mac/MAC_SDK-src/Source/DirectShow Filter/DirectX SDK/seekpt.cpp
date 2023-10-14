@@ -80,4 +80,3 @@ STDMETHODIMP CSeekingPassThru::Init(BOOL bRendererSeeking, IPin *pPin)
     }
     return hr;
 }
-

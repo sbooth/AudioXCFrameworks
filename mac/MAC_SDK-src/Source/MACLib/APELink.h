@@ -6,6 +6,8 @@
 namespace APE
 {
 
+#pragma pack(push, 1)
+
 class CAPELink
 {
 public:
@@ -19,12 +21,14 @@ public:
     const wchar_t * GetImageFilename();
 
 protected:
-    bool m_bIsLinkFile;
     int m_nStartBlock;
     int m_nFinishBlock;
     str_utfn m_cImageFilename[MAX_PATH];
+    bool m_bIsLinkFile;
 
     void ParseData(const char * pData, const str_utfn * pFilename);
 };
+
+#pragma pack(pop)
 
 }

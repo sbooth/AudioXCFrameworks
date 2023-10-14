@@ -22,6 +22,8 @@
 #ifndef __TRANSIP__
 #define __TRANSIP__
 
+#pragma warning(disable:5266)
+
 // ======================================================================
 // This is the com object that represents a simple transform filter. It
 // supports IBaseFilter, IMediaFilter and two pins through nested interfaces
@@ -247,4 +249,3 @@ protected:
 }; // CTransInPlaceFilter
 
 #endif /* __TRANSIP__ */
-

@@ -278,7 +278,7 @@ AMovieSetupRegisterFilter2( const AMOVIESETUP_FILTER * const psetupdata
     rf2.dwMerit = psetupdata->dwMerit;
     rf2.cPins = psetupdata->nPins;
     rf2.rgPins = psetupdata->lpPin;
-    
+
     // register filter
     //
     DbgLog((LOG_TRACE, 3, TEXT("= = register filter")));

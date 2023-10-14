@@ -2078,4 +2078,3 @@ HRESULT CBaseControlVideo::CheckTargetRect(__in RECT *pTargetRect)
     ASSERT(IsRectEmpty(pTargetRect) == FALSE);
     return NOERROR;
 }
-

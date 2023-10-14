@@ -10,7 +10,7 @@ CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion);
 /**************************************************************************************************
 Base class for all anti-predictors
 **************************************************************************************************/
-class CAntiPredictor 
+class CAntiPredictor
 {
 public:
     CAntiPredictor();
@@ -22,10 +22,10 @@ public:
 /**************************************************************************************************
 Offset anti-predictor
 **************************************************************************************************/
-class CAntiPredictorOffset : public CAntiPredictor 
+class CAntiPredictorOffset : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, int Offset, int DeltaM);
+    void AntiPredictOffset(int * pInputArray, int * pOutputArray, int NumberOfElements, int Offset, int DeltaM);
 };
 
 #ifdef ENABLE_COMPRESSION_MODE_FAST
@@ -33,19 +33,19 @@ public:
 /**************************************************************************************************
 Fast anti-predictor (from original 'fast' mode...updated for version 3.32)
 **************************************************************************************************/
-class CAntiPredictorFast0000To3320 : public CAntiPredictor 
+class CAntiPredictorFast0000To3320 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 Fast anti-predictor (new 'fast' mode release with version 3.32)
 **************************************************************************************************/
-class CAntiPredictorFast3320ToCurrent : public CAntiPredictor 
+class CAntiPredictorFast3320ToCurrent : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 #endif // #ifdef ENABLE_COMPRESSION_MODE_FAST
@@ -54,28 +54,28 @@ public:
 /**************************************************************************************************
 Normal anti-predictor
 **************************************************************************************************/
-class CAntiPredictorNormal0000To3320 : public CAntiPredictor 
+class CAntiPredictorNormal0000To3320 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 Normal anti-predictor
 **************************************************************************************************/
-class CAntiPredictorNormal3320To3800 : public CAntiPredictor 
+class CAntiPredictorNormal3320To3800 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 Normal anti-predictor
 **************************************************************************************************/
-class CAntiPredictorNormal3800ToCurrent : public CAntiPredictor 
+class CAntiPredictorNormal3800ToCurrent : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 #endif // #ifdef ENABLE_COMPRESSION_MODE_NORMAL
@@ -85,46 +85,46 @@ public:
 /**************************************************************************************************
 High anti-predictor
 **************************************************************************************************/
-class CAntiPredictorHigh0000To3320 : public CAntiPredictor 
+class CAntiPredictorHigh0000To3320 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 High anti-predictor
 **************************************************************************************************/
-class CAntiPredictorHigh3320To3600 : public CAntiPredictor 
+class CAntiPredictorHigh3320To3600 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 High anti-predictor
 **************************************************************************************************/
-class CAntiPredictorHigh3600To3700 : public CAntiPredictor 
+class CAntiPredictorHigh3600To3700 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 High anti-predictor
 **************************************************************************************************/
-class CAntiPredictorHigh3700To3800 : public CAntiPredictor 
+class CAntiPredictorHigh3700To3800 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 /**************************************************************************************************
 High anti-predictor
 **************************************************************************************************/
-class CAntiPredictorHigh3800ToCurrent : public CAntiPredictor 
+class CAntiPredictorHigh3800ToCurrent : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements);
+    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
 #endif // #ifdef ENABLE_COMPRESSION_MODE_HIGH
@@ -146,55 +146,55 @@ Extra high anti-predictor
 class CAntiPredictorExtraHigh0000To3320 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, uint64 * pOffsetValueArrayA, uint64 * pOffsetValueArrayB);
+    void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order);
+    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order);
 };
 
 /**************************************************************************************************
 Extra high anti-predictor
 **************************************************************************************************/
-class CAntiPredictorExtraHigh3320To3600 : public CAntiPredictor 
+class CAntiPredictorExtraHigh3320To3600 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, uint64 * pOffsetValueArrayA, uint64 * pOffsetValueArrayB);
+    void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order);
+    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order);
 };
 
 /**************************************************************************************************
 Extra high anti-predictor
 **************************************************************************************************/
-class CAntiPredictorExtraHigh3600To3700 : public CAntiPredictor 
+class CAntiPredictorExtraHigh3600To3700 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, uint64 * pOffsetValueArrayA, uint64 * pOffsetValueArrayB);
+    void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(int * Input_Array, int * Output_Array, int Number_of_Elements, uint64 g1, uint64 g2, int Max_Order);
+    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g1, int64 g2, int Max_Order);
 };
 
 /**************************************************************************************************
 Extra high anti-predictor
 **************************************************************************************************/
-class CAntiPredictorExtraHigh3700To3800 : public CAntiPredictor 
+class CAntiPredictorExtraHigh3700To3800 : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, uint64 * pOffsetValueArrayA, uint64 * pOffsetValueArrayB);
+    void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(int * Input_Array, int * Output_Array, int Number_of_Elements, uint64 g1, uint64 g2, int Max_Order);
+    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g1, int64 g2, int Max_Order);
 };
 
 /**************************************************************************************************
 Extra high anti-predictor
 **************************************************************************************************/
-class CAntiPredictorExtraHigh3800ToCurrent : public CAntiPredictor 
+class CAntiPredictorExtraHigh3800ToCurrent : public CAntiPredictor
 {
 public:
-    void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, intn nVersion);
+    void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, intn nVersion);
 };
 
 #endif // #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH

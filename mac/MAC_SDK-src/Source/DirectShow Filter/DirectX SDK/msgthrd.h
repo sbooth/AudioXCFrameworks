@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 // File: MsgThrd.h
 //
-// Desc: DirectShow base classes - provides support for a worker thread 
+// Desc: DirectShow base classes - provides support for a worker thread
 //       class to which one can asynchronously post messages.
 //
 // Copyright (c) 1992-2001 Microsoft Corporation.  All rights reserved.
@@ -117,4 +117,3 @@ public:
     virtual LRESULT ThreadMessageProc(
         UINT uMsg, DWORD dwFlags, __inout_opt LPVOID lpParam, __in_opt CAMEvent *pEvent) = 0;
 };
-

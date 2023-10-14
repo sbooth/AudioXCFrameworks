@@ -1,6 +1,6 @@
 /***************************************************************************************
 Analyze - Sample 1
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example opens an APE file and displays some basic information about it. To use it,
@@ -9,7 +9,7 @@ file.
 
 Notes for use in a new project:
     -you need to include "MACLib.lib" in the included libraries list
-    -life will be easier if you set the [MAC SDK]\\Shared directory as an include 
+    -life will be easier if you set the [MAC SDK]\\Shared directory as an include
     directory and an additional library input path in the project settings
     -set the runtime library to "Mutlithreaded"
 
@@ -32,7 +32,7 @@ int wmain(int argc, wchar_t* argv[])
     ///////////////////////////////////////////////////////////////////////////////
     // error check the command line parameters
     ///////////////////////////////////////////////////////////////////////////////
-    if (argc != 2) 
+    if (argc != 2)
     {
         _tprintf(_T("~~~Improper Usage~~~\r\n\r\n"));
         _tprintf(_T("Usage Example: Sample 1.exe 'c:\\1.ape'\r\n\r\n"));
@@ -46,7 +46,7 @@ int wmain(int argc, wchar_t* argv[])
     wchar_t                cTempBuffer[256]; ZeroMemory(&cTempBuffer[0], 256 * sizeof(wchar_t));    // generic buffer for string stuff
     wchar_t*            pFilename = argv[1];                                // the file to open
     IAPEDecompress *    pAPEDecompress = NULL;                                // APE interface
-        
+
     ///////////////////////////////////////////////////////////////////////////////
     // open the file and error check
     ///////////////////////////////////////////////////////////////////////////////
@@ -84,19 +84,19 @@ int wmain(int argc, wchar_t* argv[])
     _tprintf(_T("Size and Duration:\r\n"));
     _tprintf(_T("\tLength of file (s): %I64d\r\n"), pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_LENGTH_MS) / 1000);
     _tprintf(_T("\tFile Size (kb): %I64d\r\n\r\n"), pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_APE_TOTAL_BYTES) / 1024);
-    
+
     // tag information
     _tprintf(_T("Tag Information:\r\n"));
-    
+
     APE::CAPETag * pAPETag = (APE::CAPETag *) pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_TAG);
     BOOL bHasID3Tag = pAPETag->GetHasID3Tag();
     BOOL bHasAPETag = pAPETag->GetHasAPETag();
-    
+
     if (bHasID3Tag || bHasAPETag)
     {
         // iterate through all the tag fields
         for (int nField = 0; true; nField++)
-        { 
+        {
             APE::CAPETagField * pTagField = pAPETag->GetTagField(nField);
             if (pTagField == NULL)
                 break;
@@ -105,7 +105,7 @@ int wmain(int argc, wchar_t* argv[])
             int a = pTagField->GetFieldSize();
             //const APE::str_utfn* pFieldName = NULL;
             //pFieldName = pTagField->GetFieldName();
-            
+
             //const char * p = pTagField->GetFieldValue();
 
             // output the tag field properties (don't output huge fields like images, etc.)
@@ -121,16 +121,16 @@ int wmain(int argc, wchar_t* argv[])
             }
         }
     }
-    else 
+    else
     {
         _tprintf(_T("\tNot tagged\r\n\r\n"));
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // cleanup (just delete the object
     ///////////////////////////////////////////////////////////////////////////////
     delete pAPEDecompress;
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // quit
     ///////////////////////////////////////////////////////////////////////////////

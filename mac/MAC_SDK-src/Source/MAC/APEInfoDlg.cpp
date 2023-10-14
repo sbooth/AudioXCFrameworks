@@ -20,18 +20,18 @@ void CAPEInfoDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAPEInfoDlg, CDialog)
-    ON_BN_CLICKED(IDC_FILES_SELECT_ALL, OnBnClickedFilesSelectAll)
-    ON_BN_CLICKED(IDC_FILES_SELECT_NONE, OnBnClickedFilesSelectNone)
-    ON_NOTIFY(LVN_ITEMCHANGED, IDC_FILE_LIST, OnLvnItemchangedFileList)
+    ON_BN_CLICKED(IDC_FILES_SELECT_ALL, &CAPEInfoDlg::OnBnClickedFilesSelectAll)
+    ON_BN_CLICKED(IDC_FILES_SELECT_NONE, &CAPEInfoDlg::OnBnClickedFilesSelectNone)
+    ON_NOTIFY(LVN_ITEMCHANGED, IDC_FILE_LIST, &CAPEInfoDlg::OnLvnItemchangedFileList)
 END_MESSAGE_MAP()
 
-BOOL CAPEInfoDlg::OnInitDialog() 
+BOOL CAPEInfoDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
 
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, (WPARAM) m_pMACDlg->GetFont().GetSafeHandle(), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
 
     CRect rectFiles; m_ctrlFiles.GetWindowRect(&rectFiles); ScreenToClient(&rectFiles);
     m_ctrlFiles.InsertColumn(0, _T("Files"), LVCFMT_LEFT, rectFiles.Width() - GetSystemMetrics(SM_CXVSCROLL) - 2);
@@ -49,13 +49,13 @@ BOOL CAPEInfoDlg::OnInitDialog()
     int nTabTitleBarHeight = rectTab.Height() + theApp.GetSize(2, 0).cx;
 
     m_dlgFormat.Create(IDD_APE_INFO_FORMAT, this);
-    
+
     int nBorder = theApp.GetSize(8, 0).cx;
     m_dlgFormat.SetWindowPos(&m_ctrlTabs, rectTabs.left + nBorder, rectTabs.top + nTabTitleBarHeight + nBorder, rectTabs.Width() - (2 * nBorder), rectTabs.Height() - (2 * nBorder) - nTabTitleBarHeight, SWP_SHOWWINDOW);
     m_dlgFormat.Layout();
 
     m_dlgFormat.SetFiles(m_aryFiles);
-    
+
     return TRUE;  // return TRUE unless you set the focus to a control
                   // EXCEPTION: OCX Property Pages should return FALSE
 }

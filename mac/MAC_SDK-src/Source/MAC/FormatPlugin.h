@@ -7,11 +7,10 @@ class CMACDlg;
 class CFormatPluginLevelInfo
 {
 public:
-    
     CFormatPluginLevelInfo()
     {
     }
-    
+
     CFormatPluginLevelInfo(CMarkup & XML)
     {
         m_strName = XML.GetTagName();
@@ -33,35 +32,33 @@ public:
 class CFormatPlugin : public IFormat
 {
 public:
-
-    CFormatPlugin(CMACDlg * pMACDlg, int nIndex, const CString & strAPXFilename = _T(""));
+    CFormatPlugin(CMACDlg * pMACDlg, int nIndex);
     virtual ~CFormatPlugin();
 
     BOOL Load(const CString & strAPXFilename);
 
     virtual CString GetName() { return m_strName; }
-    
+
     virtual int Process(MAC_FILE * pInfo);
 
     virtual BOOL BuildMenu(CMenu * pMenu, int nBaseID);
     virtual BOOL ProcessMenuCommand(int nCommand);
 
-    virtual CString GetInputExtensions(MAC_MODES Mode);
-    virtual CString GetOutputExtension(MAC_MODES Mode, const CString & strInputFilename, int nLevel);
+    virtual CString GetInputExtensions(APE::APE_MODES Mode);
+    virtual CString GetOutputExtension(APE::APE_MODES Mode, const CString & strInputFilename, int nLevel);
 
 protected:
-    
     // helpers
-    void ParseModeInfo(CMarkup & XML, MAC_MODES Mode, const CString & strKeyword);
-    CFormatPluginLevelInfo * GetLevelInfo(MAC_MODES Mode, const CString & strInputFilename, int nLevel);
-    
+    void ParseModeInfo(CMarkup & XML, APE::APE_MODES Mode, const CString & strKeyword);
+    CFormatPluginLevelInfo * GetLevelInfo(APE::APE_MODES Mode, const CString & strInputFilename, int nLevel);
+
     // parent
     CMACDlg * m_pMACDlg;
 
     // properties
     BOOL m_bIsValid;
     int m_nIndex;
-    
+
     // filename
     CString m_strAPXFilename;
 
@@ -73,7 +70,7 @@ protected:
     CString m_strDescription;
 
     // mode info
-    CArray<CFormatPluginLevelInfo, CFormatPluginLevelInfo &> m_aryModeInfo[MODE_COUNT];
+    CArray<CFormatPluginLevelInfo, CFormatPluginLevelInfo &> m_aryModeInfo[APE::MODE_COUNT];
 
     // configuration
     BOOL m_bHasConfiguration;

@@ -3,45 +3,34 @@
 namespace APE
 {
 
-template <class TYPE> class CRollBuffer
+/**************************************************************************************************
+CRollBuffer
+**************************************************************************************************/
+template <class TYPE, int WINDOW_ELEMENTS> class CRollBuffer
 {
 public:
-    CRollBuffer()
+    CRollBuffer(int nHistoryElements)
+    : m_nHistoryElements(nHistoryElements),
+      m_nTotalElements(WINDOW_ELEMENTS + m_nHistoryElements)
     {
-        m_pData = NULL;
-        m_pCurrent = NULL;
-        m_nHistoryElements = 0;
-        m_nTotalElements = 0;
+        m_pData = new TYPE[static_cast<size_t>(m_nTotalElements)];
+        Flush();
     }
 
     ~CRollBuffer()
     {
-        SAFE_ARRAY_DELETE(m_pData)
-    }
-
-    int Create(int nWindowElements, int nHistoryElements)
-    {
-        SAFE_ARRAY_DELETE(m_pData)
-        m_nHistoryElements = nHistoryElements;
-        m_nTotalElements = nWindowElements + m_nHistoryElements;
-
-        m_pData = new TYPE[m_nTotalElements];
-        if (m_pData == NULL)
-            return ERROR_INSUFFICIENT_MEMORY;
-
-        Flush();
-        return ERROR_SUCCESS;
+        APE_SAFE_ARRAY_DELETE(m_pData)
     }
 
     void Flush()
     {
-        ZeroMemory(m_pData, (m_nHistoryElements + 1) * int(sizeof(TYPE)));
+        ZeroMemory(m_pData, (static_cast<size_t>(m_nHistoryElements) + 1) * sizeof(TYPE));
         m_pCurrent = &m_pData[m_nHistoryElements];
     }
 
     void Roll()
     {
-        memmove(&m_pData[0], &m_pCurrent[-m_nHistoryElements], m_nHistoryElements * int(sizeof(TYPE)));
+        memmove(&m_pData[0], &m_pCurrent[-m_nHistoryElements], static_cast<size_t>(m_nHistoryElements) * sizeof(TYPE));
         m_pCurrent = &m_pData[m_nHistoryElements];
     }
 
@@ -65,8 +54,12 @@ public:
 protected:
     TYPE * m_pData;
     TYPE * m_pCurrent;
-    int m_nHistoryElements;
-    int m_nTotalElements;
+    const int m_nHistoryElements;
+    const int m_nTotalElements;
+
+private:
+    // silence warning about implicitly deleted assignment operator
+    CRollBuffer<TYPE, WINDOW_ELEMENTS> & operator=(const CRollBuffer<TYPE, WINDOW_ELEMENTS> & Copy) { }
 };
 
 template <class TYPE, int WINDOW_ELEMENTS, int HISTORY_ELEMENTS> class CRollBufferFast
@@ -80,7 +73,7 @@ public:
 
     ~CRollBufferFast()
     {
-        SAFE_ARRAY_DELETE(m_pData)
+        APE_SAFE_ARRAY_DELETE(m_pData)
     }
 
     void Flush()

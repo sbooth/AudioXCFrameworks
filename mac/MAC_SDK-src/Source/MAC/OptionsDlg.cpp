@@ -6,6 +6,7 @@
 #include "OptionsOutputDlg.h"
 #include "APEButtons.h"
 #include "MACDlg.h"
+#include "OptionsShared.h"
 
 COptionsDlg::COptionsDlg(CMACDlg * pMACDlg, CWnd * pParent)
     : CDialog(COptionsDlg::IDD, pParent)
@@ -21,27 +22,27 @@ void COptionsDlg::DoDataExchange(CDataExchange * pDX)
 }
 
 BEGIN_MESSAGE_MAP(COptionsDlg, CDialog)
-    ON_NOTIFY(LVN_ITEMCHANGED, IDC_PAGE_LIST, OnItemchangedPageList)
+    ON_NOTIFY(LVN_ITEMCHANGED, IDC_PAGE_LIST, &COptionsDlg::OnItemchangedPageList)
     ON_WM_DESTROY()
     ON_WM_SIZE()
 END_MESSAGE_MAP()
 
-BOOL COptionsDlg::OnInitDialog() 
+BOOL COptionsDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
 
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, (WPARAM) m_pMACDlg->GetFont().GetSafeHandle(), MAKELPARAM(FALSE, 0), TRUE);
-    
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+
     m_ctrlPageList.SetImageList(theApp.GetImageList(CMACApp::Image_OptionsList), LVSIL_SMALL);
 
-    OPTIONS_PAGE * pPage = new OPTIONS_PAGE(NULL, "Processing", TBB_OPTIONS_PAGE_PROCESSING);
+    OPTIONS_PAGE * pPage = new OPTIONS_PAGE("Processing", TBB_OPTIONS_PAGE_PROCESSING);
     pPage->m_pDialog = new COptionsProcessingDlg(m_pMACDlg, pPage);
     pPage->m_pDialog->Create(IDD_OPTIONS_PROCESSING, this);
     m_aryPages.Add(pPage);
 
-    pPage = new OPTIONS_PAGE(NULL, "Output", TBB_OPTIONS_PAGE_OUTPUT);
+    pPage = new OPTIONS_PAGE("Output", TBB_OPTIONS_PAGE_OUTPUT);
     pPage->m_pDialog = new COptionsOutputDlg(m_pMACDlg, pPage);
     pPage->m_pDialog->Create(IDD_OPTIONS_OUTPUT, this);
     m_aryPages.Add(pPage);
@@ -57,7 +58,7 @@ BOOL COptionsDlg::OnInitDialog()
                   // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void COptionsDlg::OnItemchangedPageList(NMHDR *, LRESULT * pResult) 
+void COptionsDlg::OnItemchangedPageList(NMHDR *, LRESULT * pResult)
 {
     int nPage = GetSelectedPage();
     if (nPage < 0)
@@ -69,7 +70,7 @@ void COptionsDlg::OnItemchangedPageList(NMHDR *, LRESULT * pResult)
     {
         UpdatePage();
     }
-    
+
     *pResult = 0;
 }
 
@@ -93,11 +94,10 @@ BOOL COptionsDlg::UpdatePage()
         const int nBorderWidth = theApp.GetSize(4, 0).cx;
         const int nTopBorder = theApp.GetSize(16, 0).cx;
         CRect rectFrame; m_ctrlPageFrame.GetWindowRect(&rectFrame); ScreenToClient(&rectFrame);
-    
+
         m_aryPages[nPage]->m_pDialog->SetWindowPos(NULL, rectFrame.left + nBorderWidth, rectFrame.top + nBorderWidth + nTopBorder,
             rectFrame.Width() - (2 * nBorderWidth), rectFrame.Height() - (2 * nBorderWidth) - nTopBorder, SWP_NOZORDER | SWP_SHOWWINDOW);
     }
-
 
     CRect rectWindow;
     GetWindowRect(&rectWindow);
@@ -120,12 +120,14 @@ int COptionsDlg::GetSelectedPage()
     return nPage;
 }
 
-void COptionsDlg::OnDestroy() 
+void COptionsDlg::OnDestroy()
 {
-    for (int z = 0; z < m_aryPages.GetSize(); z++)
-        SAFE_DELETE(m_aryPages[z])
-    m_aryPages.RemoveAll();
-    
+    while (m_aryPages.GetSize() > 0)
+    {
+        APE_SAFE_DELETE(m_aryPages[m_aryPages.GetUpperBound()])
+        m_aryPages.RemoveAt(m_aryPages.GetUpperBound());
+    }
+
     CDialog::OnDestroy();
 }
 
@@ -154,7 +156,7 @@ void COptionsDlg::OnSize(UINT nType, int cx, int cy)
     m_ctrlPageFrame.SetWindowPos(NULL, rectPageList.right + (nBorder * 3), nPageTopBorder, cx - rectPageList.right - (nBorder * 4), cy - (1 * nBorder) - nPageTopBorder, SWP_NOZORDER);
 }
 
-void COptionsDlg::OnOK() 
+void COptionsDlg::OnOK()
 {
     for (int z = 0; z < m_aryPages.GetSize(); z++)
         m_aryPages[z]->m_pDialog->SendMessage(UM_SAVE_PAGE_OPTIONS);

@@ -17,19 +17,17 @@ public:
     // open / close
     int Open(const wchar_t * pName, bool bOpenReadOnly = false);
     int Close();
-    
+
     // read / write
     int Read(void * pBuffer, unsigned int nBytesToRead, unsigned int * pBytesRead);
     int Write(const void * pBuffer, unsigned int nBytesToWrite, unsigned int * pBytesWritten);
-    
+
     // seek
-    int64 PerformSeek();
-    
+    int Seek(int64 nPosition, SeekMethod nMethod);
+
     // other functions
     int SetEOF();
-    int SetReadWholeFile() { return ERROR_SUCCESS; }
-    void SetReadToBuffer() { }
-    unsigned char * GetBuffer(int * pnBufferBytes) { return NULL; }
+    unsigned char * GetBuffer(int *) { return APE_NULL; }
 
     // creation / destruction
     int Create(const wchar_t * pName);
@@ -42,7 +40,6 @@ public:
     int GetHandle();
 
 private:
-    
     wchar_t m_cFileName[MAX_PATH];
     bool m_bReadOnly;
     FILE * m_pFile;

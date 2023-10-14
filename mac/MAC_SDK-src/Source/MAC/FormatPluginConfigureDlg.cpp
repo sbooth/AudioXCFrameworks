@@ -34,14 +34,14 @@ BEGIN_MESSAGE_MAP(CFormatPluginConfigureDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-BOOL CFormatPluginConfigureDlg::OnInitDialog() 
+BOOL CFormatPluginConfigureDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
 
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, (WPARAM)m_pMACDlg->GetFont().GetSafeHandle(), MAKELPARAM(FALSE, 0), TRUE);
-   
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+
     if (m_strConfigureStatic1.IsEmpty())
     {
         GetDlgItem(IDC_CONFIGURE_EDIT_1)->EnableWindow(FALSE);

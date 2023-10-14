@@ -22,7 +22,6 @@ public:
     int m_nVerifyMode;
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
     virtual BOOL OnInitDialog();
 

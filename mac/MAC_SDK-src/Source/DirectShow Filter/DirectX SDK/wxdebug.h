@@ -355,5 +355,3 @@ public:
 #endif
 
 #endif // __WXDEBUG__
-
-

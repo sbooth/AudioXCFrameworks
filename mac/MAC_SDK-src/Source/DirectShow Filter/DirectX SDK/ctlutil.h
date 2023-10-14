@@ -327,9 +327,9 @@ public:
     STDMETHODIMP IsUsingTimeFormat(const GUID * pFormat);
     STDMETHODIMP IsFormatSupported( const GUID * pFormat);
     STDMETHODIMP QueryPreferredFormat( __out GUID *pFormat);
-    STDMETHODIMP ConvertTimeFormat(__out LONGLONG * pTarget, 
+    STDMETHODIMP ConvertTimeFormat(__out LONGLONG * pTarget,
                                    __in_opt const GUID * pTargetFormat,
-                                   LONGLONG Source, 
+                                   LONGLONG Source,
                                    __in_opt const GUID * pSourceFormat );
     STDMETHODIMP SetPositions( __inout_opt LONGLONG * pCurrent, DWORD CurrentFlags
                              , __inout_opt LONGLONG * pStop, DWORD StopFlags );
@@ -591,9 +591,9 @@ public:
     STDMETHODIMP GetCurrentPosition(__out LONGLONG *pCurrent);
     STDMETHODIMP GetCapabilities( __out DWORD * pCapabilities );
     STDMETHODIMP CheckCapabilities( __inout DWORD * pCapabilities );
-    STDMETHODIMP ConvertTimeFormat( __out LONGLONG * pTarget, 
+    STDMETHODIMP ConvertTimeFormat( __out LONGLONG * pTarget,
                                     __in_opt const GUID * pTargetFormat,
-                                    LONGLONG Source, 
+                                    LONGLONG Source,
                                     __in_opt const GUID * pSourceFormat );
 
     STDMETHODIMP SetPositions( __inout_opt LONGLONG * pCurrent,  DWORD CurrentFlags

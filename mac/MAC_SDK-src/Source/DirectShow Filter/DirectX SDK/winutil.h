@@ -416,4 +416,3 @@ STDAPI CheckVideoInfoType(const AM_MEDIA_TYPE *pmt);
 STDAPI CheckVideoInfo2Type(const AM_MEDIA_TYPE *pmt);
 
 #endif // __WINUTIL__
-

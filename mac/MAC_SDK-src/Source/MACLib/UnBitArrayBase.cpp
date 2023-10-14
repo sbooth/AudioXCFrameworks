@@ -25,25 +25,25 @@ CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, intn nVersio
        // also don't not read the tag if we're working on an APL file
        if (pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_APL) == 0)
        {
-           CAPETag* pAPETag = (CAPETag*)pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_TAG);
-           if ((pAPETag != NULL) && pAPETag->GetAnalyzed())
+           IAPETag * pAPETag = GET_TAG(pAPEDecompress);
+           if ((pAPETag != APE_NULL) && pAPETag->GetAnalyzed())
                nFurthestReadByte -= pAPETag->GetTagBytes();
        }
     }
 
 #ifdef APE_BACKWARDS_COMPATIBILITY
     if (nVersion >= 3900)
-        return (CUnBitArrayBase * ) new CUnBitArray(GET_IO(pAPEDecompress), nVersion, nFurthestReadByte);
+        return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray(GET_IO(pAPEDecompress), nVersion, nFurthestReadByte));
     else
-        return (CUnBitArrayBase * ) new CUnBitArrayOld(pAPEDecompress, nVersion, nFurthestReadByte);
+        return dynamic_cast<CUnBitArrayBase *>(new CUnBitArrayOld(pAPEDecompress, nVersion, nFurthestReadByte));
 #else
     // create the appropriate object
     if (nVersion < 3900)
     {
-        // we should no longer be trying to decode files this old (this check should be redundant since 
+        // we should no longer be trying to decode files this old (this check should be redundant since
         // the main gate keeper should be CreateIAPEDecompressCore(...)
         ASSERT(false);
-        return NULL;
+        return APE_NULL;
     }
 
     return (CUnBitArrayBase * ) new CUnBitArray(GET_IO(pAPEDecompress), nVersion, nFurthestReadByte);
@@ -52,16 +52,24 @@ CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, intn nVersio
 
 CUnBitArrayBase::CUnBitArrayBase(int64 nFurthestReadByte)
 {
+    m_nElements = 0;
+    m_nBytes = 0;
+    m_nBits = 0;
+    m_nGoodBytes = 0;
+    m_nVersion = 0;
+    m_pIO = APE_NULL;
     m_nFurthestReadByte = nFurthestReadByte;
+    m_pBitArray = APE_NULL;
+    m_nCurrentBitIndex = 0;
 }
 
 CUnBitArrayBase::~CUnBitArrayBase()
 {
 }
 
-void CUnBitArrayBase::AdvanceToByteBoundary() 
+void CUnBitArrayBase::AdvanceToByteBoundary()
 {
-    int nMod = m_nCurrentBitIndex % 8;
+    const uint32 nMod = (m_nCurrentBitIndex % 8);
     if (nMod != 0) { m_nCurrentBitIndex += 8 - nMod; }
 }
 
@@ -93,25 +101,25 @@ bool CUnBitArrayBase::EnsureBitsAvailable(uint32 nBits, bool bThrowExceptionOnFa
     return bResult;
 }
 
-uint32 CUnBitArrayBase::DecodeValueXBits(uint32 nBits) 
+uint32 CUnBitArrayBase::DecodeValueXBits(uint32 nBits)
 {
     // get more data if necessary
     EnsureBitsAvailable(nBits, true);
 
     // variable declares
-    uint32 nLeftBits = 32 - (m_nCurrentBitIndex & 31);
-    uint32 nBitArrayIndex = m_nCurrentBitIndex >> 5;
+    const uint32 nLeftBits = 32 - (m_nCurrentBitIndex & 31);
+    const uint32 nBitArrayIndex = m_nCurrentBitIndex >> 5;
     m_nCurrentBitIndex += nBits;
-    
+
     // if their isn't an overflow to the right value, get the value and exit
     if (nLeftBits >= nBits)
         return (m_pBitArray[nBitArrayIndex] & (POWERS_OF_TWO_MINUS_ONE[nLeftBits])) >> (nLeftBits - nBits);
-    
+
     // must get the "split" value from left and right
-    int nRightBits = nBits - nLeftBits;
-    
-    uint32 nLeftValue = ((m_pBitArray[nBitArrayIndex] & POWERS_OF_TWO_MINUS_ONE[nLeftBits]) << nRightBits);
-    uint32 nRightValue = (m_pBitArray[nBitArrayIndex + 1] >> (32 - nRightBits));
+    const int nRightBits = static_cast<int>(nBits - nLeftBits);
+
+    const uint32 nLeftValue = ((m_pBitArray[nBitArrayIndex] & POWERS_OF_TWO_MINUS_ONE[nLeftBits]) << nRightBits);
+    const uint32 nRightValue = (m_pBitArray[nBitArrayIndex + 1] >> (32 - nRightBits));
     return (nLeftValue | nRightValue);
 }
 
@@ -122,37 +130,34 @@ int CUnBitArrayBase::FillAndResetBitArray(int64 nFileLocation, int64 nNewBitInde
     // seek if necessary
     if (nFileLocation != -1)
     {
-        m_pIO->SetSeekMethod(APE_FILE_BEGIN);
-        m_pIO->SetSeekPosition(nFileLocation);
-        if (m_pIO->PerformSeek() != 0)
-            return ERROR_IO_READ;
+        RETURN_ON_ERROR(m_pIO->Seek(nFileLocation, SeekFileBegin))
     }
 
     // fill
     m_nCurrentBitIndex = m_nBits; // position at the end of the buffer
-    int nResult = FillBitArray();
+    const int nResult = FillBitArray();
 
     // set bit index
-    m_nCurrentBitIndex = (uint32) nNewBitIndex;
+    m_nCurrentBitIndex = static_cast<uint32>(nNewBitIndex);
 
     return nResult;
 }
 
-int CUnBitArrayBase::FillBitArray() 
+int CUnBitArrayBase::FillBitArray()
 {
     // get the bit array index
     uint32 nBitArrayIndex = m_nCurrentBitIndex >> 5;
-    
+
     // move the remaining data to the front
-    int nBytesToMove = m_nBytes - (nBitArrayIndex * 4);
+    const int nBytesToMove = static_cast<int>(m_nBytes - (nBitArrayIndex * 4));
     if (nBytesToMove > 0)
-        memmove((void *) (m_pBitArray), (const void *) (m_pBitArray + nBitArrayIndex), nBytesToMove);
+        memmove(m_pBitArray, (m_pBitArray + nBitArrayIndex), static_cast<size_t>(nBytesToMove));
 
     // get the number of bytes to read
-    int64 nBytesToRead = nBitArrayIndex * 4;
+    int64 nBytesToRead = static_cast<int64>(nBitArrayIndex) * 4;
     if (m_nFurthestReadByte > 0)
     {
-        int64 nFurthestReadBytes = m_nFurthestReadByte - m_pIO->GetPosition();
+        const int64 nFurthestReadBytes = m_nFurthestReadByte - m_pIO->GetPosition();
         if (nBytesToRead > nFurthestReadBytes)
         {
             nBytesToRead = nFurthestReadBytes;
@@ -163,16 +168,16 @@ int CUnBitArrayBase::FillBitArray()
 
     // read the new data
     unsigned int nBytesRead = 0;
-    int nResult = m_pIO->Read((unsigned char *) (m_pBitArray + m_nElements - nBitArrayIndex), (unsigned int) nBytesToRead, &nBytesRead);
+    const int nResult = m_pIO->Read(m_pBitArray + m_nElements - nBitArrayIndex, static_cast<unsigned int>(nBytesToRead), &nBytesRead);
 
     // zero anything at the tail we didn't fill
     m_nGoodBytes = ((m_nElements - nBitArrayIndex) * 4) + nBytesRead;
     if (m_nGoodBytes < m_nBytes)
-        memset(&((unsigned char *) m_pBitArray)[m_nGoodBytes], 0, m_nBytes - m_nGoodBytes);
+        memset(&(reinterpret_cast<unsigned char *>(m_pBitArray))[m_nGoodBytes], 0, m_nBytes - m_nGoodBytes);
 
     // adjust the m_Bit pointer
     m_nCurrentBitIndex = m_nCurrentBitIndex & 31;
-    
+
     // return
     return (nResult == 0) ? 0 : ERROR_IO_READ;
 }
@@ -180,24 +185,25 @@ int CUnBitArrayBase::FillBitArray()
 int CUnBitArrayBase::CreateHelper(CIO * pIO, intn nBytes, intn nVersion)
 {
     // check the parameters
-    if ((pIO == NULL) || (nBytes <= 0)) { return ERROR_BAD_PARAMETER; }
+    if ((pIO == APE_NULL) || (nBytes <= 0)) { return ERROR_BAD_PARAMETER; }
 
     // save the size
-    m_nElements = uint32(nBytes) / 4;
+    m_nElements = static_cast<uint32>(nBytes) / 4;
     m_nBytes = m_nElements * 4;
     m_nBits = m_nBytes * 8;
     m_nGoodBytes = 0;
-    
+
     // set the variables
     m_pIO = pIO;
     m_nVersion = nVersion;
     m_nCurrentBitIndex = 0;
-    
+
     // create the bitarray (we allocate and empty a little extra as buffer insurance, although it should never be necessary)
-    m_pBitArray = new uint32 [m_nElements + 64];
-    memset(m_pBitArray, 0, (m_nElements + 64) * sizeof(uint32));
-    
-    return (m_pBitArray != NULL) ? 0 : ERROR_INSUFFICIENT_MEMORY;
+    const size_t nAllocateElements = static_cast<size_t>(m_nElements) + 64;
+    m_pBitArray = new uint32 [nAllocateElements];
+    memset(m_pBitArray, 0, nAllocateElements * sizeof(uint32));
+
+    return (m_pBitArray != APE_NULL) ? 0 : ERROR_INSUFFICIENT_MEMORY;
 }
 
 }

@@ -6,6 +6,8 @@
 #include "MACFile.h"
 #include "MACDlg.h"
 
+using namespace APE;
+
 CFormatArray::CFormatArray(CMACDlg * pMACDlg)
 {
     m_pMACDlg = pMACDlg;
@@ -31,7 +33,8 @@ BOOL CFormatArray::Load()
     {
         if (CFilename(aryFiles[z]).GetExtension() == _T(".apx"))
         {
-            IFormat * pPlugin = new CFormatPlugin(m_pMACDlg, int(m_aryFormats.GetSize()), aryFiles[z]);
+            CFormatPlugin * pPlugin = new CFormatPlugin(m_pMACDlg, static_cast<int>(m_aryFormats.GetSize()));
+            pPlugin->Load(aryFiles[z]);
             m_aryFormats.Add(pPlugin);
         }
     }
@@ -43,7 +46,7 @@ BOOL CFormatArray::Unload()
 {
     for (int z = 0; z < m_aryFormats.GetSize(); z++)
     {
-        SAFE_DELETE(m_aryFormats[z])
+        APE_SAFE_DELETE(m_aryFormats[z])
     }
     m_aryFormats.RemoveAll();
 
@@ -54,32 +57,32 @@ BOOL CFormatArray::Unload()
 
 void CFormatArray::ClearMenuCache()
 {
-    for (int z = 0; z < m_aryMenus.GetSize(); z++)
+    while (m_aryMenus.GetSize() > 0)
     {
-        m_aryMenus[z]->DestroyMenu();
-        SAFE_DELETE(m_aryMenus[z]);
+        m_aryMenus[m_aryMenus.GetUpperBound()]->DestroyMenu();
+        APE_SAFE_DELETE(m_aryMenus[m_aryMenus.GetUpperBound()])
+        m_aryMenus.RemoveAt(m_aryMenus.GetUpperBound());
     }
-    m_aryMenus.RemoveAll();
 }
 
 BOOL CFormatArray::FillCompressionMenu(CMenu * pMenu)
 {
+    // this should only be called if we loaded and have formats
+    if (m_aryFormats.IsEmpty())
+        return FALSE;
+
     // clear the menu cache
     ClearMenuCache();
-
-    // error check
-    if (m_aryFormats.GetSize() <= 0)
-        return FALSE;
 
     // primary (not nested)
     m_aryFormats[0]->BuildMenu(pMenu, ID_SET_COMPRESSION_FIRST + (100 * (0 + 1)));
 
     // non-primary
     pMenu->AppendMenu(MF_SEPARATOR);
-    
+
     CMenu * pExternalMenu = new CMenu; pExternalMenu->CreatePopupMenu(); m_aryMenus.Add(pExternalMenu);
-    pMenu->AppendMenu(MF_POPUP, (UINT_PTR) pExternalMenu->GetSafeHmenu(), _T("E&xternal"));
-    
+    pMenu->AppendMenu(MF_POPUP, reinterpret_cast<UINT_PTR>(pExternalMenu->GetSafeHmenu()), _T("E&xternal"));
+
     if (m_aryFormats.GetSize() <= 1)
     {
         pExternalMenu->AppendMenu(MF_STRING | MF_GRAYED, 0, _T("n/a"));
@@ -88,15 +91,19 @@ BOOL CFormatArray::FillCompressionMenu(CMenu * pMenu)
     {
         for (int z = 1; z < m_aryFormats.GetSize(); z++)
         {
-            CMenu * pNewMenu = new CMenu; pNewMenu->CreatePopupMenu();
+            // create
+            CMenu * pNewMenu = new CMenu;
+            pNewMenu->CreatePopupMenu();
+
+            // put in the array (even if build doesn't work so it gets deleted later)
+            // we originally put the delete here but that made Clang lose it during analysis
+            m_aryMenus.Add(pNewMenu);
+
+            // build
             if (m_aryFormats[z]->BuildMenu(pNewMenu, ID_SET_COMPRESSION_FIRST + (100 * (z + 1))))
             {
-                m_aryMenus.Add(pNewMenu);
-                pExternalMenu->AppendMenu(MF_POPUP, (UINT_PTR)pNewMenu->GetSafeHmenu(), m_aryFormats[z]->GetName());
-            }
-            else
-            {
-                delete pNewMenu;
+                // append the menu
+                pExternalMenu->AppendMenu(MF_POPUP, reinterpret_cast<UINT_PTR>(pNewMenu->GetSafeHmenu()), m_aryFormats[z]->GetName());
             }
         }
     }
@@ -151,8 +158,8 @@ IFormat * CFormatArray::GetFormat(const CString & strName)
 
     return NULL;
 }
-    
-CString CFormatArray::GetOutputExtension(MAC_MODES Mode, const CString & strInputFilename, int nLevel, IFormat * pFormat)
+
+CString CFormatArray::GetOutputExtension(APE_MODES Mode, const CString & strInputFilename, int nLevel, IFormat * pFormat)
 {
     CString strExtension;
 
@@ -164,7 +171,7 @@ CString CFormatArray::GetOutputExtension(MAC_MODES Mode, const CString & strInpu
     {
         strExtension = pFormat->GetOutputExtension(Mode, strInputFilename, nLevel);
     }
-        
+
     return strExtension;
 }
 
@@ -172,7 +179,7 @@ BOOL CFormatArray::GetInputExtensions(CStringArrayEx & aryExtensions)
 {
     // clear the list
     aryExtensions.RemoveAll();
-    
+
     // build a map of extensions (so we remove duplicates)
     CMap<CString, LPCTSTR, BOOL, BOOL> mapExtensions;
     for (int z = 0; z < m_aryFormats.GetSize(); z++)
@@ -220,14 +227,14 @@ CString CFormatArray::GetOpenFilesFilter(BOOL bAddAllFiles)
     for (int z = 0; z < aryExtensions.GetSize(); z++)
         strSupportedExtensions += _T("*") + aryExtensions[z] + _T(";");
     strSupportedExtensions.TrimRight(_T(";"));
-    strFilter.Format(_T("All Supported Files (%s)|%s|"), (LPCTSTR) strSupportedExtensions, (LPCTSTR) strSupportedExtensions);
+    strFilter.Format(_T("All Supported Files (%s)|%s|"), strSupportedExtensions.GetString(), strSupportedExtensions.GetString());
 
     // build the list on a per-format basis
     for (int z = 0; z < m_aryFormats.GetSize(); z++)
     {
         // get the format's extensions
         aryExtensions.InitFromList(m_aryFormats[z]->GetInputExtensions(theApp.GetSettings()->GetMode()), _T(";"));
-        
+
         if (aryExtensions.GetSize() > 0)
         {
             // build the extension list
@@ -238,11 +245,11 @@ CString CFormatArray::GetOpenFilesFilter(BOOL bAddAllFiles)
 
             // build the filter string
             CString strFormatFilter;
-            strFormatFilter.Format(_T("%s Files (%s)|%s|"), (LPCTSTR) m_aryFormats[z]->GetName(), (LPCTSTR) strFormatExtensions, (LPCTSTR) strFormatExtensions);
+            strFormatFilter.Format(_T("%s Files (%s)|%s|"), m_aryFormats[z]->GetName().GetString(), strFormatExtensions.GetString(), strFormatExtensions.GetString());
             strFilter += strFormatFilter;
         }
     }
-    
+
     // all files
     if (bAddAllFiles)
         strFilter += _T("All Files (*.*)|*.*|");

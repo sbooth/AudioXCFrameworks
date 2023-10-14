@@ -299,7 +299,3 @@ HINSTANCE    LoadOLEAut32();
 
 
 #endif /* __COMBASE__ */
-
-
-
-

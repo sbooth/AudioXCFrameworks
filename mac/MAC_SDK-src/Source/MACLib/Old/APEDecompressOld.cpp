@@ -3,7 +3,7 @@
 #ifdef APE_BACKWARDS_COMPATIBILITY
 
 #include "APEDecompressOld.h"
-#include "../APEInfo.h"
+#include "APEInfo.h"
 
 namespace APE
 {
@@ -15,36 +15,38 @@ CAPEDecompressOld::CAPEDecompressOld(int * pErrorCode, CAPEInfo * pAPEInfo, int 
     // open / analyze the file
     m_spAPEInfo.Assign(pAPEInfo);
 
-    // version check (this implementation only works with 3.92 and earlier files)
-    if (GetInfo(APE_INFO_FILE_VERSION) > 3920)
-    {
-        *pErrorCode = ERROR_UNDEFINED;
-        return;
-    }
-
     // create the buffer
-    m_nBlockAlign = (int)GetInfo(APE_INFO_BLOCK_ALIGN);
-    if ((m_nBlockAlign <= 0) || (m_nBlockAlign > 32))
-    {
-        *pErrorCode = ERROR_INVALID_INPUT_FILE;
-        return;
-    }
-    
+    m_nBlockAlign = m_spAPEInfo->GetInfo(APE_INFO_BLOCK_ALIGN);
+
     // initialize other stuff
     m_nBufferTail = 0;
     m_bDecompressorInitialized = false;
     m_nCurrentFrame = 0;
     m_nCurrentBlock = 0;
-    
+
     // set the "real" start and finish blocks
-    m_nStartBlock = (nStartBlock < 0) ? 0 : ape_min(nStartBlock, (int)GetInfo(APE_INFO_TOTAL_BLOCKS));
-    m_nFinishBlock = (nFinishBlock < 0) ? (int)GetInfo(APE_INFO_TOTAL_BLOCKS) : ape_min(nFinishBlock, (int)GetInfo(APE_INFO_TOTAL_BLOCKS));
-    m_bIsRanged = (m_nStartBlock != 0) || (m_nFinishBlock != (int)GetInfo(APE_INFO_TOTAL_BLOCKS));
+    m_nStartBlock = (nStartBlock < 0) ? 0 : ape_min(nStartBlock, static_cast<int>(m_spAPEInfo->GetInfo(APE_INFO_TOTAL_BLOCKS)));
+    m_nFinishBlock = (nFinishBlock < 0) ? static_cast<int>(m_spAPEInfo->GetInfo(APE_INFO_TOTAL_BLOCKS)) : ape_min(nFinishBlock, static_cast<int>(m_spAPEInfo->GetInfo(APE_INFO_TOTAL_BLOCKS)));
+    m_bIsRanged = (m_nStartBlock != 0) || (m_nFinishBlock != static_cast<int>(m_spAPEInfo->GetInfo(APE_INFO_TOTAL_BLOCKS)));
+
+    // version check (this implementation only works with 3.92 and earlier files)
+    // do this after initializing variables or else we get a warning
+    if (m_spAPEInfo->GetInfo(APE_INFO_FILE_VERSION) > 3920)
+    {
+        *pErrorCode = ERROR_UNDEFINED;
+        return;
+    }
+
+    // check block alignment
+    if ((m_nBlockAlign <= 0) || (m_nBlockAlign > 32))
+    {
+        *pErrorCode = ERROR_INVALID_INPUT_FILE;
+        return;
+    }
 }
 
 CAPEDecompressOld::~CAPEDecompressOld()
 {
-
 }
 
 int CAPEDecompressOld::InitializeDecompressor()
@@ -56,10 +58,10 @@ int CAPEDecompressOld::InitializeDecompressor()
     // initialize the decoder
     RETURN_ON_ERROR(m_UnMAC.Initialize(this))
 
-    int64 nMaximumDecompressedFrameBytes = m_nBlockAlign * intn(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
-    int64 nTotalBufferBytes = ape_max(65536, (nMaximumDecompressedFrameBytes + 16) * 2);
-    m_spBuffer.Assign(new char [(unsigned int) nTotalBufferBytes], true);
-    if (m_spBuffer == NULL)
+    const int64 nMaximumDecompressedFrameBytes = m_nBlockAlign * static_cast<intn>(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
+    const int64 nTotalBufferBytes = ape_max(65536, (nMaximumDecompressedFrameBytes + 16) * 2);
+    m_spBuffer.Assign(new unsigned char [static_cast<unsigned int>(nTotalBufferBytes)], true);
+    if (m_spBuffer == APE_NULL)
         return ERROR_INSUFFICIENT_MEMORY;
 
     // update the initialized flag
@@ -69,14 +71,14 @@ int CAPEDecompressOld::InitializeDecompressor()
     return Seek(0);
 }
 
-int CAPEDecompressOld::GetData(char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved)
+int CAPEDecompressOld::GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING *)
 {
     if (pBlocksRetrieved) *pBlocksRetrieved = 0;
 
     RETURN_ON_ERROR(InitializeDecompressor())
-    
+
     // cap
-    int64 nBlocksUntilFinish = m_nFinishBlock - m_nCurrentBlock;
+    const int64 nBlocksUntilFinish = m_nFinishBlock - m_nCurrentBlock;
     nBlocks = ape_min(nBlocks, nBlocksUntilFinish);
 
     int64 nBlocksRetrieved = 0;
@@ -89,15 +91,15 @@ int CAPEDecompressOld::GetData(char * pBuffer, int64 nBlocks, int64 * pBlocksRet
     while (nBytesLeft > 0 && nBlocksDecoded > 0)
     {
         // empty the buffer
-        int64 nBytesAvailable = m_nBufferTail;
-        int64 nIntialBytes = ape_min(nBytesLeft, nBytesAvailable);
+        const int64 nBytesAvailable = m_nBufferTail;
+        const int64 nIntialBytes = ape_min(nBytesLeft, nBytesAvailable);
         if (nIntialBytes > 0)
         {
-            memcpy(&pBuffer[nTotalBytesNeeded - nBytesLeft], &m_spBuffer[0], size_t(nIntialBytes));
-            
+            memcpy(&pBuffer[nTotalBytesNeeded - nBytesLeft], &m_spBuffer[0], static_cast<size_t>(nIntialBytes));
+
             if ((m_nBufferTail - nIntialBytes) > 0)
-                memmove(&m_spBuffer[0], &m_spBuffer[nIntialBytes], size_t(m_nBufferTail - nIntialBytes));
-                
+                memmove(&m_spBuffer[0], &m_spBuffer[nIntialBytes], static_cast<size_t>(m_nBufferTail - nIntialBytes));
+
             nBytesLeft -= nIntialBytes;
             m_nBufferTail -= nIntialBytes;
 
@@ -106,7 +108,7 @@ int CAPEDecompressOld::GetData(char * pBuffer, int64 nBlocks, int64 * pBlocksRet
         // decode more
         if (nBytesLeft > 0)
         {
-            nBlocksDecoded = m_UnMAC.DecompressFrame((unsigned char *) &m_spBuffer[m_nBufferTail], (int32) m_nCurrentFrame++);
+            nBlocksDecoded = m_UnMAC.DecompressFrame(&m_spBuffer[m_nBufferTail], static_cast<int32>(m_nCurrentFrame++));
             if (nBlocksDecoded == -1)
             {
                 return ERROR_UNDEFINED;
@@ -114,14 +116,14 @@ int CAPEDecompressOld::GetData(char * pBuffer, int64 nBlocks, int64 * pBlocksRet
             m_nBufferTail += (nBlocksDecoded * m_nBlockAlign);
         }
     }
-    
+
     nBlocksRetrieved = (nTotalBytesNeeded - nBytesLeft) / m_nBlockAlign;
 
     // update the position
     m_nCurrentBlock += nBlocksRetrieved;
 
     if (pBlocksRetrieved) *pBlocksRetrieved = nBlocksRetrieved;
-    
+
     return ERROR_SUCCESS;
 }
 
@@ -131,7 +133,7 @@ int CAPEDecompressOld::Seek(int64 nBlockOffset)
 
     // use the offset
     nBlockOffset += m_nStartBlock;
-    
+
     // cap (to prevent seeking too far)
     if (nBlockOffset >= m_nFinishBlock)
         nBlockOffset = m_nFinishBlock - 1;
@@ -140,33 +142,33 @@ int CAPEDecompressOld::Seek(int64 nBlockOffset)
 
     // flush the buffer
     m_nBufferTail = 0;
-    
+
     // seek to the perfect location
-    int64 nBaseFrame = nBlockOffset / intn(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
-    int64 nBlocksToSkip = nBlockOffset % intn(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
-    int64 nBytesToSkip = nBlocksToSkip * m_nBlockAlign;
-        
+    const int64 nBaseFrame = nBlockOffset / static_cast<intn>(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
+    const int64 nBlocksToSkip = nBlockOffset % static_cast<intn>(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
+    const int64 nBytesToSkip = nBlocksToSkip * m_nBlockAlign;
+
     // skip necessary blocks
-    int64 nMaximumDecompressedFrameBytes = m_nBlockAlign * (int)GetInfo(APE_INFO_BLOCKS_PER_FRAME);
-    CSmartPtr<char> spTempBuffer;
-    spTempBuffer.Assign(new char[(unsigned int) (nMaximumDecompressedFrameBytes + 16)], true);
-    ZeroMemory(spTempBuffer.GetPtr(), size_t(nMaximumDecompressedFrameBytes + 16));
-    
+    const int64 nMaximumDecompressedFrameBytes = m_nBlockAlign * static_cast<int>(GetInfo(APE_INFO_BLOCKS_PER_FRAME));
+    CSmartPtr<unsigned char> spTempBuffer;
+    spTempBuffer.Assign(new unsigned char[static_cast<size_t>(nMaximumDecompressedFrameBytes + 16)], true);
+    ZeroMemory(spTempBuffer.GetPtr(), static_cast<size_t>(nMaximumDecompressedFrameBytes + 16));
+
     m_nCurrentFrame = nBaseFrame;
 
-    intn nBlocksDecoded = m_UnMAC.DecompressFrame((unsigned char *)spTempBuffer.GetPtr(), (int32) m_nCurrentFrame++);
-    
+    const intn nBlocksDecoded = m_UnMAC.DecompressFrame(spTempBuffer.GetPtr(), static_cast<int32>(m_nCurrentFrame++));
+
     if (nBlocksDecoded == -1)
     {
         return ERROR_UNDEFINED;
     }
-    
-    int64 nBytesToKeep = (nBlocksDecoded * m_nBlockAlign) - nBytesToSkip;
-    memcpy(&m_spBuffer[m_nBufferTail], &spTempBuffer[nBytesToSkip], size_t(nBytesToKeep));
+
+    const int64 nBytesToKeep = (nBlocksDecoded * m_nBlockAlign) - nBytesToSkip;
+    memcpy(&m_spBuffer[m_nBufferTail], &spTempBuffer[nBytesToSkip], static_cast<size_t>(nBytesToKeep));
     m_nBufferTail += nBytesToKeep;
-    
+
     m_nCurrentBlock = nBlockOffset;
-    
+
     return ERROR_SUCCESS;
 }
 
@@ -175,44 +177,43 @@ int64 CAPEDecompressOld::GetInfo(APE_DECOMPRESS_FIELDS Field, int64 nParam1, int
     int64 nRetVal = 0;
     bool bHandled = true;
 
-    switch (Field)
+    if (Field == APE_DECOMPRESS_CURRENT_BLOCK)
     {
-    case APE_DECOMPRESS_CURRENT_BLOCK:
         nRetVal = m_nCurrentBlock - m_nStartBlock;
-        break;
-    case APE_DECOMPRESS_CURRENT_MS:
-    {
-        int64 nSampleRate = m_spAPEInfo->GetInfo(APE_INFO_SAMPLE_RATE, 0, 0);
-        if (nSampleRate > 0)
-            nRetVal = int64((double(m_nCurrentBlock) * double(1000)) / double(nSampleRate));
-        break;
     }
-    case APE_DECOMPRESS_TOTAL_BLOCKS:
+    else if (Field == APE_DECOMPRESS_CURRENT_MS)
+    {
+        const int64 nSampleRate = m_spAPEInfo->GetInfo(APE_INFO_SAMPLE_RATE, 0, 0);
+        if (nSampleRate > 0)
+            nRetVal = static_cast<int64>((static_cast<double>(m_nCurrentBlock) * static_cast<double>(1000)) / static_cast<double>(nSampleRate));
+    }
+    else if (Field == APE_DECOMPRESS_TOTAL_BLOCKS)
+    {
         nRetVal = m_nFinishBlock - m_nStartBlock;
-        break;
-    case APE_DECOMPRESS_LENGTH_MS:
-    {
-        int64 nSampleRate = m_spAPEInfo->GetInfo(APE_INFO_SAMPLE_RATE, 0, 0);
-        if (nSampleRate > 0)
-            nRetVal = int64((double(m_nFinishBlock - m_nStartBlock) * double(1000)) / double(nSampleRate));
-        break;
     }
-    case APE_DECOMPRESS_CURRENT_BITRATE:
-        nRetVal = GetInfo(APE_INFO_FRAME_BITRATE, intn(m_nCurrentFrame));
-        break;
-    case APE_DECOMPRESS_AVERAGE_BITRATE:
+    else if (Field == APE_DECOMPRESS_LENGTH_MS)
+    {
+        const int64 nSampleRate = m_spAPEInfo->GetInfo(APE_INFO_SAMPLE_RATE, 0, 0);
+        if (nSampleRate > 0)
+            nRetVal = static_cast<int64>((static_cast<double>(m_nFinishBlock - m_nStartBlock) * static_cast<double>(1000)) / static_cast<double>(nSampleRate));
+    }
+    else if (Field == APE_DECOMPRESS_CURRENT_BITRATE)
+    {
+        nRetVal = GetInfo(APE_INFO_FRAME_BITRATE, static_cast<intn>(m_nCurrentFrame));
+    }
+    else if (Field == APE_DECOMPRESS_AVERAGE_BITRATE)
     {
         if (m_bIsRanged)
         {
             // figure the frame range
             const int64 nBlocksPerFrame = GetInfo(APE_INFO_BLOCKS_PER_FRAME);
-            int64 nStartFrame = m_nStartBlock / nBlocksPerFrame;
-            int64 nFinishFrame = (m_nFinishBlock + nBlocksPerFrame - 1) / nBlocksPerFrame;
+            const int64 nStartFrame = m_nStartBlock / nBlocksPerFrame;
+            const int64 nFinishFrame = (m_nFinishBlock + nBlocksPerFrame - 1) / nBlocksPerFrame;
 
             // get the number of bytes in the first and last frame
-            int64 nTotalBytes = (GetInfo(APE_INFO_FRAME_BYTES, intn(nStartFrame)) * (m_nStartBlock % nBlocksPerFrame)) / nBlocksPerFrame;
+            int64 nTotalBytes = (GetInfo(APE_INFO_FRAME_BYTES, static_cast<intn>(nStartFrame)) * (m_nStartBlock % nBlocksPerFrame)) / nBlocksPerFrame;
             if (nFinishFrame != nStartFrame)
-                nTotalBytes += (GetInfo(APE_INFO_FRAME_BYTES, intn(nFinishFrame)) * (m_nFinishBlock % nBlocksPerFrame)) / nBlocksPerFrame;
+                nTotalBytes += (GetInfo(APE_INFO_FRAME_BYTES, static_cast<intn>(nFinishFrame)) * (m_nFinishBlock % nBlocksPerFrame)) / nBlocksPerFrame;
 
             // get the number of bytes in between
             const int64 nTotalFrames = GetInfo(APE_INFO_TOTAL_FRAMES);
@@ -220,7 +221,7 @@ int64 CAPEDecompressOld::GetInfo(APE_DECOMPRESS_FIELDS Field, int64 nParam1, int
                 nTotalBytes += GetInfo(APE_INFO_FRAME_BYTES, nFrame);
 
             // figure the bitrate
-            int64 nTotalMS = int64((double(m_nFinishBlock - m_nStartBlock) * double(1000)) / double(GetInfo(APE_INFO_SAMPLE_RATE)));
+            const int64 nTotalMS = static_cast<int64>((static_cast<double>(m_nFinishBlock - m_nStartBlock) * static_cast<double>(1000)) / static_cast<double>(GetInfo(APE_INFO_SAMPLE_RATE)));
             if (nTotalMS != 0)
                 nRetVal = (nTotalBytes * 8) / nTotalMS;
         }
@@ -228,10 +229,9 @@ int64 CAPEDecompressOld::GetInfo(APE_DECOMPRESS_FIELDS Field, int64 nParam1, int
         {
             nRetVal = GetInfo(APE_INFO_AVERAGE_BITRATE);
         }
-
-        break;
     }
-    default:
+    else
+    {
         bHandled = false;
     }
 
@@ -239,38 +239,40 @@ int64 CAPEDecompressOld::GetInfo(APE_DECOMPRESS_FIELDS Field, int64 nParam1, int
     {
         bHandled = true;
 
-        switch (Field)
+        if (Field == APE_INFO_WAV_HEADER_BYTES)
         {
-        case APE_INFO_WAV_HEADER_BYTES:
             nRetVal = sizeof(WAVE_HEADER);
-            break;
-        case APE_INFO_WAV_HEADER_DATA:
+        }
+        else if (Field == APE_INFO_WAV_HEADER_DATA)
         {
-            char * pBuffer = (char *) nParam1;
-            int nMaxBytes = (int)nParam2;
-            
-            if (sizeof(WAVE_HEADER) > (size_t) nMaxBytes)
+            char * pBuffer = reinterpret_cast<char *>(nParam1);
+            const int nMaxBytes = static_cast<int>(nParam2);
+
+            if (sizeof(WAVE_HEADER) > static_cast<size_t>(nMaxBytes))
             {
                 nRetVal = -1;
             }
             else
             {
-                WAVEFORMATEX wfeFormat; GetInfo(APE_INFO_WAVEFORMATEX, (int64) &wfeFormat, 0);
-                WAVE_HEADER WAVHeader; FillWaveHeader(&WAVHeader, 
-                    (m_nFinishBlock - m_nStartBlock) * intn(GetInfo(APE_INFO_BLOCK_ALIGN)), 
+                WAVEFORMATEX wfeFormat; APE_CLEAR(wfeFormat);
+                GetInfo(APE_INFO_WAVEFORMATEX, POINTER_TO_INT64(&wfeFormat), 0);
+                WAVE_HEADER WAVHeader; FillWaveHeader(&WAVHeader,
+                    (m_nFinishBlock - m_nStartBlock) * static_cast<intn>(GetInfo(APE_INFO_BLOCK_ALIGN)),
                     &wfeFormat, 0);
                 memcpy(pBuffer, &WAVHeader, sizeof(WAVE_HEADER));
                 nRetVal = 0;
             }
-            break;
         }
-        case APE_INFO_WAV_TERMINATING_BYTES:
+        else if (Field == APE_INFO_WAV_TERMINATING_BYTES)
+        {
             nRetVal = 0;
-            break;
-        case APE_INFO_WAV_TERMINATING_DATA:
+        }
+        else if (Field == APE_INFO_WAV_TERMINATING_DATA)
+        {
             nRetVal = 0;
-            break;
-        default:
+        }
+        else
+        {
             bHandled = false;
         }
     }

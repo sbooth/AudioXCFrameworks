@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,7 +17,7 @@
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
                BuildableName = "MAC.framework"
                BlueprintName = "macOS"
-               ReferencedContainer = "container:MAC.xcodeproj">
+               ReferencedContainer = "container:mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -53,7 +53,7 @@
             BlueprintIdentifier = "32028D07254AE93F00A537DE"
             BuildableName = "MAC.framework"
             BlueprintName = "macOS"
-            ReferencedContainer = "container:MAC.xcodeproj">
+            ReferencedContainer = "container:mac.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

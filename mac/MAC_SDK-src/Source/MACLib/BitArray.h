@@ -14,6 +14,7 @@ struct RANGE_CODER_STRUCT_COMPRESS
     unsigned int range;      // length of interval
     unsigned int help;       // bytes_to_follow resp. intermediate value
     unsigned char buffer;    // buffer for input / output
+    unsigned char padding[3]; // buffer alignment
 };
 
 struct BIT_ARRAY_STATE
@@ -21,9 +22,11 @@ struct BIT_ARRAY_STATE
     uint32 nKSum;
 };
 
+#pragma pack(push, 1)
+
 class CBitArray
 {
-public:    
+public:
     // construction / destruction
     CBitArray(APE::CIO * pIO);
     virtual ~CBitArray();
@@ -35,16 +38,18 @@ public:
 
     // output (saving)
     int OutputBitArray(bool bFinalize = false);
-    
+
     // other functions
     void Finalize();
     void AdvanceToByteBoundary();
-    inline uint32 GetCurrentBitIndex() { return m_nCurrentBitIndex; }
+#ifdef APE_ENABLE_BIT_ARRAY_INLINES
+    __forceinline uint32 GetCurrentBitIndex() { return m_nCurrentBitIndex; }
+    __forceinline CMD5Helper& GetMD5Helper() { return m_MD5; }
+#endif
     void FlushState(BIT_ARRAY_STATE & BitArrayState);
     void FlushBitArray();
-    __forceinline CMD5Helper & GetMD5Helper() { return m_MD5; }
-        
-private:    
+
+private:
     // data members
     uint32 * m_pBitArray;
     CIO * m_pIO;
@@ -56,5 +61,7 @@ private:
     void OutputRangeTable();
 #endif
 };
+
+#pragma pack(pop)
 
 }

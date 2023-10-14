@@ -16,8 +16,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION MAC_VERSION_MAJOR,MAC_VERSION_REVISION
- PRODUCTVERSION MAC_VERSION_MAJOR,MAC_VERSION_REVISION,0,0
+ FILEVERSION APE_VERSION_MAJOR,APE_VERSION_REVISION
+ PRODUCTVERSION APE_VERSION_MAJOR,APE_VERSION_REVISION,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -34,12 +34,12 @@ BEGIN
         BEGIN
             VALUE "Comments", "APE DirectShow Filter"
             VALUE "CompanyName", "Matthew T. Ashland (adopted from RadLight plugin)"
-            VALUE "FileVersion", MAC_RESOURCE_VERSION_STRING
-            VALUE "LegalCopyright", MAC_RESOURCE_COPYRIGHT
+            VALUE "FileVersion", APE_RESOURCE_VERSION_STRING
+            VALUE "LegalCopyright", APE_RESOURCE_COPYRIGHT
             VALUE "LegalTrademarks", " "
             VALUE "OriginalFilename", "APE.ax"
             VALUE "ProductName", "APE DirectShow Filter"
-            VALUE "ProductVersion", MAC_RESOURCE_VERSION_STRING
+            VALUE "ProductVersion", APE_RESOURCE_VERSION_STRING
         END
     END
     BLOCK "VarFileInfo"

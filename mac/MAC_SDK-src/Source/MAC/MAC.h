@@ -5,15 +5,21 @@ class CFormatArray;
 class CMACSettings;
 class CMACDlg;
 
+#pragma warning(push)
+// Clang warns on this in Win32 / Release about using memory after it is freed without the NOLINT marker
+#include <gdiplus.h> // NOLINT
+#pragma warning(pop)
+
 class CMACApp : public CWinApp
 {
 public:
     // construction / destruction
     CMACApp();
-    virtual ~CMACApp();
+    ~CMACApp();
 
     // initialize
     virtual BOOL InitInstance();
+    virtual int ExitInstance();
 
     // data access
     CFormatArray * GetFormatArray();
@@ -30,17 +36,20 @@ public:
     int GetSizeReverse(int nSize);
     double GetScale() { return m_dScale; }
     bool SetScale(double dScale);
+    Gdiplus::Bitmap * GetMonkeyImage();
 
     // message map
     DECLARE_MESSAGE_MAP()
 
 private:
     // helper objects
-    CSmartPtr<CFormatArray> m_sparyFormats;
-    CSmartPtr<CMACSettings> m_spSettings;
-    CSmartPtr<CImageList> m_spImageListToolbar;
-    CSmartPtr<CImageList> m_spImageListOptionsList;
-    CSmartPtr<CImageList> m_spImageListOptionsPages;
+    APE::CSmartPtr<CFormatArray> m_sparyFormats;
+    APE::CSmartPtr<CMACSettings> m_spSettings;
+    CImageList m_ImageListToolbar;
+    CImageList m_ImageListOptionsList;
+    CImageList m_ImageListOptionsPages;
+    APE::CSmartPtr<Gdiplus::Bitmap> m_spButtons;
+    APE::CSmartPtr<Gdiplus::Bitmap> m_spMonkey;
     double m_dScale;
     HANDLE m_hSingleInstance;
     bool m_bAnotherInstanceRunning;

@@ -8,7 +8,6 @@ class CAPEInfoFormatDlg : public CDialog
     DECLARE_DYNAMIC(CAPEInfoFormatDlg)
 
 public:
-
     CAPEInfoFormatDlg(CMACDlg * pMACDlg, CWnd * pParent = NULL);
     virtual ~CAPEInfoFormatDlg();
 
@@ -18,7 +17,6 @@ public:
     enum { IDD = IDD_APE_INFO_FORMAT };
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
     virtual BOOL OnInitDialog();
     DECLARE_MESSAGE_MAP()
@@ -28,6 +26,5 @@ protected:
     CStringArray m_aryFiles;
 
 public:
-
     CRichEditCtrl m_ctrlFormat;
 };

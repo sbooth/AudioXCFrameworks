@@ -3,9 +3,9 @@
 #if !defined(PLATFORM_WINDOWS)
 
 // we treat bool as a global type, so don't declare it in the namespace
-#ifdef _MSC_VER
-    typedef int BOOL;
-#elif defined(PLATFORM_APPLE)
+#ifdef PLATFORM_APPLE
+    #include <AvailabilityMacros.h>
+
     #ifndef OBJC_BOOL_DEFINED
         #if OBJC_BOOL_IS_BOOL
             typedef bool BOOL;
@@ -26,19 +26,8 @@ namespace APE
 #define __stdcall
 #endif
 
-#define NEAR
-#define FAR
-
-typedef unsigned long       DWORD;
 typedef unsigned char       BYTE;
 typedef unsigned short      WORD;
-typedef float               FLOAT;
-typedef void *              HANDLE;
-typedef unsigned int        UINT;
-typedef long                LRESULT;
-typedef wchar_t *           LPTSTR;
-typedef const wchar_t *     LPCTSTR;
-typedef wchar_t             TCHAR;
 typedef struct _GUID {
     unsigned long  Data1;
     unsigned short Data2;
@@ -54,34 +43,19 @@ typedef struct _GUID {
 
 #define CALLBACK
 
-#ifdef _T
-#undef _T
-#endif
-#define _T(x) L ## x
-
 #define _strnicmp strncasecmp
 #define _wtoi(x) wcstol(x, NULL, 10)
-#define _tcscat wcscat
-#undef _totlower
-#define _totlower towlower
-#define _totupper towupper
-#define _tcschr wcschr
-#ifdef _MSC_VER
-#define _tcsicmp _wcsicmp
+
+#ifdef PLATFORM_APPLE
+    #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1070
+        #define _wcsicmp wcscasecmp
+    #else
+        #define _wcsicmp wcscmp // fall back to case sensitive comparison on Mac OS X 10.6.x and earlier
+    #endif
 #else
-#define _tcsicmp wcscasecmp
+    #define _wcsicmp wcscasecmp
 #endif
-#define _tcscpy wcscpy
-#define _tcslen wcslen
-#define _tcsncpy wcsncpy
-#define _tcsstr wcsstr
-#define _ftprintf fwprintf
-#define _tcsnicmp _wcsnicmp
-#define _tcscpy_s wcscpy_s
-#define _tcsncpy_s wcsncpy_s
-#define _ttoi _wtoi
-#define _tcscmp wcscmp
-#define strncpy_s(a, b, c, d) strncpy(a, c, d)
+
 #define MAX_PATH    4096
 
 }

@@ -1,6 +1,6 @@
 /***************************************************************************************
 Compress - Sample 2
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates dynamic linkage to MACDll.dll to create an APE file using
@@ -15,7 +15,7 @@ it takes around 8k per hour of CD music, so it isn't a big deal to allocate more
 needed. You can also specify MAX_AUDIO_BYTES_UNKNOWN to allocate as much space as possible. (2 GB)
 
 Notes for use in a new project:
-    -life will be easier if you set the [MAC SDK]\\Shared directory as an include 
+    -life will be easier if you set the [MAC SDK]\\Shared directory as an include
     directory and an additional library input path in the project settings
     -set the runtime library to "Mutlithreaded"
 
@@ -57,7 +57,7 @@ int GetFunctions(HMODULE hMACDll, MAC_COMPRESS_DLL * pMACDll)
 
     // load the functions
     if (hMACDll != NULL)
-    {    
+    {
         pMACDll->Create = (proc_APECompress_Create) GetProcAddress(hMACDll, "c_APECompress_Create");
         pMACDll->Destroy = (proc_APECompress_Destroy) GetProcAddress(hMACDll, "c_APECompress_Destroy");
         pMACDll->Start = (proc_APECompress_Start) GetProcAddress(hMACDll, "c_APECompress_Start");
@@ -116,7 +116,7 @@ int FillWaveFormatExStructure(APE::WAVEFORMATEX *pWaveFormatEx, int nSampleRate,
 /***************************************************************************************
 Main (the main function)
 ***************************************************************************************/
-int wmain(int argc, wchar_t* argv[]) 
+int wmain(int argc, wchar_t* argv[])
 {
     ///////////////////////////////////////////////////////////////////////////////
     // variable declares
@@ -124,18 +124,18 @@ int wmain(int argc, wchar_t* argv[])
     int nTotalAudioBytes = 1048576;
     const wchar_t cOutputFile[MAX_PATH] = _T("c:\\Noise.ape");
     int nRetVal;
-    
+
     _tprintf(_T("Creating file: %s\n"), cOutputFile);
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // load MACDll.dll and get the functions
     ///////////////////////////////////////////////////////////////////////////////
 
     // load the DLL
     HMODULE hMACDll = LoadLibrary(_T("C:\\Windows\\SysWOW64\\MACDll.dll"));
-    if (hMACDll == NULL) 
+    if (hMACDll == NULL)
         return -1;
-    
+
     // always check the interface version (so we don't crash if something changed)
     if (VersionCheckInterface(hMACDll) != 0)
     {
@@ -144,7 +144,7 @@ int wmain(int argc, wchar_t* argv[])
     }
 
     // get the functions
-    MAC_COMPRESS_DLL MACDll; 
+    MAC_COMPRESS_DLL MACDll;
     if (GetFunctions(hMACDll, &MACDll) != 0)
     {
         FreeLibrary(hMACDll);
@@ -154,10 +154,10 @@ int wmain(int argc, wchar_t* argv[])
     ///////////////////////////////////////////////////////////////////////////////
     // create and start the encoder
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     // set the input WAV format
     APE::WAVEFORMATEX wfeAudioFormat; FillWaveFormatExStructure(&wfeAudioFormat, 44100, 16, 2);
-    
+
     // create the encoder interface
     APE_COMPRESS_HANDLE hAPECompress = MACDll.Create(&nRetVal);
     if (hAPECompress == NULL)
@@ -166,11 +166,11 @@ int wmain(int argc, wchar_t* argv[])
         FreeLibrary(hMACDll);
         return -1;
     }
-    
+
     // start the encoder
     nRetVal = MACDll.StartW(hAPECompress, cOutputFile, &wfeAudioFormat, MAX_AUDIO_BYTES_UNKNOWN,
         MAC_COMPRESSION_LEVEL_HIGH, NULL, CREATE_WAV_HEADER_ON_DECOMPRESSION);
-    
+
     if (nRetVal != 0)
     {
         _tprintf(_T("Error starting encoder.\n"));
@@ -178,7 +178,7 @@ int wmain(int argc, wchar_t* argv[])
         FreeLibrary(hMACDll);
         return -1;
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // pump through and feed the encoder audio data (white noise for the sample)
     ///////////////////////////////////////////////////////////////////////////////
@@ -191,11 +191,11 @@ int wmain(int argc, wchar_t* argv[])
         for (int z = 0; z < 1024; z++)
             cBuffer[z] = rand() % 255;
 
-        // give the data to MAC 
+        // give the data to MAC
         // (we can safely add any amount, but of course larger chunks take longer to process)
         int nBytesToAdd = min(1024, nAudioBytesLeft);
         nRetVal = MACDll.AddData(hAPECompress, &cBuffer[0], nBytesToAdd);
-    
+
         if (nRetVal != ERROR_SUCCESS)
             _tprintf(_T("Encoding error (error code: %d)\r\n"), nRetVal);
 

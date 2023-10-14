@@ -5,7 +5,6 @@
 class MAC_FILE_ARRAY : public CArray<MAC_FILE, MAC_FILE &>
 {
 public:
-
     // construction / destruction
     MAC_FILE_ARRAY();
     virtual ~MAC_FILE_ARRAY();
@@ -21,5 +20,5 @@ public:
     BOOL GetContainsFile(const CString & strFilename);
 
     // data
-    DWORD m_dwStartProcessingTickCount;
+    ULONGLONG m_dwStartProcessingTickCount;
 };

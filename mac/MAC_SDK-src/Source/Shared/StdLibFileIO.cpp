@@ -115,9 +115,9 @@ CIO * CreateCIO()
 
 CStdLibFileIO::CStdLibFileIO()
 {
-    memset(m_cFileName, 0, sizeof(m_cFileName));
+    APE_CLEAR(m_cFileName);
     m_bReadOnly = false;
-    m_pFile = NULL;
+    m_pFile = APE_NULL;
 }
 
 CStdLibFileIO::~CStdLibFileIO()
@@ -130,7 +130,7 @@ int CStdLibFileIO::GetHandle()
     return FILENO(m_pFile);
 }
 
-int CStdLibFileIO::Open(const wchar_t * pName, bool bOpenReadOnly)
+int CStdLibFileIO::Open(const wchar_t * pName, bool)
 {
     Close();
 
@@ -139,21 +139,21 @@ int CStdLibFileIO::Open(const wchar_t * pName, bool bOpenReadOnly)
 
     m_bReadOnly = false;
 
-    if (0 == wcscmp(pName, _T("-")) || 0 == wcscmp(pName, _T("/dev/stdin")))
+    if (0 == wcscmp(pName, L"-") || 0 == wcscmp(pName, L"/dev/stdin"))
     {
         m_pFile = SETBINARY_IN(stdin);
         m_bReadOnly = true;                                                     // ReadOnly
     }
-    else if (0 == wcscmp(pName, _T("/dev/stdout")))
+    else if (0 == wcscmp(pName, L"/dev/stdout"))
     {
         m_pFile = SETBINARY_OUT(stdout);
         m_bReadOnly = false;                                                    // WriteOnly
     }
-    else 
+    else
     {
         CSmartPtr<char> spFilenameUTF8((char *) CAPECharacterHelper::GetUTF8FromUTF16(pName), true);
         m_pFile = fopen(spFilenameUTF8, "r+be");
-        if (m_pFile == NULL && (errno == EACCES || errno == EPERM || errno == EROFS))
+        if (m_pFile == APE_NULL && (errno == EACCES || errno == EPERM || errno == EROFS))
         {
             // failed asking for read/write mode on open, try read-only
             m_pFile = fopen(spFilenameUTF8, "rbe");
@@ -174,10 +174,10 @@ int CStdLibFileIO::Close()
 {
     int nResult = ERROR_UNDEFINED;
 
-    if (m_pFile != NULL) 
+    if (m_pFile != APE_NULL)
     {
         nResult = fclose(m_pFile);
-        m_pFile = NULL;
+        m_pFile = APE_NULL;
     }
 
     return nResult;
@@ -185,31 +185,35 @@ int CStdLibFileIO::Close()
 
 int CStdLibFileIO::Read(void * pBuffer, unsigned int nBytesToRead, unsigned int * pBytesRead)
 {
-    *pBytesRead = (int) fread(pBuffer, 1, nBytesToRead, m_pFile);
-    return ferror(m_pFile) ? ERROR_IO_READ : ERROR_SUCCESS;
+    *pBytesRead = (unsigned int) fread(pBuffer, 1, nBytesToRead, m_pFile);
+    if ((*pBytesRead == 0) && (nBytesToRead > 0)) return ERROR_IO_READ;
+    else return ferror(m_pFile) ? ERROR_IO_READ : ERROR_SUCCESS;
 }
 
 int CStdLibFileIO::Write(const void * pBuffer, unsigned  int nBytesToWrite, unsigned int * pBytesWritten)
 {
-    *pBytesWritten = (int) fwrite(pBuffer, 1, nBytesToWrite, m_pFile);
+    *pBytesWritten = (unsigned int) fwrite(pBuffer, 1, nBytesToWrite, m_pFile);
     return (ferror(m_pFile) || (*pBytesWritten != nBytesToWrite)) ? ERROR_IO_WRITE : ERROR_SUCCESS;
 }
 
-int64 CStdLibFileIO::PerformSeek()
+int CStdLibFileIO::Seek(int64 nPosition, SeekMethod nMethod)
 {
     int nOrigin = 0;
-    if (m_nSeekMethod == APE_FILE_BEGIN)
+    if (nMethod == SeekFileBegin)
         nOrigin = SEEK_SET;
-    else if (m_nSeekMethod == APE_FILE_END)
+    else if (nMethod == SeekFileEnd)
+    {
         nOrigin = SEEK_END;
-    else if (m_nSeekMethod == APE_FILE_CURRENT)
+        nPosition = -abs(nPosition);
+    }
+    else if (nMethod == SeekFileCurrent)
         nOrigin = SEEK_CUR;
 #ifdef PLATFORM_ANDROID
-    return fseek(m_pFile, m_nSeekPosition, nOrigin);
+    return fseek(m_pFile, nPosition, nOrigin);
 #elif !defined(PLATFORM_WINDOWS)
-    return fseeko(m_pFile, m_nSeekPosition, nOrigin);
+    return fseeko(m_pFile, nPosition, nOrigin);
 #else
-    return _fseeki64(m_pFile, m_nSeekPosition, nOrigin);
+    return _fseeki64(m_pFile, nPosition, nOrigin);
 #endif
 }
 
@@ -232,13 +236,9 @@ int64 CStdLibFileIO::GetPosition()
 int64 CStdLibFileIO::GetSize()
 {
     int64 nCurrentPosition = GetPosition();
-    SetSeekPosition(0);
-    SetSeekMethod(APE_FILE_END);
-    PerformSeek();
+    Seek(0, SeekFileEnd);
     int64 nLength = GetPosition();
-    SetSeekPosition(nCurrentPosition);
-    SetSeekMethod(APE_FILE_BEGIN);
-    PerformSeek();
+    Seek(nCurrentPosition, SeekFileBegin);
     return nLength;
 }
 
@@ -255,12 +255,12 @@ int CStdLibFileIO::Create(const wchar_t * pName)
     if (wcslen(pName) >= MAX_PATH)
         return ERROR_UNDEFINED;
 
-    if (0 == wcscmp(pName, _T("-")) || 0 == wcscmp(pName, _T("/dev/stdout")))
+    if (0 == wcscmp(pName, L"-") || 0 == wcscmp(pName, L"/dev/stdout"))
     {
         m_pFile = SETBINARY_OUT(stdout);
         m_bReadOnly = false;                            // WriteOnly
     }
-    else 
+    else
     {
         CSmartPtr<char> spFilenameUTF8((char *) CAPECharacterHelper::GetUTF8FromUTF16(pName), true);
         // NOTE: on Mac OSX (BSD Unix), we MUST have "w+b" if we want to read & write, with other systems "wb" seems to be fine

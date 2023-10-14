@@ -72,14 +72,14 @@ inline LONGLONG WINAPI ConvertToMilliseconds(const REFERENCE_TIME& RT)
  */
 
 class CBaseReferenceClock
-: public CUnknown, public IReferenceClock, public CCritSec, public IReferenceClockTimerControl 
+: public CUnknown, public IReferenceClock, public CCritSec, public IReferenceClockTimerControl
 {
 protected:
     virtual ~CBaseReferenceClock();     // Don't let me be created on the stack!
 public:
-    CBaseReferenceClock(__in_opt LPCTSTR pName, 
-                        __inout_opt LPUNKNOWN pUnk, 
-                        __inout HRESULT *phr, 
+    CBaseReferenceClock(__in_opt LPCTSTR pName,
+                        __inout_opt LPUNKNOWN pUnk,
+                        __inout HRESULT *phr,
                         __inout_opt CAMSchedule * pSched = 0 );
 
     STDMETHODIMP NonDelegatingQueryInterface(REFIID riid, __deref_out void ** ppv);
@@ -181,4 +181,3 @@ protected:
 };
 
 #endif
-

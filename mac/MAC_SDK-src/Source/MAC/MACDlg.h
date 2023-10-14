@@ -8,8 +8,7 @@
 class CMACDlg : public CDialog
 {
 public:
-    
-    CMACDlg(CWnd * pParent = NULL);
+    CMACDlg(CStringArrayEx * paryFiles, CWnd * pParent = NULL);
 
     enum { IDD = IDD_MAC_DIALOG };
     CMACListCtrl m_ctrlList;
@@ -26,9 +25,9 @@ public:
 
     void LayoutControlTop(CWnd * pwndLayout, CRect & rectLayout, bool bOnlyControlWidth = false, bool bCombobox = false, CWnd * pwndRight = NULL);
     void LayoutControlTopWithDivider(CWnd * pwndLayout, CWnd * pwndDivider, CWnd * pwndImage, CRect & rectLayout);
+    BOOL SetMode(APE::APE_MODES Mode);
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
 
     virtual BOOL OnInitDialog();
@@ -68,17 +67,18 @@ protected:
     afx_msg void OnHelpWebsiteJRiver();
     afx_msg void OnHelpWebsiteWinamp();
     afx_msg void OnHelpWebsiteEac();
+    afx_msg void OnHelpLicense();
     afx_msg void OnToolsOptions();
     afx_msg void OnInitMenu(CMenu * pMenu);
     afx_msg void OnInitMenuPopup(CMenu * pPopupMenu, UINT nIndex, BOOL bSysMenu);
     afx_msg void OnGetMinMaxInfo(MINMAXINFO FAR * lpMMI);
     afx_msg BOOL OnQueryEndSession();
-    afx_msg void OnEndSession(BOOL bEnding);
+    afx_msg void OnEndSession [[ noreturn ]] (BOOL bEnding);
     afx_msg LRESULT OnDPIChange(WPARAM wParam, LPARAM lParam);
     DECLARE_MESSAGE_MAP()
 
     BOOL m_bInitialized;
-    CSmartPtr<CMACProcessFiles> m_spProcessFiles;
+    APE::CSmartPtr<CMACProcessFiles> m_spProcessFiles;
     MAC_FILE_ARRAY m_aryFiles;
     HACCEL m_hAcceleratorTable;
     CString m_strAddFilesBasePath;
@@ -87,15 +87,14 @@ protected:
     CFont m_Font;
     CFont m_fontStart;
     BOOL m_bLastLoadMenuAndToolbarProcessing;
+    CStringArrayEx * m_paryFiles;
 
     void LayoutWindow();
     void UpdateWindow();
     BOOL AddToolbarButton(int nID, int nBitmap, const CString & strText = "", int nStyle = TBSTYLE_BUTTON);
-    BOOL SetMode(MAC_MODES Mode);
     BOOL SetAPECompressionLevel(int nAPECompressionLevel);
     BOOL LoadMenuAndToolbar(BOOL bProcessing);
     void SetToolbarButtonBitmap(int nID, int nBitmap);
     void PlayDefaultSound();
     void LoadScale();
 };
-

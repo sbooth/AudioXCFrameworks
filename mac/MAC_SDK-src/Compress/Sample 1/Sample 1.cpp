@@ -1,6 +1,6 @@
 /***************************************************************************************
 Compress - Sample 1
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates using MACLib.lib to create an APE file by encoding some
@@ -16,7 +16,7 @@ needed.  You can also specify MAX_AUDIO_BYTES_UNKNOWN to allocate as much space 
 
 Notes for use in a new project:
     -you need to include "MACLib.lib" in the included libraries list
-    -life will be easier if you set the [MAC SDK]\\Shared directory as an include 
+    -life will be easier if you set the [MAC SDK]\\Shared directory as an include
     directory and an additional library input path in the project settings
     -set the runtime library to "Mutlithreaded"
 
@@ -37,28 +37,28 @@ using namespace APE;
 /***************************************************************************************
 Main (the main function)
 ***************************************************************************************/
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[])
 {
     ///////////////////////////////////////////////////////////////////////////////
     // variable declares
     ///////////////////////////////////////////////////////////////////////////////
     int nAudioBytes = 1048576*10;
     const wchar_t cOutputFile[MAX_PATH] = _T("c:\\Noise.ape");
-    
+
     _tprintf(_T("Creating file: %s\n"), cOutputFile);
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // create and start the encoder
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     // set the input WAV format
     APE::WAVEFORMATEX wfeAudioFormat; FillWaveFormatEx(&wfeAudioFormat, WAVE_FORMAT_PCM, 44100, 16, 2);
-    
+
     // create the encoder interface
     IAPECompress * pAPECompress = CreateIAPECompress();
-    
+
     // start the encoder
-    int nRetVal = pAPECompress->Start(cOutputFile, &wfeAudioFormat, nAudioBytes, 
+    int nRetVal = pAPECompress->Start(cOutputFile, &wfeAudioFormat, nAudioBytes,
         MAC_COMPRESSION_LEVEL_HIGH, NULL, CREATE_WAV_HEADER_ON_DECOMPRESSION);
 
     if (nRetVal != 0)
@@ -67,25 +67,25 @@ int main(int argc, char* argv[])
         printf("Error starting encoder.\n");
         return -1;
     }
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // pump through and feed the encoder audio data (white noise for the sample)
     ///////////////////////////////////////////////////////////////////////////////
     int64 nAudioBytesLeft = nAudioBytes;
-    
+
     while (nAudioBytesLeft > 0)
     {
         ///////////////////////////////////////////////////////////////////////////////
         // NOTE: we're locking the buffer used internally by MAC and copying the data
         //         directly into it... however, you could also use the AddData(...) command
-        //       to avoid the added complexity of locking and unlocking 
+        //       to avoid the added complexity of locking and unlocking
         //       the buffer (but it may be a little slower )
         ///////////////////////////////////////////////////////////////////////////////
-    
+
         // lock the compression buffer
         int64 nBufferBytesAvailable = 0;
         unsigned char * pBuffer = pAPECompress->LockBuffer(&nBufferBytesAvailable);
-    
+
         // fill the buffer with white noise
         int64 nNoiseBytes = min(nBufferBytesAvailable, nAudioBytesLeft);
         for (int z = 0; z < nNoiseBytes; z++)

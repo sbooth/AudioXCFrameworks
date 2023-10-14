@@ -116,7 +116,7 @@ HRESULT CBaseWindow::DoneWithWindow()
 
         if (IsWindow(m_hwnd)) {
 
-            // This code should only be executed if the window exists and if the window's 
+            // This code should only be executed if the window exists and if the window's
             // messages are processed on a different thread.
             ASSERT(GetWindowThreadProcessId(m_hwnd, NULL) != GetCurrentThreadId());
 
@@ -2709,14 +2709,14 @@ STDAPI CheckVideoInfoType(const AM_MEDIA_TYPE *pmt)
     if (NULL == pmt || NULL == pmt->pbFormat) {
         return E_POINTER;
     }
-    if (pmt->majortype != MEDIATYPE_Video || 
+    if (pmt->majortype != MEDIATYPE_Video ||
         pmt->formattype != FORMAT_VideoInfo ||
         pmt->cbFormat < sizeof(VIDEOINFOHEADER)) {
         return VFW_E_TYPE_NOT_ACCEPTED;
     }
     const VIDEOINFOHEADER *pHeader = (const VIDEOINFOHEADER *)pmt->pbFormat;
     if (!ValidateBitmapInfoHeader(
-             &pHeader->bmiHeader, 
+             &pHeader->bmiHeader,
              pmt->cbFormat - FIELD_OFFSET(VIDEOINFOHEADER, bmiHeader))) {
         return VFW_E_TYPE_NOT_ACCEPTED;
     }
@@ -2729,15 +2729,15 @@ STDAPI CheckVideoInfo2Type(const AM_MEDIA_TYPE *pmt)
 {
     if (NULL == pmt || NULL == pmt->pbFormat) {
         return E_POINTER;
-    }    
-    if (pmt->majortype != MEDIATYPE_Video || 
+    }
+    if (pmt->majortype != MEDIATYPE_Video ||
         pmt->formattype != FORMAT_VideoInfo2 ||
         pmt->cbFormat < sizeof(VIDEOINFOHEADER2)) {
         return VFW_E_TYPE_NOT_ACCEPTED;
     }
     const VIDEOINFOHEADER2 *pHeader = (const VIDEOINFOHEADER2 *)pmt->pbFormat;
     if (!ValidateBitmapInfoHeader(
-             &pHeader->bmiHeader, 
+             &pHeader->bmiHeader,
              pmt->cbFormat - FIELD_OFFSET(VIDEOINFOHEADER2, bmiHeader))) {
         return VFW_E_TYPE_NOT_ACCEPTED;
     }
