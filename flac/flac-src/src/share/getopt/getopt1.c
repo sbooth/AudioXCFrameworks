@@ -36,9 +36,6 @@
 #  include <config.h>
 #endif
 
-#include "share/getopt.h"
-/*[JEC] was:#include "getopt.h"*/
-
 #if !defined __STDC__ || !__STDC__
 /* This is a separate conditional since some stdc systems
    reject `defined (const)'.  */
@@ -48,6 +45,9 @@
 #endif
 
 #include <stdio.h>
+
+#include "share/getopt.h"
+/*[JEC] was:#include "getopt.h"*/
 
 /* Comment out all this code if we are using the GNU C Library, and are not
    actually compiling the library itself.  This code is part of the GNU C
@@ -79,13 +79,7 @@
 #define NULL 0
 #endif
 
-int
-share__getopt_long (argc, argv, options, long_options, opt_index)
-     int argc;
-     char *const *argv;
-     const char *options;
-     const struct share__option *long_options;
-     int *opt_index;
+int share__getopt_long(int argc, char *const *argv, const char *options, const struct share__option *long_options, int *opt_index)
 {
   return share___getopt_internal (argc, argv, options, long_options, opt_index, 0);
 }
@@ -95,13 +89,7 @@ share__getopt_long (argc, argv, options, long_options, opt_index)
    but does match a short option, it is parsed as a short option
    instead.  */
 
-int
-share__getopt_long_only (argc, argv, options, long_options, opt_index)
-     int argc;
-     char *const *argv;
-     const char *options;
-     const struct share__option *long_options;
-     int *opt_index;
+int share__getopt_long_only(int argc, char *const *argv, const char *options, const struct share__option *long_options, int *opt_index)
 {
   return share___getopt_internal (argc, argv, options, long_options, opt_index, 1);
 }
@@ -113,10 +101,7 @@ share__getopt_long_only (argc, argv, options, long_options, opt_index)
 
 #include <stdio.h>
 
-int
-main (argc, argv)
-     int argc;
-     char **argv;
+int main(int argc, char **argv)
 {
   int c;
   int digit_optind = 0;

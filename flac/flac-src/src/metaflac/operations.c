@@ -1,6 +1,6 @@
 /* metaflac - Command-line FLAC metadata editor
  * Copyright (C) 2001-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -49,6 +49,7 @@ static FLAC__bool do_shorthand_operation__add_padding(const char *filename, FLAC
 
 static FLAC__bool passes_filter(const CommandLineOptions *options, const FLAC__StreamMetadata *block, unsigned block_number);
 static void write_metadata(const char *filename, FLAC__StreamMetadata *block, unsigned block_number, FLAC__bool raw, FLAC__bool hexdump_application);
+static void write_metadata_binary(FLAC__StreamMetadata *block, FLAC__byte *block_raw, FLAC__bool headerless);
 
 /* from operations_shorthand_seektable.c */
 extern FLAC__bool do_shorthand_operation__add_seekpoints(const char *filename, FLAC__Metadata_Chain *chain, const char *specification, FLAC__bool *needs_write);
@@ -189,8 +190,20 @@ FLAC__bool do_major_operation__list(const char *filename, FLAC__Metadata_Chain *
 		ok &= (0 != block);
 		if(!ok)
 			flac_fprintf(stderr, "%s: ERROR: couldn't get block from chain\n", filename);
-		else if(passes_filter(options, FLAC__metadata_iterator_get_block(iterator), block_number))
-			write_metadata(filename, block, block_number, !options->utf8_convert, options->application_data_format_is_hexdump);
+		else if(passes_filter(options, FLAC__metadata_iterator_get_block(iterator), block_number)) {
+			if(!options->data_format_is_binary && !options->data_format_is_binary_headerless)
+				write_metadata(filename, block, block_number, !options->utf8_convert, options->application_data_format_is_hexdump);
+			else {
+				FLAC__byte * block_raw = FLAC__metadata_object_get_raw(block);
+				if(block_raw == 0) {
+					flac_fprintf(stderr, "%s: ERROR: couldn't get block in raw form\n", filename);
+					FLAC__metadata_iterator_delete(iterator);
+					return false;
+				}
+				write_metadata_binary(block, block_raw, options->data_format_is_binary_headerless);
+				free(block_raw);
+			}
+		}
 		block_number++;
 	} while(ok && FLAC__metadata_iterator_next(iterator));
 
@@ -201,9 +214,124 @@ FLAC__bool do_major_operation__list(const char *filename, FLAC__Metadata_Chain *
 
 FLAC__bool do_major_operation__append(FLAC__Metadata_Chain *chain, const CommandLineOptions *options)
 {
-	(void) chain, (void) options;
-	flac_fprintf(stderr, "ERROR: --append not implemented yet\n");
-	return false;
+	FLAC__byte header[FLAC__STREAM_METADATA_HEADER_LENGTH];
+	FLAC__byte *buffer;
+	FLAC__uint32 buffer_size, num_objects = 0, i, append_after = UINT32_MAX;
+	FLAC__StreamMetadata *object;
+	FLAC__Metadata_Iterator *iterator = 0;
+	FLAC__bool has_vorbiscomment = false;
+
+	/* First, find out after which block appending should take place */
+	for(i = 0; i < options->args.num_arguments; i++) {
+		if(options->args.arguments[i].type == ARG__BLOCK_NUMBER) {
+			if(append_after != UINT32_MAX || options->args.arguments[i].value.block_number.num_entries > 1)	{
+				flac_fprintf(stderr, "ERROR: more than one block number specified with --append\n");
+				return false;
+			}
+			append_after = options->args.arguments[i].value.block_number.entries[0];
+		}
+	}
+
+	iterator = FLAC__metadata_iterator_new();
+
+	if(0 == iterator)
+		die("out of memory allocating iterator");
+
+	FLAC__metadata_iterator_init(iterator, chain);
+
+	/* Find out whether there is already a vorbis comment block present */
+	do {
+		FLAC__MetadataType type = FLAC__metadata_iterator_get_block_type(iterator);
+		if(type == FLAC__METADATA_TYPE_VORBIS_COMMENT)
+			has_vorbiscomment = true;
+	}
+	while(FLAC__metadata_iterator_next(iterator));
+
+	/* Reset iterator */
+	FLAC__metadata_iterator_init(iterator, chain);
+
+	/* Go to requested block */
+	for(i = 0; i < append_after; i++) {
+		if(!FLAC__metadata_iterator_next(iterator))
+			break;
+	}
+
+#ifdef _WIN32
+	_setmode(fileno(stdin),_O_BINARY);
+#endif
+
+	/* Read header from stdin */
+	while(fread(header, 1, FLAC__STREAM_METADATA_HEADER_LENGTH, stdin) == FLAC__STREAM_METADATA_HEADER_LENGTH) {
+
+		buffer_size = ((FLAC__uint32)(header[1]) << 16) + ((FLAC__uint32)(header[2]) << 8) + header[3];
+		buffer = safe_malloc_(buffer_size + FLAC__STREAM_METADATA_HEADER_LENGTH);
+		if(0 == buffer)
+			die("out of memory allocating read buffer");
+		memcpy(buffer, header, FLAC__STREAM_METADATA_HEADER_LENGTH);
+
+		num_objects++;
+
+		if(fread(buffer+FLAC__STREAM_METADATA_HEADER_LENGTH, 1, buffer_size, stdin) < buffer_size) {
+			flac_fprintf(stderr, "ERROR: couldn't read metadata block #%u from stdin\n",(num_objects));
+			free(buffer);
+			FLAC__metadata_iterator_delete(iterator);
+			return false;
+		}
+
+		if((object = FLAC__metadata_object_set_raw(buffer, buffer_size + FLAC__STREAM_METADATA_HEADER_LENGTH)) == NULL) {
+			flac_fprintf(stderr, "ERROR: couldn't parse supplied metadata block #%u\n",(num_objects));
+			free(buffer);
+			FLAC__metadata_iterator_delete(iterator);
+			return false;
+		}
+		free(buffer);
+
+		if(has_vorbiscomment && object->type == FLAC__METADATA_TYPE_VORBIS_COMMENT) {
+			flac_fprintf(stderr, "ERROR: can't add another vorbis comment block to file, it already has one\n");
+			FLAC__metadata_object_delete(object);
+			FLAC__metadata_iterator_delete(iterator);
+			return false;
+		}
+
+
+		if(object->type == FLAC__METADATA_TYPE_STREAMINFO) {
+			flac_fprintf(stderr, "ERROR: can't add streaminfo to file\n");
+			FLAC__metadata_object_delete(object);
+			FLAC__metadata_iterator_delete(iterator);
+			return false;
+		}
+
+		if(object->type == FLAC__METADATA_TYPE_SEEKTABLE) {
+			flac_fprintf(stderr, "ERROR: can't add seektable to file, please use --add-seekpoint instead\n");
+			FLAC__metadata_object_delete(object);
+			FLAC__metadata_iterator_delete(iterator);
+			return false;
+		}
+
+		if(!FLAC__metadata_iterator_insert_block_after(iterator, object)) {
+			flac_fprintf(stderr, "ERROR: couldn't add supplied metadata block #%u to file\n",(num_objects));
+			FLAC__metadata_object_delete(object);
+			FLAC__metadata_iterator_delete(iterator);
+			return false;
+		}
+		/* Now check whether what type of block was added */
+		{
+			FLAC__MetadataType type = FLAC__metadata_iterator_get_block_type(iterator);
+			if(type == FLAC__METADATA_TYPE_VORBIS_COMMENT)
+				has_vorbiscomment = true;
+		}
+	}
+
+#ifdef _WIN32
+	_setmode(fileno(stdin),_O_TEXT);
+#endif
+
+	if(num_objects == 0)
+		flac_fprintf(stderr, "ERROR: unable to find a metadata block in the supplied input\n");
+
+	FLAC__metadata_iterator_delete(iterator);
+
+	return true;
 }
 
 FLAC__bool do_major_operation__remove(FLAC__Metadata_Chain *chain, const CommandLineOptions *options)
@@ -360,6 +488,7 @@ FLAC__bool do_shorthand_operation(const char *filename, FLAC__bool prefix_with_f
 		case OP__SHOW_VC_VENDOR:
 		case OP__SHOW_VC_FIELD:
 		case OP__REMOVE_VC_ALL:
+		case OP__REMOVE_VC_ALL_EXCEPT:
 		case OP__REMOVE_VC_FIELD:
 		case OP__REMOVE_VC_FIRSTFIELD:
 		case OP__SET_VC_FIELD:
@@ -443,8 +572,11 @@ FLAC__bool do_shorthand_operation__add_replay_gain(char **filenames, unsigned nu
 			flac_fprintf(stderr, "%s: ERROR: # of channels (%u) is not supported, must be 1 or 2\n", filenames[i], channels);
 			return false;
 		}
+		if(bits_per_sample < FLAC__MIN_BITS_PER_SAMPLE || bits_per_sample > FLAC__MAX_BITS_PER_SAMPLE) {
+			flac_fprintf(stderr, "%s: ERROR: resolution (%u) is not supported, must be between %u and %u\n", filenames[i], bits_per_sample, FLAC__MIN_BITS_PER_SAMPLE, FLAC__MAX_BITS_PER_SAMPLE);
+			return false;
+		}
 	}
-	FLAC__ASSERT(bits_per_sample >= FLAC__MIN_BITS_PER_SAMPLE && bits_per_sample <= FLAC__MAX_BITS_PER_SAMPLE);
 
 	if(!grabbag__replaygain_init(sample_rate)) {
 		FLAC__ASSERT(0);
@@ -670,4 +802,22 @@ void write_metadata(const char *filename, FLAC__StreamMetadata *block, unsigned 
 			break;
 	}
 #undef PPR
+}
+
+void write_metadata_binary(FLAC__StreamMetadata *block, FLAC__byte *block_raw, FLAC__bool headerless)
+{
+#ifdef _WIN32
+	fflush(stdout);
+	_setmode(fileno(stdout),_O_BINARY);
+#endif
+	if(!headerless)
+		local_fwrite(block_raw, 1, block->length+FLAC__STREAM_METADATA_HEADER_LENGTH, stdout);
+	else if(block->type == FLAC__METADATA_TYPE_APPLICATION && block->length > 3)
+		local_fwrite(block_raw+FLAC__STREAM_METADATA_HEADER_LENGTH+4, 1, block->length-4, stdout);
+	else
+		local_fwrite(block_raw+FLAC__STREAM_METADATA_HEADER_LENGTH, 1, block->length, stdout);
+#ifdef _WIN32
+	fflush(stdout);
+	_setmode(fileno(stdout),_O_TEXT);
+#endif
 }

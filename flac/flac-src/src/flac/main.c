@@ -1,6 +1,6 @@
 /* flac - Command-line FLAC encoder/decoder
  * Copyright (C) 2000-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -38,6 +38,7 @@
 #include "share/alloc.h"
 #include "share/grabbag.h"
 #include "share/compat.h"
+#include "share/endswap.h"
 #include "share/safe_str.h"
 #include "analyze.h"
 #include "decode.h"
@@ -75,7 +76,7 @@ static int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__b
 static int decode_file(const char *infilename);
 
 static const char *get_encoded_outfilename(const char *infilename);
-static const char *get_decoded_outfilename(const char *infilename);
+static const char *get_decoded_outfilename(const char *infilename, const FileFormat format);
 static const char *get_outfilename(const char *infilename, const char *suffix);
 
 static void die(const char *message);
@@ -143,10 +144,13 @@ static struct share__option long_options_[] = {
 	{ "force-aiff-format"         , share__no_argument, 0, 0 },
 	{ "force-rf64-format"         , share__no_argument, 0, 0 },
 	{ "force-wave64-format"       , share__no_argument, 0, 0 },
+	{ "force-legacy-wave-format"  , share__no_argument, 0, 0 },
+	{ "force-extensible-wave-format",share__no_argument,0, 0 },
+	{ "force-aiff-c-none-format"  , share__no_argument, 0, 0 },
+	{ "force-aiff-c-sowt-format"  , share__no_argument, 0, 0 },
 	{ "lax"                       , share__no_argument, 0, 0 },
 	{ "replay-gain"               , share__no_argument, 0, 0 },
 	{ "ignore-chunk-sizes"        , share__no_argument, 0, 0 },
-	{ "sector-align"              , share__no_argument, 0, 0 }, /* DEPRECATED */
 	{ "seekpoint"                 , share__required_argument, 0, 'S' },
 	{ "padding"                   , share__required_argument, 0, 'P' },
 #if FLAC__HAS_OGG
@@ -189,7 +193,6 @@ static struct share__option long_options_[] = {
 	{ "no-keep-foreign-metadata"  , share__no_argument, 0, 0 },
 	{ "no-replay-gain"            , share__no_argument, 0, 0 },
 	{ "no-ignore-chunk-sizes"     , share__no_argument, 0, 0 },
-	{ "no-sector-align"           , share__no_argument, 0, 0 }, /* DEPRECATED */
 	{ "no-utf8-convert"           , share__no_argument, 0, 0 },
 	{ "no-lax"                    , share__no_argument, 0, 0 },
 #if FLAC__HAS_OGG
@@ -242,13 +245,16 @@ static struct {
 	FLAC__bool force_aiff_format;
 	FLAC__bool force_rf64_format;
 	FLAC__bool force_wave64_format;
+	FLAC__bool force_legacy_wave_format;
+	FLAC__bool force_extensible_wave_format;
+	FLAC__bool force_aiff_c_none_format;
+	FLAC__bool force_aiff_c_sowt_format;
 	FLAC__bool delete_input;
 	FLAC__bool preserve_modtime;
 	FLAC__bool keep_foreign_metadata;
 	FLAC__bool keep_foreign_metadata_if_present;
 	FLAC__bool replay_gain;
 	FLAC__bool ignore_chunk_sizes;
-	FLAC__bool sector_align;
 	FLAC__bool utf8_convert; /* true by default, to convert tag strings from locale to utf-8, false if --no-utf8-convert used */
 	const char *cmdline_forced_outfilename;
 	const char *output_prefix;
@@ -293,12 +299,12 @@ static struct {
  * miscellaneous globals
  */
 
-static FLAC__int32 align_reservoir_0[588], align_reservoir_1[588]; /* for carrying over samples from --sector-align */ /* DEPRECATED */
-static FLAC__int32 *align_reservoir[2] = { align_reservoir_0, align_reservoir_1 };
-static uint32_t align_reservoir_samples = 0; /* 0 .. 587 */
 
-
+#ifndef FUZZ_TOOL_FLAC
 int main(int argc, char *argv[])
+#else
+static int main_to_fuzz(int argc, char *argv[])
+#endif
 {
 	int retval = 0;
 
@@ -400,8 +406,16 @@ int do_it(void)
 			if(!FLAC__format_sample_rate_is_valid(option_values.format_sample_rate))
 				return usage_error("ERROR: invalid sample rate '%u', must be > 0 and <= %u\n", option_values.format_sample_rate, FLAC__MAX_SAMPLE_RATE);
 		}
-		if((option_values.force_raw_format?1:0) + (option_values.force_aiff_format?1:0) + (option_values.force_rf64_format?1:0) + (option_values.force_wave64_format?1:0) > 1)
-			return usage_error("ERROR: only one of --force-raw-format/--force-aiff-format/--force-rf64-format/--force-wave64-format allowed\n");
+		if((option_values.force_raw_format?1:0) +
+		   (option_values.force_aiff_format?1:0) +
+		   (option_values.force_rf64_format?1:0) +
+		   (option_values.force_wave64_format?1:0) +
+		   (option_values.force_legacy_wave_format?1:0) +
+		   (option_values.force_extensible_wave_format?1:0) +
+		   (option_values.force_aiff_c_none_format?1:0) +
+		   (option_values.force_aiff_c_sowt_format?1:0)
+		    > 1)
+			return usage_error("ERROR: only one of force format options allowed\n");
 		if(option_values.mode_decode) {
 			if(!option_values.force_raw_format) {
 				if(option_values.format_is_big_endian >= 0)
@@ -420,30 +434,12 @@ int do_it(void)
 		if(option_values.ignore_chunk_sizes) {
 			if(option_values.mode_decode)
 				return usage_error("ERROR: --ignore-chunk-sizes only allowed for encoding\n");
-			if(0 != option_values.sector_align)
-				return usage_error("ERROR: --ignore-chunk-sizes not allowed with --sector-align\n");
 			if(0 != option_values.until_specification)
 				return usage_error("ERROR: --ignore-chunk-sizes not allowed with --until\n");
 			if(0 != option_values.cue_specification)
 				return usage_error("ERROR: --ignore-chunk-sizes not allowed with --cue\n");
 			if(0 != option_values.cuesheet_filename)
 				return usage_error("ERROR: --ignore-chunk-sizes not allowed with --cuesheet\n");
-		}
-		if(option_values.sector_align) {
-			if(option_values.mode_decode)
-				return usage_error("ERROR: --sector-align only allowed for encoding\n");
-			if(0 != option_values.skip_specification)
-				return usage_error("ERROR: --sector-align not allowed with --skip\n");
-			if(0 != option_values.until_specification)
-				return usage_error("ERROR: --sector-align not allowed with --until\n");
-			if(0 != option_values.cue_specification)
-				return usage_error("ERROR: --sector-align not allowed with --cue\n");
-			if(option_values.format_channels >= 0 && option_values.format_channels != 2)
-				return usage_error("ERROR: --sector-align can only be done with stereo input\n");
-			if(option_values.format_bps >= 0 && option_values.format_bps != 16)
-				return usage_error("ERROR: --sector-align can only be done with 16-bit samples\n");
-			if(option_values.format_sample_rate >= 0 && option_values.format_sample_rate != 44100)
-				return usage_error("ERROR: --sector-align can only be done with a sample rate of 44100\n");
 		}
 		if(option_values.replay_gain) {
 			if(option_values.force_to_stdout)
@@ -484,7 +480,7 @@ int do_it(void)
 
 	flac__utils_printf(stderr, 2, "\n");
 	flac__utils_printf(stderr, 2, "flac %s\n", FLAC__VERSION_STRING);
-	flac__utils_printf(stderr, 2, "Copyright (C) 2000-2009  Josh Coalson, 2011-2022  Xiph.Org Foundation\n");
+	flac__utils_printf(stderr, 2, "Copyright (C) 2000-2009  Josh Coalson, 2011-2023  Xiph.Org Foundation\n");
 	flac__utils_printf(stderr, 2, "flac comes with ABSOLUTELY NO WARRANTY.  This is free software, and you are\n");
 	flac__utils_printf(stderr, 2, "welcome to redistribute it under certain conditions.  Type `flac' for details.\n\n");
 
@@ -522,8 +518,10 @@ int do_it(void)
 			for(i = 0, retval = 0; i < option_values.num_files; i++) {
 				if(0 == strcmp(option_values.filenames[i], "-") && !first)
 					continue;
-				retval |= encode_file(option_values.filenames[i], first, i == (option_values.num_files-1));
-				first = false;
+				if(encode_file(option_values.filenames[i], first, i == (option_values.num_files-1)))
+					retval = 1;
+				else
+					first = false;
 			}
 			if(option_values.replay_gain && retval == 0) {
 				float album_gain, album_peak;
@@ -550,6 +548,7 @@ FLAC__bool init_options(void)
 {
 	option_values.show_help = false;
 	option_values.show_explain = false;
+	option_values.show_version = false;
 	option_values.mode_decode = false;
 	option_values.verify = false;
 	option_values.treat_warnings_as_errors = false;
@@ -571,13 +570,16 @@ FLAC__bool init_options(void)
 	option_values.force_aiff_format = false;
 	option_values.force_rf64_format = false;
 	option_values.force_wave64_format = false;
+	option_values.force_legacy_wave_format = false;
+	option_values.force_extensible_wave_format = false;
+	option_values.force_aiff_c_none_format = false;
+	option_values.force_aiff_c_sowt_format = false;
 	option_values.delete_input = false;
 	option_values.preserve_modtime = true;
 	option_values.keep_foreign_metadata = false;
 	option_values.keep_foreign_metadata_if_present = false;
 	option_values.replay_gain = false;
 	option_values.ignore_chunk_sizes = false;
-	option_values.sector_align = false;
 	option_values.utf8_convert = true;
 	option_values.cmdline_forced_outfilename = 0;
 	option_values.output_prefix = 0;
@@ -775,6 +777,18 @@ int parse_option(int short_option, const char *long_option, const char *option_a
 		else if(0 == strcmp(long_option, "force-wave64-format")) {
 			option_values.force_wave64_format = true;
 		}
+		else if(0 == strcmp(long_option, "force-legacy-wave-format")) {
+			option_values.force_legacy_wave_format = true;
+		}
+		else if(0 == strcmp(long_option, "force-extensible-wave-format")) {
+			option_values.force_extensible_wave_format = true;
+		}
+		else if(0 == strcmp(long_option, "force-aiff-c-none-format")) {
+			option_values.force_aiff_c_none_format = true;
+		}
+		else if(0 == strcmp(long_option, "force-aiff-c-sowt-format")) {
+			option_values.force_aiff_c_sowt_format = true;
+		}
 		else if(0 == strcmp(long_option, "lax")) {
 			option_values.lax = true;
 		}
@@ -783,11 +797,6 @@ int parse_option(int short_option, const char *long_option, const char *option_a
 		}
 		else if(0 == strcmp(long_option, "ignore-chunk-sizes")) {
 			option_values.ignore_chunk_sizes = true;
-		}
-		else if(0 == strcmp(long_option, "sector-align")) {
-			flac__utils_printf(stderr, 1, "WARNING: --sector-align is DEPRECATED and may not exist in future versions of flac.\n");
-			flac__utils_printf(stderr, 1, "         shntool provides similar functionality\n");
-			option_values.sector_align = true;
 		}
 #if FLAC__HAS_OGG
 		else if(0 == strcmp(long_option, "ogg")) {
@@ -847,7 +856,9 @@ int parse_option(int short_option, const char *long_option, const char *option_a
 			option_values.continue_through_decode_errors = false;
 		}
 		else if(0 == strcmp(long_option, "no-silent")) {
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 			flac__utils_verbosity_ = 2;
+#endif
 		}
 		else if(0 == strcmp(long_option, "no-force")) {
 			option_values.force_file_overwrite = false;
@@ -868,9 +879,6 @@ int parse_option(int short_option, const char *long_option, const char *option_a
 		}
 		else if(0 == strcmp(long_option, "no-ignore-chunk-sizes")) {
 			option_values.ignore_chunk_sizes = false;
-		}
-		else if(0 == strcmp(long_option, "no-sector-align")) {
-			option_values.sector_align = false;
 		}
 		else if(0 == strcmp(long_option, "no-utf8-convert")) {
 			option_values.utf8_convert = false;
@@ -957,7 +965,9 @@ int parse_option(int short_option, const char *long_option, const char *option_a
 				option_values.force_to_stdout = true;
 				break;
 			case 's':
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 				flac__utils_verbosity_ = 1;
+#endif
 				break;
 			case 'f':
 				option_values.force_file_overwrite = true;
@@ -1128,7 +1138,11 @@ void free_options(void)
 void add_compression_setting_bool(compression_setting_type_t type, FLAC__bool value)
 {
 	if(option_values.num_compression_settings >= sizeof(option_values.compression_settings)/sizeof(option_values.compression_settings[0]))
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 		die("too many compression settings");
+#else
+		return;
+#endif
 	option_values.compression_settings[option_values.num_compression_settings].type = type;
 	option_values.compression_settings[option_values.num_compression_settings].value.t_bool = value;
 	option_values.num_compression_settings++;
@@ -1137,7 +1151,11 @@ void add_compression_setting_bool(compression_setting_type_t type, FLAC__bool va
 void add_compression_setting_string(compression_setting_type_t type, const char *value)
 {
 	if(option_values.num_compression_settings >= sizeof(option_values.compression_settings)/sizeof(option_values.compression_settings[0]))
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 		die("too many compression settings");
+#else
+		return;
+#endif
 	option_values.compression_settings[option_values.num_compression_settings].type = type;
 	option_values.compression_settings[option_values.num_compression_settings].value.t_string = value;
 	option_values.num_compression_settings++;
@@ -1146,7 +1164,11 @@ void add_compression_setting_string(compression_setting_type_t type, const char 
 void add_compression_setting_uint32_t(compression_setting_type_t type, uint32_t value)
 {
 	if(option_values.num_compression_settings >= sizeof(option_values.compression_settings)/sizeof(option_values.compression_settings[0]))
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 		die("too many compression settings");
+#else
+		return;
+#endif
 	if(type == CST_COMPRESSION_LEVEL) {
 		/* Compression level always goes first */
 		option_values.compression_settings[0].type = type;
@@ -1168,7 +1190,9 @@ int usage_error(const char *message, ...)
 
 		va_start(args, message);
 
+#ifndef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
 		(void) vfprintf(stderr, message, args);
+#endif
 
 		va_end(args);
 
@@ -1188,7 +1212,7 @@ static void usage_header(void)
 	printf("===============================================================================\n");
 	printf("flac - Command-line FLAC encoder/decoder version %s\n", FLAC__VERSION_STRING);
 	printf("Copyright (C) 2000-2009  Josh Coalson\n");
-	printf("Copyright (C) 2011-2022  Xiph.Org Foundation\n");
+	printf("Copyright (C) 2011-2023  Xiph.Org Foundation\n");
 	printf("\n");
 	printf("This program is free software; you can redistribute it and/or\n");
 	printf("modify it under the terms of the GNU General Public License\n");
@@ -1282,7 +1306,6 @@ void show_help(void)
 	printf("  -V, --verify                 Verify a correct encoding\n");
 	printf("      --lax                    Allow encoder to generate non-Subset files\n");
 	printf("      --ignore-chunk-sizes     Ignore data chunk sizes in WAVE/AIFF files\n");
-	printf("      --sector-align (DEPRECATED) Align multiple files on sector boundaries\n");
 	printf("      --replay-gain            Calculate ReplayGain & store in FLAC tags\n");
 	printf("      --cuesheet=FILENAME      Import cuesheet and store in CUESHEET block\n");
 	printf("      --picture=SPECIFICATION  Import picture and store in PICTURE block\n");
@@ -1313,10 +1336,14 @@ void show_help(void)
 	printf("  -r, --rice-partition-order=[#,]#   Set [min,]max residual partition order\n");
 	printf("      --limit-min-bitrate            Limit minimum bitrate (for streaming)\n");
 	printf("format options:\n");
-	printf("      --force-raw-format       Treat input or output as raw samples\n");
-	printf("      --force-aiff-format      Force decoding to AIFF format\n");
-	printf("      --force-rf64-format      Force decoding to RF64 format\n");
-	printf("      --force-wave64-format    Force decoding to Wave64 format\n");
+	printf("      --force-raw-format             Treat input or output as raw samples\n");
+	printf("      --force-aiff-format            Decode to AIFF format\n");
+	printf("      --force-rf64-format            Decode to RF64 format\n");
+	printf("      --force-wave64-format          Decode to Wave64 format\n");
+	printf("      --force-legacy-wave-format     Decode to legacy wave format\n");
+	printf("      --force-extensible-wave-format Decode to extensible wave format\n");
+	printf("      --force-aiff-c-none-format     Decode to AIFF-C NONE format\n");
+	printf("      --force-aiff-c-sowt-format     Decode to AIFF-C sowt format\n");
 	printf("raw format options:\n");
 	printf("      --endian={big|little}    Set byte order for samples\n");
 	printf("      --channels=#             Number of channels\n");
@@ -1344,7 +1371,6 @@ void show_help(void)
 	printf("      --no-residual-gnuplot\n");
 	printf("      --no-residual-text\n");
 	printf("      --no-ignore-chunk-sizes\n");
-	printf("      --no-sector-align\n");
 	printf("      --no-seektable\n");
 	printf("      --no-silent\n");
 	printf("      --no-force\n");
@@ -1413,6 +1439,8 @@ void show_explain(void)
 	printf("                               transcoded, e.g. WAVE chunks saved in a FLAC file\n");
 	printf("                               cannot be restored when decoding to AIFF.  Input\n");
 	printf("                               and output must be regular files, not stdin/out.\n");
+	printf("                               With this option, FLAC will pick the right\n");
+	printf("                               output format on decoding.\n");
 	printf("      --keep-foreign-metadata-if-present  As previous option, but do not throw\n");
 	printf("                               an error in case no foreign metadata is found,\n");
 	printf("                               the wrong kind of foreign metadata is found (on\n");
@@ -1485,19 +1513,19 @@ void show_explain(void)
 	printf("      --ignore-chunk-sizes     Ignore data chunk sizes in WAVE/AIFF files;\n");
 	printf("                               useful when piping data from programs which\n");
 	printf("                               generate bogus data chunk sizes.\n");
-	printf("      --sector-align           Align encoding of multiple CD format WAVE files\n");
-	printf("                               on sector boundaries.  This option is DEPRECATED\n");
-	printf("                               and may not exist in future versions of flac.\n");
-	printf("                               shntool offers similar functionality.\n");
 	printf("      --replay-gain            Calculate ReplayGain values and store them as\n");
 	printf("                               FLAC tags.  Title gains/peaks will be computed\n");
 	printf("                               for each file, and an album gain/peak will be\n");
 	printf("                               computed for all files.  All input files must\n");
 	printf("                               have the same resolution, sample rate, and\n");
-	printf("                               number of channels.  The sample rate must be\n");
-	printf("                               one of 8, 11.025, 12, 16, 22.05, 24, 32, 44.1,\n");
-	printf("                               or 48 kHz.  NOTE: this option may also leave a\n");
-	printf("                               few extra bytes in the PADDING block.\n");
+	printf("                               number of channels.  Only mono and stereo files\n");
+	printf("                               are allowed, and the sample rate must be 8,\n");
+	printf("                               11.025, 12, 16, 18.9, 22.05, 24, 28, 32, 36,\n");
+	printf("                               37.8, 44.1, 48, 56, 64, 72, 75.6, 88.2, 96, 112,\n");
+	printf("                               128, 144, 151.2, 176.4, 192, 224, 256, 288,\n");
+	printf("                               302.4, 352.8, 384, 448, 512, 576, or 604.8 kHz.\n");
+	printf("                               NOTE: this option may also leave a few extra\n");
+	printf("                               bytes in the PADDING block.\n");
 	printf("      --cuesheet=FILENAME      Import the given cuesheet file and store it in\n");
 	printf("                               a CUESHEET metadata block.  This option may only\n");
 	printf("                               be used when encoding a single file.  A\n");
@@ -1651,27 +1679,33 @@ void show_explain(void)
 	printf("format options:\n");
 	printf("      --force-raw-format       Force input (when encoding) or output (when\n");
 	printf("                               decoding) to be treated as raw samples\n");
-	printf("      --force-aiff-format      Force the decoder to output AIFF format.  This\n");
-	printf("                               option is not needed if the output filename (as\n");
-	printf("                               set by -o) ends with .aif or .aiff; this option\n");
-	printf("                               has no effect when encoding since input AIFF is\n");
-	printf("                               auto-detected.\n");
-	printf("      --force-rf64-format      Force the decoder to output RF64 format.  This\n");
-	printf("                               option is not needed if the output filename (as\n");
-	printf("                               set by -o) ends with .rf64; this option\n");
-	printf("                               has no effect when encoding since input RF64 is\n");
-	printf("                               auto-detected.\n");
-	printf("      --force-wave64-format    Force the decoder to output Wave64 format.  This\n");
-	printf("                               option is not needed if the output filename (as\n");
-	printf("                               set by -o) ends with .w64; this option\n");
-	printf("                               has no effect when encoding since input Wave64 is\n");
-	printf("                               auto-detected.\n");
+	printf("      --force-aiff-format\n");
+	printf("      --force-rf64-format\n");
+	printf("      --force-wave64-format\n");
+	printf("            Force the decoder to output AIFF/RF64/WAVE64 format respectively.\n");
+	printf("            This option is not needed if the output filename (as set by -o)\n");
+	printf("            ends with *.aif* or *.aiff*, *.rf64* and *.w64* respectively. Also,\n");
+	printf("            this option has no effect when encoding since input is\n");
+	printf("            auto-detected. When none of these options nor\n");
+	printf("            --keep-foreign-metadata are given and no output filename is set,\n");
+	printf("            the output format is WAV by default.\n");
+	printf("      --force-legacy-wave-format\n");
+	printf("      --force-extensible-wave-format\n");
+	printf("            Instruct the decoder to output a WAVE file with WAVE_FORMAT_PCM and\n");
+	printf("            WAVE_FORMAT_EXTENSIBLE respectively. If none of these options nor\n");
+	printf("            --keep-foreign-metadata are given, FLAC outputs WAVE_FORMAT_PCM\n");
+	printf("            for mono or stereo with a bit depth of 8 or 16 bits, and\n");
+	printf("            WAVE_FORMAT_EXTENSIBLE for all other audio formats.\n");
+	printf("      --force-aiff-c-none-format\n");
+	printf("      --force-aiff-c-sowt-format\n");
+	printf("            Instruct the decoder to output an AIFF-C file with format NONE and\n");
+	printf("            sowt respectively.\n");
 	printf("raw format options:\n");
 	printf("      --endian={big|little}    Set byte order for samples\n");
 	printf("      --channels=#             Number of channels\n");
 	printf("      --bps=#                  Number of bits per sample\n");
 	printf("      --sample-rate=#          Sample rate in Hz\n");
-	printf("      --sign={signed|unsigned} Sign of samples (the default is signed)\n");
+	printf("      --sign={signed|unsigned} Sign of samples\n");
 	printf("      --input-size=#           Size of the raw input in bytes.  If you are\n");
 	printf("                               encoding raw samples from stdin, you must set\n");
 	printf("                               this option in order to be able to use --skip,\n");
@@ -1699,7 +1733,6 @@ void show_explain(void)
 	printf("      --no-residual-gnuplot\n");
 	printf("      --no-residual-text\n");
 	printf("      --no-ignore-chunk-sizes\n");
-	printf("      --no-sector-align\n");
 	printf("      --no-seektable\n");
 	printf("      --no-silent\n");
 	printf("      --no-force\n");
@@ -1710,15 +1743,14 @@ void show_explain(void)
 void format_mistake(const char *infilename, FileFormat wrong, FileFormat right)
 {
 	/* WATCHOUT: indexed by FileFormat */
-	static const char * const ff[] = { " raw", " WAVE", " Wave64", "n RF64", "n AIFF", "n AIFF-C", " FLAC", "n Ogg FLAC" };
-	flac__utils_printf(stderr, 1, "WARNING: %s is not a%s file; treating as a%s file\n", infilename, ff[wrong], ff[right]);
+	flac__utils_printf(stderr, 1, "WARNING: %s is not a%s file; treating as a%s file\n", infilename, FileFormatString[wrong], FileFormatString[right]);
 }
 
 int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__bool is_last_file)
 {
 	FILE *encode_infile;
 	FLAC__byte lookahead[12];
-	uint32_t lookahead_length = 0;
+	uint32_t lookahead_length = 0, master_chunk_size = 0;
 	FileFormat input_format = FORMAT_RAW;
 	int retval;
 	FLAC__off_t infilesize;
@@ -1737,7 +1769,8 @@ int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__bool is_
 		infilesize = (FLAC__off_t)(-1);
 		encode_infile = grabbag__file_get_binary_stdin();
 	}
-	else {
+	else
+	{
 		infilesize = grabbag__file_get_filesize(infilename);
 		if(0 == (encode_infile = flac_fopen(infilename, "rb"))) {
 			flac__utils_printf(stderr, 1, "ERROR: can't open input file %s: %s\n", infilename, strerror(errno));
@@ -1814,6 +1847,27 @@ int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__bool is_
 		}
 	}
 
+	if(!option_values.ignore_chunk_sizes
+	   && (input_format == FORMAT_WAVE || input_format == FORMAT_AIFF || input_format == FORMAT_AIFF_C)
+	   && infilesize >= UINT32_MAX) {
+		conditional_fclose(encode_infile);
+		return usage_error("ERROR: file %s is too large to be valid.\n"
+		                   "Please consult the manual on the --ignore-chunk-sizes option\n\n", infilename);
+	}
+
+	if(input_format == FORMAT_WAVE || input_format == FORMAT_AIFF || input_format == FORMAT_AIFF_C) {
+		memcpy(&master_chunk_size,lookahead+4,sizeof(master_chunk_size));
+		if((input_format != FORMAT_WAVE) != CPU_IS_BIG_ENDIAN /* logical xor */)
+			/* true for WAVE on big endian CPUs or AIFF/AIFF-C on little endian CPUs */
+			master_chunk_size = ENDSWAP_32(master_chunk_size);
+
+		if(infilesize != (FLAC__off_t)(-1) && infilesize > 8 && (infilesize - 8) != master_chunk_size) {
+			flac__utils_printf(stderr, 1, "WARNING: %s chunk size of file %s does not agree with filesize\n", (input_format == FORMAT_WAVE)?"RIFF":"FORM", infilename);
+			if(option_values.treat_warnings_as_errors)
+				return 1;
+		}
+	}
+
 	if(option_values.keep_foreign_metadata || option_values.keep_foreign_metadata_if_present) {
 		if(encode_infile == stdin || option_values.force_to_stdout) {
 			conditional_fclose(encode_infile);
@@ -1867,17 +1921,6 @@ int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__bool is_
 		else {
 			infilesize = option_values.format_input_size;
 		}
-	}
-
-	if(option_values.sector_align && (input_format == FORMAT_FLAC || input_format == FORMAT_OGGFLAC)) {
-		flac__utils_printf(stderr, 1, "ERROR: can't use --sector-align when the input file is FLAC or Ogg FLAC\n");
-		conditional_fclose(encode_infile);
-		return 1;
-	}
-	if(option_values.sector_align && input_format == FORMAT_RAW && infilesize < 0) {
-		flac__utils_printf(stderr, 1, "ERROR: can't use --sector-align when the input size is unknown\n");
-		conditional_fclose(encode_infile);
-		return 1;
 	}
 
 	if(input_format == FORMAT_RAW) {
@@ -1941,11 +1984,8 @@ int encode_file(const char *infilename, FLAC__bool is_first_file, FLAC__bool is_
 	encode_options.channel_map_none = option_values.channel_map_none;
 	encode_options.is_first_file = is_first_file;
 	encode_options.is_last_file = is_last_file;
-	encode_options.align_reservoir = align_reservoir;
-	encode_options.align_reservoir_samples = &align_reservoir_samples;
 	encode_options.replay_gain = option_values.replay_gain;
 	encode_options.ignore_chunk_sizes = option_values.ignore_chunk_sizes;
-	encode_options.sector_align = option_values.sector_align;
 	encode_options.vorbis_comment = option_values.vorbis_comment;
 	FLAC__ASSERT(sizeof(encode_options.pictures) >= sizeof(option_values.pictures));
 	memcpy(encode_options.pictures, option_values.pictures, sizeof(option_values.pictures));
@@ -2070,8 +2110,10 @@ int decode_file(const char *infilename)
 	int retval;
 	FLAC__bool treat_as_ogg = false;
 	FileFormat output_format = FORMAT_WAVE;
+	FileSubFormat output_subformat = SUBFORMAT_UNSPECIFIED;
 	decode_options_t decode_options;
-	const char *outfilename = get_decoded_outfilename(infilename);
+	foreign_metadata_t *foreign_metadata = 0;
+	const char *outfilename = get_outfilename(infilename, ".    "); /* Placeholder until we know what the actual suffix is */
 	size_t infilename_length;
 
 	if(0 == outfilename) {
@@ -2079,13 +2121,38 @@ int decode_file(const char *infilename)
 		return 1;
 	}
 
-	/*
-	 * Error if output file already exists (and -f not used).
-	 * Use grabbag__file_get_filesize() as a cheap way to check.
-	 */
-	if(!option_values.test_only && !option_values.force_file_overwrite && strcmp(outfilename, "-") && grabbag__file_get_filesize(outfilename) != (FLAC__off_t)(-1)) {
-		flac__utils_printf(stderr, 1, "ERROR: output file %s already exists, use -f to override\n", outfilename);
-		return 1;
+	if(!option_values.analyze && !option_values.test_only &&(option_values.keep_foreign_metadata || option_values.keep_foreign_metadata_if_present)) {
+		const char *error;
+		if(0 == strcmp(infilename, "-") || 0 == strcmp(outfilename, "-"))
+			return usage_error("ERROR: --keep-foreign-metadata cannot be used when decoding from stdin or to stdout\n");
+		if(output_format == FORMAT_RAW)
+			return usage_error("ERROR: --keep-foreign-metadata cannot be used with raw output\n");
+		decode_options.format_options.iff.foreign_metadata = 0;
+		/* initialize foreign metadata structure */
+		foreign_metadata = flac__foreign_metadata_new(FOREIGN_BLOCK_TYPE__RIFF); /* RIFF is just a placeholder */
+		if(0 == foreign_metadata) {
+			flac__utils_printf(stderr, 1, "ERROR: creating foreign metadata object\n");
+			return 1;
+		}
+		if(!flac__foreign_metadata_read_from_flac(foreign_metadata, infilename, &error)) {
+			if(option_values.keep_foreign_metadata_if_present) {
+				flac__utils_printf(stderr, 1, "%s: WARNING reading foreign metadata: %s\n", infilename, error);
+				if(option_values.treat_warnings_as_errors) {
+					flac__foreign_metadata_delete(foreign_metadata);
+					return 1;
+				}
+				else {
+					/* Couldn't find foreign metadata, stop processing */
+					flac__foreign_metadata_delete(foreign_metadata);
+					foreign_metadata = 0;
+				}
+			}
+			else {
+				flac__utils_printf(stderr, 1, "%s: ERROR reading foreign metadata: %s\n", infilename, error);
+				flac__foreign_metadata_delete(foreign_metadata);
+				return 1;
+			}
+		}
 	}
 
 	if(option_values.force_raw_format)
@@ -2106,19 +2173,85 @@ int decode_file(const char *infilename)
 		(strlen(outfilename) >= 4 && 0 == FLAC__STRCASECMP(outfilename+(strlen(outfilename)-4), ".w64"))
 	)
 		output_format = FORMAT_WAVE64;
+	else if(foreign_metadata != NULL) {
+		/* Pick a format based on what the foreign metadata contains */
+		if(foreign_metadata->type == FOREIGN_BLOCK_TYPE__WAVE64)
+			output_format = FORMAT_WAVE64;
+		else if(foreign_metadata->is_rf64)
+			output_format = FORMAT_RF64;
+		else if(foreign_metadata->type == FOREIGN_BLOCK_TYPE__AIFF) {
+			output_format = FORMAT_AIFF;
+			if(foreign_metadata->is_aifc) {
+				output_format = FORMAT_AIFF_C;
+			}
+		}
+		else
+			output_format = FORMAT_WAVE;
+	}
 	else
 		output_format = FORMAT_WAVE;
 
-	if(!option_values.test_only && !option_values.analyze) {
-		if(output_format == FORMAT_RAW && (option_values.format_is_big_endian < 0 || option_values.format_is_unsigned_samples < 0))
-			return usage_error("ERROR: for decoding to a raw file you must specify a value for --endian and --sign\n");
+	/* Now do subformats */
+	if(option_values.force_legacy_wave_format)
+		output_subformat = SUBFORMAT_WAVE_PCM;
+	else if(option_values.force_extensible_wave_format)
+		output_subformat = SUBFORMAT_WAVE_EXTENSIBLE;
+	else if(option_values.force_aiff_c_none_format) {
+		output_format = FORMAT_AIFF_C;
+		output_subformat = SUBFORMAT_AIFF_C_NONE;
+	}
+	else if(option_values.force_aiff_c_sowt_format) {
+		output_format = FORMAT_AIFF_C;
+		output_subformat = SUBFORMAT_AIFF_C_SOWT;
+	}
+	else if(foreign_metadata != NULL) {
+		if(foreign_metadata->is_wavefmtex)
+			output_subformat = SUBFORMAT_WAVE_EXTENSIBLE;
+		else if(output_format == FORMAT_WAVE)
+			output_subformat = SUBFORMAT_WAVE_PCM;
+		else if(foreign_metadata->is_aifc) {
+			if(foreign_metadata->is_sowt)
+				output_subformat = SUBFORMAT_AIFF_C_SOWT;
+			else
+				output_subformat = SUBFORMAT_AIFF_C_NONE;
+		}
 	}
 
-	if(option_values.keep_foreign_metadata || option_values.keep_foreign_metadata_if_present) {
-		if(0 == strcmp(infilename, "-") || 0 == strcmp(outfilename, "-"))
-			return usage_error("ERROR: --keep-foreign-metadata cannot be used when decoding from stdin or to stdout\n");
-		if(output_format != FORMAT_WAVE && output_format != FORMAT_WAVE64 && output_format != FORMAT_RF64 && output_format != FORMAT_AIFF && output_format != FORMAT_AIFF_C)
-			return usage_error("ERROR: --keep-foreign-metadata can only be used with WAVE, Wave64, RF64, or AIFF output\n");
+
+	/* Check whether output format agrees with foreign metadata */
+	if(foreign_metadata != NULL) {
+		if((output_format != FORMAT_WAVE && output_format != FORMAT_RF64) && foreign_metadata->type == FOREIGN_BLOCK_TYPE__RIFF) {
+			flac__foreign_metadata_delete(foreign_metadata);
+			return usage_error("ERROR: foreign metadata type RIFF cannot be restored to a%s file, only to WAVE and RF64\n",FileFormatString[output_format]);
+		}
+		if((output_format != FORMAT_AIFF && output_format != FORMAT_AIFF_C) && foreign_metadata->type == FOREIGN_BLOCK_TYPE__AIFF) {
+			flac__foreign_metadata_delete(foreign_metadata);
+			return usage_error("ERROR: foreign metadata type AIFF cannot be restored to a%s file, only to AIFF and AIFF-C\n",FileFormatString[output_format]);
+		}
+		if(output_format != FORMAT_WAVE64 && foreign_metadata->type == FOREIGN_BLOCK_TYPE__WAVE64) {
+			flac__foreign_metadata_delete(foreign_metadata);
+			return usage_error("ERROR: foreign metadata type Wave64 cannot be restored to a%s file, only to Wave64\n",FileFormatString[output_format]);
+		}
+	}
+
+	/* Now reassemble outfilename */
+	get_decoded_outfilename(infilename, output_format);
+
+	/*
+	 * Error if output file already exists (and -f not used).
+	 * Use grabbag__file_get_filesize() as a cheap way to check.
+	 */
+	if(!option_values.test_only && !option_values.force_file_overwrite && strcmp(outfilename, "-") && grabbag__file_get_filesize(outfilename) != (FLAC__off_t)(-1)) {
+		flac__utils_printf(stderr, 1, "ERROR: output file %s already exists, use -f to override\n", outfilename);
+		flac__foreign_metadata_delete(foreign_metadata);
+		return 1;
+	}
+
+	if(!option_values.test_only && !option_values.analyze) {
+		if(output_format == FORMAT_RAW && (option_values.format_is_big_endian < 0 || option_values.format_is_unsigned_samples < 0)) {
+			flac__foreign_metadata_delete(foreign_metadata);
+			return usage_error("ERROR: for decoding to a raw file you must specify a value for --endian and --sign\n");
+		}
 	}
 
 	infilename_length = strlen(infilename);
@@ -2134,22 +2267,29 @@ int decode_file(const char *infilename)
 #if !FLAC__HAS_OGG
 	if(treat_as_ogg) {
 		flac__utils_printf(stderr, 1, "%s: Ogg support has not been built into this copy of flac\n", infilename);
+		flac__foreign_metadata_delete(foreign_metadata);
 		return 1;
 	}
 #endif
 
-	if(!flac__utils_parse_skip_until_specification(option_values.skip_specification, &decode_options.skip_specification) || decode_options.skip_specification.is_relative)
+	if(!flac__utils_parse_skip_until_specification(option_values.skip_specification, &decode_options.skip_specification) || decode_options.skip_specification.is_relative) {
+		flac__foreign_metadata_delete(foreign_metadata);
 		return usage_error("ERROR: invalid value for --skip\n");
+	}
 
-	if(!flac__utils_parse_skip_until_specification(option_values.until_specification, &decode_options.until_specification)) /*@@@ more checks: no + without --skip, no - unless known total_samples_to_{en,de}code */
+	if(!flac__utils_parse_skip_until_specification(option_values.until_specification, &decode_options.until_specification)) { /*@@@ more checks: no + without --skip, no - unless known total_samples_to_{en,de}code */
+		flac__foreign_metadata_delete(foreign_metadata);
 		return usage_error("ERROR: invalid value for --until\n");
+	}
 	/* if there is no "--until" we want to default to "--until=-0" */
 	if(0 == option_values.until_specification)
 		decode_options.until_specification.is_relative = true;
 
 	if(option_values.cue_specification) {
-		if(!flac__utils_parse_cue_specification(option_values.cue_specification, &decode_options.cue_specification))
+		if(!flac__utils_parse_cue_specification(option_values.cue_specification, &decode_options.cue_specification)) {
+			flac__foreign_metadata_delete(foreign_metadata);
 			return usage_error("ERROR: invalid value for --cue\n");
+		}
 		decode_options.has_cue_specification = true;
 	}
 	else
@@ -2159,6 +2299,7 @@ int decode_file(const char *infilename)
 	decode_options.continue_through_decode_errors = option_values.continue_through_decode_errors;
 	decode_options.relaxed_foreign_metadata_handling = option_values.keep_foreign_metadata_if_present;
 	decode_options.replaygain_synthesis_spec = option_values.replaygain_synthesis_spec;
+	decode_options.force_subformat = output_subformat;
 #if FLAC__HAS_OGG
 	decode_options.is_ogg = treat_as_ogg;
 	decode_options.use_first_serial_number = !option_values.has_serial_number;
@@ -2174,29 +2315,14 @@ int decode_file(const char *infilename)
 		retval = flac__decode_file(infilename, option_values.test_only? 0 : outfilename, option_values.analyze, option_values.aopts, decode_options);
 	}
 	else {
-		decode_options.format_options.iff.foreign_metadata = 0;
-
-		/* initialize foreign metadata if requested */
-		if(option_values.keep_foreign_metadata || option_values.keep_foreign_metadata_if_present) {
-			decode_options.format_options.iff.foreign_metadata =
-				flac__foreign_metadata_new(
-					output_format==FORMAT_WAVE || output_format==FORMAT_RF64?
-						FOREIGN_BLOCK_TYPE__RIFF :
-					output_format==FORMAT_WAVE64?
-						FOREIGN_BLOCK_TYPE__WAVE64 :
-						FOREIGN_BLOCK_TYPE__AIFF
-				);
-			if(0 == decode_options.format_options.iff.foreign_metadata) {
-				flac__utils_printf(stderr, 1, "ERROR: creating foreign metadata object\n");
-				return 1;
-			}
-		}
+		decode_options.format_options.iff.foreign_metadata = foreign_metadata;
 
 		retval = flac__decode_file(infilename, option_values.test_only? 0 : outfilename, option_values.analyze, option_values.aopts, decode_options);
 
-		if(decode_options.format_options.iff.foreign_metadata)
-			flac__foreign_metadata_delete(decode_options.format_options.iff.foreign_metadata);
 	}
+
+	if(foreign_metadata)
+		flac__foreign_metadata_delete(foreign_metadata);
 
 	if(retval == 0 && strcmp(infilename, "-")) {
 		if(option_values.preserve_modtime && strcmp(outfilename, "-"))
@@ -2223,7 +2349,7 @@ const char *get_encoded_outfilename(const char *infilename)
 	return get_outfilename(p, suffix);
 }
 
-const char *get_decoded_outfilename(const char *infilename)
+const char *get_decoded_outfilename(const char *infilename, const FileFormat format)
 {
 	const char *suffix;
 	const char *p;
@@ -2238,16 +2364,19 @@ const char *get_decoded_outfilename(const char *infilename)
 	if(option_values.analyze) {
 		suffix = ".ana";
 	}
-	else if(option_values.force_raw_format) {
+	else if(format == FORMAT_RAW) {
 		suffix = ".raw";
 	}
-	else if(option_values.force_aiff_format) {
+	else if(format == FORMAT_AIFF) {
 		suffix = ".aiff";
 	}
-	else if(option_values.force_rf64_format) {
+	else if(format == FORMAT_AIFF_C) {
+		suffix = ".aifc";
+	}
+	else if(format == FORMAT_RF64) {
 		suffix = ".rf64";
 	}
-	else if(option_values.force_wave64_format) {
+	else if(format == FORMAT_WAVE64) {
 		suffix = ".w64";
 	}
 	else {

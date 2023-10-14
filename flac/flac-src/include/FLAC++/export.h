@@ -1,6 +1,6 @@
 /* libFLAC++ - Free Lossless Audio Codec library
  * Copyright (C) 2002-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -92,7 +92,7 @@
  * http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning
  */
 #define FLACPP_API_VERSION_CURRENT 10
-#define FLACPP_API_VERSION_REVISION 0 /**< see above */
+#define FLACPP_API_VERSION_REVISION 1 /**< see above */
 #define FLACPP_API_VERSION_AGE 0 /**< see above */
 
 /* \} */

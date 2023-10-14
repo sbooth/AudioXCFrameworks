@@ -1,6 +1,6 @@
 #  FLAC - Free Lossless Audio Codec
 #  Copyright (C) 2001-2009  Josh Coalson
-#  Copyright (C) 2011-2022  Xiph.Org Foundation
+#  Copyright (C) 2011-2023  Xiph.Org Foundation
 #
 #  This file is part the FLAC project.  FLAC is comprised of several
 #  components distributed under different licenses.  The codec libraries
@@ -20,7 +20,7 @@
 # instead of FLAC__ since autoconf triggers off 'AC_' in strings
 
 AC_PREREQ(2.60)
-AC_INIT([flac],[1.4.2],[flac-dev@xiph.org],[flac],[https://www.xiph.org/flac/])
+AC_INIT([flac],[1.4.3],[flac-dev@xiph.org],[flac],[https://www.xiph.org/flac/])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/flac/main.c])
 AC_CONFIG_MACRO_DIR([m4])
@@ -53,7 +53,12 @@ AM_PROG_CC_C_O
 AC_C_INLINE
 AC_C_TYPEOF
 
-AC_CHECK_HEADERS([stdint.h inttypes.h byteswap.h sys/auxv.h sys/param.h sys/ioctl.h termios.h x86intrin.h cpuid.h arm_neon.h])
+AC_CHECK_HEADERS([stdint.h stdbool.h inttypes.h byteswap.h sys/auxv.h sys/param.h sys/ioctl.h termios.h x86intrin.h cpuid.h arm_neon.h])
+
+if test "x$ac_cv_header_stdint_h" != xyes -o "x$ac_cv_header_stdbool_h" != xyes; then
+AC_MSG_ERROR("Header stdint.h and/or stdbool.h not found")
+fi
+
 
 XIPH_C_BSWAP32
 XIPH_C_BSWAP16
@@ -121,36 +126,15 @@ case "$host_cpu" in
 		AC_DEFINE(FLAC__CPU_IA32)
 		AH_TEMPLATE(FLAC__CPU_IA32, [define if building for ia32/i386])
 		;;
-	powerpc64|powerpc64le)
-		cpu_ppc64=true
-		cpu_ppc=true
-		AC_DEFINE(FLAC__CPU_PPC)
-		AH_TEMPLATE(FLAC__CPU_PPC, [define if building for PowerPC])
-		AC_DEFINE(FLAC__CPU_PPC64)
-		AH_TEMPLATE(FLAC__CPU_PPC64, [define if building for PowerPC64])
-		;;
-	powerpc|powerpcle)
-		cpu_ppc=true
-		AC_DEFINE(FLAC__CPU_PPC)
-		AH_TEMPLATE(FLAC__CPU_PPC, [define if building for PowerPC])
-		;;
 	arm64|aarch64)
 		cpu_arm64=true
 		AC_DEFINE(FLAC__CPU_ARM64)
 		AH_TEMPLATE(FLAC__CPU_ARM64, [define if building for ARM])
 		;;
-	sparc)
-		cpu_sparc=true
-		AC_DEFINE(FLAC__CPU_SPARC)
-		AH_TEMPLATE(FLAC__CPU_SPARC, [define if building for SPARC])
-		;;
 esac
 AM_CONDITIONAL(FLAC__CPU_X86_64, test "x$cpu_x86_64" = xtrue)
 AM_CONDITIONAL(FLaC__CPU_IA32, test "x$cpu_ia32" = xtrue)
-AM_CONDITIONAL(FLaC__CPU_PPC, test "x$cpu_ppc" = xtrue)
-AM_CONDITIONAL(FLaC__CPU_PPC64, test "x$cpu_ppc64" = xtrue)
 AM_CONDITIONAL(FLAC__CPU_ARM64, test "x$cpu_arm64" = xtrue)
-AM_CONDITIONAL(FLaC__CPU_SPARC, test "x$cpu_sparc" = xtrue)
 
 if test "x$ac_cv_header_x86intrin_h" = xyes -a "x$asm_opt" = xyes; then
   AC_DEFINE([FLAC__HAS_X86INTRIN], 1, [Set to 1 if <x86intrin.h> is available.])
@@ -178,36 +162,6 @@ else
   AC_DEFINE([FLAC__HAS_NEONINTRIN], 0)
 fi
 
-if test x"$cpu_ppc64" = xtrue -a "x$asm_opt" = xyes ; then
-
-AC_C_ATTRIBUTE([target("cpu=power8")],
-  [have_cpu_power8=yes],
-  [have_cpu_power8=no])
-if test x"$have_cpu_power8" = xyes ; then
-  AC_DEFINE(FLAC__HAS_TARGET_POWER8)
-  AH_TEMPLATE(FLAC__HAS_TARGET_POWER8, [define if compiler has __attribute__((target("cpu=power8"))) support])
-fi
-
-AC_C_ATTRIBUTE([target("cpu=power9")],
-  [have_cpu_power9=yes],
-  [have_cpu_power9=no])
-if test x"$have_cpu_power9" = xyes ; then
-  AC_DEFINE(FLAC__HAS_TARGET_POWER9)
-  AH_TEMPLATE(FLAC__HAS_TARGET_POWER9, [define if compiler has __attribute__((target("cpu=power9"))) support])
-fi
-
-if test x"$have_cpu_power8" = xyes || test x"$have_cpu_power9" = xyes ; then
-  AC_MSG_CHECKING([whether altivec.h has vec_doubleh()])
-  AC_COMPILE_IFELSE(
-	[AC_LANG_PROGRAM([[#include <altivec.h>]],
-	[[vector float d = {0.0f,0.0f,0.0f,0.0f}; vec_doubleh(d);]])],
-	[AC_MSG_RESULT([yes])
-	 has_vec_doubleh=true],
-	[AC_MSG_RESULT([no])])
-fi
-
-fi
-
 case "$host" in
 	i386-*-openbsd3.[[0-3]]) OBJ_FORMAT=aoutb ;;
 	*-*-cygwin|*mingw*) OBJ_FORMAT=win32 ;;
@@ -222,10 +176,12 @@ os_is_windows=no
 case "$host" in
 	*mingw*)
 		os_is_windows=yes
+		AC_CHECK_TOOL(RC,[windres],[:])
 		;;
 esac
 
 AM_CONDITIONAL(OS_IS_WINDOWS, test "x$os_is_windows" = xyes)
+AM_CONDITIONAL(HAVE_WINDRES, test "x$RC" != "x:")
 
 case "$host" in
 	*-linux-*)
@@ -248,33 +204,6 @@ AH_TEMPLATE(FLAC__ALIGN_MALLOC_DATA, [define to align allocated memory on 32-byt
 fi
 
 AM_CONDITIONAL([DEBUG], [test "x${ax_enable_debug}" = "xyes" || test "x${ax_enable_debug}" = "xinfo"])
-
-AC_ARG_ENABLE(altivec,
-AS_HELP_STRING([--disable-altivec],[Disable use of Altivec instructions]),
-[case "${enableval}" in
-	yes) use_altivec=true ;;
-	no)  use_altivec=false ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-altivec) ;;
-esac],[use_altivec=true])
-AM_CONDITIONAL(FLaC__USE_ALTIVEC, test "x$use_altivec" = xtrue)
-if test "x$use_altivec" = xtrue ; then
-AC_DEFINE(FLAC__USE_ALTIVEC)
-AH_TEMPLATE(FLAC__USE_ALTIVEC, [define to enable use of Altivec instructions])
-fi
-
-AC_ARG_ENABLE(vsx,
-AS_HELP_STRING([--disable-vsx],[Disable VSX optimizations]),
-[case "${enableval}" in
-	yes) use_vsx=true ;;
-	no)  use_vsx=false ;;
-	*) AC_MSG_ERROR(bad value ${enableval} for --enable-vsx) ;;
-esac],[use_vsx=true])
-AM_CONDITIONAL(FLaC__USE_VSX, test "x$use_vsx" = xtrue)
-if test "x$use_vsx$has_vec_doubleh" = xtruetrue ; then
-AC_DEFINE(FLAC__USE_VSX)
-AH_TEMPLATE(FLAC__USE_VSX, [define to enable use of VSX instructions])
-asm_optimisation=yes
-fi
 
 AC_ARG_ENABLE(avx,
 AS_HELP_STRING([--disable-avx],[Disable AVX, AVX2 optimizations. There is runtime detection of CPU features, so disabling is only necessary when a compiler does not know about them]),
@@ -338,12 +267,12 @@ esac
 
 
 AC_ARG_ENABLE(64-bit-words,
-	AS_HELP_STRING([--enable-64-bit-words],[Set FLAC__BYTES_PER_WORD to 8 (4 is the default)]))
-if test "x$enable_64_bit_words" = xyes ; then
-	AC_DEFINE_UNQUOTED([ENABLE_64_BIT_WORDS],1,[Set FLAC__BYTES_PER_WORD to 8 (4 is the default)])
+	AS_HELP_STRING([--disable-64-bit-words],[Set FLAC__BYTES_PER_WORD to 4 (8 is the default)]))
+if test "x$enable_64_bit_words" = xno ; then
+	AC_DEFINE_UNQUOTED([ENABLE_64_BIT_WORDS],0,[Set FLAC__BYTES_PER_WORD to 8 (this is the default)])
 else
-	AC_DEFINE_UNQUOTED([ENABLE_64_BIT_WORDS],0)
-	fi
+	AC_DEFINE_UNQUOTED([ENABLE_64_BIT_WORDS],1)
+fi
 AC_SUBST(ENABLE_64_BIT_WORDS)
 
 AC_ARG_ENABLE(valgrind-testing,
@@ -465,15 +394,15 @@ AC_CHECK_LIB(rt, clock_gettime,
         AH_TEMPLATE(HAVE_CLOCK_GETTIME, [define if you have clock_gettime]))
 AC_SUBST(LIB_CLOCK_GETTIME)
 
-dnl Prepend defaults to CFLAGS
-AS_IF([test "x${ax_enable_debug}" = "xno"], [
-	CFLAGS="-O3 -funroll-loops $CFLAGS"
-	CXXFLAGS="-O3 $CXXFLAGS"
-])
-
 XIPH_GCC_VERSION dnl Sets a non-zero GCC_XXX_VERSION for gcc, not clang. checks below rely on that..
 
 if test x$ac_cv_c_compiler_gnu = xyes -o x$xiph_cv_c_compiler_clang = xyes ; then
+	dnl Prepend defaults to CFLAGS for GCC and Clang
+	AS_IF([test "x${ax_enable_debug}" = "xno"], [
+		CFLAGS="-O3 -funroll-loops $CFLAGS"
+		CXXFLAGS="-O3 $CXXFLAGS"
+	])
+
 	CFLAGS="$CFLAGS -Wall -Wextra -Wstrict-prototypes -Wmissing-prototypes -Waggregate-return -Wcast-align -Wnested-externs -Wshadow -Wundef -Wmissing-declarations -Winline " # -Wcast-qual -Wbad-function-cast -Wwrite-strings -Wconversion
 	CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wcast-align -Wshadow -Wwrite-strings -Wctor-dtor-privacy -Wnon-virtual-dtor -Wreorder -Wsign-promo -Wundef " # -Wcast-qual -Wbad-function-cast -Wwrite-strings -Woverloaded-virtual -Wmissing-declarations
 
@@ -634,6 +563,7 @@ AC_CONFIG_FILES([ \
 	test/common.sh \
 	test/Makefile \
 	test/cuesheets/Makefile \
+	test/foreign-metadata-test-files/Makefile \
 	test/flac-to-flac-metadata-test-files/Makefile \
 	test/metaflac-test-files/Makefile \
 	test/pictures/Makefile \

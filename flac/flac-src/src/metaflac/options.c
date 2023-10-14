@@ -1,6 +1,6 @@
 /* metaflac - Command-line FLAC metadata editor
  * Copyright (C) 2001-2009  Josh Coalson
- * Copyright (C) 2011-2022  Xiph.Org Foundation
+ * Copyright (C) 2011-2023  Xiph.Org Foundation
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,8 +65,10 @@ struct share__option long_options_[] = {
 	{ "set-bps", 1, 0, 0 }, /* undocumented */
 	{ "set-total-samples", 1, 0, 0 }, /* undocumented */ /* WATCHOUT: used by test/test_flac.sh on windows */
 	{ "show-vendor-tag", 0, 0, 0 },
+	{ "show-all-tags", 0, 0, 0 },
 	{ "show-tag", 1, 0, 0 },
 	{ "remove-all-tags", 0, 0, 0 },
+	{ "remove-all-tags-except", 1, 0, 0 },
 	{ "remove-tag", 1, 0, 0 },
 	{ "remove-first-tag", 1, 0, 0 },
 	{ "set-tag", 1, 0, 0 },
@@ -114,6 +116,7 @@ static FLAC__bool parse_uint32(const char *src, FLAC__uint32 *dest);
 static FLAC__bool parse_uint64(const char *src, FLAC__uint64 *dest);
 static FLAC__bool parse_string(const char *src, char **dest);
 static FLAC__bool parse_vorbis_comment_field_name(const char *field_ref, char **name, const char **violation);
+static FLAC__bool parse_vorbis_comment_field_names(const char *field_ref, char **names, const char **violation);
 static FLAC__bool parse_add_seekpoint(const char *in, char **out, const char **violation);
 static FLAC__bool parse_add_padding(const char *in, unsigned *out);
 static FLAC__bool parse_block_number(const char *in, Argument_BlockNumber *out);
@@ -136,6 +139,8 @@ void init_options(CommandLineOptions *options)
 	options->cued_seekpoints = true;
 	options->show_long_help = false;
 	options->show_version = false;
+	options->data_format_is_binary = false;
+	options->data_format_is_binary_headerless = false;
 	options->application_data_format_is_hexdump = false;
 
 	options->ops.operations = 0;
@@ -207,7 +212,7 @@ FLAC__bool parse_options(int argc, char *argv[], CommandLineOptions *options)
 	}
 
 	/* check for only one FLAC file used with certain options */
-	if(options->num_files > 1) {
+	if(!had_error && options->num_files > 1) {
 		if(0 != find_shorthand_operation(options, OP__IMPORT_CUESHEET_FROM)) {
 			flac_fprintf(stderr, "ERROR: you may only specify one FLAC file when using '--import-cuesheet-from'\n");
 			had_error = true;
@@ -269,6 +274,7 @@ void free_options(CommandLineOptions *options)
 			case OP__SHOW_VC_FIELD:
 			case OP__REMOVE_VC_FIELD:
 			case OP__REMOVE_VC_FIRSTFIELD:
+			case OP__REMOVE_VC_ALL_EXCEPT:
 				if(0 != op->argument.vc_field_name.value)
 					free(op->argument.vc_field_name.value);
 				break;
@@ -493,8 +499,22 @@ FLAC__bool parse_option(int option_index, const char *option_argument, CommandLi
 			ok = false;
 		}
 	}
+	else if(0 == strcmp(opt, "show-all-tags")) {
+		op = append_shorthand_operation(options, OP__EXPORT_VC_TO);
+		parse_string("-",&op->argument.filename.value);
+	}
 	else if(0 == strcmp(opt, "remove-all-tags")) {
 		(void) append_shorthand_operation(options, OP__REMOVE_VC_ALL);
+	}
+	else if(0 == strcmp(opt, "remove-all-tags-except")) {
+		const char *violation;
+		op = append_shorthand_operation(options, OP__REMOVE_VC_ALL_EXCEPT);
+		FLAC__ASSERT(0 != option_argument);
+		if(!parse_vorbis_comment_field_names(option_argument, &(op->argument.vc_field_name.value), &violation)) {
+			FLAC__ASSERT(0 != violation);
+			flac_fprintf(stderr, "ERROR (--%s): malformed vorbis comment field name \"%s\",\n       %s\n", opt, option_argument, violation);
+			ok = false;
+		}
 	}
 	else if(0 == strcmp(opt, "remove-tag")) {
 		const char *violation;
@@ -695,6 +715,8 @@ FLAC__bool parse_option(int option_index, const char *option_argument, CommandLi
 			flac_fprintf(stderr, "ERROR (--%s): illegal data format \"%s\"\n", opt, option_argument);
 			ok = false;
 		}
+		options->data_format_is_binary = arg->value.data_format.is_binary;
+		options->data_format_is_binary_headerless = arg->value.data_format.is_headerless;
 	}
 	else if(0 == strcmp(opt, "application-data-format")) {
 		FLAC__ASSERT(0 != option_argument);
@@ -886,6 +908,29 @@ FLAC__bool parse_vorbis_comment_field_name(const char *field_ref, char **name, c
 	return true;
 }
 
+FLAC__bool parse_vorbis_comment_field_names(const char *field_ref, char **names, const char **violation)
+{
+	static const char * const violations[] = {
+		"field name contains invalid character"
+	};
+
+	char *q, *s;
+
+	s = local_strdup(field_ref);
+
+	for(q = s; *q; q++) {
+		if(*q < 0x20 || *q > 0x7d) {
+			free(s);
+			*violation = violations[0];
+			return false;
+		}
+	}
+
+	*names = s;
+
+	return true;
+}
+
 FLAC__bool parse_add_seekpoint(const char *in, char **out, const char **violation)
 {
 	static const char *garbled_ = "garbled specification";
@@ -1067,10 +1112,18 @@ FLAC__bool parse_block_type(const char *in, Argument_BlockType *out)
 
 FLAC__bool parse_data_format(const char *in, Argument_DataFormat *out)
 {
-	if(0 == strcmp(in, "binary"))
-		out->is_binary = true;
-	else if(0 == strcmp(in, "text"))
+	if(0 == strcmp(in, "binary-headerless")) {
 		out->is_binary = false;
+		out->is_headerless = true;
+	}
+	else if(0 == strcmp(in, "binary")) {
+		out->is_binary = true;
+		out->is_headerless = false;
+	}
+	else if(0 == strcmp(in, "text")) {
+		out->is_binary = false;
+		out->is_headerless = false;
+	}
 	else
 		return false;
 	return true;

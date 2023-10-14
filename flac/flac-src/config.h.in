@@ -9,7 +9,7 @@
 /* Target processor is little endian. */
 #undef CPU_IS_LITTLE_ENDIAN
 
-/* Set FLAC__BYTES_PER_WORD to 8 (4 is the default) */
+/* Set FLAC__BYTES_PER_WORD to 8 (this is the default) */
 #undef ENABLE_64_BIT_WORDS
 
 /* libtool defines DLL_EXPORT for windows dll builds,
@@ -31,15 +31,6 @@
 /* define if building for ia32/i386 */
 #undef FLAC__CPU_IA32
 
-/* define if building for PowerPC */
-#undef FLAC__CPU_PPC
-
-/* define if building for PowerPC64 */
-#undef FLAC__CPU_PPC64
-
-/* define if building for SPARC */
-#undef FLAC__CPU_SPARC
-
 /* define if building for x86_64 */
 #undef FLAC__CPU_X86_64
 
@@ -55,12 +46,6 @@
 /* define if you have pandoc */
 #undef FLAC__HAS_PANDOC
 
-/* define if compiler has __attribute__((target("cpu=power8"))) support */
-#undef FLAC__HAS_TARGET_POWER8
-
-/* define if compiler has __attribute__((target("cpu=power9"))) support */
-#undef FLAC__HAS_TARGET_POWER9
-
 /* Set to 1 if <x86intrin.h> is available. */
 #undef FLAC__HAS_X86INTRIN
 
@@ -73,14 +58,8 @@
 /* define if building for Linux */
 #undef FLAC__SYS_LINUX
 
-/* define to enable use of Altivec instructions */
-#undef FLAC__USE_ALTIVEC
-
 /* define to enable use of AVX instructions */
 #undef FLAC__USE_AVX
-
-/* define to enable use of VSX instructions */
-#undef FLAC__USE_VSX
 
 /* "Define to the commit date of the current git HEAD" */
 #undef GIT_COMMIT_DATE
@@ -135,6 +114,9 @@
 
 /* Define to 1 if you have the <minix/config.h> header file. */
 #undef HAVE_MINIX_CONFIG_H
+
+/* Define to 1 if you have the <stdbool.h> header file. */
+#undef HAVE_STDBOOL_H
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H

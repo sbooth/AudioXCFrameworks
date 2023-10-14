@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.9.2" doxygen_gitid="7f1dd433424eaa2516481787803fe7431f5a0962">
+<tagfile doxygen_version="1.9.1">
   <compound kind="file">
     <name>decoder.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC++/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC++/</path>
     <filename>decoder_8h.html</filename>
     <includes id="FLAC_09_09_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
     <includes id="stream__decoder_8h" name="stream_decoder.h" local="yes" imported="no">FLAC/stream_decoder.h</includes>
@@ -12,7 +12,7 @@
   </compound>
   <compound kind="file">
     <name>encoder.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC++/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC++/</path>
     <filename>encoder_8h.html</filename>
     <includes id="FLAC_09_09_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
     <includes id="stream__encoder_8h" name="stream_encoder.h" local="yes" imported="no">FLAC/stream_encoder.h</includes>
@@ -24,7 +24,7 @@
   </compound>
   <compound kind="file">
     <name>callback.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC/</path>
     <filename>callback_8h.html</filename>
     <class kind="struct">FLAC__IOCallbacks</class>
     <member kind="typedef">
@@ -79,40 +79,7 @@
   </compound>
   <compound kind="file">
     <name>export.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC++/</path>
-    <filename>FLAC_09_09_2export_8h.html</filename>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>gaec3a801bf18630403eda6dc2f8c4927a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API_VERSION_CURRENT</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>gafc3064beba20c1795d8aaa801b79d3b6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API_VERSION_REVISION</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>gaebce36e5325dbdcdc1a9e61a44606efe</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API_VERSION_AGE</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>ga17d0e89a961696b32c2b11e08663543f</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>export.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC/</path>
     <filename>FLAC_2export_8h.html</filename>
     <member kind="define">
       <type>#define</type>
@@ -151,8 +118,41 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>export.h</name>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC++/</path>
+    <filename>FLAC_09_09_2export_8h.html</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>gaec3a801bf18630403eda6dc2f8c4927a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API_VERSION_CURRENT</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>gafc3064beba20c1795d8aaa801b79d3b6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API_VERSION_REVISION</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>gaebce36e5325dbdcdc1a9e61a44606efe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API_VERSION_AGE</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>ga17d0e89a961696b32c2b11e08663543f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>format.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC/</path>
     <filename>format_8h.html</filename>
     <includes id="FLAC_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
     <class kind="struct">FLAC__EntropyCodingMethod_PartitionedRiceContents</class>
@@ -1272,93 +1272,7 @@
   </compound>
   <compound kind="file">
     <name>metadata.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC++/</path>
-    <filename>FLAC_09_09_2metadata_8h.html</filename>
-    <includes id="FLAC_09_09_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
-    <includes id="FLAC_2metadata_8h" name="metadata.h" local="yes" imported="no">FLAC/metadata.h</includes>
-    <class kind="class">FLAC::Metadata::Prototype</class>
-    <class kind="class">FLAC::Metadata::StreamInfo</class>
-    <class kind="class">FLAC::Metadata::Padding</class>
-    <class kind="class">FLAC::Metadata::Application</class>
-    <class kind="class">FLAC::Metadata::SeekTable</class>
-    <class kind="class">FLAC::Metadata::VorbisComment</class>
-    <class kind="class">FLAC::Metadata::VorbisComment::Entry</class>
-    <class kind="class">FLAC::Metadata::CueSheet</class>
-    <class kind="class">FLAC::Metadata::CueSheet::Track</class>
-    <class kind="class">FLAC::Metadata::Picture</class>
-    <class kind="class">FLAC::Metadata::Unknown</class>
-    <class kind="class">FLAC::Metadata::SimpleIterator</class>
-    <class kind="class">FLAC::Metadata::SimpleIterator::Status</class>
-    <class kind="class">FLAC::Metadata::Chain</class>
-    <class kind="class">FLAC::Metadata::Chain::Status</class>
-    <class kind="class">FLAC::Metadata::Iterator</class>
-    <member kind="function">
-      <type>Prototype *</type>
-      <name>construct_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga71382f9536987249f089c8702e5b8233</anchor>
-      <arglist>(::FLAC__StreamMetadata *object)</arglist>
-    </member>
-    <member kind="function">
-      <type>Prototype *</type>
-      <name>clone</name>
-      <anchorfile>group__flacpp__metadata__object.html</anchorfile>
-      <anchor>gaa30b76bf93ffc9b031d47e8dd51add30</anchor>
-      <arglist>(const Prototype *)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_streaminfo</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga8fa8da652f33edeb4dabb4ce39fda04b</anchor>
-      <arglist>(const char *filename, StreamInfo &amp;streaminfo)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_tags</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga533a71ba745ca03068523a4a45fb0329</anchor>
-      <arglist>(const char *filename, VorbisComment *&amp;tags)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_tags</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga85166e6206f3d5635684de4257f2b00e</anchor>
-      <arglist>(const char *filename, VorbisComment &amp;tags)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_cuesheet</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga4fad03d91f22d78acf35dd2f35df9ac7</anchor>
-      <arglist>(const char *filename, CueSheet *&amp;cuesheet)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_cuesheet</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>gaea8f05f89e36af143d73b4280f05cc0e</anchor>
-      <arglist>(const char *filename, CueSheet &amp;cuesheet)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_picture</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>gaa44df95da4d3abc459fdc526a0d54a55</anchor>
-      <arglist>(const char *filename, Picture *&amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_picture</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>gaa6aea22f1ebeb671db19b73277babdea</anchor>
-      <arglist>(const char *filename, Picture &amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>metadata.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC/</path>
     <filename>FLAC_2metadata_8h.html</filename>
     <includes id="FLAC_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
     <includes id="callback_8h" name="callback.h" local="yes" imported="no">callback.h</includes>
@@ -1604,7 +1518,7 @@
       <type>FLAC__Metadata_SimpleIterator *</type>
       <name>FLAC__metadata_simple_iterator_new</name>
       <anchorfile>group__flac__metadata__level1.html</anchorfile>
-      <anchor>ga9b2ea79894c7e5df712e0ca7d4e0e56d</anchor>
+      <anchor>ga017ae86f3351888f50feb47026ed2482</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -1688,7 +1602,7 @@
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_simple_iterator_get_block</name>
       <anchorfile>group__flac__metadata__level1.html</anchorfile>
-      <anchor>ga6c2a2f978e61dc6634d2c991c58174cf</anchor>
+      <anchor>ga1b7374cafd886ceb880b050dfa1e387a</anchor>
       <arglist>(FLAC__Metadata_SimpleIterator *iterator)</arglist>
     </member>
     <member kind="function">
@@ -1716,7 +1630,7 @@
       <type>FLAC__Metadata_Chain *</type>
       <name>FLAC__metadata_chain_new</name>
       <anchorfile>group__flac__metadata__level2.html</anchorfile>
-      <anchor>ga04c441b6c2bec6db0b7a1998cd10846c</anchor>
+      <anchor>ga381a1b6efff8d4e9d793f1dda515bd73</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -1807,7 +1721,7 @@
       <type>FLAC__Metadata_Iterator *</type>
       <name>FLAC__metadata_iterator_new</name>
       <anchorfile>group__flac__metadata__level2.html</anchorfile>
-      <anchor>gab41f9cbda6240979672501e00a30d606</anchor>
+      <anchor>ga1941ca04671813fc039ea7fd35ae6461</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -1849,7 +1763,7 @@
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_iterator_get_block</name>
       <anchorfile>group__flac__metadata__level2.html</anchorfile>
-      <anchor>ga1b7286a89bd17f120bbd9952d657e574</anchor>
+      <anchor>gad3e7fbc3b3d9c192a3ac425c7b263641</anchor>
       <arglist>(FLAC__Metadata_Iterator *iterator)</arglist>
     </member>
     <member kind="function">
@@ -1884,14 +1798,14 @@
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_object_new</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>gaf5cbd34fb2e2bfd2277bc9706b584577</anchor>
+      <anchor>ga5df7bc8c72cafed1391bdc5ffc876e0f</anchor>
       <arglist>(FLAC__MetadataType type)</arglist>
     </member>
     <member kind="function">
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_object_clone</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>gaf81a1eff588f66493ad5f247d94cdd19</anchor>
+      <anchor>ga29af0ecc2a015ef22289f206bc308d80</anchor>
       <arglist>(const FLAC__StreamMetadata *object)</arglist>
     </member>
     <member kind="function">
@@ -2087,14 +2001,14 @@
       <type>FLAC__StreamMetadata_CueSheet_Track *</type>
       <name>FLAC__metadata_object_cuesheet_track_new</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>ga0a22d0a0ca22f209669cb9731b5b2a6e</anchor>
+      <anchor>gafe2983a9c09685e34626cab39b3fb52c</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
       <type>FLAC__StreamMetadata_CueSheet_Track *</type>
       <name>FLAC__metadata_object_cuesheet_track_clone</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>gac1efa12615b7f44c09bafdef0a0b3ac8</anchor>
+      <anchor>ga1293d6df6daf2d65143d8bb40eed9261</anchor>
       <arglist>(const FLAC__StreamMetadata_CueSheet_Track *object)</arglist>
     </member>
     <member kind="function">
@@ -2209,6 +2123,20 @@
       <anchor>ga88268a5186e37d4b98b4df7870561128</anchor>
       <arglist>(const FLAC__StreamMetadata *object, const char **violation)</arglist>
     </member>
+    <member kind="function">
+      <type>FLAC__byte *</type>
+      <name>FLAC__metadata_object_get_raw</name>
+      <anchorfile>group__flac__metadata__object.html</anchorfile>
+      <anchor>ga25695e3b6541ed37c94169158cd352f8</anchor>
+      <arglist>(const FLAC__StreamMetadata *object)</arglist>
+    </member>
+    <member kind="function">
+      <type>FLAC__StreamMetadata *</type>
+      <name>FLAC__metadata_object_set_raw</name>
+      <anchorfile>group__flac__metadata__object.html</anchorfile>
+      <anchor>ga2db85cdea68f2fa84dd3f8aa31d9e4eb</anchor>
+      <arglist>(FLAC__byte *buffer, FLAC__uint32 length)</arglist>
+    </member>
     <member kind="variable">
       <type>const char *const</type>
       <name>FLAC__Metadata_SimpleIteratorStatusString</name>
@@ -2225,8 +2153,94 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>metadata.h</name>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC++/</path>
+    <filename>FLAC_09_09_2metadata_8h.html</filename>
+    <includes id="FLAC_09_09_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
+    <includes id="FLAC_2metadata_8h" name="metadata.h" local="yes" imported="no">FLAC/metadata.h</includes>
+    <class kind="class">FLAC::Metadata::Prototype</class>
+    <class kind="class">FLAC::Metadata::StreamInfo</class>
+    <class kind="class">FLAC::Metadata::Padding</class>
+    <class kind="class">FLAC::Metadata::Application</class>
+    <class kind="class">FLAC::Metadata::SeekTable</class>
+    <class kind="class">FLAC::Metadata::VorbisComment</class>
+    <class kind="class">FLAC::Metadata::VorbisComment::Entry</class>
+    <class kind="class">FLAC::Metadata::CueSheet</class>
+    <class kind="class">FLAC::Metadata::CueSheet::Track</class>
+    <class kind="class">FLAC::Metadata::Picture</class>
+    <class kind="class">FLAC::Metadata::Unknown</class>
+    <class kind="class">FLAC::Metadata::SimpleIterator</class>
+    <class kind="class">FLAC::Metadata::SimpleIterator::Status</class>
+    <class kind="class">FLAC::Metadata::Chain</class>
+    <class kind="class">FLAC::Metadata::Chain::Status</class>
+    <class kind="class">FLAC::Metadata::Iterator</class>
+    <member kind="function">
+      <type>Prototype *</type>
+      <name>construct_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga8df28d7c46448436905e52a01824dbec</anchor>
+      <arglist>(::FLAC__StreamMetadata *object)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prototype *</type>
+      <name>clone</name>
+      <anchorfile>group__flacpp__metadata__object.html</anchorfile>
+      <anchor>gae18d91726a320349b2c3fb45e79d21fc</anchor>
+      <arglist>(const Prototype *)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_streaminfo</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga8fa8da652f33edeb4dabb4ce39fda04b</anchor>
+      <arglist>(const char *filename, StreamInfo &amp;streaminfo)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_tags</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga533a71ba745ca03068523a4a45fb0329</anchor>
+      <arglist>(const char *filename, VorbisComment *&amp;tags)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_tags</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga85166e6206f3d5635684de4257f2b00e</anchor>
+      <arglist>(const char *filename, VorbisComment &amp;tags)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_cuesheet</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga4fad03d91f22d78acf35dd2f35df9ac7</anchor>
+      <arglist>(const char *filename, CueSheet *&amp;cuesheet)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_cuesheet</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>gaea8f05f89e36af143d73b4280f05cc0e</anchor>
+      <arglist>(const char *filename, CueSheet &amp;cuesheet)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_picture</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>gaa44df95da4d3abc459fdc526a0d54a55</anchor>
+      <arglist>(const char *filename, Picture *&amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_picture</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>gaa6aea22f1ebeb671db19b73277babdea</anchor>
+      <arglist>(const char *filename, Picture &amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>stream_decoder.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC/</path>
     <filename>stream__decoder_8h.html</filename>
     <includes id="FLAC_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
     <includes id="format_8h" name="format.h" local="yes" imported="no">format.h</includes>
@@ -2557,7 +2571,7 @@
       <type>FLAC__StreamDecoder *</type>
       <name>FLAC__stream_decoder_new</name>
       <anchorfile>group__flac__stream__decoder.html</anchorfile>
-      <anchor>gad6ef19e729b5edd44ee9dabc8a6ed92c</anchor>
+      <anchor>ga529c3c1e46417570767fb8e4c76f5477</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -2634,7 +2648,7 @@
       <type>const char *</type>
       <name>FLAC__stream_decoder_get_resolved_state_string</name>
       <anchorfile>group__flac__stream__decoder.html</anchorfile>
-      <anchor>ga36a2a4af3e2e458091b523190e4aedf6</anchor>
+      <anchor>gad28257412951ca266751a19e2cf54be2</anchor>
       <arglist>(const FLAC__StreamDecoder *decoder)</arglist>
     </member>
     <member kind="function">
@@ -2697,7 +2711,7 @@
       <type>const void *</type>
       <name>FLAC__stream_decoder_get_client_data</name>
       <anchorfile>group__flac__stream__decoder.html</anchorfile>
-      <anchor>gaf61add658612b497da0673128b364b70</anchor>
+      <anchor>gab14d8d4fa1a66a5a603f96090c2deb07</anchor>
       <arglist>(FLAC__StreamDecoder *decoder)</arglist>
     </member>
     <member kind="function">
@@ -2857,7 +2871,7 @@
   </compound>
   <compound kind="file">
     <name>stream_encoder.h</name>
-    <path>/home/m_van/flac-ktmf01/include/FLAC/</path>
+    <path>/home/martijn/bin/flac-ktmf01/include/FLAC/</path>
     <filename>stream__encoder_8h.html</filename>
     <includes id="FLAC_2export_8h" name="export.h" local="yes" imported="no">export.h</includes>
     <includes id="format_8h" name="format.h" local="yes" imported="no">format.h</includes>
@@ -3161,7 +3175,7 @@
       <type>FLAC__StreamEncoder *</type>
       <name>FLAC__stream_encoder_new</name>
       <anchorfile>group__flac__stream__encoder.html</anchorfile>
-      <anchor>ga15ae6918f32fd6a57426de9888c884bd</anchor>
+      <anchor>gab09f7620a0ba9c30020c189ce112a52f</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -3343,7 +3357,7 @@
       <type>const char *</type>
       <name>FLAC__stream_encoder_get_resolved_state_string</name>
       <anchorfile>group__flac__stream__encoder.html</anchorfile>
-      <anchor>gafa6fb6a95471c2c5bd188aa0e988b16f</anchor>
+      <anchor>ga0916f813358eb6f1e44148353acd4d42</anchor>
       <arglist>(const FLAC__StreamEncoder *encoder)</arglist>
     </member>
     <member kind="function">
@@ -5028,14 +5042,14 @@
       <type>Application &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga749891da34b3d709c16129bdbbea1879</anchor>
+      <anchor>ga3ca9dd06666b1dc7d4bdb6aef8e14d04</anchor>
       <arglist>(const Application &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>Application &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf42f0ffe86877a68609f1032c859ae75</anchor>
+      <anchor>ga47f68d7001ef094a916d3b13fe589fc2</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -5119,7 +5133,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -5232,14 +5246,14 @@
       <type>CueSheet &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gae5a2121b375344645b2dd62a68fa22bf</anchor>
+      <anchor>gad24bf2e19de81159d5e205ae5ef63843</anchor>
       <arglist>(const CueSheet &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>CueSheet &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga5ab1dd1f6d7e1c36165dc361296d9704</anchor>
+      <anchor>gac83a472ca9852f3e2e800ae57d3e1305</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -5393,7 +5407,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -5457,7 +5471,7 @@
       <type>Prototype *</type>
       <name>get_block</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga9fb167ff8f0b058e244353a21541f3d7</anchor>
+      <anchor>ga3693233f592b9cb333c437413c6be2a6</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -5518,14 +5532,14 @@
       <type>Padding &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafcfc83524d1d4a8e6227557f96b4b08d</anchor>
+      <anchor>gaece6ab03932bea3f0c32ff3cd88f2617</anchor>
       <arglist>(const Padding &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>Padding &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga8712aef7b4d754838e331ed2512025b9</anchor>
+      <anchor>ga3b7508e56df71854ff1f5ad9570b5684</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -5609,7 +5623,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -5642,14 +5656,14 @@
       <type>Picture &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gacef320e703be17cdb153a7a7f9d5a2f4</anchor>
+      <anchor>ga2ab3ef473f6c70aafe5bd3229f397a93</anchor>
       <arglist>(const Picture &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>Picture &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga4aff0f2e0bd5de1efa0f6d7f3f4362dc</anchor>
+      <anchor>gaa3d7384cb724a842c3471a9ab19f81ed</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -5761,7 +5775,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -5856,14 +5870,14 @@
       <type>Prototype &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaa6e6fbd804baaba187f9e8859a9b05de</anchor>
+      <anchor>gaea76819568855c4f49f2a23d42a642f2</anchor>
       <arglist>(const Prototype &amp;)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -5896,14 +5910,14 @@
       <type>SeekTable &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga24b884eb73c52bd4a70f1519be39bbbc</anchor>
+      <anchor>gac1094c0536952a569e41ba619f9b4ff5</anchor>
       <arglist>(const SeekTable &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>SeekTable &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga32328cf845281964ed733bc90015c0f9</anchor>
+      <anchor>gad9d0036938d6ad1c81180cf1e156b844</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -6057,7 +6071,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -6153,7 +6167,7 @@
       <type>Prototype *</type>
       <name>get_block</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga61de602276e5159253b21a19590d3584</anchor>
+      <anchor>gab206e5d7145d3726335d336cbc452598</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -6204,14 +6218,14 @@
       <type>StreamInfo &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafcb52c9e5798433c992adc03b78af255</anchor>
+      <anchor>ga353a63aa812f125fedec844142946142</anchor>
       <arglist>(const StreamInfo &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>StreamInfo &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga273c99834dac03cdae2bd73c5e0e3711</anchor>
+      <anchor>gad1193a408a5735845dea17a131b7282c</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -6295,7 +6309,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -6328,14 +6342,14 @@
       <type>Unknown &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad71a2703435fc641490fb827c6e5c90f</anchor>
+      <anchor>ga295f824df8ed10c3386df72272fdca47</anchor>
       <arglist>(const Unknown &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>Unknown &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafd6e5eba4b7d20bcba9ac35a3e8c3ef3</anchor>
+      <anchor>ga4dc5e794c8d529245888414b2bf7d404</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -6419,7 +6433,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -6453,14 +6467,14 @@
       <type>VorbisComment &amp;</type>
       <name>operator=</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga4d4e9b792231b89df47d392713ebd169</anchor>
+      <anchor>ga135650367ce6c2c5ce12b534307f1cca</anchor>
       <arglist>(const VorbisComment &amp;object)</arglist>
     </member>
     <member kind="function">
       <type>VorbisComment &amp;</type>
       <name>assign</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga2f0f25eb213a02f71a096ee06444228e</anchor>
+      <anchor>ga9db2171c398cd62a5907e625c3a6228d</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function">
@@ -6607,7 +6621,7 @@
       <type>Prototype &amp;</type>
       <name>assign_object</name>
       <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
       <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
@@ -7190,1164 +7204,6 @@
       <anchorfile>group__flac__format.html</anchorfile>
       <anchor>ga20ca19c50b671487f5d1da78b07f1b66</anchor>
       <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="group">
-    <name>flacpp</name>
-    <title>FLAC C++ API</title>
-    <filename>group__flacpp.html</filename>
-    <subgroup>flacpp_decoder</subgroup>
-    <subgroup>flacpp_encoder</subgroup>
-    <subgroup>flacpp_export</subgroup>
-    <subgroup>flacpp_metadata</subgroup>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_decoder</name>
-    <title>FLAC++/decoder.h: decoder classes</title>
-    <filename>group__flacpp__decoder.html</filename>
-    <class kind="class">FLAC::Decoder::Stream</class>
-    <class kind="class">FLAC::Decoder::File</class>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_encoder</name>
-    <title>FLAC++/encoder.h: encoder classes</title>
-    <filename>group__flacpp__encoder.html</filename>
-    <class kind="class">FLAC::Encoder::Stream</class>
-    <class kind="class">FLAC::Encoder::File</class>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_export</name>
-    <title>FLAC++/export.h: export symbols</title>
-    <filename>group__flacpp__export.html</filename>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>gaec3a801bf18630403eda6dc2f8c4927a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API_VERSION_CURRENT</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>gafc3064beba20c1795d8aaa801b79d3b6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API_VERSION_REVISION</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>gaebce36e5325dbdcdc1a9e61a44606efe</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="define">
-      <type>#define</type>
-      <name>FLACPP_API_VERSION_AGE</name>
-      <anchorfile>group__flacpp__export.html</anchorfile>
-      <anchor>ga17d0e89a961696b32c2b11e08663543f</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_metadata</name>
-    <title>FLAC++/metadata.h: metadata interfaces</title>
-    <filename>group__flacpp__metadata.html</filename>
-    <subgroup>flacpp_metadata_object</subgroup>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_metadata_object</name>
-    <title>FLAC++/metadata.h: metadata object classes</title>
-    <filename>group__flacpp__metadata__object.html</filename>
-    <subgroup>flacpp_metadata_level0</subgroup>
-    <class kind="class">FLAC::Metadata::Prototype</class>
-    <class kind="class">FLAC::Metadata::StreamInfo</class>
-    <class kind="class">FLAC::Metadata::Padding</class>
-    <class kind="class">FLAC::Metadata::Application</class>
-    <class kind="class">FLAC::Metadata::SeekTable</class>
-    <class kind="class">FLAC::Metadata::VorbisComment</class>
-    <class kind="class">FLAC::Metadata::CueSheet</class>
-    <class kind="class">FLAC::Metadata::Picture</class>
-    <class kind="class">FLAC::Metadata::Unknown</class>
-    <member kind="function">
-      <type>Prototype *</type>
-      <name>clone</name>
-      <anchorfile>group__flacpp__metadata__object.html</anchorfile>
-      <anchor>gaa30b76bf93ffc9b031d47e8dd51add30</anchor>
-      <arglist>(const Prototype *)</arglist>
-    </member>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_metadata_level0</name>
-    <title>FLAC++/metadata.h: metadata level 0 interface</title>
-    <filename>group__flacpp__metadata__level0.html</filename>
-    <subgroup>flacpp_metadata_level1</subgroup>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_streaminfo</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga8fa8da652f33edeb4dabb4ce39fda04b</anchor>
-      <arglist>(const char *filename, StreamInfo &amp;streaminfo)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_tags</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga533a71ba745ca03068523a4a45fb0329</anchor>
-      <arglist>(const char *filename, VorbisComment *&amp;tags)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_tags</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga85166e6206f3d5635684de4257f2b00e</anchor>
-      <arglist>(const char *filename, VorbisComment &amp;tags)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_cuesheet</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>ga4fad03d91f22d78acf35dd2f35df9ac7</anchor>
-      <arglist>(const char *filename, CueSheet *&amp;cuesheet)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_cuesheet</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>gaea8f05f89e36af143d73b4280f05cc0e</anchor>
-      <arglist>(const char *filename, CueSheet &amp;cuesheet)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_picture</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>gaa44df95da4d3abc459fdc526a0d54a55</anchor>
-      <arglist>(const char *filename, Picture *&amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_picture</name>
-      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
-      <anchor>gaa6aea22f1ebeb671db19b73277babdea</anchor>
-      <arglist>(const char *filename, Picture &amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
-    </member>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_metadata_level1</name>
-    <title>FLAC++/metadata.h: metadata level 1 interface</title>
-    <filename>group__flacpp__metadata__level1.html</filename>
-    <subgroup>flacpp_metadata_level2</subgroup>
-    <class kind="class">FLAC::Metadata::SimpleIterator</class>
-  </compound>
-  <compound kind="group">
-    <name>flacpp_metadata_level2</name>
-    <title>FLAC++/metadata.h: metadata level 2 interface</title>
-    <filename>group__flacpp__metadata__level2.html</filename>
-    <class kind="class">FLAC::Metadata::VorbisComment::Entry</class>
-    <class kind="class">FLAC::Metadata::CueSheet::Track</class>
-    <class kind="class">FLAC::Metadata::SimpleIterator::Status</class>
-    <class kind="class">FLAC::Metadata::Chain</class>
-    <class kind="class">FLAC::Metadata::Chain::Status</class>
-    <class kind="class">FLAC::Metadata::Iterator</class>
-    <member kind="function" protection="protected">
-      <type></type>
-      <name>Prototype</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gae49fa399a6273ccad7cb0e6f787a3f5c</anchor>
-      <arglist>(const Prototype &amp;)</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type></type>
-      <name>Prototype</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga23ec8d118119578adb95de42fcbbaca2</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>Prototype &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaa6e6fbd804baaba187f9e8859a9b05de</anchor>
-      <arglist>(const Prototype &amp;)</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>Prototype &amp;</type>
-      <name>assign_object</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga553ddf0187b31218ecfb0d7ba259fda0</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
-      <name>clear</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaa54338931745f7f1b1d8240441efedb8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual</type>
-      <name>~Prototype</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga698fa1529af534ab5d1d98d0979844f6</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga5f1ce22db46834e315363e730f24ffaf</anchor>
-      <arglist>(const Prototype &amp;) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gab8e067674ea0181dc0756bbb5b242c6e</anchor>
-      <arglist>(const Prototype &amp;) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_valid</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga0466615f2d7e725d1fc33bd1ae72ea5b</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_is_last</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad88ba607c1bb6b3729b4a729be181db8</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>::FLAC__MetadataType</type>
-      <name>get_type</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga524f81715c9aae70ba8b1b7ee4565171</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>uint32_t</type>
-      <name>get_length</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga5d95592dea00bcf47dcdbc0b7224cf9e</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>set_is_last</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf40c7c078e408f7d6d0b5f521a013315</anchor>
-      <arglist>(bool)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>operator const ::FLAC__StreamMetadata *</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga72cc341e319780e2dca66d7c28bd0200</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Prototype *</type>
-      <name>construct_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga71382f9536987249f089c8702e5b8233</anchor>
-      <arglist>(::FLAC__StreamMetadata *object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>StreamInfo</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gab86611073f13dd3e7aea386bb6f1a7a4</anchor>
-      <arglist>(const StreamInfo &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>StreamInfo</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaaf4d96124e2b323398f7edf1aaf28003</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>StreamInfo &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafcb52c9e5798433c992adc03b78af255</anchor>
-      <arglist>(const StreamInfo &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>StreamInfo &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga273c99834dac03cdae2bd73c5e0e3711</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga4010b479ff46aad5ddd363bf456fbfa1</anchor>
-      <arglist>(const StreamInfo &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf0f86d918ae7416e4de77215df6e861b</anchor>
-      <arglist>(const StreamInfo &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>uint32_t</type>
-      <name>get_min_blocksize</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaa53c8d9f0c5c396a51bbf543093121cc</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Padding</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga3a5665a824530dec2906d76e665573ee</anchor>
-      <arglist>(const Padding &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Padding</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga358085e3cec897ed0b0c88c8ac04618d</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Padding</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga86b26d7f7df2a1b3ee0215f2b9352274</anchor>
-      <arglist>(uint32_t length)</arglist>
-    </member>
-    <member kind="function">
-      <type>Padding &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafcfc83524d1d4a8e6227557f96b4b08d</anchor>
-      <arglist>(const Padding &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>Padding &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga8712aef7b4d754838e331ed2512025b9</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1c400bb08e873eae7a1a8640a97d4cde</anchor>
-      <arglist>(const Padding &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga12654720889aec7a4694c97f2b1f75b7</anchor>
-      <arglist>(const Padding &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>set_length</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga07dae9d71b724f27f4bfbea26d7ab8fc</anchor>
-      <arglist>(uint32_t length)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Application</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gac852c4aa3be004f1ffa4895ca54354a0</anchor>
-      <arglist>(const Application &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Application</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga354471e537af33ba0c86de4db988efd1</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>Application &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga749891da34b3d709c16129bdbbea1879</anchor>
-      <arglist>(const Application &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>Application &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf42f0ffe86877a68609f1032c859ae75</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga89c2e1e78226550b47fceb2ab7fe1fa8</anchor>
-      <arglist>(const Application &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gadf4f2c38053d0d39e735c5f30b9934cf</anchor>
-      <arglist>(const Application &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_data</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga95eaa06ca65af25385cf05f4942100b8</anchor>
-      <arglist>(const FLAC__byte *data, uint32_t length)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>SeekTable</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga7f93d054937829a85108cd423a56299f</anchor>
-      <arglist>(const SeekTable &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>SeekTable</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaccd82ef77dcc489280c0f46e443b16c7</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>SeekTable &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga24b884eb73c52bd4a70f1519be39bbbc</anchor>
-      <arglist>(const SeekTable &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>SeekTable &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga32328cf845281964ed733bc90015c0f9</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga15966f2e33461ce14c3d98a41d47f94d</anchor>
-      <arglist>(const SeekTable &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga9b25b057f2fdbdc88e2db66d94ad0de4</anchor>
-      <arglist>(const SeekTable &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>resize_points</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga09783f913385728901ff93686456d647</anchor>
-      <arglist>(uint32_t new_num_points)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>set_point</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad01b009dc3aecd5e881b7b425439643f</anchor>
-      <arglist>(uint32_t index, const ::FLAC__StreamMetadata_SeekPoint &amp;point)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_point</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gabc1476cf5960660fa5c5d4a65db1441f</anchor>
-      <arglist>(uint32_t index, const ::FLAC__StreamMetadata_SeekPoint &amp;point)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>delete_point</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga0d8260db8b7534cc66fe2b80380c91bd</anchor>
-      <arglist>(uint32_t index)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_legal</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga8a47e1f8b8331024c2ae977d8bd104d6</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>template_append_placeholders</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gae8e334f73f3d8870df2e948aa5de1234</anchor>
-      <arglist>(uint32_t num)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>template_append_point</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga9c05d6c010988cf2f336ab1c02c3c618</anchor>
-      <arglist>(FLAC__uint64 sample_number)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>template_append_points</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad3c644c5e7de6b944feee725d396b27e</anchor>
-      <arglist>(FLAC__uint64 sample_numbers[], uint32_t num)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>template_append_spaced_points</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga6ecfcb2478134b483790276b22a4f8b2</anchor>
-      <arglist>(uint32_t num, FLAC__uint64 total_samples)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>template_append_spaced_points_by_samples</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga64bc1300d59e79f6c99356bf4a256383</anchor>
-      <arglist>(uint32_t samples, FLAC__uint64 total_samples)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>template_sort</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga09cc5c101fc9c26655de9ec91dcb502f</anchor>
-      <arglist>(bool compact)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>is_valid</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga75772bb6b5bf90da459e7fb247239b27</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>VorbisComment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga436a5c6a42a83a88206376805743fe3b</anchor>
-      <arglist>(const VorbisComment &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>VorbisComment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga65a73f4665db16ac7aec76e9f5e699f2</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>VorbisComment &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga4d4e9b792231b89df47d392713ebd169</anchor>
-      <arglist>(const VorbisComment &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>VorbisComment &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga2f0f25eb213a02f71a096ee06444228e</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga40e48312009df9d321a46df47fceb63b</anchor>
-      <arglist>(const VorbisComment &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gac882ee4619675b1231d38a58af5fc8a8</anchor>
-      <arglist>(const VorbisComment &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_vendor_string</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad8cffdb4c43ba01eaa9a3f7be0d5926a</anchor>
-      <arglist>(const FLAC__byte *string)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>resize_comments</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad924744735bfd0dad8a30aabe2865cbb</anchor>
-      <arglist>(uint32_t new_num_comments)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_comment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad179979211b6f4ed4ca0e8df0760b343</anchor>
-      <arglist>(uint32_t index, const Entry &amp;entry)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_comment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gab1de71f1c0acdc93c1ed39b6b5e09956</anchor>
-      <arglist>(uint32_t index, const Entry &amp;entry)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>append_comment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1126c7a0f25a2cf78efc8317d3a861f2</anchor>
-      <arglist>(const Entry &amp;entry)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>replace_comment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga240eb83264d05d953395e75e18e15ee2</anchor>
-      <arglist>(const Entry &amp;entry, bool all)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>delete_comment</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf79834672ef87d30faa4574755f05ef8</anchor>
-      <arglist>(uint32_t index)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>find_entry_from</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1a8d3eec60ce932566ce847fb7fbb97d</anchor>
-      <arglist>(uint32_t offset, const char *field_name)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>remove_entry_matching</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf0770518f35fe18fb9a0cc5c0542c4b7</anchor>
-      <arglist>(const char *field_name)</arglist>
-    </member>
-    <member kind="function">
-      <type>int</type>
-      <name>remove_entries_matching</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gadde2dc584e31f29d67fcc6d15d2d1034</anchor>
-      <arglist>(const char *field_name)</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>is_valid</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gac0fb597614c2327157e765ea278b014f</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>CueSheet</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaff87fa8ab761fc12c0f37b6ff033f74e</anchor>
-      <arglist>(const CueSheet &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>CueSheet</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gadd934e1916c2427197f8a5654f7ffae9</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>CueSheet &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gae5a2121b375344645b2dd62a68fa22bf</anchor>
-      <arglist>(const CueSheet &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>CueSheet &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga5ab1dd1f6d7e1c36165dc361296d9704</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad101b9f069c4af9053718b408a9737f5</anchor>
-      <arglist>(const CueSheet &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad02b4b1f541c8607a233a248ec295db9</anchor>
-      <arglist>(const CueSheet &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>resize_indices</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga7dd7822a201fa2310410029a36f4f1ac</anchor>
-      <arglist>(uint32_t track_num, uint32_t new_num_indices)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_index</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gacebb3ac32324137091b965a9e9ba2edf</anchor>
-      <arglist>(uint32_t track_num, uint32_t index_num, const ::FLAC__StreamMetadata_CueSheet_Index &amp;index)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_blank_index</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga294125ebcaf6c1576759b74f4ba96aa6</anchor>
-      <arglist>(uint32_t track_num, uint32_t index_num)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>delete_index</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga01c9f6ec36ba9b538ac3c9de993551f8</anchor>
-      <arglist>(uint32_t track_num, uint32_t index_num)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>resize_tracks</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga8d574ef586ab17413dbf1cb45b630a69</anchor>
-      <arglist>(uint32_t new_num_tracks)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_track</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga5854e1797bf5161d1dc7e9cca5201bc9</anchor>
-      <arglist>(uint32_t i, const Track &amp;track)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_track</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaeef4dc2ff2f9cc102855aec900860ce6</anchor>
-      <arglist>(uint32_t i, const Track &amp;track)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_blank_track</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gabe22447cc77d2f12092b68493ad2fca5</anchor>
-      <arglist>(uint32_t i)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>delete_track</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga742ea19be39cd5ad23aeac04671c44ae</anchor>
-      <arglist>(uint32_t i)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_legal</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga920da7efb6143683543440c2409b3d26</anchor>
-      <arglist>(bool check_cd_da_subset=false, const char **violation=0) const</arglist>
-    </member>
-    <member kind="function">
-      <type>FLAC__uint32</type>
-      <name>calculate_cddb_id</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga7f03abfc2473e54a766c888c8cd431b6</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Picture</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga368985afb060fe1024129ed808392183</anchor>
-      <arglist>(const Picture &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Picture</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga703d5d8a88e9764714ee2dd25806e381</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>Picture &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gacef320e703be17cdb153a7a7f9d5a2f4</anchor>
-      <arglist>(const Picture &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>Picture &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga4aff0f2e0bd5de1efa0f6d7f3f4362dc</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1cc03a87e1ada7b81af2dfe487d86fa7</anchor>
-      <arglist>(const Picture &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga3b0c4fa11c7c54427e7aa690c8998692</anchor>
-      <arglist>(const Picture &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>FLAC__uint32</type>
-      <name>get_colors</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gab44cabf75add1973ebde9f5f7ed6b780</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_mime_type</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafb4e53cb8ae62ea0d9ebd1afdca40c3f</anchor>
-      <arglist>(const char *string)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_description</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1bbcd96802a16fc36ac1b6610cd7d4a3</anchor>
-      <arglist>(const FLAC__byte *string)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>set_colors</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga8e7dc667ccc55e60abe2b8a751656097</anchor>
-      <arglist>(FLAC__uint32 value) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_data</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga301630d1c8f7647d0f192e6a2a03e6ba</anchor>
-      <arglist>(const FLAC__byte *data, FLAC__uint32 data_length)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_legal</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaf11147e2041b46d679b077e6ac26bea0</anchor>
-      <arglist>(const char **violation)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Unknown</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga686a799c353cf7a3dc95bb8899318a6b</anchor>
-      <arglist>(const Unknown &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Unknown</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga2fb76f94e891c3eea7209a461cab4279</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>Unknown &amp;</type>
-      <name>operator=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad71a2703435fc641490fb827c6e5c90f</anchor>
-      <arglist>(const Unknown &amp;object)</arglist>
-    </member>
-    <member kind="function">
-      <type>Unknown &amp;</type>
-      <name>assign</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gafd6e5eba4b7d20bcba9ac35a3e8c3ef3</anchor>
-      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator==</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga3a94274ea08f3ff252216b82c07b73e1</anchor>
-      <arglist>(const Unknown &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator!=</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaa700239bfb0acd74e7e8ca0b1cdfcdb5</anchor>
-      <arglist>(const Unknown &amp;object) const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_data</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad9618a004195b86f5989f5f0d396d028</anchor>
-      <arglist>(const FLAC__byte *data, uint32_t length)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_valid</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga5d528419f9c71d92b71d1d79cff52207</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>init</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga67dc75f18d282f41696467f1fbf5c3e8</anchor>
-      <arglist>(const char *filename, bool read_only, bool preserve_file_stats)</arglist>
-    </member>
-    <member kind="function">
-      <type>Status</type>
-      <name>status</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga9e681b6ad35b10633002ecea5cab37c3</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_writable</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga70d7bb568dc6190f9cc5be089eaed03b</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>next</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gab399f6b8c5e35a1d18588279613ea63c</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>prev</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga75a859af156322f451045418876eb6a3</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_last</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gac83c8401b2e58a3e4ce03a9996523c44</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>off_t</type>
-      <name>get_block_offset</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gad3779538af5b3fe7cdd2188c79bc80b0</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>::FLAC__MetadataType</type>
-      <name>get_block_type</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga30dff6debdbc72aceac7a69b9c3bea75</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>uint32_t</type>
-      <name>get_block_length</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga7e53cef599f3ff984a847a4a251afea5</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>get_application_id</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga426d06a9d079f74e82eaa217f14997a5</anchor>
-      <arglist>(FLAC__byte *id)</arglist>
-    </member>
-    <member kind="function">
-      <type>Prototype *</type>
-      <name>get_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga61de602276e5159253b21a19590d3584</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga0ebd4df55346cbcec9ace04f7d7b484d</anchor>
-      <arglist>(Prototype *block, bool use_padding=true)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_block_after</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1d0e512147967b7e12ac22914fbe3818</anchor>
-      <arglist>(Prototype *block, bool use_padding=true)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>delete_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga67824deff81e2f49c2f51db6b71565e8</anchor>
-      <arglist>(bool use_padding=true)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_valid</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga62ff055714c8ce75d907ae58738113a4</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Status</type>
-      <name>status</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga02d7a4adc89e37b28eaccbccfe5da5b0</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>read</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga509bf6a75a12df65bc77947a4765d9c1</anchor>
-      <arglist>(const char *filename, bool is_ogg=false)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>read</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga030c805328fc8b2da947830959dafb5b</anchor>
-      <arglist>(FLAC__IOHandle handle, FLAC__IOCallbacks callbacks, bool is_ogg=false)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>check_if_tempfile_needed</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1d54ed419365faf5429caa84b35265c3</anchor>
-      <arglist>(bool use_padding)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>write</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga2341690885e2312013afc561e6fafd81</anchor>
-      <arglist>(bool use_padding=true, bool preserve_file_stats=false)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>write</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga0ef47e1634bca2d269ac49fc164306b5</anchor>
-      <arglist>(bool use_padding, ::FLAC__IOHandle handle, ::FLAC__IOCallbacks callbacks)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>write</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga37b863c4d490fea96f67294f03fbe975</anchor>
-      <arglist>(bool use_padding, ::FLAC__IOHandle handle, ::FLAC__IOCallbacks callbacks, ::FLAC__IOHandle temp_handle, ::FLAC__IOCallbacks temp_callbacks)</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>merge_padding</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaef51a0414284f468a2d73c07b540641d</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>sort_padding</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga779eaac12da7e7edac67089053e5907f</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>is_valid</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga42057c663e277d83cc91763730d38b0f</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>init</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gab5713af7318f10a46bd8b26ce586947c</anchor>
-      <arglist>(Chain &amp;chain)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>next</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga1d2871fc1fdcc5dffee1eafd7019f4a0</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>prev</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gade6ee6b67b22115959e2adfc65d5d3b4</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>::FLAC__MetadataType</type>
-      <name>get_block_type</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>gaa25cb3c27e4d6250f98605f89b0fa904</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Prototype *</type>
-      <name>get_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga9fb167ff8f0b058e244353a21541f3d7</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>set_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga3123daf89fca2a8981c9f361f466a418</anchor>
-      <arglist>(Prototype *block)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>delete_block</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga67adaa4ae39cf405ee0f4674ca8836dd</anchor>
-      <arglist>(bool replace_with_padding)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_block_before</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga86de6d0b21ac08b74a2ea8c1a9adce36</anchor>
-      <arglist>(Prototype *block)</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>insert_block_after</name>
-      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
-      <anchor>ga73e7a3f7192f369cb3a19d078da504ab</anchor>
-      <arglist>(Prototype *block)</arglist>
     </member>
   </compound>
   <compound kind="group">
@@ -10481,7 +9337,7 @@
       <type>FLAC__Metadata_SimpleIterator *</type>
       <name>FLAC__metadata_simple_iterator_new</name>
       <anchorfile>group__flac__metadata__level1.html</anchorfile>
-      <anchor>ga9b2ea79894c7e5df712e0ca7d4e0e56d</anchor>
+      <anchor>ga017ae86f3351888f50feb47026ed2482</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -10565,7 +9421,7 @@
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_simple_iterator_get_block</name>
       <anchorfile>group__flac__metadata__level1.html</anchorfile>
-      <anchor>ga6c2a2f978e61dc6634d2c991c58174cf</anchor>
+      <anchor>ga1b7374cafd886ceb880b050dfa1e387a</anchor>
       <arglist>(FLAC__Metadata_SimpleIterator *iterator)</arglist>
     </member>
     <member kind="function">
@@ -10723,7 +9579,7 @@
       <type>FLAC__Metadata_Chain *</type>
       <name>FLAC__metadata_chain_new</name>
       <anchorfile>group__flac__metadata__level2.html</anchorfile>
-      <anchor>ga04c441b6c2bec6db0b7a1998cd10846c</anchor>
+      <anchor>ga381a1b6efff8d4e9d793f1dda515bd73</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -10814,7 +9670,7 @@
       <type>FLAC__Metadata_Iterator *</type>
       <name>FLAC__metadata_iterator_new</name>
       <anchorfile>group__flac__metadata__level2.html</anchorfile>
-      <anchor>gab41f9cbda6240979672501e00a30d606</anchor>
+      <anchor>ga1941ca04671813fc039ea7fd35ae6461</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -10856,7 +9712,7 @@
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_iterator_get_block</name>
       <anchorfile>group__flac__metadata__level2.html</anchorfile>
-      <anchor>ga1b7286a89bd17f120bbd9952d657e574</anchor>
+      <anchor>gad3e7fbc3b3d9c192a3ac425c7b263641</anchor>
       <arglist>(FLAC__Metadata_Iterator *iterator)</arglist>
     </member>
     <member kind="function">
@@ -11077,14 +9933,14 @@
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_object_new</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>gaf5cbd34fb2e2bfd2277bc9706b584577</anchor>
+      <anchor>ga5df7bc8c72cafed1391bdc5ffc876e0f</anchor>
       <arglist>(FLAC__MetadataType type)</arglist>
     </member>
     <member kind="function">
       <type>FLAC__StreamMetadata *</type>
       <name>FLAC__metadata_object_clone</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>gaf81a1eff588f66493ad5f247d94cdd19</anchor>
+      <anchor>ga29af0ecc2a015ef22289f206bc308d80</anchor>
       <arglist>(const FLAC__StreamMetadata *object)</arglist>
     </member>
     <member kind="function">
@@ -11280,14 +10136,14 @@
       <type>FLAC__StreamMetadata_CueSheet_Track *</type>
       <name>FLAC__metadata_object_cuesheet_track_new</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>ga0a22d0a0ca22f209669cb9731b5b2a6e</anchor>
+      <anchor>gafe2983a9c09685e34626cab39b3fb52c</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
       <type>FLAC__StreamMetadata_CueSheet_Track *</type>
       <name>FLAC__metadata_object_cuesheet_track_clone</name>
       <anchorfile>group__flac__metadata__object.html</anchorfile>
-      <anchor>gac1efa12615b7f44c09bafdef0a0b3ac8</anchor>
+      <anchor>ga1293d6df6daf2d65143d8bb40eed9261</anchor>
       <arglist>(const FLAC__StreamMetadata_CueSheet_Track *object)</arglist>
     </member>
     <member kind="function">
@@ -11401,6 +10257,20 @@
       <anchorfile>group__flac__metadata__object.html</anchorfile>
       <anchor>ga88268a5186e37d4b98b4df7870561128</anchor>
       <arglist>(const FLAC__StreamMetadata *object, const char **violation)</arglist>
+    </member>
+    <member kind="function">
+      <type>FLAC__byte *</type>
+      <name>FLAC__metadata_object_get_raw</name>
+      <anchorfile>group__flac__metadata__object.html</anchorfile>
+      <anchor>ga25695e3b6541ed37c94169158cd352f8</anchor>
+      <arglist>(const FLAC__StreamMetadata *object)</arglist>
+    </member>
+    <member kind="function">
+      <type>FLAC__StreamMetadata *</type>
+      <name>FLAC__metadata_object_set_raw</name>
+      <anchorfile>group__flac__metadata__object.html</anchorfile>
+      <anchor>ga2db85cdea68f2fa84dd3f8aa31d9e4eb</anchor>
+      <arglist>(FLAC__byte *buffer, FLAC__uint32 length)</arglist>
     </member>
   </compound>
   <compound kind="group">
@@ -11950,7 +10820,7 @@
       <type>FLAC__StreamDecoder *</type>
       <name>FLAC__stream_decoder_new</name>
       <anchorfile>group__flac__stream__decoder.html</anchorfile>
-      <anchor>gad6ef19e729b5edd44ee9dabc8a6ed92c</anchor>
+      <anchor>ga529c3c1e46417570767fb8e4c76f5477</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -12027,7 +10897,7 @@
       <type>const char *</type>
       <name>FLAC__stream_decoder_get_resolved_state_string</name>
       <anchorfile>group__flac__stream__decoder.html</anchorfile>
-      <anchor>ga36a2a4af3e2e458091b523190e4aedf6</anchor>
+      <anchor>gad28257412951ca266751a19e2cf54be2</anchor>
       <arglist>(const FLAC__StreamDecoder *decoder)</arglist>
     </member>
     <member kind="function">
@@ -12090,7 +10960,7 @@
       <type>const void *</type>
       <name>FLAC__stream_decoder_get_client_data</name>
       <anchorfile>group__flac__stream__decoder.html</anchorfile>
-      <anchor>gaf61add658612b497da0673128b364b70</anchor>
+      <anchor>gab14d8d4fa1a66a5a603f96090c2deb07</anchor>
       <arglist>(FLAC__StreamDecoder *decoder)</arglist>
     </member>
     <member kind="function">
@@ -12767,7 +11637,7 @@
       <type>FLAC__StreamEncoder *</type>
       <name>FLAC__stream_encoder_new</name>
       <anchorfile>group__flac__stream__encoder.html</anchorfile>
-      <anchor>ga15ae6918f32fd6a57426de9888c884bd</anchor>
+      <anchor>gab09f7620a0ba9c30020c189ce112a52f</anchor>
       <arglist>(void)</arglist>
     </member>
     <member kind="function">
@@ -12949,7 +11819,7 @@
       <type>const char *</type>
       <name>FLAC__stream_encoder_get_resolved_state_string</name>
       <anchorfile>group__flac__stream__encoder.html</anchorfile>
-      <anchor>gafa6fb6a95471c2c5bd188aa0e988b16f</anchor>
+      <anchor>ga0916f813358eb6f1e44148353acd4d42</anchor>
       <arglist>(const FLAC__StreamEncoder *encoder)</arglist>
     </member>
     <member kind="function">
@@ -13191,9 +12061,1167 @@
       <arglist>[]</arglist>
     </member>
   </compound>
+  <compound kind="group">
+    <name>flacpp</name>
+    <title>FLAC C++ API</title>
+    <filename>group__flacpp.html</filename>
+    <subgroup>flacpp_decoder</subgroup>
+    <subgroup>flacpp_encoder</subgroup>
+    <subgroup>flacpp_export</subgroup>
+    <subgroup>flacpp_metadata</subgroup>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_decoder</name>
+    <title>FLAC++/decoder.h: decoder classes</title>
+    <filename>group__flacpp__decoder.html</filename>
+    <class kind="class">FLAC::Decoder::Stream</class>
+    <class kind="class">FLAC::Decoder::File</class>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_encoder</name>
+    <title>FLAC++/encoder.h: encoder classes</title>
+    <filename>group__flacpp__encoder.html</filename>
+    <class kind="class">FLAC::Encoder::Stream</class>
+    <class kind="class">FLAC::Encoder::File</class>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_export</name>
+    <title>FLAC++/export.h: export symbols</title>
+    <filename>group__flacpp__export.html</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>gaec3a801bf18630403eda6dc2f8c4927a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API_VERSION_CURRENT</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>gafc3064beba20c1795d8aaa801b79d3b6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API_VERSION_REVISION</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>gaebce36e5325dbdcdc1a9e61a44606efe</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>FLACPP_API_VERSION_AGE</name>
+      <anchorfile>group__flacpp__export.html</anchorfile>
+      <anchor>ga17d0e89a961696b32c2b11e08663543f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_metadata</name>
+    <title>FLAC++/metadata.h: metadata interfaces</title>
+    <filename>group__flacpp__metadata.html</filename>
+    <subgroup>flacpp_metadata_object</subgroup>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_metadata_object</name>
+    <title>FLAC++/metadata.h: metadata object classes</title>
+    <filename>group__flacpp__metadata__object.html</filename>
+    <subgroup>flacpp_metadata_level0</subgroup>
+    <class kind="class">FLAC::Metadata::Prototype</class>
+    <class kind="class">FLAC::Metadata::StreamInfo</class>
+    <class kind="class">FLAC::Metadata::Padding</class>
+    <class kind="class">FLAC::Metadata::Application</class>
+    <class kind="class">FLAC::Metadata::SeekTable</class>
+    <class kind="class">FLAC::Metadata::VorbisComment</class>
+    <class kind="class">FLAC::Metadata::CueSheet</class>
+    <class kind="class">FLAC::Metadata::Picture</class>
+    <class kind="class">FLAC::Metadata::Unknown</class>
+    <member kind="function">
+      <type>Prototype *</type>
+      <name>clone</name>
+      <anchorfile>group__flacpp__metadata__object.html</anchorfile>
+      <anchor>gae18d91726a320349b2c3fb45e79d21fc</anchor>
+      <arglist>(const Prototype *)</arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_metadata_level0</name>
+    <title>FLAC++/metadata.h: metadata level 0 interface</title>
+    <filename>group__flacpp__metadata__level0.html</filename>
+    <subgroup>flacpp_metadata_level1</subgroup>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_streaminfo</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga8fa8da652f33edeb4dabb4ce39fda04b</anchor>
+      <arglist>(const char *filename, StreamInfo &amp;streaminfo)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_tags</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga533a71ba745ca03068523a4a45fb0329</anchor>
+      <arglist>(const char *filename, VorbisComment *&amp;tags)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_tags</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga85166e6206f3d5635684de4257f2b00e</anchor>
+      <arglist>(const char *filename, VorbisComment &amp;tags)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_cuesheet</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>ga4fad03d91f22d78acf35dd2f35df9ac7</anchor>
+      <arglist>(const char *filename, CueSheet *&amp;cuesheet)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_cuesheet</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>gaea8f05f89e36af143d73b4280f05cc0e</anchor>
+      <arglist>(const char *filename, CueSheet &amp;cuesheet)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_picture</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>gaa44df95da4d3abc459fdc526a0d54a55</anchor>
+      <arglist>(const char *filename, Picture *&amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_picture</name>
+      <anchorfile>group__flacpp__metadata__level0.html</anchorfile>
+      <anchor>gaa6aea22f1ebeb671db19b73277babdea</anchor>
+      <arglist>(const char *filename, Picture &amp;picture, ::FLAC__StreamMetadata_Picture_Type type, const char *mime_type, const FLAC__byte *description, uint32_t max_width, uint32_t max_height, uint32_t max_depth, uint32_t max_colors)</arglist>
+    </member>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_metadata_level1</name>
+    <title>FLAC++/metadata.h: metadata level 1 interface</title>
+    <filename>group__flacpp__metadata__level1.html</filename>
+    <subgroup>flacpp_metadata_level2</subgroup>
+    <class kind="class">FLAC::Metadata::SimpleIterator</class>
+  </compound>
+  <compound kind="group">
+    <name>flacpp_metadata_level2</name>
+    <title>FLAC++/metadata.h: metadata level 2 interface</title>
+    <filename>group__flacpp__metadata__level2.html</filename>
+    <class kind="class">FLAC::Metadata::VorbisComment::Entry</class>
+    <class kind="class">FLAC::Metadata::CueSheet::Track</class>
+    <class kind="class">FLAC::Metadata::SimpleIterator::Status</class>
+    <class kind="class">FLAC::Metadata::Chain</class>
+    <class kind="class">FLAC::Metadata::Chain::Status</class>
+    <class kind="class">FLAC::Metadata::Iterator</class>
+    <member kind="function" protection="protected">
+      <type></type>
+      <name>Prototype</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gae49fa399a6273ccad7cb0e6f787a3f5c</anchor>
+      <arglist>(const Prototype &amp;)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type></type>
+      <name>Prototype</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga23ec8d118119578adb95de42fcbbaca2</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>Prototype &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaea76819568855c4f49f2a23d42a642f2</anchor>
+      <arglist>(const Prototype &amp;)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>Prototype &amp;</type>
+      <name>assign_object</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gacc8ddaac1f1afe9d4fd9de33354847bd</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>clear</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaa54338931745f7f1b1d8240441efedb8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual</type>
+      <name>~Prototype</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga698fa1529af534ab5d1d98d0979844f6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga5f1ce22db46834e315363e730f24ffaf</anchor>
+      <arglist>(const Prototype &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab8e067674ea0181dc0756bbb5b242c6e</anchor>
+      <arglist>(const Prototype &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga0466615f2d7e725d1fc33bd1ae72ea5b</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_is_last</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad88ba607c1bb6b3729b4a729be181db8</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>::FLAC__MetadataType</type>
+      <name>get_type</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga524f81715c9aae70ba8b1b7ee4565171</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>uint32_t</type>
+      <name>get_length</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga5d95592dea00bcf47dcdbc0b7224cf9e</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_is_last</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaf40c7c078e408f7d6d0b5f521a013315</anchor>
+      <arglist>(bool)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>operator const ::FLAC__StreamMetadata *</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga72cc341e319780e2dca66d7c28bd0200</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Prototype *</type>
+      <name>construct_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga8df28d7c46448436905e52a01824dbec</anchor>
+      <arglist>(::FLAC__StreamMetadata *object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>StreamInfo</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab86611073f13dd3e7aea386bb6f1a7a4</anchor>
+      <arglist>(const StreamInfo &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>StreamInfo</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaaf4d96124e2b323398f7edf1aaf28003</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>StreamInfo &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga353a63aa812f125fedec844142946142</anchor>
+      <arglist>(const StreamInfo &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>StreamInfo &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad1193a408a5735845dea17a131b7282c</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga4010b479ff46aad5ddd363bf456fbfa1</anchor>
+      <arglist>(const StreamInfo &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaf0f86d918ae7416e4de77215df6e861b</anchor>
+      <arglist>(const StreamInfo &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>uint32_t</type>
+      <name>get_min_blocksize</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaa53c8d9f0c5c396a51bbf543093121cc</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Padding</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3a5665a824530dec2906d76e665573ee</anchor>
+      <arglist>(const Padding &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Padding</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga358085e3cec897ed0b0c88c8ac04618d</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Padding</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga86b26d7f7df2a1b3ee0215f2b9352274</anchor>
+      <arglist>(uint32_t length)</arglist>
+    </member>
+    <member kind="function">
+      <type>Padding &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaece6ab03932bea3f0c32ff3cd88f2617</anchor>
+      <arglist>(const Padding &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>Padding &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3b7508e56df71854ff1f5ad9570b5684</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1c400bb08e873eae7a1a8640a97d4cde</anchor>
+      <arglist>(const Padding &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga12654720889aec7a4694c97f2b1f75b7</anchor>
+      <arglist>(const Padding &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_length</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga07dae9d71b724f27f4bfbea26d7ab8fc</anchor>
+      <arglist>(uint32_t length)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Application</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gac852c4aa3be004f1ffa4895ca54354a0</anchor>
+      <arglist>(const Application &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Application</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga354471e537af33ba0c86de4db988efd1</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>Application &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3ca9dd06666b1dc7d4bdb6aef8e14d04</anchor>
+      <arglist>(const Application &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>Application &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga47f68d7001ef094a916d3b13fe589fc2</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga89c2e1e78226550b47fceb2ab7fe1fa8</anchor>
+      <arglist>(const Application &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gadf4f2c38053d0d39e735c5f30b9934cf</anchor>
+      <arglist>(const Application &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_data</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga95eaa06ca65af25385cf05f4942100b8</anchor>
+      <arglist>(const FLAC__byte *data, uint32_t length)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>SeekTable</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga7f93d054937829a85108cd423a56299f</anchor>
+      <arglist>(const SeekTable &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>SeekTable</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaccd82ef77dcc489280c0f46e443b16c7</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>SeekTable &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gac1094c0536952a569e41ba619f9b4ff5</anchor>
+      <arglist>(const SeekTable &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>SeekTable &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad9d0036938d6ad1c81180cf1e156b844</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga15966f2e33461ce14c3d98a41d47f94d</anchor>
+      <arglist>(const SeekTable &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga9b25b057f2fdbdc88e2db66d94ad0de4</anchor>
+      <arglist>(const SeekTable &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>resize_points</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga09783f913385728901ff93686456d647</anchor>
+      <arglist>(uint32_t new_num_points)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_point</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad01b009dc3aecd5e881b7b425439643f</anchor>
+      <arglist>(uint32_t index, const ::FLAC__StreamMetadata_SeekPoint &amp;point)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_point</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gabc1476cf5960660fa5c5d4a65db1441f</anchor>
+      <arglist>(uint32_t index, const ::FLAC__StreamMetadata_SeekPoint &amp;point)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>delete_point</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga0d8260db8b7534cc66fe2b80380c91bd</anchor>
+      <arglist>(uint32_t index)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_legal</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga8a47e1f8b8331024c2ae977d8bd104d6</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>template_append_placeholders</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gae8e334f73f3d8870df2e948aa5de1234</anchor>
+      <arglist>(uint32_t num)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>template_append_point</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga9c05d6c010988cf2f336ab1c02c3c618</anchor>
+      <arglist>(FLAC__uint64 sample_number)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>template_append_points</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad3c644c5e7de6b944feee725d396b27e</anchor>
+      <arglist>(FLAC__uint64 sample_numbers[], uint32_t num)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>template_append_spaced_points</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga6ecfcb2478134b483790276b22a4f8b2</anchor>
+      <arglist>(uint32_t num, FLAC__uint64 total_samples)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>template_append_spaced_points_by_samples</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga64bc1300d59e79f6c99356bf4a256383</anchor>
+      <arglist>(uint32_t samples, FLAC__uint64 total_samples)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>template_sort</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga09cc5c101fc9c26655de9ec91dcb502f</anchor>
+      <arglist>(bool compact)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>is_valid</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga75772bb6b5bf90da459e7fb247239b27</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>VorbisComment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga436a5c6a42a83a88206376805743fe3b</anchor>
+      <arglist>(const VorbisComment &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>VorbisComment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga65a73f4665db16ac7aec76e9f5e699f2</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>VorbisComment &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga135650367ce6c2c5ce12b534307f1cca</anchor>
+      <arglist>(const VorbisComment &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>VorbisComment &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga9db2171c398cd62a5907e625c3a6228d</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga40e48312009df9d321a46df47fceb63b</anchor>
+      <arglist>(const VorbisComment &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gac882ee4619675b1231d38a58af5fc8a8</anchor>
+      <arglist>(const VorbisComment &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_vendor_string</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad8cffdb4c43ba01eaa9a3f7be0d5926a</anchor>
+      <arglist>(const FLAC__byte *string)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>resize_comments</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad924744735bfd0dad8a30aabe2865cbb</anchor>
+      <arglist>(uint32_t new_num_comments)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_comment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad179979211b6f4ed4ca0e8df0760b343</anchor>
+      <arglist>(uint32_t index, const Entry &amp;entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_comment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab1de71f1c0acdc93c1ed39b6b5e09956</anchor>
+      <arglist>(uint32_t index, const Entry &amp;entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>append_comment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1126c7a0f25a2cf78efc8317d3a861f2</anchor>
+      <arglist>(const Entry &amp;entry)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>replace_comment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga240eb83264d05d953395e75e18e15ee2</anchor>
+      <arglist>(const Entry &amp;entry, bool all)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>delete_comment</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaf79834672ef87d30faa4574755f05ef8</anchor>
+      <arglist>(uint32_t index)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>find_entry_from</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1a8d3eec60ce932566ce847fb7fbb97d</anchor>
+      <arglist>(uint32_t offset, const char *field_name)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>remove_entry_matching</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaf0770518f35fe18fb9a0cc5c0542c4b7</anchor>
+      <arglist>(const char *field_name)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>remove_entries_matching</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gadde2dc584e31f29d67fcc6d15d2d1034</anchor>
+      <arglist>(const char *field_name)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>is_valid</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gac0fb597614c2327157e765ea278b014f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>CueSheet</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaff87fa8ab761fc12c0f37b6ff033f74e</anchor>
+      <arglist>(const CueSheet &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>CueSheet</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gadd934e1916c2427197f8a5654f7ffae9</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>CueSheet &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad24bf2e19de81159d5e205ae5ef63843</anchor>
+      <arglist>(const CueSheet &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>CueSheet &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gac83a472ca9852f3e2e800ae57d3e1305</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad101b9f069c4af9053718b408a9737f5</anchor>
+      <arglist>(const CueSheet &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad02b4b1f541c8607a233a248ec295db9</anchor>
+      <arglist>(const CueSheet &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>resize_indices</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga7dd7822a201fa2310410029a36f4f1ac</anchor>
+      <arglist>(uint32_t track_num, uint32_t new_num_indices)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_index</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gacebb3ac32324137091b965a9e9ba2edf</anchor>
+      <arglist>(uint32_t track_num, uint32_t index_num, const ::FLAC__StreamMetadata_CueSheet_Index &amp;index)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_blank_index</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga294125ebcaf6c1576759b74f4ba96aa6</anchor>
+      <arglist>(uint32_t track_num, uint32_t index_num)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>delete_index</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga01c9f6ec36ba9b538ac3c9de993551f8</anchor>
+      <arglist>(uint32_t track_num, uint32_t index_num)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>resize_tracks</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga8d574ef586ab17413dbf1cb45b630a69</anchor>
+      <arglist>(uint32_t new_num_tracks)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_track</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga5854e1797bf5161d1dc7e9cca5201bc9</anchor>
+      <arglist>(uint32_t i, const Track &amp;track)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_track</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaeef4dc2ff2f9cc102855aec900860ce6</anchor>
+      <arglist>(uint32_t i, const Track &amp;track)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_blank_track</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gabe22447cc77d2f12092b68493ad2fca5</anchor>
+      <arglist>(uint32_t i)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>delete_track</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga742ea19be39cd5ad23aeac04671c44ae</anchor>
+      <arglist>(uint32_t i)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_legal</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga920da7efb6143683543440c2409b3d26</anchor>
+      <arglist>(bool check_cd_da_subset=false, const char **violation=0) const</arglist>
+    </member>
+    <member kind="function">
+      <type>FLAC__uint32</type>
+      <name>calculate_cddb_id</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga7f03abfc2473e54a766c888c8cd431b6</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Picture</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga368985afb060fe1024129ed808392183</anchor>
+      <arglist>(const Picture &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Picture</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga703d5d8a88e9764714ee2dd25806e381</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>Picture &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga2ab3ef473f6c70aafe5bd3229f397a93</anchor>
+      <arglist>(const Picture &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>Picture &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaa3d7384cb724a842c3471a9ab19f81ed</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1cc03a87e1ada7b81af2dfe487d86fa7</anchor>
+      <arglist>(const Picture &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3b0c4fa11c7c54427e7aa690c8998692</anchor>
+      <arglist>(const Picture &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>FLAC__uint32</type>
+      <name>get_colors</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab44cabf75add1973ebde9f5f7ed6b780</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_mime_type</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gafb4e53cb8ae62ea0d9ebd1afdca40c3f</anchor>
+      <arglist>(const char *string)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_description</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1bbcd96802a16fc36ac1b6610cd7d4a3</anchor>
+      <arglist>(const FLAC__byte *string)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_colors</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga8e7dc667ccc55e60abe2b8a751656097</anchor>
+      <arglist>(FLAC__uint32 value) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_data</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga301630d1c8f7647d0f192e6a2a03e6ba</anchor>
+      <arglist>(const FLAC__byte *data, FLAC__uint32 data_length)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_legal</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaf11147e2041b46d679b077e6ac26bea0</anchor>
+      <arglist>(const char **violation)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Unknown</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga686a799c353cf7a3dc95bb8899318a6b</anchor>
+      <arglist>(const Unknown &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Unknown</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga2fb76f94e891c3eea7209a461cab4279</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>Unknown &amp;</type>
+      <name>operator=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga295f824df8ed10c3386df72272fdca47</anchor>
+      <arglist>(const Unknown &amp;object)</arglist>
+    </member>
+    <member kind="function">
+      <type>Unknown &amp;</type>
+      <name>assign</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga4dc5e794c8d529245888414b2bf7d404</anchor>
+      <arglist>(::FLAC__StreamMetadata *object, bool copy)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator==</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3a94274ea08f3ff252216b82c07b73e1</anchor>
+      <arglist>(const Unknown &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>operator!=</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaa700239bfb0acd74e7e8ca0b1cdfcdb5</anchor>
+      <arglist>(const Unknown &amp;object) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_data</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad9618a004195b86f5989f5f0d396d028</anchor>
+      <arglist>(const FLAC__byte *data, uint32_t length)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga5d528419f9c71d92b71d1d79cff52207</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>init</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga67dc75f18d282f41696467f1fbf5c3e8</anchor>
+      <arglist>(const char *filename, bool read_only, bool preserve_file_stats)</arglist>
+    </member>
+    <member kind="function">
+      <type>Status</type>
+      <name>status</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga9e681b6ad35b10633002ecea5cab37c3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_writable</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga70d7bb568dc6190f9cc5be089eaed03b</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>next</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab399f6b8c5e35a1d18588279613ea63c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>prev</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga75a859af156322f451045418876eb6a3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_last</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gac83c8401b2e58a3e4ce03a9996523c44</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>off_t</type>
+      <name>get_block_offset</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gad3779538af5b3fe7cdd2188c79bc80b0</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>::FLAC__MetadataType</type>
+      <name>get_block_type</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga30dff6debdbc72aceac7a69b9c3bea75</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>uint32_t</type>
+      <name>get_block_length</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga7e53cef599f3ff984a847a4a251afea5</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>get_application_id</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga426d06a9d079f74e82eaa217f14997a5</anchor>
+      <arglist>(FLAC__byte *id)</arglist>
+    </member>
+    <member kind="function">
+      <type>Prototype *</type>
+      <name>get_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab206e5d7145d3726335d336cbc452598</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga0ebd4df55346cbcec9ace04f7d7b484d</anchor>
+      <arglist>(Prototype *block, bool use_padding=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_block_after</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1d0e512147967b7e12ac22914fbe3818</anchor>
+      <arglist>(Prototype *block, bool use_padding=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>delete_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga67824deff81e2f49c2f51db6b71565e8</anchor>
+      <arglist>(bool use_padding=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga62ff055714c8ce75d907ae58738113a4</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Status</type>
+      <name>status</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga02d7a4adc89e37b28eaccbccfe5da5b0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>read</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga509bf6a75a12df65bc77947a4765d9c1</anchor>
+      <arglist>(const char *filename, bool is_ogg=false)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>read</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga030c805328fc8b2da947830959dafb5b</anchor>
+      <arglist>(FLAC__IOHandle handle, FLAC__IOCallbacks callbacks, bool is_ogg=false)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>check_if_tempfile_needed</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1d54ed419365faf5429caa84b35265c3</anchor>
+      <arglist>(bool use_padding)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>write</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga2341690885e2312013afc561e6fafd81</anchor>
+      <arglist>(bool use_padding=true, bool preserve_file_stats=false)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>write</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga0ef47e1634bca2d269ac49fc164306b5</anchor>
+      <arglist>(bool use_padding, ::FLAC__IOHandle handle, ::FLAC__IOCallbacks callbacks)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>write</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga37b863c4d490fea96f67294f03fbe975</anchor>
+      <arglist>(bool use_padding, ::FLAC__IOHandle handle, ::FLAC__IOCallbacks callbacks, ::FLAC__IOHandle temp_handle, ::FLAC__IOCallbacks temp_callbacks)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>merge_padding</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaef51a0414284f468a2d73c07b540641d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>sort_padding</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga779eaac12da7e7edac67089053e5907f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga42057c663e277d83cc91763730d38b0f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>init</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gab5713af7318f10a46bd8b26ce586947c</anchor>
+      <arglist>(Chain &amp;chain)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>next</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga1d2871fc1fdcc5dffee1eafd7019f4a0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>prev</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gade6ee6b67b22115959e2adfc65d5d3b4</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>::FLAC__MetadataType</type>
+      <name>get_block_type</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>gaa25cb3c27e4d6250f98605f89b0fa904</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Prototype *</type>
+      <name>get_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3693233f592b9cb333c437413c6be2a6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>set_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga3123daf89fca2a8981c9f361f466a418</anchor>
+      <arglist>(Prototype *block)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>delete_block</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga67adaa4ae39cf405ee0f4674ca8836dd</anchor>
+      <arglist>(bool replace_with_padding)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_block_before</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga86de6d0b21ac08b74a2ea8c1a9adce36</anchor>
+      <arglist>(Prototype *block)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>insert_block_after</name>
+      <anchorfile>group__flacpp__metadata__level2.html</anchorfile>
+      <anchor>ga73e7a3f7192f369cb3a19d078da504ab</anchor>
+      <arglist>(Prototype *block)</arglist>
+    </member>
+  </compound>
   <compound kind="page">
     <name>index</name>
-    <title>FLAC</title>
+    <title></title>
     <filename>index.html</filename>
     <docanchor file="index.html" title="Introduction">intro</docanchor>
     <docanchor file="index.html" title="FLAC C API">c_api</docanchor>

@@ -1,5 +1,5 @@
 /* fuzzer_encoder_v2
- * Copyright (C) 2022  Xiph.Org Foundation
+ * Copyright (C) 2022-2023  Xiph.Org Foundation
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -36,7 +36,7 @@
 extern "C" {
 #include "share/private.h"
 }
-#include "fuzzer_common.h"
+#include "common.h"
 
 /* This C++ fuzzer uses the FLAC and not FLAC++ because the latter lacks a few
  * hidden functions like FLAC__stream_encoder_disable_constant_subframes. It
@@ -120,6 +120,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 	encoder_valid &= FLAC__stream_encoder_set_sample_rate(encoder, sample_rate);
 	encoder_valid &= FLAC__stream_encoder_set_total_samples_estimate(encoder, samples_estimate);
 	encoder_valid &= FLAC__stream_encoder_disable_instruction_set(encoder, instruction_set_disable_mask);
+	encoder_valid &= FLAC__stream_encoder_set_limit_min_bitrate(encoder, data_bools[15]);
 
 	/* Set compression related parameters */
 	encoder_valid &= FLAC__stream_encoder_set_compression_level(encoder, compression_level);
@@ -168,8 +169,6 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 	/* Disable alloc check if requested */
 	if(encoder_valid && data_bools[14])
 		alloc_check_threshold = INT32_MAX;
-
-	/* data_bools[15] are spare */
 
 	/* add metadata */
 	if(encoder_valid && (metadata_mask & 1)) {
@@ -232,6 +231,36 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
 			}
 			else
 				num_metadata++;
+		}
+	}
+	if(encoder_valid && (metadata_mask & 32)){
+		if((metadata[num_metadata] = FLAC__metadata_object_new(FLAC__METADATA_TYPE_CUESHEET)) != NULL) {
+			if(!FLAC__metadata_object_cuesheet_insert_blank_track(metadata[num_metadata],0)) {
+				FLAC__metadata_object_delete(metadata[num_metadata]);
+				metadata[num_metadata] = 0;
+			}
+			else {
+				if(!FLAC__metadata_object_cuesheet_track_insert_blank_index(metadata[num_metadata],0,0)) {
+					FLAC__metadata_object_delete(metadata[num_metadata]);
+					metadata[num_metadata] = 0;
+				}
+				else {
+					metadata[num_metadata]->data.cue_sheet.tracks[0].number = 1;
+					num_metadata++;
+				}
+			}
+		}
+	}
+	if(encoder_valid && (metadata_mask & 64)){
+		if((metadata[num_metadata] = FLAC__metadata_object_new(FLAC__METADATA_TYPE_PICTURE)) != NULL) {
+			num_metadata++;
+		}
+	}
+	if(encoder_valid && (metadata_mask & 128)){
+		if((metadata[num_metadata] = FLAC__metadata_object_new(FLAC__METADATA_TYPE_UNDEFINED)) != NULL) {
+			metadata[num_metadata]->length = 24;
+			metadata[num_metadata]->data.unknown.data = (FLAC__byte *)calloc(24, 1);
+			num_metadata++;
 		}
 	}
 

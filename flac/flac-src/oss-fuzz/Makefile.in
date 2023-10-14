@@ -15,7 +15,7 @@
 @SET_MAKE@
 
 #  FLAC - Free Lossless Audio Codec
-#  Copyright (C) 2019-2022  Xiph.Org Foundation
+#  Copyright (C) 2019-2023  Xiph.Org Foundation
 #
 #  This file is part the FLAC project.  FLAC is comprised of several
 #  components distributed under different licenses.  The codec libraries
@@ -106,7 +106,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = $(am__EXEEXT_1)
-@USE_OSSFUZZERS_TRUE@am__append_1 = fuzzer_encoder fuzzer_encoder_v2 fuzzer_decoder fuzzer_seek fuzzer_metadata
+@USE_OSSFUZZERS_TRUE@am__append_1 = fuzzer_encoder fuzzer_encoder_v2 fuzzer_decoder fuzzer_seek fuzzer_metadata fuzzer_reencoder fuzzer_tool_flac fuzzer_tool_metaflac
 subdir = oss-fuzz
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/add_cflags.m4 \
@@ -114,14 +114,14 @@ am__aclocal_m4_deps = $(top_srcdir)/m4/add_cflags.m4 \
 	$(top_srcdir)/m4/ax_add_fortify_source.m4 \
 	$(top_srcdir)/m4/ax_check_compile_flag.m4 \
 	$(top_srcdir)/m4/ax_check_enable_debug.m4 \
-	$(top_srcdir)/m4/bswap.m4 $(top_srcdir)/m4/c_attribute.m4 \
-	$(top_srcdir)/m4/clang.m4 $(top_srcdir)/m4/codeset.m4 \
-	$(top_srcdir)/m4/gcc_version.m4 $(top_srcdir)/m4/iconv.m4 \
-	$(top_srcdir)/m4/lib-ld.m4 $(top_srcdir)/m4/lib-link.m4 \
-	$(top_srcdir)/m4/lib-prefix.m4 $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/m4/ogg.m4 $(top_srcdir)/m4/really_gcc.m4 \
+	$(top_srcdir)/m4/bswap.m4 $(top_srcdir)/m4/clang.m4 \
+	$(top_srcdir)/m4/codeset.m4 $(top_srcdir)/m4/gcc_version.m4 \
+	$(top_srcdir)/m4/iconv.m4 $(top_srcdir)/m4/lib-ld.m4 \
+	$(top_srcdir)/m4/lib-link.m4 $(top_srcdir)/m4/lib-prefix.m4 \
+	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
+	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
+	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/ogg.m4 \
+	$(top_srcdir)/m4/really_gcc.m4 \
 	$(top_srcdir)/m4/stack_protect.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -134,10 +134,14 @@ CONFIG_CLEAN_VPATH_FILES =
 @USE_OSSFUZZERS_TRUE@	fuzzer_encoder_v2$(EXEEXT) \
 @USE_OSSFUZZERS_TRUE@	fuzzer_decoder$(EXEEXT) \
 @USE_OSSFUZZERS_TRUE@	fuzzer_seek$(EXEEXT) \
-@USE_OSSFUZZERS_TRUE@	fuzzer_metadata$(EXEEXT)
+@USE_OSSFUZZERS_TRUE@	fuzzer_metadata$(EXEEXT) \
+@USE_OSSFUZZERS_TRUE@	fuzzer_reencoder$(EXEEXT) \
+@USE_OSSFUZZERS_TRUE@	fuzzer_tool_flac$(EXEEXT) \
+@USE_OSSFUZZERS_TRUE@	fuzzer_tool_metaflac$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
-am_fuzzer_decoder_OBJECTS = fuzzer_decoder-fuzzer_decoder.$(OBJEXT)
+am_fuzzer_decoder_OBJECTS = decoder.$(OBJEXT)
 fuzzer_decoder_OBJECTS = $(am_fuzzer_decoder_OBJECTS)
+fuzzer_decoder_LDADD = $(LDADD)
 am__DEPENDENCIES_1 = $(top_builddir)/src/libFLAC/libFLAC-static.la \
 	$(top_builddir)/src/libFLAC++/libFLAC++-static.la
 fuzzer_decoder_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -145,39 +149,63 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-fuzzer_decoder_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(fuzzer_decoder_CXXFLAGS) $(CXXFLAGS) \
-	$(fuzzer_decoder_LDFLAGS) $(LDFLAGS) -o $@
-am_fuzzer_encoder_OBJECTS = fuzzer_encoder-fuzzer_encoder.$(OBJEXT)
+am_fuzzer_encoder_OBJECTS = encoder.$(OBJEXT)
 fuzzer_encoder_OBJECTS = $(am_fuzzer_encoder_OBJECTS)
+fuzzer_encoder_LDADD = $(LDADD)
 fuzzer_encoder_DEPENDENCIES = $(am__DEPENDENCIES_1)
-fuzzer_encoder_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(fuzzer_encoder_CXXFLAGS) $(CXXFLAGS) \
-	$(fuzzer_encoder_LDFLAGS) $(LDFLAGS) -o $@
-am_fuzzer_encoder_v2_OBJECTS =  \
-	fuzzer_encoder_v2-fuzzer_encoder_v2.$(OBJEXT)
+am_fuzzer_encoder_v2_OBJECTS = encoder_v2.$(OBJEXT)
 fuzzer_encoder_v2_OBJECTS = $(am_fuzzer_encoder_v2_OBJECTS)
+fuzzer_encoder_v2_LDADD = $(LDADD)
 fuzzer_encoder_v2_DEPENDENCIES = $(am__DEPENDENCIES_1)
-fuzzer_encoder_v2_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(fuzzer_encoder_v2_CXXFLAGS) $(CXXFLAGS) \
-	$(fuzzer_encoder_v2_LDFLAGS) $(LDFLAGS) -o $@
-am_fuzzer_metadata_OBJECTS =  \
-	fuzzer_metadata-fuzzer_metadata.$(OBJEXT)
+am_fuzzer_metadata_OBJECTS = metadata.$(OBJEXT)
 fuzzer_metadata_OBJECTS = $(am_fuzzer_metadata_OBJECTS)
+fuzzer_metadata_LDADD = $(LDADD)
 fuzzer_metadata_DEPENDENCIES = $(am__DEPENDENCIES_1)
-fuzzer_metadata_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(fuzzer_metadata_CXXFLAGS) $(CXXFLAGS) \
-	$(fuzzer_metadata_LDFLAGS) $(LDFLAGS) -o $@
-am_fuzzer_seek_OBJECTS = fuzzer_seek-fuzzer_seek.$(OBJEXT)
+am_fuzzer_reencoder_OBJECTS = reencoder.$(OBJEXT)
+fuzzer_reencoder_OBJECTS = $(am_fuzzer_reencoder_OBJECTS)
+fuzzer_reencoder_LDADD = $(LDADD)
+fuzzer_reencoder_DEPENDENCIES = $(am__DEPENDENCIES_1)
+am_fuzzer_seek_OBJECTS = seek.$(OBJEXT)
 fuzzer_seek_OBJECTS = $(am_fuzzer_seek_OBJECTS)
+fuzzer_seek_LDADD = $(LDADD)
 fuzzer_seek_DEPENDENCIES = $(am__DEPENDENCIES_1)
-fuzzer_seek_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(fuzzer_seek_CXXFLAGS) \
-	$(CXXFLAGS) $(fuzzer_seek_LDFLAGS) $(LDFLAGS) -o $@
+am__dirstamp = $(am__leading_dot)dirstamp
+am__objects_1 = ${top_builddir}/src/flac/analyze.$(OBJEXT) \
+	${top_builddir}/src/flac/decode.$(OBJEXT) \
+	${top_builddir}/src/flac/encode.$(OBJEXT) \
+	${top_builddir}/src/flac/foreign_metadata.$(OBJEXT) \
+	${top_builddir}/src/flac/local_string_utils.$(OBJEXT) \
+	${top_builddir}/src/flac/utils.$(OBJEXT) \
+	${top_builddir}/src/flac/vorbiscomment.$(OBJEXT)
+am_fuzzer_tool_flac_OBJECTS = $(am__objects_1) empty.$(OBJEXT) \
+	tool_flac.$(OBJEXT)
+fuzzer_tool_flac_OBJECTS = $(am_fuzzer_tool_flac_OBJECTS)
+fuzzer_tool_flac_DEPENDENCIES =  \
+	$(top_builddir)/src/share/utf8/libutf8.la \
+	$(top_builddir)/src/share/grabbag/libgrabbag.la \
+	$(top_builddir)/src/share/getopt/libgetopt.la \
+	$(top_builddir)/src/share/replaygain_analysis/libreplaygain_analysis.la \
+	$(top_builddir)/src/share/replaygain_synthesis/libreplaygain_synthesis.la \
+	$(top_builddir)/src/libFLAC/libFLAC.la
+am__objects_2 = ${top_builddir}/src/metaflac/operations.$(OBJEXT) \
+	${top_builddir}/src/metaflac/operations_shorthand_cuesheet.$(OBJEXT) \
+	${top_builddir}/src/metaflac/operations_shorthand_picture.$(OBJEXT) \
+	${top_builddir}/src/metaflac/operations_shorthand_seektable.$(OBJEXT) \
+	${top_builddir}/src/metaflac/operations_shorthand_streaminfo.$(OBJEXT) \
+	${top_builddir}/src/metaflac/operations_shorthand_vorbiscomment.$(OBJEXT) \
+	${top_builddir}/src/metaflac/options.$(OBJEXT) \
+	${top_builddir}/src/metaflac/usage.$(OBJEXT) \
+	${top_builddir}/src/metaflac/utils.$(OBJEXT)
+am_fuzzer_tool_metaflac_OBJECTS = $(am__objects_2) empty.$(OBJEXT) \
+	tool_metaflac.$(OBJEXT)
+fuzzer_tool_metaflac_OBJECTS = $(am_fuzzer_tool_metaflac_OBJECTS)
+fuzzer_tool_metaflac_DEPENDENCIES =  \
+	$(top_builddir)/src/share/utf8/libutf8.la \
+	$(top_builddir)/src/share/grabbag/libgrabbag.la \
+	$(top_builddir)/src/share/getopt/libgetopt.la \
+	$(top_builddir)/src/share/replaygain_analysis/libreplaygain_analysis.la \
+	$(top_builddir)/src/share/replaygain_synthesis/libreplaygain_synthesis.la \
+	$(top_builddir)/src/libFLAC/libFLAC.la
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -193,12 +221,46 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Po \
-	./$(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Po \
-	./$(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Po \
-	./$(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Po \
-	./$(DEPDIR)/fuzzer_seek-fuzzer_seek.Po
+am__depfiles_remade = ${top_builddir}/src/flac/$(DEPDIR)/analyze.Po \
+	${top_builddir}/src/flac/$(DEPDIR)/decode.Po \
+	${top_builddir}/src/flac/$(DEPDIR)/encode.Po \
+	${top_builddir}/src/flac/$(DEPDIR)/foreign_metadata.Po \
+	${top_builddir}/src/flac/$(DEPDIR)/local_string_utils.Po \
+	${top_builddir}/src/flac/$(DEPDIR)/utils.Po \
+	${top_builddir}/src/flac/$(DEPDIR)/vorbiscomment.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/operations.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_cuesheet.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_picture.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_seektable.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_streaminfo.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_vorbiscomment.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/options.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/usage.Po \
+	${top_builddir}/src/metaflac/$(DEPDIR)/utils.Po \
+	./$(DEPDIR)/decoder.Po ./$(DEPDIR)/empty.Po \
+	./$(DEPDIR)/encoder.Po ./$(DEPDIR)/encoder_v2.Po \
+	./$(DEPDIR)/metadata.Po ./$(DEPDIR)/reencoder.Po \
+	./$(DEPDIR)/seek.Po ./$(DEPDIR)/tool_flac.Po \
+	./$(DEPDIR)/tool_metaflac.Po
 am__mv = mv -f
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC      " $@;
+am__v_CC_1 = 
+CCLD = $(CC)
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD    " $@;
+am__v_CCLD_1 = 
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
@@ -219,10 +281,12 @@ am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(fuzzer_decoder_SOURCES) $(fuzzer_encoder_SOURCES) \
 	$(fuzzer_encoder_v2_SOURCES) $(fuzzer_metadata_SOURCES) \
-	$(fuzzer_seek_SOURCES)
+	$(fuzzer_reencoder_SOURCES) $(fuzzer_seek_SOURCES) \
+	$(fuzzer_tool_flac_SOURCES) $(fuzzer_tool_metaflac_SOURCES)
 DIST_SOURCES = $(fuzzer_decoder_SOURCES) $(fuzzer_encoder_SOURCES) \
 	$(fuzzer_encoder_v2_SOURCES) $(fuzzer_metadata_SOURCES) \
-	$(fuzzer_seek_SOURCES)
+	$(fuzzer_reencoder_SOURCES) $(fuzzer_seek_SOURCES) \
+	$(fuzzer_tool_flac_SOURCES) $(fuzzer_tool_metaflac_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -335,6 +399,7 @@ PACKAGE_VERSION = @PACKAGE_VERSION@
 PANDOC = @PANDOC@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 RANLIB = @RANLIB@
+RC = @RC@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -395,10 +460,12 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/oss-fuzz
-AM_CXXFLAGS = -std=c++11
+AM_CFLAGS = ${LIB_FUZZING_ENGINE}
+AM_CXXFLAGS = -std=c++11 $(LIB_FUZZING_ENGINE)
+LDADD = $(flac_libs)
 EXTRA_DIST = \
 	fuzzer_encoder.dict \
-	fuzzer_common.h \
+	common.h \
 	Readme.md \
 	fuzzing/datasource/datasource.hpp \
 	fuzzing/datasource/id.hpp \
@@ -406,36 +473,76 @@ EXTRA_DIST = \
 	fuzzing/memory.hpp \
 	fuzzing/types.hpp
 
-fuzzer_encoder_SOURCES = fuzzer_encoder.cc
-fuzzer_encoder_CXXFLAGS = $(AM_CXXFLAGS) $(LIB_FUZZING_ENGINE)
-fuzzer_encoder_LDFLAGS = $(AM_LDFLAGS)
-fuzzer_encoder_LDADD = $(flac_libs)
-fuzzer_encoder_v2_SOURCES = fuzzer_encoder_v2.cc
-fuzzer_encoder_v2_CXXFLAGS = $(AM_CXXFLAGS) $(LIB_FUZZING_ENGINE)
-fuzzer_encoder_v2_LDFLAGS = $(AM_LDFLAGS)
-fuzzer_encoder_v2_LDADD = $(flac_libs)
-fuzzer_decoder_SOURCES = fuzzer_decoder.cc
-fuzzer_decoder_CXXFLAGS = $(AM_CXXFLAGS) $(LIB_FUZZING_ENGINE)
-fuzzer_decoder_LDFLAGS = $(AM_LDFLAGS)
-fuzzer_decoder_LDADD = $(flac_libs)
-fuzzer_seek_SOURCES = fuzzer_seek.cc
-fuzzer_seek_CXXFLAGS = $(AM_CXXFLAGS) $(LIB_FUZZING_ENGINE)
-fuzzer_seek_LDFLAGS = $(AM_LDFLAGS)
-fuzzer_seek_LDADD = $(flac_libs)
-fuzzer_metadata_SOURCES = fuzzer_metadata.cc
-fuzzer_metadata_CXXFLAGS = $(AM_CXXFLAGS) $(LIB_FUZZING_ENGINE)
-fuzzer_metadata_LDFLAGS = $(AM_LDFLAGS)
-fuzzer_metadata_LDADD = $(flac_libs)
+fuzzer_encoder_SOURCES = encoder.cc
+fuzzer_encoder_v2_SOURCES = encoder_v2.cc
+fuzzer_decoder_SOURCES = decoder.cc
+fuzzer_seek_SOURCES = seek.cc
+fuzzer_metadata_SOURCES = metadata.cc
+fuzzer_reencoder_SOURCES = reencoder.cc
+fuzzer_tool_flac_SOURCES = ${flac_SOURCES} empty.cc tool_flac.c # empty.cc is to force use of C++ linker, which is mandated by oss-fuzz
+fuzzer_tool_flac_LDADD = \
+        $(top_builddir)/src/share/utf8/libutf8.la \
+        $(top_builddir)/src/share/grabbag/libgrabbag.la \
+        $(top_builddir)/src/share/getopt/libgetopt.la \
+        $(top_builddir)/src/share/replaygain_analysis/libreplaygain_analysis.la \
+        $(top_builddir)/src/share/replaygain_synthesis/libreplaygain_synthesis.la \
+        $(top_builddir)/src/libFLAC/libFLAC.la \
+        @LTLIBICONV@ \
+        -lm
+
+fuzzer_tool_metaflac_SOURCES = ${metaflac_SOURCES} empty.cc tool_metaflac.c # empty.cc is to force use of C++ linker, which is mandated by oss-fuzz
+fuzzer_tool_metaflac_LDADD = \
+        $(top_builddir)/src/share/utf8/libutf8.la \
+        $(top_builddir)/src/share/grabbag/libgrabbag.la \
+        $(top_builddir)/src/share/getopt/libgetopt.la \
+        $(top_builddir)/src/share/replaygain_analysis/libreplaygain_analysis.la \
+        $(top_builddir)/src/share/replaygain_synthesis/libreplaygain_synthesis.la \
+        $(top_builddir)/src/libFLAC/libFLAC.la \
+        @LTLIBICONV@ \
+        -lm
+
 flac_libs = \
 	$(top_builddir)/src/libFLAC/libFLAC-static.la \
 	$(top_builddir)/src/libFLAC++/libFLAC++-static.la \
 	@OGG_LIBS@ \
 	-lm
 
+flac_SOURCES = \
+        ${top_builddir}/src/flac/analyze.c \
+        ${top_builddir}/src/flac/decode.c \
+        ${top_builddir}/src/flac/encode.c \
+        ${top_builddir}/src/flac/foreign_metadata.c \
+        ${top_builddir}/src/flac/local_string_utils.c \
+        ${top_builddir}/src/flac/utils.c \
+        ${top_builddir}/src/flac/vorbiscomment.c \
+        ${top_builddir}/src/flac/analyze.h \
+        ${top_builddir}/src/flac/decode.h \
+        ${top_builddir}/src/flac/encode.h \
+        ${top_builddir}/src/flac/foreign_metadata.h \
+        ${top_builddir}/src/flac/local_string_utils.h \
+        ${top_builddir}/src/flac/utils.h \
+        ${top_builddir}/src/flac/vorbiscomment.h
+
+metaflac_SOURCES = \
+        ${top_builddir}/src/metaflac/operations.c \
+        ${top_builddir}/src/metaflac/operations_shorthand_cuesheet.c \
+        ${top_builddir}/src/metaflac/operations_shorthand_picture.c \
+        ${top_builddir}/src/metaflac/operations_shorthand_seektable.c \
+        ${top_builddir}/src/metaflac/operations_shorthand_streaminfo.c \
+        ${top_builddir}/src/metaflac/operations_shorthand_vorbiscomment.c \
+        ${top_builddir}/src/metaflac/options.c \
+        ${top_builddir}/src/metaflac/usage.c \
+        ${top_builddir}/src/metaflac/utils.c \
+        ${top_builddir}/src/metaflac/operations.h \
+        ${top_builddir}/src/metaflac/operations_shorthand.h \
+        ${top_builddir}/src/metaflac/options.h \
+        ${top_builddir}/src/metaflac/usage.h \
+        ${top_builddir}/src/metaflac/utils.h
+
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cc .lo .o .obj
+.SUFFIXES: .c .cc .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -477,41 +584,159 @@ clean-noinstPROGRAMS:
 
 fuzzer_decoder$(EXEEXT): $(fuzzer_decoder_OBJECTS) $(fuzzer_decoder_DEPENDENCIES) $(EXTRA_fuzzer_decoder_DEPENDENCIES) 
 	@rm -f fuzzer_decoder$(EXEEXT)
-	$(AM_V_CXXLD)$(fuzzer_decoder_LINK) $(fuzzer_decoder_OBJECTS) $(fuzzer_decoder_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_decoder_OBJECTS) $(fuzzer_decoder_LDADD) $(LIBS)
 
 fuzzer_encoder$(EXEEXT): $(fuzzer_encoder_OBJECTS) $(fuzzer_encoder_DEPENDENCIES) $(EXTRA_fuzzer_encoder_DEPENDENCIES) 
 	@rm -f fuzzer_encoder$(EXEEXT)
-	$(AM_V_CXXLD)$(fuzzer_encoder_LINK) $(fuzzer_encoder_OBJECTS) $(fuzzer_encoder_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_encoder_OBJECTS) $(fuzzer_encoder_LDADD) $(LIBS)
 
 fuzzer_encoder_v2$(EXEEXT): $(fuzzer_encoder_v2_OBJECTS) $(fuzzer_encoder_v2_DEPENDENCIES) $(EXTRA_fuzzer_encoder_v2_DEPENDENCIES) 
 	@rm -f fuzzer_encoder_v2$(EXEEXT)
-	$(AM_V_CXXLD)$(fuzzer_encoder_v2_LINK) $(fuzzer_encoder_v2_OBJECTS) $(fuzzer_encoder_v2_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_encoder_v2_OBJECTS) $(fuzzer_encoder_v2_LDADD) $(LIBS)
 
 fuzzer_metadata$(EXEEXT): $(fuzzer_metadata_OBJECTS) $(fuzzer_metadata_DEPENDENCIES) $(EXTRA_fuzzer_metadata_DEPENDENCIES) 
 	@rm -f fuzzer_metadata$(EXEEXT)
-	$(AM_V_CXXLD)$(fuzzer_metadata_LINK) $(fuzzer_metadata_OBJECTS) $(fuzzer_metadata_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_metadata_OBJECTS) $(fuzzer_metadata_LDADD) $(LIBS)
+
+fuzzer_reencoder$(EXEEXT): $(fuzzer_reencoder_OBJECTS) $(fuzzer_reencoder_DEPENDENCIES) $(EXTRA_fuzzer_reencoder_DEPENDENCIES) 
+	@rm -f fuzzer_reencoder$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_reencoder_OBJECTS) $(fuzzer_reencoder_LDADD) $(LIBS)
 
 fuzzer_seek$(EXEEXT): $(fuzzer_seek_OBJECTS) $(fuzzer_seek_DEPENDENCIES) $(EXTRA_fuzzer_seek_DEPENDENCIES) 
 	@rm -f fuzzer_seek$(EXEEXT)
-	$(AM_V_CXXLD)$(fuzzer_seek_LINK) $(fuzzer_seek_OBJECTS) $(fuzzer_seek_LDADD) $(LIBS)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_seek_OBJECTS) $(fuzzer_seek_LDADD) $(LIBS)
+${top_builddir}/src/flac/$(am__dirstamp):
+	@$(MKDIR_P) ${top_builddir}/src/flac
+	@: > ${top_builddir}/src/flac/$(am__dirstamp)
+${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ${top_builddir}/src/flac/$(DEPDIR)
+	@: > ${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/analyze.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/decode.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/encode.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/foreign_metadata.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/local_string_utils.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/utils.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/flac/vorbiscomment.$(OBJEXT):  \
+	${top_builddir}/src/flac/$(am__dirstamp) \
+	${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+
+fuzzer_tool_flac$(EXEEXT): $(fuzzer_tool_flac_OBJECTS) $(fuzzer_tool_flac_DEPENDENCIES) $(EXTRA_fuzzer_tool_flac_DEPENDENCIES) 
+	@rm -f fuzzer_tool_flac$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_tool_flac_OBJECTS) $(fuzzer_tool_flac_LDADD) $(LIBS)
+${top_builddir}/src/metaflac/$(am__dirstamp):
+	@$(MKDIR_P) ${top_builddir}/src/metaflac
+	@: > ${top_builddir}/src/metaflac/$(am__dirstamp)
+${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) ${top_builddir}/src/metaflac/$(DEPDIR)
+	@: > ${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/operations.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/operations_shorthand_cuesheet.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/operations_shorthand_picture.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/operations_shorthand_seektable.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/operations_shorthand_streaminfo.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/operations_shorthand_vorbiscomment.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/options.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/usage.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+${top_builddir}/src/metaflac/utils.$(OBJEXT):  \
+	${top_builddir}/src/metaflac/$(am__dirstamp) \
+	${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+
+fuzzer_tool_metaflac$(EXEEXT): $(fuzzer_tool_metaflac_OBJECTS) $(fuzzer_tool_metaflac_DEPENDENCIES) $(EXTRA_fuzzer_tool_metaflac_DEPENDENCIES) 
+	@rm -f fuzzer_tool_metaflac$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(fuzzer_tool_metaflac_OBJECTS) $(fuzzer_tool_metaflac_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f ${top_builddir}/src/flac/*.$(OBJEXT)
+	-rm -f ${top_builddir}/src/metaflac/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fuzzer_seek-fuzzer_seek.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/analyze.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/decode.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/encode.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/foreign_metadata.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/local_string_utils.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/utils.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/flac/$(DEPDIR)/vorbiscomment.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/operations.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_cuesheet.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_picture.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_seektable.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_streaminfo.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_vorbiscomment.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/options.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/usage.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@${top_builddir}/src/metaflac/$(DEPDIR)/utils.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/decoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/empty.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/encoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/encoder_v2.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/metadata.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reencoder.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/seek.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tool_flac.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tool_metaflac.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
 	@echo '# dummy' >$@-t && $(am__mv) $@-t $@
 
 am--depfiles: $(am__depfiles_remade)
+
+.c.o:
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ $<
+
+.c.obj:
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.c.lo:
+@am__fastdepCC_TRUE@	$(AM_V_CC)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCC_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -536,76 +761,6 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
-
-fuzzer_decoder-fuzzer_decoder.o: fuzzer_decoder.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_decoder_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_decoder-fuzzer_decoder.o -MD -MP -MF $(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Tpo -c -o fuzzer_decoder-fuzzer_decoder.o `test -f 'fuzzer_decoder.cc' || echo '$(srcdir)/'`fuzzer_decoder.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Tpo $(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_decoder.cc' object='fuzzer_decoder-fuzzer_decoder.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_decoder_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_decoder-fuzzer_decoder.o `test -f 'fuzzer_decoder.cc' || echo '$(srcdir)/'`fuzzer_decoder.cc
-
-fuzzer_decoder-fuzzer_decoder.obj: fuzzer_decoder.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_decoder_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_decoder-fuzzer_decoder.obj -MD -MP -MF $(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Tpo -c -o fuzzer_decoder-fuzzer_decoder.obj `if test -f 'fuzzer_decoder.cc'; then $(CYGPATH_W) 'fuzzer_decoder.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_decoder.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Tpo $(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_decoder.cc' object='fuzzer_decoder-fuzzer_decoder.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_decoder_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_decoder-fuzzer_decoder.obj `if test -f 'fuzzer_decoder.cc'; then $(CYGPATH_W) 'fuzzer_decoder.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_decoder.cc'; fi`
-
-fuzzer_encoder-fuzzer_encoder.o: fuzzer_encoder.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_encoder-fuzzer_encoder.o -MD -MP -MF $(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Tpo -c -o fuzzer_encoder-fuzzer_encoder.o `test -f 'fuzzer_encoder.cc' || echo '$(srcdir)/'`fuzzer_encoder.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Tpo $(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_encoder.cc' object='fuzzer_encoder-fuzzer_encoder.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_encoder-fuzzer_encoder.o `test -f 'fuzzer_encoder.cc' || echo '$(srcdir)/'`fuzzer_encoder.cc
-
-fuzzer_encoder-fuzzer_encoder.obj: fuzzer_encoder.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_encoder-fuzzer_encoder.obj -MD -MP -MF $(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Tpo -c -o fuzzer_encoder-fuzzer_encoder.obj `if test -f 'fuzzer_encoder.cc'; then $(CYGPATH_W) 'fuzzer_encoder.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_encoder.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Tpo $(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_encoder.cc' object='fuzzer_encoder-fuzzer_encoder.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_encoder-fuzzer_encoder.obj `if test -f 'fuzzer_encoder.cc'; then $(CYGPATH_W) 'fuzzer_encoder.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_encoder.cc'; fi`
-
-fuzzer_encoder_v2-fuzzer_encoder_v2.o: fuzzer_encoder_v2.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_v2_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_encoder_v2-fuzzer_encoder_v2.o -MD -MP -MF $(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Tpo -c -o fuzzer_encoder_v2-fuzzer_encoder_v2.o `test -f 'fuzzer_encoder_v2.cc' || echo '$(srcdir)/'`fuzzer_encoder_v2.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Tpo $(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_encoder_v2.cc' object='fuzzer_encoder_v2-fuzzer_encoder_v2.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_v2_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_encoder_v2-fuzzer_encoder_v2.o `test -f 'fuzzer_encoder_v2.cc' || echo '$(srcdir)/'`fuzzer_encoder_v2.cc
-
-fuzzer_encoder_v2-fuzzer_encoder_v2.obj: fuzzer_encoder_v2.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_v2_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_encoder_v2-fuzzer_encoder_v2.obj -MD -MP -MF $(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Tpo -c -o fuzzer_encoder_v2-fuzzer_encoder_v2.obj `if test -f 'fuzzer_encoder_v2.cc'; then $(CYGPATH_W) 'fuzzer_encoder_v2.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_encoder_v2.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Tpo $(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_encoder_v2.cc' object='fuzzer_encoder_v2-fuzzer_encoder_v2.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_encoder_v2_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_encoder_v2-fuzzer_encoder_v2.obj `if test -f 'fuzzer_encoder_v2.cc'; then $(CYGPATH_W) 'fuzzer_encoder_v2.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_encoder_v2.cc'; fi`
-
-fuzzer_metadata-fuzzer_metadata.o: fuzzer_metadata.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_metadata_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_metadata-fuzzer_metadata.o -MD -MP -MF $(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Tpo -c -o fuzzer_metadata-fuzzer_metadata.o `test -f 'fuzzer_metadata.cc' || echo '$(srcdir)/'`fuzzer_metadata.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Tpo $(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_metadata.cc' object='fuzzer_metadata-fuzzer_metadata.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_metadata_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_metadata-fuzzer_metadata.o `test -f 'fuzzer_metadata.cc' || echo '$(srcdir)/'`fuzzer_metadata.cc
-
-fuzzer_metadata-fuzzer_metadata.obj: fuzzer_metadata.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_metadata_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_metadata-fuzzer_metadata.obj -MD -MP -MF $(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Tpo -c -o fuzzer_metadata-fuzzer_metadata.obj `if test -f 'fuzzer_metadata.cc'; then $(CYGPATH_W) 'fuzzer_metadata.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_metadata.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Tpo $(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_metadata.cc' object='fuzzer_metadata-fuzzer_metadata.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_metadata_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_metadata-fuzzer_metadata.obj `if test -f 'fuzzer_metadata.cc'; then $(CYGPATH_W) 'fuzzer_metadata.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_metadata.cc'; fi`
-
-fuzzer_seek-fuzzer_seek.o: fuzzer_seek.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_seek_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_seek-fuzzer_seek.o -MD -MP -MF $(DEPDIR)/fuzzer_seek-fuzzer_seek.Tpo -c -o fuzzer_seek-fuzzer_seek.o `test -f 'fuzzer_seek.cc' || echo '$(srcdir)/'`fuzzer_seek.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_seek-fuzzer_seek.Tpo $(DEPDIR)/fuzzer_seek-fuzzer_seek.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_seek.cc' object='fuzzer_seek-fuzzer_seek.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_seek_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_seek-fuzzer_seek.o `test -f 'fuzzer_seek.cc' || echo '$(srcdir)/'`fuzzer_seek.cc
-
-fuzzer_seek-fuzzer_seek.obj: fuzzer_seek.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_seek_CXXFLAGS) $(CXXFLAGS) -MT fuzzer_seek-fuzzer_seek.obj -MD -MP -MF $(DEPDIR)/fuzzer_seek-fuzzer_seek.Tpo -c -o fuzzer_seek-fuzzer_seek.obj `if test -f 'fuzzer_seek.cc'; then $(CYGPATH_W) 'fuzzer_seek.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_seek.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/fuzzer_seek-fuzzer_seek.Tpo $(DEPDIR)/fuzzer_seek-fuzzer_seek.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='fuzzer_seek.cc' object='fuzzer_seek-fuzzer_seek.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(fuzzer_seek_CXXFLAGS) $(CXXFLAGS) -c -o fuzzer_seek-fuzzer_seek.obj `if test -f 'fuzzer_seek.cc'; then $(CYGPATH_W) 'fuzzer_seek.cc'; else $(CYGPATH_W) '$(srcdir)/fuzzer_seek.cc'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -727,6 +882,10 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/$(am__dirstamp)
+	-rm -f ${top_builddir}/src/flac/$(am__dirstamp)
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/$(am__dirstamp)
+	-rm -f ${top_builddir}/src/metaflac/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -737,11 +896,31 @@ clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
 	mostlyclean-am
 
 distclean: distclean-am
-		-rm -f ./$(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Po
-	-rm -f ./$(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Po
-	-rm -f ./$(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Po
-	-rm -f ./$(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Po
-	-rm -f ./$(DEPDIR)/fuzzer_seek-fuzzer_seek.Po
+		-rm -f ${top_builddir}/src/flac/$(DEPDIR)/analyze.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/decode.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/encode.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/foreign_metadata.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/local_string_utils.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/utils.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/vorbiscomment.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_cuesheet.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_picture.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_seektable.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_streaminfo.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_vorbiscomment.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/options.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/usage.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/utils.Po
+	-rm -f ./$(DEPDIR)/decoder.Po
+	-rm -f ./$(DEPDIR)/empty.Po
+	-rm -f ./$(DEPDIR)/encoder.Po
+	-rm -f ./$(DEPDIR)/encoder_v2.Po
+	-rm -f ./$(DEPDIR)/metadata.Po
+	-rm -f ./$(DEPDIR)/reencoder.Po
+	-rm -f ./$(DEPDIR)/seek.Po
+	-rm -f ./$(DEPDIR)/tool_flac.Po
+	-rm -f ./$(DEPDIR)/tool_metaflac.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -787,11 +966,31 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-		-rm -f ./$(DEPDIR)/fuzzer_decoder-fuzzer_decoder.Po
-	-rm -f ./$(DEPDIR)/fuzzer_encoder-fuzzer_encoder.Po
-	-rm -f ./$(DEPDIR)/fuzzer_encoder_v2-fuzzer_encoder_v2.Po
-	-rm -f ./$(DEPDIR)/fuzzer_metadata-fuzzer_metadata.Po
-	-rm -f ./$(DEPDIR)/fuzzer_seek-fuzzer_seek.Po
+		-rm -f ${top_builddir}/src/flac/$(DEPDIR)/analyze.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/decode.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/encode.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/foreign_metadata.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/local_string_utils.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/utils.Po
+	-rm -f ${top_builddir}/src/flac/$(DEPDIR)/vorbiscomment.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_cuesheet.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_picture.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_seektable.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_streaminfo.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/operations_shorthand_vorbiscomment.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/options.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/usage.Po
+	-rm -f ${top_builddir}/src/metaflac/$(DEPDIR)/utils.Po
+	-rm -f ./$(DEPDIR)/decoder.Po
+	-rm -f ./$(DEPDIR)/empty.Po
+	-rm -f ./$(DEPDIR)/encoder.Po
+	-rm -f ./$(DEPDIR)/encoder_v2.Po
+	-rm -f ./$(DEPDIR)/metadata.Po
+	-rm -f ./$(DEPDIR)/reencoder.Po
+	-rm -f ./$(DEPDIR)/seek.Po
+	-rm -f ./$(DEPDIR)/tool_flac.Po
+	-rm -f ./$(DEPDIR)/tool_metaflac.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

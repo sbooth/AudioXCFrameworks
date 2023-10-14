@@ -1,6 +1,6 @@
 #  FLAC - Free Lossless Audio Codec
 #  Copyright (C) 2001-2009  Josh Coalson
-#  Copyright (C) 2011-2022  Xiph.Org Foundation
+#  Copyright (C) 2011-2023  Xiph.Org Foundation
 #
 #  This file is part the FLAC project.  FLAC is comprised of several
 #  components distributed under different licenses.  The codec libraries
@@ -18,7 +18,7 @@
 
 TESTS_ENVIRONMENT = FLAC__TEST_LEVEL=@FLAC__TEST_LEVEL@ FLAC__TEST_WITH_VALGRIND=@FLAC__TEST_WITH_VALGRIND@ ECHO_N="@ECHO_N@" ECHO_C="@ECHO_C@"
 
-SUBDIRS = cuesheets flac-to-flac-metadata-test-files metaflac-test-files pictures
+SUBDIRS = cuesheets foreign-metadata-test-files flac-to-flac-metadata-test-files metaflac-test-files pictures
 
 check_SCRIPTS = \
 	test_libFLAC.sh \
@@ -49,8 +49,9 @@ endif
 	@echo "----------------"
 
 EXTRA_DIST = \
-    CMakeLists.txt \
+	CMakeLists.txt \
 	cuesheet.ok \
+	generate_streams.sh \
 	metaflac.flac.in \
 	metaflac.flac.ok \
 	picture.ok \
