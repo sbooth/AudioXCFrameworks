@@ -21,8 +21,6 @@
 		325695B9256DC9EC003F09C5 /* opusenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32569597256DC9AE003F09C5 /* opusenc.c */; settings = {COMPILER_FLAGS = "-DRANDOM_PREFIX=libopusenc -DOUTSIDE_SPEEX"; }; };
 		325695BA256DC9EC003F09C5 /* picture.c in Sources */ = {isa = PBXBuildFile; fileRef = 3256959C256DC9AE003F09C5 /* picture.c */; };
 		325695BB256DC9EC003F09C5 /* unicode_support.c in Sources */ = {isa = PBXBuildFile; fileRef = 3256959E256DC9AE003F09C5 /* unicode_support.c */; };
-		325695BF256DCA56003F09C5 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 325695BE256DCA56003F09C5 /* config.h */; };
-		325695C0256DCA56003F09C5 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 325695BE256DCA56003F09C5 /* config.h */; };
 		3260C6C6255461F000E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C6B9255461BD00E8C286 /* ogg.framework */; };
 		3260C6C9255461F900E8C286 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C6BB255461BD00E8C286 /* ogg.framework */; };
 		32714926254F367500029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327147EF254F365D00029BD7 /* config.h */; };
@@ -400,7 +398,6 @@
 		3256959F256DC9AE003F09C5 /* ogg_packer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ogg_packer.h; sourceTree = "<group>"; };
 		325695A0256DC9AE003F09C5 /* resample_sse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resample_sse.h; sourceTree = "<group>"; };
 		325695A1256DC9AE003F09C5 /* arch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = arch.h; sourceTree = "<group>"; };
-		325695BE256DCA56003F09C5 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		3260C6B3255461BD00E8C286 /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ogg.xcodeproj; path = ../ogg/ogg.xcodeproj; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32714781254F365D00029BD7 /* celt_lpc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = celt_lpc.h; sourceTree = "<group>"; };
@@ -709,9 +706,7 @@
 		32714923254F365E00029BD7 /* mapping_matrix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mapping_matrix.c; sourceTree = "<group>"; };
 		32714924254F365E00029BD7 /* opus_multistream.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = opus_multistream.c; sourceTree = "<group>"; };
 		32714925254F365E00029BD7 /* analysis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = analysis.h; sourceTree = "<group>"; };
-		32714B2E2550439700029BD7 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		32714B352550439700029BD7 /* opusfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = opusfile.h; sourceTree = "<group>"; };
-		32714B3C2550439700029BD7 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		32714B602550439700029BD7 /* internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = internal.h; sourceTree = "<group>"; };
 		32714B612550439700029BD7 /* opusfile.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = opusfile.c; sourceTree = "<group>"; };
 		32714B622550439700029BD7 /* info.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = info.c; sourceTree = "<group>"; };
@@ -768,7 +763,6 @@
 		32569573256DC9AD003F09C5 /* libopusenc-src */ = {
 			isa = PBXGroup;
 			children = (
-				325695BE256DCA56003F09C5 /* config.h */,
 				32569577256DC9AD003F09C5 /* include */,
 				32569594256DC9AD003F09C5 /* src */,
 			);
@@ -1263,9 +1257,7 @@
 		32714B2A2550439700029BD7 /* opusfile-src */ = {
 			isa = PBXGroup;
 			children = (
-				32714B2E2550439700029BD7 /* config.h */,
 				32714B342550439700029BD7 /* include */,
-				32714B3C2550439700029BD7 /* Makefile.am */,
 				32714B5F2550439700029BD7 /* src */,
 			);
 			path = "opusfile-src";
@@ -1303,7 +1295,6 @@
 			files = (
 				32714937254F36A000029BD7 /* opus_types.h in Headers */,
 				32714B682550447500029BD7 /* opusfile.h in Headers */,
-				325695BF256DCA56003F09C5 /* config.h in Headers */,
 				32714934254F36A000029BD7 /* opus_defines.h in Headers */,
 				32714926254F367500029BD7 /* config.h in Headers */,
 				325695A4256DC9DC003F09C5 /* opusenc.h in Headers */,
@@ -1319,7 +1310,6 @@
 			files = (
 				3271493F254F36A100029BD7 /* opus_types.h in Headers */,
 				32714B6B2550447600029BD7 /* opusfile.h in Headers */,
-				325695C0256DCA56003F09C5 /* config.h in Headers */,
 				3271493C254F36A100029BD7 /* opus_defines.h in Headers */,
 				32714929254F367500029BD7 /* config.h in Headers */,
 				325695A7256DC9DD003F09C5 /* opusenc.h in Headers */,

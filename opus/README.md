@@ -1,10 +1,10 @@
 ## Versions
 
-[libopus 1.3.1](https://opus-codec.org/release/stable/2019/04/12/libopus-1_3_1.html) 
+[libopus 1.4](https://www.opus-codec.org/release/stable/2023/04/20/libopus-1_4.html) 
 
-[opusfile 0.12](https://opus-codec.org/release/dev/2020/06/27/opusfile_0_12.html)
+[opusfile 9d718345](https://gitlab.xiph.org/xiph/opusfile/-/tree/9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166)
 
-[libopusenc f51c3aa4](https://gitlab.xiph.org/xiph/libopusenc/-/tree/f51c3aa431c2f0f8fccd8926628b5f330292489f)
+[libopusenc d53a41b5](https://gitlab.xiph.org/xiph/libopusenc/-/tree/d53a41b5ed02eba854d12b6d35bea13a330018d5)
 
 ## License
 
