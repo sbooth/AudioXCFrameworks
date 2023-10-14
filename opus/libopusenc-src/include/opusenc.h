@@ -50,12 +50,12 @@
    <tt>libopus</tt>.
 */
 
+#include <stddef.h>
+#include <opus/opus.h>
+
 # if defined(__cplusplus)
 extern "C" {
 # endif
-
-#include <stddef.h>
-#include <opus/opus.h>
 
 #ifndef OPE_EXPORT
 # if defined(WIN32)
