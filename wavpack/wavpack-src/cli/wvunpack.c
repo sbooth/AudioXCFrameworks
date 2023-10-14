@@ -57,7 +57,6 @@
 #define fopen(f,m) fopen_utf8(f,m)
 #define strdup(x) _strdup(x)
 #define snprintf _snprintf
-#define fileno _fileno
 #endif
 
 ///////////////////////////// local variable storage //////////////////////////
@@ -79,6 +78,7 @@ static const char *usage =
 "           (default is restore original file, multiple input files allowed)\n\n"
 #endif
 " Formats: Microsoft RIFF:   'wav', force with -w or --wav, makes RF64 if > 4 GB\n"
+"          Apple AIFF:       'aif', force with --aif or --aif-le\n"
 "          Sony Wave64:      'w64', force with --w64\n"
 "          Apple Core Audio: 'caf', force with --caf-be or --caf-le\n"
 "          Raw PCM or DSD:   'raw', force with -r or --raw, little-endian\n"
@@ -129,12 +129,15 @@ static const char *help =
 "          (--raw) to avoid headers being interleaved with the audio data.\n\n"
 #endif
 " Formats: Microsoft RIFF:   'wav', force with -w or --wav, makes RF64 if > 4 GB\n"
+"          Apple AIFF:       'aif', force with --aif or --aif-le\n"
 "          Sony Wave64:      'w64', force with --w64\n"
 "          Apple Core Audio: 'caf', force with --caf-be or --caf-le\n"
 "          Raw PCM or DSD:   'raw', force with -r or --raw, little-endian\n"
 "          Philips DSDIFF:   'dff', force with --dsdiff or --dff\n"
 "          Sony DSF:         'dsf', force with --dsf\n\n"
 " Options:\n"
+"    --aif                 force output to Apple AIFF (extension .aif)\n"
+"    --aif-le              force output to Apple AIFF-C/sowt (extension .aif)\n"
 "    -b                    blindly decode all stream blocks & ignore length info\n"
 "    -c                    extract cuesheet only to stdout (no audio decode)\n"
 "                           (note: equivalent to -x \"cuesheet\")\n"
@@ -205,6 +208,7 @@ int WriteWave64Header (FILE *outfile, WavpackContext *wpc, int64_t total_samples
 int WriteRiffHeader (FILE *outfile, WavpackContext *wpc, int64_t total_samples, int qmode);
 int WriteDsdiffHeader (FILE *outfile, WavpackContext *wpc, int64_t total_samples, int qmode);
 int WriteDsfHeader (FILE *outfile, WavpackContext *wpc, int64_t total_samples, int qmode);
+int WriteAiffHeader (FILE *outfile, WavpackContext *wpc, int64_t total_samples, int qmode);
 
 static struct {
     char *default_extension, *format_name;
@@ -215,7 +219,8 @@ static struct {
     { "w64", "Sony Wave64",      WriteWave64Header, 8 },
     { "caf", "Apple Core Audio", WriteCaffHeader,   1 },
     { "dff", "Philips DSDIFF",   WriteDsdiffHeader, 2 },
-    { "dsf", "Sony DSF",         WriteDsfHeader,    1 }
+    { "dsf", "Sony DSF",         WriteDsfHeader,    1 },
+    { "aif", "Apple AIFF",       WriteAiffHeader,   2 }
 };
 
 #define NUM_FILE_FORMATS (sizeof (file_formats) / sizeof (file_formats [0]))
@@ -225,8 +230,8 @@ static struct {
 
 int debug_logging_mode;
 
-static int overwrite_all, delete_source, raw_decode, raw_pcm, normalize_floats, no_utf8_convert, no_audio_decode, file_info,
-    summary, ignore_wvc, quiet_mode, calc_md5, copy_time, blind_decode, decode_format, format_specified, caf_be, set_console_title;
+static int overwrite_all, delete_source, raw_decode, raw_pcm, normalize_floats, no_utf8_convert, no_audio_decode, file_info, summary,
+    ignore_wvc, quiet_mode, calc_md5, copy_time, blind_decode, decode_format, format_specified, caf_be, aif_le, set_console_title;
 
 static int num_files, file_index, outbuf_k;
 
@@ -383,6 +388,14 @@ int main(int argc, char **argv)
             else if (!strcmp (long_option, "caf-le")) {                 // --caf-le
                 decode_format = WP_FORMAT_CAF;
                 format_specified = 1;
+            }
+            else if (!strcmp (long_option, "aif")) {                    // --aif
+                decode_format = WP_FORMAT_AIF;
+                format_specified = 1;
+            }
+            else if (!strcmp (long_option, "aif-le")) {                 // --aif-le
+                decode_format = WP_FORMAT_AIF;
+                aif_le = format_specified = 1;
             }
             else if (!strcmp (long_option, "dsf")) {                    // --dsf
                 decode_format = WP_FORMAT_DSF;
@@ -629,8 +642,8 @@ int main(int argc, char **argv)
         ++error_count;
     }
 
-    if (verify_only && (format_specified || outfilename)) {
-        error_line ("specifying output file or format and verify mode are incompatible!");
+    if (verify_only && (format_specified || outfilename || skip.value_is_valid || until.value_is_valid)) {
+        error_line ("specifying output file or format or skip/until are incompatible with verify mode!");
         ++error_count;
     }
 
@@ -1148,10 +1161,10 @@ static uint32_t read_next_header (FILE *infile, WavpackHeader *wphdr)
 
 static int quick_verify_file (char *infilename, int verbose)
 {
-    int64_t file_size, block_index, bytes_read = 0, total_samples = 0;
+    int64_t file_size, block_index = 0, bytes_read = 0, total_samples = 0;
     int block_errors = 0, continuity_errors = 0, missing_checksums = 0, truncated = 0;
     int block_errors_c = 0, continuity_errors_c = 0, missing_checksums_c = 0, truncated_c = 0;
-    int num_channels = 0, chan_index = 0, wvc_mode = 0, block_samples;
+    int num_channels = 0, chan_index = 0, wvc_mode = 0, block_samples = 0;
     FILE *(*fopen_func)(const char *, const char *) = fopen;
     double dtime, progress = -1.0;
     WavpackHeader wphdr, wphdr_c;
@@ -1159,7 +1172,9 @@ static int quick_verify_file (char *infilename, int verbose)
     FILE *infile, *infile_c;
     uint32_t bytes_skipped;
 
-#ifdef _WIN32
+#if defined(__WATCOMC__)
+    struct _timeb time1, time2;
+#elif defined(_WIN32)
     struct __timeb64 time1, time2;
 #else
     struct timeval time1, time2;
@@ -1173,7 +1188,7 @@ static int quick_verify_file (char *infilename, int verbose)
     if (*infilename == '-') {
         infile = stdin;
 #ifdef _WIN32
-        _setmode (fileno (stdin), O_BINARY);
+        _setmode (_fileno (stdin), O_BINARY);
 #endif
 #ifdef __OS2__
         setmode (fileno (stdin), O_BINARY);
@@ -1253,7 +1268,9 @@ static int quick_verify_file (char *infilename, int verbose)
         fflush (stderr);
     }
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time1);
+#elif defined(_WIN32)
     _ftime64 (&time1);
 #else
     gettimeofday(&time1,&timez);
@@ -1476,7 +1493,11 @@ static int quick_verify_file (char *infilename, int verbose)
         return WAVPACK_SOFT_ERROR;
     }
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time2);
+    dtime = time2.time + time2.millitm / 1000.0;
+    dtime -= time1.time + time1.millitm / 1000.0;
+#elif defined(_WIN32)
     _ftime64 (&time2);
     dtime = time2.time + time2.millitm / 1000.0;
     dtime -= time1.time + time1.millitm / 1000.0;
@@ -1530,7 +1551,9 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
     FILE *outfile;
     double dtime;
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    struct _timeb time1, time2;
+#elif defined(_WIN32)
     struct __timeb64 time1, time2;
 #else
     struct timeval time1, time2;
@@ -1605,6 +1628,11 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
                 output_format = decode_format;
                 break;
 
+            case WP_FORMAT_AIF:
+                output_qmode = QMODE_SIGNED_BYTES | (aif_le ? 0 : QMODE_BIG_ENDIAN);
+                output_format = decode_format;
+                break;
+
             case WP_FORMAT_WAV:
             case WP_FORMAT_W64:
                 output_format = decode_format;
@@ -1631,9 +1659,17 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
     else if (input_format < NUM_FILE_FORMATS) {         // case 3: user specified nothing, and this is a format we know about
         output_format = input_format;                   //   (obviously this is the most common situation)
         output_qmode = input_qmode;
+
+        if (outfilename) {
+            if (output_format == WP_FORMAT_DFF)         // "raw" files are either WAV (for PCM) or DFF (for DSD), but we store
+                output_qmode = QMODE_DSD_MSB_FIRST;     // the raw "qmode" in the file as well (for some future use perhaps?),
+            else if (output_format == WP_FORMAT_WAV)    // but we DON'T want to honor that when generating WAV or DFF files
+                output_qmode = 0;                       // because then they would be corrupt (e.g., big-endian WAV files)
+        }
     }
-    else if (!WavpackGetWrapperBytes (wpc) ||           // case 4: unknown format and no wrapper present or extracting section
-        skip.value_is_valid || until.value_is_valid) {  //   so we must override to a known format & extension
+    else if ((!WavpackGetWrapperBytes (wpc) &&          // case 4: unknown format and no wrapper present (and not verify mode),
+        outfilename) || skip.value_is_valid ||          //   or just doing a partial file, so we must override to a known format
+        until.value_is_valid) {
 
         if (input_qmode & QMODE_DSD_AUDIO) {
             output_format = WP_FORMAT_DFF;
@@ -1646,8 +1682,8 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
 
         extension = file_formats [output_format].default_extension;
     }
-    else                                                // case 5: unknown format, but wrapper is present and we're doing
-        output_qmode = input_qmode;                     //   the whole file, so we don't have to understand the format
+    else                                                // case 5: unknown format, but wrapper is present (or just verify) and
+        output_qmode = input_qmode;                     //   doing the whole file, so we don't have to understand the format
 
     if (skip.value_is_valid) {
         if (skip.value_is_time)
@@ -1770,7 +1806,9 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
         }
     }
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time1);
+#elif defined(_WIN32)
     _ftime64 (&time1);
 #else
     gettimeofday(&time1,&timez);
@@ -1780,7 +1818,7 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
         if (until_samples_total) {
             if (!file_formats [output_format].WriteHeader (outfile, wpc, until_samples_total, output_qmode)) {
                 DoTruncateFile (outfile);
-                result = WAVPACK_HARD_ERROR;
+                result = WAVPACK_SOFT_ERROR;
             }
             else
                 created_riff_header = TRUE;
@@ -1797,7 +1835,7 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
         }
         else if (!file_formats [output_format].WriteHeader (outfile, wpc, WavpackGetNumSamples64 (wpc), output_qmode)) {
             DoTruncateFile (outfile);
-            result = WAVPACK_HARD_ERROR;
+            result = WAVPACK_SOFT_ERROR;
         }
         else
             created_riff_header = TRUE;
@@ -1885,7 +1923,7 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
                 error_line ("can't update file header with actual size");
             else if (!file_formats [output_format].WriteHeader (outfile, wpc, total_unpacked_samples, output_qmode)) {
                 DoTruncateFile (outfile);
-                result = WAVPACK_HARD_ERROR;
+                result = WAVPACK_SOFT_ERROR;
             }
     }
 
@@ -1963,7 +2001,11 @@ static int unpack_file (char *infilename, char *outfilename, int add_extension)
     // Compute and display the time consumed along with some other details of
     // the unpacking operation (assuming there was no error).
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time2);
+    dtime = time2.time + time2.millitm / 1000.0;
+    dtime -= time1.time + time1.millitm / 1000.0;
+#elif defined(_WIN32)
     _ftime64 (&time2);
     dtime = time2.time + time2.millitm / 1000.0;
     dtime -= time1.time + time1.millitm / 1000.0;
@@ -2680,7 +2722,7 @@ static void dump_summary (WavpackContext *wpc, char *name, FILE *dst)
     uint32_t channel_mask = (uint32_t) WavpackGetChannelMask (wpc);
     int num_channels = WavpackGetNumChannels (wpc);
     unsigned char md5_sum [16];
-    char modes [80];
+    char modes [160];
 
     fprintf (dst, "\n");
 

@@ -12,6 +12,7 @@
 // utilities and the self-extraction module.
 
 #if defined(_WIN32)
+#define _WIN32_WINNT 0x0500 /* for GetConsoleWindow() */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <io.h>
@@ -381,12 +382,15 @@ extern int debug_logging_mode;
 
 #ifdef _WIN32
 
+typedef HRESULT (WINAPI *getfolderpath_t)(HWND,int,HANDLE,DWORD,LPSTR); /* SHGetFolderPathA */
+typedef BOOL (WINAPI *getspecialfolderpath_t)(HWND,LPSTR,int,BOOL);     /* SHGetSpecialFolderPathA */
+
 int get_app_path (char *app_path)
 {
     static char file_path [MAX_PATH], tried, result;
 
     HINSTANCE hinstLib;
-    FARPROC ProcAdd;
+    getfolderpath_t getfolderpath;
 
     if (tried) {
         if (result)
@@ -399,15 +403,15 @@ int get_app_path (char *app_path)
     hinstLib = LoadLibrary ("shell32.dll");
 
     if (hinstLib) {
-        ProcAdd = GetProcAddress (hinstLib, "SHGetFolderPathA");
+        getfolderpath = (getfolderpath_t) GetProcAddress (hinstLib, "SHGetFolderPathA");
 
-        if (ProcAdd && SUCCEEDED ((ProcAdd) (NULL, CSIDL_APPDATA | 0x8000, NULL, 0, file_path)))
+        if (getfolderpath && SUCCEEDED (getfolderpath (NULL, CSIDL_APPDATA | 0x8000, NULL, 0, file_path)))
             result = TRUE;
 
         if (!result) {
-            ProcAdd = GetProcAddress (hinstLib, "SHGetSpecialFolderPathA");
-
-            if (ProcAdd && SUCCEEDED ((ProcAdd) (NULL, file_path, CSIDL_APPDATA, TRUE)))
+            getspecialfolderpath_t getspecialfolderpath;
+            getspecialfolderpath = (getspecialfolderpath_t) GetProcAddress (hinstLib, "SHGetSpecialFolderPathA");
+            if (getspecialfolderpath && getspecialfolderpath (NULL, file_path, CSIDL_APPDATA, TRUE) != 0)
                 result = TRUE;
         }
 
@@ -418,9 +422,9 @@ int get_app_path (char *app_path)
         hinstLib = LoadLibrary ("shfolder.dll");
 
         if (hinstLib) {
-            ProcAdd = GetProcAddress (hinstLib, "SHGetFolderPathA");
+            getfolderpath = (getfolderpath_t) GetProcAddress (hinstLib, "SHGetFolderPathA");
 
-            if (ProcAdd && SUCCEEDED ((ProcAdd) (NULL, CSIDL_APPDATA | 0x8000, NULL, 0, file_path)))
+            if (getfolderpath && SUCCEEDED (getfolderpath (NULL, CSIDL_APPDATA | 0x8000, NULL, 0, file_path)))
                 result = TRUE;
 
             FreeLibrary (hinstLib);
@@ -687,7 +691,7 @@ int64_t DoGetFileSize (FILE *hFile)
     if (fHandle == INVALID_HANDLE_VALUE)
         return 0;
 
-    Size.u.LowPart = GetFileSize(fHandle, &Size.u.HighPart);
+    Size.u.LowPart = GetFileSize(fHandle, (DWORD *) &Size.u.HighPart);
 
     if (Size.u.LowPart == INVALID_FILE_SIZE && GetLastError() != NO_ERROR)
         return 0;

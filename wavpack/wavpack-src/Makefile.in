@@ -202,15 +202,15 @@ src_libwavpack_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(src_libwavpack_la_CFLAGS) $(CFLAGS) \
 	$(src_libwavpack_la_LDFLAGS) $(LDFLAGS) -o $@
 am__cli_wavpack_SOURCES_DIST = cli/wavpack.c cli/riff.c cli/wave64.c \
-	cli/caff.c cli/dsdiff.c cli/dsf.c cli/utils.c cli/md5.c \
-	cli/import_id3.c cli/win32_unicode_support.c
+	cli/caff.c cli/dsdiff.c cli/dsf.c cli/aiff.c cli/utils.c \
+	cli/md5.c cli/import_id3.c cli/win32_unicode_support.c
 @WINDOWS_HOST_TRUE@am__objects_6 = cli/wavpack-win32_unicode_support.$(OBJEXT)
 am_cli_wavpack_OBJECTS = cli/wavpack-wavpack.$(OBJEXT) \
 	cli/wavpack-riff.$(OBJEXT) cli/wavpack-wave64.$(OBJEXT) \
 	cli/wavpack-caff.$(OBJEXT) cli/wavpack-dsdiff.$(OBJEXT) \
-	cli/wavpack-dsf.$(OBJEXT) cli/wavpack-utils.$(OBJEXT) \
-	cli/wavpack-md5.$(OBJEXT) cli/wavpack-import_id3.$(OBJEXT) \
-	$(am__objects_6)
+	cli/wavpack-dsf.$(OBJEXT) cli/wavpack-aiff.$(OBJEXT) \
+	cli/wavpack-utils.$(OBJEXT) cli/wavpack-md5.$(OBJEXT) \
+	cli/wavpack-import_id3.$(OBJEXT) $(am__objects_6)
 cli_wavpack_OBJECTS = $(am_cli_wavpack_OBJECTS)
 cli_wavpack_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
@@ -250,7 +250,7 @@ cli_wvtest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(CFLAGS) $(cli_wvtest_LDFLAGS) $(LDFLAGS) -o $@
 am__cli_wvunpack_SOURCES_DIST = cli/wvunpack.c cli/riff_write.c \
 	cli/wave64_write.c cli/caff_write.c cli/dsdiff_write.c \
-	cli/dsf_write.c cli/utils.c cli/md5.c \
+	cli/aiff_write.c cli/dsf_write.c cli/utils.c cli/md5.c \
 	cli/win32_unicode_support.c
 @WINDOWS_HOST_TRUE@am__objects_9 = cli/wvunpack-win32_unicode_support.$(OBJEXT)
 am_cli_wvunpack_OBJECTS = cli/wvunpack-wvunpack.$(OBJEXT) \
@@ -258,6 +258,7 @@ am_cli_wvunpack_OBJECTS = cli/wvunpack-wvunpack.$(OBJEXT) \
 	cli/wvunpack-wave64_write.$(OBJEXT) \
 	cli/wvunpack-caff_write.$(OBJEXT) \
 	cli/wvunpack-dsdiff_write.$(OBJEXT) \
+	cli/wvunpack-aiff_write.$(OBJEXT) \
 	cli/wvunpack-dsf_write.$(OBJEXT) cli/wvunpack-utils.$(OBJEXT) \
 	cli/wvunpack-md5.$(OBJEXT) $(am__objects_9)
 cli_wvunpack_OBJECTS = $(am_cli_wvunpack_OBJECTS)
@@ -281,8 +282,9 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = cli/$(DEPDIR)/wavpack-caff.Po \
-	cli/$(DEPDIR)/wavpack-dsdiff.Po cli/$(DEPDIR)/wavpack-dsf.Po \
+am__depfiles_remade = cli/$(DEPDIR)/wavpack-aiff.Po \
+	cli/$(DEPDIR)/wavpack-caff.Po cli/$(DEPDIR)/wavpack-dsdiff.Po \
+	cli/$(DEPDIR)/wavpack-dsf.Po \
 	cli/$(DEPDIR)/wavpack-import_id3.Po \
 	cli/$(DEPDIR)/wavpack-md5.Po cli/$(DEPDIR)/wavpack-riff.Po \
 	cli/$(DEPDIR)/wavpack-utils.Po cli/$(DEPDIR)/wavpack-wave64.Po \
@@ -295,6 +297,7 @@ am__depfiles_remade = cli/$(DEPDIR)/wavpack-caff.Po \
 	cli/$(DEPDIR)/wvtag-win32_unicode_support.Po \
 	cli/$(DEPDIR)/wvtag-wvtag.Po cli/$(DEPDIR)/wvtest-md5.Po \
 	cli/$(DEPDIR)/wvtest-wvtest.Po \
+	cli/$(DEPDIR)/wvunpack-aiff_write.Po \
 	cli/$(DEPDIR)/wvunpack-caff_write.Po \
 	cli/$(DEPDIR)/wvunpack-dsdiff_write.Po \
 	cli/$(DEPDIR)/wvunpack-dsf_write.Po \
@@ -592,20 +595,21 @@ dist_html_DATA = \
 
 EXTRA_DIST = CMakeLists.txt cmake/CheckCLinkerFlag.cmake \
 	cmake/modules/FindIconv.cmake cmake/TestLargeFiles.cmake \
-	wavpackdll/wavpackdll.rc man/wavpack.xml man/wvgain.xml \
-	man/wvunpack.xml man/wvtag.xml
+	wavpackdll/resource.h wavpackdll/wavpackdll.rc man/wavpack.xml \
+	man/wvgain.xml man/wvunpack.xml man/wvtag.xml
 MAINTAINERCLEANFILES = aclocal.m4 ar-lib compile config.guess \
 	config.rpath config.sub configure depcomp install-sh ltmain.sh \
 	Makefile.in missing $(man_MANS)
 cli_wavpack_SOURCES = cli/wavpack.c cli/riff.c cli/wave64.c cli/caff.c \
-	cli/dsdiff.c cli/dsf.c cli/utils.c cli/md5.c cli/import_id3.c \
-	$(am__append_1)
+	cli/dsdiff.c cli/dsf.c cli/aiff.c cli/utils.c cli/md5.c \
+	cli/import_id3.c $(am__append_1)
 cli_wavpack_CFLAGS = $(AM_CFLAGS) -I$(top_srcdir)/include
 @ENABLE_RPATH_TRUE@cli_wavpack_LDFLAGS = -rpath $(libdir)
 cli_wavpack_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) $(LIBICONV)
 cli_wvunpack_SOURCES = cli/wvunpack.c cli/riff_write.c \
 	cli/wave64_write.c cli/caff_write.c cli/dsdiff_write.c \
-	cli/dsf_write.c cli/utils.c cli/md5.c $(am__append_2)
+	cli/aiff_write.c cli/dsf_write.c cli/utils.c cli/md5.c \
+	$(am__append_2)
 cli_wvunpack_CFLAGS = $(AM_CFLAGS) -I$(top_srcdir)/include
 @ENABLE_RPATH_TRUE@cli_wvunpack_LDFLAGS = -rpath $(libdir)
 cli_wvunpack_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) $(LIBICONV)
@@ -875,6 +879,8 @@ cli/wavpack-dsdiff.$(OBJEXT): cli/$(am__dirstamp) \
 	cli/$(DEPDIR)/$(am__dirstamp)
 cli/wavpack-dsf.$(OBJEXT): cli/$(am__dirstamp) \
 	cli/$(DEPDIR)/$(am__dirstamp)
+cli/wavpack-aiff.$(OBJEXT): cli/$(am__dirstamp) \
+	cli/$(DEPDIR)/$(am__dirstamp)
 cli/wavpack-utils.$(OBJEXT): cli/$(am__dirstamp) \
 	cli/$(DEPDIR)/$(am__dirstamp)
 cli/wavpack-md5.$(OBJEXT): cli/$(am__dirstamp) \
@@ -927,6 +933,8 @@ cli/wvunpack-caff_write.$(OBJEXT): cli/$(am__dirstamp) \
 	cli/$(DEPDIR)/$(am__dirstamp)
 cli/wvunpack-dsdiff_write.$(OBJEXT): cli/$(am__dirstamp) \
 	cli/$(DEPDIR)/$(am__dirstamp)
+cli/wvunpack-aiff_write.$(OBJEXT): cli/$(am__dirstamp) \
+	cli/$(DEPDIR)/$(am__dirstamp)
 cli/wvunpack-dsf_write.$(OBJEXT): cli/$(am__dirstamp) \
 	cli/$(DEPDIR)/$(am__dirstamp)
 cli/wvunpack-utils.$(OBJEXT): cli/$(am__dirstamp) \
@@ -949,6 +957,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wavpack-aiff.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wavpack-caff.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wavpack-dsdiff.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wavpack-dsf.Po@am__quote@ # am--include-marker
@@ -968,6 +977,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvtag-wvtag.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvtest-md5.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvtest-wvtest.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvunpack-aiff_write.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvunpack-caff_write.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvunpack-dsdiff_write.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@cli/$(DEPDIR)/wvunpack-dsf_write.Po@am__quote@ # am--include-marker
@@ -1329,6 +1339,20 @@ cli/wavpack-dsf.obj: cli/dsf.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -c -o cli/wavpack-dsf.obj `if test -f 'cli/dsf.c'; then $(CYGPATH_W) 'cli/dsf.c'; else $(CYGPATH_W) '$(srcdir)/cli/dsf.c'; fi`
 
+cli/wavpack-aiff.o: cli/aiff.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -MT cli/wavpack-aiff.o -MD -MP -MF cli/$(DEPDIR)/wavpack-aiff.Tpo -c -o cli/wavpack-aiff.o `test -f 'cli/aiff.c' || echo '$(srcdir)/'`cli/aiff.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) cli/$(DEPDIR)/wavpack-aiff.Tpo cli/$(DEPDIR)/wavpack-aiff.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cli/aiff.c' object='cli/wavpack-aiff.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -c -o cli/wavpack-aiff.o `test -f 'cli/aiff.c' || echo '$(srcdir)/'`cli/aiff.c
+
+cli/wavpack-aiff.obj: cli/aiff.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -MT cli/wavpack-aiff.obj -MD -MP -MF cli/$(DEPDIR)/wavpack-aiff.Tpo -c -o cli/wavpack-aiff.obj `if test -f 'cli/aiff.c'; then $(CYGPATH_W) 'cli/aiff.c'; else $(CYGPATH_W) '$(srcdir)/cli/aiff.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) cli/$(DEPDIR)/wavpack-aiff.Tpo cli/$(DEPDIR)/wavpack-aiff.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cli/aiff.c' object='cli/wavpack-aiff.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -c -o cli/wavpack-aiff.obj `if test -f 'cli/aiff.c'; then $(CYGPATH_W) 'cli/aiff.c'; else $(CYGPATH_W) '$(srcdir)/cli/aiff.c'; fi`
+
 cli/wavpack-utils.o: cli/utils.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -MT cli/wavpack-utils.o -MD -MP -MF cli/$(DEPDIR)/wavpack-utils.Tpo -c -o cli/wavpack-utils.o `test -f 'cli/utils.c' || echo '$(srcdir)/'`cli/utils.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) cli/$(DEPDIR)/wavpack-utils.Tpo cli/$(DEPDIR)/wavpack-utils.Po
@@ -1580,6 +1604,20 @@ cli/wvunpack-dsdiff_write.obj: cli/dsdiff_write.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cli/dsdiff_write.c' object='cli/wvunpack-dsdiff_write.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wvunpack_CFLAGS) $(CFLAGS) -c -o cli/wvunpack-dsdiff_write.obj `if test -f 'cli/dsdiff_write.c'; then $(CYGPATH_W) 'cli/dsdiff_write.c'; else $(CYGPATH_W) '$(srcdir)/cli/dsdiff_write.c'; fi`
+
+cli/wvunpack-aiff_write.o: cli/aiff_write.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wvunpack_CFLAGS) $(CFLAGS) -MT cli/wvunpack-aiff_write.o -MD -MP -MF cli/$(DEPDIR)/wvunpack-aiff_write.Tpo -c -o cli/wvunpack-aiff_write.o `test -f 'cli/aiff_write.c' || echo '$(srcdir)/'`cli/aiff_write.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) cli/$(DEPDIR)/wvunpack-aiff_write.Tpo cli/$(DEPDIR)/wvunpack-aiff_write.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cli/aiff_write.c' object='cli/wvunpack-aiff_write.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wvunpack_CFLAGS) $(CFLAGS) -c -o cli/wvunpack-aiff_write.o `test -f 'cli/aiff_write.c' || echo '$(srcdir)/'`cli/aiff_write.c
+
+cli/wvunpack-aiff_write.obj: cli/aiff_write.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wvunpack_CFLAGS) $(CFLAGS) -MT cli/wvunpack-aiff_write.obj -MD -MP -MF cli/$(DEPDIR)/wvunpack-aiff_write.Tpo -c -o cli/wvunpack-aiff_write.obj `if test -f 'cli/aiff_write.c'; then $(CYGPATH_W) 'cli/aiff_write.c'; else $(CYGPATH_W) '$(srcdir)/cli/aiff_write.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) cli/$(DEPDIR)/wvunpack-aiff_write.Tpo cli/$(DEPDIR)/wvunpack-aiff_write.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='cli/aiff_write.c' object='cli/wvunpack-aiff_write.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wvunpack_CFLAGS) $(CFLAGS) -c -o cli/wvunpack-aiff_write.obj `if test -f 'cli/aiff_write.c'; then $(CYGPATH_W) 'cli/aiff_write.c'; else $(CYGPATH_W) '$(srcdir)/cli/aiff_write.c'; fi`
 
 cli/wvunpack-dsf_write.o: cli/dsf_write.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wvunpack_CFLAGS) $(CFLAGS) -MT cli/wvunpack-dsf_write.o -MD -MP -MF cli/$(DEPDIR)/wvunpack-dsf_write.Tpo -c -o cli/wvunpack-dsf_write.o `test -f 'cli/dsf_write.c' || echo '$(srcdir)/'`cli/dsf_write.c
@@ -2173,7 +2211,8 @@ clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
 
 distclean: distclean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
-		-rm -f cli/$(DEPDIR)/wavpack-caff.Po
+		-rm -f cli/$(DEPDIR)/wavpack-aiff.Po
+	-rm -f cli/$(DEPDIR)/wavpack-caff.Po
 	-rm -f cli/$(DEPDIR)/wavpack-dsdiff.Po
 	-rm -f cli/$(DEPDIR)/wavpack-dsf.Po
 	-rm -f cli/$(DEPDIR)/wavpack-import_id3.Po
@@ -2192,6 +2231,7 @@ distclean: distclean-am
 	-rm -f cli/$(DEPDIR)/wvtag-wvtag.Po
 	-rm -f cli/$(DEPDIR)/wvtest-md5.Po
 	-rm -f cli/$(DEPDIR)/wvtest-wvtest.Po
+	-rm -f cli/$(DEPDIR)/wvunpack-aiff_write.Po
 	-rm -f cli/$(DEPDIR)/wvunpack-caff_write.Po
 	-rm -f cli/$(DEPDIR)/wvunpack-dsdiff_write.Po
 	-rm -f cli/$(DEPDIR)/wvunpack-dsf_write.Po
@@ -2281,7 +2321,8 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
-		-rm -f cli/$(DEPDIR)/wavpack-caff.Po
+		-rm -f cli/$(DEPDIR)/wavpack-aiff.Po
+	-rm -f cli/$(DEPDIR)/wavpack-caff.Po
 	-rm -f cli/$(DEPDIR)/wavpack-dsdiff.Po
 	-rm -f cli/$(DEPDIR)/wavpack-dsf.Po
 	-rm -f cli/$(DEPDIR)/wavpack-import_id3.Po
@@ -2300,6 +2341,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f cli/$(DEPDIR)/wvtag-wvtag.Po
 	-rm -f cli/$(DEPDIR)/wvtest-md5.Po
 	-rm -f cli/$(DEPDIR)/wvtest-wvtest.Po
+	-rm -f cli/$(DEPDIR)/wvunpack-aiff_write.Po
 	-rm -f cli/$(DEPDIR)/wvunpack-caff_write.Po
 	-rm -f cli/$(DEPDIR)/wvunpack-dsdiff_write.Po
 	-rm -f cli/$(DEPDIR)/wvunpack-dsf_write.Po

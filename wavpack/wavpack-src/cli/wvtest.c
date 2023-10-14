@@ -134,7 +134,7 @@ static WavpackStreamReader freader;
 
 int main (argc, argv) int argc; char **argv;
 {
-    int wpconfig_flags = CONFIG_MD5_CHECKSUM | CONFIG_OPTIMIZE_MONO, test_flags = 0, base_minutes = 2, res;
+    int wpconfig_flags = CONFIG_MD5_CHECKSUM | CONFIG_OPTIMIZE_MONO, test_flags = 0, base_minutes = 2, res = 0;
     int seektest = 0;
 
     // loop through command-line arguments
@@ -352,14 +352,17 @@ static int seeking_test (char *filename, uint32_t test_count)
             if (!samples)
                 break;
 
+            if ((sample_count += samples) > total_samples) {
+                printf ("seeking_test(): sample count is not correct!\n");
+                return -1;
+            }
+
             store_samples (decoded_samples, decoded_samples, qmode, bps, samples * num_chans);
             MD5_Update (&md5_global, (unsigned char *) decoded_samples, bps * samples * num_chans);
 
             MD5_Init (&md5_local);
             MD5_Update (&md5_local, (unsigned char *) decoded_samples, bps * samples * num_chans);
             MD5_Final (chunked_md5 + chunk_count * 16, &md5_local);
-
-            sample_count += samples;
             chunk_count++;
         }
 
@@ -960,7 +963,7 @@ static int run_test (int wpconfig_flags, int test_flags, int bits, int num_chans
         pthread_join (pthread, &term_value);
 
         if (term_value) {
-            printf ("decode_thread() returned error %lld\n", (long long) term_value);
+            printf ("decode_thread() returned error\n");
             return 1;
         }
     }
@@ -1234,7 +1237,7 @@ static void free_stream (StreamingFile *ws)
 
 static double frandom (void)
 {
-    static uint64_t random = 0x3141592653589793;
+    static uint64_t random = 0x3141592653589793ULL;
     random = ((random << 4) - random) ^ 1;
     random = ((random << 4) - random) ^ 1;
     random = ((random << 4) - random) ^ 1;
