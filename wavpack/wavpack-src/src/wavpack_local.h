@@ -13,14 +13,26 @@
 
 #include "wavpack.h"
 
-#if defined(_WIN32)
+#if defined(_WIN32) || (defined(__WATCOMC__) && defined(__OS2__))
 #define strdup(x) _strdup(x)
+#ifndef FASTCALL
+#if defined(_M_IX86) || defined(__i386__)
 #define FASTCALL __fastcall
+#else /* !x86: */
+#define FASTCALL
+#endif
+#endif /* FASTCALL */
 #else
 #define FASTCALL
 #endif
 
-#if defined(_WIN32) || \
+#if defined(__WATCOMC__) && defined(OPT_ASM_X86)
+#define ASMCALL __cdecl
+#else
+#define ASMCALL
+#endif
+
+#if defined(_WIN32) || defined(__WATCOMC__) || \
     (defined(BYTE_ORDER) && defined(LITTLE_ENDIAN) && (BYTE_ORDER == LITTLE_ENDIAN)) || \
     (defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__) && (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__))
 #define BITSTREAM_SHORTS    // use 16-bit "shorts" for reading/writing bitstreams (instead of chars)
@@ -317,6 +329,7 @@ struct WavpackContext {
 //////////////////////// function prototypes and macros //////////////////////
 
 #define CLEAR(destin) memset (&destin, 0, sizeof (destin));
+#define CLEARA(destin) memset (destin, 0, sizeof (destin)); /* for arrays */
 
 //////////////////////////////// decorrelation //////////////////////////////
 // modules: pack.c, unpack.c, unpack_floats.c, extra1.c, extra2.c
@@ -404,7 +417,8 @@ void decimate_dsd_destroy (void *decimate_context);
 
 ///////////////////////////////// CPU feature detection ////////////////////////////////
 
-int unpack_cpu_has_feature_x86 (int findex), pack_cpu_has_feature_x86 (int findex);
+int ASMCALL unpack_cpu_has_feature_x86 (int findex);
+int ASMCALL pack_cpu_has_feature_x86 (int findex);
 
 #define CPU_FEATURE_MMX     23
 
@@ -514,6 +528,14 @@ uint32_t bs_close_read (Bitstream *bs);
 
 #ifdef HAVE___BUILTIN_CLZ
 #define count_bits(av) ((av) ? 32 - __builtin_clz (av) : 0)
+#elif defined (__WATCOMC__) && defined(__386__)
+extern __inline int _bsr_watcom(uint32_t);
+#pragma aux _bsr_watcom = \
+  "bsr eax, eax" \
+  parm [eax] nomemory \
+  value [eax] \
+  modify exact [eax] nomemory;
+#define count_bits(av) ((av) ? _bsr_watcom((av)) + 1 : 0)
 #elif defined (_WIN64)
 static __inline int count_bits (uint32_t av) { unsigned long res; return _BitScanReverse (&res, av) ? (int)(res + 1) : 0; }
 #else
@@ -558,7 +580,7 @@ int FASTCALL wp_log2 (uint32_t avalue);
 #define LOG2BUFFER log2buffer
 #endif
 
-uint32_t LOG2BUFFER (int32_t *samples, uint32_t num_samples, int limit);
+uint32_t ASMCALL LOG2BUFFER (int32_t *samples, uint32_t num_samples, int limit);
 
 signed char store_weight (int weight);
 int restore_weight (signed char weight);

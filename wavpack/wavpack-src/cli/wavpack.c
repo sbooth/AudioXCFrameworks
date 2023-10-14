@@ -83,9 +83,10 @@ static const char *usage =
 "          WVUNPACK: unpack or verify existing WavPack files\n"
 "          WVGAIN:   apply ReplayGain to WavPack files\n"
 "          WVTAG:    apply or edit metadata tags on WavPack files\n\n"
-" Formats: .wav (default, bwf/rf64 okay)  .wv (transcode, with tags)\n"
+" Formats: .wav (default, bwf/rf64 okay)  .aif (Apple AIFF)\n"
 "          .w64 (Sony Wave64)             .caf (Core Audio Format)\n"
-"          .dff (Philips DSDIFF)          .dsf (Sony DSD stream)\n\n"
+"          .dff (Philips DSDIFF)          .dsf (Sony DSD stream)\n"
+"          .wv (transcode from existing WavPack file, with tags)\n\n"
 " Options: -bn = enable hybrid compression, n = 2.0 to 23.9 bits/sample, or\n"
 "                                           n = 24-9600 kbits/second (kbps)\n"
 "          -c  = create correction file (.wvc) for hybrid mode (=lossless)\n"
@@ -125,7 +126,8 @@ static const char *help =
 "                            WVGAIN:   apply ReplayGain to WavPack files\n"
 "                            WVTAG:    apply or edit metadata tags on WavPack files\n\n"
 " Input Formats:             .wav (default, includes bwf/rf64 variants)\n"
-"                            .wv  (transcode operation, tags copied)\n"
+"                            .wv  (WavPack transcode operation, tags copied)\n"
+"                            .aif (Apple AIFF)\n"
 "                            .caf (Core Audio Format)\n"
 "                            .w64 (Sony Wave64)\n"
 "                            .dff (Philips DSDIFF)\n"
@@ -160,6 +162,8 @@ static const char *help =
 #endif
 "    -f                      fast mode (faster encode and decode, but some\n"
 "                             compromise in compression ratio)\n"
+"    --force-even-byte-depth ignore non-whole-byte bit depths (e.g., 12-bit or\n"
+"                             20-bit) and round up to the next whole byte\n"
 "    -g                      general/normal mode (cancels -f and -h options)\n"
 "    -h                      high quality (better compression ratio, but slightly\n"
 "                             slower encode and decode than normal mode)\n"
@@ -253,6 +257,7 @@ int ParseWave64HeaderConfig (FILE *infile, char *infilename, char *fourcc, Wavpa
 int ParseCaffHeaderConfig (FILE *infile, char *infilename, char *fourcc, WavpackContext *wpc, WavpackConfig *config);
 int ParseDsdiffHeaderConfig (FILE *infile, char *infilename, char *fourcc, WavpackContext *wpc, WavpackConfig *config);
 int ParseDsfHeaderConfig (FILE *infile, char *infilename, char *fourcc, WavpackContext *wpc, WavpackConfig *config);
+int ParseAiffHeaderConfig (FILE *infile, char *infilename, char *fourcc, WavpackContext *wpc, WavpackConfig *config);
 
 static struct {
     unsigned char id;
@@ -265,7 +270,8 @@ static struct {
     { WP_FORMAT_W64,  "riff", "w64", ParseWave64HeaderConfig, 8 },
     { WP_FORMAT_CAF,  "caff", "caf", ParseCaffHeaderConfig,   1 },
     { WP_FORMAT_DFF,  "FRM8", "dff", ParseDsdiffHeaderConfig, 2 },
-    { WP_FORMAT_DSF,  "DSD ", "dsf", ParseDsfHeaderConfig,    1 }
+    { WP_FORMAT_DSF,  "DSD ", "dsf", ParseDsfHeaderConfig,    1 },
+    { WP_FORMAT_AIF,  "FORM", "aif", ParseAiffHeaderConfig,   2 }
 };
 
 #define NUM_FILE_FORMATS (sizeof (file_formats) / sizeof (file_formats [0]))
@@ -433,6 +439,8 @@ int main (int argc, char **argv)
                 config.flags |= CONFIG_MERGE_BLOCKS;
             else if (!strcmp (long_option, "pair-unassigned-chans"))    // --pair-unassigned-chans
                 config.flags |= CONFIG_PAIR_UNDEF_CHANS;
+            else if (!strcmp (long_option, "force-even-byte-depth"))    // --force-even-byte_depth
+                config.qmode |= QMODE_EVEN_BYTE_DEPTH;
             else if (!strcmp (long_option, "import-id3"))               // --import-id3
                 import_id3 = 1;
             else if (!strcmp (long_option, "no-utf8-convert"))          // --no-utf8-convert
@@ -1584,7 +1592,9 @@ static int pack_file (char *infilename, char *outfilename, char *out2filename, c
     FILE *infile;
     int result;
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    struct _timeb time1, time2;
+#elif defined(_WIN32)
     struct __timeb64 time1, time2;
 #else
     struct timeval time1, time2;
@@ -1794,7 +1804,9 @@ static int pack_file (char *infilename, char *outfilename, char *out2filename, c
         }
     }
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time1);
+#elif defined(_WIN32)
     _ftime64 (&time1);
 #else
     gettimeofday(&time1,&timez);
@@ -2035,6 +2047,8 @@ static int pack_file (char *infilename, char *outfilename, char *out2filename, c
             error_line ("%s", WavpackGetErrorMessage (wpc));
             result = WAVPACK_HARD_ERROR;
         }
+        else if (wrapper_size && debug_logging_mode)
+            error_line ("%d bytes of trailing data stored in file", wrapper_size);
 
         // if we're supposed to try to import ID3 tags, check for and do that now
         // (but only error on a bad tag, not just a missing one or one with no applicable items)
@@ -2300,7 +2314,11 @@ static int pack_file (char *infilename, char *outfilename, char *out2filename, c
     // compute and display the time consumed along with some other details of
     // the packing operation, and then return WAVPACK_NO_ERROR
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time2);
+    dtime = time2.time + time2.millitm / 1000.0;
+    dtime -= time1.time + time1.millitm / 1000.0;
+#elif defined(_WIN32)
     _ftime64 (&time2);
     dtime = time2.time + time2.millitm / 1000.0;
     dtime -= time1.time + time1.millitm / 1000.0;
@@ -2395,7 +2413,7 @@ static int pack_audio (WavpackContext *wpc, FILE *infile, int qmode, unsigned ch
     int32_t *sample_buffer;
     unsigned char *input_buffer;
     MD5_CTX md5_context;
-    int32_t quantize_bit_mask = 0;
+    int32_t padding_error_bit_mask = 0, quantize_bit_mask = 0;
     double fquantize_scale = 1.0, fquantize_iscale = 1.0;
 
     // don't use an absurd amount of memory just because we have an absurd number of channels
@@ -2420,6 +2438,9 @@ static int pack_audio (WavpackContext *wpc, FILE *infile, int qmode, unsigned ch
             fquantize_iscale = exp2 (float_norm_exp - 126 - quantize_bits);
         }
     }
+
+    if (WavpackGetBitsPerSample (wpc) % 8)
+        padding_error_bit_mask = (1 << (8 - (WavpackGetBitsPerSample (wpc) % 8))) - 1;
 
     while (1) {
         uint32_t bytes_to_read, bytes_read = 0;
@@ -2487,6 +2508,22 @@ static int pack_audio (WavpackContext *wpc, FILE *infile, int qmode, unsigned ch
                     store_samples (input_buffer, sample_buffer, qmode, bps, sample_count * WavpackGetNumChannels (wpc));
                     MD5_Update (&md5_context, input_buffer, WavpackGetBytesPerSample (wpc) * l);
                 }
+            }
+
+            if (padding_error_bit_mask) {
+                unsigned int x,l = sample_count * WavpackGetNumChannels (wpc);
+
+                for (x = 0; x < l; x ++)
+                    if (sample_buffer[x] & padding_error_bit_mask) {
+                        int bits = WavpackGetBitsPerSample (wpc);
+                        error_line ("\"%d-bit\" file has non-zero PCM padding bits!!", bits);
+                        error_line ("use --force-even-byte-depth to encode as %d-bit", (bits + 7) / 8 * 8);
+                        if (bits >= 4)
+                            error_line ("or --pre-quantize=%d to zero those bits before encoding", bits);
+                        free (sample_buffer);
+                        free (input_buffer);
+                        return WAVPACK_SOFT_ERROR;
+                    }
             }
         }
 
@@ -2719,7 +2756,9 @@ static int repack_file (char *infilename, char *outfilename, char *out2filename,
     double dtime;
     int result;
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    struct _timeb time1, time2;
+#elif defined(_WIN32)
     struct __timeb64 time1, time2;
 #else
     struct timeval time1, time2;
@@ -2881,7 +2920,9 @@ static int repack_file (char *infilename, char *outfilename, char *out2filename,
         }
     }
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time1);
+#elif defined(_WIN32)
     _ftime64 (&time1);
 #else
     gettimeofday(&time1,&timez);
@@ -3269,7 +3310,11 @@ static int repack_file (char *infilename, char *outfilename, char *out2filename,
     // compute and display the time consumed along with some other details of
     // the packing operation, and then return WAVPACK_NO_ERROR
 
-#if defined(_WIN32)
+#if defined(__WATCOMC__)
+    _ftime (&time2);
+    dtime = time2.time + time2.millitm / 1000.0;
+    dtime -= time1.time + time1.millitm / 1000.0;
+#elif defined(_WIN32)
     _ftime64 (&time2);
     dtime = time2.time + time2.millitm / 1000.0;
     dtime -= time1.time + time1.millitm / 1000.0;
