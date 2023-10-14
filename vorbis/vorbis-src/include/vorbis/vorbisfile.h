@@ -17,13 +17,13 @@
 #ifndef _OV_FILE_H_
 #define _OV_FILE_H_
 
+#include <stdio.h>
+#include <vorbis/codec.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
-
-#include <stdio.h>
-#include <vorbis/codec.h>
 
 /* The function prototypes for the callbacks are basically the same as for
  * the stdio functions fread, fseek, fclose, ftell.

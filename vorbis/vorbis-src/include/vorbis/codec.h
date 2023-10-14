@@ -17,12 +17,12 @@
 #ifndef _vorbis_codec_h_
 #define _vorbis_codec_h_
 
+#include <ogg/ogg.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
-
-#include <ogg/ogg.h>
 
 typedef struct vorbis_info{
   int version;
