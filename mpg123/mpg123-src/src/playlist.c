@@ -182,7 +182,7 @@ size_t playlist_pos(size_t *total, long *loop)
 	return pl.hit_end ? pl.fill+1 : pl.num;
 }
 
-void playlist_jump(ssize_t incr)
+void playlist_jump(mpg123_ssize_t incr)
 {
 	size_t off = incr < 0 ? -incr : incr;
 
@@ -190,7 +190,7 @@ void playlist_jump(ssize_t incr)
 	/* Straight or shuffled lists can be jumped around in. */
 	if(pl.fill && param.shuffle < 2)
 	{
-		debug3("jump %"SIZE_P" (%ld) + %"SSIZE_P, pl.pos, pl.loop, incr);
+		debug3("jump %"SIZE_P" (%ld) + %"SSIZE_P, (size_p)pl.pos, pl.loop, (ssize_p)incr);
 		if(pl.pos)
 			--pl.pos;
 		/* Now we're at the _current_ position. */
@@ -203,7 +203,7 @@ void playlist_jump(ssize_t incr)
 			else
 				pl.pos += off;
 		}
-		debug2("jumped %"SIZE_P" (%ld)", pl.pos, pl.loop);
+		debug2("jumped %"SIZE_P" (%ld)", (size_p)pl.pos, pl.loop);
 	}
 }
 
@@ -357,7 +357,8 @@ static int add_next_file (int argc, char *argv[], int args_utf8)
 				}
 			}
 			pl.entry = 0;
-			if(pl.file && pl.file->network)
+#ifdef NET123
+			if(pl.file && pl.file->nh)
 			{
 				debug1("htd.content_type.p: %p", (void*) pl.file->htd.content_type.p);
 				if(!APPFLAG(MPG123APP_IGNORE_MIME) && pl.file->htd.content_type.p != NULL)
@@ -402,6 +403,7 @@ static int add_next_file (int argc, char *argv[], int args_utf8)
 					}
 				}
 			}
+#endif
 			if(!pl.file)
 			{
 				param.listname = NULL; // why?
@@ -652,7 +654,7 @@ static int add_to_playlist(char* new_entry, char freeit)
 	{
 		struct listitem* tmp = NULL;
 		/* enlarge the list */
-		tmp = (struct listitem*) safe_realloc(pl.list, (pl.size + pl.alloc_step) * sizeof(struct listitem));
+		tmp = (struct listitem*) INT123_safe_realloc(pl.list, (pl.size + pl.alloc_step) * sizeof(struct listitem));
 		if(!tmp)
 		{
 			error("unable to allocate more memory for playlist");

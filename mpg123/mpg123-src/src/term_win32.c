@@ -29,7 +29,7 @@
 static HANDLE consoleintput = INVALID_HANDLE_VALUE;
 static HANDLE consoleoutput = INVALID_HANDLE_VALUE;
 static HANDLE getconsoleintput(void){
-  DWORD mode, r;
+  DWORD mode;
   if(consoleintput == INVALID_HANDLE_VALUE){
     consoleintput = CreateFileW(L"CONIN$", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
     if(consoleintput == INVALID_HANDLE_VALUE || consoleintput == NULL)
@@ -55,7 +55,6 @@ int term_have_fun(int fd, int want_visuals)
         return 0;
 }
 
-static DWORD lastmode;
 int term_setup(void)
 {
   return 0;
@@ -90,7 +89,7 @@ int term_present(void){
 
 /* Get the next pressed key, if any.
    Returns 1 when there is a key, 0 if not. */
-int term_get_key(int do_delay, char *val){
+int term_get_key(int stopped, int do_delay, char *val){
   INPUT_RECORD record;
   HANDLE input;
   DWORD res;
@@ -99,7 +98,7 @@ int term_get_key(int do_delay, char *val){
   if(input == NULL || input == INVALID_HANDLE_VALUE)
     return 0;
 
-  while(WaitForSingleObject(input, do_delay ? 10 : 0) == WAIT_OBJECT_0){
+  while(WaitForSingleObject(input, stopped ? INFINITE : (do_delay ? 10 : 0)) == WAIT_OBJECT_0){
     do_delay = 0;
     if(!ReadConsoleInput(input, &record, 1, &res))
       return 0;

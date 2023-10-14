@@ -10,6 +10,8 @@
 #include "mpg123app.h"
 #include "mpg123.h"
 #include "out123.h"
+#include "syn123.h"
+#include "version.h"
 #include "local.h"
 
 #ifdef HAVE_SYS_WAIT_H
@@ -50,6 +52,7 @@ static void long_usage(int err);
 static void want_long_usage(char* arg, topt *);
 static void print_title(FILE* o);
 static void give_version(char* arg, topt *);
+static void give_libversion(char* arg, topt *);
 
 struct parameter param = { 
   FALSE , /* aggressiv */
@@ -103,6 +106,7 @@ struct parameter param = {
 	,1024 /* resync_limit */
 	,0 /* smooth */
 	,0.0 /* pitch */
+	,0.5 // pauseloop
 	,0 /* appflags */
 	,NULL /* proxyurl */
 	,0 /* keep_open */
@@ -182,7 +186,7 @@ void set_intflag()
 }
 
 #if !defined(WIN32) && !defined(GENERIC)
-static void catch_interrupt(void)
+static void catch_interrupt(int sig)
 {
 	intflag = TRUE;
 }
@@ -199,11 +203,11 @@ static void handle_fatal_msg(const char *msg)
 		fprintf(stderr, "%s", msg);
 	handle_fatal();
 }
-static void catch_fatal_term(void)
+static void catch_fatal_term(int sig)
 {
 	handle_fatal_msg("\nmpg123: death by SIGTERM\n");
 }
-static void catch_fatal_pipe(void)
+static void catch_fatal_pipe(int sig)
 {
 	/* If the SIGPIPE is because of piped stderr, trying to write
 	   in the signal handler hangs the program. */
@@ -243,7 +247,7 @@ void prev_dir(void)
 
 void safe_exit(int code);
 
-static void play_prebuffer(void)
+void play_prebuffer(void)
 {
 	/* Ensure that the prebuffer bit has been posted. */
 	if(prebuffer_fill)
@@ -483,7 +487,7 @@ static void set_appflag(char *arg, topt *opts)
 #if defined(NETWORK) || defined(NET123)
 static void set_httpauth(char *arg, topt *opts)
 {
-	param.httpauth = strdup(arg);
+	param.httpauth = INT123_compat_strdup(arg);
 	// Do not advertise the password for all system users.
 	memset(arg, 'x', strlen(arg));
 }
@@ -494,7 +498,7 @@ static void set_httpauth_file(char *arg, topt *opts)
 	int good = 0;
 	if(fd >= 0)
 	{
-		ssize_t rdb = read(fd, buf, sizeof(buf));
+		mpg123_ssize_t rdb = read(fd, buf, sizeof(buf));
 		// If the file filled the whole buffer, this is too much.
 		// realistic limits for aith are 255:255.
 		if(rdb > 0 && rdb < sizeof(buf))
@@ -700,6 +704,7 @@ topt opts[] = {
 	{'?', "help",            0,  want_usage, 0,           0 },
 	{0 , "longhelp" ,        0,  want_long_usage, 0,      0 },
 	{0 , "version" ,         0,  give_version, 0,         0 },
+	{0,   "libversion" ,     0,  give_libversion, 0,      0 },
 	{'l', "listentry",       GLO_ARG | GLO_LONG, 0, &param.listentry, 0 },
 	{0, "continue",      GLO_LONG, set_appflag, &appflag, MPG123APP_CONTINUE },
 	{0, "rva-mix",         GLO_INT,  0, &param.rva, 1 },
@@ -717,6 +722,8 @@ topt opts[] = {
 	{'D', "delay", GLO_ARG | GLO_INT, 0, &param.delay, 0},
 	{0, "resync-limit", GLO_ARG | GLO_LONG, 0, &param.resync_limit, 0},
 	{0, "pitch", GLO_ARG|GLO_DOUBLE, 0, &param.pitch, 0},
+	{0, "pauseloop", GLO_ARG|GLO_DOUBLE, 0, &param.pauseloop, 0},
+	{0, "presetloop", GLO_ARG|GLO_DOUBLE, 0, &param.pauseloop, 0},
 #ifdef NETWORK
 	{0, "ignore-mime", GLO_LONG, set_appflag, &appflag, MPG123APP_IGNORE_MIME },
 #endif
@@ -803,7 +810,7 @@ int play_frame(void)
 			memcpy(prebuffer, audio, bytes);
 			prebuffer_fill = bytes;
 			bytes = 0;
-			debug1("prebuffered %"SIZE_P" bytes", prebuffer_fill);
+			debug1("prebuffered %"SIZE_P" bytes", (size_p)prebuffer_fill);
 		}
 		if(param.checkrange)
 		{
@@ -1007,9 +1014,9 @@ int main(int sys_argc, char ** sys_argv)
 	 * so using _wpgmptr with unicode paths after UTF8 conversion is broken on Windows
 	 */
 	
-	fullprogname = compat_strdup(_pgmptr);
+	fullprogname = INT123_compat_strdup(_pgmptr);
 #else
-	fullprogname = compat_strdup(argv[0]);
+	fullprogname = INT123_compat_strdup(argv[0]);
 #endif
 
 	if(!fullprogname)
@@ -1092,6 +1099,10 @@ int main(int sys_argc, char ** sys_argv)
 		case GLO_NOARG:
 			print_outstr(stderr, prgName, 0, stderr_is_term);
 			fprintf(stderr, ": Missing argument for option \"%s\".\n", loptarg);
+			usage(1);
+		case GLO_BADARG:
+			print_outstr(stderr, prgName, 0, stderr_is_term);
+			fprintf(stderr, ": Bad option argument \"%s\".\n", loptarg);
 			usage(1);
 	}
 	/* Do this _after_ parameter parsing. */
@@ -1281,10 +1292,10 @@ int main(int sys_argc, char ** sys_argv)
 	   For one it serves for track skip when not in terminal control mode.
 	   The more important use being a graceful exit, including telling the buffer process what's going on. */
 	if(!param.remote)
-		catchsignal(SIGINT, catch_interrupt);
+		INT123_catchsignal(SIGINT, catch_interrupt);
 	/* Need to catch things to exit cleanly, not messing up the terminal. */
-	catchsignal(SIGTERM, catch_fatal_term);
-	catchsignal(SIGPIPE, catch_fatal_pipe);
+	INT123_catchsignal(SIGTERM, catch_fatal_term);
+	INT123_catchsignal(SIGPIPE, catch_fatal_pipe);
 #endif
 	/* Now either check caps myself or query buffer for that. */
 	if(audio_setup(ao, mh))
@@ -1298,9 +1309,16 @@ int main(int sys_argc, char ** sys_argv)
 		ret = control_generic(mh);
 		safe_exit(ret);
 	}
-	if(param.term_ctrl == MAYBE)
-		param.term_ctrl = term_ctrl_default;
-	term_init();
+	{
+		int term_forced = param.term_ctrl == TRUE;
+		if(param.term_ctrl == MAYBE)
+			param.term_ctrl = term_ctrl_default;
+		if(term_init() && term_forced)
+		{
+			error("Aborting since explicitly requested terminal control is not available.");
+			safe_exit(99);
+		}
+	}
 	if(APPFLAG(MPG123APP_CONTINUE)) frames_left = param.frame_number;
 
 	while ((fname = get_next_file()))
@@ -1316,8 +1334,10 @@ int main(int sys_argc, char ** sys_argv)
 		}
 		if(param.delay > 0)
 		{
+			// How much control do we want here? Jumping around would mean to get out of the
+			// delay phase and just mess everything up. Pause/unpause would be the only
+			// sensible playback controls. Maybe we can enforce that.
 			controlled_drain();
-			/* One should enable terminal control during that sleeping phase! */
 			if(param.verbose > 2) fprintf(stderr, "Note: pausing %i seconds before next track.\n", param.delay);
 #ifdef WIN32
 			Sleep(param.delay*1000);
@@ -1326,6 +1346,7 @@ int main(int sys_argc, char ** sys_argv)
 #endif
 		}
 		if(!APPFLAG(MPG123APP_CONTINUE)) frames_left = param.frame_number;
+		term_new_track();
 
 		debug1("Going to play %s", strcmp(fname, "-") ? fname : "standard input");
 		// If a previous track did not cause error, we forget the success to
@@ -1488,13 +1509,13 @@ int main(int sys_argc, char ** sys_argv)
 
 	if(!param.quiet)
 	{
-		double secs;
+		double secs = 0;
 		long frank;
 		fprintf(stderr, "\n");
 		if(mpg123_getstate(mh, MPG123_FRANKENSTEIN, &frank, NULL) == MPG123_OK && frank)
 		fprintf(stderr, "This was a Frankenstein track.\n");
 
-		mpg123_position(mh, 0, 0, NULL, NULL, &secs, NULL);
+		position_info(mh, 0, ao, NULL, NULL, &secs, NULL, NULL, NULL);
 		fprintf(stderr,"[%d:%02d] Decoding of %s finished.\n", (int)(secs / 60), ((int)secs) % 60, filename);
 	}
 	else if(param.verbose) fprintf(stderr, "\n");
@@ -1599,14 +1620,13 @@ static void long_usage(int err)
 	fprintf(o," -y     --no-resync        DISABLES resync on error (--resync is deprecated)\n");
 	fprintf(o," -F     --no-frankenstein  disable support for Frankenstein streams\n");
 #if defined(NETWORK) || defined(NET123)
-#ifdef NETWORK
-	fprintf(o," -p <f> --proxy <f>        set WWW proxy\n");
-#else
+	fprintf(o," -p <f> --proxy <f>        override proxy environemnt variable for plain HTTP\n");
 	fprintf(o,"        --network <b>      select network backend, available: auto");
 	const char **nb = net123_backends;
 	while(*nb){ fprintf(o, " %s", *nb++); }
 	fprintf(o, "\n");
-#endif
+	fprintf(o,"                           (auto meaning internal code for plain HTTP and the\n");
+	fprintf(o,"                           first external option for HTTPS)\n");
 	fprintf(o," -u     --auth             set auth values for HTTP access\n");
 	fprintf(o,"        --auth-file        set auth values for HTTP access from given file\n");
 	fprintf(o,"        --ignore-mime      ignore HTTP MIME types (content-type)\n");
@@ -1635,6 +1655,7 @@ static void long_usage(int err)
 	fprintf(o,"        --list-devices     list the available output devices for given output module\n");
 	fprintf(o," -a <d> --audiodevice <d>  select audio device (depending on chosen module)\n");
 	fprintf(o," -s     --stdout           write raw audio to stdout (host native format)\n");
+	fprintf(o," -O <f> --outfile <f>      write raw audio to given file (- is stdout)\n");
 	fprintf(o," -w <f> --wav <f>          write samples as WAV file in <f> (- is stdout)\n");
 	fprintf(o,"        --au <f>           write samples as Sun AU file in <f> (- is stdout)\n");
 	fprintf(o,"        --cdr <f>          write samples as raw CD audio file in <f> (- is stdout)\n");
@@ -1703,6 +1724,7 @@ static void long_usage(int err)
 	#ifndef GENERIC
 	fprintf(o,"        --title            set terminal title to filename\n");
 	#endif
+	fprintf(o,"        --presetloop <s>   preset loop interval in (fractional) seconds\n");
 	fprintf(o,"        --name <n>         set instance name (used in various places)\n");
 	fprintf(o,"        --long-tag         spacy id3 display with every item on a separate line\n");
 	fprintf(o,"        --lyrics           show lyrics (from ID3v2 USLT frame)\n");
@@ -1726,6 +1748,7 @@ static void long_usage(int err)
 	fprintf(o," -?     --help             give compact help\n");
 	fprintf(o,"        --longhelp         give this long help listing\n");
 	fprintf(o,"        --version          give name / version string\n");
+	fprintf(o,"        --libversion       give version info on mpg123 libraries\n");
 
 	fprintf(o,"\nSee the manpage "PACKAGE_NAME"(1) for more information.\n");
 	mpg123_free_string(enclist);
@@ -1740,7 +1763,19 @@ static void want_long_usage(char* arg, topt *opts)
 
 static void give_version(char* arg, topt *opts)
 {
-	fprintf(stdout, PACKAGE_NAME" "PACKAGE_VERSION"\n");
+	fprintf(stdout, PACKAGE_NAME " " MPG123_VERSION "\n");
+	safe_exit(0);
+}
+
+static void give_libversion(char* arg, topt *opts)
+{
+	unsigned int pl = 0;
+	unsigned int al = mpg123_libversion(&pl);
+	printf("libmpg123 from mpg123 %s, API version %u, patchlevel %u\n", mpg123_distversion(NULL, NULL, NULL), al, pl);
+	al = out123_libversion(&pl);
+	printf("libout123 from mpg123 %s, API version %u, patchlevel %u\n", out123_distversion(NULL, NULL, NULL), al, pl);
+	al = syn123_libversion(&pl);
+	printf("libsyn123 from mpg123 %s, API version %u, patchlevel %u\n", syn123_distversion(NULL, NULL, NULL), al, pl);
 	safe_exit(0);
 }
 

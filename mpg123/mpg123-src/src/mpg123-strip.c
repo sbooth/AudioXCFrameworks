@@ -1,12 +1,13 @@
 /*
 	extract_frams: utlize the framebyframe API and mpg123_framedata to extract the MPEG frames out of a stream (strip off anything else).
 
-	copyright 2011-2013 by the mpg123 project - free software under the terms of the LGPL 2.1
+	copyright 2011-2023 by the mpg123 project - free software under the terms of the LGPL 2.1
 	see COPYING and AUTHORS files in distribution or http://mpg123.org
 	initially written by Thomas Orgis
 */
 
 #include "config.h"
+#include "version.h"
 #include "compat.h"
 
 #if defined(WIN32) && defined(DYNAMIC_BUILD)
@@ -40,7 +41,7 @@ static void usage(int err)
 		fprintf(o, "You made some mistake in program usage... let me briefly remind you:\n\n");
 	}
 	fprintf(o, "Extract only MPEG frames from a stream using libmpg123 (stdin to stdout)\n");
-	fprintf(o, "\tversion %s; written and copyright by Thomas Orgis and the mpg123 project\n", PACKAGE_VERSION);
+	fprintf(o, "\tversion %s; written and copyright by Thomas Orgis and the mpg123 project\n", MPG123_VERSION);
 	fprintf(o,"\nusage: %s [option(s)] < input > output\n", progname);
 	fprintf(o,"\noptions:\n");
 	fprintf(o," -h     --help              give usage help\n");
@@ -133,8 +134,8 @@ int do_work(mpg123_handle *m)
 {
 	int ret;
 	size_t count = 0;
-	compat_binmode(STDIN_FILENO, TRUE);
-	compat_binmode(STDOUT_FILENO, TRUE);
+	INT123_compat_binmode(STDIN_FILENO, TRUE);
+	INT123_compat_binmode(STDOUT_FILENO, TRUE);
 	ret = mpg123_open_fd(m, STDIN_FILENO);
 	if(ret != MPG123_OK) return ret;
 
@@ -151,10 +152,10 @@ int do_work(mpg123_handle *m)
 			for(i=0; i<4; ++i) hbuf[i] = (unsigned char) ((header >> ((3-i)*8)) & 0xff);
 
 			/* Now write out both header and data, fire and forget. */
-			if( 4 != unintr_write(STDOUT_FILENO, hbuf, 4) ||
-			    bodybytes != unintr_write(STDOUT_FILENO, bodydata, bodybytes) )
+			if( 4 != INT123_unintr_write(STDOUT_FILENO, hbuf, 4) ||
+			    bodybytes != INT123_unintr_write(STDOUT_FILENO, bodydata, bodybytes) )
 			{
-				fprintf(stderr, "Failed to write data: %s\n", strerror(errno));
+				fprintf(stderr, "Failed to write data: %s\n", INT123_strerror(errno));
 				return MPG123_ERR;
 			}
 			if(param.verbose)
