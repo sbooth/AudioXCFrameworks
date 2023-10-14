@@ -1,6 +1,6 @@
 #pragma once
 
-class CAPLHelper  
+class CAPLHelper
 {
 public:
     CAPLHelper();
@@ -9,5 +9,5 @@ public:
     BOOL GenerateLinkFiles(const CString & strImage, const CString & strNamingTemplate);
 
 protected:
-    int64 GetAPESampleRate(const CString & strFilename);
+    APE::int64 GetAPESampleRate(const CString & strFilename);
 };

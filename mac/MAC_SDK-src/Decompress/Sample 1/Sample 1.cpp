@@ -1,6 +1,6 @@
 /***************************************************************************************
 Decompress - Sample 1
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates using MACDLib.lib and the simple IAPESimple class to verify
@@ -8,13 +8,13 @@ or decompress a file. (verify and decompress work the same, except that verify d
 have an output file)  Also, shows how to use a callback to display the progress.
 
 General Notes:
-    -the terminology "Sample" refers to a single sample value, and "Block" refers 
+    -the terminology "Sample" refers to a single sample value, and "Block" refers
     to a collection    of "Channel" samples.  For simplicity, MAC typically uses blocks
     everywhere so that channel mis-alignment cannot happen.
 
 Notes for use in a new project:
     -you need to include "MACLib.lib" in the included libraries list
-    -life will be easier if you set the [MAC SDK]\\Shared directory as an include 
+    -life will be easier if you set the [MAC SDK]\\Shared directory as an include
     directory and an additional library input path in the project settings
     -set the runtime library to "Mutlithreaded"
 
@@ -42,18 +42,18 @@ void CALLBACK ProgressCallback(int nPercentageDone)
     double dElapsedMS = (GetTickCount() - g_nInitialTickCount);
 
     double dSecondsRemaining = (((dElapsedMS * 100) / dProgress) - dElapsedMS) / 1000;
-    printf("Progress: %.1f%% (%.1f seconds remaining)          \r", dProgress, dSecondsRemaining);    
+    printf("Progress: %.1f%% (%.1f seconds remaining)          \r", dProgress, dSecondsRemaining);
 }
 
 /***************************************************************************************
 Main (the main function)
 ***************************************************************************************/
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[])
 {
     ///////////////////////////////////////////////////////////////////////////////
     // error check the command line parameters
     ///////////////////////////////////////////////////////////////////////////////
-    if (argc != 2) 
+    if (argc != 2)
     {
         printf("~~~Improper Usage~~~\n\n");
         printf("Usage Example: Sample 1.exe \"c:\\1.ape\"\n\n");
@@ -80,9 +80,9 @@ int main(int argc, char* argv[])
     nRetVal = VerifyFile(pFilename, &nPercentageDone, ProgressCallback, &nKillFlag);
 
     // process the return value
-    if (nRetVal == 0) 
+    if (nRetVal == 0)
         printf("\nPassed...\n");
-    else 
+    else
         printf("\nFailed (error: %d)\n", nRetVal);
 
     ///////////////////////////////////////////////////////////////////////////////

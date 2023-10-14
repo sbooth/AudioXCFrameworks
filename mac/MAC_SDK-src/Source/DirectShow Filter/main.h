@@ -1,16 +1,6 @@
-//-----------------------------------------------------------------------------
-//
-//    RadLight APE Decoder
-//
-//    Author : Igor Janos
-//  Last Update : 21-nov-2003
-//
-//-----------------------------------------------------------------------------
+#pragma once
 
-#ifndef MAIN_H
-#define MAIN_H
-
-const int WAVE_BUFFER_SIZE = 4096; 
+const int WAVE_BUFFER_SIZE = 4096;
 
 //-----------------------------------------------------------------------------
 //
@@ -46,21 +36,20 @@ public:
 //
 //-----------------------------------------------------------------------------
 
-class CAPEStream :    public CSourceStream,
-                    public CSourceSeeking
+class CAPEStream : public CSourceStream,
+                   public CSourceSeeking
 {
     friend class CAPESource;
 private:
 
-    CAPESource        *m_pSource;
-    APE::IAPEDecompress    *m_pDecoder;
+    CAPESource * m_pSource;
+    APE::IAPEDecompress * m_pDecoder;
 
-    CMediaType        m_mtOut;
-
+    CMediaType m_mtOut;
 
     // seeking stuff
 
-    double            m_dDuration;
+    double          m_dDuration;
     unsigned int    m_iBlockSize;
     unsigned int    m_iBlocksDecoded;
     unsigned int    m_iTotalBlocks;
@@ -70,9 +59,7 @@ private:
     CCritSec        m_csSeeking;
     CCritSec        m_csDecoding;
 
-
 public:
-
     CAPEStream(HRESULT *phr, CAPESource *pParent, LPCWSTR pPinName);
     ~CAPEStream();
 
@@ -96,12 +83,3 @@ public:
 
     HRESULT OnThreadStartPlay();
 };
-
-
-
-
-
-
-
-
-#endif /* MAIN_H */

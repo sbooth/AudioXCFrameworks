@@ -25,6 +25,60 @@
 #pragma warning(disable:4703)
 #pragma warning(disable:4706)
 
+// some more added by Matt Ashland on 7/15/2022 (to build with all warnings enabled)
+#pragma warning(disable:4061)
+#pragma warning(disable:4191)
+#pragma warning(disable:4263)
+#pragma warning(disable:4264)
+#pragma warning(disable:4265)
+#pragma warning(disable:4266)
+#pragma warning(disable:4365)
+#pragma warning(disable:4555)
+#pragma warning(disable:4596)
+#pragma warning(disable:4619)
+#pragma warning(disable:4625)
+#pragma warning(disable:4626)
+#pragma warning(disable:4668)
+#pragma warning(disable:4710)
+#pragma warning(disable:4711)
+#pragma warning(disable:4820)
+#pragma warning(disable:5026)
+#pragma warning(disable:5027)
+#pragma warning(disable:5038)
+#pragma warning(disable:5039)
+#pragma warning(disable:5045)
+#pragma warning(disable:5204)
+#pragma warning(disable:5220)
+#pragma warning(disable:5246)
+
+// some more added by Matt Ashland on 10/5/2022
+#pragma warning(disable:6001)
+#pragma warning(disable:6031)
+#pragma warning(disable:6011)
+#pragma warning(disable:6064)
+#pragma warning(disable:6067)
+#pragma warning(disable:6101)
+#pragma warning(disable:6273)
+#pragma warning(disable:6284)
+#pragma warning(disable:6302)
+#pragma warning(disable:6328)
+#pragma warning(disable:6385)
+#pragma warning(disable:6386)
+#pragma warning(disable:6387)
+#pragma warning(disable:6509)
+#pragma warning(disable:26444)
+#pragma warning(disable:26451)
+#pragma warning(disable:26495)
+#pragma warning(disable:28159)
+#pragma warning(disable:28183)
+#pragma warning(disable:28196)
+#pragma warning(disable:28251)
+#pragma warning(disable:28252)
+#pragma warning(disable:28253)
+
+// again on 11/9/2022 after VS update
+#pragma warning(disable:5264)
+
 #if _MSC_VER>=1100
 #define AM_NOVTABLE __declspec(novtable)
 #else
@@ -55,7 +109,7 @@
    #define NUMELMS(aa) (sizeof(aa)/sizeof((aa)[0]))
 #else
    #define NUMELMS(aa) ARRAYSIZE(aa)
-#endif   
+#endif
 #endif
 
 ///////////////////////////////////////////////////////////////////////////
@@ -124,7 +178,7 @@ typedef struct {
 #ifndef DWLP_MSGRESULT
   #define DWLP_MSGRESULT  0
 #endif
-#ifndef DWLP_DLGPROC 
+#ifndef DWLP_DLGPROC
   #define DWLP_DLGPROC    DWLP_MSGRESULT + sizeof(LRESULT)
 #endif
 #ifndef DWLP_USER
@@ -206,4 +260,3 @@ LONG_PTR _SetWindowLongPtr(HWND hwnd, int nIndex, T p)
     #pragma message("STREAMS.H included TWICE")
     #endif
 #endif // __STREAMS__
-

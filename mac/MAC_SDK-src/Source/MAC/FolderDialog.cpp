@@ -1,5 +1,5 @@
 // FolderDialog.cpp: implementation of the CFolderDialog class.
-//    $Copyright ©  1998 Kenneth M. Reed, ALL RIGHTS RESERVED. $
+//    $Copyright 1998 Kenneth M. Reed, ALL RIGHTS RESERVED. $
 //    $Header: FolderDialog.cpp  Revision:1.11  Tue Jun 23 18:00:44 1998  KenReed $
 
 #include "stdafx.h"
@@ -8,12 +8,12 @@
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-static int CALLBACK BrowseDirectoryCallback(
+int CALLBACK CFolderDialog::BrowseDirectoryCallback(
                 HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
 {
     // Context was pointer to CFolderDialog instance
-    CFolderDialog* pFd = (CFolderDialog*)lpData;
-    
+    CFolderDialog* pFd = reinterpret_cast<CFolderDialog *>(lpData);
+
     // Let the class handle it
     pFd->CallbackFunction(hWnd, uMsg, lParam);
 
@@ -29,10 +29,10 @@ CFolderDialog::CFolderDialog(LPCTSTR lpszFolderName, DWORD dwFlags, CWnd* pParen
     else
         m_strInitialFolderName = lpszFolderName;
 
-    memset(&m_bi, '\0', sizeof(BROWSEINFO));
+    APE_CLEAR(m_bi);
 
     if (pParentWnd == NULL)
-        m_bi.hwndOwner = 0;
+        m_bi.hwndOwner = APE_NULL;
     else
         m_bi.hwndOwner = pParentWnd->GetSafeHwnd();
 
@@ -42,13 +42,11 @@ CFolderDialog::CFolderDialog(LPCTSTR lpszFolderName, DWORD dwFlags, CWnd* pParen
     m_bi.lpszTitle = _T("Choose Folder");
     m_bi.ulFlags = dwFlags;
     m_bi.lpfn = BrowseDirectoryCallback;
-    m_bi.lParam = (LPARAM)this;
-
+    m_bi.lParam = reinterpret_cast<LPARAM>(this);
 }
 
 CFolderDialog::~CFolderDialog()
 {
-
 }
 
 void CFolderDialog::CallbackFunction(HWND hWnd, UINT uMsg,    LPARAM lParam)
@@ -63,10 +61,10 @@ void CFolderDialog::CallbackFunction(HWND hWnd, UINT uMsg,    LPARAM lParam)
     case BFFM_INITIALIZED:
         {
             OnInitDialog();
-        }        
+        }
         break;
     case BFFM_SELCHANGED:
-        OnSelChanged((ITEMIDLIST*) lParam);
+        OnSelChanged(reinterpret_cast<ITEMIDLIST *>(lParam));
         break;
     }
 }
@@ -78,10 +76,8 @@ int CFolderDialog::DoModal()
     // initialize the result to the starting folder value
     m_strFinalFolderName = m_strInitialFolderName;
 
-    ITEMIDLIST * piid = NULL;
-
     // call the shell function
-    piid = (ITEMIDLIST *) ::SHBrowseForFolder(&m_bi);
+    ITEMIDLIST * piid = reinterpret_cast<ITEMIDLIST *>(::SHBrowseForFolder(&m_bi));
 
     // process the result
     if (piid && ::SHGetPathFromIDList(piid, m_szPath))
@@ -121,17 +117,17 @@ void CFolderDialog::EnableOK(BOOL bEnable)
 
 void CFolderDialog::SetSelection(LPCTSTR pszSelection)
 {
-    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, TRUE, (LPARAM) pszSelection);
+    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, TRUE, reinterpret_cast<LPARAM>(pszSelection));
 }
 
 void CFolderDialog::SetSelection(ITEMIDLIST* pIdl)
 {
-    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, FALSE, (LPARAM) pIdl);
+    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, FALSE, reinterpret_cast<LPARAM>(pIdl));
 }
 
 void CFolderDialog::SetStatusText(LPCTSTR pszStatusText)
 {
-    ::SendMessage(m_hDialogBox, BFFM_SETSTATUSTEXT, 0, (LPARAM) pszStatusText);
+    ::SendMessage(m_hDialogBox, BFFM_SETSTATUSTEXT, 0, reinterpret_cast<LPARAM>(pszStatusText));
 }
 
 CString CFolderDialog::ShortName(const CString& strName)
@@ -147,7 +143,7 @@ CString CFolderDialog::ShortName(const CString& strName)
 
 void CFolderDialog::OnInitDialog()
 {
-    // Default handing of the init dialog message sets the selection to 
+    // Default handing of the init dialog message sets the selection to
     //    the initial folder
     SetSelection(m_strInitialFolderName);
     SetStatusText(ShortName(m_strInitialFolderName));

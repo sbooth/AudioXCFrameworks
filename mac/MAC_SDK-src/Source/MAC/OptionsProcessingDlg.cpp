@@ -37,19 +37,19 @@ void COptionsProcessingDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(COptionsProcessingDlg, CDialog)
     ON_WM_SIZE()
-    ON_BN_CLICKED(IDOK, OnOK)
-    ON_BN_CLICKED(IDCANCEL, OnCancel)
+    ON_BN_CLICKED(IDOK, &COptionsProcessingDlg::OnOK)
+    ON_BN_CLICKED(IDCANCEL, &COptionsProcessingDlg::OnCancel)
     ON_WM_DESTROY()
-    ON_REGISTERED_MESSAGE(UM_SAVE_PAGE_OPTIONS, OnSaveOptions)
+    ON_REGISTERED_MESSAGE(UM_SAVE_PAGE_OPTIONS, &COptionsProcessingDlg::OnSaveOptions)
 END_MESSAGE_MAP()
 
-BOOL COptionsProcessingDlg::OnInitDialog() 
+BOOL COptionsProcessingDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
-    
+
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, (WPARAM) m_pMACDlg->GetFont().GetSafeHandle(), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
 
     // images
     HICON hIcon = theApp.GetImageList(CMACApp::Image_OptionsPages)->ExtractIcon(TBB_OPTIONS_PROCESSING_GENERAL);
@@ -100,10 +100,10 @@ BOOL COptionsProcessingDlg::OnInitDialog()
                   // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void COptionsProcessingDlg::OnDestroy() 
+void COptionsProcessingDlg::OnDestroy()
 {
     CDialog::OnDestroy();
-    
+
     for (int z = 0; z < m_aryIcons.GetSize(); z++)
         DestroyIcon(m_aryIcons[z]);
     m_aryIcons.RemoveAll();
@@ -138,7 +138,7 @@ void COptionsProcessingDlg::OnOK()
 
 void COptionsProcessingDlg::OnCancel()
 {
-    
+
 }
 
 void COptionsProcessingDlg::Layout()

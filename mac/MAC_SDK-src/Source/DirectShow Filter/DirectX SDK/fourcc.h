@@ -98,4 +98,3 @@ FOURCCMap::GetFOURCC(void)
 }
 
 #endif /* __FOURCC__ */
-

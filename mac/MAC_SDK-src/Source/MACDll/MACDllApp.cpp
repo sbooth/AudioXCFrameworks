@@ -13,19 +13,10 @@ CMACDllApp::CMACDllApp()
 
 CMACDllApp::~CMACDllApp()
 {
-    m_spWinampSettingsDlg.Delete();
 }
 
 BOOL CMACDllApp::InitInstance()
 {
     CWinApp::InitInstance();
     return TRUE;
-}
-
-CWinampSettingsDlg * CMACDllApp::GetWinampSettingsDlg()
-{
-    if (m_spWinampSettingsDlg == NULL)
-        m_spWinampSettingsDlg.Assign(new CWinampSettingsDlg);
-
-    return m_spWinampSettingsDlg;
 }

@@ -343,5 +343,3 @@ PerflogTraceEventLevel(
 
     _TraceEvent (PerflogTraceHandle, Event);
 }
-
-

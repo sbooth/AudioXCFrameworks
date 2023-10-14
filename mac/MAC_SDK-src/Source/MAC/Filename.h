@@ -3,7 +3,7 @@
 /**************************************************************************************************
 CFilename - a filename wrapper to provide easy path splitting and other tools
 **************************************************************************************************/
-class CFilename  
+class CFilename
 {
 public:
     /**************************************************************************************************
@@ -38,7 +38,7 @@ public:
     void SetFilename(LPCTSTR lpszFilename)
     {
         m_strFilename = lpszFilename;
-        
+
         TCHAR cDrive[_MAX_DRIVE], cDir[_MAX_DIR], cName[_MAX_FNAME], cExt[_MAX_EXT];
         cDrive[0] = 0; cDir[0] = 0; cName[0] = 0; cExt[0] = 0;
         _tsplitpath_s(m_strFilename, cDrive, _MAX_DRIVE, cDir, _MAX_DIR, cName, _MAX_FNAME, cExt, _MAX_EXT);
@@ -59,7 +59,7 @@ public:
     inline const CString & GetExtension() { return m_strExtension; }
     inline CString GetPath() { return m_strDrive + m_strDirectory; }
     inline CString GetNameAndExtension() { return m_strName + m_strExtension; }
-    
+
     /**************************************************************************************************
     Advanced queries
     **************************************************************************************************/

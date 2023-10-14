@@ -1,9 +1,9 @@
 /***************************************************************************************
 Decompress - Sample 2
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
-This example illustrates using MACLib.lib to do decoding and seeking of an APE file.  
+This example illustrates using MACLib.lib to do decoding and seeking of an APE file.
 The library manages all seeking and buffering, so you simply seek
 to a location and ask for the amount of data required.  (Seek() and GetData())
 
@@ -14,13 +14,13 @@ were encountered.  In these cases, the decoder will do the best job it can to ke
 returning valid data. (corrupt data will be converted to silence)
 
 General Notes:
-    -the terminology "Sample" refers to a single sample value, and "Block" refers 
+    -the terminology "Sample" refers to a single sample value, and "Block" refers
     to a collection    of "Channel" samples.  For simplicity, MAC typically uses blocks
     everywhere so that channel mis-alignment cannot happen.
 
 Notes for use in a new project:
     -you need to include "MACLib.lib" in the included libraries list
-    -life will be easier if you set the [MAC SDK]\\Shared directory as an include 
+    -life will be easier if you set the [MAC SDK]\\Shared directory as an include
     directory and an additional library input path in the project settings
     -set the runtime library to "Mutlithreaded"
 
@@ -40,12 +40,12 @@ using namespace APE;
 /***************************************************************************************
 Main (the main function)
 ***************************************************************************************/
-int wmain(int argc, TCHAR* argv[]) 
+int wmain(int argc, TCHAR* argv[])
 {
     ///////////////////////////////////////////////////////////////////////////////
     // error check the command line parameters
     ///////////////////////////////////////////////////////////////////////////////
-    if (argc != 2) 
+    if (argc != 2)
     {
         printf("~~~Improper Usage~~~\r\n\r\n");
         printf("Usage Example: Sample 2.exe \"c:\\1.ape\"\r\n\r\n");
@@ -59,7 +59,7 @@ int wmain(int argc, TCHAR* argv[])
     int nKillFlag = 0;            // the kill flag for controlling the decoder
     int nRetVal = 0;            // generic holder for return values
     TCHAR * pFilename = argv[1];    // the file to open
-    
+
     ///////////////////////////////////////////////////////////////////////////////
     // open the APE file
     ///////////////////////////////////////////////////////////////////////////////
@@ -79,7 +79,7 @@ int wmain(int argc, TCHAR* argv[])
     ///////////////////////////////////////////////////////////////////////////////
     // ask for data at a a few random locations and display the sum of 1024 blocks
     ///////////////////////////////////////////////////////////////////////////////
-    for (int z = 0; z < 16; z++) 
+    for (int z = 0; z < 16; z++)
     {
         // figure a random location in the file and seek to it
         int nRandomBlock = rand() % (pAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS) - 1024);
@@ -92,11 +92,11 @@ int wmain(int argc, TCHAR* argv[])
         {
             printf("Decoding error (%d)\r\n", nRetVal);
         }
-        
+
         // figure the sum of the decoded data
-        int64 nBytesRetrieved = nBlocksRetrieved * pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_BLOCK_ALIGN);        
+        int64 nBytesRetrieved = nBlocksRetrieved * pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_BLOCK_ALIGN);
         int nSum = 0;
-        for (int x = 0; x < nBytesRetrieved; x++) 
+        for (int x = 0; x < nBytesRetrieved; x++)
         {
             nSum += pRawData[x];
         }

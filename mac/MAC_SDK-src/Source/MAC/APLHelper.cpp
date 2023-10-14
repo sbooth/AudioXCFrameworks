@@ -3,10 +3,12 @@
 #include "APLHelper.h"
 
 #include <mmsystem.h>
-#include "all.h"
+#include "All.h"
 #include "APETag.h"
 #include "CharacterHelper.h"
 #include "IO.h"
+
+using namespace APE;
 
 CAPLHelper::CAPLHelper()
 {
@@ -24,14 +26,18 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
 
     // get the CUE data
     HANDLE hCUE = CreateFile(strImage, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
-    int nCUEBytes = GetFileSize(hCUE, NULL);
-    
-    CSmartPtr<char> spCUE(new char [nCUEBytes + 1], TRUE);
-    memset(spCUE, 0, nCUEBytes + 1);
+    DWORD dwCUEBytes = GetFileSize(hCUE, NULL);
+
+    CSmartPtr<char> spCUE(new char [static_cast<size_t>(dwCUEBytes) + 1], TRUE);
+    memset(spCUE, 0, static_cast<size_t>(dwCUEBytes) + 1);
 
     unsigned long nBytesRead = 0;
-    ReadFile(hCUE, spCUE.GetPtr(), nCUEBytes, &nBytesRead, NULL);
+    BOOL bReadResult = ReadFile(hCUE, spCUE.GetPtr(), dwCUEBytes, &nBytesRead, NULL);
     CloseHandle(hCUE);
+    if (bReadResult == FALSE)
+    {
+        return FALSE;
+    }
 
     CString strCUE = spCUE.GetPtr();
 
@@ -73,7 +79,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
 
     // convert to a relative path
     strImageFile = strImageFile.Right(strImageFile.GetLength() - strImageFile.ReverseFind('\\') - 1);
-    
+
     // go through each track in the CUE file and build an APL file from it
     int nTrack = 1;
     TCHAR cSearch[256];
@@ -89,14 +95,14 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
             strTitle = strCUE.Right(strCUE.GetLength() - nStart2 - 7);
             strTitle = strTitle.SpanExcluding(_T("\""));
         }
-        
+
         nStart2 = strCUE.Find(_T("PERFORMER \""), nStart);
         if (nStart2 >= 0)
         {
             strArtist = strCUE.Right(strCUE.GetLength() - nStart2 - 11);
             strArtist = strArtist.SpanExcluding(_T("\""));
         }
-                
+
         nStart2 = strCUE.Find(_T("INDEX 01 "), nStart);
         CString strStartTime;
         if (nStart2 >= 0)
@@ -112,7 +118,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
             strFinishTime = strCUE.Right(strCUE.GetLength() - nStart2 - 9);
             strFinishTime = strFinishTime.SpanExcluding(_T("\""));
         }
-        
+
         // figure the times out
         int nMinutes = _ttoi(strStartTime.SpanExcluding(_T(":")));
         strStartTime = strStartTime.Right(strStartTime.GetLength() - 3);
@@ -120,11 +126,11 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
         strStartTime = strStartTime.Right(strStartTime.GetLength() - 3);
         int nDecimal = _ttoi(strStartTime);
 
-        double dStartSecond = double(nMinutes * 60) + double(nSeconds) + (double(nDecimal) / double(75));
-        double dStartBlock = double(nSampleRate) * dStartSecond;
+        double dStartSecond = (static_cast<double>(nMinutes) * static_cast<double>(60)) + static_cast<double>(nSeconds) + (static_cast<double>(nDecimal) / static_cast<double>(75));
+        double dStartBlock = static_cast<double>(nSampleRate) * dStartSecond;
 
-        CString strStartBlock; strStartBlock.Format(_T("%d"), int(dStartBlock + 0.5));
-        
+        CString strStartBlock; strStartBlock.Format(_T("%d"), static_cast<int>(dStartBlock + 0.5));
+
         CString strFinishBlock;
         if (strFinishTime.IsEmpty())
         {
@@ -137,12 +143,12 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
             nSeconds = _ttoi(strFinishTime.SpanExcluding(_T(":")));
             strFinishTime = strFinishTime.Right(strFinishTime.GetLength() - 3);
             nDecimal = _ttoi(strFinishTime);
-            
-            double dFinishSecond = double(nMinutes * 60) + double(nSeconds) + (double(nDecimal) / double(75));
-            double dFinishBlock = double(nSampleRate) * dFinishSecond;
-            
-            strFinishBlock.Format(_T("%d"), int(dFinishBlock + 0.5));
-        }        
+
+            double dFinishSecond = (static_cast<double>(nMinutes) * static_cast<double>(60)) + static_cast<double>(nSeconds) + (static_cast<double>(nDecimal) / static_cast<double>(75));
+            double dFinishBlock = static_cast<double>(nSampleRate) * dFinishSecond;
+
+            strFinishBlock.Format(_T("%d"), static_cast<int>(dFinishBlock + 0.5));
+        }
 
         CString strTrack; strTrack.Format(_T("%d"), nTrack);
         if (strTrack.GetLength() == 1) strTrack = _T("0") + strTrack;
@@ -153,7 +159,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
         strAPL.Replace(_T("TRACK#"), strTrack);
         strAPL.Replace(_T("TITLE"), strTitle);
         strAPL.Replace(_T("ALBUM"), strAlbum);
-        
+
         if (strAPL.GetLength() >= 4)
         {
             if (strAPL.Right(4) == _T(".apl"))
@@ -173,37 +179,35 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
 
         // add the directory
         strAPL = strDirectory + strAPL + _T(".apl");
-                    
+
         DeleteFileEx(strAPL);
 
         CSmartPtr<CIO> spFileIO(CreateCIO());
         if (spFileIO->Create(strAPL) == 0)
         {
-            spFileIO->SetSeekMethod(APE_FILE_END);
-            spFileIO->SetSeekPosition(0);
-            spFileIO->PerformSeek();
-            
+            spFileIO->Seek(0, SeekFileEnd);
+
             CString strHeader;
             strHeader.Format(_T("[Monkey's Audio Image Link File]\r\n")
                 _T("Image File=%s\r\n")
                 _T("Start Block=%s\r\n")
                 _T("Finish Block=%s\r\n"),
-                (LPCTSTR) strImageFile, (LPCTSTR) strStartBlock, (LPCTSTR) strFinishBlock);
-                        
+                strImageFile.GetString(), strStartBlock.GetString(), strFinishBlock.GetString());
+
             CSmartPtr<char> spHeader(CAPECharacterHelper::GetANSIFromUTF16(strHeader), TRUE);
             unsigned int nBytesWritten = 0;
-            spFileIO->Write((void *) spHeader.GetPtr(), (unsigned int) strlen(spHeader), &nBytesWritten);
-                        
+            spFileIO->Write(spHeader.GetPtr(), static_cast<unsigned int>(strlen(spHeader)), &nBytesWritten);
+
             const char * pcTagHeader = "\r\n----- APE TAG (DO NOT TOUCH!!!) -----\r\n";
             nBytesWritten = 0;
-            spFileIO->Write((void *) pcTagHeader, (unsigned int) strlen(pcTagHeader), &nBytesWritten);
-            
+            spFileIO->Write(pcTagHeader, static_cast<unsigned int>(strlen(pcTagHeader)), &nBytesWritten);
+
             CAPETag APETag(spFileIO, TRUE);
             APETag.SetFieldString(APE_TAG_FIELD_ARTIST, strArtist);
             APETag.SetFieldString(APE_TAG_FIELD_ALBUM, strAlbum);
             APETag.SetFieldString(APE_TAG_FIELD_TITLE, strTitle);
             APETag.SetFieldString(APE_TAG_FIELD_TRACK, strTrack);
-            
+
             APETag.Save();
         }
 
@@ -213,7 +217,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
         nStart = strCUE.Find(cSearch, 0);
     }
 
-    return TRUE;    
+    return TRUE;
 }
 
 int64 CAPLHelper::GetAPESampleRate(const CString & strFilename)
@@ -224,7 +228,7 @@ int64 CAPLHelper::GetAPESampleRate(const CString & strFilename)
     try
     {
         int nFunctionRetVal = ERROR_SUCCESS;
-        
+
         spAPEDecompress.Assign(CreateIAPEDecompress(strFilename, &nFunctionRetVal, true, false, false));
         if (spAPEDecompress == NULL || nFunctionRetVal != ERROR_SUCCESS) throw(nFunctionRetVal);
 

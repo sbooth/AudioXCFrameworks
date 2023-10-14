@@ -1,18 +1,18 @@
 /***************************************************************************************
 Decompress - Sample 3
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates dynamic linkage to MACDll.dll to decompress a whole file
 and display a simple checksum. (see Sample 1 and Sample 2 for more info)
 
 General Notes:
-    -the terminology "Sample" refers to a single sample value, and "Block" refers 
+    -the terminology "Sample" refers to a single sample value, and "Block" refers
     to a collection    of "Channel" samples.  For simplicity, MAC typically uses blocks
     everywhere so that channel mis-alignment cannot happen.
 
 Notes for use in a new project:
-    -life will be easier if you set the [MAC SDK]\\Shared directory as an include 
+    -life will be easier if you set the [MAC SDK]\\Shared directory as an include
     directory and an additional library input path in the project settings
     -set the runtime library to "Mutlithreaded"
 
@@ -52,7 +52,7 @@ int GetFunctions(HMODULE hMACDll, MAC_DLL * pMACDll)
 
     // load the functions
     if (hMACDll != NULL)
-    {    
+    {
         pMACDll->Create = (proc_APEDecompress_Create) GetProcAddress(hMACDll, "c_APEDecompress_Create");
         pMACDll->Destroy = (proc_APEDecompress_Destroy) GetProcAddress(hMACDll, "c_APEDecompress_Destroy");
         pMACDll->GetData = (proc_APEDecompress_GetData) GetProcAddress(hMACDll, "c_APEDecompress_GetData");
@@ -91,12 +91,12 @@ int VersionCheckInterface(HMODULE hMACDll)
 /***************************************************************************************
 Main (the main function)
 ***************************************************************************************/
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[])
 {
     ///////////////////////////////////////////////////////////////////////////////
     // error check the command line parameters
     ///////////////////////////////////////////////////////////////////////////////
-    if (argc != 2) 
+    if (argc != 2)
     {
         printf("~~~Improper Usage~~~\r\n\r\n");
         printf("Usage Example: Sample 3.exe \"c:\\1.ape\"\r\n\r\n");
@@ -119,9 +119,9 @@ int main(int argc, char* argv[])
 #else
     HMODULE hMACDll = LoadLibrary(_T("C:\\Windows\\SysWOW64\\MACDll.dll"));
 #endif
-    if (hMACDll == NULL) 
+    if (hMACDll == NULL)
         return -1;
-    
+
     // always check the interface version (so we don't crash if something changed)
     if (VersionCheckInterface(hMACDll) != 0)
     {
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
     }
 
     // get the functions
-    MAC_DLL MACDll; 
+    MAC_DLL MACDll;
     if (GetFunctions(hMACDll, &MACDll) != 0)
     {
         FreeLibrary(hMACDll);
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
     ///////////////////////////////////////////////////////////////////////////////
     // create the APEDecompress object for the file
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     APE_DECOMPRESS_HANDLE hAPEDecompress = MACDll.Create(pFilename, &nRetVal);
     if (hAPEDecompress == NULL)
     {
@@ -152,11 +152,11 @@ int main(int argc, char* argv[])
     ///////////////////////////////////////////////////////////////////////////////
     // calculate a byte-level checksum of the whole file
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     // make a buffer to hold 1024 blocks of audio data
     APE::int64 nBlockAlign = MACDll.GetInfo(hAPEDecompress, APE::IAPEDecompress::APE_INFO_BLOCK_ALIGN, 0, 0);
     unsigned char * pBuffer = new unsigned char [size_t(1024 * nBlockAlign)];
-    
+
     // loop through the whole file
     APE::int64 nTotalBlocks = MACDll.GetInfo(hAPEDecompress, APE::IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS, 0, 0);
     APE::int64 nBlocksRetrieved = 1;
@@ -178,7 +178,7 @@ int main(int argc, char* argv[])
         nTotalBlocksRetrieved += nBlocksRetrieved;
 
         // output the progress
-        printf("Progress: %.1f%%          \r", (float(nTotalBlocksRetrieved) * float(100)) / float(max(nTotalBlocks, 1.0)));    
+        printf("Progress: %.1f%%          \r", (float(nTotalBlocksRetrieved) * float(100)) / float(max(nTotalBlocks, 1.0)));
     }
 
     delete [] pBuffer;

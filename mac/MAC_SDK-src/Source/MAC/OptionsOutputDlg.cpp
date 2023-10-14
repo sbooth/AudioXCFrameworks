@@ -29,27 +29,26 @@ void COptionsOutputDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_MIRROR_TIME_STAMP_CHECK, m_bMirrorTimeStamp);
 }
 
-
 BEGIN_MESSAGE_MAP(COptionsOutputDlg, CDialog)
     ON_WM_SIZE()
     ON_WM_DESTROY()
-    ON_BN_CLICKED(IDC_APL_FILENAME_TEMPLATE_HELP, OnAplFilenameTemplateHelp)
-    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_DIRECTORY_BROWSE, OnOutputLocationDirectoryBrowse)
-    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_SPECIFIED_DIRECTORY, OnOutputLocationSpecifiedDirectory)
-    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_SAME_DIRECTORY, OnOutputLocationSameDirectory)
-    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_RECREATE_DIRECTORY_STRUCTURE_CHECK, OnOutputLocationRecreateDirectoryStructureCheck)
-    ON_BN_CLICKED(IDOK, OnOK)
-    ON_BN_CLICKED(IDCANCEL, OnCancel)
-    ON_REGISTERED_MESSAGE(UM_SAVE_PAGE_OPTIONS, OnSaveOptions)
+    ON_BN_CLICKED(IDC_APL_FILENAME_TEMPLATE_HELP, &COptionsOutputDlg::OnAplFilenameTemplateHelp)
+    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_DIRECTORY_BROWSE, &COptionsOutputDlg::OnOutputLocationDirectoryBrowse)
+    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_SPECIFIED_DIRECTORY, &COptionsOutputDlg::OnOutputLocationSpecifiedDirectory)
+    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_SAME_DIRECTORY, &COptionsOutputDlg::OnOutputLocationSameDirectory)
+    ON_BN_CLICKED(IDC_OUTPUT_LOCATION_RECREATE_DIRECTORY_STRUCTURE_CHECK, &COptionsOutputDlg::OnOutputLocationRecreateDirectoryStructureCheck)
+    ON_BN_CLICKED(IDOK, &COptionsOutputDlg::OnOK)
+    ON_BN_CLICKED(IDCANCEL, &COptionsOutputDlg::OnCancel)
+    ON_REGISTERED_MESSAGE(UM_SAVE_PAGE_OPTIONS, &COptionsOutputDlg::OnSaveOptions)
 END_MESSAGE_MAP()
 
-BOOL COptionsOutputDlg::OnInitDialog() 
+BOOL COptionsOutputDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
-    
+
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, (WPARAM) m_pMACDlg->GetFont().GetSafeHandle(), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
 
     // images
     HICON hIcon = theApp.GetImageList(CMACApp::Image_OptionsPages)->ExtractIcon(TBB_OPTIONS_OUTPUT_LOCATION);
@@ -65,7 +64,7 @@ BOOL COptionsOutputDlg::OnInitDialog()
     m_aryIcons.Add(hIcon);
 
     // output location settings
-    ((CButton *) GetDlgItem(IDC_OUTPUT_LOCATION_SAME_DIRECTORY + theApp.GetSettings()->m_nOutputLocationMode))->SetCheck(TRUE);
+    (static_cast<CButton *>(GetDlgItem(IDC_OUTPUT_LOCATION_SAME_DIRECTORY + theApp.GetSettings()->m_nOutputLocationMode)))->SetCheck(TRUE);
     m_ctrlOutputLocationDirectoryCombo.SetWindowText(theApp.GetSettings()->m_strOutputLocationDirectory);
     if (theApp.GetSettings()->m_bOutputLocationRecreateDirectoryStructure == false)
         m_ctrlOutputLocationDirectoryRecreate.SetCurSel(0);
@@ -98,7 +97,7 @@ BOOL COptionsOutputDlg::OnInitDialog()
 void COptionsOutputDlg::UpdateDialogState()
 {
     int nOutputLocation = GetCheckedRadioButton(IDC_OUTPUT_LOCATION_SAME_DIRECTORY, IDC_OUTPUT_LOCATION_SPECIFIED_DIRECTORY) - IDC_OUTPUT_LOCATION_SAME_DIRECTORY;
-    
+
     m_ctrlOutputLocationDirectoryRecreate.EnableWindow((nOutputLocation == 1));
     m_ctrlOutputLocationDirectoryCombo.EnableWindow((nOutputLocation == 1));
     m_ctrlOutputLocationDirectoryBrowse.EnableWindow((nOutputLocation == 1));
@@ -110,10 +109,10 @@ void COptionsOutputDlg::OnSize(UINT nType, int cx, int cy)
     CDialog::OnSize(nType, cx, cy);
 }
 
-void COptionsOutputDlg::OnDestroy() 
+void COptionsOutputDlg::OnDestroy()
 {
     CDialog::OnDestroy();
-    
+
     for (int z = 0; z < m_aryIcons.GetSize(); z++)
         DestroyIcon(m_aryIcons[z]);
     m_aryIcons.RemoveAll();
@@ -147,48 +146,48 @@ LRESULT COptionsOutputDlg::OnSaveOptions(WPARAM, LPARAM)
     return TRUE;
 }
 
-void COptionsOutputDlg::OnAplFilenameTemplateHelp() 
+void COptionsOutputDlg::OnAplFilenameTemplateHelp()
 {
     CString strMessage;
-    
+
     strMessage = _T("You can create filenames using any combination of letters and keywords.\r\n\r\n")
         _T("These keywords will be replaced by the corresponding values for each track:\r\n")
         _T("     ARTIST\r\n")
         _T("     ALBUM\r\n")
         _T("     TITLE\r\n")
         _T("     TRACK#\r\n")
-        _T("\r\nExample:\r\n") 
+        _T("\r\nExample:\r\n")
         _T("     Naming template: \"ARTIST - ALBUM - TRACK# - TITLE\"\r\n")
         _T("     Resulting filename: \"Bush - Sixteen Stone - 09 - Monkey.apl\"");
-    
+
     ::MessageBox(GetSafeHwnd(), strMessage, _T("Filename Help"), MB_OK | MB_ICONINFORMATION);
 }
 
-void COptionsOutputDlg::OnOutputLocationDirectoryBrowse() 
+void COptionsOutputDlg::OnOutputLocationDirectoryBrowse()
 {
     CString strPath;
     m_ctrlOutputLocationDirectoryCombo.GetWindowText(strPath);
 
-    CFolderDialog FolderDialog(strPath);
-    if (FolderDialog.DoModal() == IDOK)
+    APE::CSmartPtr<CFolderDialog> spFolderDialog(new CFolderDialog(strPath));
+    if (spFolderDialog->DoModal() == IDOK)
     {
-        m_ctrlOutputLocationDirectoryCombo.SetWindowText(FolderDialog.GetPathName());
-    }    
+        m_ctrlOutputLocationDirectoryCombo.SetWindowText(spFolderDialog->GetPathName());
+    }
 }
 
-void COptionsOutputDlg::OnOutputLocationSpecifiedDirectory() 
+void COptionsOutputDlg::OnOutputLocationSpecifiedDirectory()
 {
     UpdateDialogState();
 }
 
-void COptionsOutputDlg::OnOutputLocationSameDirectory() 
+void COptionsOutputDlg::OnOutputLocationSameDirectory()
 {
     UpdateDialogState();
 }
 
-void COptionsOutputDlg::OnOutputLocationRecreateDirectoryStructureCheck() 
+void COptionsOutputDlg::OnOutputLocationRecreateDirectoryStructureCheck()
 {
-    UpdateDialogState();    
+    UpdateDialogState();
 }
 
 void COptionsOutputDlg::OnOK()
@@ -198,7 +197,7 @@ void COptionsOutputDlg::OnOK()
 
 void COptionsOutputDlg::OnCancel()
 {
-    
+
 }
 
 void COptionsOutputDlg::Layout()

@@ -1,3 +1,4 @@
+// NOLINTBEGIN
 // HyperLink.cpp : implementation file
 //
 // HyperLink static control. Will open the default browser with the given URL
@@ -18,6 +19,12 @@
 // 2/29/00 -- P. Shaffer standard font mod.
 
 #include "stdafx.h"
+#pragma warning(push)
+#pragma warning(disable: 6011)
+#pragma warning(disable: 6031)
+#pragma warning(disable: 6255)
+#pragma warning(disable: 28159)
+#pragma warning(disable: 6387)
 #include "HyperLink.h"
 
 #include "atlconv.h"    // for Unicode conversion - requires #include <afxdisp.h> // MFC OLE automation classes
@@ -56,26 +63,26 @@ CHyperLink::~CHyperLink()
 /////////////////////////////////////////////////////////////////////////////
 // CHyperLink overrides
 
-BOOL CHyperLink::DestroyWindow() 
+BOOL CHyperLink::DestroyWindow()
 {
     KillTimer(m_nTimerID);
-    
+
     return CStatic::DestroyWindow();
 }
 
-BOOL CHyperLink::PreTranslateMessage(MSG* pMsg) 
+BOOL CHyperLink::PreTranslateMessage(MSG* pMsg)
 {
     m_ToolTip.RelayEvent(pMsg);
     return CStatic::PreTranslateMessage(pMsg);
 }
 
 
-void CHyperLink::PreSubclassWindow() 
+void CHyperLink::PreSubclassWindow()
 {
     // We want to get mouse clicks via STN_CLICKED
     DWORD dwStyle = GetStyle();
-    ::SetWindowLong(GetSafeHwnd(), GWL_STYLE, dwStyle | SS_NOTIFY);
-    
+    ::SetWindowLong(GetSafeHwnd(), GWL_STYLE, static_cast<LONG>(dwStyle | SS_NOTIFY));
+
     // Set the URL as the window text
     if (m_strURL.IsEmpty())
         GetWindowText(m_strURL);
@@ -83,7 +90,7 @@ void CHyperLink::PreSubclassWindow()
     // Check that the window text isn't empty. If it is, set it as the URL.
     CString strWndText;
     GetWindowText(strWndText);
-    if (strWndText.IsEmpty()) 
+    if (strWndText.IsEmpty())
     {
         ASSERT(!m_strURL.IsEmpty());    // Window and URL both NULL. DUH!
         SetWindowText(m_strURL);
@@ -92,9 +99,9 @@ void CHyperLink::PreSubclassWindow()
     CFont* pFont = m_pFont ? m_pFont : GetFont();
     if (!pFont)
     {
-        HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
+        HFONT hFont = static_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
         if (hFont == NULL)
-            hFont = (HFONT) GetStockObject(ANSI_VAR_FONT);
+            hFont = static_cast<HFONT>(GetStockObject(ANSI_VAR_FONT));
         if (hFont)
             pFont = CFont::FromHandle(hFont);
     }
@@ -104,7 +111,7 @@ void CHyperLink::PreSubclassWindow()
     LOGFONT lf;
     pFont->GetLogFont(&lf);
     m_StdFont.CreateFontIndirect(&lf);
-    lf.lfUnderline = (BYTE) TRUE;
+    lf.lfUnderline = static_cast<BYTE>(TRUE);
     m_UnderlineFont.CreateFontIndirect(&lf);
 
     PositionWindow();        // Adjust size of window to fit URL if necessary
@@ -112,7 +119,7 @@ void CHyperLink::PreSubclassWindow()
     SetUnderline();
 
     // Create the tooltip
-    CRect rect; 
+    CRect rect;
     GetClientRect(rect);
     m_ToolTip.Create(this);
     m_ToolTip.AddTool(this, m_strURL, rect, TOOLTIP_ID);
@@ -125,7 +132,7 @@ BEGIN_MESSAGE_MAP(CHyperLink, CStatic)
     ON_WM_SETCURSOR()
     ON_WM_MOUSEMOVE()
     ON_WM_TIMER()
-    ON_CONTROL_REFLECT(STN_CLICKED, OnClicked)
+    ON_CONTROL_REFLECT(STN_CLICKED, &CHyperLink::OnClicked)
     ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
@@ -138,11 +145,11 @@ void CHyperLink::OnClicked()
     {
         MessageBeep(MB_ICONEXCLAMATION);     // Unable to follow link
     }
-    else 
+    else
         SetVisited();                        // Repaint to show visited colour
 }
 
-HBRUSH CHyperLink::CtlColor(CDC * pDC, UINT nCtlColor) 
+HBRUSH CHyperLink::CtlColor(CDC * pDC, UINT nCtlColor)
 {
     (void) nCtlColor;
     ASSERT(nCtlColor == CTLCOLOR_STATIC);
@@ -156,10 +163,10 @@ HBRUSH CHyperLink::CtlColor(CDC * pDC, UINT nCtlColor)
 
     // transparent text.
     pDC->SetBkMode(TRANSPARENT);
-    return (HBRUSH)GetStockObject(NULL_BRUSH);
+    return static_cast<HBRUSH>(GetStockObject(NULL_BRUSH));
 }
 
-void CHyperLink::OnMouseMove(UINT nFlags, CPoint point) 
+void CHyperLink::OnMouseMove(UINT nFlags, CPoint point)
 {
     if (!m_bOverControl)        // Cursor has just moved over control
     {
@@ -174,7 +181,7 @@ void CHyperLink::OnMouseMove(UINT nFlags, CPoint point)
     CStatic::OnMouseMove(nFlags, point);
 }
 
-void CHyperLink::OnTimer(UINT_PTR nIDEvent) 
+void CHyperLink::OnTimer(UINT_PTR nIDEvent)
 {
     CPoint p(GetMessagePos());
     ScreenToClient(&p);
@@ -191,11 +198,11 @@ void CHyperLink::OnTimer(UINT_PTR nIDEvent)
         rect.bottom+=10;
         InvalidateRect(rect);
     }
-    
+
     CStatic::OnTimer(nIDEvent);
 }
 
-BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/) 
+BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/)
 {
     if (m_hLinkCursor)
     {
@@ -205,7 +212,7 @@ BOOL CHyperLink::OnSetCursor(CWnd* /*pWnd*/, UINT /*nHitTest*/, UINT /*message*/
     return FALSE;
 }
 
-BOOL CHyperLink::OnEraseBkgnd(CDC* pDC) 
+BOOL CHyperLink::OnEraseBkgnd(CDC* pDC)
 {
     CRect rect;
     GetClientRect(rect);
@@ -228,33 +235,33 @@ void CHyperLink::SetURL(CString strURL)
 }
 
 CString CHyperLink::GetURL() const
-{ 
-    return m_strURL;   
+{
+    return m_strURL;
 }
 
 void CHyperLink::SetColours(COLORREF crLinkColour, COLORREF crVisitedColour,
-                            COLORREF crHoverColour /* = -1 */) 
-{ 
-    m_crLinkColour    = crLinkColour; 
+                            COLORREF crHoverColour /* = -1 */)
+{
+    m_crLinkColour    = crLinkColour;
     m_crVisitedColour = crVisitedColour;
 
-    if (crHoverColour == -1)
+    if (crHoverColour == static_cast<COLORREF>(-1))
         m_crHoverColour = ::GetSysColor(COLOR_HIGHLIGHT);
     else
         m_crHoverColour = crHoverColour;
 
     if (::IsWindow(m_hWnd))
-        Invalidate(); 
+        Invalidate();
 }
 
 COLORREF CHyperLink::GetLinkColour() const
-{ 
-    return m_crLinkColour; 
+{
+    return m_crLinkColour;
 }
 
 COLORREF CHyperLink::GetVisitedColour() const
 {
-    return m_crVisitedColour; 
+    return m_crVisitedColour;
 }
 
 COLORREF CHyperLink::GetHoverColour() const
@@ -262,21 +269,21 @@ COLORREF CHyperLink::GetHoverColour() const
     return m_crHoverColour;
 }
 
-void CHyperLink::SetVisited(BOOL bVisited /* = TRUE */) 
-{ 
-    m_bVisited = bVisited; 
+void CHyperLink::SetVisited(BOOL bVisited /* = TRUE */)
+{
+    m_bVisited = bVisited;
 
     if (::IsWindow(GetSafeHwnd()))
-        Invalidate(); 
+        Invalidate();
 }
 
 BOOL CHyperLink::GetVisited() const
-{ 
-    return m_bVisited; 
+{
+    return m_bVisited;
 }
 
 void CHyperLink::SetLinkCursor(HCURSOR hCursor)
-{ 
+{
     m_hLinkCursor = hCursor;
     if (m_hLinkCursor == NULL)
         SetDefaultCursor();
@@ -299,15 +306,15 @@ void CHyperLink::SetUnderline(int nUnderline /*=ulHover*/)
         else
             SetFont(&m_StdFont);
 
-        Invalidate(); 
+        Invalidate();
     }
 
     m_nUnderline = nUnderline;
 }
 
 int CHyperLink::GetUnderline() const
-{ 
-    return m_nUnderline; 
+{
+    return m_nUnderline;
 }
 
 void CHyperLink::SetAutoSize(BOOL bAutoSize /* = TRUE */)
@@ -319,8 +326,8 @@ void CHyperLink::SetAutoSize(BOOL bAutoSize /* = TRUE */)
 }
 
 BOOL CHyperLink::GetAutoSize() const
-{ 
-    return m_bAdjustToFit; 
+{
+    return m_bAdjustToFit;
 }
 
 
@@ -330,11 +337,11 @@ BOOL CHyperLink::GetAutoSize() const
 // then the window is merely shrunk, but if it is centred or right
 // justified then the window will have to be moved as well.
 //
-// Suggested by Pål K. Tønder 
+// Suggested by Pål K. Tønder
 
 void CHyperLink::PositionWindow()
 {
-    if (!::IsWindow(GetSafeHwnd()) || !m_bAdjustToFit) 
+    if (!::IsWindow(GetSafeHwnd()) || !m_bAdjustToFit)
         return;
 
     // Get the current window position
@@ -362,8 +369,8 @@ void CHyperLink::PositionWindow()
     ReleaseDC(pDC);
 
     // Adjust for window borders
-    Extent.cx += WndRect.Width() - ClientRect.Width(); 
-    Extent.cy += WndRect.Height() - ClientRect.Height(); 
+    Extent.cx += WndRect.Width() - ClientRect.Width();
+    Extent.cy += WndRect.Height() - ClientRect.Height();
 
     // Get the text justification via the window style
     DWORD dwStyle = GetStyle();
@@ -374,11 +381,11 @@ void CHyperLink::PositionWindow()
     else
         WndRect.bottom = WndRect.top + Extent.cy;
 
-    if (dwStyle & SS_CENTER)   
+    if (dwStyle & SS_CENTER)
         WndRect.DeflateRect((WndRect.Width() - Extent.cx)/2, 0);
-    else if (dwStyle & SS_RIGHT) 
+    else if (dwStyle & SS_RIGHT)
         WndRect.left  = WndRect.right - Extent.cx;
-    else // SS_LEFT = 0, so we can't test for it explicitly 
+    else // SS_LEFT = 0, so we can't test for it explicitly
         WndRect.right = WndRect.left + Extent.cx;
 
     // Move the window
@@ -406,8 +413,8 @@ void CHyperLink::SetDefaultCursor()
             HCURSOR hHandCursor = ::LoadCursor(hModule, MAKEINTRESOURCE(106));
             if (hHandCursor)
                 m_hLinkCursor = CopyCursor(hHandCursor);
+            FreeLibrary(hModule);
         }
-        FreeLibrary(hModule);
     }
 }
 
@@ -427,7 +434,7 @@ LONG CHyperLink::GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
     return retval;
 }
 
-void CHyperLink::ReportError(intn nError)
+void CHyperLink::ReportError(APE::intn nError)
 {
     CString str;
     switch (nError) {
@@ -444,7 +451,7 @@ void CHyperLink::ReportError(intn nError)
         case SE_ERR_NOASSOC:          str = "There is no application associated\nwith the given filename extension."; break;
         case SE_ERR_OOM:              str = "There was not enough memory to complete the operation."; break;
         case SE_ERR_SHARE:            str = "A sharing violation occurred. ";
-        default:                      str.Format(_T("Unknown Error (%d) occurred."), nError); break;
+        default:                      str.Format(_T("Unknown Error (%d) occurred."), static_cast<int>(nError)); break;
     }
     str = "Unable to open hyperlink:\n\n" + str;
     AfxMessageBox(str, MB_ICONEXCLAMATION | MB_OK);
@@ -456,10 +463,10 @@ bool CHyperLink::GotoURL(LPCTSTR url, int showcmd)
     TCHAR key[MAX_PATH + MAX_PATH];
 
     // First try ShellExecute()
-    HINSTANCE result = (HINSTANCE) ShellExecute(NULL, _T("open"), url, NULL, NULL, showcmd);
-    
+    HINSTANCE result = static_cast<HINSTANCE>(ShellExecute(NULL, _T("open"), url, NULL, NULL, showcmd));
+
     // If it failed, get the .htm regkey and lookup the program
-    if (int64(result) <= HINSTANCE_ERROR) {
+    if (POINTER_TO_INT64(result) <= HINSTANCE_ERROR) {
 
         if (GetRegKey(HKEY_CLASSES_ROOT, _T(".htm"), key) == ERROR_SUCCESS) {
             lstrcat(key, _T("\\shell\\open\\command"));
@@ -468,7 +475,7 @@ bool CHyperLink::GotoURL(LPCTSTR url, int showcmd)
                 TCHAR *pos;
                 pos = _tcsstr(key, _T("\"%1\""));
                 if (pos == NULL) {                     // No quotes found
-                    pos = _tcsstr(key, _T("%1"));      // Check for %1, without quotes 
+                    pos = _tcsstr(key, _T("%1"));      // Check for %1, without quotes
                     if (pos == NULL)                   // No parameter at all...
                         pos = key+lstrlen(key)-1;
                     else
@@ -493,4 +500,5 @@ bool CHyperLink::GotoURL(LPCTSTR url, int showcmd)
 
     return bResult;
 }
-
+#pragma warning(pop)
+// NOLINTEND

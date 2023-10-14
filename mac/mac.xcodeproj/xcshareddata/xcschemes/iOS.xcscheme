@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,7 +17,7 @@
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
                BuildableName = "MAC.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:MAC.xcodeproj">
+               ReferencedContainer = "container:mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

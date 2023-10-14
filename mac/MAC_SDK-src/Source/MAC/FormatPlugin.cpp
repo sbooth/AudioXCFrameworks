@@ -7,16 +7,15 @@
 #include "FormatPluginInfoDlg.h"
 #include "MACDlg.h"
 
-CFormatPlugin::CFormatPlugin(CMACDlg * pMACDlg, int nIndex, const CString & strAPXFilename)
+using namespace APE;
+
+CFormatPlugin::CFormatPlugin(CMACDlg * pMACDlg, int nIndex)
 {
     // initialize
     m_pMACDlg = pMACDlg;
     m_nIndex = nIndex;
     m_bIsValid = FALSE;
-    
-    // load 
-    if (strAPXFilename.IsEmpty() == FALSE)
-        Load(strAPXFilename);
+    m_bHasConfiguration = FALSE;
 }
 
 CFormatPlugin::~CFormatPlugin()
@@ -60,7 +59,7 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
             if (XML.FindChildElem(_T("Configure")))
             {
                 m_bHasConfiguration = TRUE;
-                
+
                 XML.IntoElem();
 
                 for (int z = 0; z < 3; z++)
@@ -71,9 +70,9 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
                     {
                         XML.IntoElem();
                         m_strConfigureDescription[z] = XML.GetChildData(_T("Description"));
-                        
+
                         CString strSetting;
-                        strSetting.Format(_T("Format Plugin - %s - Configure %d"), (LPCTSTR) GetName(), z + 1);
+                        strSetting.Format(_T("Format Plugin - %s - Configure %d"), GetName().GetString(), z + 1);
                         m_strConfigureValue[z] = theApp.GetSettings()->LoadSetting(strSetting, XML.GetChildData(_T("DefaultValue")));
 
                         XML.OutOfElem();
@@ -84,7 +83,7 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
             }
 
             bRetVal = TRUE;
-        }        
+        }
     }
 
     // check
@@ -103,14 +102,14 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
             }
         }
     }
-    
+
     if (bRetVal)
         m_bIsValid = TRUE;
 
     return bRetVal;
 }
 
-void CFormatPlugin::ParseModeInfo(CMarkup & XML, MAC_MODES Mode, const CString & strKeyword)
+void CFormatPlugin::ParseModeInfo(CMarkup & XML, APE_MODES Mode, const CString & strKeyword)
 {
     m_aryModeInfo[Mode].RemoveAll();
 
@@ -139,7 +138,8 @@ BOOL CFormatPlugin::BuildMenu(CMenu * pMenu, int nBaseID)
             BOOL bChecked = (theApp.GetSettings()->GetFormat() == m_strName) &&
                 (theApp.GetSettings()->GetLevel() == z);
 
-            pMenu->AppendMenu(MF_STRING | (bChecked ? MF_CHECKED : MF_UNCHECKED), nBaseID + 10 + z, m_aryModeInfo[MODE_COMPRESS][z].m_strName);
+            UINT_PTR nNewID = static_cast<UINT_PTR>(nBaseID) + static_cast<UINT_PTR>(z)  + static_cast<UINT_PTR>(10);
+            pMenu->AppendMenu(MF_STRING | (bChecked ? MF_CHECKED : MF_UNCHECKED), nNewID, m_aryModeInfo[MODE_COMPRESS][z].m_strName);
         }
 
         pMenu->AppendMenu(MF_SEPARATOR);
@@ -147,7 +147,7 @@ BOOL CFormatPlugin::BuildMenu(CMenu * pMenu, int nBaseID)
         if (m_bHasConfiguration)
             pMenu->AppendMenu(MF_STRING, nBaseID + 0, _T("Configure..."));
 
-        pMenu->AppendMenu(MF_STRING, nBaseID + 1, _T("Info..."));
+        pMenu->AppendMenu(MF_STRING, UINT_PTR(nBaseID) + 1, _T("Info..."));
     }
 
     return ((pMenu->GetSafeHmenu() != NULL) && m_bIsValid) ? TRUE : FALSE;
@@ -162,18 +162,18 @@ BOOL CFormatPlugin::ProcessMenuCommand(int nCommand)
 
         if (dlgConfigure.DoModal() == IDOK)
         {
-            CString strSetting; 
-            
+            CString strSetting;
+
             m_strConfigureValue[0] = dlgConfigure.m_strConfigureEdit1;
-            strSetting.Format(_T("Format Plugin - %s - Configure 1"), (LPCTSTR) GetName());
+            strSetting.Format(_T("Format Plugin - %s - Configure 1"), GetName().GetString());
             theApp.GetSettings()->SaveSetting(strSetting, m_strConfigureValue[0]);
 
             m_strConfigureValue[1] = dlgConfigure.m_strConfigureEdit2;
-            strSetting.Format(_T("Format Plugin - %s - Configure 2"), (LPCTSTR) GetName());
+            strSetting.Format(_T("Format Plugin - %s - Configure 2"), GetName().GetString());
             theApp.GetSettings()->SaveSetting(strSetting, m_strConfigureValue[1]);
 
             m_strConfigureValue[2] = dlgConfigure.m_strConfigureEdit3;
-            strSetting.Format(_T("Format Plugin - %s - Configure 3"), (LPCTSTR) GetName());
+            strSetting.Format(_T("Format Plugin - %s - Configure 3"), GetName().GetString());
             theApp.GetSettings()->SaveSetting(strSetting, m_strConfigureValue[2]);
         }
     }
@@ -187,11 +187,11 @@ BOOL CFormatPlugin::ProcessMenuCommand(int nCommand)
         int nMode = nCommand - 10;
         theApp.GetSettings()->SetCompression(GetName(), nMode);
     }
-    
+
     return TRUE;
 }
 
-CString CFormatPlugin::GetOutputExtension(MAC_MODES Mode, const CString & strInputFilename, int nLevel)
+CString CFormatPlugin::GetOutputExtension(APE_MODES Mode, const CString & strInputFilename, int nLevel)
 {
     CString strExtension;
 
@@ -201,13 +201,37 @@ CString CFormatPlugin::GetOutputExtension(MAC_MODES Mode, const CString & strInp
         strExtension = pLevelInfo->m_strOutputExtension;
     }
 
+    // custom code for WavPack
+    if ((m_strName == _T("WavPack")) && (pLevelInfo != NULL) && ((Mode == MODE_DECOMPRESS) || (Mode == MODE_CONVERT)))
+    {
+        CString strPath = GetProgramPath() + _T("External\\");
+        CString strApplication = strPath + pLevelInfo->m_strApplication;
+
+        CString strExtensionCheck = _T("-ssq \"") + strInputFilename + _T("\"");
+        int nExitCode = 0;
+        CString strOutput;
+        BOOL bSuccess = ExecuteProgramBlocking(strApplication, strExtensionCheck, &nExitCode, false, &strOutput);
+
+        if (bSuccess)
+        {
+            int nExtensionEnd = strOutput.Find(_T("' extension"));
+            strOutput = strOutput.Left(nExtensionEnd);
+            int nExtensionStart = strOutput.ReverseFind('\'');
+            if ((strOutput.IsEmpty() == false) && (nExtensionStart >= 0))
+            {
+                strExtension = strOutput.Mid(nExtensionStart + 1, 1000);
+                strExtension = _T(".") + strExtension;
+            }
+        }
+    }
+
     return strExtension;
 }
 
 int CFormatPlugin::Process(MAC_FILE * pInfo)
 {
     int nRetVal = ERROR_UNDEFINED;
-    
+
     CFormatPluginLevelInfo * pLevelInfo = GetLevelInfo(pInfo->Mode, pInfo->strInputFilename, pInfo->nLevel);
     if (pLevelInfo != NULL)
     {
@@ -228,7 +252,7 @@ int CFormatPlugin::Process(MAC_FILE * pInfo)
         if (pInfo->Mode == MODE_CHECK)
             bShow = false;
         BOOL bSuccess = ExecuteProgramBlocking(strApplication, strCommandLine, &nExitCode, bShow);
-        
+
         if (pLevelInfo->m_strSuccessReturn.IsEmpty() == FALSE)
         {
             if (bSuccess && (nExitCode == _ttoi(pLevelInfo->m_strSuccessReturn)))
@@ -248,12 +272,12 @@ int CFormatPlugin::Process(MAC_FILE * pInfo)
     return nRetVal;
 }
 
-CString CFormatPlugin::GetInputExtensions(MAC_MODES Mode)
+CString CFormatPlugin::GetInputExtensions(APE_MODES Mode)
 {
     CStringArrayEx aryExtensions;
     for (int z = 0; z < m_aryModeInfo[Mode].GetSize(); z++)
         aryExtensions.Append(m_aryModeInfo[Mode][z].m_aryInputExtensions);
-        
+
     if (Mode == MODE_CONVERT)
     {
         for (int z = 0; z < m_aryModeInfo[MODE_DECOMPRESS].GetSize(); z++)
@@ -264,7 +288,7 @@ CString CFormatPlugin::GetInputExtensions(MAC_MODES Mode)
     return aryExtensions.GetList(_T(";"));
 }
 
-CFormatPluginLevelInfo * CFormatPlugin::GetLevelInfo(MAC_MODES Mode, const CString & strInputFilename, int nLevel)
+CFormatPluginLevelInfo * CFormatPlugin::GetLevelInfo(APE_MODES Mode, const CString & strInputFilename, int nLevel)
 {
     // start with NULL
     CFormatPluginLevelInfo * pLevelInfo = NULL;

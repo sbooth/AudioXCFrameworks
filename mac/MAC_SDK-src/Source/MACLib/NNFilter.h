@@ -1,51 +1,79 @@
 #pragma once
 
 #include "All.h"
+#include "RollBuffer.h"
+
+#define NN_WINDOW_ELEMENTS 512
 
 namespace APE
 {
 
-#include "RollBuffer.h"
-#define NN_WINDOW_ELEMENTS    4096
 class IPredictorDecompress;
 
-template <class INTTYPE> class CNNFilter
+#pragma pack(push, 1)
+
+/**************************************************************************************************
+CNNFilter
+**************************************************************************************************/
+template <class INTTYPE, class DATATYPE> class CNNFilter
 {
 public:
-    CNNFilter(int nOrder, int nShift, int nVersion);
-    ~CNNFilter();
+    CNNFilter(int nOrder, int nShift, int nVersion = -1);
+    virtual ~CNNFilter();
 
-    INTTYPE Compress(INTTYPE nInput);
-    INTTYPE Decompress(INTTYPE nInput);
+    INTTYPE Compress(INTTYPE nInput) { return (this->*CompressImpl)(nInput); }
+    INTTYPE Decompress(INTTYPE nInput) { return (this->*DecompressImpl)(nInput); }
     void Flush();
 
-    void SetLegacyDecode(bool bLegacyDecode) { m_bLegacyDecode = bLegacyDecode; }
+    void SetInterimMode(bool bInterimMode) { m_bInterimMode = bInterimMode; }
 
 private:
-    int m_nOrder;
-    int m_nShift;
-    int m_nOneShiftedByShift;
-    int m_nVersion;
-    INTTYPE m_nRunningAverage;
-    APE::CRollBuffer<short> m_rbInput16;
-    APE::CRollBuffer<short> m_rbDeltaM16;
-    APE::CRollBuffer<int> m_rbInput32;
-    APE::CRollBuffer<int> m_rbDeltaM32;
-    short * m_paryM16;
-    int * m_paryM32;
-    bool m_bLegacyDecode;
-    bool m_bSSEAvailable;
-    bool m_bAVX2Available;
-    bool useSSE2() const { return m_bSSEAvailable; }
-    bool useAVX2() const { return m_bAVX2Available; }
+    INTTYPE (CNNFilter<INTTYPE, DATATYPE>::*CompressImpl)(INTTYPE nInput);
+    INTTYPE (CNNFilter<INTTYPE, DATATYPE>::*DecompressImpl)(INTTYPE nInput);
 
-    __forceinline short GetSaturatedShortFromInt(INTTYPE nValue) const
-    {
-        short sValue = short(nValue);
-        if (sValue != nValue)
-            sValue = (nValue >> (8 * sizeof(INTTYPE) - 1)) ^ 0x7FFF;
-        return sValue;
-    }
+    INTTYPE CompressGeneric(INTTYPE nInput);
+    INTTYPE DecompressGeneric(INTTYPE nInput);
+
+#if defined(__i386__) || defined(__x86_64__) || defined(_M_IX86) || defined(_M_X64)
+    INTTYPE CompressSSE2(INTTYPE nInput);
+    INTTYPE DecompressSSE2(INTTYPE nInput);
+
+    INTTYPE CompressSSE41(INTTYPE nInput);
+    INTTYPE DecompressSSE41(INTTYPE nInput);
+
+    INTTYPE CompressAVX2(INTTYPE nInput);
+    INTTYPE DecompressAVX2(INTTYPE nInput);
+
+    INTTYPE CompressAVX512(INTTYPE nInput);
+    INTTYPE DecompressAVX512(INTTYPE nInput);
+#endif
+
+#if defined(__arm__) || defined(__aarch64__) || defined(_M_ARM) || defined(_M_ARM64) || defined(_M_ARM64EC)
+    INTTYPE CompressNeon(INTTYPE nInput);
+    INTTYPE DecompressNeon(INTTYPE nInput);
+#endif
+
+    const int m_nOrder;
+    const int m_nShift;
+    const int m_nOneShiftedByShift;
+    const int m_nVersion;
+    DATATYPE * m_paryM;
+    APE::CRollBuffer<DATATYPE, NN_WINDOW_ELEMENTS> m_rbInput;
+    APE::CRollBuffer<DATATYPE, NN_WINDOW_ELEMENTS> m_rbDeltaM;
+    bool m_bInterimMode;
+    INTTYPE m_nRunningAverage;
+
+private:
+    // silence warning about implicitly deleted assignment operator
+    CNNFilter<INTTYPE, DATATYPE> & operator=(const CNNFilter<INTTYPE, DATATYPE> & Copy) { }
 };
+
+// forward declare the CNNFilter classes because it helps with a Clang warning
+#ifdef _MSC_VER
+extern template class CNNFilter<int, short>;
+extern template class CNNFilter<int64, int>;
+#endif
+
+#pragma pack(pop)
 
 }

@@ -19,7 +19,7 @@ BOOL MAC_FILE_ARRAY::PrepareForProcessing(CMACProcessFiles * pProcessFiles)
         ElementAt(z).PrepareForProcessing(pProcessFiles);
     }
 
-    m_dwStartProcessingTickCount = GetTickCount();
+    m_dwStartProcessingTickCount = GetTickCount64();
 
     return TRUE;
 }
@@ -52,7 +52,7 @@ BOOL MAC_FILE_ARRAY::GetProcessingInfo(BOOL bStopped, int & rnRunning, BOOL & rb
 {
     rnRunning = 0;
     rbAllDone = TRUE;
-    
+
     for (int z = 0; z < GetSize(); z++)
     {
         MAC_FILE * pInfo = &ElementAt(z);
@@ -68,15 +68,12 @@ BOOL MAC_FILE_ARRAY::GetProcessingInfo(BOOL bStopped, int & rnRunning, BOOL & rb
                 rbAllDone = FALSE;
         }
     }
-    
+
     return TRUE;
 }
 
 BOOL MAC_FILE_ARRAY::GetProcessingProgress(double & rdProgress, double & rdSecondsLeft, int nPausedTotalMS)
 {
-    int nRunning = 0;
-    int nDone = 0;
-
     double dTotal = 0;
     double dDone = 0;
 
@@ -89,24 +86,21 @@ BOOL MAC_FILE_ARRAY::GetProcessingProgress(double & rdProgress, double & rdSecon
         {
             if (pInfo->bStarted)
             {
-                nRunning++;
-                
                 double dProgress = pInfo->GetProgress();
                 dDone += pInfo->dInputFileBytes * dProgress;
             }
         }
         else
         {
-            nDone++;
             dDone += pInfo->dInputFileBytes;
         }
     }
 
-    double dElapsed = double(GetTickCount() - m_dwStartProcessingTickCount) - double(nPausedTotalMS);
-    
+    double dElapsed = static_cast<double>(GetTickCount64() - m_dwStartProcessingTickCount) - static_cast<double>(nPausedTotalMS);
+
     rdProgress = dDone / dTotal;
     rdSecondsLeft = ((dElapsed / rdProgress) - dElapsed) / 1000;
-    
+
     return TRUE;
 }
 

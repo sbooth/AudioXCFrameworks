@@ -4,6 +4,9 @@
 #include "APETag.h"
 #include "WAVInputSource.h"
 #include "MACDlg.h"
+#include "APEInfo.h"
+
+using namespace APE;
 
 IMPLEMENT_DYNAMIC(CAPEInfoFormatDlg, CDialog)
 CAPEInfoFormatDlg::CAPEInfoFormatDlg(CMACDlg * pMACDlg, CWnd * pParent)
@@ -26,7 +29,7 @@ BOOL CAPEInfoFormatDlg::OnInitDialog()
 {
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, (WPARAM) m_pMACDlg->GetFont().GetSafeHandle(), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
 
     // parent
     return CDialog::OnInitDialog();
@@ -46,7 +49,7 @@ void CAPEInfoFormatDlg::Layout()
 BOOL CAPEInfoFormatDlg::SetFiles(CStringArray & aryFiles)
 {
     m_aryFiles.Copy(aryFiles);
-    
+
     CString strSummary;
 
     if (m_aryFiles.GetSize() <= 100)
@@ -74,44 +77,68 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
 
     CSmartPtr<IAPEDecompress> spAPEDecompress; int nFunctionRetVal = ERROR_UNDEFINED;
     spAPEDecompress.Assign(CreateIAPEDecompress(strFilename, &nFunctionRetVal, true, true, false));
-    if ((spAPEDecompress != NULL) && (nFunctionRetVal == ERROR_SUCCESS))
+    if ((spAPEDecompress != APE_NULL) && (nFunctionRetVal == ERROR_SUCCESS))
     {
         CString strLine;
 
+        str_utfn cCompressionName[256]; APE_CLEAR(cCompressionName);
+        GetAPECompressionLevelName(static_cast<int>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL)), cCompressionName, 256, false);
+
         strLine.Format(_T("Monkey's Audio %.2f (%s)"),
-            double(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)) / double(1000),
-            (LPCTSTR) theApp.GetSettings()->GetAPECompressionName(int(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL))));
+            static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)) / static_cast<double>(1000),
+            static_cast<LPCTSTR>(cCompressionName));
         strSummary += strLine + _T("\r\n");
-        
+
+        // format
         strLine.Format(_T("Format: %.1f khz, %d bit, %d ch"),
-            double(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_SAMPLE_RATE)) / double(1000),
-            spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_BITS_PER_SAMPLE),
-            spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_CHANNELS));
-        if (spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FORMAT_FLAGS) & MAC_FORMAT_FLAG_AIFF)
+            static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_SAMPLE_RATE)) / static_cast<double>(1000),
+            static_cast<int>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_BITS_PER_SAMPLE)),
+            static_cast<int>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_CHANNELS)));
+        if (spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FORMAT_FLAGS) & APE_FORMAT_FLAG_AIFF)
             strLine += _T(", AIFF");
         strSummary += strLine + _T("\r\n");
 
-        strLine.Format(_T("Length: %s (%d blocks)"),
-            (LPCTSTR) FormatDuration(double(spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_LENGTH_MS)) / 1000.0, FALSE),
-            spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS));
+        // length
+        strLine.Format(_T("Length: %s (%I64d blocks)"),
+            FormatDuration(static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_LENGTH_MS)) / 1000.0, FALSE).GetString(),
+            static_cast<int64>(spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS)));
         strSummary += strLine + _T("\r\n");
 
-        CAPETag * pTag = (CAPETag *) spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_TAG);
-        if (pTag)
+        // the file size
+        strLine.Format(_T("APE: %.2f MB"), static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_APE_TOTAL_BYTES)) / static_cast<double>(1048576));
+        strSummary += strLine + _T("\r\n");
+
+        strLine.Format(_T("WAV: %.2f MB"), static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_WAV_TOTAL_BYTES)) / static_cast<double>(1048576));
+        strSummary += strLine + _T("\r\n");
+
+        // the compression ratio
+        strLine.Format(_T("Compression: %.2f%%"), static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_AVERAGE_BITRATE) * 100) / static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_DECOMPRESSED_BITRATE)));
+        strSummary += strLine + _T("\r\n");
+
+        IAPETag * pTag = GET_TAG(spAPEDecompress);
+        if (pTag != APE_NULL)
         {
             CString strTag = _T("None");
             if (pTag->GetHasAPETag())
-                strTag.Format(_T("APE Tag v%.2f"), double(pTag->GetAPETagVersion()) / double(1000));
+            {
+                strTag.Format(_T("APE Tag v%.2f"), static_cast<double>(pTag->GetAPETagVersion()) / static_cast<double>(1000));
+                if (pTag->GetHasID3Tag())
+                    strTag += _T(", ID3v1.1");
+            }
             else if (pTag->GetHasID3Tag())
+            {
                 strTag = _T("ID3v1.1");
+            }
             strLine.Format(_T("Tag: %s (%d bytes)"),
-                (LPCTSTR) strTag, pTag->GetTagBytes());
+                strTag.GetString(), pTag->GetTagBytes());
             strSummary += strLine + _T("\r\n");
 
-            int nTagIndex = 0; CAPETagField * pTagField = NULL;
-            while ((pTagField = pTag->GetTagField(nTagIndex++)) != NULL)
+            int nTagIndex = 0; CAPETagField * pTagField = APE_NULL;
+            while ((pTagField = pTag->GetTagField(nTagIndex++)) != APE_NULL)
             {
-                WCHAR cValue[1024] = { 0 }; int nValueBytes = 1023;
+                WCHAR cValue[1024];
+                APE_CLEAR(cValue);
+                int nValueBytes = 1023;
                 pTag->GetFieldString(pTagField->GetFieldName(), &cValue[0], &nValueBytes);
 
                 strLine.Format(_T("    %s: %s"),
@@ -123,11 +150,24 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
     }
     else
     {
-        APE::WAVEFORMATEX wfeInput; int64 nTotalBlocks = 0; int64 nHeaderBytes = 0; int64 nTerminatingBytes = 0; int nErrorCode = 0;
-        APE::CWAVInputSource WAV(strFilename, &wfeInput, &nTotalBlocks, &nHeaderBytes, &nTerminatingBytes, &nErrorCode);
-        
+        APE::WAVEFORMATEX wfeInput; APE_CLEAR(wfeInput); int64 nTotalBlocks = 0; int64 nHeaderBytes = 0; int64 nTerminatingBytes = 0; int32 nFlags = 0; int nErrorCode = 0;
+        CSmartPtr<CInputSource> spInputSource(CreateInputSource(strFilename, &wfeInput, &nTotalBlocks, &nHeaderBytes, &nTerminatingBytes, &nFlags, &nErrorCode));
+
         CString strFormat;
-        strFormat.Format(_T("%d samples per second\r\n%d channels\r\n%d bits per sample\r\n%d header bytes\r\n%d terminating bytes\r\n%I64d total blocks"), wfeInput.nSamplesPerSec, wfeInput.nChannels, wfeInput.wBitsPerSample, nHeaderBytes, nTerminatingBytes, nTotalBlocks);
+        if (nErrorCode == ERROR_SUCCESS)
+        {
+            strFormat.Format(_T("%d samples per second\r\n%d channels\r\n%d bits per sample\r\n%I64d header bytes\r\n%I64d terminating bytes\r\n%I64d total blocks"), static_cast<int>(wfeInput.nSamplesPerSec), static_cast<int>(wfeInput.nChannels), static_cast<int>(wfeInput.wBitsPerSample), nHeaderBytes, nTerminatingBytes, nTotalBlocks);
+            if (nFlags & APE_FORMAT_FLAG_BIG_ENDIAN)
+                strFormat += _T("\r\nBig endian");
+            if (nFlags & APE_FORMAT_FLAG_SIGNED_8_BIT)
+                strFormat += _T("\r\nSigned 8-bit");
+            if (wfeInput.wFormatTag == WAVE_FORMAT_IEEE_FLOAT)
+                strFormat += _T("\r\nFloating point");
+        }
+        else
+        {
+            strFormat = _T("Format information not available for this file (unsupported by Monkey's Audio)");
+        }
 
         strSummary += strFormat;
     }

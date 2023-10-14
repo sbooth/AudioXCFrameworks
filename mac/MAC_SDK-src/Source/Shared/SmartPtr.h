@@ -3,6 +3,8 @@
 namespace APE
 {
 
+#pragma pack(push, 1)
+
 /**************************************************************************************************
 CSmartPtr - a simple smart pointer class that can automatically initialize and free memory
     note: (doesn't do garbage collection / reference counting because of the many pitfalls)
@@ -14,26 +16,26 @@ public:
     bool m_bArray;
     bool m_bDelete;
 
-    CSmartPtr()
+    __forceinline CSmartPtr()
     {
         m_bDelete = true;
-        m_pObject = NULL;
+        m_pObject = APE_NULL;
         m_bArray = false;
     }
-    CSmartPtr(TYPE * pObject, bool bArray = false, bool bDelete = true)
+    __forceinline CSmartPtr(TYPE * pObject, bool bArray = false, bool bDelete = true)
     {
         m_bDelete = true;
-        m_pObject = NULL;
+        m_pObject = APE_NULL;
         m_bArray = false;
         Assign(pObject, bArray, bDelete);
     }
 
-    ~CSmartPtr()
+    __forceinline ~CSmartPtr()
     {
         Delete();
     }
 
-    void Assign(TYPE * pObject, bool bArray = false, bool bDelete = true)
+    __forceinline void Assign(TYPE * pObject, bool bArray = false, bool bDelete = true)
     {
         Delete();
 
@@ -42,16 +44,17 @@ public:
         m_pObject = pObject;
     }
 
-    void Delete()
+    __forceinline void Delete()
     {
         if (m_bDelete && m_pObject)
         {
-            if (m_bArray)
-                delete [] m_pObject;
-            else
-                delete m_pObject;
+            TYPE * pObject = m_pObject;
+            m_pObject = APE_NULL;
 
-            m_pObject = NULL;
+            if (m_bArray)
+                delete [] pObject;
+            else
+                delete pObject;
         }
     }
 
@@ -79,5 +82,7 @@ public:
     // that way we can't carelessly mix smart pointers and regular pointers
     __forceinline void * operator =(void *) const;
 };
+
+#pragma pack(pop)
 
 }

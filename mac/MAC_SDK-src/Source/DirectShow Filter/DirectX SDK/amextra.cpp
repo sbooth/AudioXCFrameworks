@@ -108,4 +108,3 @@ void CRenderedInputPin::DoCompleteHandling()
         m_pFilter->NotifyEvent(EC_COMPLETE, S_OK, (LONG_PTR)(IBaseFilter *)m_pFilter);
     }
 }
-

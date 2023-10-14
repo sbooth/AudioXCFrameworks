@@ -718,11 +718,11 @@ timeSetEvent() if the current operating system supports it.  TIME_KILL_SYNCHRONO
 is supported on Windows XP and later operating systems.
 
 Parameters:
-- The same parameters as timeSetEvent().  See timeSetEvent()'s documentation in 
+- The same parameters as timeSetEvent().  See timeSetEvent()'s documentation in
 the Platform SDK for more information.
 
 Return Value:
-- The same return value as timeSetEvent().  See timeSetEvent()'s documentation in 
+- The same return value as timeSetEvent().  See timeSetEvent()'s documentation in
 the Platform SDK for more information.
 
 ******************************************************************************/
@@ -731,7 +731,7 @@ MMRESULT CompatibleTimeSetEvent( UINT uDelay, UINT uResolution, __in LPTIMECALLB
     #if WINVER >= 0x0501
     {
         static bool fCheckedVersion = false;
-        static bool fTimeKillSynchronousFlagAvailable = false; 
+        static bool fTimeKillSynchronousFlagAvailable = false;
 
         if( !fCheckedVersion ) {
             fTimeKillSynchronousFlagAvailable = TimeKillSynchronousFlagAvailable();
@@ -750,15 +750,16 @@ MMRESULT CompatibleTimeSetEvent( UINT uDelay, UINT uResolution, __in LPTIMECALLB
 bool TimeKillSynchronousFlagAvailable( void )
 {
     OSVERSIONINFO osverinfo;
+    memset(&osverinfo, 0, sizeof(osverinfo));
 
     osverinfo.dwOSVersionInfoSize = sizeof(osverinfo);
 
     if( GetVersionEx( &osverinfo ) ) {
-        
+
         // Windows XP's major version is 5 and its' minor version is 1.
         // timeSetEvent() started supporting the TIME_KILL_SYNCHRONOUS flag
         // in Windows XP.
-        if( (osverinfo.dwMajorVersion > 5) || 
+        if( (osverinfo.dwMajorVersion > 5) ||
             ( (osverinfo.dwMajorVersion == 5) && (osverinfo.dwMinorVersion >= 1) ) ) {
             return true;
         }
@@ -766,5 +767,3 @@ bool TimeKillSynchronousFlagAvailable( void )
 
     return false;
 }
-
-

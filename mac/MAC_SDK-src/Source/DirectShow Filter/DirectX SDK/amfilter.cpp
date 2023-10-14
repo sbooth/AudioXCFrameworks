@@ -1058,7 +1058,7 @@ CEnumPins::Release()
    interface that initially has the same state. Since we are taking a snapshot
    of an object (current position and all) we must lock access at the start */
 
-STDMETHODIMP 
+STDMETHODIMP
 CEnumPins::Clone(__deref_out IEnumPins **ppEnum)
 {
     CheckPointer(ppEnum,E_POINTER);
@@ -1070,7 +1070,7 @@ CEnumPins::Clone(__deref_out IEnumPins **ppEnum)
         *ppEnum = NULL;
         hr =  VFW_E_ENUM_OUT_OF_SYNC;
     } else {
-        *ppEnum = new CEnumPins(m_pFilter, 
+        *ppEnum = new CEnumPins(m_pFilter,
                                 this);
         if (*ppEnum == NULL) {
             hr = E_OUTOFMEMORY;
@@ -5355,4 +5355,3 @@ AMovieSetupRegisterFilter( const AMOVIESETUP_FILTER * const psetupdata
 
 //  Remove warnings about unreferenced inline functions
 #pragma warning(disable:4514)
-

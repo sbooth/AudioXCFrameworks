@@ -11,6 +11,8 @@ namespace APE
 class CPrepare;
 class IPredictorCompress;
 
+#pragma pack(push, 1)
+
 /**************************************************************************************************
 CAPECompressCore - manages the core of compression and bitstream output
 **************************************************************************************************/
@@ -22,8 +24,8 @@ public:
 
     int EncodeFrame(const void * pInputData, int nInputBytes);
 
-    CBitArray * GetBitArray() { return m_spBitArray.GetPtr(); }
-    intn GetPeakLevel() { return m_nPeakLevel; }
+    CBitArray * GetBitArray();
+    intn GetPeakLevel();
 
 private:
     int Prepare(const void * pInputData, int nInputBytes, int * pSpecialCodes);
@@ -34,10 +36,12 @@ private:
     CSmartPtr<int> m_spData;
     CSmartPtr<int> m_spTempData;
     CSmartPtr<CPrepare> m_spPrepare;
-    WAVEFORMATEX m_wfeInput;
     int m_nPeakLevel;
     int m_nMaxFrameBlocks;
+    WAVEFORMATEX m_wfeInput;
 };
+
+#pragma pack(pop)
 
 }
 

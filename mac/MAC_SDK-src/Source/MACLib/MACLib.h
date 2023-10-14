@@ -1,6 +1,5 @@
 /**************************************************************************************************
 Monkey's Audio MACLib.h (include for using MACLib.lib in your projects)
-Copyright (C) 2000-2022 by Matthew T. Ashland   All Rights Reserved.
 
 Overview:
 
@@ -11,10 +10,10 @@ There are two main interfaces... create one (using CreateIAPExxx) and go to town
 
 Note(s):
 
-Unless otherwise specified, functions return ERROR_SUCCESS (0) on success and an 
+Unless otherwise specified, functions return ERROR_SUCCESS (0) on success and an
 error code on failure.
 
-The terminology "Sample" refers to a single sample value, and "Block" refers 
+The terminology "Sample" refers to a single sample value, and "Block" refers
 to a collection of "Channel" samples.  For simplicity, MAC typically uses blocks
 everywhere so that channel mis-alignment cannot happen. (i.e. on a CD, a sample is
 2 bytes and a block is 4 bytes ([2 bytes per sample] * [2 channels] = 4 bytes))
@@ -56,7 +55,7 @@ Notes:
 
     Seek Table:
 
-    A 32-bit unsigned integer array of offsets from the header to the frame data.  May become "delta" 
+    A 32-bit unsigned integer array of offsets from the header to the frame data.  May become "delta"
     values someday to better suit huge files.
 
     MD5 Hash:
@@ -64,30 +63,32 @@ Notes:
     Since the header is the last part written to an APE file, you must calculate the MD5 checksum out of order.
     So, you first calculate from the tail of the seek table to the end of the terminating data.
     Then, go back and do from the end of the descriptor to the tail of the seek table.
-    You may wish to just cache the header data when starting and run it last, so you don't 
+    You may wish to just cache the header data when starting and run it last, so you don't
     need to seek back in the I/O.
 **************************************************************************************************/
 
 /**************************************************************************************************
 Defines
 **************************************************************************************************/
-#define MAC_COMPRESSION_LEVEL_FAST          1000
-#define MAC_COMPRESSION_LEVEL_NORMAL        2000
-#define MAC_COMPRESSION_LEVEL_HIGH          3000
-#define MAC_COMPRESSION_LEVEL_EXTRA_HIGH    4000
-#define MAC_COMPRESSION_LEVEL_INSANE        5000
+#define APE_COMPRESSION_LEVEL_FAST          1000
+#define APE_COMPRESSION_LEVEL_NORMAL        2000
+#define APE_COMPRESSION_LEVEL_HIGH          3000
+#define APE_COMPRESSION_LEVEL_EXTRA_HIGH    4000
+#define APE_COMPRESSION_LEVEL_INSANE        5000
 
-#define MAC_FORMAT_FLAG_8_BIT               (1 << 0)    // is 8-bit [OBSOLETE]
-#define MAC_FORMAT_FLAG_CRC                 (1 << 1)    // uses the new CRC32 error detection [OBSOLETE]
-#define MAC_FORMAT_FLAG_HAS_PEAK_LEVEL      (1 << 2)    // uint32 nPeakLevel after the header [OBSOLETE]
-#define MAC_FORMAT_FLAG_24_BIT              (1 << 3)    // is 24-bit [OBSOLETE]
-#define MAC_FORMAT_FLAG_HAS_SEEK_ELEMENTS   (1 << 4)    // has the number of seek elements after the peak level
-#define MAC_FORMAT_FLAG_CREATE_WAV_HEADER   (1 << 5)    // create the wave header on decompression (not stored)
-#define MAC_FORMAT_FLAG_AIFF                (1 << 6)    // the file is an AIFF that was compressed (instead of WAV)
-#define MAC_FORMAT_FLAG_W64                 (1 << 7)    // the file is a W64 (instead of WAV)
-#define MAC_FORMAT_FLAG_SND                 (1 << 8)    // the file is a SND (instead of WAV)
-#define MAC_FORMAT_FLAG_BIG_ENDIAN          (1 << 9)    // flags that the file uses big endian encoding
-#define MAC_FORMAT_FLAG_CAF                 (1 << 10)   // the file is a CAF (instead of WAV)
+#define APE_FORMAT_FLAG_8_BIT               (1 << 0)    // is 8-bit [OBSOLETE]
+#define APE_FORMAT_FLAG_CRC                 (1 << 1)    // uses the new CRC32 error detection [OBSOLETE]
+#define APE_FORMAT_FLAG_HAS_PEAK_LEVEL      (1 << 2)    // uint32 nPeakLevel after the header [OBSOLETE]
+#define APE_FORMAT_FLAG_24_BIT              (1 << 3)    // is 24-bit [OBSOLETE]
+#define APE_FORMAT_FLAG_HAS_SEEK_ELEMENTS   (1 << 4)    // has the number of seek elements after the peak level
+#define APE_FORMAT_FLAG_CREATE_WAV_HEADER   (1 << 5)    // create the wave header on decompression (not stored)
+#define APE_FORMAT_FLAG_AIFF                (1 << 6)    // the file is an AIFF that was compressed (instead of WAV)
+#define APE_FORMAT_FLAG_W64                 (1 << 7)    // the file is a W64 (instead of WAV)
+#define APE_FORMAT_FLAG_SND                 (1 << 8)    // the file is a SND (instead of WAV)
+#define APE_FORMAT_FLAG_BIG_ENDIAN          (1 << 9)    // flags that the file uses big endian encoding
+#define APE_FORMAT_FLAG_CAF                 (1 << 10)   // the file is a CAF (instead of WAV)
+#define APE_FORMAT_FLAG_SIGNED_8_BIT        (1 << 11)   // 8-bit values are signed
+#define APE_FORMAT_FLAG_FLOATING_POINT      (1 << 12)   // floating point
 
 #define CREATE_WAV_HEADER_ON_DECOMPRESSION    -1
 #define MAX_AUDIO_BYTES_UNKNOWN -1
@@ -100,11 +101,9 @@ typedef void (__stdcall * APE_PROGRESS_CALLBACK) (int);
 class IAPEProgressCallback
 {
 public:
-    
     virtual ~IAPEProgressCallback() { }
     virtual void Progress(int nPercentageDone) = 0;
     virtual int GetKillFlag() = 0; // KILL_FLAG_CONTINUE to continue
-    virtual void SetFileType(const APE::str_ansi * pType) = 0;
 };
 
 /**************************************************************************************************
@@ -134,7 +133,7 @@ struct WAVE_HEADER
     unsigned int nAvgBytesPerSec;
     unsigned short nBlockAlign;
     unsigned short nBitsPerSample;
-    
+
     // data chunk header
     char cDataHeader[4];
     unsigned int nDataBytes;
@@ -149,7 +148,7 @@ struct RF64_HEADER
     char cRIFFHeader[4]; // RF64
     unsigned int nRIFFBytes;
 
-    // DS64 
+    // DS64
     char cDataTypeID[4]; // WAVE
     char cDS64[4]; // ds64
     int32 nDSHeaderSize;
@@ -179,7 +178,7 @@ APE_DESCRIPTOR structure (file header that describes lengths, offsets, etc.)
 **************************************************************************************************/
 struct APE_DESCRIPTOR
 {
-    char   cID[4];                             // should equal 'MAC '
+    char   cID[4];                             // should equal 'MAC ' or 'MACF'
     uint16 nVersion;                           // version number * 1000 (3.81 = 3810)
     uint16 nPadding;                           // because 4-byte alignment requires this (or else nVersion would take 4-bytes)
 
@@ -229,7 +228,6 @@ IAPEDecompress - interface for working with existing APE files (decoding, seekin
 class IAPEDecompress
 {
 public:
-
     /**************************************************************************************************
     APE_DECOMPRESS_FIELDS - used when querying for information
 
@@ -274,6 +272,8 @@ public:
         APE_INFO_FRAME_BLOCKS = 1029,               // blocks in a given frame [frame index, ignored]
         APE_INFO_TAG = 1030,                        // point to tag (CAPETag *) [ignored, ignored]
         APE_INFO_APL = 1031,                        // whether it's an APL file
+        APE_INFO_MD5 = 1032,                        // the MD5 checksum [buffer *, ignored]
+        APE_INFO_MD5_MATCHES = 1033,                // an MD5 checksum to test (returns ERROR_INVALID_CHECKSUM or ERROR_SUCCESS) [buffer *, ignored]
 
         APE_DECOMPRESS_CURRENT_BLOCK = 2000,        // current block location [ignored, ignored]
         APE_DECOMPRESS_CURRENT_MS = 2001,           // current millisecond location [ignored, ignored]
@@ -288,14 +288,14 @@ public:
 
     // destructor (needed so implementation's destructor will be called)
     virtual ~IAPEDecompress() { }
-    
+
     /**************************************************************************************************
     * Decompress / Seek
     **************************************************************************************************/
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////
     // GetData(...) - gets raw decompressed audio
-    // 
+    //
     // Parameters:
     //    char * pBuffer
     //        a pointer to a buffer to put the data into
@@ -304,11 +304,17 @@ public:
     //    int * pBlocksRetrieved
     //        the number of blocks actually retrieved (could be less at end of file or on critical failure)
     //////////////////////////////////////////////////////////////////////////////////////////////
-    virtual int GetData(char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved) = 0;
+    struct APE_GET_DATA_PROCESSING
+    {
+        bool bApplyFloatProcessing;
+        bool bApplySigned8BitProcessing;
+        bool bApplyBigEndianProcessing;
+    };
+    virtual int GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING * pProcessing = NULL) = 0;
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // Seek(...) - seeks
-    // 
+    //
     // Parameters:
     //    int nBlockOffset
     //        the block to seek to (see note at intro about blocks vs. samples)
@@ -321,7 +327,7 @@ public:
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // GetInfo(...) - get information about the APE file or the state of the decompressor
-    // 
+    //
     // Parameters:
     //    APE_DECOMPRESS_FIELDS Field
     //        the field we're querying (see APE_DECOMPRESS_FIELDS above for more info)
@@ -345,14 +351,14 @@ class IAPECompress
 public:
     // destructor (needed so implementation's destructor will be called)
     virtual ~IAPECompress() { }
-    
+
     /**************************************************************************************************
     * Start
     **************************************************************************************************/
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////
     // Start(...) / StartEx(...) - starts encoding
-    // 
+    //
     // Parameters:
     //    CIO * pioOutput / const str_utfn * pFilename
     //        the output... either a filename or an I/O source
@@ -376,14 +382,14 @@ public:
     //        on decompression)
     //////////////////////////////////////////////////////////////////////////////////////////////
 
-    virtual int Start(const str_utfn * pOutputFilename, const WAVEFORMATEX * pwfeInput, 
-        int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL,
-        const void * pHeaderData = NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION, int nFlags = 0) = 0;
+    virtual int Start(const str_utfn * pOutputFilename, const WAVEFORMATEX * pwfeInput,
+        int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL,
+        const void * pHeaderData = APE_NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION, int nFlags = 0) = 0;
 
-    virtual int StartEx(CIO * pioOutput, const WAVEFORMATEX * pwfeInput, 
-        int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL,
-        const void * pHeaderData = NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION) = 0;
-    
+    virtual int StartEx(CIO * pioOutput, const WAVEFORMATEX * pwfeInput,
+        int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL,
+        const void * pHeaderData = APE_NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION) = 0;
+
     /**************************************************************************************************
     * Add / Compress Data
     *    - there are 3 ways to add data:
@@ -394,7 +400,7 @@ public:
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // AddData(...) - adds data to the encoder
-    // 
+    //
     // Parameters:
     //    unsigned char * pData
     //        a pointer to a buffer containing the raw audio data
@@ -402,7 +408,7 @@ public:
     //        the number of bytes in the buffer
     //////////////////////////////////////////////////////////////////////////////////////////////
     virtual int64 AddData(unsigned char * pData, int64 nBytes) = 0;
-    
+
     //////////////////////////////////////////////////////////////////////////////////////////////
     // GetBufferBytesAvailable(...) - returns the number of bytes available in the buffer
     //    (helpful when locking)
@@ -411,7 +417,7 @@ public:
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // LockBuffer(...) - locks MAC's buffer so we can copy into it
-    // 
+    //
     // Parameters:
     //    int * pBytesAvailable
     //        returns the number of bytes available in the buffer (DO NOT COPY MORE THAN THIS IN)
@@ -423,7 +429,7 @@ public:
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // UnlockBuffer(...) - releases the buffer
-    // 
+    //
     // Parameters:
     //    int nBytesAdded
     //        the number of bytes copied into the buffer
@@ -431,7 +437,7 @@ public:
     //        whether MAC should process as much as possible of the buffer
     //////////////////////////////////////////////////////////////////////////////////////////////
     virtual int64 UnlockBuffer(int64 nBytesAdded, bool bProcess = true) = 0;
-    
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // AddDataFromInputSource(...) - use a CInputSource (input source) to add data
@@ -444,15 +450,15 @@ public:
     //    int * pBytesAdded
     //        returns the number of bytes added from the I/O source
     //////////////////////////////////////////////////////////////////////////////////////////////
-    virtual int64 AddDataFromInputSource(CInputSource * pInputSource, int64 nMaxBytes = 0, int64 * pBytesAdded = NULL) = 0;
-    
+    virtual int64 AddDataFromInputSource(CInputSource * pInputSource, int64 nMaxBytes = 0, int64 * pBytesAdded = APE_NULL) = 0;
+
     /**************************************************************************************************
     * Finish / Kill
     **************************************************************************************************/
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // Finish(...) - ends encoding and finalizes the file
-    // 
+    //
     // Parameters:
     //    unsigned char * pTerminatingData
     //        a pointer to a buffer containing the information to place at the end of the APE file
@@ -479,12 +485,12 @@ public:
 Functions to create the interfaces
 
 Usage:
-    Interface creation returns a NULL pointer on failure (and fills error code if it was passed in)
+    Interface creation returns a APE_NULL pointer on failure (and fills error code if it was passed in)
 
 Usage example:
     int nErrorCode;
     IAPEDecompress * pAPEDecompress = CreateIAPEDecompress("c:\\1.ape", &nErrorCode);
-    if (pAPEDecompress == NULL)
+    if (pAPEDecompress == APE_NULL)
     {
         // failure... nErrorCode will have specific code
     }
@@ -492,11 +498,11 @@ Usage example:
 **************************************************************************************************/
 extern "C"
 {
-    APE::IAPEDecompress * __stdcall CreateIAPEDecompress(const APE::str_utfn * pFilename, int * pErrorCode, bool bReadOnly, bool bAnalyzeTagNow, bool bReadWholeFile);
-    APE::IAPEDecompress * __stdcall CreateIAPEDecompressEx(APE::CIO * pIO, int * pErrorCode);
-    APE::IAPEDecompress * __stdcall CreateIAPEDecompressEx2(APE::CAPEInfo * pAPEInfo, int nStartBlock, int nFinishBlock, int * pErrorCode);
+    DLLEXPORT APE::IAPEDecompress * __stdcall CreateIAPEDecompress(const APE::str_utfn * pFilename, int * pErrorCode, bool bReadOnly, bool bAnalyzeTagNow, bool bReadWholeFile);
+    DLLEXPORT APE::IAPEDecompress * __stdcall CreateIAPEDecompressEx(APE::CIO * pIO, int * pErrorCode);
+    DLLEXPORT APE::IAPEDecompress * __stdcall CreateIAPEDecompressEx2(APE::CAPEInfo * pAPEInfo, int nStartBlock, int nFinishBlock, int * pErrorCode);
 #ifdef APE_SUPPORT_COMPRESS
-    APE::IAPECompress * __stdcall CreateIAPECompress(int * pErrorCode = NULL);
+    DLLEXPORT APE::IAPECompress * __stdcall CreateIAPECompress(int * pErrorCode = APE_NULL);
 #endif
 }
 
@@ -507,28 +513,30 @@ extern "C"
 {
     // process whole files
 #ifdef APE_SUPPORT_COMPRESS
-    DLLEXPORT int __stdcall CompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL, int * pPercentageDone = NULL, APE::APE_PROGRESS_CALLBACK ProgressCallback = 0, int * pKillFlag = NULL);
+    DLLEXPORT int __stdcall CompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL, int * pPercentageDone = APE_NULL, APE::APE_PROGRESS_CALLBACK ProgressCallback = 0, int * pKillFlag = APE_NULL);
 #endif
-    DLLEXPORT int __stdcall DecompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, APE::str_ansi cFileType[5]);
+    DLLEXPORT int __stdcall DecompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag);
     DLLEXPORT int __stdcall ConvertFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag);
     DLLEXPORT int __stdcall VerifyFile(const APE::str_ansi * pInputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible = false);
 
 #ifdef APE_SUPPORT_COMPRESS
-    DLLEXPORT int __stdcall CompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL, int * pPercentageDone = NULL, APE::APE_PROGRESS_CALLBACK ProgressCallback = 0, int * pKillFlag = NULL);
+    DLLEXPORT int __stdcall CompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL, int * pPercentageDone = APE_NULL, APE::APE_PROGRESS_CALLBACK ProgressCallback = 0, int * pKillFlag = APE_NULL);
 #endif
-    DLLEXPORT int __stdcall DecompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, APE::str_ansi cFileType[5]);
+    DLLEXPORT int __stdcall DecompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag);
     DLLEXPORT int __stdcall ConvertFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag);
-    DLLEXPORT int __stdcall VerifyFileW(const APE::str_utfn * pInputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible = false); 
+    DLLEXPORT int __stdcall VerifyFileW(const APE::str_utfn * pInputFilename, int * pPercentageDone, APE::APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible = false);
 
 #ifdef APE_SUPPORT_COMPRESS
-    DLLEXPORT int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel = MAC_COMPRESSION_LEVEL_NORMAL, APE::IAPEProgressCallback * pProgressCallback = NULL);
+    DLLEXPORT int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL, APE::IAPEProgressCallback * pProgressCallback = APE_NULL);
 #endif
-    DLLEXPORT int __stdcall DecompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, APE::IAPEProgressCallback * pProgressCallback = NULL);
-    DLLEXPORT int __stdcall ConvertFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, APE::IAPEProgressCallback * pProgressCallback = NULL);
-    DLLEXPORT int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, APE::IAPEProgressCallback * pProgressCallback = NULL, bool bQuickVerifyIfPossible = false); 
+    DLLEXPORT int __stdcall DecompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, APE::IAPEProgressCallback * pProgressCallback = APE_NULL);
+    DLLEXPORT int __stdcall ConvertFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, APE::IAPEProgressCallback * pProgressCallback = APE_NULL);
+    DLLEXPORT int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, APE::IAPEProgressCallback * pProgressCallback = APE_NULL, bool bQuickVerifyIfPossible = false);
 
     // helper functions
     DLLEXPORT int __stdcall FillWaveFormatEx(APE::WAVEFORMATEX * pWaveFormatEx, int nFormatTag, int nSampleRate, int nBitsPerSample, int nChannels);
-    DLLEXPORT int __stdcall FillWaveHeader(APE::WAVE_HEADER * pWAVHeader, APE::int64 nAudioBytes, APE::WAVEFORMATEX * pWaveFormatEx, APE::intn nTerminatingBytes = 0);
-    DLLEXPORT int __stdcall FillRF64Header(APE::RF64_HEADER * pWAVHeader, APE::int64 nAudioBytes, APE::WAVEFORMATEX * pWaveFormatEx);
+    DLLEXPORT int __stdcall FillWaveHeader(APE::WAVE_HEADER * pWAVHeader, APE::int64 nAudioBytes, const APE::WAVEFORMATEX * pWaveFormatEx, APE::intn nTerminatingBytes = 0);
+    DLLEXPORT int __stdcall FillRF64Header(APE::RF64_HEADER * pWAVHeader, APE::int64 nAudioBytes, const APE::WAVEFORMATEX * pWaveFormatEx);
+    DLLEXPORT int __stdcall GetAPEFileType(const APE::str_utfn * pInputFilename, APE::str_ansi cFileType[8]);
+    DLLEXPORT void __stdcall GetAPECompressionLevelName(int nCompressionLevel, APE::str_utfn * pCompressionLevel, size_t nBufferCharacters, bool bTitleCase);
 }

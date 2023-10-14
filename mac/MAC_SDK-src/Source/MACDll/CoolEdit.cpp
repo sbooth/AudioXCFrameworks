@@ -1,24 +1,34 @@
 #include "stdafx.h"
 #include <math.h>
 #include <stdio.h>
-#include "filters.h" 
+#include "Filters.h"
 #include "resource.h"
-#include "all.h"
-#include "apeinfo.h"
-#include "apecompress.h"
+#include "All.h"
+#include "APEInfo.h"
+#include "APECompress.h"
 #include "CharacterHelper.h"
+
+using namespace APE;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Forward declares to avoid Clang warnings
+///////////////////////////////////
+__declspec(dllexport) short FAR PASCAL QueryCoolFilter(COOLQUERY far * cq);
+__declspec(dllexport) BOOL FAR PASCAL FilterUnderstandsFormat(LPSTR filename);
+__declspec(dllexport) INT_PTR FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Message, WPARAM wParam, LPARAM lParam);
+__declspec(dllexport) DWORD FAR PASCAL FilterGetOptions(HWND hWnd, HINSTANCE hInst, long, WORD, WORD, DWORD dwOptions);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //QueryCoolFilter: Setup the filter
 ///////////////////////////////////
 __declspec(dllexport) short FAR PASCAL QueryCoolFilter(COOLQUERY far * cq)
-{   
+{
     strcpy_s(cq->szName, 24, "Monkey's Audio");
     strcpy_s(cq->szCopyright, 80, "Monkey's Audio file");
     strcpy_s(cq->szExt, 4, "APE");
     strcpy_s(cq->szExt2, 4, "MAC");
-    
-    cq->lChunkSize=1; 
+
+    cq->lChunkSize=1;
     cq->dwFlags=QF_READSPECIALLAST|QF_WRITESPECIALFIRST|QF_RATEADJUSTABLE|
         QF_CANSAVE|QF_CANLOAD|QF_HASOPTIONSBOX|QF_CANDO32BITFLOATS;
      cq->Stereo8=0xFF;
@@ -37,16 +47,20 @@ __declspec(dllexport) short FAR PASCAL QueryCoolFilter(COOLQUERY far * cq)
 //FilterUnderstandsFormat: Check if the file is a real .ape
 ///////////////////////////////////////////////////////////
 __declspec(dllexport) BOOL FAR PASCAL FilterUnderstandsFormat(LPSTR filename)
-{    
+{
     BOOL bValid = FALSE;
 
-    CATCH_ERRORS
+    APE_CATCH_ERRORS
     (
-        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), TRUE);
-        IAPEDecompress * pAPEDecompress = CreateIAPEDecompress(spUTF16, NULL, true, true, false);
-        if (pAPEDecompress != NULL)
+        CSmartPtr<wchar_t> spFilenameUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), TRUE);
+        int nErrorCode = ERROR_SUCCESS;
+        IAPEDecompress * pAPEDecompress = CreateIAPEDecompress(spFilenameUTF16, &nErrorCode, true, true, false);
+        if (pAPEDecompress != APE_NULL)
         {
-            bValid = TRUE;
+            if (nErrorCode == ERROR_SUCCESS)
+            {
+                bValid = TRUE;
+            }
             delete pAPEDecompress;
         }
     )
@@ -58,7 +72,7 @@ __declspec(dllexport) BOOL FAR PASCAL FilterUnderstandsFormat(LPSTR filename)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //DIALOGMsgProc: All Dialog stuff here
 //////////////////////////////////////
-__declspec(dllexport) BOOL FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Message, WPARAM wParam, LPARAM lParam)
+__declspec(dllexport) INT_PTR FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Message, WPARAM wParam, LPARAM lParam)
 {
     switch (Message)
     {
@@ -69,7 +83,7 @@ __declspec(dllexport) BOOL FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Message, 
     {
         long nDialogReturn = 0;
 
-        nDialogReturn = (long)lParam;
+        nDialogReturn = static_cast<long>(lParam);
         if (nDialogReturn == 1) CheckDlgButton(hWndDlg, IDC_R1, TRUE);
         else if (nDialogReturn == 2) CheckDlgButton(hWndDlg, IDC_R2, TRUE);
         else if (nDialogReturn == 3) CheckDlgButton(hWndDlg, IDC_R3, TRUE);
@@ -99,7 +113,7 @@ __declspec(dllexport) BOOL FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Message, 
             else if (IsDlgButtonChecked(hWndDlg, IDC_R4)) nDialogReturn = 4;
             else if (IsDlgButtonChecked(hWndDlg, IDC_R5)) nDialogReturn = 5;
 
-            EndDialog(hWndDlg, (short)nDialogReturn);
+            EndDialog(hWndDlg, static_cast<short>(nDialogReturn));
         }
         break;
 
@@ -122,16 +136,14 @@ __declspec(dllexport) BOOL FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Message, 
 ///////////////////////////////////////////////////////////
 __declspec(dllexport) DWORD FAR PASCAL FilterGetOptions(HWND hWnd, HINSTANCE hInst, long, WORD, WORD, DWORD dwOptions)
 {
-    long nDialogReturn = 0L;
-            
-    if (dwOptions == 0) 
-        nDialogReturn = 1;
-    else 
-        nDialogReturn = dwOptions;
-        
-    nDialogReturn = (long) DialogBoxParam((HINSTANCE) hInst,(LPCTSTR) MAKEINTRESOURCE(IDD_COMPRESSION), (HWND) hWnd, (DLGPROC) DIALOGMsgProc, nDialogReturn);
-    
-    return nDialogReturn;
+    DWORD dwDialogReturn = 0L;
+
+    if (dwOptions == 0)
+        dwDialogReturn = 1;
+    else
+        dwDialogReturn = dwOptions;
+
+    dwDialogReturn = static_cast<DWORD>(DialogBoxParam(hInst, MAKEINTRESOURCE(IDD_COMPRESSION), hWnd, DIALOGMsgProc, dwDialogReturn));
+
+    return dwDialogReturn;
 }
-
-

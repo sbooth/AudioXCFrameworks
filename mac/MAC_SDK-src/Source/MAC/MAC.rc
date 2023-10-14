@@ -3,6 +3,7 @@
 #pragma code_page(65001)
 
 #include "resource.h"
+#include "../Shared/All.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -187,7 +188,7 @@ END
 
 IDD_APE_INFO DIALOGEX 0, 0, 631, 234
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "APE Info"
+CAPTION "File Info"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,574,213,50,14
@@ -218,8 +219,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 8,1,0,0
- PRODUCTVERSION 8,1,0,0
+ FILEVERSION APE_VERSION_MAJOR,APE_VERSION_REVISION
+ PRODUCTVERSION APE_VERSION_MAJOR,APE_VERSION_REVISION,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -236,13 +237,13 @@ BEGIN
         BEGIN
             VALUE "Comments", "Windows program for Monkey's Audio"
             VALUE "CompanyName", "Matthew T. Ashland"
-            VALUE "FileVersion", "8.01.0.0"
-            VALUE "FileDescription", "Monkey's Audio windows program"
+            VALUE "FileVersion", APE_RESOURCE_VERSION_STRING
+            VALUE "FileDescription", "Monkey's Audio"
             VALUE "InternalName", "Monkey's Audio"
-            VALUE "LegalCopyright", "Copyright (c) 2000-2022 Matthew T. Ashland"
+            VALUE "LegalCopyright", APE_RESOURCE_COPYRIGHT
             VALUE "OriginalFilename", "Monkey's Audio.exe"
             VALUE "ProductName", "Monkey's Audio"
-            VALUE "ProductVersion", "8.01.0.0"
+            VALUE "ProductVersion", APE_RESOURCE_VERSION_STRING
         END
     END
     BLOCK "VarFileInfo"
@@ -375,6 +376,8 @@ BEGIN
         MENUITEM "&Help...\tF1",                ID_HELP_HELP
         MENUITEM SEPARATOR
         MENUITEM "Monkey's Audio &Website...",  ID_HELP_WEBSITE_MONKEYS_AUDIO
+        MENUITEM SEPARATOR
+        MENUITEM "Monkey's Audio &License...",   ID_HELP_LICENSE
         MENUITEM SEPARATOR
         MENUITEM "&Media Center Website...",    ID_HELP_WEBSITE_MEDIA_JUKEBOX
         MENUITEM "&Winamp Website...",          ID_HELP_WEBSITE_WINAMP

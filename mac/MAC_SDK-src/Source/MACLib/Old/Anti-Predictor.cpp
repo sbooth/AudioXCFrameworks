@@ -1,7 +1,7 @@
 #include "All.h"
 #ifdef APE_BACKWARDS_COMPATIBILITY
 
-#include "../MACLib.h"
+#include "MACLib.h"
 #include "Anti-Predictor.h"
 
 namespace APE
@@ -9,114 +9,117 @@ namespace APE
 
 CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion)
 {
-    CAntiPredictor * pAntiPredictor = NULL;
+    CAntiPredictor * pAntiPredictor = APE_NULL;
 
-    switch (nCompressionLevel) 
+    switch (nCompressionLevel)
     {
 #ifdef ENABLE_COMPRESSION_MODE_FAST
-        case MAC_COMPRESSION_LEVEL_FAST:
+        case APE_COMPRESSION_LEVEL_FAST:
             if (nVersion < 3320)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorFast0000To3320;
+                pAntiPredictor = new CAntiPredictorFast0000To3320;
             }
             else
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorFast3320ToCurrent;
+                pAntiPredictor = new CAntiPredictorFast3320ToCurrent;
             }
             break;
 #endif //ENABLE_COMPRESSION_MODE_FAST
-            
+
 #ifdef ENABLE_COMPRESSION_MODE_NORMAL
-        
-        case MAC_COMPRESSION_LEVEL_NORMAL:
+
+        case APE_COMPRESSION_LEVEL_NORMAL:
             if (nVersion < 3320)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorNormal0000To3320;
-            }                
+                pAntiPredictor = new CAntiPredictorNormal0000To3320;
+            }
             else if (nVersion < 3800)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorNormal3320To3800;
+                pAntiPredictor = new CAntiPredictorNormal3320To3800;
             }
             else
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorNormal3800ToCurrent;
+                pAntiPredictor = new CAntiPredictorNormal3800ToCurrent;
             }
             break;
 
 #endif //ENABLE_COMPRESSION_MODE_NORMAL
 
 #ifdef ENABLE_COMPRESSION_MODE_HIGH
-        case MAC_COMPRESSION_LEVEL_HIGH:
+        case APE_COMPRESSION_LEVEL_HIGH:
             if (nVersion < 3320)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorHigh0000To3320;
+                pAntiPredictor = new CAntiPredictorHigh0000To3320;
             }
             else if (nVersion < 3600)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorHigh3320To3600;
+                pAntiPredictor = new CAntiPredictorHigh3320To3600;
             }
             else if (nVersion < 3700)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorHigh3600To3700;
+                pAntiPredictor = new CAntiPredictorHigh3600To3700;
             }
             else if (nVersion < 3800)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorHigh3700To3800;
+                pAntiPredictor = new CAntiPredictorHigh3700To3800;
             }
             else
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorHigh3800ToCurrent;
+                pAntiPredictor = new CAntiPredictorHigh3800ToCurrent;
             }
             break;
 #endif //ENABLE_COMPRESSION_MODE_HIGH
 
 #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
-        case MAC_COMPRESSION_LEVEL_EXTRA_HIGH:
-            if (nVersion < 3320) 
+        case APE_COMPRESSION_LEVEL_EXTRA_HIGH:
+            if (nVersion < 3320)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorExtraHigh0000To3320;
+                pAntiPredictor = new CAntiPredictorExtraHigh0000To3320;
             }
-            else if (nVersion < 3600) 
+            else if (nVersion < 3600)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorExtraHigh3320To3600;
+                pAntiPredictor = new CAntiPredictorExtraHigh3320To3600;
             }
-            else if (nVersion < 3700) 
+            else if (nVersion < 3700)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorExtraHigh3600To3700;
+                pAntiPredictor = new CAntiPredictorExtraHigh3600To3700;
             }
-            else if (nVersion < 3800) 
+            else if (nVersion < 3800)
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorExtraHigh3700To3800;
-            }    
+                pAntiPredictor = new CAntiPredictorExtraHigh3700To3800;
+            }
             else
             {
-                pAntiPredictor = (CAntiPredictor *) new CAntiPredictorExtraHigh3800ToCurrent;
+                pAntiPredictor = new CAntiPredictorExtraHigh3800ToCurrent;
             }
             break;
 #endif //ENABLE_COMPRESSION_MODE_EXTRA_HIGH
+
+        default:
+            pAntiPredictor = APE_NULL; // this shouldn't hit, but just to handle all cases we'll put it here
     }
 
     return pAntiPredictor;
 }
 
-CAntiPredictor::CAntiPredictor() 
+CAntiPredictor::CAntiPredictor()
 {
 }
 
-CAntiPredictor::~CAntiPredictor() 
+CAntiPredictor::~CAntiPredictor()
 {
 }
 
-void CAntiPredictorOffset::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements, int Offset, int DeltaM) 
+void CAntiPredictorOffset::AntiPredictOffset(int * pInputArray, int * pOutputArray, int NumberOfElements, int Offset, int DeltaM)
 {
-    memcpy(pOutputArray, pInputArray, Offset * 4);
+    memcpy(pOutputArray, pInputArray, static_cast<size_t>(Offset) * 4);
 
     int * ip = &pInputArray[Offset];
     int * ipo = &pOutputArray[0];
     int * op = &pOutputArray[Offset];
     int m = 0;
-    
-    for (; op < &pOutputArray[NumberOfElements]; ip++, ipo++, op++) 
+
+    for (; op < &pOutputArray[NumberOfElements]; ip++, ipo++, op++)
     {
         *op = *ip + ((*ipo * m) >> 12);
 
@@ -126,12 +129,12 @@ void CAntiPredictorOffset::AntiPredict(int * pInputArray, int * pOutputArray, in
 
 #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
-int CAntiPredictorExtraHighHelper::ConventionalDotProduct(short *bip, short *bbm, short *pIPAdaptFactor, int op, int nNumberOfIterations) 
+int CAntiPredictorExtraHighHelper::ConventionalDotProduct(short *bip, short *bbm, short *pIPAdaptFactor, int op, int nNumberOfIterations)
 {
     // dot product
     int nDotProduct = 0;
-    short *pMaxBBM = &bbm[nNumberOfIterations];
-    
+    const short * pMaxBBM = &bbm[nNumberOfIterations];
+
     if (op == 0)
     {
         while(bbm < pMaxBBM)
@@ -139,7 +142,7 @@ int CAntiPredictorExtraHighHelper::ConventionalDotProduct(short *bip, short *bbm
             EXPAND_32_TIMES(nDotProduct += *bip++ * *bbm++;)
         }
     }
-    else if (op > 0) 
+    else if (op > 0)
     {
         while(bbm < pMaxBBM)
         {
@@ -153,7 +156,7 @@ int CAntiPredictorExtraHighHelper::ConventionalDotProduct(short *bip, short *bbm
             EXPAND_32_TIMES(nDotProduct += *bip++ * *bbm; *bbm++ -= *pIPAdaptFactor++;)
         }
     }
-    
+
     // use the dot product
     return nDotProduct;
 }

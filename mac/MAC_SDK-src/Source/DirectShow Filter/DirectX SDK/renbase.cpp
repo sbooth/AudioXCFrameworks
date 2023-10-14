@@ -1043,7 +1043,7 @@ HRESULT CBaseRenderer::PrepareReceive(IMediaSample *pMediaSample)
 
     // Check our flushing and filter state
 
-    // This function must hold the interface lock because it calls 
+    // This function must hold the interface lock because it calls
     // CBaseInputPin::Receive() and CBaseInputPin::Receive() uses
     // CBasePin::m_bRunTimeError.
     HRESULT hr = m_pInputPin->CBaseInputPin::Receive(pMediaSample);
@@ -1648,9 +1648,9 @@ STDMETHODIMP CRendererInputPin::Receive(IMediaSample *pSample)
             CAutoLock cRendererLock(&m_pRenderer->m_InterfaceLock);
 
             // We do not report errors which occur while the filter is stopping,
-            // flushing or if the m_bAbort flag is set .  Errors are expected to 
-            // occur during these operations and the streaming thread correctly 
-            // handles the errors.  
+            // flushing or if the m_bAbort flag is set .  Errors are expected to
+            // occur during these operations and the streaming thread correctly
+            // handles the errors.
             if (!IsStopped() && !IsFlushing() && !m_pRenderer->m_bAbort && !m_bRunTimeError) {
 
                 // EC_ERRORABORT's first parameter is the error which caused
@@ -1664,7 +1664,7 @@ STDMETHODIMP CRendererInputPin::Receive(IMediaSample *pSample)
                         m_pRenderer->NotifyEndOfStream();
                     }
                 }
-    
+
                 m_bRunTimeError = TRUE;
             }
         }
@@ -1735,7 +1735,7 @@ HRESULT CRendererInputPin::Active()
 
 HRESULT CRendererInputPin::Inactive()
 {
-    // The caller must hold the interface lock because 
+    // The caller must hold the interface lock because
     // this function uses m_bRunTimeError.
     ASSERT(CritCheckIn(&m_pRenderer->m_InterfaceLock));
 
@@ -2855,4 +2855,3 @@ CBaseVideoRenderer::JoinFilterGraph(__inout_opt IFilterGraph *pGraph, __in_opt L
 // This removes a large number of level 4 warnings from the
 // Microsoft compiler which in this case are not very useful
 #pragma warning(disable: 4514)
-

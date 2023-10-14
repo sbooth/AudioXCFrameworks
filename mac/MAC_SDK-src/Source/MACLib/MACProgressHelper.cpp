@@ -16,11 +16,6 @@ CMACProgressHelper::CMACProgressHelper(int64 nTotalSteps, IAPEProgressCallback *
     UpdateProgress(0);
 }
 
-CMACProgressHelper::~CMACProgressHelper()
-{
-
-}
-
 void CMACProgressHelper::UpdateProgress(int64 nCurrentStep, bool bForceUpdate)
 {
     // update the step
@@ -30,12 +25,12 @@ void CMACProgressHelper::UpdateProgress(int64 nCurrentStep, bool bForceUpdate)
         m_nCurrentStep = nCurrentStep;
 
     // figure the percentage done
-     double dPercentageDone = double(m_nCurrentStep) / double(ape_max(m_nTotalSteps, 1));
-    int nPercentageDone = (int) (dPercentageDone * 1000 * 100);
+    const double dPercentageDone = static_cast<double>(m_nCurrentStep) / static_cast<double>(ape_max(m_nTotalSteps, 1));
+    int nPercentageDone = static_cast<int>((dPercentageDone * 1000 * 100));
     if (nPercentageDone > 100000) nPercentageDone = 100000;
 
     // fire the callback
-    if (m_pProgressCallback != NULL)
+    if (m_pProgressCallback != APE_NULL)
     {
         if (bForceUpdate || (nPercentageDone - m_nLastCallbackFiredPercentageDone) >= 1000)
         {
@@ -45,20 +40,18 @@ void CMACProgressHelper::UpdateProgress(int64 nCurrentStep, bool bForceUpdate)
     }
 }
 
-int CMACProgressHelper::ProcessKillFlag(bool bSleep)
+void CMACProgressHelper::UpdateProgressComplete()
 {
-    // process any messages (allows repaint, etc.)
-    if (bSleep)
-    {
-        PUMP_MESSAGE_LOOP
-    }
+    UpdateProgress(m_nTotalSteps, true);
+}
 
+int CMACProgressHelper::ProcessKillFlag()
+{
     if (m_pProgressCallback)
     {
         while (m_pProgressCallback->GetKillFlag() == KILL_FLAG_PAUSE)
         {
             SLEEP(50);
-            PUMP_MESSAGE_LOOP
         }
 
         if ((m_pProgressCallback->GetKillFlag() != KILL_FLAG_CONTINUE) && (m_pProgressCallback->GetKillFlag() != KILL_FLAG_PAUSE))

@@ -20,7 +20,7 @@ HRESULT GUID2String(TCHAR *DstString, const GUID SrcGuid)
 
 // ----------------------------------------------------------------------------
 
-void RegisterSourceFilterExtension(const char* Extension,
+void RegisterSourceFilterExtension(const TCHAR* Extension,
     const GUID SourceFilterGUID,
     const GUID MediaType,
     const GUID Subtype)
@@ -61,7 +61,7 @@ void RegisterSourceFilterExtension(const char* Extension,
 
 // ----------------------------------------------------------------------------
 
-void UnRegisterSourceFilterExtension(const char* Extension)
+void UnRegisterSourceFilterExtension(const TCHAR* Extension)
 {
     TCHAR RegistryKeyName[256];
     wsprintf(RegistryKeyName, _T("Media Type\\Extensions\\%s"), Extension);
@@ -158,9 +158,9 @@ void RegisterWMPExtension(const TCHAR* Extension, const TCHAR* Description,
         KEY_WRITE | KEY_ENUMERATE_SUB_KEYS | KEY_QUERY_VALUE, &Key))
     {
         DWORD Index = 0, CurrentIndex = 0, MaxIndex = 0;
-        TCHAR KeyName[256];
+        TCHAR KeyName[256] = { 0 };
         DWORD KeyNameMaxLen = 256;
-        TCHAR KeyValue[256];
+        TCHAR KeyValue[256] = { 0 };
         DWORD KeyValueMaxLen = 256;
         bool AlreadyRegistered = false;
 
@@ -252,9 +252,9 @@ void UnRegisterWMPExtension(const TCHAR* Extension)
         KEY_WRITE | KEY_ENUMERATE_SUB_KEYS | KEY_QUERY_VALUE, &Key))
     {
         DWORD Index = 0;
-        TCHAR KeyName[256];
+        TCHAR KeyName[256] = { 0 };
         DWORD KeyNameMaxLen = 256;
-        TCHAR KeyValue[256];
+        TCHAR KeyValue[256] = { 0 };
         DWORD KeyValueMaxLen = 256;
         bool AlreadyRegistered = false;
 

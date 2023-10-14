@@ -7,7 +7,7 @@ namespace APE
 
 CCircleBuffer::CCircleBuffer()
 {
-    m_pBuffer = NULL;
+    m_pBuffer = APE_NULL;
     m_nTotal = 0;
     m_nHead = 0;
     m_nTail = 0;
@@ -17,16 +17,16 @@ CCircleBuffer::CCircleBuffer()
 
 CCircleBuffer::~CCircleBuffer()
 {
-    SAFE_ARRAY_DELETE(m_pBuffer)
+    APE_SAFE_ARRAY_DELETE(m_pBuffer)
 }
 
 void CCircleBuffer::CreateBuffer(uint32 nBytes, uint32 nMaxDirectWriteBytes)
 {
-    SAFE_ARRAY_DELETE(m_pBuffer)
-    
+    APE_SAFE_ARRAY_DELETE(m_pBuffer)
+
     m_nMaxDirectWriteBytes = nMaxDirectWriteBytes;
     m_nTotal = nBytes + 1 + nMaxDirectWriteBytes;
-    m_pBuffer = new unsigned char [(unsigned int) m_nTotal];
+    m_pBuffer = new unsigned char [static_cast<size_t>(m_nTotal)];
     m_nHead = 0;
     m_nTail = 0;
     m_nEndCap = m_nTotal;
@@ -34,7 +34,7 @@ void CCircleBuffer::CreateBuffer(uint32 nBytes, uint32 nMaxDirectWriteBytes)
 
 uint32 CCircleBuffer::MaxAdd()
 {
-    uint32 nMaxAdd = (m_nTail >= m_nHead) ? (m_nTotal - 1 - m_nMaxDirectWriteBytes) - (m_nTail - m_nHead) : m_nHead - m_nTail - 1;
+    const uint32 nMaxAdd = (m_nTail >= m_nHead) ? (m_nTotal - 1 - m_nMaxDirectWriteBytes) - (m_nTail - m_nHead) : m_nHead - m_nTail - 1;
     return nMaxAdd;
 }
 
@@ -45,13 +45,13 @@ uint32 CCircleBuffer::MaxGet()
 
 uint32 CCircleBuffer::UpdateCRC(uint32 nCRC, uint32 nBytes)
 {
-    uint32 nFrontBytes = ape_min(m_nTail, nBytes);
-    uint32 nHeadBytes = nBytes - nFrontBytes;
+    const uint32 nFrontBytes = ape_min(m_nTail, nBytes);
+    const uint32 nHeadBytes = nBytes - nFrontBytes;
 
     if (nHeadBytes > 0)
-        nCRC = CRC_update(nCRC, &m_pBuffer[m_nEndCap - nHeadBytes], nHeadBytes);
+        nCRC = CRC_update(nCRC, &m_pBuffer[m_nEndCap - nHeadBytes], static_cast<int>(nHeadBytes));
 
-    nCRC = CRC_update(nCRC, &m_pBuffer[m_nTail - nFrontBytes], nFrontBytes);
+    nCRC = CRC_update(nCRC, &m_pBuffer[m_nTail - nFrontBytes], static_cast<int>(nFrontBytes));
 
     return nCRC;
 }
@@ -60,17 +60,17 @@ uint32 CCircleBuffer::Get(unsigned char * pBuffer, uint32 nBytes)
 {
     uint32 nTotalGetBytes = 0;
 
-    if (pBuffer != NULL && nBytes > 0)
+    if (pBuffer != APE_NULL && nBytes > 0)
     {
         uint32 nHeadBytes = ape_min(m_nEndCap - m_nHead, nBytes);
-        uint32 nFrontBytes = nBytes - nHeadBytes;
+        const uint32 nFrontBytes = nBytes - nHeadBytes;
 
-        memcpy(&pBuffer[0], &m_pBuffer[m_nHead], (size_t) nHeadBytes);
+        memcpy(&pBuffer[0], &m_pBuffer[m_nHead], static_cast<size_t>(nHeadBytes));
         nTotalGetBytes = nHeadBytes;
 
         if (nFrontBytes > 0)
         {
-            memcpy(&pBuffer[nHeadBytes], &m_pBuffer[0], (size_t) nFrontBytes);
+            memcpy(&pBuffer[nHeadBytes], &m_pBuffer[0], static_cast<size_t>(nFrontBytes));
             nTotalGetBytes += nFrontBytes;
         }
 

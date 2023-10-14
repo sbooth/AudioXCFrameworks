@@ -5,6 +5,8 @@
 #include "APLHelper.h"
 #include "FormatArray.h"
 
+using namespace APE;
+
 CMACProcessFiles::CMACProcessFiles()
 {
     m_paryFiles = NULL;
@@ -15,6 +17,24 @@ CMACProcessFiles::CMACProcessFiles()
 
 CMACProcessFiles::~CMACProcessFiles()
 {
+    // stop
+    for (int z = 0; z < m_paryFiles->GetSize(); z++)
+        m_paryFiles->ElementAt(z).nKillFlag = KILL_FLAG_STOP;
+
+    // wait until we're done processing
+    bool bProcessing = true;
+    while (bProcessing != false)
+    {
+        bProcessing = false;
+        for (int z = 0; z < m_paryFiles->GetSize(); z++)
+        {
+            if (m_paryFiles->ElementAt(z).bProcessing)
+                bProcessing = true;
+        }
+
+        if (bProcessing)
+            Sleep(10);
+    }
 }
 
 void CMACProcessFiles::Destroy()
@@ -59,9 +79,9 @@ BOOL CMACProcessFiles::Pause(BOOL bPause)
 
 int CMACProcessFiles::GetPausedTotalMS()
 {
-    int nPausedMS = (int) m_nPausedTotalMS;
+    int nPausedMS = static_cast<int>(m_nPausedTotalMS);
     if (m_bPaused)
-        nPausedMS += int(GetTickCount64() - m_nPausedStartTickCount);
+        nPausedMS += static_cast<int>(GetTickCount64() - m_nPausedStartTickCount);
     return nPausedMS;
 }
 
@@ -76,7 +96,7 @@ BOOL CMACProcessFiles::Stop(BOOL bImmediately)
 
     // flag the stop (it will happen eventually if we didn't do an immediate stop)
     m_bStopped = TRUE;
-    
+
     return TRUE;
 }
 
@@ -86,33 +106,47 @@ BOOL CMACProcessFiles::ProcessFile(int nIndex)
     // setup
     m_paryFiles->ElementAt(nIndex).bStarted = TRUE;
     TICK_COUNT_READ(m_paryFiles->ElementAt(nIndex).dwStartTickCount);
-    
+
+    // create the thread
+    std::thread Thread(ProcessFileThread, &m_paryFiles->ElementAt(nIndex));
+
     // spin off the thread
-    HANDLE hThread = (HANDLE) _beginthread(ProcessFileThread, 0, &m_paryFiles->ElementAt(nIndex));
-    
-    // thread priority
-    if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_IDLE)
-        SetThreadPriority(hThread, THREAD_PRIORITY_IDLE);
-    else if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_LOW)
-        SetThreadPriority(hThread, THREAD_PRIORITY_BELOW_NORMAL);
-    else if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_NORMAL)
-        SetThreadPriority(hThread, THREAD_PRIORITY_NORMAL);
-    else if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_HIGH)
-        SetThreadPriority(hThread, THREAD_PRIORITY_HIGHEST);
-    
+    Thread.detach();
+
     return TRUE;
 }
 
 BOOL CMACProcessFiles::UpdateProgress(double dPercentageDone)
 {
-    TRACE(_T("%f done\n"), double(dPercentageDone));
+    TRACE(_T("%f done\n"), static_cast<double>(dPercentageDone));
     return TRUE;
 }
 
-void CMACProcessFiles::ProcessFileThread(void * pVoid)
+void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
 {
-    MAC_FILE * pInfo = (MAC_FILE *) pVoid;
+    // we're processing
+    pInfo->bProcessing = TRUE;
 
+    // thread priority
+    if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_IDLE)
+    {
+        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_IDLE);
+    }
+    else if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_LOW)
+    {
+        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_BELOW_NORMAL);
+    }
+    else if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_HIGH)
+    {
+        SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+    }
+    else if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_NORMAL)
+    {
+        // we should already be THREAD_PRIORITY_NORMAL since we were started and never set
+        ASSERT(GetThreadPriority(GetCurrentThread()) == THREAD_PRIORITY_NORMAL);
+    }
+
+    // process
     pInfo->pFormat = theApp.GetFormatArray()->GetFormat(pInfo);
     pInfo->CalculateFilenames();
 
@@ -124,13 +158,13 @@ void CMACProcessFiles::ProcessFileThread(void * pVoid)
         if ((theApp.GetSettings()->m_nOutputExistsMode == OUTPUT_EXISTS_MODE_SKIP) && (FileExists(pInfo->strOutputFilename)))
             bSkip = TRUE;
     }
-    
+
     if (bSkip == FALSE)
     {
         BOOL bVerifyWhenDone = theApp.GetSettings()->m_bProcessingAutoVerifyOnCreation && (CFilename(pInfo->strOutputFilename).GetExtension() == _T(".ape"));
         if (bVerifyWhenDone)
             pInfo->nTotalStages++;
-        
+
         if (bMakesOutput)
             CreateDirectoryEx(CFilename(pInfo->strWorkingFilename).GetPath());
 
@@ -138,15 +172,6 @@ void CMACProcessFiles::ProcessFileThread(void * pVoid)
             (pInfo->Mode == MODE_VERIFY))
         {
             nRetVal = theApp.GetFormatArray()->Process(pInfo);
-
-            // change the file type if requested
-            if (pInfo->m_cFileType[0] != 0)
-            {
-                CString strNewOutputFilename = pInfo->strOutputFilename;
-                strNewOutputFilename = strNewOutputFilename.Left(strNewOutputFilename.ReverseFind('.') + 1);
-                strNewOutputFilename += pInfo->m_cFileType;
-                pInfo->strOutputFilename = strNewOutputFilename;
-            }
         }
         else if (pInfo->Mode == MODE_CONVERT)
         {
@@ -156,7 +181,7 @@ void CMACProcessFiles::ProcessFileThread(void * pVoid)
             IFormat * pFormat = theApp.GetFormatArray()->GetFormat(pInfo->strFormat);
             if (pFormat)
             {
-                CStringArrayEx aryExtensions; 
+                CStringArrayEx aryExtensions;
                 aryExtensions.InitFromList(pFormat->GetInputExtensions(pInfo->Mode), _T(";"));
 
                 if (aryExtensions.Find(CFilename(pInfo->strInputFilename).GetExtension()) != -1)
@@ -197,7 +222,7 @@ void CMACProcessFiles::ProcessFileThread(void * pVoid)
                     // update the working filename
                     CString strWorkingFilename = pInfo->strWorkingFilename;
                     CString strWorkingFilenameOriginal = pInfo->strWorkingFilename;
-                    strWorkingFilename = strWorkingFilename.Left(strWorkingFilename.GetLength() - 3) + _T("dat");
+                    strWorkingFilename = strWorkingFilename.Left(strWorkingFilename.ReverseFind('.') + 1) + _T("dat");
                     pInfo->strWorkingFilename = strWorkingFilename;
 
                     // enter compress mode
@@ -291,7 +316,7 @@ void CMACProcessFiles::ProcessFileThread(void * pVoid)
     {
         nRetVal = ERROR_SKIPPED;
     }
-    
+
     TICK_COUNT_READ(pInfo->dwEndTickCount);
     pInfo->nRetVal = nRetVal;
     pInfo->bDone = TRUE;
@@ -303,4 +328,7 @@ void CMACProcessFiles::ProcessFileThread(void * pVoid)
 
     // reset thread state
     SetThreadExecutionState(ES_CONTINUOUS);
+
+    // we're done processing
+    pInfo->bProcessing = FALSE;
 }

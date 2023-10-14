@@ -24,7 +24,7 @@ CAPELink::CAPELink(const str_utfn * pFilename)
     {
         // create a buffer
         CSmartPtr<char> spBuffer(new char [1024], true);
-        
+
         // fill the buffer from the file and null terminate it
         unsigned int nBytesRead = 0;
         spioLinkFile->Read(spBuffer.GetPtr(), 1023, &nBytesRead);
@@ -52,13 +52,13 @@ void CAPELink::ParseData(const char * pData, const str_utfn * pFilename)
     m_nFinishBlock = 0;
     m_cImageFilename[0] = 0;
 
-    if (pData != NULL)
+    if (pData != APE_NULL)
     {
         // parse out the information
-        const char * pHeader = (const char *) strstr(pData, APE_LINK_HEADER);
-        const char * pImageFile = (const char *) strstr(pData, APE_LINK_IMAGE_FILE_TAG);
-        const char * pStartBlock = (const char *) strstr(pData, APE_LINK_START_BLOCK_TAG);
-        const char * pFinishBlock = (const char *) strstr(pData, APE_LINK_FINISH_BLOCK_TAG);
+        const char * pHeader = static_cast<const char *>(strstr(pData, APE_LINK_HEADER));
+        const char * pImageFile = static_cast<const char *>(strstr(pData, APE_LINK_IMAGE_FILE_TAG));
+        const char * pStartBlock = static_cast<const char *>(strstr(pData, APE_LINK_START_BLOCK_TAG));
+        const char * pFinishBlock = static_cast<const char *>(strstr(pData, APE_LINK_FINISH_BLOCK_TAG));
 
         if (pHeader && pImageFile && pStartBlock && pFinishBlock)
         {
@@ -70,23 +70,23 @@ void CAPELink::ParseData(const char * pData, const str_utfn * pFilename)
                 // get the start and finish blocks
                 m_nStartBlock = atoi(&pStartBlock[strlen(APE_LINK_START_BLOCK_TAG)]);
                 m_nFinishBlock = atoi(&pFinishBlock[strlen(APE_LINK_FINISH_BLOCK_TAG)]);
-                
+
                 // get the path
-                char cImageFile[MAX_PATH + 1]; int nIndex = 0;
+                char cImageFile[MAX_PATH + 1] = { 0 }; int nIndex = 0;
                 const char * pImageCharacter = &pImageFile[strlen(APE_LINK_IMAGE_FILE_TAG)];
                 while ((*pImageCharacter != 0) && (*pImageCharacter != '\r') && (*pImageCharacter != '\n'))
                     cImageFile[nIndex++] = *pImageCharacter++;
                 cImageFile[nIndex] = 0;
 
-                CSmartPtr<str_utfn> spImageFileUTF16(CAPECharacterHelper::GetUTF16FromUTF8((const str_utf8 *) cImageFile), true);
+                CSmartPtr<str_utfn> spImageFileUTF16(CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<const str_utf8 *>(cImageFile)), true);
 
                 // process the path
-                if ((wcsrchr(spImageFileUTF16, APE_FILENAME_SLASH) == NULL) && (wcsrchr(pFilename, APE_FILENAME_SLASH) != NULL))
+                if ((wcsrchr(spImageFileUTF16, APE_FILENAME_SLASH) == APE_NULL) && (wcsrchr(pFilename, APE_FILENAME_SLASH) != APE_NULL))
                 {
                     str_utfn cImagePath[MAX_PATH + 1];
                     wcscpy_s(cImagePath, MAX_PATH, pFilename);
                     str_utfn * pNext = wcsrchr(cImagePath, APE_FILENAME_SLASH) + 1;
-                    wcscpy_s(pNext, MAX_PATH - (pNext - cImagePath), spImageFileUTF16);
+                    wcscpy_s(pNext, static_cast<size_t>(MAX_PATH - (pNext - cImagePath)), spImageFileUTF16);
                     wcscpy_s(m_cImageFilename, MAX_PATH, cImagePath);
                 }
                 else

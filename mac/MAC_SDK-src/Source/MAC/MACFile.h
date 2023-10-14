@@ -6,10 +6,8 @@ class IFormat;
 class MAC_FILE
 {
 public:
-
     // construction / destruction
     MAC_FILE();
-    ~MAC_FILE();
 
     // data
     CString strInputFilename;
@@ -17,11 +15,11 @@ public:
     CString strWorkingFilename;
     double dInputFileBytes;
     double dOutputFileBytes;
-    
+
     // processing info
     BOOL bProcessing;
     CMACProcessFiles * pMACProcessFiles;
-    MAC_MODES Mode;
+    APE::APE_MODES Mode;
     int nStageProgress;
     BOOL bDone;
     BOOL nRetVal;
@@ -35,13 +33,13 @@ public:
     int nCurrentStage;
     int nTotalStages;
     IFormat * pFormat;
-    APE::str_ansi m_cFileType[64];
     BOOL bEmptyExtension;
+    BOOL bOverwriteInput;
 
     // helpers
     BOOL PrepareForProcessing(CMACProcessFiles * pProcessFiles);
     void CalculateFilenames();
-    double GetProgress();
+    double GetProgress() const;
     CString GetOutputExtension();
     inline BOOL GetNeverStarted() { return (bDone == FALSE) && (bStarted == FALSE); }
     inline BOOL GetRunning() { return (bDone == FALSE) && (bStarted != FALSE); }

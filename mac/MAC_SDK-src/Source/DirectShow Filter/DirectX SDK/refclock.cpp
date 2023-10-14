@@ -68,9 +68,9 @@ CBaseReferenceClock::~CBaseReferenceClock()
 // A derived class may supply a hThreadEvent if it has its own thread that will take care
 // of calling the schedulers Advise method.  (Refere to CBaseReferenceClock::AdviseThread()
 // to see what such a thread has to do.)
-CBaseReferenceClock::CBaseReferenceClock( __in_opt LPCTSTR pName, 
-                                          __inout_opt LPUNKNOWN pUnk, 
-                                          __inout HRESULT *phr, 
+CBaseReferenceClock::CBaseReferenceClock( __in_opt LPCTSTR pName,
+                                          __inout_opt LPUNKNOWN pUnk,
+                                          __inout HRESULT *phr,
                                           __inout_opt CAMSchedule * pShed )
 : CUnknown( pName, pUnk )
 , m_rtLastGotTime(0)

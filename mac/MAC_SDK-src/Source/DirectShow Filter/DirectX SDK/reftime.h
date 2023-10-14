@@ -35,6 +35,7 @@
 #ifndef __REFTIME__
 #define __REFTIME__
 
+#pragma warning(disable: 5267) // needed after 17.7.0 VS update
 
 const LONGLONG MILLISECONDS = (1000);            // 10 ^ 3
 const LONGLONG NANOSECONDS = (1000000000);       // 10 ^ 9
@@ -113,4 +114,3 @@ public:
 const LONGLONG TimeZero = 0;
 
 #endif /* __REFTIME__ */
-

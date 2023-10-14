@@ -65,7 +65,7 @@
 #endif
 
 // Text type and function defines (compiler and build-option dependent)
-// 
+//
 #define MCD_ACP 0
 #define MCD_UTF8 65001
 #define MCD_UTF16 1200
@@ -434,7 +434,7 @@ protected:
         MNF_CHILD      = 0x004000
     };
 
-#if defined(_DEBUG) // DEBUG 
+#if defined(_DEBUG) // DEBUG
     void x_SetDebugState();
 #define MARKUP_SETDEBUGSTATE x_SetDebugState()
 #else // not DEBUG

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "OptionsShared.h"
 class CMACDlg;
+class OPTIONS_PAGE;
 
 class COptionsDlg : public CDialog
 {
 public:
-
     COptionsDlg(CMACDlg * pMACDlg, CWnd * pParent = NULL);
 
     enum { IDD = IDD_OPTIONS };
@@ -14,7 +13,6 @@ public:
     CButton m_ctrlPageFrame;
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
     virtual BOOL OnInitDialog();
     virtual void OnOK();

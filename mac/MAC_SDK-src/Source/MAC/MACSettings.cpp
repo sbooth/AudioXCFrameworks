@@ -2,6 +2,9 @@
 #include "MAC.h"
 #include "MACSettings.h"
 #include "FormatArray.h"
+#include "APEInfo.h"
+
+using namespace APE;
 
 CMACSettings::CMACSettings()
 {
@@ -27,13 +30,13 @@ CMACSettings::~CMACSettings()
 BOOL CMACSettings::Save()
 {
     // general
-    SaveSetting(_T("Mode"), (int) m_Mode);
+    SaveSetting(_T("Mode"), static_cast<int>(m_Mode));
     SaveSetting(_T("Compression Main"), m_strFormat);
     SaveSetting(_T("Compression Sub"), m_nLevel);
     SaveSetting(_T("APL Filename Template"), m_strAPLFilenameTemplate);
     SaveSetting(_T("Add Files MRU List"), m_aryAddFilesMRU.GetList(_T("|")));
     SaveSetting(_T("Add Folder MRU List"), m_aryAddFolderMRU.GetList(_T("|")));
-    
+
     // output
     SaveSetting(_T("Output Location Mode"), m_nOutputLocationMode);
     SaveSetting(_T("Output Location Directory"), m_strOutputLocationDirectory);
@@ -51,21 +54,21 @@ BOOL CMACSettings::Save()
     SaveSetting(_T("Processing Show External Windows"), m_bProcessingShowExternalWindows);
     SaveSetting(_T("Processing Verify Mode"), m_nProcessingVerifyMode);
     SaveSetting(_T("Processing Automatic Verify On Creation"), m_bProcessingAutoVerifyOnCreation);
-    
+
     return TRUE;
 }
 
 BOOL CMACSettings::Load()
 {
     // general
-    SetMode((MAC_MODES) LoadSetting(_T("Mode"), (int) MODE_COMPRESS));
+    SetMode(static_cast<APE_MODES>(LoadSetting(_T("Mode"), static_cast<int>(MODE_COMPRESS))));
 
     m_strFormat = LoadSetting(_T("Compression Main"), COMPRESSION_APE);
-    m_nLevel = LoadSetting(_T("Compression Sub"), MAC_COMPRESSION_LEVEL_NORMAL);
+    m_nLevel = LoadSetting(_T("Compression Sub"), APE_COMPRESSION_LEVEL_NORMAL);
     m_strAPLFilenameTemplate = LoadSetting(_T("APL Filename Template"), _T("ARTIST - ALBUM - TRACK# - TITLE"));
     m_aryAddFilesMRU.InitFromList(LoadSetting(_T("Add Files MRU List"), _T("")), _T("|"));
     m_aryAddFolderMRU.InitFromList(LoadSetting(_T("Add Folder MRU List"), _T("")), _T("|"));
-    
+
     // output
     m_nOutputLocationMode = LoadSetting(_T("Output Location Mode"), OUTPUT_LOCATION_MODE_SAME_DIRECTORY);
     m_strOutputLocationDirectory = LoadSetting(_T("Output Location Directory"), _T("C:\\"));
@@ -92,7 +95,7 @@ int CMACSettings::LoadSetting(const CString & strName, int nDefault)
     if (m_bValid == FALSE) return nDefault;
 
     int nValue = nDefault;
-    m_RegKey.QueryDWORDValue(strName, (DWORD &)nValue);
+    m_RegKey.QueryDWORDValue(strName, reinterpret_cast<DWORD &>(nValue));
     return nValue;
 }
 
@@ -102,8 +105,8 @@ CString CMACSettings::LoadSetting(const CString & strName, const CString & strDe
 
     CString strValue;
 
-    DWORD dwLength = nMaxLength;
-    LONG nRetVal = m_RegKey.QueryStringValue(strName, strValue.GetBuffer(dwLength + 1), &dwLength);
+    DWORD dwLength = static_cast<DWORD>(nMaxLength);
+    LONG nRetVal = m_RegKey.QueryStringValue(strName, strValue.GetBuffer(nMaxLength + 1), &dwLength);
     strValue.ReleaseBuffer();
 
     if (nRetVal != ERROR_SUCCESS)
@@ -116,10 +119,10 @@ BOOL CMACSettings::LoadSetting(const CString & strName, void * pData, int nBytes
 {
     if (m_bValid == FALSE) return FALSE;
 
-    DWORD dwDataType = REG_BINARY; DWORD dwBytes = nBytes;
-    if (RegQueryValueEx(m_RegKey.m_hKey, strName, 0, &dwDataType, (LPBYTE) pData, &dwBytes) == ERROR_SUCCESS)
+    DWORD dwDataType = REG_BINARY; DWORD dwBytes = static_cast<DWORD>(nBytes);
+    if (RegQueryValueEx(m_RegKey.m_hKey, strName, APE_NULL, &dwDataType, static_cast<LPBYTE>(pData), &dwBytes) == ERROR_SUCCESS)
     {
-        if (int(dwBytes) == nBytes)
+        if (static_cast<int>(dwBytes) == nBytes)
             return TRUE;
     }
 
@@ -131,13 +134,13 @@ void CMACSettings::SaveSetting(const CString & strName, int nValue)
 {
     if (m_bValid == FALSE) return;
 
-    m_RegKey.SetDWORDValue(strName, nValue);
+    m_RegKey.SetDWORDValue(strName, static_cast<DWORD>(nValue));
 }
 
 void CMACSettings::SaveSetting(const CString & strName, const CString & strValue)
 {
     if (m_bValid == FALSE) return;
-    
+
     m_RegKey.SetStringValue(strName, strValue);
 }
 
@@ -145,10 +148,10 @@ void CMACSettings::SaveSetting(const CString & strName, void * pData, int nBytes
 {
     if (m_bValid == FALSE) return;
 
-    RegSetValueEx(m_RegKey.m_hKey, strName, 0, REG_BINARY, (LPBYTE) pData, nBytes);
+    RegSetValueEx(m_RegKey.m_hKey, strName, 0, REG_BINARY, static_cast<LPBYTE>(pData), nBytes);
 }
 
-void CMACSettings::SetMode(MAC_MODES Mode)
+void CMACSettings::SetMode(APE_MODES Mode)
 {
     // mode
     m_Mode = Mode;
@@ -163,8 +166,10 @@ void CMACSettings::SetCompression(const CString & strFormat, int nLevel)
 CString CMACSettings::GetModeName()
 {
     CString strRetVal;
-    if ((m_Mode >= 0) && (m_Mode < MODE_COUNT))
-        strRetVal = g_aryModeNames[(int) m_Mode];
+
+    int nMode = static_cast<int>(m_Mode);
+    if ((nMode >= 0) && (nMode < MODE_COUNT))
+        strRetVal = g_aryModeNames[nMode];
 
     return strRetVal;
 }
@@ -176,28 +181,16 @@ CString CMACSettings::GetCompressionName()
     if ((m_Mode == MODE_COMPRESS) || (m_Mode == MODE_CONVERT))
     {
         if (GetFormat() == COMPRESSION_APE)
-            strRetVal = GetAPECompressionName(GetLevel());
+        {
+            str_utfn cCompressionLevel[256]; APE_CLEAR(cCompressionLevel);
+            GetAPECompressionLevelName(GetLevel(), cCompressionLevel, 256, true);
+            strRetVal = cCompressionLevel;
+        }
         else
+        {
             strRetVal = _T("External");
+        }
     }
-    
-    return strRetVal;
-}
 
-CString CMACSettings::GetAPECompressionName(int nAPELevel)
-{
-    CString strRetVal;
-
-    if (nAPELevel == MAC_COMPRESSION_LEVEL_FAST)
-        strRetVal = _T("Fast");
-    else if (nAPELevel == MAC_COMPRESSION_LEVEL_NORMAL)
-        strRetVal = _T("Normal");
-    else if (nAPELevel == MAC_COMPRESSION_LEVEL_HIGH)
-        strRetVal = _T("High");
-    else if (nAPELevel == MAC_COMPRESSION_LEVEL_EXTRA_HIGH)
-        strRetVal = _T("Extra High");
-    else if (nAPELevel == MAC_COMPRESSION_LEVEL_INSANE)
-        strRetVal = _T("Insane");
-    
     return strRetVal;
 }

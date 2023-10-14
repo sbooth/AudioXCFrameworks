@@ -86,4 +86,3 @@ STDAPI CreateAudioMediaType(
     BOOL bSetFormat);
 
 #endif /* __MTYPE__ */
-

@@ -130,13 +130,14 @@
 #define ID_HELP_HELP                    32806
 #define ID_FILE_SELECTALL               32807
 #define ID_SELECTALL_CTRL               32808
+#define ID_HELP_LICENSE                 32809
 
 // Next default values for new objects
-// 
+//
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        163
-#define _APS_NEXT_COMMAND_VALUE         32809
+#define _APS_NEXT_COMMAND_VALUE         32810
 #define _APS_NEXT_CONTROL_VALUE         1071
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

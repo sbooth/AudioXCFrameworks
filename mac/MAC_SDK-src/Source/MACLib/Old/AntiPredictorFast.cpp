@@ -11,9 +11,9 @@ namespace APE
 void CAntiPredictorFast0000To3320::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) {
 
     //short frame handling
-    if (NumberOfElements < 32) 
+    if (NumberOfElements < 32)
     {
-        memcpy(pOutputArray, pInputArray, NumberOfElements * 4);
+        memcpy(pOutputArray, pInputArray, static_cast<size_t>(NumberOfElements) * 4);
         return;
     }
 
@@ -35,11 +35,11 @@ void CAntiPredictorFast0000To3320::AntiPredict(int * pInputArray, int * pOutputA
     op1 = &pOutputArray[7];
     p = (*op1 * 2) - pOutputArray[6];
     pw = (p * m) >> 12;
-        
-    for (op = &pOutputArray[8], ip = &pInputArray[8]; ip < &pInputArray[NumberOfElements]; ip++, op++, op1++) 
+
+    for (op = &pOutputArray[8], ip = &pInputArray[8]; ip < &pInputArray[NumberOfElements]; ip++, op++, op1++)
     {
         *op = *ip + pw;
-    
+
         // adjust m
         if (*ip > 0)
             m += (p > 0) ? 4 : -4;
@@ -52,12 +52,12 @@ void CAntiPredictorFast0000To3320::AntiPredict(int * pInputArray, int * pOutputA
 }
 
 ///////note: no output - overwrites input/////////////////
-void CAntiPredictorFast3320ToCurrent::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) 
+void CAntiPredictorFast3320ToCurrent::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements)
 {
     (void) pOutputArray;
-    
+
     // short frame handling
-    if (NumberOfElements < 3) 
+    if (NumberOfElements < 3)
     {
         return;
     }
@@ -72,14 +72,14 @@ void CAntiPredictorFast3320ToCurrent::AntiPredict(int * pInputArray, int * pOutp
 
     // the decompression loop (order 2 followed by order 1)
     for (ip = &pInputArray[2]; ip < &pInputArray[NumberOfElements]; ip++) {
-        
+
         // make a prediction for order 2
         p = IP2 + IP2 - IP3;
-        
+
         // rollback the values
         IP3 = IP2;
         IP2 = *ip + ((p * m) >> 9);
-        
+
         // adjust m for the order 2
         (*ip ^ p) > 0 ? m++ : m--;
 

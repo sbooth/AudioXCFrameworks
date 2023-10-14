@@ -4,26 +4,35 @@
 #include "MACProgressHelper.h"
 #include "FormatArray.h"
 
-int g_nWorkingFilenameIndex = 1;
+using namespace APE;
+
+static int g_nWorkingFilenameIndex = 1;
 
 MAC_FILE::MAC_FILE()
 {
     dInputFileBytes = 0;
     dOutputFileBytes = 0;
-    pFormat = NULL;
-    m_cFileType[0] = 0;
-
     bProcessing = FALSE;
-}
-
-MAC_FILE::~MAC_FILE()
-{
-
+    pMACProcessFiles = NULL;
+    Mode = MODE_COMPRESS;
+    nStageProgress = 0;
+    bDone = FALSE;
+    nRetVal = FALSE;
+    bStarted = FALSE;
+    bNeedsUpdate = FALSE;
+    dwStartTickCount = 0;
+    dwEndTickCount = 0;
+    nLevel = 0;
+    nKillFlag = 0;
+    nCurrentStage = 0;
+    nTotalStages = 0;
+    pFormat = NULL;
+    bEmptyExtension = FALSE;
+    bOverwriteInput = FALSE;
 }
 
 BOOL MAC_FILE::PrepareForProcessing(CMACProcessFiles * pProcessFiles)
 {
-    bProcessing = TRUE;
     pMACProcessFiles = pProcessFiles;
     Mode = theApp.GetSettings()->GetMode();
     nStageProgress = 0;
@@ -41,6 +50,14 @@ BOOL MAC_FILE::PrepareForProcessing(CMACProcessFiles * pProcessFiles)
     nCurrentStage = 1;
     nTotalStages = 1;
     bEmptyExtension = FALSE;
+
+    // get the size again if we overwrote our input file so doing conversion from APE to APE at different levels updates the size
+    if (bOverwriteInput)
+    {
+        dInputFileBytes = GetFileBytes(strInputFilename);
+        bOverwriteInput = FALSE;
+    }
+    dOutputFileBytes = 0;
 
     return TRUE;
 }
@@ -79,7 +96,7 @@ void MAC_FILE::CalculateFilenames()
                     strExtraPath = strInputPath.Right(strInputPath.GetLength() - nSlash - 1);
                 else
                     strExtraPath = strInputPath.Right(strInputPath.GetLength() - nSlash - 1) + _T("\\") + strExtraPath;
-                
+
                 strInputPath = strInputPath.Left(nSlash);
 
                 nLevels = nLevels - 1;
@@ -91,18 +108,21 @@ void MAC_FILE::CalculateFilenames()
 
         strOutputFilename = strPath + fnOriginal.GetName() + strOutputExtension;
     }
-    
+
     // working filename (use g_nWorkingFilenameIndex so they'll never collide in multi-thread mode) (use parenthesis so it matches our GetUniqueFilename function)
     CFilename fnOutput(strOutputFilename);
-    CString strName; strName.Format(_T("MAC Temp File (%d)"), g_nWorkingFilenameIndex++);
+    CString strName; strName.Format(_T("MAC Temp File (%d - %d)"), GetCurrentThreadId(), g_nWorkingFilenameIndex++);
     strWorkingFilename = fnOutput.BuildFilename(NULL, NULL, strName, strOutputExtension);
     strWorkingFilename = GetUniqueFilename(strWorkingFilename);
+
+    // check if the output filename is the same as the input
+    bOverwriteInput = (strOutputFilename.CompareNoCase(fnOriginal.GetFilename()) == 0);
 }
 
-double MAC_FILE::GetProgress()
+double MAC_FILE::GetProgress() const
 {
     if (nTotalStages > 0)
-        return (double(nStageProgress) / double(100000) / double(nTotalStages)) + (double(nCurrentStage - 1) / double(nTotalStages));
+        return (static_cast<double>(nStageProgress) / static_cast<double>(100000) / static_cast<double>(nTotalStages)) + ((static_cast<double>(nCurrentStage) - static_cast<double>(1)) / static_cast<double>(nTotalStages));
     else
         return 1;
 }

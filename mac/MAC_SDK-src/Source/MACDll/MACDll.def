@@ -36,7 +36,9 @@ EXPORTS
     ; helpers / miscellaneous
     GetVersionNumber
     GetInterfaceCompatibility
-    ShowFileInfoDialog
+    GetLibraryVersionString
+    GetLibraryVersionNumber
+    GetLibraryInterfaceVersion
     RemoveTag
     TagFileSimple
     GetID3Tag

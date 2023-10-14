@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 // File: Transfrm.h
 //
-// Desc: DirectShow base classes - defines classes from which simple 
+// Desc: DirectShow base classes - defines classes from which simple
 //       transform codecs may be derived.
 //
 // Copyright (c) 1992-2001 Microsoft Corporation.  All rights reserved.
@@ -300,5 +300,3 @@ protected:
 };
 
 #endif /* __TRANSFRM__ */
-
-

@@ -202,33 +202,15 @@
     <ClInclude Include="..\..\..\MAC\OptionsShared.h">
       <Filter>Header Files\Options %28h%29</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Shared\MFCWarnings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\MFCGlobals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\MAC\res\MAC.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\Options_Icons.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\Options_Tree.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\Toolbar_Full.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\Monkey_Watermark.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\Toolbar_Small.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\Tree_Icons.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\APE_Buttons.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\..\..\MAC\res\APE_Buttons.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -238,9 +220,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\MAC\res\Completion Sound.wav" />
+    <Media Include="..\..\..\MAC\res\Completion Sound.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
-    <Manifest Include="..\..\..\MAC\MAC.manifest" />
+    <Manifest Include="..\..\..\MAC\MAC.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
   </ItemGroup>
 </Project>

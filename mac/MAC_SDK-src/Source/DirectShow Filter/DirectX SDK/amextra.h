@@ -34,7 +34,7 @@ public:
                       __inout HRESULT *phr,
                       __in_opt LPCWSTR pName);
 #endif
-    
+
     // Override methods to track end of stream state
     STDMETHODIMP EndOfStream();
     STDMETHODIMP EndFlush();
@@ -53,4 +53,3 @@ private:
 };
 
 #endif // __AMEXTRA__
-

@@ -6,13 +6,11 @@ class CMACDlg;
 class CAPEInfoDlg : public CDialog
 {
 public:
-
     CAPEInfoDlg(CMACDlg * pMACDlg, CStringArray & aryFiles);
 
     enum { IDD = IDD_APE_INFO };
 
 protected:
-
     virtual void DoDataExchange(CDataExchange * pDX);
     virtual BOOL OnInitDialog();
 
@@ -23,7 +21,6 @@ protected:
     CAPEInfoFormatDlg m_dlgFormat;
 
 public:
-
     CListCtrl m_ctrlFiles;
     afx_msg void OnBnClickedFilesSelectAll();
     afx_msg void OnBnClickedFilesSelectNone();

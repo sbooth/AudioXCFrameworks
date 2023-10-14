@@ -1582,6 +1582,3 @@ AMovieSetupRegisterFilter( const AMOVIESETUP_FILTER * const psetupdata
 ///////////////////////////////////////////////////////////////////////////
 
 #endif /* __FILTER__ */
-
-
-

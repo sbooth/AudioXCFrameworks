@@ -6,12 +6,14 @@
 #include <afxole.h>
 #include "MemDC.h"
 
+using namespace APE;
+
 struct MAC_ERROR_EXPLANATION
 {
     int nErrorCode;
     LPCTSTR pDescription;
 };
-const MAC_ERROR_EXPLANATION g_MACErrorExplanations[] = { 
+const MAC_ERROR_EXPLANATION g_MACErrorExplanations[] = {
     { ERROR_IO_READ                               , _T("I/O read error") },                         \
     { ERROR_IO_WRITE                              , _T("I/O write error") },                        \
     { ERROR_INVALID_INPUT_FILE                    , _T("invalid input file") },                     \
@@ -36,7 +38,7 @@ const MAC_ERROR_EXPLANATION g_MACErrorExplanations[] = {
     { ERROR_APE_COMPRESS_TOO_MUCH_DATA            , _T("APE compress too much data") },             \
     { ERROR_UNSUPPORTED_FILE_VERSION              , _T("unsupported file version") },               \
     { ERROR_OPENING_FILE_IN_USE                   , _T("file in use") },                            \
-    { ERROR_UNDEFINED                             , _T("undefined") } 
+    { ERROR_UNDEFINED                             , _T("undefined") }
 };
 
 #define IDC_AUTO_SIZE_ALL 1000
@@ -49,16 +51,15 @@ CMACListCtrl::CMACListCtrl()
 
 CMACListCtrl::~CMACListCtrl()
 {
-    m_spBitmap.Delete();
 }
 
 BEGIN_MESSAGE_MAP(CMACListCtrl, CListCtrl)
     ON_WM_DESTROY()
-    ON_NOTIFY_REFLECT(LVN_GETDISPINFO, OnGetdispinfo)
+    ON_NOTIFY_REFLECT(LVN_GETDISPINFO, &CMACListCtrl::OnGetdispinfo)
     ON_WM_DROPFILES()
-    ON_NOTIFY_REFLECT(LVN_BEGINDRAG, OnBegindrag)
-    ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
-    ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, OnLvnColumnclickList)
+    ON_NOTIFY_REFLECT(LVN_BEGINDRAG, &CMACListCtrl::OnBegindrag)
+    ON_NOTIFY_REFLECT(NM_RCLICK, &CMACListCtrl::OnRclick)
+    ON_NOTIFY_REFLECT(LVN_COLUMNCLICK, &CMACListCtrl::OnLvnColumnclickList)
     ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
@@ -70,7 +71,7 @@ BOOL CMACListCtrl::Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles)
 
     // set the style
     SetExtendedStyle(GetExtendedStyle() | LVS_EX_HEADERDRAGDROP | LVS_EX_FULLROWSELECT);
-    
+
     // accept drag-n-drop
     DragAcceptFiles(TRUE);
 
@@ -82,59 +83,91 @@ BOOL CMACListCtrl::Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles)
     InsertColumn(COLUMN_COMPRESSION_PERCENTAGE, _T("%"), LVCFMT_CENTER);
     InsertColumn(COLUMN_TIME_ELAPSED, _T("Time (s)"), LVCFMT_CENTER);
     InsertColumn(COLUMN_STATUS, _T("Status"), LVCFMT_CENTER);
-    
+
     // set background color
     SetTextBkColor(CLR_NONE);
     SetTextColor(RGB(0, 0, 0));
 
-    // load settings
-    m_nSortColumn = theApp.GetSettings()->LoadSetting(_T("List Sort Column"), 0);
-    m_bSortAscending = theApp.GetSettings()->LoadSetting(_T("List Sort Ascending"), TRUE);
-    m_bSortEnabled = theApp.GetSettings()->LoadSetting(_T("List Sort Enabled"), TRUE);
-    
+    // get system UI font
+    NONCLIENTMETRICS ncm;
+    APE_CLEAR(ncm);
+    ncm.cbSize = sizeof(ncm);
+    SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0);
+
+    // create font
+    m_Font.CreateFont(ncm.lfMessageFont.lfHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0,
+        DEFAULT_CHARSET,
+        OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
+        DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, ncm.lfMessageFont.lfFaceName);
+    SetFont(&m_Font);
+
     return TRUE;
 }
 
-BOOL CMACListCtrl::LoadFileList(const CString & strPath)
+BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFiles)
 {
-    HANDLE hInputFile = CreateFile(strPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
-    if (hInputFile != INVALID_HANDLE_VALUE)
+    if ((paryFiles != NULL) && (paryFiles->GetSize() > 0))
     {
-        int nTotalBytes = GetFileSize(hInputFile, NULL);
-        unsigned long nBytesRead = 0;
-        
-        CSmartPtr<char> spBuffer(new char [nTotalBytes + 1], TRUE);
-        spBuffer[nTotalBytes] = 0;
-        if (ReadFile(hInputFile, spBuffer, nTotalBytes, &nBytesRead, NULL) == false)
-            spBuffer[0] = 0;
-        
-        int nIndex = 0;
-        for (nIndex = 0; nIndex < nTotalBytes; nIndex++)
+        for (int z = 0; z < paryFiles->GetSize(); z++)
         {
-            if ((spBuffer[nIndex] == '\r') || (spBuffer[nIndex] == '\n'))
-                spBuffer[nIndex] = 0;
-        }
-
-        StartFileInsertion();
-
-        nIndex = 0;
-        while (nIndex < nTotalBytes)
-        {
-            if (spBuffer[nIndex] == 0)
+            CString strFilename = paryFiles->ElementAt(z);
+            strFilename.Trim(_T("\""));
+            if (z == 0)
             {
-                nIndex++;
-            }
-            else
-            {
-                CSmartPtr<TCHAR> spUTF16(CAPECharacterHelper::GetUTF16FromUTF8((unsigned char *) &spBuffer[nIndex]), TRUE);
-                AddFileInternal(spUTF16.GetPtr());
-                nIndex += int(strlen(&spBuffer[nIndex])) + 1;
-            }
-        }
+                // set the mode based on the first file
+                if (strFilename.Right(3).CompareNoCase(_T("ape")) == 0)
+                    m_pParent->SetMode(MODE_DECOMPRESS);
+                else if (strFilename.Right(3).CompareNoCase(_T("wav")) == 0)
+                    m_pParent->SetMode(MODE_COMPRESS);
 
+                // start insertion after we set the mode
+                StartFileInsertion();
+            }
+            AddFileInternal(strFilename);
+        }
         FinishFileInsertion();
-        
-        CloseHandle(hInputFile);
+    }
+    else
+    {
+        HANDLE hInputFile = CreateFile(strPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
+        if (hInputFile != INVALID_HANDLE_VALUE)
+        {
+            DWORD dwTotalBytes = GetFileSize(hInputFile, NULL);
+            unsigned long nBytesRead = 0;
+
+            CSmartPtr<char> spBuffer(new char [static_cast<size_t>(dwTotalBytes) + 1], TRUE);
+            spBuffer[dwTotalBytes] = 0;
+            if (ReadFile(hInputFile, spBuffer, dwTotalBytes, &nBytesRead, NULL) == false)
+                spBuffer[0] = 0;
+
+            DWORD dwIndex = 0;
+            for (dwIndex = 0; dwIndex < dwTotalBytes; dwIndex++)
+            {
+                if ((spBuffer[dwIndex] == '\r') || (spBuffer[dwIndex] == '\n'))
+                    spBuffer[dwIndex] = 0;
+            }
+
+            StartFileInsertion();
+
+            dwIndex = 0;
+            while (dwIndex < dwTotalBytes)
+            {
+                if (spBuffer[dwIndex] == 0)
+                {
+                    dwIndex++;
+                }
+                else
+                {
+                    CSmartPtr<TCHAR> spUTF16(CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<unsigned char *>(&spBuffer[dwIndex])), TRUE);
+                    AddFileInternal(spUTF16.GetPtr());
+                    dwIndex += static_cast<DWORD>(strlen(&spBuffer[dwIndex]) + 1);
+                }
+            }
+
+            FinishFileInsertion();
+
+            CloseHandle(hInputFile);
+        }
     }
 
     return TRUE;
@@ -149,12 +182,12 @@ BOOL CMACListCtrl::SaveFileList(const CString & strPath)
         unsigned long nBytesWritten = 0;
         for (int z = 0; z < GetItemCount(); z++)
         {
-            CSmartPtr<char> spUTF8((char *) CAPECharacterHelper::GetUTF8FromUTF16(GetFilename(z)), TRUE);
-            
-            WriteFile(hOutputFile, spUTF8.GetPtr(), (DWORD) strlen(spUTF8), &nBytesWritten, NULL);
+            CSmartPtr<char> spUTF8(reinterpret_cast<char *>(CAPECharacterHelper::GetUTF8FromUTF16(GetFilename(z))), TRUE);
+
+            WriteFile(hOutputFile, spUTF8.GetPtr(), static_cast<DWORD>(strlen(spUTF8)), &nBytesWritten, NULL);
             WriteFile(hOutputFile, "\r\n", 2, &nBytesWritten, NULL);
         }
-        
+
         CloseHandle(hOutputFile);
     }
 
@@ -183,11 +216,22 @@ BOOL CMACListCtrl::FinishFileInsertion()
 
 BOOL CMACListCtrl::Update()
 {
-    SetItemCount((int) m_paryFiles->GetSize());
+    SetItemCount(static_cast<int>(m_paryFiles->GetSize()));
     if (m_pParent->m_ctrlStatusBar.m_hWnd != NULL)
         m_pParent->m_ctrlStatusBar.UpdateFiles(m_paryFiles);
 
     return TRUE;
+}
+
+void CMACListCtrl::SaveColumns()
+{
+    for (int z = 0; z < COLUMN_COUNT; z++)
+    {
+        CString strValueName; strValueName.Format(_T("List Column %d Width"), z);
+        int nWidth = GetColumnWidth(z);
+        nWidth = theApp.GetSizeReverse(nWidth);
+        theApp.GetSettings()->SaveSetting(strValueName, nWidth);
+    }
 }
 
 void CMACListCtrl::LoadColumns()
@@ -198,7 +242,8 @@ void CMACListCtrl::LoadColumns()
         int nSize = theApp.GetSettings()->LoadSetting(strValueName, 100);
         if (nSize <= 20)
             nSize = 200;
-        SetColumnWidth(z, theApp.GetSize(nSize, 0).cx);
+        nSize = theApp.GetSize(nSize, 0).cx;
+        SetColumnWidth(z, nSize);
     }
 
     CSmartPtr<int> spOrderArray(new int[COLUMN_COUNT], TRUE);
@@ -229,7 +274,7 @@ BOOL CMACListCtrl::AddFolder(CString strPath)
     return TRUE;
 }
 
-BOOL CMACListCtrl::AddFileInternal(const CString & strInputFilename)
+BOOL CMACListCtrl::AddFileInternal(CString strInputFilename)
 {
     // make sure the file exists
     WIN32_FIND_DATA WFD;
@@ -244,6 +289,18 @@ BOOL CMACListCtrl::AddFileInternal(const CString & strInputFilename)
     }
     else
     {
+        // expand the filename
+        TCHAR * pLongFilename = new TCHAR [APE_MAX_PATH];
+        pLongFilename[0] = 0;
+        if (GetLongPathName(strInputFilename, pLongFilename, APE_MAX_PATH) > 0)
+            strInputFilename = pLongFilename;
+        APE_SAFE_ARRAY_DELETE(pLongFilename)
+        if ((strInputFilename.GetLength() >= MAX_PATH) &&
+            (strInputFilename.Left(4) != _T("\\\\?\\")))
+        {
+            strInputFilename = _T("\\\\?\\") + strInputFilename;
+        }
+
         // split the path
         CString strExtension = GetExtension(strInputFilename);
 
@@ -253,7 +310,7 @@ BOOL CMACListCtrl::AddFileInternal(const CString & strInputFilename)
             // build file
             MAC_FILE File;
             File.strInputFilename = strInputFilename;
-            File.dInputFileBytes = double(WFD.nFileSizeLow) + (double(WFD.nFileSizeHigh) * double(4294967296));
+            File.dInputFileBytes = static_cast<double>(WFD.nFileSizeLow) + (static_cast<double>(WFD.nFileSizeHigh) * static_cast<double>(4294967296.0));
 
             // add
             m_paryFiles->Add(File);
@@ -262,11 +319,11 @@ BOOL CMACListCtrl::AddFileInternal(const CString & strInputFilename)
             bRetVal = TRUE;
         }
     }
-    
+
     // cleanup
     FindClose(hFind);
 
-    return TRUE;
+    return bRetVal;
 }
 
 BOOL CMACListCtrl::AddFolderInternal(CString strPath)
@@ -282,25 +339,20 @@ BOOL CMACListCtrl::RemoveSelectedFiles()
 {
     SetRedraw(FALSE);
 
-    BOOL bOriginalSortEnabled = m_bSortEnabled;
-    m_bSortEnabled = FALSE;
-    
     // build a list of indexes
     POSITION Pos = GetFirstSelectedItemPosition();
     CUIntArray aryIndex;
     while (Pos)
-        aryIndex.Add(GetNextSelectedItem(Pos));
+        aryIndex.Add(static_cast<UINT>(GetNextSelectedItem(Pos)));
 
     // remove the files
     for (intn z = aryIndex.GetUpperBound(); z >= 0; z--)
-        m_paryFiles->RemoveAt(aryIndex[z]);
+        m_paryFiles->RemoveAt(static_cast<INT_PTR>(aryIndex[z]));
 
     // update
-    SetItemCount((int) m_paryFiles->GetSize());
+    SetItemCount(static_cast<int>(m_paryFiles->GetSize()));
     SelectNone();
     m_pParent->m_ctrlStatusBar.UpdateFiles(m_paryFiles);
-
-    m_bSortEnabled = bOriginalSortEnabled;
 
     SetRedraw(TRUE);
 
@@ -316,25 +368,15 @@ BOOL CMACListCtrl::RemoveAllFiles()
     return TRUE;
 }
 
-void CMACListCtrl::OnDestroy() 
+void CMACListCtrl::OnDestroy()
 {
     // save the settings
-    for (int z = 0; z < COLUMN_COUNT; z++)
-    {
-        CString strValueName; strValueName.Format(_T("List Column %d Width"), z);
-        int nWidth = GetColumnWidth(z);
-        nWidth = theApp.GetSizeReverse(nWidth);
-        theApp.GetSettings()->SaveSetting(strValueName, nWidth);
-    }
+    SaveColumns();
 
     CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], TRUE);
     GetColumnOrderArray(spOrderArray, -1);
     theApp.GetSettings()->SaveSetting(_T("List Column Order"), spOrderArray, (sizeof(int) * COLUMN_COUNT));
 
-    theApp.GetSettings()->SaveSetting(_T("List Sort Column"), m_nSortColumn);
-    theApp.GetSettings()->SaveSetting(_T("List Sort Ascending"), m_bSortAscending);
-    theApp.GetSettings()->SaveSetting(_T("List Sort Enabled"), m_bSortEnabled);
-    
     // save the file list
     CString strFileListsFolder = GetUserDataPath() + _T("File Lists\\");
     CreateDirectoryEx(strFileListsFolder);
@@ -353,41 +395,38 @@ CString CMACListCtrl::GetFilename(int nIndex)
     return strRetVal;
 }
 
-CString CMACListCtrl::GetStatus(MAC_FILE & File)
+CString CMACListCtrl::GetStatus(const MAC_FILE & File)
 {
     CString strValue;
-    if (File.bProcessing)
+    if (File.bDone)
     {
-        if (File.bDone)
+        // lookup the error text
+        if (File.nRetVal == ERROR_SUCCESS)
         {
-            // lookup the error text
-            if (File.nRetVal == ERROR_SUCCESS)
-            {
-                strValue = _T("OK");
-            }
-            else if (File.nRetVal == ERROR_SKIPPED)
-            {
-                strValue = _T("Skipped");
-            }
-            else
-            {
-                CString strError = _T("unknown");
-                for (int z = 0; z < _countof(g_MACErrorExplanations); z++)
-                {
-                    if (File.nRetVal == g_MACErrorExplanations[z].nErrorCode)
-                    {
-                        strError = g_MACErrorExplanations[z].pDescription;
-                        break;
-                    }
-                }
-                strValue.Format(_T("Error (%s)"), (LPCTSTR) strError);
-            }
+            strValue = _T("OK");
+        }
+        else if (File.nRetVal == ERROR_SKIPPED)
+        {
+            strValue = _T("Skipped");
         }
         else
         {
-            double dProgress = File.GetProgress();
-            strValue.Format(_T("%.1f%% (%s)"), dProgress * 100, g_aryModeActionNames[File.Mode]);
+            CString strError = _T("unknown");
+            for (int z = 0; z < static_cast<int>(_countof(g_MACErrorExplanations)); z++)
+            {
+                if (File.nRetVal == g_MACErrorExplanations[z].nErrorCode)
+                {
+                    strError = g_MACErrorExplanations[z].pDescription;
+                    break;
+                }
+            }
+            strValue.Format(_T("Error (%s)"), strError.GetString());
         }
+    }
+    else if (File.bProcessing)
+    {
+        double dProgress = File.GetProgress();
+        strValue.Format(_T("%.1f%% (%s)"), dProgress * 100, g_aryModeActionNames[File.Mode]);
     }
     else
     {
@@ -397,10 +436,10 @@ CString CMACListCtrl::GetStatus(MAC_FILE & File)
     return strValue;
 }
 
-BOOL CMACListCtrl::SetMode(MAC_MODES Mode)
+BOOL CMACListCtrl::SetMode(APE_MODES Mode)
 {
     LVCOLUMN lvCol;
-    ::ZeroMemory((void *) &lvCol, sizeof(LVCOLUMN));
+    APE_CLEAR(lvCol);
     lvCol.mask = LVCF_TEXT;
     GetColumn(3, &lvCol);
 
@@ -418,7 +457,7 @@ BOOL CMACListCtrl::SetMode(MAC_MODES Mode)
 BOOL CMACListCtrl::GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection)
 {
     aryFiles.RemoveAll();
-    
+
     POSITION Pos = GetFirstSelectedItemPosition();
 
     if (bIgnoreSelection || (Pos == NULL))
@@ -438,9 +477,9 @@ BOOL CMACListCtrl::GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection)
     return TRUE;
 }
 
-void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult) 
+void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 {
-    LV_DISPINFO * pDispInfo = (LV_DISPINFO *)pNMHDR;
+    LV_DISPINFO * pDispInfo = reinterpret_cast<LV_DISPINFO *>(pNMHDR);
 
     if (pDispInfo->item.mask & LVIF_TEXT)
     {
@@ -464,31 +503,28 @@ void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
                 }
                 case COLUMN_ORIGINAL_SIZE:
                 {
-                    strValue.Format(_T("%.2f"), double(File.dInputFileBytes) / double(1024 * 1024));
+                    strValue.Format(_T("%.2f"), static_cast<double>(File.dInputFileBytes) / (static_cast<double>(1024) * static_cast<double>(1024)));
                     break;
                 }
                 case COLUMN_COMPRESSED_SIZE:
                 {
                     if (File.dOutputFileBytes > 0)
-                        strValue.Format(_T("%.2f"), double(File.dOutputFileBytes) / double(1024 * 1024));
+                        strValue.Format(_T("%.2f"), static_cast<double>(File.dOutputFileBytes) / (static_cast<double>(1024) * static_cast<double>(1024)));
 
                     break;
                 }
                 case COLUMN_COMPRESSION_PERCENTAGE:
                 {
                     if (File.dOutputFileBytes > 0)
-                        strValue.Format(_T("%.2f%%"), (double(100.0) * double(File.dOutputFileBytes)) / double(File.dInputFileBytes));
+                        strValue.Format(_T("%.2f%%"), (static_cast<double>(100.0) * static_cast<double>(File.dOutputFileBytes)) / static_cast<double>(File.dInputFileBytes));
                     break;
                 }
                 case COLUMN_TIME_ELAPSED:
                 {
-                    if (File.bProcessing)
+                    if (File.bStarted && File.bDone)
                     {
-                        if (File.bStarted && File.bDone)
-                        {
-                            int64 nElapsedMS = int64(File.dwEndTickCount - File.dwStartTickCount);
-                            strValue.Format(_T("%.2f"), double(nElapsedMS) / double(1000));
-                        }
+                        int64 nElapsedMS = static_cast<int64>(File.dwEndTickCount - File.dwStartTickCount);
+                        strValue.Format(_T("%.2f"), static_cast<double>(nElapsedMS) / static_cast<double>(1000));
                     }
                     break;
                 }
@@ -507,24 +543,26 @@ void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
     *pResult = 0;
 }
 
-void CMACListCtrl::OnDropFiles(HDROP hDropInfo) 
+void CMACListCtrl::OnDropFiles(HDROP hDropInfo)
 {
     StartFileInsertion(FALSE);
 
     const int nFiles = DragQueryFile(hDropInfo, 0xFFFFFFFF, NULL, 0);
+    TCHAR * pFilename = new TCHAR [APE_MAX_PATH];
     for (int z = 0; z < nFiles; z++)
     {
-        TCHAR cFilename[MAX_PATH + 1] = { 0 };
-        DragQueryFile(hDropInfo, z, cFilename, MAX_PATH);
-        AddFileInternal(cFilename);
+        pFilename[0] = 0;
+        DragQueryFile(hDropInfo, z, pFilename, APE_MAX_PATH);
+        AddFileInternal(pFilename);
     }
+    APE_SAFE_ARRAY_DELETE(pFilename)
 
     FinishFileInsertion();
-        
+
     CListCtrl::OnDropFiles(hDropInfo);
 }
 
-void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *) 
+void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
 {
     // get the list of files
     CStringList slDraggedFiles; int nBufferSize = 0;
@@ -537,13 +575,13 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
             slDraggedFiles.AddTail(strFilename);
             nBufferSize += strFilename.GetLength() + 1;
         }
-        nBufferSize = int(sizeof(DROPFILES)) + (int(sizeof(TCHAR)) * (nBufferSize + 1));
+        nBufferSize = static_cast<int>(sizeof(DROPFILES)) + (static_cast<int>(sizeof(TCHAR)) * (nBufferSize + 1));
 
         // create the drop object
-        HGLOBAL hgDrop = GlobalAlloc(GHND | GMEM_SHARE, nBufferSize);
+        HGLOBAL hgDrop = GlobalAlloc(GHND | GMEM_SHARE, static_cast<size_t>(nBufferSize));
         if (hgDrop != NULL)
         {
-            DROPFILES * pDrop = (DROPFILES *) GlobalLock(hgDrop);
+            DROPFILES * pDrop = static_cast<DROPFILES *>(GlobalLock(hgDrop));
             if (pDrop != NULL)
             {
                 // setup the drop object
@@ -558,13 +596,13 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
 
                 // fill in the actual filenames
                 POSITION InternalPos = slDraggedFiles.GetHeadPosition();
-                TCHAR * pszBuff = (TCHAR *) (LPBYTE(pDrop) + sizeof(DROPFILES));
+                TCHAR * pszBuff = reinterpret_cast<TCHAR *>((LPBYTE(pDrop) + sizeof(DROPFILES)));
                 while (InternalPos != NULL)
                 {
-                    LPCTSTR pFilename = (LPCTSTR) slDraggedFiles.GetNext(InternalPos);
-                    _tcscpy_s(pszBuff, nBufferSizeLeft / sizeof(TCHAR), pFilename);
+                    LPCTSTR pFilename = slDraggedFiles.GetNext(InternalPos).GetString();
+                    _tcscpy_s(pszBuff, static_cast<size_t>(nBufferSizeLeft) / sizeof(TCHAR), pFilename);
                     pszBuff += 1 + _tcslen(pFilename);
-                    nBufferSizeLeft -= (int) (sizeof(TCHAR) * (1 + _tcslen(pFilename)));
+                    nBufferSizeLeft -= static_cast<int>((sizeof(TCHAR) * (1 + _tcslen(pFilename))));
                 }
                 GlobalUnlock(hgDrop);
 
@@ -586,21 +624,21 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
     }
 }
 
-void CMACListCtrl::OnRclick(NMHDR *, LRESULT * pResult) 
+void CMACListCtrl::OnRclick(NMHDR *, LRESULT * pResult)
 {
     CMenu menuPopup; menuPopup.CreatePopupMenu();
 
     menuPopup.AppendMenu(MF_STRING, 1000, _T("Add File(s)"));
     menuPopup.AppendMenu(MF_STRING, 1001, _T("Add Folder"));
     menuPopup.AppendMenu(MF_STRING, 1002, _T("File Info..."));
-        
+
     CPoint ptMouse; GetCursorPos(&ptMouse);
-    int nRetVal = menuPopup.TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_RETURNCMD, 
+    int nRetVal = menuPopup.TrackPopupMenu(TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_RETURNCMD,
         ptMouse.x, ptMouse.y, this);
 
     if (nRetVal == 1000)
     {
-        m_pParent->PostMessage(WM_COMMAND, ID_FILE_ADD_FILES, 0);   
+        m_pParent->PostMessage(WM_COMMAND, ID_FILE_ADD_FILES, 0);
     }
     else if (nRetVal == 1001)
     {
@@ -608,7 +646,7 @@ void CMACListCtrl::OnRclick(NMHDR *, LRESULT * pResult)
     }
     else if (nRetVal == 1002)
     {
-        m_pParent->PostMessage(WM_COMMAND, ID_FILE_FILE_INFO, 0); 
+        m_pParent->PostMessage(WM_COMMAND, ID_FILE_FILE_INFO, 0);
     }
 
     *pResult = 0;
@@ -631,36 +669,49 @@ BOOL CMACListCtrl::SelectAll()
     return TRUE;
 }
 
-CMACListCtrl * s_pThis = NULL;
+static CMACListCtrl * s_pThis = NULL;
 static int s_nCompareColumn = -1;
 static int s_nCompareOrder = 0;
 
+int Compare(const void * pOne, const void * pTwo); // declare before implementing because it makes Clang happy
 int Compare(const void * pOne, const void * pTwo)
 {
     int nReturn = 0;
-    MAC_FILE * pFileOne = (MAC_FILE *)pOne;
-    MAC_FILE * pFileTwo = (MAC_FILE *)pTwo;
-    if (s_nCompareColumn == 0)
+    const MAC_FILE * pFileOne = static_cast<const MAC_FILE *>(pOne);
+    const MAC_FILE * pFileTwo = static_cast<const MAC_FILE *>(pTwo);
+    if (s_nCompareColumn == COLUMN_FILENAME)
     {
         nReturn = pFileOne->strInputFilename.Compare(pFileTwo->strInputFilename);
     }
-    else if (s_nCompareColumn == 1)
+    else if (s_nCompareColumn == COLUMN_EXTENSION)
     {
-        nReturn = pFileOne->strFormat.Compare(pFileTwo->strFormat);
+        CString strExtensionOne = GetExtension(pFileOne->strInputFilename);
+        CString strExtensionTwo = GetExtension(pFileTwo->strInputFilename);
+
+        nReturn = strExtensionOne.Compare(strExtensionTwo);
     }
-    else if (s_nCompareColumn == 2)
+    else if (s_nCompareColumn == COLUMN_ORIGINAL_SIZE)
     {
-        nReturn = int(pFileOne->dInputFileBytes - pFileTwo->dInputFileBytes);
+        nReturn = static_cast<int>(pFileOne->dInputFileBytes - pFileTwo->dInputFileBytes);
     }
-    else if (s_nCompareColumn == 3)
+    else if (s_nCompareColumn == COLUMN_COMPRESSED_SIZE)
     {
-        nReturn = int(pFileOne->dOutputFileBytes - pFileTwo->dOutputFileBytes);
+        nReturn = static_cast<int>(pFileOne->dOutputFileBytes - pFileTwo->dOutputFileBytes);
     }
-    else if (s_nCompareColumn == 5)
+    else if (s_nCompareColumn == COLUMN_COMPRESSION_PERCENTAGE)
     {
-        nReturn = int((pFileOne->dwEndTickCount - pFileOne->dwStartTickCount) - (pFileTwo->dwEndTickCount - pFileTwo->dwStartTickCount));
+        double dOne = static_cast<double>(pFileOne->dOutputFileBytes) / static_cast<double>(pFileOne->dInputFileBytes);
+        double dTwo = static_cast<double>(pFileTwo->dOutputFileBytes) / static_cast<double>(pFileTwo->dInputFileBytes);
+        if (dOne > dTwo)
+            nReturn = 1;
+        else if (dOne < dTwo)
+            nReturn = -1;
     }
-    else if (s_nCompareColumn == 6)
+    else if (s_nCompareColumn == COLUMN_TIME_ELAPSED)
+    {
+        nReturn = static_cast<int>((pFileOne->dwEndTickCount - pFileOne->dwStartTickCount) - (pFileTwo->dwEndTickCount - pFileTwo->dwStartTickCount));
+    }
+    else if (s_nCompareColumn == COLUMN_STATUS)
     {
         nReturn = s_pThis->GetStatus(*pFileOne).Compare(s_pThis->GetStatus(*pFileTwo));
     }
@@ -694,8 +745,7 @@ void CMACListCtrl::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 
     if (m_paryFiles->GetSize() > 0)
     {
-        qsort(&m_paryFiles->ElementAt(0), m_paryFiles->GetSize(), sizeof(MAC_FILE), Compare);
-        if (s_nCompareColumn == 6)
+        if (s_nCompareColumn == COLUMN_STATUS)
         {
             bool bAllOK = true;
             for (int z = 0; z < m_paryFiles->GetSize(); z++)
@@ -711,8 +761,11 @@ void CMACListCtrl::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
             if (bAllOK && (m_paryFiles->GetSize() > 0))
             {
                 AfxMessageBox(_T("All files are OK."));
+                return;
             }
         }
+
+        qsort(&m_paryFiles->ElementAt(0), static_cast<size_t>(m_paryFiles->GetSize()), sizeof(MAC_FILE), Compare);
         DeleteAllItems();
         Update();
     }
@@ -722,7 +775,7 @@ void CMACListCtrl::OnLvnColumnclickList(NMHDR *pNMHDR, LRESULT *pResult)
 
 BOOL CMACListCtrl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 {
-    if (wParam == 0 && ((NMHDR *) lParam)->code == NM_RCLICK)
+    if (wParam == 0 && (reinterpret_cast<NMHDR *>(lParam))->code == NM_RCLICK)
     {
         // get mouse point
         POINT MousePoint;
@@ -732,14 +785,15 @@ BOOL CMACListCtrl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
         ScreenToClient(&Point);
 
         // create hit test object
-        HDHITTESTINFO HitTest = { 0 };
+        HDHITTESTINFO HitTest;
+        APE_CLEAR(HitTest);
 
-        // offset of right scrolling  
+        // offset of right scrolling
         HitTest.pt.x = Point.x + GetScrollPos(SB_HORZ); // offset of right scrolling
         HitTest.pt.y = Point.y;
 
         // send the hit test message
-        GetHeaderCtrl()->SendMessage(HDM_HITTEST, 0, (LPARAM)&HitTest);
+        GetHeaderCtrl()->SendMessage(HDM_HITTEST, 0, reinterpret_cast<LPARAM>(&HitTest));
 
         // create a menu
         CMenu menu;
@@ -771,24 +825,24 @@ BOOL CMACListCtrl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 
             if ((nTotalWidth + 32) < nListWidth)
             {
-                int nColumn0 = int(double(nListWidth) * 0.30);
+                int nColumn0 = static_cast<int>(static_cast<double>(nListWidth) * 0.30);
                 SetColumnWidth(0, nColumn0);
-                int nColumn1 = int(double(nListWidth) * 0.10);
+                int nColumn1 = static_cast<int>(static_cast<double>(nListWidth) * 0.10);
                 SetColumnWidth(1, nColumn1);
-                int nColumn2 = int(double(nListWidth) * 0.10);
+                int nColumn2 = static_cast<int>(static_cast<double>(nListWidth) * 0.10);
                 SetColumnWidth(2, nColumn2);
-                int nColumn3 = int(double(nListWidth) * 0.14);
+                int nColumn3 = static_cast<int>(static_cast<double>(nListWidth) * 0.14);
                 SetColumnWidth(3, nColumn3);
-                int nColumn4 = int(double(nListWidth) * 0.10);
+                int nColumn4 = static_cast<int>(static_cast<double>(nListWidth) * 0.10);
                 SetColumnWidth(4, nColumn4);
-                int nColumn5 = int(double(nListWidth) * 0.10);
+                int nColumn5 = static_cast<int>(static_cast<double>(nListWidth) * 0.10);
                 SetColumnWidth(5, nColumn5);
-                int nColumn6 = int(double(nListWidth) * 0.10);
+                int nColumn6 = static_cast<int>(static_cast<double>(nListWidth) * 0.10);
                 SetColumnWidth(6, nColumn6);
             }
         }
     }
-    
+
     return CListCtrl::OnNotify(wParam, lParam, pResult);
 }
 
@@ -796,32 +850,6 @@ BOOL CMACListCtrl::OnEraseBkgnd(CDC * pDC)
 {
     if ((m_pParent == NULL) || (m_pParent->GetInitialized() == FALSE))
         return TRUE;
-
-    // load bitmap
-    if (m_spBitmap == NULL)
-    {
-        // load image
-        CString strImage = GetProgramPath() + _T("Monkey.png");
-        if (FileExists(strImage) == false)
-            strImage = GetInstallPath() + _T("Monkey.png");
-        m_spBitmap.Assign(Gdiplus::Bitmap::FromFile(strImage));
-        
-        if (m_spBitmap != NULL)
-        {
-            // lock bits and scale alpha
-            Gdiplus::BitmapData bitmapData;
-            Gdiplus::Rect rectLock(0, 0, m_spBitmap->GetWidth(), m_spBitmap->GetHeight());
-            m_spBitmap->LockBits(&rectLock, Gdiplus::ImageLockModeWrite, PixelFormat32bppARGB, &bitmapData);
-            uint32 * pPixel = (uint32 *) bitmapData.Scan0;
-            for (int nPixel = 0; nPixel < int(bitmapData.Width * bitmapData.Height); nPixel++)
-            {
-                int nAlpha = pPixel[nPixel] >> 24;
-                nAlpha /= 8; // scale alpha down so the image is faded
-                pPixel[nPixel] = (nAlpha << 24) | (pPixel[nPixel] & 0x00FFFFFF);
-            }
-            m_spBitmap->UnlockBits(&bitmapData);
-        }
-    }
 
     // get rectangle
     CRect rectClient;
@@ -852,7 +880,7 @@ BOOL CMACListCtrl::OnEraseBkgnd(CDC * pDC)
     Gdiplus::Graphics graphics(Buffer.GetSafeHdc());
     graphics.SetInterpolationMode(Gdiplus::InterpolationMode::InterpolationModeHighQualityBicubic);
     graphics.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
-    graphics.DrawImage(m_spBitmap, rectLayout.left, rectLayout.top, rectLayout.Width(), rectLayout.Height());
+    graphics.DrawImage(theApp.GetMonkeyImage(), rectLayout.left, rectLayout.top, rectLayout.Width(), rectLayout.Height());
 
     // painting from the memory buffer to the screen happens when the memory DC unwinds
 

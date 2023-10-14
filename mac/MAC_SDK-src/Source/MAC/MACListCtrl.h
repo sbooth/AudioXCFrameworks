@@ -11,27 +11,21 @@
 
 #include "MACFileArray.h"
 
-#pragma warning(push)
-#pragma warning(disable: 4458)
-#include <gdiplus.h>
-#pragma warning(pop)
-
 class CMACDlg;
 
 class CMACListCtrl : public CListCtrl
 {
 public:
-
     CMACListCtrl();
     virtual ~CMACListCtrl();
 
     BOOL Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles);
 
     BOOL GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection = FALSE);
-    
+
     BOOL StartFileInsertion(BOOL bClearList = TRUE);
     BOOL FinishFileInsertion();
-    BOOL AddFileInternal(const CString & strFilename);
+    BOOL AddFileInternal(CString strFilename);
     BOOL AddFolderInternal(CString strPath);
 
     BOOL AddFile(const CString & strFilename);
@@ -41,17 +35,17 @@ public:
     BOOL RemoveSelectedFiles();
 
     BOOL Update();
+    void SaveColumns();
     void LoadColumns();
 
     BOOL SelectNone();
     BOOL SelectAll();
-    
-    CString GetStatus(MAC_FILE & File);
-    BOOL SetMode(MAC_MODES Mode);
-    BOOL LoadFileList(const CString & strPath);
+
+    CString GetStatus(const MAC_FILE & File);
+    BOOL SetMode(APE::APE_MODES Mode);
+    BOOL LoadFileList(const CString & strPath, CStringArrayEx * paryFiles);
 
 protected:
-
     afx_msg void OnDestroy();
     afx_msg void OnGetdispinfo(NMHDR * pNMHDR, LRESULT * pResult);
     afx_msg void OnDropFiles(HDROP hDropInfo);
@@ -66,19 +60,14 @@ protected:
     BOOL SaveFileList(const CString & strPath);
     CString GetFilename(int nIndex);
 
-    // sorting
-    int m_nSortColumn;
-    BOOL m_bSortAscending;
-    BOOL m_bSortEnabled;
-
     // the actual files
     MAC_FILE_ARRAY * m_paryFiles;
 
     // supported extensions
     CStringArrayEx m_arySupportedExtensions;
 
-    // image
-    CSmartPtr<Gdiplus::Bitmap> m_spBitmap;
+    // font
+    CFont m_Font;
 
     // other data
     CMACDlg * m_pParent;

@@ -2,8 +2,8 @@
 //
 //    RadLight APE Decoder
 //
-//    Author : Igor Janos
-//  Last Update : 21-nov-2003
+//    Original Author: Igor Janos
+//    Updated by Matt Ashland at times
 //
 //-----------------------------------------------------------------------------
 
@@ -26,10 +26,10 @@ extern "C" BOOL WINAPI DllEntryPoint(HINSTANCE, ULONG, LPVOID);
 BOOL WINAPI DllMain(HANDLE hDllHandle, DWORD dwReason, LPVOID lpReserved)
 {
     return DllEntryPoint(reinterpret_cast<HINSTANCE>(hDllHandle), dwReason, lpReserved);
-} 
+}
 
 // {D042079E-8E02-418b-AE2F-F12E26704FCA}
-DEFINE_GUID(CLSID_APEDecoder, 
+DEFINE_GUID(CLSID_APEDecoder,
 0xd042079e, 0x8e02, 0x418b, 0xae, 0x2f, 0xf1, 0x2e, 0x26, 0x70, 0x4f, 0xca);
 
 //-----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ const AMOVIESETUP_MEDIATYPE sudAPEOutPinTypes =
 
 const AMOVIESETUP_PIN sudAPEOutPin =
                                 {
-                                    L"PCM Out",                // Pin string name
+                                    L"PCM Out",             // Pin string name
                                     FALSE,                  // Is it rendered
                                     TRUE,                   // Is it an output
                                     FALSE,                  // Can we have none
@@ -54,21 +54,21 @@ const AMOVIESETUP_PIN sudAPEOutPin =
                                     &CLSID_NULL,            // Connects to filter
                                     NULL,                   // Connects to pin
                                     1,                      // Number of types
-                                    &sudAPEOutPinTypes        // Pin details
-                                };       
+                                    &sudAPEOutPinTypes      // Pin details
+                                };
 
 const AMOVIESETUP_FILTER sudAPEDec =
                                 {
-                                    &CLSID_APEDecoder,    // Filter CLSID
+                                    &CLSID_APEDecoder,           // Filter CLSID
                                     L"APE DirectShow Filter",    // String name
-                                    MERIT_NORMAL,            // Filter merit
-                                    1,                        // Number pins
+                                    MERIT_NORMAL,                // Filter merit
+                                    1,                           // Number pins
                                     &sudAPEOutPin                // Pin details
                                 };
 
 
 CFactoryTemplate g_Templates[] = {
-                                { 
+                                {
                                     L"APE DirectShow Filter",
                                     &CLSID_APEDecoder,
                                     CAPESource::CreateInstance,
@@ -92,8 +92,7 @@ STDAPI DllRegisterServer()
 
     ASSERT(SUCCEEDED(hr));
 
-    // vytvorime registry keys pre .APE
-    //
+    // create .APE registry keys
     HKEY hkey;
 
     {
@@ -109,7 +108,7 @@ STDAPI DllRegisterServer()
         RegisterWMPExtension(_T("*.ape"), _T("Monkey's Audio Files (*.ape)"),
             _T("Monkey's Audio Files"), _T("audio"));
     }
-    
+
     {
         // .apl
         LONG lr = RegCreateKey(HKEY_CLASSES_ROOT, _T("Media Type\\Extensions\\.apl"), &hkey);
@@ -155,7 +154,7 @@ CUnknown *WINAPI CAPESource::CreateInstance(LPUNKNOWN lpunk, HRESULT *phr)
     return punk;
 }
 
-CAPESource::CAPESource(LPUNKNOWN lpunk, HRESULT *phr) 
+CAPESource::CAPESource(LPUNKNOWN lpunk, HRESULT *phr)
     :
     CSource(NAME("APE DirectShow Filter"), lpunk, CLSID_APEDecoder),
     m_pFileName(NULL)
@@ -163,17 +162,19 @@ CAPESource::CAPESource(LPUNKNOWN lpunk, HRESULT *phr)
 
     CAutoLock cAutoLock(&m_cStateLock);
 
-    // output pins ...
+    // output pins
     m_paStreams    = (CSourceStream **) new CAPEStream*[1];
-    if (m_paStreams == NULL) {
+    if (m_paStreams == NULL)
+    {
         *phr = E_OUTOFMEMORY;
-    return;
+        return;
     }
 
     m_paStreams[0] = new CAPEStream(phr, this, L"PCM Out");
-    if (m_paStreams[0] == NULL) {
+    if (m_paStreams[0] == NULL)
+    {
         *phr = E_OUTOFMEMORY;
-    return;
+        return;
     }
 }
 
@@ -214,12 +215,12 @@ STDMETHODIMP CAPESource::Load(LPCOLESTR lpwszFileName, const AM_MEDIA_TYPE *pmt)
     // lstrlenW is one of the few Unicode functions that works on win95
     int cch = lstrlenW(lpwszFileName) + 1;
     m_pFileName = new WCHAR[cch];
-    if (m_pFileName!=NULL) CopyMemory(m_pFileName, lpwszFileName, cch*sizeof(WCHAR));
+    if (m_pFileName!=NULL) CopyMemory(m_pFileName, lpwszFileName, cch * sizeof(WCHAR));
 
-    // otvorime zvoleny subor
-    CAPEStream *pStream = (CAPEStream *)m_paStreams[0];
+    // open the file
+    CAPEStream * pStream = (CAPEStream *) m_paStreams[0];
     HRESULT hr = pStream->OpenAPEFile(m_pFileName);
-    
+
     return hr;
 }
 
@@ -229,10 +230,10 @@ STDMETHODIMP CAPESource::NonDelegatingQueryInterface(REFIID riid,void **ppv)
 
     if (riid == IID_IFileSourceFilter) {
         return GetInterface((IFileSourceFilter *)this, ppv);
-    } 
+    }
 
     return CSource::NonDelegatingQueryInterface(riid,ppv);
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -244,33 +245,33 @@ STDMETHODIMP CAPESource::NonDelegatingQueryInterface(REFIID riid,void **ppv)
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::CAPEStream
-// Desc : constructor
 //-----------------------------------------------------------------------------
-CAPEStream::CAPEStream(HRESULT *phr, CAPESource *pParent, LPCWSTR pPinName) 
+CAPEStream::CAPEStream(HRESULT *phr, CAPESource *pParent, LPCWSTR pPinName)
     :
     CSourceStream(NAME("PCM Out"),phr, pParent, pPinName),
     CSourceSeeking(NAME("APE Seeking"), NULL, phr, &m_csSeeking),
     m_pSource(pParent),
-    m_pDecoder(NULL)
+    m_pDecoder(NULL),
+    m_bDiscontinuity(FALSE),
+    m_dDuration(0),
+    m_iBlockSize(0),
+    m_iBlocksDecoded(0),
+    m_iTotalBlocks(0),
+    m_lSampleRate(0)
 {
-    // aby nas nereleasli...
     CSourceSeeking::AddRef();
-
 }
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::~CAPEStream
-// Desc : destructor
 //-----------------------------------------------------------------------------
 CAPEStream::~CAPEStream()
 {
-    // zatvorime dekoder aj reader
     ReleaseAPEObjects();
 }
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::NonDelegatingQueryInterface
-// Desc : rozhadze dalsie interfacesy
 //-----------------------------------------------------------------------------
 STDMETHODIMP CAPEStream::NonDelegatingQueryInterface(REFIID riid, VOID **ppv)
 {
@@ -283,45 +284,41 @@ STDMETHODIMP CAPEStream::NonDelegatingQueryInterface(REFIID riid, VOID **ppv)
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::DecideBufferSize
-// Desc : urcime dlzku vystupneho bufferu
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::DecideBufferSize(IMemAllocator *pAlloc, ALLOCATOR_PROPERTIES *pRequest)
 {
     ASSERT(pAlloc);
     ASSERT(pRequest);
 
-    // musime mat otvoreny subor
+    // must have a decoder
     if (m_pDecoder == NULL) return E_FAIL;
 
-    // urcime dlzku bufferu
+    // get the format
     WAVEFORMATEX *pwf = (WAVEFORMATEX *)m_mtOut.Format();
     if (pwf == NULL) return E_FAIL;
 
     pRequest->cbBuffer    =    pwf->nChannels * WAVE_BUFFER_SIZE;
-    pRequest->cBuffers    =    (pwf->nChannels * pwf->nSamplesPerSec * pwf->wBitsPerSample) / 
-                            (pRequest->cbBuffer * 8); 
+    pRequest->cBuffers    =    (pwf->nChannels * pwf->nSamplesPerSec * pwf->wBitsPerSample) /
+                            (pRequest->cbBuffer * 8);
 
-    // chcelo by to aspon 1 buffer
+    // need at least one buffer
     if (pRequest->cBuffers < 1) pRequest->cBuffers = 1;
 
-    // nechame alokator nech nam rezervuje nejaku pamat
+    // allocate some memory
     ALLOCATOR_PROPERTIES Actual;
     HRESULT hr = pAlloc->SetProperties(pRequest, &Actual);
     if (FAILED(hr)) return hr;
 
-    // vratene properties sa mozu lisit...
+    // check the buffer
     if (Actual.cbBuffer < pRequest->cbBuffer) return E_FAIL;
 
     return NOERROR;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::CheckMediaType
-// Desc : povolime iba nami preferovany typ
 //-----------------------------------------------------------------------------
-HRESULT CAPEStream::CheckMediaType(const CMediaType *pmt)
+HRESULT CAPEStream::CheckMediaType(const CMediaType * pmt)
 {
     if (m_pDecoder == NULL || *pmt != m_mtOut) return E_FAIL;
 
@@ -331,9 +328,8 @@ HRESULT CAPEStream::CheckMediaType(const CMediaType *pmt)
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::GetMediaType
-// Desc : vracia nami preferovany typ
 //-----------------------------------------------------------------------------
-HRESULT CAPEStream::GetMediaType(CMediaType *pmt)
+HRESULT CAPEStream::GetMediaType(CMediaType * pmt)
 {
     *pmt = m_mtOut;
     return NOERROR;
@@ -342,11 +338,11 @@ HRESULT CAPEStream::GetMediaType(CMediaType *pmt)
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::ReleaseAPEObjects
-// Desc : uvolni objekty
 //-----------------------------------------------------------------------------
 void CAPEStream::ReleaseAPEObjects()
 {
-    if (m_pDecoder != NULL) {
+    if (m_pDecoder != NULL)
+    {
         delete m_pDecoder;
         m_pDecoder = NULL;
     }
@@ -354,36 +350,32 @@ void CAPEStream::ReleaseAPEObjects()
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::OpenAPEFile
-// Desc : pokusime sa otvorit subor
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::OpenAPEFile(LPWSTR pFileName)
 {
     // file already opened ?
     if (m_pDecoder != NULL) return S_FALSE;
 
-    int iRet;
+    int nResult = ERROR_SUCCESS;
+    m_pDecoder = CreateIAPEDecompress(pFileName, &nResult, true, true, false);
 
-    m_pDecoder = CreateIAPEDecompress(pFileName, &iRet, true, true, false);
-
-    // ak sa nepodarilo otvorit, koncime...
-    if (m_pDecoder == NULL) return E_FAIL;
-    
+    // no decoder, fail
+    if ((m_pDecoder == NULL) || (nResult != ERROR_SUCCESS))
+        return E_FAIL;
 
     m_dDuration = (double) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_DECOMPRESS_LENGTH_MS);
 
-
-    m_rtDuration = (__int64) ( (double)m_dDuration * (double)10000 );
+    m_rtDuration = (__int64) ((double) m_dDuration * (double) 10000 );
     m_iBlockSize = (unsigned int) (m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_CHANNELS) * (m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_BITS_PER_SAMPLE) >> 3));
     m_iTotalBlocks = (unsigned int) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS);
 
-
-    // Display Information message
+    // display information message
 //#define DISPLAY_MESSAGE
 #ifdef DISPLAY_MESSAGE
     char *str = (char *)malloc(512);
     ZeroMemory(str, 512);
 
-    wsprintf(str, "Length in ms : %d\nBlockSize : %d\nTotal Blocks : %d\n", 
+    wsprintf(str, "Length in ms : %d\nBlockSize : %d\nTotal Blocks : %d\n",
              m_pDecoder->GetInfo(APE_INFO_LENGTH_MS),
              m_iBlockSize,
              m_iTotalBlocks);
@@ -392,22 +384,24 @@ HRESULT CAPEStream::OpenAPEFile(LPWSTR pFileName)
     free(str);
 #endif /* DISPLAY_MESSAGE */
 
-
-    // nastavime spravny media type a sme hotovi :)
+    // set the correct media type
     m_mtOut.SetType(&MEDIATYPE_Audio);
     m_mtOut.SetSubtype(&MEDIASUBTYPE_PCM);
 
-    WAVEFORMATEX *pwf = (WAVEFORMATEX *)m_mtOut.AllocFormatBuffer(sizeof(WAVEFORMATEX));
+    WAVEFORMATEX * pwf = (WAVEFORMATEX *) m_mtOut.AllocFormatBuffer(sizeof(WAVEFORMATEX));
 
-    // nastavime wave format
+    // build wave format
     ZeroMemory(pwf, sizeof(WAVEFORMATEX));
 
-    pwf->nChannels        = (WORD) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_CHANNELS);
+    pwf->nChannels = (WORD) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_CHANNELS);
     pwf->wBitsPerSample = (WORD) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_BITS_PER_SAMPLE);
-    pwf->nSamplesPerSec    = m_lSampleRate = (long) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_SAMPLE_RATE);
-    pwf->nBlockAlign    = (WORD) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_BLOCK_ALIGN);
-    pwf->wFormatTag        = WAVE_FORMAT_PCM;
-    pwf->nAvgBytesPerSec= pwf->nChannels * (pwf->wBitsPerSample>>3) * pwf->nSamplesPerSec;
+    pwf->nSamplesPerSec = m_lSampleRate = (long) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_SAMPLE_RATE);
+    pwf->nBlockAlign = (WORD) m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_BLOCK_ALIGN);
+    pwf->wFormatTag = WAVE_FORMAT_PCM;
+    pwf->nAvgBytesPerSec = pwf->nChannels * (pwf->wBitsPerSample>>3) * pwf->nSamplesPerSec;
+
+    if (m_pDecoder->GetInfo(APE::IAPEDecompress::APE_INFO_FORMAT_FLAGS) & APE_FORMAT_FLAG_FLOATING_POINT)
+        pwf->wFormatTag = WAVE_FORMAT_IEEE_FLOAT;
 
     m_mtOut.SetFormatType(&FORMAT_WaveFormatEx);
 
@@ -418,27 +412,24 @@ HRESULT CAPEStream::OpenAPEFile(LPWSTR pFileName)
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::FillBuffer
-// Desc : vypustime dekodovany zvuk
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::FillBuffer(IMediaSample *pSample)
 {
     ASSERT(pSample);
     ASSERT(m_pDecoder);
 
-    PBYTE    pData;
-    __int64  lSize;
-
+    PBYTE    pData = NULL;
     pSample->GetPointer(&pData);
-    lSize = pSample->GetSize();
+    __int64 lSize = pSample->GetSize();
 
-    __int64 iBlocksDecoded;
+    __int64 iBlocksDecoded = 0;
 
     {
         CAutoLock    Lck(&m_csDecoding);
 
-        m_pDecoder->GetData((char *)pData, lSize / m_iBlockSize, &iBlocksDecoded);
+        m_pDecoder->GetData((unsigned char *)pData, lSize / m_iBlockSize, &iBlocksDecoded);
 
-        lSize = iBlocksDecoded * m_iBlockSize;    
+        lSize = iBlocksDecoded * m_iBlockSize;
 
         pSample->SetActualDataLength((LONG) lSize);
         pSample->SetDiscontinuity(m_bDiscontinuity);
@@ -453,17 +444,16 @@ HRESULT CAPEStream::FillBuffer(IMediaSample *pSample)
         rtStop = rtStart + 1;
         pSample->SetTime((REFERENCE_TIME *)&rtStart, (REFERENCE_TIME *)&rtStop);
         m_iBlocksDecoded += unsigned int(iBlocksDecoded);
-        
+
     }
 
     return (iBlocksDecoded == 0 ? S_FALSE : NOERROR);
-    
+
 }
 
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::UpdateFromSeek
-// Desc : spamata sa po seekovani
 //-----------------------------------------------------------------------------
 void CAPEStream::UpdateFromSeek()
 {
@@ -477,7 +467,6 @@ void CAPEStream::UpdateFromSeek()
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::OnThreadStartPlay
-// Desc : zavolame new segment
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::OnThreadStartPlay()
 {
@@ -488,7 +477,6 @@ HRESULT CAPEStream::OnThreadStartPlay()
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::ChangeStart
-// Desc : menime start poziciu
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::ChangeStart()
 {
@@ -507,7 +495,6 @@ HRESULT CAPEStream::ChangeStart()
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::ChangeStop
-// Desc : menime stop poziciu
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::ChangeStop()
 {
@@ -518,16 +505,14 @@ HRESULT CAPEStream::ChangeStop()
 
 //-----------------------------------------------------------------------------
 // Name : CAPEStream::ChangeRate
-// Desc : menime playrate
 //-----------------------------------------------------------------------------
 HRESULT CAPEStream::ChangeRate()
 {
-    {   // Scope for critical section lock.
+    {
+        // Scope for critical section lock.
         CAutoLock cAutoLockSeeking(CSourceSeeking::m_pLock);
-
-        m_dRateSeeking = 1.0;  // zatial nepodporujeme ine playraty ako 1.0
+        m_dRateSeeking = 1.0;  // only support 1.0
     }
     UpdateFromSeek();
     return S_OK;
 }
-

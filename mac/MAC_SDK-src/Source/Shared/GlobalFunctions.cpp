@@ -2,9 +2,15 @@
 #include "GlobalFunctions.h"
 #include "IO.h"
 #include "CharacterHelper.h"
+
 #ifdef _MSC_VER
     #include <intrin.h>
 #endif
+
+#ifdef PLATFORM_APPLE
+    #include <AvailabilityMacros.h>
+#endif
+
 #ifdef PLATFORM_ANDROID
     #include <android/api-level.h>
 #endif
@@ -15,10 +21,10 @@ namespace APE
 int ReadSafe(CIO * pIO, void * pBuffer, int nBytes)
 {
     unsigned int nBytesRead = 0;
-    int nResult = pIO->Read(pBuffer, nBytes, &nBytesRead);
+    int nResult = pIO->Read(pBuffer, static_cast<unsigned int>(nBytes), &nBytesRead);
     if (nResult == ERROR_SUCCESS)
     {
-        if (nBytes != int(nBytesRead))
+        if (nBytes != static_cast<int>(nBytesRead))
             nResult = ERROR_IO_READ;
     }
 
@@ -28,18 +34,20 @@ int ReadSafe(CIO * pIO, void * pBuffer, int nBytes)
 intn WriteSafe(CIO * pIO, void * pBuffer, intn nBytes)
 {
     unsigned int nBytesWritten = 0;
-    intn nResult = pIO->Write(pBuffer, (unsigned int) nBytes, &nBytesWritten);
+    intn nResult = pIO->Write(pBuffer, static_cast<unsigned int>(nBytes), &nBytesWritten);
     if (nResult == ERROR_SUCCESS)
     {
-        if (nBytes != int(nBytesWritten))
+        if (nBytes != static_cast<int>(nBytesWritten))
             nResult = ERROR_IO_WRITE;
     }
 
     return nResult;
 }
 
-bool FileExists(wchar_t * pFilename)
-{    
+bool FileExists(const wchar_t * pFilename)
+{
+    if (pFilename == NULL)
+        return false;
     if (0 == wcscmp(pFilename, L"-")  ||  0 == wcscmp(pFilename, L"/dev/stdin"))
         return true;
 
@@ -48,7 +56,11 @@ bool FileExists(wchar_t * pFilename)
     bool bFound = false;
 
     WIN32_FIND_DATA WFD;
+#ifdef UNICODE
     HANDLE hFind = FindFirstFile(pFilename, &WFD);
+#else
+    HANDLE hFind = FindFirstFile(CAPECharacterHelper::GetANSIFromUTF16(pFilename), &WFD);
+#endif
     if (hFind != INVALID_HANDLE_VALUE)
     {
         bFound = true;
@@ -76,16 +88,18 @@ bool FileExists(wchar_t * pFilename)
 
 void * AllocateAligned(intn nBytes, intn nAlignment)
 {
-#ifdef _WIN32
-    return _aligned_malloc(nBytes, nAlignment);
-#elif defined(__APPLE__)
-    return malloc(nBytes);
+#if defined(PLATFORM_WINDOWS)
+    return _aligned_malloc(static_cast<size_t>(nBytes), static_cast<size_t>(nAlignment));
+#elif defined(PLATFORM_APPLE) && (MAC_OS_X_VERSION_MIN_REQUIRED < 1060)
+    if (nAlignment <= 16)
+        return malloc(nBytes);
+    return valloc(nBytes);
 #elif defined(PLATFORM_ANDROID) && (__ANDROID_API__ < 21)
     return memalign(nAlignment, nBytes);
 #else
-    void * pMemory = NULL;
+    void * pMemory = APE_NULL;
     if (posix_memalign(&pMemory, nAlignment, nBytes))
-        return NULL;
+        return APE_NULL;
     return pMemory;
 #endif
 }
@@ -96,65 +110,6 @@ void FreeAligned(void * pMemory)
     _aligned_free(pMemory);
 #else
     free(pMemory);
-#endif
-}
-
-bool GetSSEAvailable(bool bTestForSSE41)
-{
-#if defined(__SSE41__)
-    return true;
-#elif defined(__SSE2__)
-    return !bTestForSSE41;
-#else
-    bool bSSE = false;
-#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
-    #define CPU_SSE2 (1 << 26)
-    #define CPU_SSE41 (1 << 19)
-
-    int cpuInfo[4] = { 0 };
-    __cpuid(cpuInfo, 0);
-
-    int nIds = cpuInfo[0];
-    if (nIds >= 1)
-    {
-        __cpuid(cpuInfo, 1);
-        if (bTestForSSE41)
-        {
-            if (cpuInfo[3] & CPU_SSE41)
-                bSSE = true;
-        }
-        else
-        {
-            if (cpuInfo[3] & CPU_SSE2)
-                bSSE = true;
-        }
-    }
-#endif
-    return bSSE;
-#endif
-}
-
-bool GetAVX2Available()
-{
-#if defined(__AVX2__)
-    return true;
-#else
-    bool bAVX = false;
-#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64))
-    #define CPU_AVX2 (1 << 5)
-
-    int cpuInfo[4] = { 0 };
-    __cpuid(cpuInfo, 0);
-
-    int nIds = cpuInfo[0];
-    if (nIds >= 7)
-    {
-        __cpuid(cpuInfo, 7);
-        if (cpuInfo[1] & CPU_AVX2)
-            bAVX = true;
-    }
-#endif
-    return bAVX;
 #endif
 }
 
@@ -180,8 +135,8 @@ bool StringIsEqual(const str_utfn * pString1, const str_utfn * pString2, bool bC
             l = *pString2++;
             if (!bCaseSensitive)
             {
-                f = _totlower(f);
-                l = _totlower(l);
+                f = towlower(f);
+                l = towlower(l);
             }
         }
         while ((--nCharacters) && (f != 0) && (f == l));

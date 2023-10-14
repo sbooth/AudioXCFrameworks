@@ -165,4 +165,3 @@ public:
 };
 
 #endif // __VIDEOCTL__
-

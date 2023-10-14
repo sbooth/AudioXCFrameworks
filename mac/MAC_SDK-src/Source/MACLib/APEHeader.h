@@ -15,7 +15,7 @@ struct APE_COMMON_HEADER
 /**************************************************************************************************
 APE header structure for old APE files (3.97 and earlier)
 **************************************************************************************************/
-struct APE_HEADER_OLD 
+struct APE_HEADER_OLD
 {
     char cID[4];                            // should equal 'MAC '
     uint16 nVersion;                        // version number * 1000 (3.81 = 3810)
@@ -29,7 +29,7 @@ struct APE_HEADER_OLD
     uint32 nFinalFrameBlocks;               // the number of samples in the final frame
 };
 
-struct APE_FILE_INFO;
+class APE_FILE_INFO;
 class CIO;
 
 /**************************************************************************************************
@@ -37,7 +37,7 @@ CAPEHeader - makes managing APE headers a little smoother (and the format change
 **************************************************************************************************/
 class CAPEHeader
 {
-public:    
+public:
     CAPEHeader(CIO * pIO);
     ~CAPEHeader();
 
@@ -48,7 +48,7 @@ protected:
     int AnalyzeOld(APE_FILE_INFO * pInfo);
 
     int FindDescriptor(bool bSeek);
-    void Convert32BitSeekTable(APE_FILE_INFO * pInfo, uint32 * pSeekTable32, int nSeekTableElements);
+    void Convert32BitSeekTable(APE_FILE_INFO * pInfo, const uint32 * pSeekTable32, int nSeekTableElements);
 
     CIO * m_pIO;
 };

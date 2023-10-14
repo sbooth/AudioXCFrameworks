@@ -5,7 +5,7 @@
 // when the user clicks on the link.
 //
 // Copyright Chris Maunder, 1997-1999 (cmaunder@mail.com)
-// Feel free to use and distribute. May not be sold for profit. 
+// Feel free to use and distribute. May not be sold for profit.
 
 // 2/29/00 -- P. Shaffer standard font mod.
 
@@ -25,7 +25,7 @@ public:
     void SetURL(CString strURL);
     CString GetURL() const;
 
-    void SetColours(COLORREF crLinkColour, COLORREF crVisitedColour, 
+    void SetColours(COLORREF crLinkColour, COLORREF crVisitedColour,
                     COLORREF crHoverColour = -1);
     COLORREF GetLinkColour() const;
     COLORREF GetVisitedColour() const;
@@ -47,11 +47,10 @@ public:
     virtual BOOL DestroyWindow();
 
 protected:
-
     virtual void PreSubclassWindow();
 
     bool GotoURL(LPCTSTR url, int showcmd);
-    void ReportError(intn nError);
+    void ReportError(APE::intn nError);
     LONG GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata);
     void PositionWindow();
     void SetDefaultCursor();

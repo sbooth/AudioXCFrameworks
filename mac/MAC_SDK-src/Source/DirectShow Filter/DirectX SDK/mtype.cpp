@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 // File: MType.cpp
 //
-// Desc: DirectShow base classes - implements a class that holds and 
+// Desc: DirectShow base classes - implements a class that holds and
 //       manages media type information.
 //
 // Copyright (c) 1992-2001 Microsoft Corporation.  All rights reserved.
@@ -122,7 +122,7 @@ CMediaType::Set(const AM_MEDIA_TYPE& rt)
         }
     }
 
-    return S_OK;    
+    return S_OK;
 }
 
 

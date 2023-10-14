@@ -182,14 +182,14 @@ COutputQueue::~COutputQueue()
 DWORD WINAPI COutputQueue::InitialThreadProc(__in LPVOID pv)
 {
     HRESULT hrCoInit = CAMThread::CoInitializeHelper();
-    
+
     COutputQueue *pSampleQueue = (COutputQueue *)pv;
     DWORD dwReturn = pSampleQueue->ThreadProc();
 
     if(hrCoInit == S_OK) {
         CoUninitialize();
     }
-    
+
     return dwReturn;
 }
 
@@ -599,7 +599,7 @@ HRESULT COutputQueue::ReceiveMultiple (
     if (nSamples < 0) {
         return E_INVALIDARG;
     }
-    
+
     CAutoLock lck(this);
     //  Either call directly or queue up the samples
 
