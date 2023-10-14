@@ -64,6 +64,7 @@ The available commands are as follows:
 | [SFC_WAVEX_SET_AMBISONIC](#sfc_wavex_set_ambisonic)               | Modify a WAVEX header for Ambisonic format.             |
 | [SFC_SET_VBR_ENCODING_QUALITY](#sfc_set_vbr_encoding_quality)     | Set the Variable Bit Rate encoding quality.             |
 | [SFC_SET_OGG_PAGE_LATENCY_MS](#sfc_set_ogg_page_latency_ms)       | Set Ogg page latency for Opus file.                     |
+| [SFC_GET_OGG_STREAM_SERIALNO](#sfc_get_ogg_stream_serialno)       | Get Ogg stream serial number.                           |
 | [SFC_SET_COMPRESSION_LEVEL](#sfc_set_compression_level)           | Set the compression level.                              |
 | [SFC_RAW_DATA_NEEDS_ENDSWAP](#sfc_raw_data_needs_endswap)         | Determine if raw data needs endswapping.                |
 | [SFC_GET_BROADCAST_INFO](#sfc_get_broadcast_info)                 | Get the Broadcast Chunk info.                           |
@@ -81,8 +82,8 @@ The available commands are as follows:
 | [SFC_RF64_AUTO_DOWNGRADE](#sfc_rf64_auto_downgrade)               | Set auto downgrade from RF64 to WAV.                    |
 | [SFC_GET_ORIGINAL_SAMPLERATE](#sfc_get_original_samplerate)       | Get original samplerate metadata.                       |
 | [SFC_SET_ORIGINAL_SAMPLERATE](#sfc_set_original_samplerate)       | Set original samplerate metadata.                       |
-| [SFC_GET_BITRATE_MODE](#sfc_get_bitrate_mode)                     | Get bitrate mode.
-| [SFC_SET_BITRATE_MODE](#sfc_set_bitrate_mode)                     | Set bitrate mode.
+| [SFC_GET_BITRATE_MODE](#sfc_get_bitrate_mode)                     | Get bitrate mode.                                       |
+| [SFC_SET_BITRATE_MODE](#sfc_set_bitrate_mode)                     | Set bitrate mode.                                       |
 
 ---
 
@@ -1033,7 +1034,7 @@ sf_command (sndfile, SFC_FILE_TRUNCATE, &frames, sizeof (frames)) ;
 
 ### Return value
 
-Zero on sucess, non-zero otherwise.
+Zero on success, non-zero otherwise.
 
 ## SFC_SET_RAW_START_OFFSET
 
@@ -1227,7 +1228,7 @@ file format does not support ambisonic encoding.
 
 Set the Variable Bit Rate encoding quality. The encoding quality value
 should be between 0.0 (lowest quality) and 1.0 (highest quality).
-Currenly this command is only implemented for FLAC and Ogg/Vorbis files.
+Currently this command is only implemented for FLAC and Ogg/Vorbis files.
 It has no effect on un-compressed file formats.
 
 ### Parameters
@@ -1273,10 +1274,34 @@ datasize
 
 0 on success and non-zero otherwise.
 
+## SFC_GET_OGG_STREAM_SERIALNO
+
+Get the Ogg stream serial number for files with the Ogg major format. Ogg
+stream serail numbers are a randomly chosen 32-bit value, used for
+differentiating logical Ogg streams.
+
+### Parameters
+
+sndfile
+: A valid SNDFILE* pointer
+
+cmd
+: SFC_SET_OGG_STREAM_SERIALNO
+
+data
+: A pointer to a 32-bit int value
+
+datasize
+: sizeof (int32_t) = 4
+
+### Return value
+
+0 on success and non-zero otherwise.
+
 ## SFC_SET_COMPRESSION_LEVEL
 
 Set the compression level. The compression level should be between 0.0 (minimum
-compression level) and 1.0 (highest compression level). Currenly this command is
+compression level) and 1.0 (highest compression level). Currently this command is
 only implemented for FLAC and Ogg/Vorbis files. It has no effect on
 uncompressed file formats.
 
@@ -1579,7 +1604,7 @@ typedef struct
                               /* a full bar of 7/8 is 7 beats */
 
     float    bpm ;            /* suggestion, as it can be calculated using other fields:*/
-                              /* file's lenght, file's sampleRate and our time_sig_den*/
+                              /* file's length, file's sampleRate and our time_sig_den*/
                               /* -> bpms are always the amount of _quarter notes_ per minute */
 
     int    root_key ;         /* MIDI note, or -1 for None */
@@ -1602,7 +1627,7 @@ otherwise.
 ## SFC_GET_INSTRUMENT
 
 Retrieve instrument information from file including MIDI base note, keyboard
-mapping and looping informations(start/stop and mode).
+mapping and looping information (start/stop and mode).
 
 ### Parameters
 
@@ -1804,7 +1829,7 @@ sf_command (sndfile, SFC_SET_CUE, &cues, sizeof (cues)) ;
 
 Enable auto downgrade from RF64 to WAV.
 
-The EBU recomendation is that when writing RF64 files and the resulting file is
+The EBU recommendation is that when writing RF64 files and the resulting file is
 less than 4Gig in size, it should be downgraded to a WAV file (WAV files have a
 maximum size of 4Gig). libsndfile doesn't follow the EBU recommendations
 exactly, mainly because the test suite needs to be able test reading/writing

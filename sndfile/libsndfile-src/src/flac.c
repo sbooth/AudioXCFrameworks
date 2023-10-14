@@ -43,6 +43,15 @@
 
 #define ENC_BUFFER_SIZE 8192
 
+/*
+** READ_LOOP_MAX_LEN is the maximum 'len' that will be passed to
+** flac_read_loop().  This is somewhat arbitrary, but must be less
+** than (UINT_MAX - FLAC__MAX_CHANNELS * FLAC__MAX_BLOCK_SIZE) to
+** avoid overflows, and must also be a multiple of the number of
+** channels (which is between 1 and 8.)
+*/
+#define READ_LOOP_MAX_LEN (0x10000 * 3 * 5 * 7)
+
 typedef enum
 {	PFLAC_PCM_SHORT = 50,
 	PFLAC_PCM_INT = 51,
@@ -977,7 +986,7 @@ flac_read_flac2s (SF_PRIVATE *psf, short *ptr, sf_count_t len)
 
 	while (total < len)
 	{	pflac->ptr = ptr + total ;
-		readlen = (len - total > 0x1000000) ? 0x1000000 : (unsigned) (len - total) ;
+		readlen = (len - total > READ_LOOP_MAX_LEN) ? READ_LOOP_MAX_LEN : (unsigned) (len - total) ;
 		current = flac_read_loop (psf, readlen) ;
 		if (current == 0)
 			break ;
@@ -997,7 +1006,7 @@ flac_read_flac2i (SF_PRIVATE *psf, int *ptr, sf_count_t len)
 
 	while (total < len)
 	{	pflac->ptr = ptr + total ;
-		readlen = (len - total > 0x1000000) ? 0x1000000 : (unsigned) (len - total) ;
+		readlen = (len - total > READ_LOOP_MAX_LEN) ? READ_LOOP_MAX_LEN : (unsigned) (len - total) ;
 		current = flac_read_loop (psf, readlen) ;
 		if (current == 0)
 			break ;
@@ -1017,7 +1026,7 @@ flac_read_flac2f (SF_PRIVATE *psf, float *ptr, sf_count_t len)
 
 	while (total < len)
 	{	pflac->ptr = ptr + total ;
-		readlen = (len - total > 0x1000000) ? 0x1000000 : (unsigned) (len - total) ;
+		readlen = (len - total > READ_LOOP_MAX_LEN) ? READ_LOOP_MAX_LEN : (unsigned) (len - total) ;
 		current = flac_read_loop (psf, readlen) ;
 		if (current == 0)
 			break ;
@@ -1037,7 +1046,7 @@ flac_read_flac2d (SF_PRIVATE *psf, double *ptr, sf_count_t len)
 
 	while (total < len)
 	{	pflac->ptr = ptr + total ;
-		readlen = (len - total > 0x1000000) ? 0x1000000 : (unsigned) (len - total) ;
+		readlen = (len - total > READ_LOOP_MAX_LEN) ? READ_LOOP_MAX_LEN : (unsigned) (len - total) ;
 
 		current = flac_read_loop (psf, readlen) ;
 		if (current == 0)
@@ -1182,11 +1191,11 @@ f2flac8_clip_array (const float *src, int32_t *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-		if (CPU_CLIPS_POSITIVE == 0 && scaled_value >= (1.0 * 0x7F))
+		if (scaled_value >= (1.0 * 0x7F))
 		{	dest [i] = 0x7F ;
 			continue ;
 			} ;
-		if (CPU_CLIPS_NEGATIVE == 0 && scaled_value <= (-8.0 * 0x10))
+		if (scaled_value <= (-8.0 * 0x10))
 		{	dest [i] = -0x80 ;
 			continue ;
 			} ;
@@ -1204,11 +1213,11 @@ f2flac16_clip_array (const float *src, int32_t *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-		if (CPU_CLIPS_POSITIVE == 0 && scaled_value >= (1.0 * 0x7FFF))
+		if (scaled_value >= (1.0 * 0x7FFF))
 		{	dest [i] = 0x7FFF ;
 			continue ;
 			} ;
-		if (CPU_CLIPS_NEGATIVE == 0 && scaled_value <= (-8.0 * 0x1000))
+		if (scaled_value <= (-8.0 * 0x1000))
 		{	dest [i] = -0x8000 ;
 			continue ;
 			} ;
@@ -1224,12 +1233,12 @@ f2flac24_clip_array (const float *src, int32_t *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-		if (CPU_CLIPS_POSITIVE == 0 && scaled_value >= (1.0 * 0x7FFFFF))
+		if (scaled_value >= (1.0 * 0x7FFFFF))
 		{	dest [i] = 0x7FFFFF ;
 			continue ;
 			} ;
 
-		if (CPU_CLIPS_NEGATIVE == 0 && scaled_value <= (-8.0 * 0x100000))
+		if (scaled_value <= (-8.0 * 0x100000))
 		{	dest [i] = -0x800000 ;
 			continue ;
 			}
@@ -1313,11 +1322,11 @@ d2flac8_clip_array (const double *src, int32_t *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-		if (CPU_CLIPS_POSITIVE == 0 && scaled_value >= (1.0 * 0x7F))
+		if (scaled_value >= (1.0 * 0x7F))
 		{	dest [i] = 0x7F ;
 			continue ;
 			} ;
-		if (CPU_CLIPS_NEGATIVE == 0 && scaled_value <= (-8.0 * 0x10))
+		if (scaled_value <= (-8.0 * 0x10))
 		{	dest [i] = -0x80 ;
 			continue ;
 			} ;
@@ -1335,11 +1344,11 @@ d2flac16_clip_array (const double *src, int32_t *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-		if (CPU_CLIPS_POSITIVE == 0 && scaled_value >= (1.0 * 0x7FFF))
+		if (scaled_value >= (1.0 * 0x7FFF))
 		{	dest [i] = 0x7FFF ;
 			continue ;
 			} ;
-		if (CPU_CLIPS_NEGATIVE == 0 && scaled_value <= (-8.0 * 0x1000))
+		if (scaled_value <= (-8.0 * 0x1000))
 		{	dest [i] = -0x8000 ;
 			continue ;
 			} ;
@@ -1357,11 +1366,11 @@ d2flac24_clip_array (const double *src, int32_t *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-		if (CPU_CLIPS_POSITIVE == 0 && scaled_value >= (1.0 * 0x7FFFFF))
+		if (scaled_value >= (1.0 * 0x7FFFFF))
 		{	dest [i] = 0x7FFFFF ;
 			continue ;
 			} ;
-		if (CPU_CLIPS_NEGATIVE == 0 && scaled_value <= (-8.0 * 0x100000))
+		if (scaled_value <= (-8.0 * 0x100000))
 		{	dest [i] = -0x800000 ;
 			continue ;
 			} ;

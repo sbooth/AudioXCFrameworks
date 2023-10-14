@@ -252,10 +252,10 @@ psf_log_printf (SF_PRIVATE *psf, const char *format, ...)
 						else
 						{	if (D < 0)
 							{	log_putchar (psf, '-') ;
-								U = -((uint64_t) D) ;
+								U = - ((uint64_t) D) ;
 								}
 							else
-							{	U = (uint64_t) D;
+							{	U = (uint64_t) D ;
 								}
 							}
 
@@ -375,7 +375,7 @@ psf_log_printf (SF_PRIVATE *psf, const char *format, ...)
 					strptr = istr ;
 					while (*strptr)
 					{	c = *strptr++ ;
-						log_putchar (psf, c) ;
+						log_putchar (psf, psf_isprint (c) ? c : '.') ;
 						} ;
 					break ;
 
@@ -540,8 +540,6 @@ header_put_le_int (SF_PRIVATE *psf, int x)
 	psf->header.ptr [psf->header.indx++] = (x >> 24) ;
 } /* header_put_le_int */
 
-#if (SIZEOF_SF_COUNT_T == 8)
-
 static inline void
 header_put_be_8byte (SF_PRIVATE *psf, sf_count_t x)
 {	psf->header.ptr [psf->header.indx++] = (x >> 56) ;
@@ -565,10 +563,6 @@ header_put_le_8byte (SF_PRIVATE *psf, sf_count_t x)
 	psf->header.ptr [psf->header.indx++] = (unsigned char) (x >> 48) ;
 	psf->header.ptr [psf->header.indx++] = (x >> 56) ;
 } /* header_put_le_8byte */
-
-#else
-#error "SIZEOF_SF_COUNT_T != 8"
-#endif
 
 int
 psf_binheader_writef (SF_PRIVATE *psf, const char *format, ...)
@@ -925,8 +919,22 @@ header_seek (SF_PRIVATE *psf, sf_count_t position, int whence)
 
 			if (psf->header.indx + position > psf->header.len)
 			{	/* Need to jump this without caching it. */
+				position -= (psf->header.end - psf->header.indx) ;
 				psf->header.indx = psf->header.end ;
-				psf_fseek (psf, position, SEEK_CUR) ;
+				if (psf->is_pipe)
+				{
+					/* seeking is not supported on pipe input, so we read instead */
+					size_t skip = position ;
+					while (skip)
+					{	char junk [16 * 1024] ;
+						size_t to_skip = SF_MIN (skip, sizeof (junk)) ;
+						psf_fread (junk, 1, to_skip, psf) ;
+						skip -= to_skip ;
+						}
+					}
+				else
+				{	psf_fseek (psf, position, SEEK_CUR) ;
+					}
 				break ;
 				} ;
 
@@ -1684,18 +1692,14 @@ psf_f2s_clip_array (const float *src, short *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-#if CPU_CLIPS_POSITIVE == 0
 		if (scaled_value >= (1.0 * 0x7FFF))
 		{	dest [i] = 0x7FFF ;
 			continue ;
 			} ;
-#endif
-#if CPU_CLIPS_NEGATIVE == 0
 		if (scaled_value <= (-8.0 * 0x1000))
 		{	dest [i] = -0x7FFF - 1 ;
 			continue ;
 			} ;
-#endif
 
 		dest [i] = psf_lrintf (scaled_value) ;
 		} ;
@@ -1722,18 +1726,14 @@ psf_d2s_clip_array (const double *src, short *dest, int count, int normalize)
 
 	for (int i = 0 ; i < count ; i++)
 	{	scaled_value = src [i] * normfact ;
-#if CPU_CLIPS_POSITIVE == 0
 		if (scaled_value >= (1.0 * 0x7FFF))
 		{	dest [i] = 0x7FFF ;
 			continue ;
 			} ;
-#endif
-#if CPU_CLIPS_NEGATIVE == 0
 		if (scaled_value <= (-8.0 * 0x1000))
 		{	dest [i] = -0x7FFF - 1 ;
 			continue ;
 			} ;
-#endif
 
 		dest [i] = psf_lrint (scaled_value) ;
 		} ;

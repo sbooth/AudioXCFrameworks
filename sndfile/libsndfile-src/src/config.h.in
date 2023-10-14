@@ -222,9 +222,6 @@
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
-/* Set to maximum allowed value of sf_count_t type. */
-#undef SF_COUNT_MAX
-
 /* The size of `double', as computed by sizeof. */
 #undef SIZEOF_DOUBLE
 
@@ -246,9 +243,6 @@
 /* The size of `off_t', as computed by sizeof. */
 #undef SIZEOF_OFF_T
 
-/* Set to sizeof (long) if unknown. */
-#undef SIZEOF_SF_COUNT_T
-
 /* The size of `short', as computed by sizeof. */
 #undef SIZEOF_SHORT
 
@@ -265,9 +259,6 @@
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #undef STDC_HEADERS
-
-/* Set to long if unknown. */
-#undef TYPEOF_SF_COUNT_T
 
 /* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE

@@ -171,14 +171,13 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/src/config.h
-CONFIG_CLEAN_FILES = src/version-metadata.rc include/sndfile.h \
-	tests/test_wrapper.sh tests/pedantic-header-test.sh \
-	libsndfile.spec sndfile.pc Scripts/build-test-tarball.mk
+CONFIG_CLEAN_FILES = src/version-metadata.rc tests/test_wrapper.sh \
+	tests/pedantic-header-test.sh sndfile.pc \
+	Scripts/build-test-tarball.mk
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(man1dir)" "$(DESTDIR)$(docdir)" \
-	"$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includedir)" \
-	"$(DESTDIR)$(includedir)"
+	"$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includedir)"
 @ENABLE_TEST_COVERAGE_FALSE@am__EXEEXT_1 = tests/cpp_test$(EXEEXT)
 @HAVE_SQLITE3_TRUE@am__EXEEXT_2 = regtest/sndfile-regtest$(EXEEXT)
 @FULL_SUITE_TRUE@@USE_OSSFUZZERS_TRUE@am__EXEEXT_3 = ossfuzz/sndfile_fuzzer$(EXEEXT) \
@@ -302,8 +301,7 @@ am_src_libsndfile_la_OBJECTS = src/libsndfile_la-sndfile.lo \
 	src/libsndfile_la-ogg_vorbis.lo src/libsndfile_la-ogg_speex.lo \
 	src/libsndfile_la-ogg_pcm.lo src/libsndfile_la-ogg_opus.lo \
 	src/libsndfile_la-ogg_vcomment.lo src/libsndfile_la-mpeg.lo
-am__objects_2 =
-nodist_src_libsndfile_la_OBJECTS = $(am__objects_2)
+nodist_src_libsndfile_la_OBJECTS =
 src_libsndfile_la_OBJECTS = $(am_src_libsndfile_la_OBJECTS) \
 	$(nodist_src_libsndfile_la_OBJECTS)
 src_libsndfile_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -930,7 +928,7 @@ am__dist_doc_DATA_DIST = docs/index.md docs/libsndfile.jpg \
 	docs/lists.md docs/embedded_files.md docs/octave.md \
 	docs/tutorial.md
 DATA = $(dist_doc_DATA) $(pkgconfig_DATA)
-HEADERS = $(include_HEADERS) $(nodist_include_HEADERS)
+HEADERS = $(include_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -980,7 +978,7 @@ am__tty_colors = { \
 }
 DIST_SUBDIRS = Octave
 am__DIST_COMMON = $(dist_man_MANS) $(srcdir)/Makefile.in \
-	$(srcdir)/libsndfile.spec.in $(srcdir)/sndfile.pc.in \
+	$(srcdir)/sndfile.pc.in \
 	$(top_srcdir)/Scripts/build-test-tarball.mk.in \
 	$(top_srcdir)/build-aux/ar-lib $(top_srcdir)/build-aux/compile \
 	$(top_srcdir)/build-aux/config.guess \
@@ -988,9 +986,7 @@ am__DIST_COMMON = $(dist_man_MANS) $(srcdir)/Makefile.in \
 	$(top_srcdir)/build-aux/depcomp \
 	$(top_srcdir)/build-aux/install-sh \
 	$(top_srcdir)/build-aux/ltmain.sh \
-	$(top_srcdir)/build-aux/missing \
-	$(top_srcdir)/include/sndfile.h.in \
-	$(top_srcdir)/src/config.h.in \
+	$(top_srcdir)/build-aux/missing $(top_srcdir)/src/config.h.in \
 	$(top_srcdir)/src/version-metadata.rc.in \
 	$(top_srcdir)/tests/pedantic-header-test.sh.in \
 	$(top_srcdir)/tests/test_wrapper.sh.in AUTHORS COPYING \
@@ -1079,11 +1075,13 @@ ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
+EXTERNAL_MPEG_LIBS = @EXTERNAL_MPEG_LIBS@
 EXTERNAL_MPEG_REQUIRE = @EXTERNAL_MPEG_REQUIRE@
 EXTERNAL_XIPH_CFLAGS = @EXTERNAL_XIPH_CFLAGS@
 EXTERNAL_XIPH_LIBS = @EXTERNAL_XIPH_LIBS@
 EXTERNAL_XIPH_REQUIRE = @EXTERNAL_XIPH_REQUIRE@
 FGREP = @FGREP@
+FILECMD = @FILECMD@
 FLAC_CFLAGS = @FLAC_CFLAGS@
 FLAC_LIBS = @FLAC_LIBS@
 GEN_TOOL = @GEN_TOOL@
@@ -1161,11 +1159,9 @@ RANLIB = @RANLIB@
 RC = @RC@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
-SF_COUNT_MAX = @SF_COUNT_MAX@
 SHARED_VERSION_INFO = @SHARED_VERSION_INFO@
 SHELL = @SHELL@
 SHLIB_VERSION_ARG = @SHLIB_VERSION_ARG@
-SIZEOF_SF_COUNT_T = @SIZEOF_SF_COUNT_T@
 SNDIO_LIBS = @SNDIO_LIBS@
 SPEEX_CFLAGS = @SPEEX_CFLAGS@
 SPEEX_LIBS = @SPEEX_LIBS@
@@ -1174,7 +1170,6 @@ SQLITE3_LIBS = @SQLITE3_LIBS@
 SRC_BINDIR = @SRC_BINDIR@
 STRIP = @STRIP@
 TEST_BINDIR = @TEST_BINDIR@
-TYPEOF_SF_COUNT_T = @TYPEOF_SF_COUNT_T@
 VERSION = @VERSION@
 VERSION_MAJOR = @VERSION_MAJOR@
 VORBISENC_CFLAGS = @VORBISENC_CFLAGS@
@@ -1245,10 +1240,9 @@ AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/include -I$(top_builddir)/incl
 DISTCHECK_CONFIGURE_FLAGS = --enable-werror
 CLEANFILES = programs/*.wav octave-workspace
 @BUILD_OCTAVE_MOD_TRUE@@FULL_SUITE_TRUE@SUBDIRS = Octave
-EXTRA_DIST = libsndfile.spec.in sndfile.pc.in \
-	Scripts/android-configure.sh NEWS.OLD CHANGELOG.md \
-	Scripts/linux-to-win-cross-configure.sh CMakeLists.txt \
-	$(cmake_files) Win32 SECURITY.md include/sndfile.h.in \
+EXTRA_DIST = sndfile.pc.in Scripts/android-configure.sh NEWS.OLD \
+	CHANGELOG.md Scripts/linux-to-win-cross-configure.sh \
+	CMakeLists.txt $(cmake_files) Win32 SECURITY.md \
 	src/config.h.in src/test_endswap.tpl src/test_endswap.def \
 	$(SYMBOL_FILES) src/create_symbols_file.py \
 	src/binheader_writef_check.py src/GSM610/README \
@@ -1272,6 +1266,7 @@ cmake_files = cmake/ClipMode.cmake cmake/FindFLAC.cmake \
 	cmake/TestLargeFiles.cmake cmake/TestInline.c.in \
 	cmake/FindOpus.cmake cmake/SndFileConfig.cmake.in \
 	cmake/CheckCPUArch.cmake cmake/CheckCPUArch.c.in \
+	cmake/Findmp3lame.cmake cmake/Findmpg123.cmake \
 	cmake/SetupABIVersions.cmake
 
 pkgconfig_DATA = sndfile.pc
@@ -1289,8 +1284,7 @@ SYMBOL_FILES = src/Symbols.gnu-binutils src/Symbols.darwin src/libsndfile-1.def 
 
 #===============================================================================
 lib_LTLIBRARIES = src/libsndfile.la
-include_HEADERS = include/sndfile.hh
-nodist_include_HEADERS = include/sndfile.h
+include_HEADERS = include/sndfile.h include/sndfile.hh
 src_libsndfile_la_CFLAGS = $(EXTERNAL_XIPH_CFLAGS) $(MPEG_CFLAGS)
 # MinGW requires -no-undefined if a DLL is to be built.
 src_libsndfile_la_LDFLAGS = -no-undefined -version-info $(SHARED_VERSION_INFO) $(SHLIB_VERSION_ARG)
@@ -1596,13 +1590,9 @@ distclean-hdr:
 	-rm -f src/config.h src/stamp-h1
 src/version-metadata.rc: $(top_builddir)/config.status $(top_srcdir)/src/version-metadata.rc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
-include/sndfile.h: $(top_builddir)/config.status $(top_srcdir)/include/sndfile.h.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
 tests/test_wrapper.sh: $(top_builddir)/config.status $(top_srcdir)/tests/test_wrapper.sh.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 tests/pedantic-header-test.sh: $(top_builddir)/config.status $(top_srcdir)/tests/pedantic-header-test.sh.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-libsndfile.spec: $(top_builddir)/config.status $(srcdir)/libsndfile.spec.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 sndfile.pc: $(top_builddir)/config.status $(srcdir)/sndfile.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
@@ -3275,27 +3265,6 @@ uninstall-includeHEADERS:
 	@list='$(include_HEADERS)'; test -n "$(includedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(includedir)'; $(am__uninstall_files_from_dir)
-install-nodist_includeHEADERS: $(nodist_include_HEADERS)
-	@$(NORMAL_INSTALL)
-	@list='$(nodist_include_HEADERS)'; test -n "$(includedir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(includedir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(includedir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(includedir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(includedir)" || exit $$?; \
-	done
-
-uninstall-nodist_includeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(nodist_include_HEADERS)'; test -n "$(includedir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(includedir)'; $(am__uninstall_files_from_dir)
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run 'make' without going through this Makefile.
@@ -3703,7 +3672,7 @@ install-checkPROGRAMS: install-libLTLIBRARIES
 
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includedir)" "$(DESTDIR)$(includedir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(man1dir)" "$(DESTDIR)$(docdir)" "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(includedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -3961,8 +3930,7 @@ info: info-recursive
 info-am:
 
 install-data-am: install-dist_docDATA install-includeHEADERS \
-	install-man install-nodist_includeHEADERS \
-	install-pkgconfigDATA
+	install-man install-pkgconfigDATA
 
 install-dvi: install-dvi-recursive
 
@@ -4188,8 +4156,7 @@ ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-dist_docDATA \
 	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-man uninstall-nodist_includeHEADERS \
-	uninstall-pkgconfigDATA
+	uninstall-man uninstall-pkgconfigDATA
 
 uninstall-man: uninstall-man1
 
@@ -4211,17 +4178,15 @@ uninstall-man: uninstall-man1
 	install-dist_docDATA install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am \
 	install-includeHEADERS install-info install-info-am \
-	install-libLTLIBRARIES install-man install-man1 \
-	install-nodist_includeHEADERS install-pdf install-pdf-am \
-	install-pkgconfigDATA install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-dist_docDATA \
+	install-libLTLIBRARIES install-man install-man1 install-pdf \
+	install-pdf-am install-pkgconfigDATA install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binPROGRAMS uninstall-dist_docDATA \
 	uninstall-includeHEADERS uninstall-libLTLIBRARIES \
-	uninstall-man uninstall-man1 uninstall-nodist_includeHEADERS \
-	uninstall-pkgconfigDATA
+	uninstall-man uninstall-man1 uninstall-pkgconfigDATA
 
 .PRECIOUS: Makefile
 

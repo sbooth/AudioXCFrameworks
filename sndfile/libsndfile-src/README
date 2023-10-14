@@ -1,5 +1,3 @@
-This is libsndfile, 1.1.0
-
 libsndfile is a library of C routines for reading and writing
 files containing sampled audio data.
 
@@ -26,7 +24,7 @@ released under the Apache license.
 
 LINUX
 -----
-Whereever possible, you should use the packages supplied by your Linux
+Wherever possible, you should use the packages supplied by your Linux
 distribution.
 
 If you really do need to compile from source it should be as easy as:
