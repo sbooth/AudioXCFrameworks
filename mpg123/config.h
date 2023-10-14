@@ -80,6 +80,9 @@
 /* Define to 1 if you have the <byteswap.h> header file. */
 /* #undef HAVE_BYTESWAP_H */
 
+/* Define to 1 if you have the `clock_gettime' function. */
+#define HAVE_CLOCK_GETTIME 1
+
 /* Define to 1 if you have the <CoreServices/CoreServices.h> header file. */
 #define HAVE_CORESERVICES_CORESERVICES_H 1
 
@@ -140,14 +143,14 @@
 /* Define to 1 if you have the <locale.h> header file. */
 #define HAVE_LOCALE_H 1
 
+/* Define to 1 if you have the `lseek64' function. */
+/* #undef HAVE_LSEEK64 */
+
 /* Define to 1 if you have the <machine/soundcard.h> header file. */
 /* #undef HAVE_MACHINE_SOUNDCARD_H */
 
 /* Define to 1 if you have the `mbstowcs' function. */
 #define HAVE_MBSTOWCS 1
-
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
 
 /* Define to 1 if you have the `mkfifo' function. */
 #define HAVE_MKFIFO 1
@@ -179,6 +182,9 @@
 /* Define to 1 if you have the <os2.h> header file. */
 /* #undef HAVE_OS2_H */
 
+/* Define if O_LARGEFILE flag for open(2) exists. */
+/* #undef HAVE_O_LARGEFILE */
+
 /* Define to 1 if you have the `random' function. */
 #define HAVE_RANDOM 1
 
@@ -187,6 +193,9 @@
 
 /* Define to 1 if you have the `sched_setscheduler' function. */
 /* #undef HAVE_SCHED_SETSCHEDULER */
+
+/* Define to 1 if you have the `setenv' function. */
+#define HAVE_SETENV 1
 
 /* Define to 1 if you have the `setlocale' function. */
 #define HAVE_SETLOCALE 1
@@ -215,9 +224,6 @@
 /* Define to 1 if you have the <signal.h> header file. */
 #define HAVE_SIGNAL_H 1
 
-/* Define to 1 if you have the <sndio.h> header file. */
-/* #undef HAVE_SNDIO_H */
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
 
@@ -229,6 +235,9 @@
 
 /* Define to 1 if you have the `strerror' function. */
 #define HAVE_STRERROR 1
+
+/* Define to 1 if you have the `strerror_l' function. */
+/* #undef HAVE_STRERROR_L */
 
 /* Define to 1 if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H 1
@@ -290,6 +299,12 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
+/* Define to 1 if you have the `unsetenv' function. */
+#define HAVE_UNSETENV 1
+
+/* Define to 1 if you have the `uselocale' function. */
+#define HAVE_USELOCALE 1
+
 /* Define to 1 if you have the <wchar.h> header file. */
 #define HAVE_WCHAR_H 1
 
@@ -301,6 +316,9 @@
 
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
+
+/* Define to 1 if you have the <wincon.h> header file. */
+#define HAVE_WINCON_H 1
 
 /* Define to 1 if you have the <windows.h> header file. */
 /* #undef HAVE_WINDOWS_H */
@@ -318,11 +336,13 @@
 #define INDEX_SIZE 1000
 
 /* Define if IPV6 support is enabled. */
-/* #undef IPV6 */
+#define IPV6 1
 
-/* Define this to the size of native offset type in bits, used for LFS alias
-   functions. */
-#define LFS_ALIAS_BITS 64
+/* Define if we use _LARGEFILE64_SOURCE with off64_t and lseek64. */
+/* #undef LFS_LARGEFILE_64 */
+
+/* System redefines off_t when defining _FILE_OFFSET_BITS to 64. */
+/* #undef LFS_SENSITIVE */
 
 /* Define to the extension used for runtime loadable modules, say, ".so". */
 #define LT_MODULE_EXT ".so"
@@ -339,8 +359,17 @@
 /* Define to for new net123 network stack. */
 #define NET123 1
 
+/* Define for executable-based networking (for HTTPS). */
+#define NET123_EXEC 1
+
+/* Define for winhttp networking (for HTTPS). */
+/* #undef NET123_WINHTTP */
+
+/* Define for wininet networking (for HTTPS). */
+/* #undef NET123_WININET */
+
 /* Define if network support is enabled. */
-/* #undef NETWORK */
+#define NETWORK 1
 
 /* Define to disable 16 bit integer output. */
 /* #undef NO_16BIT */
@@ -410,7 +439,7 @@
 #define PACKAGE_NAME "mpg123"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "mpg123 1.30.1"
+#define PACKAGE_STRING "mpg123 1.32.3"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "mpg123"
@@ -419,7 +448,10 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.30.1"
+#define PACKAGE_VERSION "1.32.3"
+
+/* Define to only include portable library API (no off_t, no internal I/O). */
+/* #undef PORTABLE_API */
 
 /* Define if portaudio v18 API is wanted. */
 /* #undef PORTAUDIO18 */
@@ -433,9 +465,6 @@
 /* The size of `long', as computed by sizeof. */
 #define SIZEOF_LONG 8
 
-/* The size of `off64_t', as computed by sizeof. */
-#define SIZEOF_OFF64_T 0
-
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8
 
@@ -445,7 +474,9 @@
 /* The size of `ssize_t', as computed by sizeof. */
 #define SIZEOF_SSIZE_T 8
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Define to not duplicate some code for likely cases in libsyn123. */
@@ -461,7 +492,7 @@
 /* #undef USE_YASM_FOR_AVX */
 
 /* Version number of package */
-#define VERSION "1.30.1"
+#define VERSION "1.32.3"
 
 /* Define to use Win32 named pipes */
 /* #undef WANT_WIN32_FIFO */
@@ -493,17 +524,6 @@
 /* Define for extreme debugging. */
 /* #undef XDEBUG */
 
-/* Enable large inode numbers on Mac OS X 10.5.  */
-#ifndef _DARWIN_USE_64_BIT_INODE
-# define _DARWIN_USE_64_BIT_INODE 1
-#endif
-
-/* Number of bits in a file offset, on hosts where this is settable. */
-/* #undef _FILE_OFFSET_BITS */
-
-/* Define for large files, on AIX-style hosts. */
-/* #undef _LARGE_FILES */
-
 /* Windows Vista and later APIs */
 /* #undef _WIN32_WINNT */
 
@@ -525,11 +545,8 @@
 /* Define to `long long' if <sys/types.h> does not define. */
 /* #undef int64_t */
 
-/* Define to the native offset type (long or actually off_t). */
-#define lfs_alias_t off_t
-
-/* Define to `long int' if <sys/types.h> does not define. */
-/* #undef off_t */
+/* Define to `long' if <sys/types.h> does not define. */
+/* #undef ptrdiff_t */
 
 /* Define to `unsigned long' if <sys/types.h> does not define. */
 /* #undef size_t */

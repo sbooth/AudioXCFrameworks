@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
 
 include(cmake/read_api_version.cmake)
-read_api_version(MPG123_VERSION API_VERSION OUTAPI_VERSION SYNAPI_VERSION)
+read_api_version(MPG123_VERSION)
 
 project(mpg123 VERSION ${MPG123_VERSION} LANGUAGES C ASM)
+set(CMAKE_C_STANDARD 99)
 
-option(BUILD_LIBOUT123 "build libout123" ON)
+option(BUILD_LIBOUT123 "build libout123 (prerequisite for included programs)" ON)
 if(CMAKE_SYSTEM_NAME STREQUAL "WindowsStore")
     message(WARNING "Output module is not implemented for '${CMAKE_SYSTEM_NAME}' platform.")
     message(WARNING "To prevent build errors 'BUILD_LIBOUT123' option is set to OFF.")

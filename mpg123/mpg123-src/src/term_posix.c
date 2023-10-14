@@ -3,10 +3,14 @@
 
 	HAVE_TERMIOS is a prerequisite.
 
-	copyright 2008-2022 by the mpg123 project - free software under the terms of the LGPL 2.1
+	copyright 2008-2023 by the mpg123 project - free software under the terms of the LGPL 2.1
 	see COPYING and AUTHORS files in distribution or http://mpg123.org
 	initially written by Thomas Orgis
 */
+
+// ctermid
+#define _XOPEN_SOURCE 600
+#define _POSIX_C_SOURCE 200112L
 
 #include "config.h"
 
@@ -53,7 +57,7 @@ int term_have_fun(int fd, int want_visuals)
 	if(term_width(fd) > 0 && want_visuals)
 	{
 		/* Only play with non-dumb terminals. */
-		char *tname = compat_getenv("TERM");
+		char *tname = INT123_compat_getenv("TERM");
 		if(tname)
 		{
 			if(strcmp(tname, "") && strcmp(tname, "dumb"))
@@ -145,7 +149,7 @@ int term_setup(void)
 		term_fd = open(term_name, O_RDONLY);
 		if(term_fd < 0)
 		{
-			merror("failed to open terminal: %s", strerror(errno));
+			merror("failed to open terminal: %s", INT123_strerror(errno));
 			return -1;
 		}
 	}
@@ -155,7 +159,7 @@ int term_setup(void)
 		// For now, this always fails on OS/2, but they might fix things.
 		// So just try to move on.
 #ifndef __OS2__
-		merror("failed to get terminal attributes: %s", strerror(errno));
+		merror("failed to get terminal attributes: %s", INT123_strerror(errno));
 		return -1;
 #endif
 	}
@@ -166,7 +170,7 @@ int term_setup(void)
 		close(term_fd);
 		term_fd = -1;
 		if(errno)
-			merror("failure setting terminal attributes: %s", strerror(errno));
+			merror("failure setting terminal attributes: %s", INT123_strerror(errno));
 		else
 			error("failure setting terminal attributes");
 		return -1;
@@ -176,7 +180,7 @@ int term_setup(void)
 
 /* Get the next pressed key, if any.
    Returns 1 when there is a key, 0 if not. */
-int term_get_key(int do_delay, char *val)
+int term_get_key(int stopped, int do_delay, char *val)
 {
 #ifdef __OS2__
 	KBDKEYINFO key;
@@ -184,7 +188,7 @@ int term_get_key(int do_delay, char *val)
 	key.chScan = 0;
 	if(do_delay)
 		DosSleep(10);
-	if(!KbdCharIn(&key,IO_NOWAIT,0) && key.chChar)
+	if(!KbdCharIn(&key,(stopped) ? IO_WAIT : IO_NOWAIT,0) && key.chChar)
 	{
 		*val = key.chChar;
 		return 1;
@@ -207,7 +211,8 @@ int term_get_key(int do_delay, char *val)
 
 	FD_ZERO(&r);
 	FD_SET(term_fd,&r);
-	if(select(term_fd+1,&r,NULL,NULL,&t) > 0 && FD_ISSET(term_fd,&r))
+	/* No timeout if stopped */
+	if(select(term_fd+1,&r,NULL,NULL,(stopped) ? NULL : &t) > 0 && FD_ISSET(term_fd,&r))
 	{
 		if(read(term_fd,val,1) <= 0)
 		return 0; /* Well, we couldn't read the key, so there is none. */
