@@ -100,14 +100,14 @@
    This makes application support for chained files with <tt>libopusfile</tt>
     very easy.*/
 
-# if defined(__cplusplus)
-extern "C" {
-# endif
-
 # include <stdarg.h>
 # include <stdio.h>
 # include <ogg/ogg.h>
 # include <opus/opus_multistream.h>
+
+# if defined(__cplusplus)
+extern "C" {
+# endif
 
 /**@cond PRIVATE*/
 
