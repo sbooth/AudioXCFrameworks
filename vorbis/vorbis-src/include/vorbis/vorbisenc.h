@@ -23,12 +23,12 @@
 #ifndef _OV_ENC_H_
 #define _OV_ENC_H_
 
+#include <vorbis/codec.h>
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
-
-#include <vorbis/codec.h>
 
 /**
  * This is the primary function within libvorbisenc for setting up managed

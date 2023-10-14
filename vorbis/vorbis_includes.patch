@@ -1,25 +1,56 @@
-Only in vorbis-src: config.h
-diff -ru vorbis-v1.3.7/include/vorbis/vorbisenc.h vorbis-src/include/vorbis/vorbisenc.h
---- vorbis-v1.3.7/include/vorbis/vorbisenc.h	2020-07-04 01:12:30.000000000 -0500
-+++ vorbis-src/include/vorbis/vorbisenc.h	2022-07-16 22:15:31.000000000 -0500
-@@ -28,7 +28,7 @@
+diff -ur vorbis-v1.3.7/include/vorbis/codec.h vorbis-src/include/vorbis/codec.h
+--- vorbis-v1.3.7/include/vorbis/codec.h	2020-07-04 01:12:30
++++ vorbis-src/include/vorbis/codec.h	2023-10-13 22:52:52
+@@ -17,12 +17,12 @@
+ #ifndef _vorbis_codec_h_
+ #define _vorbis_codec_h_
+ 
++#include <ogg/ogg.h>
++
+ #ifdef __cplusplus
+ extern "C"
  {
  #endif /* __cplusplus */
+-
+-#include <ogg/ogg.h>
  
--#include "codec.h"
+ typedef struct vorbis_info{
+   int version;
+diff -ur vorbis-v1.3.7/include/vorbis/vorbisenc.h vorbis-src/include/vorbis/vorbisenc.h
+--- vorbis-v1.3.7/include/vorbis/vorbisenc.h	2020-07-04 01:12:30
++++ vorbis-src/include/vorbis/vorbisenc.h	2023-10-13 22:52:59
+@@ -23,12 +23,12 @@
+ #ifndef _OV_ENC_H_
+ #define _OV_ENC_H_
+ 
 +#include <vorbis/codec.h>
++
+ #ifdef __cplusplus
+ extern "C"
+ {
+ #endif /* __cplusplus */
+-
+-#include "codec.h"
  
  /**
   * This is the primary function within libvorbisenc for setting up managed
-diff -ru vorbis-v1.3.7/include/vorbis/vorbisfile.h vorbis-src/include/vorbis/vorbisfile.h
---- vorbis-v1.3.7/include/vorbis/vorbisfile.h	2020-07-04 01:12:30.000000000 -0500
-+++ vorbis-src/include/vorbis/vorbisfile.h	2022-07-16 22:15:23.000000000 -0500
-@@ -23,7 +23,7 @@
- #endif /* __cplusplus */
+diff -ur vorbis-v1.3.7/include/vorbis/vorbisfile.h vorbis-src/include/vorbis/vorbisfile.h
+--- vorbis-v1.3.7/include/vorbis/vorbisfile.h	2020-07-04 01:12:30
++++ vorbis-src/include/vorbis/vorbisfile.h	2023-10-13 22:52:44
+@@ -17,13 +17,13 @@
+ #ifndef _OV_FILE_H_
+ #define _OV_FILE_H_
  
- #include <stdio.h>
--#include "codec.h"
++#include <stdio.h>
 +#include <vorbis/codec.h>
++
+ #ifdef __cplusplus
+ extern "C"
+ {
+ #endif /* __cplusplus */
+-
+-#include <stdio.h>
+-#include "codec.h"
  
  /* The function prototypes for the callbacks are basically the same as for
   * the stdio functions fread, fseek, fclose, ftell.
