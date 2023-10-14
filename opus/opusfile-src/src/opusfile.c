@@ -148,6 +148,7 @@ static int op_get_data(OggOpusFile *_of,int _nbytes){
   int            nbytes;
   OP_ASSERT(_nbytes>0);
   buffer=(unsigned char *)ogg_sync_buffer(&_of->oy,_nbytes);
+  if(OP_UNLIKELY(buffer==NULL))return OP_EFAULT;
   nbytes=(int)(*_of->callbacks.read)(_of->stream,buffer,_nbytes);
   OP_ASSERT(nbytes<=_nbytes);
   if(OP_LIKELY(nbytes>0))ogg_sync_wrote(&_of->oy,nbytes);
@@ -1057,9 +1058,11 @@ static opus_int64 op_predict_link_start(const OpusSeekRecord *_sr,int _nsr,
     ogg_uint32_t serialno1;
     opus_int64   offset1;
     /*If the granule position is negative, either it's invalid or we'd cause
-       overflow.*/
+       overflow.
+      If it is larger than OP_INT64_MAX-OP_GP_SPACING_MIN, then no positive
+       granule position would satisfy our minimum spacing requirements below.*/
     gp1=_sr[sri].gp;
-    if(gp1<0)continue;
+    if(gp1<0||gp1>OP_INT64_MAX-OP_GP_SPACING_MIN)continue;
     /*We require some minimum distance between granule positions to make an
        estimate.
       We don't actually know what granule position scheme is being used,
@@ -1067,10 +1070,7 @@ static opus_int64 op_predict_link_start(const OpusSeekRecord *_sr,int _nsr,
       Therefore we require a minimum spacing between them, with the
        expectation that while bitrates and granule position increments might
        vary locally in quite complex ways, they are globally smooth.*/
-    if(OP_UNLIKELY(op_granpos_add(&gp2_min,gp1,OP_GP_SPACING_MIN)<0)){
-      /*No granule position would satisfy us.*/
-      continue;
-    }
+    gp2_min=gp1+OP_GP_SPACING_MIN;
     offset1=_sr[sri].offset;
     serialno1=_sr[sri].serialno;
     for(srj=sri;srj-->0;){
@@ -1267,6 +1267,8 @@ static int op_bisect_forward_serialno(OggOpusFile *_of,
     ret=op_fetch_headers(_of,&links[nlinks].head,&links[nlinks].tags,
      _serialnos,_nserialnos,_cserialnos,last!=next?NULL:&og);
     if(OP_UNLIKELY(ret<0))return ret;
+    /*Mark the current link count so it can be cleaned up on error.*/
+    _of->nlinks=nlinks+1;
     links[nlinks].offset=next;
     links[nlinks].data_offset=_of->offset;
     links[nlinks].serialno=_of->os.serialno;
@@ -1277,8 +1279,7 @@ static int op_bisect_forward_serialno(OggOpusFile *_of,
     if(OP_UNLIKELY(ret<0))return ret;
     links[nlinks].pcm_file_offset=total_duration;
     _searched=_of->offset;
-    /*Mark the current link count so it can be cleaned up on error.*/
-    _of->nlinks=++nlinks;
+    ++nlinks;
   }
   /*Last page is in the starting serialno list, so we've reached the last link.
     Now find the last granule position for it (if we didn't the first time we
@@ -1527,6 +1528,7 @@ static int op_open1(OggOpusFile *_of,
   if(_initial_bytes>0){
     char *buffer;
     buffer=ogg_sync_buffer(&_of->oy,(long)_initial_bytes);
+    if(OP_UNLIKELY(buffer==NULL))return OP_EFAULT;
     memcpy(buffer,_initial_data,_initial_bytes*sizeof(*buffer));
     ogg_sync_wrote(&_of->oy,(long)_initial_bytes);
   }
@@ -1753,7 +1755,7 @@ ogg_int64_t op_pcm_total(const OggOpusFile *_of,int _li){
   }
   OP_ALWAYS_TRUE(!op_granpos_diff(&diff,
    links[_li].pcm_end,links[_li].pcm_start));
-  return pcm_total+diff-links[_li].head.pre_skip;
+  return pcm_total+(diff-links[_li].head.pre_skip);
 }
 
 const OpusHead *op_head(const OggOpusFile *_of,int _li){
@@ -2310,13 +2312,18 @@ static int op_pcm_seek_page(OggOpusFile *_of,
       opus_int64 offset;
       int        op_count;
       op_count=_of->op_count;
-      /*The only way the offset can be invalid _and_ we can fail the granule
+      /*The offset can be out of range if we were reading through the stream
+         and encountered a page with the granule position for another link
+         outside of the data range identified during link enumeration when we
+         were opening the file.
+        We will just ignore the current position in that case.
+        The only way the offset can be valid _and_ we can fail the granule
          position checks below is if someone changed the contents of the last
          page since we read it.
-        We'd be within our rights to just return OP_EBADLINK in that case, but
-         we'll simply ignore the current position instead.*/
+        We'd be within our rights to just return OP_EBADLINK, but instead we'll
+         simply ignore the current position in that case, too.*/
       offset=_of->offset;
-      if(op_count>0&&OP_LIKELY(offset<=end)){
+      if(op_count>0&&OP_LIKELY(begin<=offset&&offset<=end)){
         ogg_int64_t gp;
         /*Make sure the timestamp is valid.
           The granule position might be -1 if we collected the packets from a
@@ -2332,7 +2339,6 @@ static int op_pcm_seek_page(OggOpusFile *_of,
             Otherwise it appears using the whole link range to estimate the
              first seek location gives better results, on average.*/
           if(diff<0){
-            OP_ASSERT(offset>=begin);
             if(offset-begin>=end-begin>>1||diff>-OP_CUR_TIME_THRESH){
               best=begin=offset;
               best_gp=pcm_start=gp;
@@ -2358,8 +2364,19 @@ static int op_pcm_seek_page(OggOpusFile *_of,
               For very small files (with all of the data in a single page,
                generally 1 second or less), we can loop them continuously
                without seeking at all.*/
-            OP_ALWAYS_TRUE(!op_granpos_add(&prev_page_gp,_of->op[0].granulepos,
-             -op_get_packet_duration(_of->op[0].packet,_of->op[0].bytes)));
+            if(op_granpos_add(&prev_page_gp,_of->op[0].granulepos,
+             -op_get_packet_duration(_of->op[0].packet,_of->op[0].bytes))<0) {
+              /*We validate/sanitize the per-packet timestamps, so the only way
+                 we should fail to calculate a granule position for the
+                 previous page is if the first page with completed packets in
+                 the stream is also the last, and end-trimming causes the
+                 apparent granule position preceding the first sample in the
+                 first packet to underflow.
+                The starting PCM offset is then 0 by spec mandate (see also:
+                 op_find_initial_pcm_offset()).*/
+              OP_ASSERT(_of->op[0].e_o_s);
+              prev_page_gp=0;
+            }
             if(op_granpos_cmp(prev_page_gp,_target_gp)<=0){
               /*Don't call op_decode_clear(), because it will dump our
                  packets.*/

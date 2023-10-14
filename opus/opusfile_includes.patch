@@ -1,13 +1,23 @@
-Only in opusfile-src: config.h
-diff -ur opusfile-0.12/include/opusfile.h opusfile-src/include/opusfile.h
---- opusfile-0.12/include/opusfile.h	2020-06-26 19:44:15.000000000 -0500
-+++ opusfile-src/include/opusfile.h	2022-07-16 21:40:30.000000000 -0500
-@@ -107,7 +107,7 @@
+diff -ur opusfile-9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166/include/opusfile.h opusfile-src/include/opusfile.h
+--- opusfile-9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166/include/opusfile.h	2022-11-21 21:17:09
++++ opusfile-src/include/opusfile.h	2023-10-13 23:44:33
+@@ -100,14 +100,14 @@
+    This makes application support for chained files with <tt>libopusfile</tt>
+     very easy.*/
+ 
+-# if defined(__cplusplus)
+-extern "C" {
+-# endif
+-
  # include <stdarg.h>
  # include <stdio.h>
  # include <ogg/ogg.h>
 -# include <opus_multistream.h>
 +# include <opus/opus_multistream.h>
++
++# if defined(__cplusplus)
++extern "C" {
++# endif
  
  /**@cond PRIVATE*/
  
