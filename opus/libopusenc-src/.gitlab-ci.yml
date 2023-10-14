@@ -1,0 +1,19 @@
+default:
+  tags:
+    - docker
+  image: alpine
+
+autoconf:
+
+  stage: build
+
+  before_script:
+    - apk update &&
+      apk add autoconf automake doxygen gcc git graphviz gzip make musl-dev libtool opus-dev xz zip
+
+  script:
+    - ./autogen.sh
+    - ./configure || cat config.log
+    - make check
+    - make distcheck
+    - . ./package_version && test $PACKAGE_VERSION != "unknown"
