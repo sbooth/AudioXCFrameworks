@@ -30,8 +30,8 @@
 #ifndef TAGLIB_TRUEAUDIOPROPERTIES_H
 #define TAGLIB_TRUEAUDIOPROPERTIES_H
 
-#include "tbytevector.h"
-#include "audioproperties.h"
+#include <tbytevector.h>
+#include <audioproperties.h>
 
 namespace TagLib {
 

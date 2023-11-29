@@ -30,9 +30,9 @@
 #ifndef TAGLIB_SPEEXFILE_H
 #define TAGLIB_SPEEXFILE_H
 
-#include "oggfile.h"
-#include "xiphcomment.h"
-#include "speexproperties.h"
+#include <oggfile.h>
+#include <xiphcomment.h>
+#include <speexproperties.h>
 
 namespace TagLib {
 

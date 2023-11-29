@@ -26,10 +26,10 @@
 #ifndef TAGLIB_FLACUNKNOWNMETADATABLOCK_H
 #define TAGLIB_FLACUNKNOWNMETADATABLOCK_H
 
-#include "tlist.h"
-#include "tbytevector.h"
-#include "taglib_export.h"
-#include "flacmetadatablock.h"
+#include <tlist.h>
+#include <tbytevector.h>
+#include <taglib_export.h>
+#include <flacmetadatablock.h>
 
 namespace TagLib {
   namespace FLAC {

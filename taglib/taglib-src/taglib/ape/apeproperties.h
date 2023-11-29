@@ -30,9 +30,9 @@
 #ifndef TAGLIB_APEPROPERTIES_H
 #define TAGLIB_APEPROPERTIES_H
 
-#include "taglib.h"
-#include "taglib_export.h"
-#include "audioproperties.h"
+#include <taglib.h>
+#include <taglib_export.h>
+#include <audioproperties.h>
 
 namespace TagLib {
 

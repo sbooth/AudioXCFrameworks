@@ -30,9 +30,9 @@
 #ifndef TAGLIB_OPUSFILE_H
 #define TAGLIB_OPUSFILE_H
 
-#include "oggfile.h"
-#include "xiphcomment.h"
-#include "opusproperties.h"
+#include <oggfile.h>
+#include <xiphcomment.h>
+#include <opusproperties.h>
 
 namespace TagLib {
 

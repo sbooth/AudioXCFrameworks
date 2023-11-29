@@ -26,12 +26,12 @@
 #ifndef TAGLIB_XMFILE_H
 #define TAGLIB_XMFILE_H
 
-#include "tfile.h"
-#include "taglib_export.h"
-#include "audioproperties.h"
-#include "modfilebase.h"
-#include "modtag.h"
-#include "xmproperties.h"
+#include <tfile.h>
+#include <taglib_export.h>
+#include <audioproperties.h>
+#include <modfilebase.h>
+#include <modtag.h>
+#include <xmproperties.h>
 
 namespace TagLib {
 

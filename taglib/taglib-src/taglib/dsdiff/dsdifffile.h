@@ -26,10 +26,10 @@
 #ifndef TAGLIB_DSDIFFFILE_H
 #define TAGLIB_DSDIFFFILE_H
 
-#include "rifffile.h"
-#include "id3v2tag.h"
-#include "dsdiffproperties.h"
-#include "dsdiffdiintag.h"
+#include <rifffile.h>
+#include <id3v2tag.h>
+#include <dsdiffproperties.h>
+#include <dsdiffdiintag.h>
 
 namespace TagLib {
 

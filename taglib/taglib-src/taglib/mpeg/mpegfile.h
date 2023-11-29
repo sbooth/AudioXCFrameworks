@@ -26,11 +26,11 @@
 #ifndef TAGLIB_MPEGFILE_H
 #define TAGLIB_MPEGFILE_H
 
-#include "tfile.h"
-#include "taglib_export.h"
-#include "tag.h"
-#include "mpegproperties.h"
-#include "id3v2.h"
+#include <tfile.h>
+#include <taglib_export.h>
+#include <tag.h>
+#include <mpegproperties.h>
+#include <id3v2.h>
 
 namespace TagLib {
 

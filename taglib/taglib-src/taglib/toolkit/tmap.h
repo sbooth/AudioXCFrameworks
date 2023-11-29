@@ -31,7 +31,7 @@
 #include <initializer_list>
 #include <utility>
 
-#include "taglib.h"
+#include <taglib.h>
 
 namespace TagLib {
 

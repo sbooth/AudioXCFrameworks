@@ -29,7 +29,7 @@
 #ifndef TAGLIB_VERSIONNUMBER_H
 #define TAGLIB_VERSIONNUMBER_H
 
-#include "taglib_export.h"
+#include <taglib_export.h>
 
 namespace TagLib {
 

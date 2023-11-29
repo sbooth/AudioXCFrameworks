@@ -30,8 +30,8 @@
 #include <memory>
 #include <vector>
 
-#include "taglib.h"
-#include "taglib_export.h"
+#include <taglib.h>
+#include <taglib_export.h>
 
 namespace TagLib {
 

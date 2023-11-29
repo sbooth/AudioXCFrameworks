@@ -26,12 +26,12 @@
 #ifndef TAGLIB_MODFILE_H
 #define TAGLIB_MODFILE_H
 
-#include "tfile.h"
-#include "taglib_export.h"
-#include "audioproperties.h"
-#include "modfilebase.h"
-#include "modtag.h"
-#include "modproperties.h"
+#include <tfile.h>
+#include <taglib_export.h>
+#include <audioproperties.h>
+#include <modfilebase.h>
+#include <modtag.h>
+#include <modproperties.h>
 
 namespace TagLib {
   namespace Mod {

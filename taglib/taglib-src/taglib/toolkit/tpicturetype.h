@@ -30,7 +30,7 @@
 
 #ifndef DO_NOT_DOCUMENT  // tell Doxygen not to document this header
 
-#include "taglib_export.h"
+#include <taglib_export.h>
 
 /*!
  * Declare a picture type \a name enumeration inside a class.

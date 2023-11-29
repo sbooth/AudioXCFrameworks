@@ -27,8 +27,8 @@
 #define TAGLIB_MP4ITEMFACTORY_H
 
 #include <memory>
-#include "taglib_export.h"
-#include "mp4item.h"
+#include <taglib_export.h>
+#include <mp4item.h>
 
 namespace TagLib {
 

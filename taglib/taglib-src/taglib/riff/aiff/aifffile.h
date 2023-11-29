@@ -26,9 +26,9 @@
 #ifndef TAGLIB_AIFFFILE_H
 #define TAGLIB_AIFFFILE_H
 
-#include "rifffile.h"
-#include "id3v2tag.h"
-#include "aiffproperties.h"
+#include <rifffile.h>
+#include <id3v2tag.h>
+#include <aiffproperties.h>
 
 namespace TagLib {
 

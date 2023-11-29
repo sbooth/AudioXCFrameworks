@@ -28,10 +28,10 @@
 
 #include <iostream>
 
-#include "tstring.h"
-#include "tlist.h"
-#include "tbytevectorlist.h"
-#include "taglib_export.h"
+#include <tstring.h>
+#include <tlist.h>
+#include <tbytevectorlist.h>
+#include <taglib_export.h>
 
 namespace TagLib {
 
