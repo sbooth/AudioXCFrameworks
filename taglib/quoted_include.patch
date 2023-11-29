@@ -1610,7 +1610,7 @@ diff -ru taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tiostrea
  
 diff -ru taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tlist.h taglib-src/taglib/toolkit/tlist.h
 --- taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tlist.h	2023-11-23 08:41:46
-+++ taglib-src/taglib/toolkit/tlist.h	2023-11-29 12:05:03
++++ taglib-src/taglib/toolkit/tlist.h	2023-11-29 12:10:47
 @@ -30,7 +30,7 @@
  #include <initializer_list>
  #include <memory>
@@ -1620,9 +1620,17 @@ diff -ru taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tlist.h 
  
  namespace TagLib {
  
+@@ -309,6 +309,6 @@
+ // Since GCC doesn't support the "export" keyword, we have to include the
+ // implementation.
+ 
+-#include "tlist.tcc"
++#include <taglib/tlist.tcc>
+ 
+ #endif
 diff -ru taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tmap.h taglib-src/taglib/toolkit/tmap.h
 --- taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tmap.h	2023-11-23 08:41:46
-+++ taglib-src/taglib/toolkit/tmap.h	2023-11-29 12:05:03
++++ taglib-src/taglib/toolkit/tmap.h	2023-11-29 12:10:53
 @@ -31,7 +31,7 @@
  #include <initializer_list>
  #include <utility>
@@ -1632,6 +1640,14 @@ diff -ru taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tmap.h t
  
  namespace TagLib {
  
+@@ -243,6 +243,6 @@
+ // Since GCC doesn't support the "export" keyword, we have to include the
+ // implementation.
+ 
+-#include "tmap.tcc"
++#include <taglib/tmap.tcc>
+ 
+ #endif
 diff -ru taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tpicturetype.h taglib-src/taglib/toolkit/tpicturetype.h
 --- taglib-3d67b139e48bfa020ea43bf43ca925c1e711cfd6/taglib/toolkit/tpicturetype.h	2023-11-23 08:41:46
 +++ taglib-src/taglib/toolkit/tpicturetype.h	2023-11-29 12:05:04

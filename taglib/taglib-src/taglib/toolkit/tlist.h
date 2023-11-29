@@ -309,6 +309,6 @@ namespace TagLib {
 // Since GCC doesn't support the "export" keyword, we have to include the
 // implementation.
 
-#include "tlist.tcc"
+#include <taglib/tlist.tcc>
 
 #endif
