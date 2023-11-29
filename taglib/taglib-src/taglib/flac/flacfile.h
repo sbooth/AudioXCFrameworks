@@ -26,11 +26,10 @@
 #ifndef TAGLIB_FLACFILE_H
 #define TAGLIB_FLACFILE_H
 
-#include <taglib/taglib_export.h>
 #include <taglib/tfile.h>
 #include <taglib/tlist.h>
+#include <taglib/taglib_export.h>
 #include <taglib/tag.h>
-
 #include <taglib/flacpicture.h>
 #include <taglib/flacproperties.h>
 
@@ -84,40 +83,54 @@ namespace TagLib {
       };
 
       /*!
-       * Constructs an FLAC file from \a file.  If \a readProperties is true the
-       * file's audio properties will also be read.
-       *
-       * If this file contains and ID3v2 tag the frames will be created using
-       * \a frameFactory.
-       *
-       * \note In the current implementation, \a propertiesStyle is ignored.
-       */
-      File(FileName file,
-           bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average,
-           ID3v2::FrameFactory *frameFactory = 0);
-
-      /*!
        * Constructs a FLAC file from \a file.  If \a readProperties is true the
        * file's audio properties will also be read.
        *
-       * If this file contains and ID3v2 tag the frames will be created using
+       * \note In the current implementation, \a propertiesStyle is ignored.
+       *
+       * \deprecated This constructor will be dropped in favor of the one below
+       * in a future version.
+       */
+      File(FileName file, bool readProperties = true,
+           Properties::ReadStyle propertiesStyle = Properties::Average);
+
+      /*!
+       * Constructs an FLAC file from \a file.  If \a readProperties is true the
+       * file's audio properties will also be read.
+       *
+       * If this file contains an ID3v2 tag, the frames will be created using
        * \a frameFactory.
        *
        * \note In the current implementation, \a propertiesStyle is ignored.
+       */
+      // BIC: merge with the above constructor, kept for source compatibility
+      File(FileName file, ID3v2::FrameFactory *frameFactory,
+           bool readProperties = true,
+           Properties::ReadStyle propertiesStyle = Properties::Average);
+
+      /*!
+       * Constructs a FLAC file from \a stream.  If \a readProperties is true the
+       * file's audio properties will also be read.
        *
        * \note TagLib will *not* take ownership of the stream, the caller is
        * responsible for deleting it after the File object.
+       *
+       * If this file contains an ID3v2 tag, the frames will be created using
+       * \a frameFactory.
+       *
+       * \note In the current implementation, \a propertiesStyle is ignored.
        */
-      File(IOStream *stream,
+      File(IOStream *stream, ID3v2::FrameFactory *frameFactory,
            bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average,
-           ID3v2::FrameFactory *frameFactory = 0);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
       /*!
        * Returns the Tag for this file.  This will be a union of XiphComment,
@@ -127,7 +140,17 @@ namespace TagLib {
        * \see ID3v1Tag()
        * \see XiphComment()
        */
-      virtual TagLib::Tag *tag() const;
+      TagLib::Tag *tag() const override;
+
+      /*!
+       * Implements the unified property interface -- export function.
+       * If the file contains more than one tag (e.g. XiphComment and ID3v1),
+       * only the first one (in the order XiphComment, ID3v2, ID3v1) will be
+       * converted to the PropertyMap.
+       */
+      PropertyMap properties() const override;
+
+      void removeUnsupportedProperties(const StringList &) override;
 
       /*!
        * Implements the unified property interface -- import function.
@@ -136,13 +159,30 @@ namespace TagLib {
        * Ignores any changes to ID3v1 or ID3v2 comments since they are not allowed
        * in the FLAC specification.
        */
-      virtual PropertyMap setProperties(const PropertyMap &);
+      PropertyMap setProperties(const PropertyMap &) override;
+
+      /*!
+       * Returns ["PICTURE"] if any picture is stored in METADATA_BLOCK_PICTURE.
+       */
+      StringList complexPropertyKeys() const override;
+
+      /*!
+       * Get the pictures stored in METADATA_BLOCK_PICTURE as complex properties
+       * for \a key "PICTURE".
+       */
+      List<VariantMap> complexProperties(const String &key) const override;
+
+      /*!
+       * Set the complex properties \a value as pictures in METADATA_BLOCK_PICTURE
+       * for \a key "PICTURE".
+       */
+      bool setComplexProperties(const String &key, const List<VariantMap> &value) override;
 
       /*!
        * Returns the FLAC::Properties for this file.  If no audio properties
        * were read then this will return a null pointer.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
 
       /*!
        * Save the file.  This will primarily save the XiphComment, but
@@ -151,7 +191,7 @@ namespace TagLib {
        *
        * This returns true if the save was successful.
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
        * Returns a pointer to the ID3v2 tag of the file.
@@ -216,9 +256,10 @@ namespace TagLib {
       List<Picture *> pictureList();
 
       /*!
-       * Removes an attached picture. The picture's memory will be freed.
+       * Removes an attached picture. If \a del is true the picture's memory
+       * will be freed; if it is false, it must be deleted by the user.
        */
-      void removePicture(Picture *picture);
+      void removePicture(Picture *picture, bool del = true);
 
       /*!
        * Remove all attached images.
@@ -279,16 +320,13 @@ namespace TagLib {
       static bool isSupported(IOStream *stream);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
-
       void read(bool readProperties);
       void scan();
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace FLAC
+}  // namespace TagLib
 
 #endif

@@ -1,6 +1,6 @@
 /***************************************************************************
- copyright            : (C) 2016 by Damien Plisson, Audirvana
- email                : damien78@audirvana.com
+    copyright            : (C) 2016 by Damien Plisson, Audirvana
+    email                : damien78@audirvana.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,95 +23,79 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
-
 #include "dsdiffproperties.h"
+
+#include "tstring.h"
+#include "tdebug.h"
 
 using namespace TagLib;
 
-class DSDIFF::AudioProperties::AudioPropertiesPrivate
+class DSDIFF::Properties::PropertiesPrivate
 {
 public:
-  AudioPropertiesPrivate() :
-  length(0),
-  bitrate(0),
-  sampleRate(0),
-  channels(0),
-  sampleWidth(0),
-  sampleCount(0)
-  {
-  }
-
-  int length;
-  int bitrate;
-  int sampleRate;
-  int channels;
-  int sampleWidth;
-  unsigned long long sampleCount;
+  int length { 0 };
+  int bitrate { 0 };
+  int sampleRate { 0 };
+  int channels { 0 };
+  int sampleWidth { 0 };
+  unsigned long long sampleCount { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-DSDIFF::AudioProperties::AudioProperties(const unsigned int sampleRate,
-                                         const unsigned short channels,
-                                         const unsigned long long samplesCount,
-                                         const int bitrate,
-                                         ReadStyle style) : TagLib::AudioProperties(), d(new AudioPropertiesPrivate)
+DSDIFF::Properties::Properties(const unsigned int sampleRate,
+                               const unsigned short channels,
+                               const unsigned long long samplesCount,
+                               const int bitrate,
+                               ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
-  d->channels    = channels;
+  d->channels = channels;
   d->sampleCount = samplesCount;
   d->sampleWidth = 1;
-  d->sampleRate  = sampleRate;
-  d->bitrate     = bitrate;
-  d->length      = d->sampleRate > 0
+  d->sampleRate = sampleRate;
+  d->bitrate = bitrate;
+  d->length = d->sampleRate > 0
     ? static_cast<int>((d->sampleCount * 1000.0) / d->sampleRate + 0.5)
     : 0;
 }
 
-DSDIFF::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+DSDIFF::Properties::~Properties() = default;
 
-int DSDIFF::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int DSDIFF::AudioProperties::lengthInSeconds() const
+int DSDIFF::Properties::lengthInSeconds() const
 {
   return d->length / 1000;
 }
 
-int DSDIFF::AudioProperties::lengthInMilliseconds() const
+int DSDIFF::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int DSDIFF::AudioProperties::bitrate() const
+int DSDIFF::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int DSDIFF::AudioProperties::sampleRate() const
+int DSDIFF::Properties::sampleRate() const
 {
   return d->sampleRate;
 }
 
-int DSDIFF::AudioProperties::channels() const
+int DSDIFF::Properties::channels() const
 {
   return d->channels;
 }
 
-int DSDIFF::AudioProperties::bitsPerSample() const
+int DSDIFF::Properties::bitsPerSample() const
 {
   return d->sampleWidth;
 }
 
-long long DSDIFF::AudioProperties::sampleCount() const
+long long DSDIFF::Properties::sampleCount() const
 {
   return d->sampleCount;
 }

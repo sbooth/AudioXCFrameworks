@@ -30,41 +30,32 @@
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
-
   namespace Mod {
-
-    class File;
-
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+    class TAGLIB_EXPORT Properties : public AudioProperties
     {
-      friend class File;
-
     public:
-      explicit AudioProperties(AudioProperties::ReadStyle propertiesStyle);
-      virtual ~AudioProperties();
+      Properties(AudioProperties::ReadStyle propertiesStyle);
+      ~Properties() override;
 
-      int length()               const;
-      int lengthInSeconds()      const;
-      int lengthInMilliseconds() const;
-      int bitrate()              const;
-      int sampleRate()           const;
-      int channels()             const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
-      unsigned int  instrumentCount()  const;
+      int bitrate() const override;
+      int sampleRate() const override;
+      int channels() const override;
+
+      unsigned int instrumentCount() const;
       unsigned char lengthInPatterns() const;
 
-    private:
       void setChannels(int channels);
 
-      void setInstrumentCount(unsigned int sampleCount);
+      void setInstrumentCount(unsigned int instrumentCount);
       void setLengthInPatterns(unsigned char lengthInPatterns);
 
+    private:
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-
-  }
-
-}
-
+  }  // namespace Mod
+}  // namespace TagLib
 #endif

@@ -54,12 +54,15 @@ namespace TagLib {
        * Constructs an APE footer based on \a data.  parse() is called
        * immediately.
        */
-      explicit Footer(const ByteVector &data);
+      Footer(const ByteVector &data);
 
       /*!
        * Destroys the footer.
        */
       virtual ~Footer();
+
+      Footer(const Footer &) = delete;
+      Footer &operator=(const Footer &) = delete;
 
       /*!
        * Returns the version number.  (Note: This is the 1000 or 2000.)
@@ -160,14 +163,11 @@ namespace TagLib {
       ByteVector render(bool isHeader) const;
 
     private:
-      Footer(const Footer &);
-      Footer &operator=(const Footer &);
-
       class FooterPrivate;
-      FooterPrivate *d;
+      std::unique_ptr<FooterPrivate> d;
     };
 
-  }
-}
+  }  // namespace APE
+}  // namespace TagLib
 
 #endif

@@ -31,9 +31,7 @@
 #include <taglib/tstringlist.h>
 
 namespace TagLib {
-
   namespace APE {
-
     //! An implementation of APE-items
 
     /*!
@@ -57,11 +55,6 @@ namespace TagLib {
        * Constructs an empty item.
        */
       Item();
-
-      /*!
-       * Constructs a text item with \a key and \a value.
-       */
-      Item(const String &key, const String &value);
 
       /*!
        * Constructs a text item with \a key and \a values.
@@ -111,6 +104,11 @@ namespace TagLib {
       */
       void setBinaryData(const ByteVector &value);
 
+#ifndef DO_NOT_DOCUMENT
+      /* Remove in next binary incompatible release */
+      ByteVector value() const;
+#endif
+
       /*!
        * Sets the key for the item to \a key.
        */
@@ -157,6 +155,11 @@ namespace TagLib {
        */
       String toString() const;
 
+#ifndef DO_NOT_DOCUMENT
+      /* Remove in next binary incompatible release */
+      StringList toStringList() const;
+#endif
+
       /*!
        * Returns the list of text values.  If the data type is not \a Text, always
        * returns an empty StringList.
@@ -184,11 +187,11 @@ namespace TagLib {
       bool isReadOnly() const;
 
       /*!
-       * Sets the type of the item to \a type.
+       * Sets the type of the item to \a val.
        *
        * \see ItemTypes
        */
-      void setType(ItemTypes type);
+      void setType(ItemTypes val);
 
       /*!
        * Returns the type of the item.
@@ -202,12 +205,9 @@ namespace TagLib {
 
     private:
       class ItemPrivate;
-      ItemPrivate *d;
+      std::unique_ptr<ItemPrivate> d;
     };
-  }
-
-}
+  }  // namespace APE
+}  // namespace TagLib
 
 #endif
-
-

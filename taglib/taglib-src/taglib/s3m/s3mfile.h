@@ -27,8 +27,8 @@
 #define TAGLIB_S3MFILE_H
 
 #include <taglib/tfile.h>
-#include <taglib/audioproperties.h>
 #include <taglib/taglib_export.h>
+#include <taglib/audioproperties.h>
 #include <taglib/modfilebase.h>
 #include <taglib/modtag.h>
 #include <taglib/s3mproperties.h>
@@ -67,15 +67,30 @@ namespace TagLib {
         /*!
          * Destroys this instance of the File.
          */
-        virtual ~File();
+        ~File() override;
 
-        Mod::Tag *tag() const;
+        File(const File &) = delete;
+        File &operator=(const File &) = delete;
+
+        Mod::Tag *tag() const override;
+
+        /*!
+         * Implements the unified property interface -- export function.
+         * Forwards to Mod::Tag::properties().
+         */
+        PropertyMap properties() const override;
+
+        /*!
+         * Implements the unified property interface -- import function.
+         * Forwards to Mod::Tag::setProperties().
+         */
+        PropertyMap setProperties(const PropertyMap &) override;
 
         /*!
          * Returns the S3M::Properties for this file. If no audio properties
          * were read then this will return a null pointer.
          */
-        S3M::AudioProperties *audioProperties() const;
+        S3M::Properties *audioProperties() const override;
 
         /*!
          * Save the file.
@@ -83,18 +98,15 @@ namespace TagLib {
          *
          * \note Saving ScreamTracker III tags is not supported.
          */
-        bool save();
+        bool save() override;
 
       private:
-        File(const File &);
-        File &operator=(const File &);
-
         void read(bool readProperties);
 
         class FilePrivate;
-        FilePrivate *d;
+        std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace S3M
+}  // namespace TagLib
 
 #endif

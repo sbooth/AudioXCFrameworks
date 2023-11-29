@@ -26,34 +26,71 @@
 #ifndef TAGLIB_INFOTAG_H
 #define TAGLIB_INFOTAG_H
 
-#include <taglib/tag.h>
 #include <taglib/tmap.h>
 #include <taglib/tstring.h>
 #include <taglib/tstringlist.h>
-#include <taglib/tstringhandler.h>
 #include <taglib/tbytevector.h>
 #include <taglib/taglib_export.h>
+#include <taglib/tag.h>
 
 namespace TagLib {
 
   class File;
 
   //! A RIFF INFO tag implementation.
-
   namespace RIFF {
   namespace Info {
 
-    typedef Map<ByteVector, String> FieldMap;
+    using FieldListMap = Map<ByteVector, String>;
 
-    //! The main class in the RIFF INFO tag implementation
+    //! A abstraction for the string to data encoding in Info tags.
 
     /*!
-     * This is the main class in the INFO tag implementation.  RIFF INFO tag is
-     * a metadata format found in WAV audio and AVI video files.  Though it is a
-     * part of Microsoft/IBM's RIFF specification, the author could not find the
-     * official documents about it.  So, this implementation is referring to
-     * unofficial documents on the web and some applications' behaviors especially
-     * Windows Explorer.
+     * RIFF INFO tag has no clear definitions about character encodings.
+     * In practice, local encoding of each system is largely used and UTF-8 is
+     * popular too.
+     *
+     * Here is an option to read and write tags in your preferred encoding
+     * by subclassing this class, reimplementing parse() and render() and setting
+     * your reimplementation as the default with Info::Tag::setStringHandler().
+     *
+     * \see ID3v1::Tag::setStringHandler()
+     */
+
+    class TAGLIB_EXPORT StringHandler
+    {
+    public:
+      StringHandler();
+      virtual ~StringHandler();
+
+      StringHandler(const StringHandler &) = delete;
+      StringHandler &operator=(const StringHandler &) = delete;
+
+      /*!
+       * Decode a string from \a data.  The default implementation assumes that
+       * \a data is an UTF-8 character array.
+       */
+      virtual String parse(const ByteVector &data) const;
+
+      /*!
+       * Encode a ByteVector with the data from \a s.  The default implementation
+       * assumes that \a s is an UTF-8 string.
+       */
+      virtual ByteVector render(const String &s) const;
+
+    private:
+      class StringHandlerPrivate;
+      std::unique_ptr<StringHandlerPrivate> d;
+    };
+
+    //! The main class in the ID3v2 implementation
+
+    /*!
+     * This is the main class in the INFO tag implementation.  RIFF INFO tag is a
+     * metadata format found in WAV audio and AVI video files.  Though it is a part
+     * of Microsoft/IBM's RIFF specification, the author could not find the official
+     * documents about it.  So, this implementation is referring to unofficial documents
+     * online and some applications' behaviors especially Windows Explorer.
      */
     class TAGLIB_EXPORT Tag : public TagLib::Tag
     {
@@ -66,31 +103,32 @@ namespace TagLib {
       /*!
        * Constructs an INFO tag read from \a data which is contents of "LIST" chunk.
        */
-      explicit Tag(const ByteVector &data);
+      Tag(const ByteVector &data);
 
-      virtual ~Tag();
+      ~Tag() override;
+
+      Tag(const Tag &) = delete;
+      Tag &operator=(const Tag &) = delete;
 
       // Reimplementations
 
-      virtual String title() const;
-      virtual String artist() const;
-      virtual String album() const;
-      virtual String comment() const;
-      virtual String genre() const;
-      virtual unsigned int year() const;
-      virtual unsigned int track() const;
-      virtual PictureMap pictures() const;
+      String title() const override;
+      String artist() const override;
+      String album() const override;
+      String comment() const override;
+      String genre() const override;
+      unsigned int year() const override;
+      unsigned int track() const override;
 
-      virtual void setTitle(const String &s);
-      virtual void setArtist(const String &s);
-      virtual void setAlbum(const String &s);
-      virtual void setComment(const String &s);
-      virtual void setGenre(const String &s);
-      virtual void setYear(unsigned int i);
-      virtual void setTrack(unsigned int i);
-      virtual void setPictures(const PictureMap &l);
+      void setTitle(const String &s) override;
+      void setArtist(const String &s) override;
+      void setAlbum(const String &s) override;
+      void setComment(const String &s) override;
+      void setGenre(const String &s) override;
+      void setYear(unsigned int i) override;
+      void setTrack(unsigned int i) override;
 
-      virtual bool isEmpty() const;
+      bool isEmpty() const override;
 
       /*!
        * Returns a copy of the internal fields of the tag.  The returned map directly
@@ -102,7 +140,7 @@ namespace TagLib {
        * \see setFieldText()
        * \see removeField()
        */
-      FieldMap fieldMap() const;
+      FieldListMap fieldListMap() const;
 
       /*
        * Gets the value of the field with the ID \a id.
@@ -139,8 +177,10 @@ namespace TagLib {
        *
        * \note The caller is responsible for deleting the previous handler
        * as needed after it is released.
+       *
+       * \see StringHandler
        */
-      static void setStringHandler(const TagLib::StringHandler *handler);
+      static void setStringHandler(const StringHandler *handler);
 
     protected:
       /*!
@@ -149,13 +189,11 @@ namespace TagLib {
       void parse(const ByteVector &data);
 
     private:
-      Tag(const Tag &);
-      Tag &operator=(const Tag &);
-
       class TagPrivate;
-      TagPrivate *d;
+      std::unique_ptr<TagPrivate> d;
     };
-  }}
-}
+  }  // namespace Info
+}  // namespace RIFF
+}  // namespace TagLib
 
 #endif

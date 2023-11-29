@@ -23,36 +23,21 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <taglib.h>
-#include "tdebug.h"
-#include "tsmartptr.h"
-
-#include "asfattribute.h"
-#include "asffile.h"
 #include "asfpicture.h"
+
+#include "asffile.h"
 #include "asfutils.h"
 
 using namespace TagLib;
 
-namespace
-{
-  struct PictureData
-  {
-    bool valid;
-    ASF::Picture::Type type;
-    String mimeType;
-    String description;
-    ByteVector picture;
-  };
-}
-
 class ASF::Picture::PicturePrivate
 {
 public:
-  PicturePrivate() :
-    data(new PictureData()) {}
-
-  SHARED_PTR<PictureData> data;
+  bool valid;
+  Type type;
+  String mimeType;
+  String description;
+  ByteVector picture;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,78 +45,67 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 ASF::Picture::Picture() :
-  d(new PicturePrivate())
+  d(std::make_shared<PicturePrivate>())
 {
-  d->data->valid = true;
+  d->valid = true;
 }
 
-ASF::Picture::Picture(const Picture& other) :
-  d(new PicturePrivate(*other.d))
-{
-}
-
-ASF::Picture::~Picture()
-{
-  delete d;
-}
+ASF::Picture::Picture(const Picture &) = default;
+ASF::Picture::~Picture() = default;
 
 bool ASF::Picture::isValid() const
 {
-  return d->data->valid;
+  return d->valid;
 }
 
 String ASF::Picture::mimeType() const
 {
-  return d->data->mimeType;
+  return d->mimeType;
 }
 
 void ASF::Picture::setMimeType(const String &value)
 {
-  d->data->mimeType = value;
+  d->mimeType = value;
 }
 
 ASF::Picture::Type ASF::Picture::type() const
 {
-  return d->data->type;
+  return d->type;
 }
 
 void ASF::Picture::setType(const ASF::Picture::Type& t)
 {
-  d->data->type = t;
+  d->type = t;
 }
 
 String ASF::Picture::description() const
 {
-  return d->data->description;
+  return d->description;
 }
 
 void ASF::Picture::setDescription(const String &desc)
 {
-  d->data->description = desc;
+  d->description = desc;
 }
 
 ByteVector ASF::Picture::picture() const
 {
-  return d->data->picture;
+  return d->picture;
 }
 
 void ASF::Picture::setPicture(const ByteVector &p)
 {
-  d->data->picture = p;
+  d->picture = p;
 }
 
 int ASF::Picture::dataSize() const
 {
-  return static_cast<int>(
-    9 + (d->data->mimeType.length() + d->data->description.length()) * 2 +
-    d->data->picture.size());
+  return
+    9 + (d->mimeType.length() + d->description.length()) * 2 +
+    d->picture.size();
 }
 
-ASF::Picture& ASF::Picture::operator=(const ASF::Picture& other)
-{
-  Picture(other).swap(*this);
-  return *this;
-}
+ASF::Picture &ASF::Picture::operator=(const ASF::Picture &) = default;
 
 void ASF::Picture::swap(Picture &other)
 {
@@ -146,47 +120,46 @@ ByteVector ASF::Picture::render() const
     return ByteVector();
 
   return
-    ByteVector((char)d->data->type) +
-    ByteVector::fromUInt32LE(d->data->picture.size()) +
-    renderString(d->data->mimeType) +
-    renderString(d->data->description) +
-    d->data->picture;
+    ByteVector(static_cast<char>(d->type)) +
+    ByteVector::fromUInt(d->picture.size(), false) +
+    renderString(d->mimeType) +
+    renderString(d->description) +
+    d->picture;
 }
 
 void ASF::Picture::parse(const ByteVector& bytes)
 {
-  d->data->valid = false;
+  d->valid = false;
   if(bytes.size() < 9)
     return;
-  size_t pos = 0;
-  d->data->type = (Type)bytes[0]; ++pos;
-  const unsigned int dataLen = bytes.toUInt32LE(pos); pos+=4;
+  int pos = 0;
+  d->type = static_cast<Type>(bytes[0]); ++pos;
+  const unsigned int dataLen = bytes.toUInt(pos, false); pos+=4;
 
   const ByteVector nullStringTerminator(2, 0);
 
-  size_t endPos = bytes.find(nullStringTerminator, pos, 2);
-  if(endPos == ByteVector::npos())
+  int endPos = bytes.find(nullStringTerminator, pos, 2);
+  if(endPos < 0)
     return;
-  d->data->mimeType = String(bytes.mid(pos, endPos - pos), String::UTF16LE);
+  d->mimeType = String(bytes.mid(pos, endPos - pos), String::UTF16LE);
   pos = endPos+2;
 
   endPos = bytes.find(nullStringTerminator, pos, 2);
-  if(endPos == ByteVector::npos())
+  if(endPos < 0)
     return;
-  d->data->description = String(bytes.mid(pos, endPos - pos), String::UTF16LE);
+  d->description = String(bytes.mid(pos, endPos - pos), String::UTF16LE);
   pos = endPos+2;
 
   if(dataLen + pos != bytes.size())
     return;
 
-  d->data->picture = bytes.mid(pos, dataLen);
-  d->data->valid = true;
-  return;
+  d->picture = bytes.mid(pos, dataLen);
+  d->valid = true;
 }
 
 ASF::Picture ASF::Picture::fromInvalid()
 {
   Picture ret;
-  ret.d->data->valid = false;
+  ret.d->valid = false;
   return ret;
 }

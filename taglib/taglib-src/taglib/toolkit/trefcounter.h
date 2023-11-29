@@ -31,8 +31,11 @@
 
 #ifndef DO_NOT_DOCUMENT // Tell Doxygen to skip this class.
 /*!
- * \warning This <b>is not</b> part of the TagLib public API!
- */
+  * \internal
+  * This is just used as a base class for shared classes in TagLib.
+  *
+  * \warning This <b>is not</b> part of the TagLib public API!
+  */
 namespace TagLib
 {
 
@@ -40,23 +43,21 @@ namespace TagLib
   {
   public:
     RefCounter();
-    virtual ~RefCounter();
+    ~RefCounter();
+
+    RefCounter(const RefCounter &) = delete;
+    RefCounter &operator=(const RefCounter &) = delete;
 
     void ref();
     bool deref();
     int count() const;
-    bool unique() const;
 
   private:
-    RefCounter(const RefCounter &);
-    RefCounter &operator=(const RefCounter &);
-
     class RefCounterPrivate;
     RefCounterPrivate *d;
   };
 
-}
+}  // namespace TagLib
 
 #endif // DO_NOT_DOCUMENT
 #endif
-

@@ -23,11 +23,14 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tbytevectorlist.h>
-#include <id3v2tag.h>
 #include "textidentificationframe.h"
+
+#include <array>
+#include <utility>
+
 #include "tpropertymap.h"
 #include "id3v1genres.h"
+#include "id3v2tag.h"
 
 using namespace TagLib;
 using namespace ID3v2;
@@ -35,9 +38,12 @@ using namespace ID3v2;
 class TextIdentificationFrame::TextIdentificationFramePrivate
 {
 public:
-  TextIdentificationFramePrivate() : textEncoding(String::Latin1) {}
-  String::Type textEncoding;
+  String::Type textEncoding { String::Latin1 };
   StringList fieldList;
+};
+
+class UserTextIdentificationFrame::UserTextIdentificationFramePrivate
+{
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,25 +52,28 @@ public:
 
 TextIdentificationFrame::TextIdentificationFrame(const ByteVector &type, String::Type encoding) :
   Frame(type),
-  d(new TextIdentificationFramePrivate())
+  d(std::make_unique<TextIdentificationFramePrivate>())
 {
   d->textEncoding = encoding;
 }
 
 TextIdentificationFrame::TextIdentificationFrame(const ByteVector &data) :
   Frame(data),
-  d(new TextIdentificationFramePrivate())
+  d(std::make_unique<TextIdentificationFramePrivate>())
 {
   setData(data);
 }
 
 TextIdentificationFrame *TextIdentificationFrame::createTIPLFrame(const PropertyMap &properties) // static
 {
-  TextIdentificationFrame *frame = new TextIdentificationFrame("TIPL");
+  auto frame = new TextIdentificationFrame("TIPL");
   StringList l;
-  for(PropertyMap::ConstIterator it = properties.begin(); it != properties.end(); ++it){
-    l.append(it->first);
-    l.append(it->second.toString(",")); // comma-separated list of names
+  for(const auto &[person, list] : properties) {
+    const String role = involvedPeopleMap()[person];
+    if(role.isEmpty()) // should not happen
+      continue;
+    l.append(role);
+    l.append(list.toString(",")); // comma-separated list of names
   }
   frame->setText(l);
   return frame;
@@ -72,22 +81,19 @@ TextIdentificationFrame *TextIdentificationFrame::createTIPLFrame(const Property
 
 TextIdentificationFrame *TextIdentificationFrame::createTMCLFrame(const PropertyMap &properties) // static
 {
-  TextIdentificationFrame *frame = new TextIdentificationFrame("TMCL");
+  auto frame = new TextIdentificationFrame("TMCL");
   StringList l;
-  for(PropertyMap::ConstIterator it = properties.begin(); it != properties.end(); ++it){
-    if(!it->first.startsWith(instrumentPrefix)) // should not happen
+  for(const auto &[instrument, list] : properties) {
+    if(!instrument.startsWith(instrumentPrefix)) // should not happen
       continue;
-    l.append(it->first.substr(instrumentPrefix.size()));
-    l.append(it->second.toString(","));
+    l.append(instrument.substr(instrumentPrefix.size()));
+    l.append(list.toString(","));
   }
   frame->setText(l);
   return frame;
 }
 
-TextIdentificationFrame::~TextIdentificationFrame()
-{
-  delete d;
-}
+TextIdentificationFrame::~TextIdentificationFrame() = default;
 
 void TextIdentificationFrame::setText(const StringList &l)
 {
@@ -122,22 +128,36 @@ void TextIdentificationFrame::setTextEncoding(String::Type encoding)
 namespace
 {
   // array of allowed TIPL prefixes and their corresponding key value
-  const char* involvedPeople[][2] = {
-      {"ARRANGER", "ARRANGER"},
-      {"ENGINEER", "ENGINEER"},
-      {"PRODUCER", "PRODUCER"},
-      {"DJ-MIX", "DJMIXER"},
-      {"MIX", "MIXER"},
+  constexpr std::array involvedPeople {
+    std::pair("ARRANGER", "ARRANGER"),
+    std::pair("ENGINEER", "ENGINEER"),
+    std::pair("PRODUCER", "PRODUCER"),
+    std::pair("DJ-MIX", "DJMIXER"),
+    std::pair("MIX", "MIXER"),
   };
-  const size_t involvedPeopleSize = sizeof(involvedPeople) / sizeof(involvedPeople[0]);
-}
+
+  constexpr std::array txxxFrameTranslation {
+    std::pair("MUSICBRAINZ ALBUM ID", "MUSICBRAINZ_ALBUMID"),
+    std::pair("MUSICBRAINZ ARTIST ID", "MUSICBRAINZ_ARTISTID"),
+    std::pair("MUSICBRAINZ ALBUM ARTIST ID", "MUSICBRAINZ_ALBUMARTISTID"),
+    std::pair("MUSICBRAINZ ALBUM RELEASE COUNTRY", "RELEASECOUNTRY"),
+    std::pair("MUSICBRAINZ ALBUM STATUS", "RELEASESTATUS"),
+    std::pair("MUSICBRAINZ ALBUM TYPE", "RELEASETYPE"),
+    std::pair("MUSICBRAINZ RELEASE GROUP ID", "MUSICBRAINZ_RELEASEGROUPID"),
+    std::pair("MUSICBRAINZ RELEASE TRACK ID", "MUSICBRAINZ_RELEASETRACKID"),
+    std::pair("MUSICBRAINZ WORK ID", "MUSICBRAINZ_WORKID"),
+    std::pair("ACOUSTID ID", "ACOUSTID_ID"),
+    std::pair("ACOUSTID FINGERPRINT", "ACOUSTID_FINGERPRINT"),
+    std::pair("MUSICIP PUID", "MUSICIP_PUID"),
+  };
+}  // namespace
 
 const KeyConversionMap &TextIdentificationFrame::involvedPeopleMap() // static
 {
   static KeyConversionMap m;
   if(m.isEmpty()) {
-    for(size_t i = 0; i < involvedPeopleSize; ++i)
-      m.insert(involvedPeople[i][1], involvedPeople[i][0]);
+    for(const auto &[o, t] : involvedPeople)
+      m.insert(t, o);
   }
   return m;
 }
@@ -158,19 +178,19 @@ PropertyMap TextIdentificationFrame::asProperties() const
   if(tagName == "GENRE") {
     // Special case: Support ID3v1-style genre numbers. They are not officially supported in
     // ID3v2, however it seems that still a lot of programs use them.
-    for(StringList::Iterator it = values.begin(); it != values.end(); ++it) {
+    for(auto &value : values) {
       bool ok = false;
-      int test = it->toInt(&ok); // test if the genre value is an integer
+      int test = value.toInt(&ok); // test if the genre value is an integer
       if(ok)
-        *it = ID3v1::genre(test);
+        value = ID3v1::genre(test);
     }
   } else if(tagName == "DATE") {
-    for(StringList::Iterator it = values.begin(); it != values.end(); ++it) {
+    for(auto &value : values) {
       // ID3v2 specifies ISO8601 timestamps which contain a 'T' as separator between date and time.
       // Since this is unusual in other formats, the T is removed.
-      const size_t tpos = it->find("T");
-      if(tpos != String::npos())
-        (*it)[tpos] = ' ';
+      int tpos = value.find("T");
+      if(tpos != -1)
+        value[tpos] = ' ';
     }
   }
   PropertyMap ret;
@@ -191,7 +211,7 @@ void TextIdentificationFrame::parseFields(const ByteVector &data)
 
   // read the string data type (the first byte of the field data)
 
-  d->textEncoding = String::Type(data[0]);
+  d->textEncoding = static_cast<String::Type>(data[0]);
 
   // split the byte array into chunks based on the string type (two byte delimiter
   // for unicode encodings)
@@ -200,7 +220,7 @@ void TextIdentificationFrame::parseFields(const ByteVector &data)
 
   // build a small counter to strip nulls off the end of the field
 
-  int dataLength = static_cast<int>(data.size()) - 1;
+  int dataLength = data.size() - 1;
 
   while(dataLength > 0 && data[dataLength] == 0)
     dataLength--;
@@ -208,19 +228,39 @@ void TextIdentificationFrame::parseFields(const ByteVector &data)
   while(dataLength % byteAlign != 0)
     dataLength++;
 
-  ByteVectorList l = ByteVectorList::split(data.mid(1, dataLength), textDelimiter(d->textEncoding), byteAlign);
+  const ByteVectorList l = ByteVectorList::split(data.mid(1, dataLength), textDelimiter(d->textEncoding), byteAlign);
 
   d->fieldList.clear();
 
   // append those split values to the list and make sure that the new string's
   // type is the same specified for this frame
 
-  for(ByteVectorList::ConstIterator it = l.begin(); it != l.end(); it++) {
-    if(!(*it).isEmpty()) {
-      if(d->textEncoding == String::Latin1)
+  unsigned short firstBom = 0;
+  for(auto it = l.begin(); it != l.end(); it++) {
+    if(!it->isEmpty() || (it == l.begin() && frameID() == "TXXX")) {
+      if(d->textEncoding == String::Latin1) {
         d->fieldList.append(Tag::latin1StringHandler()->parse(*it));
-      else
-        d->fieldList.append(String(*it, d->textEncoding));
+      }
+      else {
+        String::Type textEncoding = d->textEncoding;
+        if(textEncoding == String::UTF16) {
+          if(it == l.begin()) {
+            firstBom = it->mid(0, 2).toUShort();
+          }
+          else {
+            unsigned short subsequentBom = it->mid(0, 2).toUShort();
+            if(subsequentBom != 0xfeff && subsequentBom != 0xfffe) {
+              if(firstBom == 0xfeff) {
+                textEncoding = String::UTF16BE;
+              }
+              else if(firstBom == 0xfffe) {
+                textEncoding = String::UTF16LE;
+              }
+            }
+          }
+        }
+        d->fieldList.append(String(*it, textEncoding));
+      }
     }
   }
 }
@@ -231,15 +271,15 @@ ByteVector TextIdentificationFrame::renderFields() const
 
   ByteVector v;
 
-  v.append(char(encoding));
+  v.append(static_cast<char>(encoding));
 
-  for(StringList::ConstIterator it = d->fieldList.begin(); it != d->fieldList.end(); it++) {
+  for(auto it = d->fieldList.cbegin(); it != d->fieldList.cend(); it++) {
 
     // Since the field list is null delimited, if this is not the first
     // element in the list, append the appropriate delimiter for this
     // encoding.
 
-    if(it != d->fieldList.begin())
+    if(it != d->fieldList.cbegin())
       v.append(textDelimiter(encoding));
 
     v.append((*it).data(encoding));
@@ -254,7 +294,7 @@ ByteVector TextIdentificationFrame::renderFields() const
 
 TextIdentificationFrame::TextIdentificationFrame(const ByteVector &data, Header *h) :
   Frame(h),
-  d(new TextIdentificationFramePrivate())
+  d(std::make_unique<TextIdentificationFramePrivate>())
 {
   parseFields(fieldData(data));
 }
@@ -267,17 +307,15 @@ PropertyMap TextIdentificationFrame::makeTIPLProperties() const
     map.unsupportedData().append(frameID());
     return map;
   }
-  StringList l = fieldList();
-  for(StringList::ConstIterator it = l.begin(); it != l.end(); ++it) {
-    bool found = false;
-    for(size_t i = 0; i < involvedPeopleSize; ++i)
-      if(*it == involvedPeople[i][0]) {
-        map.insert(involvedPeople[i][1], (++it)->split(","));
-        found = true;
-        break;
-      }
-    if(!found){
-      // invalid involved role -> mark whole frame as unsupported in order to be consisten with writing
+  const StringList l = fieldList();
+  for(auto it = l.begin(); it != l.end(); ++it) {
+    auto found = std::find_if(involvedPeople.begin(), involvedPeople.end(),
+      [=](const auto &person) { return *it == person.first; });
+    if(found != involvedPeople.end()) {
+      map.insert(found->second, (++it)->split(","));
+    }
+    else {
+      // invalid involved role -> mark whole frame as unsupported in order to be consistent with writing
       map.clear();
       map.unsupportedData().append(frameID());
       return map;
@@ -294,8 +332,8 @@ PropertyMap TextIdentificationFrame::makeTMCLProperties() const
     map.unsupportedData().append(frameID());
     return map;
   }
-  StringList l = fieldList();
-  for(StringList::ConstIterator it = l.begin(); it != l.end(); ++it) {
+  const StringList l = fieldList();
+  for(auto it = l.begin(); it != l.end(); ++it) {
     String instrument = it->upper();
     if(instrument.isEmpty()) {
       // instrument is not a valid key -> frame unsupported
@@ -312,9 +350,10 @@ PropertyMap TextIdentificationFrame::makeTMCLProperties() const
 // UserTextIdentificationFrame public members
 ////////////////////////////////////////////////////////////////////////////////
 
+UserTextIdentificationFrame::~UserTextIdentificationFrame() = default;
+
 UserTextIdentificationFrame::UserTextIdentificationFrame(String::Type encoding) :
-  TextIdentificationFrame("TXXX", encoding),
-  d(0)
+  TextIdentificationFrame("TXXX", encoding)
 {
   StringList l;
   l.append(String());
@@ -330,8 +369,7 @@ UserTextIdentificationFrame::UserTextIdentificationFrame(const ByteVector &data)
 }
 
 UserTextIdentificationFrame::UserTextIdentificationFrame(const String &description, const StringList &values, String::Type encoding) :
-    TextIdentificationFrame("TXXX", encoding),
-    d(0)
+  TextIdentificationFrame("TXXX", encoding)
 {
   setDescription(description);
   setText(values);
@@ -341,10 +379,8 @@ String UserTextIdentificationFrame::toString() const
 {
   // first entry is the description itself, drop from values list
   StringList l = fieldList();
-  for(StringList::Iterator it = l.begin(); it != l.end(); ++it) {
-    l.erase(it);
-    break;
-  }
+  if(!l.isEmpty())
+    l.erase(l.begin());
   return "[" + description() + "] " + l.toString();
 }
 
@@ -394,23 +430,41 @@ PropertyMap UserTextIdentificationFrame::asProperties() const
 {
   PropertyMap map;
   String tagName = txxxToKey(description());
-  StringList v = fieldList();
-  for(StringList::ConstIterator it = v.begin(); it != v.end(); ++it)
-    if(it != v.begin())
-      map.insert(tagName, *it);
+  const StringList v = fieldList();
+  for(auto it = std::next(v.begin()); it != v.end(); ++it)
+    map.insert(tagName, *it);
   return map;
 }
 
 UserTextIdentificationFrame *UserTextIdentificationFrame::find(
   ID3v2::Tag *tag, const String &description) // static
 {
-  FrameList l = tag->frameList("TXXX");
-  for(FrameList::ConstIterator it = l.begin(); it != l.end(); ++it) {
-    UserTextIdentificationFrame *f = dynamic_cast<UserTextIdentificationFrame *>(*it);
+  for(const auto &frame : std::as_const(tag->frameList("TXXX"))) {
+    auto f = dynamic_cast<UserTextIdentificationFrame *>(frame);
     if(f && f->description() == description)
       return f;
   }
-  return 0;
+  return nullptr;
+}
+
+String UserTextIdentificationFrame::txxxToKey(const String &description)
+{
+  const String d = description.upper();
+  for(const auto &[o, t] : txxxFrameTranslation) {
+    if(d == o)
+      return t;
+  }
+  return d;
+}
+
+String UserTextIdentificationFrame::keyToTXXX(const String &s)
+{
+  const String key = s.upper();
+  for(const auto &[o, t] : txxxFrameTranslation) {
+    if(key == t)
+      return o;
+  }
+  return s;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -425,7 +479,7 @@ UserTextIdentificationFrame::UserTextIdentificationFrame(const ByteVector &data,
 
 void UserTextIdentificationFrame::checkFields()
 {
-  const size_t fields = fieldList().size();
+  int fields = fieldList().size();
 
   if(fields == 0)
     setDescription(String());

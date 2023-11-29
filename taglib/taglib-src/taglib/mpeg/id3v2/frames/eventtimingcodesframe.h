@@ -26,8 +26,8 @@
 #ifndef TAGLIB_EVENTTIMINGCODESFRAME_H
 #define TAGLIB_EVENTTIMINGCODESFRAME_H
 
-#include <taglib/id3v2frame.h>
 #include <taglib/tlist.h>
+#include <taglib/id3v2frame.h>
 
 namespace TagLib {
 
@@ -116,7 +116,7 @@ namespace TagLib {
       /*!
        * List of synchronized events.
        */
-      typedef TagLib::List<SynchedEvent> SynchedEventList;
+      using SynchedEventList = TagLib::List<SynchedEvent>;
 
       /*!
        * Construct an empty event timing codes frame.
@@ -131,12 +131,15 @@ namespace TagLib {
       /*!
        * Destroys this EventTimingCodesFrame instance.
        */
-      virtual ~EventTimingCodesFrame();
+      ~EventTimingCodesFrame() override;
+
+      EventTimingCodesFrame(const EventTimingCodesFrame &) = delete;
+      EventTimingCodesFrame &operator=(const EventTimingCodesFrame &) = delete;
 
       /*!
        * Returns a null string.
        */
-      virtual String toString() const;
+      String toString() const override;
 
       /*!
        * Returns the timestamp format.
@@ -165,21 +168,19 @@ namespace TagLib {
     protected:
       // Reimplementations.
 
-      virtual void parseFields(const ByteVector &data);
-      virtual ByteVector renderFields() const;
+      void parseFields(const ByteVector &data) override;
+      ByteVector renderFields() const override;
 
     private:
       /*!
        * The constructor used by the FrameFactory.
        */
       EventTimingCodesFrame(const ByteVector &data, Header *h);
-      EventTimingCodesFrame(const EventTimingCodesFrame &);
-      EventTimingCodesFrame &operator=(const EventTimingCodesFrame &);
 
       class EventTimingCodesFramePrivate;
-      EventTimingCodesFramePrivate *d;
+      std::unique_ptr<EventTimingCodesFramePrivate> d;
     };
 
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 #endif

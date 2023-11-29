@@ -23,7 +23,7 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <xmfile.h>
+#include "xmfile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -124,24 +124,24 @@ public:
     XM::File file(TEST_FILE_PATH_C("stripped.xm"));
     CPPUNIT_ASSERT(file.isValid());
 
-    XM::AudioProperties *p = file.audioProperties();
+    XM::Properties *p = file.audioProperties();
     Mod::Tag *t = file.tag();
 
-    CPPUNIT_ASSERT(0 != p);
-    CPPUNIT_ASSERT(0 != t);
+    CPPUNIT_ASSERT(nullptr != p);
+    CPPUNIT_ASSERT(nullptr != t);
 
-    CPPUNIT_ASSERT_EQUAL(0, p->length());
+    CPPUNIT_ASSERT_EQUAL(0, p->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(0, p->bitrate());
     CPPUNIT_ASSERT_EQUAL(0, p->sampleRate());
     CPPUNIT_ASSERT_EQUAL(8, p->channels());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->lengthInPatterns());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  0, p->version());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  0 , p->restartPosition());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->patternCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  0, p->instrumentCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->flags());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  6, p->tempo());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)125, p->bpmSpeed());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->lengthInPatterns());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0), p->version());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0) , p->restartPosition());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->patternCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0), p->instrumentCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->flags());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(6), p->tempo());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(125), p->bpmSpeed());
     CPPUNIT_ASSERT_EQUAL(titleBefore, t->title());
     CPPUNIT_ASSERT_EQUAL(String(), t->artist());
     CPPUNIT_ASSERT_EQUAL(String(), t->album());
@@ -170,24 +170,24 @@ private:
 
     CPPUNIT_ASSERT(file.isValid());
 
-    XM::AudioProperties *p = file.audioProperties();
+    XM::Properties *p = file.audioProperties();
     Mod::Tag *t = file.tag();
 
-    CPPUNIT_ASSERT(0 != p);
-    CPPUNIT_ASSERT(0 != t);
+    CPPUNIT_ASSERT(nullptr != p);
+    CPPUNIT_ASSERT(nullptr != t);
 
-    CPPUNIT_ASSERT_EQUAL(0, p->length());
+    CPPUNIT_ASSERT_EQUAL(0, p->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(0, p->bitrate());
     CPPUNIT_ASSERT_EQUAL(0, p->sampleRate());
     CPPUNIT_ASSERT_EQUAL(8, p->channels());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->lengthInPatterns());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)260, p->version());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  0, p->restartPosition());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->patternCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)128, p->instrumentCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->flags());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  6, p->tempo());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)125, p->bpmSpeed());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->lengthInPatterns());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(260), p->version());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0), p->restartPosition());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->patternCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(128), p->instrumentCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->flags());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(6), p->tempo());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(125), p->bpmSpeed());
     CPPUNIT_ASSERT_EQUAL(title, t->title());
     CPPUNIT_ASSERT_EQUAL(String(), t->artist());
     CPPUNIT_ASSERT_EQUAL(String(), t->album());
@@ -203,7 +203,7 @@ private:
     ScopedFileCopy copy("test", ".xm");
     {
       XM::File file(copy.fileName().c_str());
-      CPPUNIT_ASSERT(file.tag() != 0);
+      CPPUNIT_ASSERT(file.tag() != nullptr);
       file.tag()->setTitle(titleAfter);
       file.tag()->setComment(comment);
       file.tag()->setTrackerName(trackerNameAfter);

@@ -85,20 +85,20 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Constructs a TrueAudio file from \a file.  If \a readProperties is true
        * the file's audio properties will also be read.
        *
-       * If this file contains and ID3v2 tag the frames will be created using
+       * If this file contains an ID3v2 tag, the frames will be created using
        * \a frameFactory.
        *
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(FileName file, ID3v2::FrameFactory *frameFactory,
            bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Constructs a TrueAudio file from \a stream.  If \a readProperties is true
@@ -110,7 +110,7 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Constructs a TrueAudio file from \a stream.  If \a readProperties is true
@@ -119,42 +119,54 @@ namespace TagLib {
        * \note TagLib will *not* take ownership of the stream, the caller is
        * responsible for deleting it after the File object.
        *
-       * If this file contains and ID3v2 tag the frames will be created using
+       * If this file contains an ID3v2 tag, the frames will be created using
        * \a frameFactory.
        *
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(IOStream *stream, ID3v2::FrameFactory *frameFactory,
            bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
       /*!
        * Returns the Tag for this file.
        */
-      virtual TagLib::Tag *tag() const;
+      TagLib::Tag *tag() const override;
+
+      /*!
+       * Implements the unified property interface -- export function.
+       * If the file contains both ID3v1 and v2 tags, only ID3v2 will be
+       * converted to the PropertyMap.
+       */
+      PropertyMap properties() const override;
 
       /*!
        * Implements the unified property interface -- import function.
        * Creates in ID3v2 tag if necessary. If an ID3v1 tag exists, it will
        * be updated as well, within the limitations of ID3v1.
        */
-      virtual PropertyMap setProperties(const PropertyMap &);
+      PropertyMap setProperties(const PropertyMap &) override;
+
+      void removeUnsupportedProperties(const StringList &unsupported) override;
 
       /*!
        * Returns the TrueAudio::Properties for this file.  If no audio properties
        * were read then this will return a null pointer.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
 
       /*!
        * Saves the file.
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
        * Returns a pointer to the ID3v1 tag of the file.
@@ -228,15 +240,12 @@ namespace TagLib {
       static bool isSupported(IOStream *stream);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
-
       void read(bool readProperties);
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace TrueAudio
+}  // namespace TagLib
 
 #endif

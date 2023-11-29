@@ -27,8 +27,8 @@
 #define TAGLIB_RELATIVEVOLUMEFRAME_H
 
 #include <taglib/tlist.h>
-#include <taglib/id3v2frame.h>
 #include <taglib/taglib_export.h>
+#include <taglib/id3v2frame.h>
 
 namespace TagLib {
 
@@ -82,17 +82,12 @@ namespace TagLib {
        * The peak volume is described as a series of bits that is padded to fill
        * a block of bytes.  These two values should always be updated in tandem.
        */
-      struct PeakVolume
-      {
-        /*!
-         * Constructs an empty peak volume description.
-         */
-        PeakVolume() : bitsRepresentingPeak(0) {}
+      struct PeakVolume {
         /*!
          * The number of bits (in the range of 0 to 255) used to describe the
          * peak volume.
          */
-        unsigned char bitsRepresentingPeak;
+        unsigned char bitsRepresentingPeak { 0 };
         /*!
          * The array of bits (represented as a series of bytes) used to describe
          * the peak volume.
@@ -109,40 +104,27 @@ namespace TagLib {
       /*!
        * Constructs a RelativeVolumeFrame based on the contents of \a data.
        */
-      explicit RelativeVolumeFrame(const ByteVector &data);
+      RelativeVolumeFrame(const ByteVector &data);
 
       /*!
        * Destroys the RelativeVolumeFrame instance.
        */
-      virtual ~RelativeVolumeFrame();
+      ~RelativeVolumeFrame() override;
+
+      RelativeVolumeFrame(const RelativeVolumeFrame &) = delete;
+      RelativeVolumeFrame &operator=(const RelativeVolumeFrame &) = delete;
 
       /*!
        * Returns the frame's identification.
        *
        * \see identification()
        */
-      virtual String toString() const;
+      String toString() const override;
 
       /*!
        * Returns a list of channels with information currently in the frame.
        */
       List<ChannelType> channels() const;
-
-      /*!
-       * \deprecated Always returns master volume.
-       */
-      ChannelType channelType() const;
-
-      /*!
-       * \deprecated This method no longer has any effect.
-       */
-      void setChannelType(ChannelType t);
-
-      /*
-       * There was a terrible API goof here, and while this can't be changed to
-       * the way it appears below for binary compatibility reasons, let's at
-       * least pretend that it looks clean.
-       */
 
       /*!
        * Returns the relative volume adjustment "index".  As indicated by the
@@ -153,7 +135,7 @@ namespace TagLib {
        * available and returns 0 if the specified channel does not exist.
        *
        * \see setVolumeAdjustmentIndex()
-       * \see volumeAjustment()
+       * \see volumeAdjustment()
        */
       short volumeAdjustmentIndex(ChannelType type = MasterVolume) const;
 
@@ -165,7 +147,7 @@ namespace TagLib {
        * By default this sets the value for the master volume.
        *
        * \see volumeAdjustmentIndex()
-       * \see setVolumeAjustment()
+       * \see setVolumeAdjustment()
        */
       void setVolumeAdjustmentIndex(short index, ChannelType type = MasterVolume);
 
@@ -230,18 +212,16 @@ namespace TagLib {
       void setIdentification(const String &s);
 
     protected:
-      virtual void parseFields(const ByteVector &data);
-      virtual ByteVector renderFields() const;
+      void parseFields(const ByteVector &data) override;
+      ByteVector renderFields() const override;
 
     private:
       RelativeVolumeFrame(const ByteVector &data, Header *h);
-      RelativeVolumeFrame(const RelativeVolumeFrame &);
-      RelativeVolumeFrame &operator=(const RelativeVolumeFrame &);
 
       class RelativeVolumeFramePrivate;
-      RelativeVolumeFramePrivate *d;
+      std::unique_ptr<RelativeVolumeFramePrivate> d;
     };
 
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 #endif

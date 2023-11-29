@@ -23,7 +23,7 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tbytevectorstream.h>
+#include "tbytevectorstream.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 using namespace std;
@@ -117,7 +117,7 @@ public:
   {
     ByteVector v("abcdefghijklmnopqrstuvwxyz");
     ByteVectorStream stream(v);
-    CPPUNIT_ASSERT_EQUAL(26LL, stream.length());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(26), stream.length());
 
     stream.seek(-4, IOStream::End);
     CPPUNIT_ASSERT_EQUAL(ByteVector("w"), stream.readBlock(1));

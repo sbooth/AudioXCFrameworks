@@ -37,7 +37,7 @@ namespace TagLib
     namespace
     {
 
-      inline unsigned short readWORD(File *file, bool *ok = 0)
+      inline unsigned short readWORD(File *file, bool *ok = nullptr)
       {
         const ByteVector v = file->readBlock(2);
         if(v.size() != 2) {
@@ -45,10 +45,10 @@ namespace TagLib
           return 0;
         }
         if(ok) *ok = true;
-        return v.toUInt16LE(0);
+        return v.toUShort(false);
       }
 
-      inline unsigned int readDWORD(File *file, bool *ok = 0)
+      inline unsigned int readDWORD(File *file, bool *ok = nullptr)
       {
         const ByteVector v = file->readBlock(4);
         if(v.size() != 4) {
@@ -56,10 +56,10 @@ namespace TagLib
           return 0;
         }
         if(ok) *ok = true;
-        return v.toUInt32LE(0);
+        return v.toUInt(false);
       }
 
-      inline long long readQWORD(File *file, bool *ok = 0)
+      inline long long readQWORD(File *file, bool *ok = nullptr)
       {
         const ByteVector v = file->readBlock(8);
         if(v.size() != 8) {
@@ -67,13 +67,13 @@ namespace TagLib
           return 0;
         }
         if(ok) *ok = true;
-        return v.toInt64LE(0);
+        return v.toLongLong(false);
       }
 
       inline String readString(File *file, int length)
       {
         ByteVector data = file->readBlock(length);
-        size_t size = data.size();
+        unsigned int size = data.size();
         while (size >= 2) {
           if(data[size - 1] != '\0' || data[size - 2] != '\0') {
             break;
@@ -88,16 +88,16 @@ namespace TagLib
 
       inline ByteVector renderString(const String &str, bool includeLength = false)
       {
-        ByteVector data = str.data(String::UTF16LE) + ByteVector::fromUInt16LE(0);
+        ByteVector data = str.data(String::UTF16LE) + ByteVector::fromShort(0, false);
         if(includeLength) {
-          data = ByteVector::fromUInt16LE(data.size()) + data;
+          data = ByteVector::fromShort(data.size(), false) + data;
         }
         return data;
       }
 
-    }
-  }
-}
+    }  // namespace
+  }  // namespace ASF
+}  // namespace TagLib
 
 #endif
 

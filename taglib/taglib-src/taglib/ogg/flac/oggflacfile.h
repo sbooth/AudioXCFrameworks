@@ -29,7 +29,6 @@
 #include <taglib/taglib_export.h>
 #include <taglib/oggfile.h>
 #include <taglib/xiphcomment.h>
-
 #include <taglib/flacproperties.h>
 
 namespace TagLib {
@@ -49,7 +48,7 @@ namespace TagLib {
    */
   namespace FLAC {
 
-    using TagLib::FLAC::AudioProperties;
+    using TagLib::FLAC::Properties;
 
     //! An implementation of TagLib::File with Ogg/FLAC specific methods
 
@@ -70,7 +69,7 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Constructs an Ogg/FLAC file from \a stream.  If \a readProperties is true
@@ -82,12 +81,15 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
       /*!
        * Returns the Tag for this file.  This will always be a XiphComment.
@@ -102,25 +104,39 @@ namespace TagLib {
        *
        * \see hasXiphComment()
        */
-      virtual XiphComment *tag() const;
+      XiphComment *tag() const override;
 
       /*!
        * Returns the FLAC::Properties for this file.  If no audio properties
        * were read then this will return a null pointer.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
+
+
+      /*!
+       * Implements the unified property interface -- export function.
+       * This forwards directly to XiphComment::properties().
+       */
+      PropertyMap properties() const override;
+
+      /*!
+       * Implements the unified tag dictionary interface -- import function.
+       * Like properties(), this is a forwarder to the file's XiphComment.
+       */
+      PropertyMap setProperties(const PropertyMap &) override;
+
 
       /*!
        * Save the file.  This will primarily save and update the XiphComment.
        * Returns true if the save is successful.
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
        * Returns the length of the audio-stream, used by FLAC::Properties for
        * calculating the bitrate.
        */
-      long long streamLength();
+      offset_t streamLength();
 
       /*!
        * Returns whether or not the file on disk actually has a XiphComment.
@@ -138,16 +154,13 @@ namespace TagLib {
       static bool isSupported(IOStream *stream);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
-
-      void read(bool readProperties, AudioProperties::ReadStyle propertiesStyle);
+      void read(bool readProperties, Properties::ReadStyle propertiesStyle);
       void scan();
       ByteVector streamInfoData();
       ByteVector xiphCommentData();
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
   } // namespace FLAC
   } // namespace Ogg

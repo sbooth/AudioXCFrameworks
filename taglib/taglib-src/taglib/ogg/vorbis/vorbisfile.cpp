@@ -23,32 +23,19 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <bitset>
-
-#include <tstring.h>
-#include "tdebug.h"
-#include <tpropertymap.h>
-#include "tagutils.h"
-
 #include "vorbisfile.h"
+
+#include "tdebug.h"
+#include "tpropertymap.h"
+#include "tagutils.h"
 
 using namespace TagLib;
 
-class Ogg::Vorbis::File::FilePrivate
+class Vorbis::File::FilePrivate
 {
 public:
-  FilePrivate() :
-    comment(0),
-    properties(0) {}
-
-  ~FilePrivate()
-  {
-    delete comment;
-    delete properties;
-  }
-
-  Ogg::XiphComment *comment;
-  AudioProperties *properties;
+  std::unique_ptr<Ogg::XiphComment> comment;
+  std::unique_ptr<Properties> properties;
 };
 
 namespace TagLib {
@@ -57,62 +44,68 @@ namespace TagLib {
    * an Ogg stream.  0x03 indicates the comment header.
    */
   static const char vorbisCommentHeaderID[] = { 0x03, 'v', 'o', 'r', 'b', 'i', 's', 0 };
-}
+} // namespace TagLib
 
 ////////////////////////////////////////////////////////////////////////////////
 // static members
 ////////////////////////////////////////////////////////////////////////////////
 
-bool Ogg::Vorbis::File::isSupported(IOStream *stream)
+bool Vorbis::File::isSupported(IOStream *stream)
 {
   // An Ogg Vorbis file has IDs "OggS" and "\x01vorbis" somewhere.
 
   const ByteVector buffer = Utils::readHeader(stream, bufferSize(), false);
-  return (buffer.find("OggS") != ByteVector::npos()
-    && buffer.find("\x01vorbis") != ByteVector::npos());
+  return (buffer.find("OggS") >= 0 && buffer.find("\x01vorbis") >= 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-Ogg::Vorbis::File::File(FileName file, bool readProperties, AudioProperties::ReadStyle) :
+Vorbis::File::File(FileName file, bool readProperties, Properties::ReadStyle) :
   Ogg::File(file),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
   if(isOpen())
     read(readProperties);
 }
 
-Ogg::Vorbis::File::File(IOStream *stream, bool readProperties, AudioProperties::ReadStyle) :
+Vorbis::File::File(IOStream *stream, bool readProperties, Properties::ReadStyle) :
   Ogg::File(stream),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
   if(isOpen())
     read(readProperties);
 }
 
-Ogg::Vorbis::File::~File()
+Vorbis::File::~File() = default;
+
+Ogg::XiphComment *Vorbis::File::tag() const
 {
-  delete d;
+  return d->comment.get();
 }
 
-Ogg::XiphComment *Ogg::Vorbis::File::tag() const
+PropertyMap Vorbis::File::properties() const
 {
-  return d->comment;
+  return d->comment->properties();
 }
 
-Ogg::Vorbis::AudioProperties *Ogg::Vorbis::File::audioProperties() const
+PropertyMap Vorbis::File::setProperties(const PropertyMap &properties)
 {
-  return d->properties;
+  return d->comment->setProperties(properties);
 }
 
-bool Ogg::Vorbis::File::save()
+Vorbis::Properties *Vorbis::File::audioProperties() const
+{
+  return d->properties.get();
+}
+
+bool Vorbis::File::save()
 {
   ByteVector v(vorbisCommentHeaderID);
 
   if(!d->comment)
-    d->comment = new Ogg::XiphComment();
+    d->comment = std::make_unique<Ogg::XiphComment>();
   v.append(d->comment->render());
 
   setPacket(1, v);
@@ -124,18 +117,18 @@ bool Ogg::Vorbis::File::save()
 // private members
 ////////////////////////////////////////////////////////////////////////////////
 
-void Ogg::Vorbis::File::read(bool readProperties)
+void Vorbis::File::read(bool readProperties)
 {
   ByteVector commentHeaderData = packet(1);
 
   if(commentHeaderData.mid(0, 7) != vorbisCommentHeaderID) {
-    debug("Ogg::Vorbis::File::read() - Could not find the Ogg::Vorbis comment header.");
+    debug("Vorbis::File::read() - Could not find the Vorbis comment header.");
     setValid(false);
     return;
   }
 
-  d->comment = new Ogg::XiphComment(commentHeaderData.mid(7));
+  d->comment = std::make_unique<Ogg::XiphComment>(commentHeaderData.mid(7));
 
   if(readProperties)
-    d->properties = new AudioProperties(this);
+    d->properties = std::make_unique<Properties>(this);
 }

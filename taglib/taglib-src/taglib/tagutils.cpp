@@ -23,31 +23,42 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tfile.h>
+#include "tagutils.h"
+
+#include "tfile.h"
 
 #include "id3v1tag.h"
 #include "id3v2header.h"
 #include "apetag.h"
 
-#include "tagutils.h"
-
 using namespace TagLib;
 
-long long Utils::findID3v1(File *file)
+offset_t Utils::findID3v1(File *file)
 {
   if(!file->isValid())
     return -1;
 
-  file->seek(-128, File::End);
-  const long long p = file->tell();
+  // Differentiate between a match of APEv2 magic and a match of ID3v1 magic.
 
-  if(file->readBlock(3) == ID3v1::Tag::fileIdentifier())
-    return p;
+  if (file->length() >= 131) {
+    file->seek(-131, File::End);
+    const offset_t p = file->tell() + 3;
+    const TagLib::ByteVector data = file->readBlock(8);
+
+    if(data.containsAt(ID3v1::Tag::fileIdentifier(), 3) && (data != APE::Tag::fileIdentifier()))
+      return p;
+  } else {
+    file->seek(-128, File::End);
+    const offset_t p = file->tell();
+
+    if(file->readBlock(3) == ID3v1::Tag::fileIdentifier())
+      return p;
+  }
 
   return -1;
 }
 
-long long Utils::findID3v2(File *file)
+offset_t Utils::findID3v2(File *file)
 {
   if(!file->isValid())
     return -1;
@@ -60,7 +71,7 @@ long long Utils::findID3v2(File *file)
   return -1;
 }
 
-long long Utils::findAPE(File *file, long long id3v1Location)
+offset_t Utils::findAPE(File *file, offset_t id3v1Location)
 {
   if(!file->isValid())
     return -1;
@@ -70,7 +81,7 @@ long long Utils::findAPE(File *file, long long id3v1Location)
   else
     file->seek(-32, File::End);
 
-  const long long p = file->tell();
+  const offset_t p = file->tell();
 
   if(file->readBlock(8) == APE::Tag::fileIdentifier())
     return p;
@@ -78,14 +89,14 @@ long long Utils::findAPE(File *file, long long id3v1Location)
   return -1;
 }
 
-ByteVector TagLib::Utils::readHeader(IOStream *stream, size_t length,
-                                     bool skipID3v2, long long *headerOffset)
+ByteVector TagLib::Utils::readHeader(IOStream *stream, unsigned int length,
+                                     bool skipID3v2, offset_t *headerOffset)
 {
   if(!stream || !stream->isOpen())
     return ByteVector();
 
-  const long long originalPosition = stream->tell();
-  long long bufferOffset = 0;
+  const offset_t originalPosition = stream->tell();
+  offset_t bufferOffset = 0;
 
   if(skipID3v2) {
     stream->seek(0);

@@ -26,6 +26,9 @@
 #ifndef TAGLIB_MPEGHEADER_H
 #define TAGLIB_MPEGHEADER_H
 
+#include <memory>
+
+#include <taglib/taglib.h>
 #include <taglib/taglib_export.h>
 
 namespace TagLib {
@@ -48,20 +51,13 @@ namespace TagLib {
     {
     public:
       /*!
-       * Parses an MPEG header based on \a data.
-       *
-       * \deprecated
-       */
-      explicit Header(const ByteVector &data);
-
-      /*!
        * Parses an MPEG header based on \a file and \a offset.
        *
        * \note If \a checkLength is true, this requires the next MPEG frame to
        * check if the frame length is parsed and calculated correctly.  So it's
        * suitable for seeking for the first valid frame.
        */
-      Header(File *file, long long offset, bool checkLength = true);
+      Header(File *file, offset_t offset, bool checkLength = true);
 
       /*!
        * Does a shallow copy of \a h.
@@ -88,7 +84,9 @@ namespace TagLib {
         //! MPEG Version 2
         Version2 = 1,
         //! MPEG Version 2.5
-        Version2_5 = 2
+        Version2_5 = 2,
+        //! MPEG Version 4
+        Version4 = 3
       };
 
       /*!
@@ -142,6 +140,31 @@ namespace TagLib {
       ChannelMode channelMode() const;
 
       /*!
+       * MPEG-4 channel configuration.
+       */
+      enum ChannelConfiguration {
+        Custom = 0,
+        FrontCenter = 1,
+        FrontLeftRight = 2,
+        FrontCenterLeftRight = 3,
+        FrontCenterLeftRightBackCenter = 4,
+        FrontCenterLeftRightBackLeftRight = 5,
+        FrontCenterLeftRightBackLeftRightLFE = 6,
+        FrontCenterLeftRightSideLeftRightBackLeftRightLFE = 7
+      };
+
+      /*!
+       * Returns the MPEG-4 channel configuration.
+       */
+      ChannelConfiguration channelConfiguration() const;
+
+      /*!
+       * Returns true if this is the header of an Audio Data Transport Stream
+       * (ADTS), usually AAC.
+       */
+      bool isADTS() const;
+
+      /*!
        * Returns true if the copyrighted bit is set.
        */
       bool isCopyrighted() const;
@@ -167,12 +190,12 @@ namespace TagLib {
       Header &operator=(const Header &h);
 
     private:
-      void parse(File *file, long long offset, bool checkLength);
+      void parse(File *file, offset_t offset, bool checkLength);
 
       class HeaderPrivate;
-      HeaderPrivate *d;
+      std::shared_ptr<HeaderPrivate> d;
     };
-  }
-}
+  }  // namespace MPEG
+}  // namespace TagLib
 
 #endif

@@ -23,15 +23,12 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tbytevector.h>
-#include <tstring.h>
-#include "tagunion.h"
-#include "tdebug.h"
-#include <tpropertymap.h>
-#include "tagutils.h"
-#include "tsmartptr.h"
-
 #include "mpcfile.h"
+
+#include "tdebug.h"
+#include "tpropertymap.h"
+#include "tagunion.h"
+#include "tagutils.h"
 #include "id3v1tag.h"
 #include "id3v2header.h"
 #include "apetag.h"
@@ -42,30 +39,23 @@ using namespace TagLib;
 namespace
 {
   enum { MPCAPEIndex = 0, MPCID3v1Index = 1 };
-}
+} // namespace
 
 class MPC::File::FilePrivate
 {
 public:
-  FilePrivate() :
-    APELocation(-1),
-    APESize(0),
-    ID3v1Location(-1),
-    ID3v2Location(-1),
-    ID3v2Size(0) {}
+  offset_t APELocation { -1 };
+  long APESize { 0 };
 
-  long long APELocation;
-  long long APESize;
+  offset_t ID3v1Location { -1 };
 
-  long long ID3v1Location;
+  std::unique_ptr<ID3v2::Header> ID3v2Header;
+  offset_t ID3v2Location { -1 };
+  long ID3v2Size { 0 };
 
-  SCOPED_PTR<ID3v2::Header> ID3v2Header;
-  long long ID3v2Location;
-  long long ID3v2Size;
+  TagUnion tag;
 
-  DoubleTagUnion tag;
-
-  SCOPED_PTR<AudioProperties> properties;
+  std::unique_ptr<Properties> properties;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,9 +65,9 @@ public:
 bool MPC::File::isSupported(IOStream *stream)
 {
   // A newer MPC file has to start with "MPCK" or "MP+", but older files don't
-  // have keys to do a quick check.
+  // have keys to do a quick check. An ID3v2 tag may precede.
 
-  const ByteVector id = Utils::readHeader(stream, 4, false);
+  const ByteVector id = Utils::readHeader(stream, 4, true);
   return (id == "MPCK" || id.startsWith("MP+"));
 }
 
@@ -85,30 +75,37 @@ bool MPC::File::isSupported(IOStream *stream)
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-MPC::File::File(FileName file, bool readProperties, AudioProperties::ReadStyle) :
+MPC::File::File(FileName file, bool readProperties, Properties::ReadStyle) :
   TagLib::File(file),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
   if(isOpen())
     read(readProperties);
 }
 
-MPC::File::File(IOStream *stream, bool readProperties, AudioProperties::ReadStyle) :
+MPC::File::File(IOStream *stream, bool readProperties, Properties::ReadStyle) :
   TagLib::File(stream),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
   if(isOpen())
     read(readProperties);
 }
 
-MPC::File::~File()
-{
-  delete d;
-}
+MPC::File::~File() = default;
 
 TagLib::Tag *MPC::File::tag() const
 {
   return &d->tag;
+}
+
+PropertyMap MPC::File::properties() const
+{
+  return d->tag.properties();
+}
+
+void MPC::File::removeUnsupportedProperties(const StringList &properties)
+{
+  d->tag.removeUnsupportedProperties(properties);
 }
 
 PropertyMap MPC::File::setProperties(const PropertyMap &properties)
@@ -119,7 +116,7 @@ PropertyMap MPC::File::setProperties(const PropertyMap &properties)
   return APETag(true)->setProperties(properties);
 }
 
-MPC::AudioProperties *MPC::File::audioProperties() const
+MPC::Properties *MPC::File::audioProperties() const
 {
   return d->properties.get();
 }
@@ -134,7 +131,7 @@ bool MPC::File::save()
   // Possibly strip ID3v2 tag
 
   if(!d->ID3v2Header && d->ID3v2Location >= 0) {
-    removeBlock(d->ID3v2Location, static_cast<size_t>(d->ID3v2Size));
+    removeBlock(d->ID3v2Location, d->ID3v2Size);
 
     if(d->APELocation >= 0)
       d->APELocation -= d->ID3v2Size;
@@ -186,7 +183,7 @@ bool MPC::File::save()
     }
 
     const ByteVector data = APETag()->render();
-    insert(data, d->APELocation, static_cast<size_t>(d->APESize));
+    insert(data, d->APELocation, d->APESize);
 
     if(d->ID3v1Location >= 0)
       d->ID3v1Location += (static_cast<long>(data.size()) - d->APESize);
@@ -198,7 +195,7 @@ bool MPC::File::save()
     // APE tag is empty. Remove the old one.
 
     if(d->APELocation >= 0) {
-      removeBlock(d->APELocation, static_cast<size_t>(d->APESize));
+      removeBlock(d->APELocation, d->APESize);
 
       if(d->ID3v1Location >= 0)
         d->ID3v1Location -= d->APESize;
@@ -224,21 +221,17 @@ APE::Tag *MPC::File::APETag(bool create)
 void MPC::File::strip(int tags)
 {
   if(tags & ID3v1)
-    d->tag.set(MPCID3v1Index, 0);
+    d->tag.set(MPCID3v1Index, nullptr);
 
   if(tags & APE)
-    d->tag.set(MPCAPEIndex, 0);
+    d->tag.set(MPCAPEIndex, nullptr);
 
   if(!ID3v1Tag())
     APETag(true);
 
-  if(tags & ID3v2)
-    d->ID3v2Header.reset();
-}
-
-void MPC::File::remove(int tags)
-{
-  strip(tags);
+  if(tags & ID3v2) {
+    d->ID3v2Header = nullptr;
+  }
 }
 
 bool MPC::File::hasID3v1Tag() const
@@ -263,7 +256,7 @@ void MPC::File::read(bool readProperties)
 
   if(d->ID3v2Location >= 0) {
     seek(d->ID3v2Location);
-    d->ID3v2Header.reset(new ID3v2::Header(readBlock(ID3v2::Header::size())));
+    d->ID3v2Header = std::make_unique<ID3v2::Header>(readBlock(ID3v2::Header::size()));
     d->ID3v2Size = d->ID3v2Header->completeTagSize();
   }
 
@@ -291,7 +284,7 @@ void MPC::File::read(bool readProperties)
 
   if(readProperties) {
 
-    long long streamLength;
+    offset_t streamLength;
 
     if(d->APELocation >= 0)
       streamLength = d->APELocation;
@@ -308,6 +301,6 @@ void MPC::File::read(bool readProperties)
       seek(0);
     }
 
-    d->properties.reset(new AudioProperties(this, streamLength));
+    d->properties = std::make_unique<Properties>(this, streamLength);
   }
 }

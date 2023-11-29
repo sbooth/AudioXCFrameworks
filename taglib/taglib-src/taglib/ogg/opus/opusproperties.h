@@ -47,49 +47,34 @@ namespace TagLib {
        * API.
        */
 
-      class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+      class TAGLIB_EXPORT Properties : public AudioProperties
       {
       public:
         /*!
-         * Creates an instance of Opus::AudioProperties with the data read from
-         * the Opus::File \a file.
+         * Create an instance of Opus::Properties with the data read from the
+         * Opus::File \a file.
          */
-        AudioProperties(File *file, ReadStyle style = Average);
+        Properties(File *file, ReadStyle style = Average);
 
         /*!
-         * Destroys this Opus::AudioProperties instance.
+         * Destroys this Opus::Properties instance.
          */
-        virtual ~AudioProperties();
+        ~Properties() override;
 
-        /*!
-         * Returns the length of the file in seconds.  The length is rounded down to
-         * the nearest whole second.
-         *
-         * \note This method is just an alias of lengthInSeconds().
-         *
-         * \deprecated
-         */
-        virtual int length() const;
-
-        /*!
-         * Returns the length of the file in seconds.  The length is rounded down to
-         * the nearest whole second.
-         *
-         * \see lengthInMilliseconds()
-         */
-        virtual int lengthInSeconds() const;
+        Properties(const Properties &) = delete;
+        Properties &operator=(const Properties &) = delete;
 
         /*!
          * Returns the length of the file in milliseconds.
          *
          * \see lengthInSeconds()
          */
-        virtual int lengthInMilliseconds() const;
+        int lengthInMilliseconds() const override;
 
         /*!
          * Returns the average bit rate of the file in kb/s.
          */
-        virtual int bitrate() const;
+        int bitrate() const override;
 
         /*!
          * Returns the sample rate in Hz.
@@ -97,12 +82,12 @@ namespace TagLib {
          * \note Always returns 48000, because Opus can decode any stream at a
          * sample rate of 8, 12, 16, 24, or 48 kHz,
          */
-        virtual int sampleRate() const;
+        int sampleRate() const override;
 
         /*!
          * Returns the number of audio channels.
          */
-        virtual int channels() const;
+        int channels() const override;
 
         /*!
          * The Opus codec supports decoding at multiple sample rates, there is no
@@ -120,10 +105,10 @@ namespace TagLib {
         void read(File *file);
 
         class PropertiesPrivate;
-        PropertiesPrivate *d;
+        std::unique_ptr<PropertiesPrivate> d;
       };
-    }
-  }
-}
+    }  // namespace Opus
+  }  // namespace Ogg
+}  // namespace TagLib
 
 #endif

@@ -26,10 +26,10 @@
 #ifndef TAGLIB_BYTEVECTORSTREAM_H
 #define TAGLIB_BYTEVECTORSTREAM_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/taglib.h>
 #include <taglib/tbytevector.h>
 #include <taglib/tiostream.h>
+#include <taglib/taglib_export.h>
+#include <taglib/taglib.h>
 
 namespace TagLib {
 
@@ -46,22 +46,25 @@ namespace TagLib {
      * Construct a File object and opens the \a file.  \a file should be a
      * be a C-string in the local file system encoding.
      */
-    explicit ByteVectorStream(const ByteVector &data);
+    ByteVectorStream(const ByteVector &data);
 
     /*!
      * Destroys this ByteVectorStream instance.
      */
-    virtual ~ByteVectorStream();
+    ~ByteVectorStream() override;
+
+    ByteVectorStream(const ByteVectorStream &) = delete;
+    ByteVectorStream &operator=(const ByteVectorStream &) = delete;
 
     /*!
      * Returns the file name in the local file system encoding.
      */
-    FileName name() const;
+    FileName name() const override;
 
     /*!
      * Reads a block of size \a length at the current get pointer.
      */
-    ByteVector readBlock(size_t length);
+    ByteVector readBlock(size_t length) override;
 
     /*!
      * Attempts to write the block \a data at the current get pointer.  If the
@@ -72,7 +75,7 @@ namespace TagLib {
      * for a ByteVector.  And even this function is significantly slower than
      * doing output with a char[].
      */
-    void writeBlock(const ByteVector &data);
+    void writeBlock(const ByteVector &data) override;
 
     /*!
      * Insert \a data at position \a start in the file overwriting \a replace
@@ -81,7 +84,7 @@ namespace TagLib {
      * \note This method is slow since it requires rewriting all of the file
      * after the insertion point.
      */
-    void insert(const ByteVector &data, long long start = 0, size_t replace = 0);
+    void insert(const ByteVector &data, offset_t start = 0, size_t replace = 0) override;
 
     /*!
      * Removes a block of the file starting a \a start and continuing for
@@ -90,18 +93,18 @@ namespace TagLib {
      * \note This method is slow since it involves rewriting all of the file
      * after the removed portion.
      */
-    void removeBlock(long long start = 0, size_t length = 0);
+    void removeBlock(offset_t start = 0, size_t length = 0) override;
 
     /*!
      * Returns true if the file is read only (or if the file can not be opened).
      */
-    bool readOnly() const;
+    bool readOnly() const override;
 
     /*!
      * Since the file can currently only be opened as an argument to the
      * constructor (sort-of by design), this returns if that open succeeded.
      */
-    bool isOpen() const;
+    bool isOpen() const override;
 
     /*!
      * Move the I/O pointer to \a offset in the file from position \a p.  This
@@ -109,27 +112,27 @@ namespace TagLib {
      *
      * \see Position
      */
-    void seek(long long offset, Position p = Beginning);
+    void seek(offset_t offset, Position p = Beginning) override;
 
     /*!
      * Reset the end-of-file and error flags on the file.
      */
-    void clear();
+    void clear() override;
 
     /*!
      * Returns the current offset within the file.
      */
-    long long tell() const;
+    offset_t tell() const override;
 
     /*!
      * Returns the length of the file.
      */
-    long long length();
+    offset_t length() override;
 
     /*!
      * Truncates the file to a \a length.
      */
-    void truncate(long long length);
+    void truncate(offset_t length) override;
 
     ByteVector *data();
 
@@ -137,9 +140,9 @@ namespace TagLib {
 
   private:
     class ByteVectorStreamPrivate;
-    ByteVectorStreamPrivate *d;
+    std::unique_ptr<ByteVectorStreamPrivate> d;
   };
 
-}
+}  // namespace TagLib
 
 #endif

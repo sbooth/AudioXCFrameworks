@@ -23,33 +23,15 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include "taglib.h"
-#include "tdebug.h"
-#include "tsmartptr.h"
 #include "mp4coverart.h"
 
 using namespace TagLib;
 
-namespace
-{
-  struct CoverArtData
-  {
-    MP4::CoverArt::Format format;
-    ByteVector data;
-  };
-}
-
 class MP4::CoverArt::CoverArtPrivate
 {
 public:
-  CoverArtPrivate(Format f, const ByteVector &v) :
-    data(new CoverArtData())
-  {
-    data->format = f;
-    data->data   = v;
-  }
-
-  SHARED_PTR<CoverArtData> data;
+  Format format { MP4::CoverArt::JPEG };
+  ByteVector data;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -57,21 +39,14 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 MP4::CoverArt::CoverArt(Format format, const ByteVector &data) :
-  d(new CoverArtPrivate(format, data))
+  d(std::make_shared<CoverArtPrivate>())
 {
+  d->format = format;
+  d->data = data;
 }
 
-MP4::CoverArt::CoverArt(const CoverArt &item) :
-  d(new CoverArtPrivate(*item.d))
-{
-}
-
-MP4::CoverArt &
-MP4::CoverArt::operator=(const CoverArt &item)
-{
-  CoverArt(item).swap(*this);
-  return *this;
-}
+MP4::CoverArt::CoverArt(const CoverArt &) = default;
+MP4::CoverArt &MP4::CoverArt::operator=(const CoverArt &) = default;
 
 void
 MP4::CoverArt::swap(CoverArt &item)
@@ -81,19 +56,16 @@ MP4::CoverArt::swap(CoverArt &item)
   swap(d, item.d);
 }
 
-MP4::CoverArt::~CoverArt()
-{
-  delete d;
-}
+MP4::CoverArt::~CoverArt() = default;
 
 MP4::CoverArt::Format
 MP4::CoverArt::format() const
 {
-  return d->data->format;
+  return d->format;
 }
 
 ByteVector
 MP4::CoverArt::data() const
 {
-  return d->data->data;
+  return d->data;
 }

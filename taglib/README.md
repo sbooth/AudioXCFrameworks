@@ -1,8 +1,6 @@
-This project builds the `taglib2` branch of TagLib.
-
 ## Version
 
-[65a6a4e](https://github.com/taglib/taglib/tree/65a6a4e225fff1288148de92721418e1c634713b)
+[3d67b13](https://github.com/taglib/taglib/tree/3d67b139e48bfa020ea43bf43ca925c1e711cfd6)
 
 ## License
 

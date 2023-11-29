@@ -23,27 +23,21 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tbytevector.h>
-#include <tstring.h>
-#include "tdebug.h"
-
 #include "xingheader.h"
-#include "mpegfile.h"
+
+#include "tbytevector.h"
+#include "tstring.h"
+#include "tdebug.h"
 
 using namespace TagLib;
 
 class MPEG::XingHeader::XingHeaderPrivate
 {
 public:
-  XingHeaderPrivate() :
-    frames(0),
-    size(0),
-    type(MPEG::XingHeader::Invalid) {}
+  unsigned int frames { 0 };
+  unsigned int size { 0 };
 
-  unsigned int frames;
-  unsigned int size;
-
-  MPEG::XingHeader::HeaderType type;
+  MPEG::XingHeader::HeaderType type { MPEG::XingHeader::Invalid };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,15 +45,12 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 MPEG::XingHeader::XingHeader(const ByteVector &data) :
-  d(new XingHeaderPrivate())
+  d(std::make_unique<XingHeaderPrivate>())
 {
   parse(data);
 }
 
-MPEG::XingHeader::~XingHeader()
-{
-  delete d;
-}
+MPEG::XingHeader::~XingHeader() = default;
 
 bool MPEG::XingHeader::isValid() const
 {
@@ -89,11 +80,11 @@ void MPEG::XingHeader::parse(const ByteVector &data)
 {
   // Look for a Xing header.
 
-  size_t offset = data.find("Xing");
-  if(offset == ByteVector::npos())
+  long offset = data.find("Xing");
+  if(offset < 0)
     offset = data.find("Info");
 
-  if(offset != ByteVector::npos()) {
+  if(offset >= 0) {
 
     // Xing header found.
 
@@ -107,8 +98,8 @@ void MPEG::XingHeader::parse(const ByteVector &data)
       return;
     }
 
-    d->frames = data.toUInt32BE(offset + 8);
-    d->size   = data.toUInt32BE(offset + 12);
+    d->frames = data.toUInt(offset + 8,  true);
+    d->size   = data.toUInt(offset + 12, true);
     d->type   = Xing;
   }
   else {
@@ -117,7 +108,7 @@ void MPEG::XingHeader::parse(const ByteVector &data)
 
     offset = data.find("VBRI");
 
-    if(offset != ByteVector::npos()) {
+    if(offset >= 0) {
 
       // VBRI header found.
 
@@ -126,8 +117,8 @@ void MPEG::XingHeader::parse(const ByteVector &data)
         return;
       }
 
-      d->frames = data.toUInt32BE(offset + 14);
-      d->size   = data.toUInt32BE(offset + 10);
+      d->frames = data.toUInt(offset + 14, true);
+      d->size   = data.toUInt(offset + 10, true);
       d->type   = VBRI;
     }
   }

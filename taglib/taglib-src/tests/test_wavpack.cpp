@@ -24,12 +24,13 @@
  ***************************************************************************/
 
 #include <string>
-#include <stdio.h>
-#include <apetag.h>
-#include <id3v1tag.h>
-#include <tbytevectorlist.h>
-#include <tpropertymap.h>
-#include <wavpackfile.h>
+#include <cstdio>
+
+#include "tbytevectorlist.h"
+#include "tpropertymap.h"
+#include "apetag.h"
+#include "id3v1tag.h"
+#include "wavpackfile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -41,6 +42,8 @@ class TestWavPack : public CppUnit::TestFixture
   CPPUNIT_TEST_SUITE(TestWavPack);
   CPPUNIT_TEST(testNoLengthProperties);
   CPPUNIT_TEST(testMultiChannelProperties);
+  CPPUNIT_TEST(testDsdStereoProperties);
+  CPPUNIT_TEST(testNonStandardRateProperties);
   CPPUNIT_TEST(testTaggedProperties);
   CPPUNIT_TEST(testFuzzedFile);
   CPPUNIT_TEST(testStripAndProperties);
@@ -53,7 +56,6 @@ public:
   {
     WavPack::File f(TEST_FILE_PATH_C("no_length.wv"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3705, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(1, f.audioProperties()->bitrate());
@@ -69,7 +71,6 @@ public:
   {
     WavPack::File f(TEST_FILE_PATH_C("four_channels.wv"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3833, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(112, f.audioProperties()->bitrate());
@@ -81,11 +82,40 @@ public:
     CPPUNIT_ASSERT_EQUAL(1031, f.audioProperties()->version());
   }
 
+  void testDsdStereoProperties()
+  {
+    WavPack::File f(TEST_FILE_PATH_C("dsd_stereo.wv"));
+    CPPUNIT_ASSERT(f.audioProperties());
+    CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->lengthInSeconds());
+    CPPUNIT_ASSERT_EQUAL(200, f.audioProperties()->lengthInMilliseconds());
+    CPPUNIT_ASSERT_EQUAL(2096, f.audioProperties()->bitrate());
+    CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->channels());
+    CPPUNIT_ASSERT_EQUAL(8, f.audioProperties()->bitsPerSample());
+    CPPUNIT_ASSERT_EQUAL(true, f.audioProperties()->isLossless());
+    CPPUNIT_ASSERT_EQUAL(352800, f.audioProperties()->sampleRate());
+    CPPUNIT_ASSERT_EQUAL(70560U, f.audioProperties()->sampleFrames());
+    CPPUNIT_ASSERT_EQUAL(1040, f.audioProperties()->version());
+  }
+
+  void testNonStandardRateProperties()
+  {
+    WavPack::File f(TEST_FILE_PATH_C("non_standard_rate.wv"));
+    CPPUNIT_ASSERT(f.audioProperties());
+    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
+    CPPUNIT_ASSERT_EQUAL(3675, f.audioProperties()->lengthInMilliseconds());
+    CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->bitrate());
+    CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->channels());
+    CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
+    CPPUNIT_ASSERT_EQUAL(true, f.audioProperties()->isLossless());
+    CPPUNIT_ASSERT_EQUAL(1000, f.audioProperties()->sampleRate());
+    CPPUNIT_ASSERT_EQUAL(3675U, f.audioProperties()->sampleFrames());
+    CPPUNIT_ASSERT_EQUAL(1040, f.audioProperties()->version());
+  }
+
   void testTaggedProperties()
   {
     WavPack::File f(TEST_FILE_PATH_C("tagged.wv"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3550, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(172, f.audioProperties()->bitrate());

@@ -27,95 +27,71 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
-
-#include "id3v2tag.h"
 #include "apeproperties.h"
+
+#include "tdebug.h"
 #include "apefile.h"
-#include "apetag.h"
 #include "apefooter.h"
+#include "apetag.h"
 
 using namespace TagLib;
 
-class APE::AudioProperties::PropertiesPrivate
+class APE::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    length(0),
-    bitrate(0),
-    sampleRate(0),
-    channels(0),
-    version(0),
-    bitsPerSample(0),
-    sampleFrames(0) {}
-
-  int length;
-  int bitrate;
-  int sampleRate;
-  int channels;
-  int version;
-  int bitsPerSample;
-  unsigned int sampleFrames;
+  int length { 0 };
+  int bitrate { 0 };
+  int sampleRate { 0 };
+  int channels { 0 };
+  int version { 0 };
+  int bitsPerSample { 0 };
+  unsigned int sampleFrames { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-APE::AudioProperties::AudioProperties(File *file, long long streamLength, ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+APE::Properties::Properties(File *file, offset_t streamLength, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   read(file, streamLength);
 }
 
-APE::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+APE::Properties::~Properties() = default;
 
-int APE::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int APE::AudioProperties::lengthInSeconds() const
-{
-  return d->length / 1000;
-}
-
-int APE::AudioProperties::lengthInMilliseconds() const
+int APE::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int APE::AudioProperties::bitrate() const
+int APE::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int APE::AudioProperties::sampleRate() const
+int APE::Properties::sampleRate() const
 {
   return d->sampleRate;
 }
 
-int APE::AudioProperties::channels() const
+int APE::Properties::channels() const
 {
   return d->channels;
 }
 
-int APE::AudioProperties::version() const
+int APE::Properties::version() const
 {
   return d->version;
 }
 
-int APE::AudioProperties::bitsPerSample() const
+int APE::Properties::bitsPerSample() const
 {
   return d->bitsPerSample;
 }
 
-unsigned int APE::AudioProperties::sampleFrames() const
+unsigned int APE::Properties::sampleFrames() const
 {
   return d->sampleFrames;
 }
@@ -131,14 +107,14 @@ namespace
     if(header.size() < 6 || !header.startsWith("MAC "))
       return -1;
 
-    return header.toUInt16LE(4);
+    return header.toUShort(4, false);
   }
-}
+} // namespace
 
-void APE::AudioProperties::read(File *file, long long streamLength)
+void APE::Properties::read(File *file, offset_t streamLength)
 {
   // First, we assume that the file pointer is set at the first descriptor.
-  long long offset = file->tell();
+  offset_t offset = file->tell();
   int version = headerVersion(file->readBlock(6));
 
   // Next, we look for the descriptor.
@@ -149,7 +125,7 @@ void APE::AudioProperties::read(File *file, long long streamLength)
   }
 
   if(version < 0) {
-    debug("APE::AudioProperties::read() -- APE descriptor not found");
+    debug("APE::Properties::read() -- APE descriptor not found");
     return;
   }
 
@@ -167,17 +143,17 @@ void APE::AudioProperties::read(File *file, long long streamLength)
   }
 }
 
-void APE::AudioProperties::analyzeCurrent(File *file)
+void APE::Properties::analyzeCurrent(File *file)
 {
   // Read the descriptor
   file->seek(2, File::Current);
   const ByteVector descriptor = file->readBlock(44);
   if(descriptor.size() < 44) {
-    debug("APE::AudioProperties::analyzeCurrent() -- descriptor is too short.");
+    debug("APE::Properties::analyzeCurrent() -- descriptor is too short.");
     return;
   }
 
-  const unsigned int descriptorBytes = descriptor.toUInt32LE(0);
+  const unsigned int descriptorBytes = descriptor.toUInt(0, false);
 
   if((descriptorBytes - 52) > 0)
     file->seek(descriptorBytes - 52, File::Current);
@@ -185,39 +161,39 @@ void APE::AudioProperties::analyzeCurrent(File *file)
   // Read the header
   const ByteVector header = file->readBlock(24);
   if(header.size() < 24) {
-    debug("APE::AudioProperties::analyzeCurrent() -- MAC header is too short.");
+    debug("APE::Properties::analyzeCurrent() -- MAC header is too short.");
     return;
   }
 
   // Get the APE info
-  d->channels      = header.toUInt16LE(18);
-  d->sampleRate    = header.toUInt32LE(20);
-  d->bitsPerSample = header.toUInt16LE(16);
+  d->channels      = header.toShort(18, false);
+  d->sampleRate    = header.toUInt(20, false);
+  d->bitsPerSample = header.toShort(16, false);
 
-  const unsigned int totalFrames = header.toUInt32LE(12);
+  const unsigned int totalFrames = header.toUInt(12, false);
   if(totalFrames == 0)
     return;
 
-  const unsigned int blocksPerFrame   = header.toUInt32LE(4);
-  const unsigned int finalFrameBlocks = header.toUInt32LE(8);
+  const unsigned int blocksPerFrame   = header.toUInt(4, false);
+  const unsigned int finalFrameBlocks = header.toUInt(8, false);
   d->sampleFrames = (totalFrames - 1) * blocksPerFrame + finalFrameBlocks;
 }
 
-void APE::AudioProperties::analyzeOld(File *file)
+void APE::Properties::analyzeOld(File *file)
 {
   const ByteVector header = file->readBlock(26);
   if(header.size() < 26) {
-    debug("APE::AudioProperties::analyzeOld() -- MAC header is too short.");
+    debug("APE::Properties::analyzeOld() -- MAC header is too short.");
     return;
   }
 
-  const unsigned int totalFrames = header.toUInt32LE(18);
+  const unsigned int totalFrames = header.toUInt(18, false);
 
   // Fail on 0 length APE files (catches non-finalized APE files)
   if(totalFrames == 0)
     return;
 
-  const short compressionLevel = header.toUInt32LE(0);
+  const short compressionLevel = header.toShort(0, false);
   unsigned int blocksPerFrame;
   if(d->version >= 3950)
     blocksPerFrame = 73728 * 4;
@@ -227,19 +203,19 @@ void APE::AudioProperties::analyzeOld(File *file)
     blocksPerFrame = 9216;
 
   // Get the APE info
-  d->channels   = header.toUInt16LE(4);
-  d->sampleRate = header.toUInt32LE(6);
+  d->channels   = header.toShort(4, false);
+  d->sampleRate = header.toUInt(6, false);
 
-  const unsigned int finalFrameBlocks = header.toUInt32LE(22);
+  const unsigned int finalFrameBlocks = header.toUInt(22, false);
   d->sampleFrames = (totalFrames - 1) * blocksPerFrame + finalFrameBlocks;
 
   // Get the bit depth from the RIFF-fmt chunk.
   file->seek(16, File::Current);
   const ByteVector fmt = file->readBlock(28);
   if(fmt.size() < 28 || !fmt.startsWith("WAVEfmt ")) {
-    debug("APE::AudioProperties::analyzeOld() -- fmt header is too short.");
+    debug("APE::Properties::analyzeOld() -- fmt header is too short.");
     return;
   }
 
-  d->bitsPerSample = fmt.toUInt16LE(26);
+  d->bitsPerSample = fmt.toShort(26, false);
 }

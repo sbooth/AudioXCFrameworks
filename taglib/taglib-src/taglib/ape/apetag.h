@@ -26,16 +26,12 @@
 #ifndef TAGLIB_APETAG_H
 #define TAGLIB_APETAG_H
 
-#include <taglib/tag.h>
 #include <taglib/tbytevector.h>
 #include <taglib/tmap.h>
 #include <taglib/tstring.h>
 #include <taglib/taglib_export.h>
-
+#include <taglib/tag.h>
 #include <taglib/apeitem.h>
-
-#define FRONT_COVER "COVER ART (FRONT)"
-#define BACK_COVER "COVER ART (BACK)"
 
 namespace TagLib {
 
@@ -52,8 +48,7 @@ namespace TagLib {
      *
      * \see APE::Tag::itemListMap()
      */
-    typedef Map<String, Item> ItemListMap;
-
+    using ItemListMap = Map<const String, Item>;
 
     //! An APE tag implementation
 
@@ -69,12 +64,15 @@ namespace TagLib {
        * Create an APE tag and parse the data in \a file with APE footer at
        * \a tagOffset.
        */
-      Tag(TagLib::File *file, long long footerLocation);
+      Tag(TagLib::File *file, offset_t footerLocation);
 
       /*!
        * Destroys this Tag instance.
        */
-      virtual ~Tag();
+      ~Tag() override;
+
+      Tag(const Tag &) = delete;
+      Tag &operator=(const Tag &) = delete;
 
       /*!
        * Renders the in memory values to a ByteVector suitable for writing to
@@ -90,31 +88,21 @@ namespace TagLib {
 
       // Reimplementations.
 
-      virtual String title() const;
-      virtual String artist() const;
-      virtual String album() const;
-      virtual String comment() const;
-      virtual String genre() const;
-      virtual unsigned int year() const;
-      virtual unsigned int track() const;
+      String title() const override;
+      String artist() const override;
+      String album() const override;
+      String comment() const override;
+      String genre() const override;
+      unsigned int year() const override;
+      unsigned int track() const override;
 
-      /**
-       * @brief pictures
-       * According to :
-       * http://www.hydrogenaud.io/forums/index.php?showtopic=40603&st=50&p=504669&#entry504669
-       * http://git.videolan.org/?p=vlc.git;a=blob;f=modules/meta_engine/taglib.cpp
-       * @return
-       */
-      virtual PictureMap pictures() const;
-
-      virtual void setTitle(const String &s);
-      virtual void setArtist(const String &s);
-      virtual void setAlbum(const String &s);
-      virtual void setComment(const String &s);
-      virtual void setGenre(const String &s);
-      virtual void setYear(unsigned int i);
-      virtual void setTrack(unsigned int i);
-      virtual void setPictures(const PictureMap &l);
+      void setTitle(const String &s) override;
+      void setArtist(const String &s) override;
+      void setAlbum(const String &s) override;
+      void setComment(const String &s) override;
+      void setGenre(const String &s) override;
+      void setYear(unsigned int i) override;
+      void setTrack(unsigned int i) override;
 
       /*!
        * Implements the unified tag dictionary interface -- export function.
@@ -130,9 +118,9 @@ namespace TagLib {
        * TRACK to TRACKNUMBER, YEAR to DATE, and ALBUM ARTIST to ALBUMARTIST, respectively,
        * in order to be compliant with the names used in other formats.
        */
-      PropertyMap properties() const;
+      PropertyMap properties() const override;
 
-      void removeUnsupportedProperties(const StringList &properties);
+      void removeUnsupportedProperties(const StringList &properties) override;
 
       /*!
        * Implements the unified tag dictionary interface -- import function. The same
@@ -140,7 +128,11 @@ namespace TagLib {
        * specification requires keys to have between 2 and 16 printable ASCII characters
        * with the exception of the fixed strings "ID3", "TAG", "OGGS", and "MP+".
        */
-      PropertyMap setProperties(const PropertyMap &);
+      PropertyMap setProperties(const PropertyMap &) override;
+
+      StringList complexPropertyKeys() const override;
+      List<VariantMap> complexProperties(const String &key) const override;
+      bool setComplexProperties(const String &key, const List<VariantMap> &value) override;
 
       /*!
        * Check if the given String is a valid APE tag key.
@@ -194,7 +186,7 @@ namespace TagLib {
       /*!
        * Returns true if the tag does not contain any data.
        */
-      bool isEmpty() const;
+      bool isEmpty() const override;
 
     protected:
 
@@ -209,13 +201,10 @@ namespace TagLib {
       void parse(const ByteVector &data);
 
     private:
-      Tag(const Tag &);
-      Tag &operator=(const Tag &);
-
       class TagPrivate;
-      TagPrivate *d;
+      std::unique_ptr<TagPrivate> d;
     };
-  }
-}
+  }  // namespace APE
+}  // namespace TagLib
 
 #endif

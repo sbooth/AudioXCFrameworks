@@ -1,16 +1,14 @@
-cmake_minimum_required(VERSION 2.8.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5.0 FATAL_ERROR)
 
 project(taglib)
 
-if(NOT ${CMAKE_VERSION} VERSION_LESS 2.8.12)
-  cmake_policy(SET CMP0022 OLD)
-endif()
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
-
-if(DEFINED ENABLE_STATIC)
-  message(FATAL_ERROR "This option is no longer available, use BUILD_SHARED_LIBS instead")
-endif()
+include(CTest)
+include(FeatureSummary)
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 if(APPLE)
@@ -36,7 +34,6 @@ if(ENABLE_CCACHE)
 endif()
 
 option(VISIBILITY_HIDDEN "Build with -fvisibility=hidden" OFF)
-option(BUILD_TESTS "Build the test suite" OFF)
 option(BUILD_EXAMPLES "Build the examples" OFF)
 option(BUILD_BINDINGS "Build the bindings" ON)
 
@@ -50,22 +47,27 @@ endif()
 add_definitions(-DHAVE_CONFIG_H)
 set(TESTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tests/")
 
-## the following are directories where stuff will be installed to
-set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)")
-set(EXEC_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" CACHE PATH "Base directory for executables and libraries")
-set(BIN_INSTALL_DIR "${EXEC_INSTALL_PREFIX}/bin" CACHE PATH "The subdirectory to the binaries prefix (default prefix/bin)")
-set(LIB_INSTALL_DIR "${EXEC_INSTALL_PREFIX}/lib${LIB_SUFFIX}" CACHE PATH "The subdirectory relative to the install prefix where libraries will be installed (default is /lib${LIB_SUFFIX})")
-set(INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "The subdirectory to the header prefix")
-
-if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+if(CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+endif()
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 endif()
 
-if(MSVC AND ENABLE_STATIC_RUNTIME)
-  foreach(flag_var CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-    string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
-  endforeach(flag_var)
+if(MSVC)
+  if(ENABLE_STATIC_RUNTIME)
+    foreach(flag_var CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+      string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
+    endforeach(flag_var)
+  endif()
+  # Disable warnings for internal invocations of API functions
+  # that have been marked with TAGLIB_DEPRECATED
+  # https://docs.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-3-c4996
+  # Also disable C4910: '__declspec(dllexport)' and 'extern' are incompatible on an explicit instantiation
+  # and C4251: needs to have dll-interface to be used by clients.
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /wd4996 /wd4910 /wd4251")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4996 /wd4910 /wd4251")
 endif()
 
 # Read version information from file taglib/toolkit/taglib.h into variables
@@ -90,46 +92,78 @@ else()
   set(TAGLIB_LIB_VERSION_STRING "${TAGLIB_LIB_MAJOR_VERSION}.${TAGLIB_LIB_MINOR_VERSION}.${TAGLIB_LIB_PATCH_VERSION}")
 endif()
 
-# 1. If the library source code has changed at all since the last update, then increment revision.
-# 2. If any interfaces have been added, removed, or changed since the last update, increment current, and set revision to 0.
-# 3. If any interfaces have been added since the last public release, then increment age.
-# 4. If any interfaces have been removed since the last public release, then set age to 0.
-set(TAGLIB_SOVERSION_CURRENT  18)
-set(TAGLIB_SOVERSION_REVISION 0)
-set(TAGLIB_SOVERSION_AGE      17)
-
-math(EXPR TAGLIB_SOVERSION_MAJOR "${TAGLIB_SOVERSION_CURRENT} - ${TAGLIB_SOVERSION_AGE}")
-math(EXPR TAGLIB_SOVERSION_MINOR "${TAGLIB_SOVERSION_AGE}")
-math(EXPR TAGLIB_SOVERSION_PATCH "${TAGLIB_SOVERSION_REVISION}")
+# Major version: increase it if you break ABI compatibility.
+# Minor version: increase it if you add ABI compatible features.
+# Patch version: increase it for bug fix releases.
+set(TAGLIB_SOVERSION_MAJOR 2)
+set(TAGLIB_SOVERSION_MINOR 0)
+set(TAGLIB_SOVERSION_PATCH 0)
 
 include(ConfigureChecks.cmake)
 
+# Determine whether zlib is installed.
+option(WITH_ZLIB "Build with ZLIB" ON)
+
+if(WITH_ZLIB)
+  find_package("ZLIB")
+  set(HAVE_ZLIB ${ZLIB_FOUND})
+  if(ZLIB_FOUND)
+    set(ZLIB_LIBRARIES_FLAGS -lz)
+    if(NOT BUILD_SHARED_LIBS)
+      # When linking TagLib statically, zlib has to be linked explicitly.
+      set(ZLIB_INTERFACE_LINK_LIBRARIES ZLIB::ZLIB)
+    endif()
+  endif()
+endif()
+
 if(NOT WIN32)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/taglib-config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/taglib-config")
-  install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/taglib-config" DESTINATION "${BIN_INSTALL_DIR}")
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/taglib-config.cmake" "${CMAKE_CURRENT_BINARY_DIR}/taglib-config" @ONLY)
+  install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/taglib-config" DESTINATION "${CMAKE_INSTALL_BINDIR}")
 endif()
 
 if(WIN32)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/taglib-config.cmd.cmake" "${CMAKE_CURRENT_BINARY_DIR}/taglib-config.cmd")
-  install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/taglib-config.cmd" DESTINATION "${BIN_INSTALL_DIR}")
+  install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/taglib-config.cmd" DESTINATION "${CMAKE_INSTALL_BINDIR}")
 endif()
 
 if(NOT BUILD_FRAMEWORK)
+  if(IS_ABSOLUTE ${CMAKE_INSTALL_INCLUDEDIR})
+    set(CMAKE_PC_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR})
+  else()
+    set(CMAKE_PC_INCLUDEDIR "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+  endif()
+  if(IS_ABSOLUTE ${CMAKE_INSTALL_LIBDIR})
+    set(CMAKE_PC_LIBDIR ${CMAKE_INSTALL_LIBDIR})
+  else()
+    set(CMAKE_PC_LIBDIR "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
+  endif()
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/taglib.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/taglib.pc" @ONLY)
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/taglib.pc" DESTINATION "${LIB_INSTALL_DIR}/pkgconfig")
-endif()
-
-if(NOT HAVE_ZLIB AND ZLIB_SOURCE)
-  set(HAVE_ZLIB 1)
-  set(HAVE_ZLIB_SOURCE 1)
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/taglib.pc" DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 endif()
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 configure_file(config.h.cmake "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
-option(TRACE_IN_RELEASE "Output debug messages even in release mode"  OFF)
+option(TRACE_IN_RELEASE "Output debug messages even in release mode" OFF)
 if(TRACE_IN_RELEASE)
   set(TRACE_IN_RELEASE TRUE)
+endif()
+
+configure_file(taglib/taglib_config.h.cmake "${CMAKE_CURRENT_BINARY_DIR}/taglib_config.h")
+
+find_package(utf8cpp QUIET)
+if(NOT utf8cpp_FOUND)
+  if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/utfcpp/CMakeLists.txt)
+    add_subdirectory("3rdparty/utfcpp")
+    message(STATUS "Using utfcpp from ${utf8cpp_SOURCE_DIR}")
+  else()
+    message(FATAL_ERROR
+      "utfcpp not found. Either install package (probably utfcpp, utf8cpp, or libutfcpp-dev) "
+      "or fetch the git submodule using\n"
+      "git submodule update --init")
+  endif()
+else()
+  message(STATUS "Using utfcpp ${utf8cpp_VERSION} from ${utf8cpp_CONFIG}")
 endif()
 
 add_subdirectory(taglib)
@@ -138,9 +172,13 @@ if(BUILD_BINDINGS)
   add_subdirectory(bindings)
 endif()
 
-if(BUILD_TESTS AND NOT BUILD_SHARED_LIBS)
-  enable_testing()
-  add_subdirectory(tests)
+if(BUILD_TESTING)
+  find_package(CppUnit)
+  if(CppUnit_FOUND)
+    add_subdirectory(tests)
+  else()
+    message(WARNING "BUILD_TESTING requested, but CppUnit not found, skipping tests.")
+  endif()
 endif()
 
 if(BUILD_EXAMPLES)
@@ -148,7 +186,6 @@ if(BUILD_EXAMPLES)
 endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.cmake" "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile")
-file(COPY doc/taglib.png DESTINATION doc)
 add_custom_target(docs doxygen)
 
 # uninstall target
@@ -157,3 +194,5 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in" "${CMAKE_C
 if(NOT TARGET uninstall)
   add_custom_target(uninstall COMMAND "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 endif()
+
+feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)

@@ -85,7 +85,7 @@ namespace TagLib {
        * false, \a propertiesStyle is ignored
        */
       File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Constructs an WavPack file from \a file.  If \a readProperties is true the
@@ -96,38 +96,50 @@ namespace TagLib {
        * responsible for deleting it after the File object.
        */
       File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
       /*!
        * Returns the Tag for this file.  This will be an APE tag, an ID3v1 tag
        * or a combination of the two.
        */
-      virtual TagLib::Tag *tag() const;
+      TagLib::Tag *tag() const override;
+
+      /*!
+       * Implements the unified property interface -- export function.
+       * If the file contains both an APE and an ID3v1 tag, only APE
+       * will be converted to the PropertyMap.
+       */
+      PropertyMap properties() const override;
+
+      void removeUnsupportedProperties(const StringList &unsupported) override;
 
       /*!
        * Implements the unified property interface -- import function.
        * Creates an APE tag if it does not exists and calls setProperties() on
        * that. Any existing ID3v1 tag will be updated as well.
        */
-      virtual PropertyMap setProperties(const PropertyMap&);
+      PropertyMap setProperties(const PropertyMap&) override;
 
       /*!
        * Returns the MPC::Properties for this file.  If no audio properties
        * were read then this will return a null pointer.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
 
       /*!
        * Saves the file.
        *
        * This returns true if the save was successful.
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
        * Returns a pointer to the ID3v1 tag of the file.
@@ -200,15 +212,12 @@ namespace TagLib {
       static bool isSupported(IOStream *stream);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
-
       void read(bool readProperties);
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace WavPack
+}  // namespace TagLib
 
 #endif

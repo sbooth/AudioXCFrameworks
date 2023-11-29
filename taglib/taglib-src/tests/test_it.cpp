@@ -23,8 +23,8 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <itfile.h>
-#include <tstringlist.h>
+#include "tstringlist.h"
+#include "itfile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -85,7 +85,7 @@ public:
     ScopedFileCopy copy("test", ".it");
     {
       IT::File file(copy.fileName().c_str());
-      CPPUNIT_ASSERT(file.tag() != 0);
+      CPPUNIT_ASSERT(file.tag() != nullptr);
       file.tag()->setTitle(titleAfter);
       file.tag()->setComment(newComment);
       file.tag()->setTrackerName("won't be saved");
@@ -101,30 +101,30 @@ private:
 
     CPPUNIT_ASSERT(file.isValid());
 
-    IT::AudioProperties *p = file.audioProperties();
+    IT::Properties *p = file.audioProperties();
     Mod::Tag *t = file.tag();
 
-    CPPUNIT_ASSERT(0 != p);
-    CPPUNIT_ASSERT(0 != t);
+    CPPUNIT_ASSERT(nullptr != p);
+    CPPUNIT_ASSERT(nullptr != t);
 
-    CPPUNIT_ASSERT_EQUAL( 0, p->length());
+    CPPUNIT_ASSERT_EQUAL( 0, p->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL( 0, p->bitrate());
     CPPUNIT_ASSERT_EQUAL( 0, p->sampleRate());
     CPPUNIT_ASSERT_EQUAL(64, p->channels());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  0, p->lengthInPatterns());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0), p->lengthInPatterns());
     CPPUNIT_ASSERT_EQUAL(true, p->stereo());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  0, p->instrumentCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  5, p->sampleCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  1, p->patternCount());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)535, p->version());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)532, p->compatibleVersion());
-    CPPUNIT_ASSERT_EQUAL((unsigned short)  9, p->flags());
-    CPPUNIT_ASSERT_EQUAL((unsigned char)128, p->globalVolume());
-    CPPUNIT_ASSERT_EQUAL((unsigned char) 48, p->mixVolume());
-    CPPUNIT_ASSERT_EQUAL((unsigned char)125, p->tempo());
-    CPPUNIT_ASSERT_EQUAL((unsigned char)  6, p->bpmSpeed());
-    CPPUNIT_ASSERT_EQUAL((unsigned char)128, p->panningSeparation());
-    CPPUNIT_ASSERT_EQUAL((unsigned char)  0, p->pitchWheelDepth());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0), p->instrumentCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(5), p->sampleCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(1), p->patternCount());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(535), p->version());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(532), p->compatibleVersion());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(9), p->flags());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(128), p->globalVolume());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(48), p->mixVolume());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(125), p->tempo());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(6), p->bpmSpeed());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(128), p->panningSeparation());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(0), p->pitchWheelDepth());
     CPPUNIT_ASSERT_EQUAL(title, t->title());
     CPPUNIT_ASSERT_EQUAL(String(), t->artist());
     CPPUNIT_ASSERT_EQUAL(String(), t->album());

@@ -5,6 +5,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/mpeg
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/mpeg/id3v1
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/mpeg/id3v2
+  ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/mpeg/id3v2/frames
   ${CMAKE_CURRENT_SOURCE_DIR}/../bindings/c/
 )
 
@@ -37,7 +38,8 @@ target_link_libraries(framelist tag)
 add_executable(strip-id3v1 strip-id3v1.cpp)
 target_link_libraries(strip-id3v1 tag)
 
-########### next target ###############
-
-add_executable(inspect inspect.cpp)
-target_link_libraries(inspect tag)
+install(TARGETS tagreader tagreader_c tagwriter framelist strip-id3v1
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

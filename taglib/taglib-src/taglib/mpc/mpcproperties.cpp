@@ -23,58 +23,40 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
-#include <bitset>
-#include <math.h>
-
 #include "mpcproperties.h"
+
+#include <array>
+#include <cmath>
+
+#include "tdebug.h"
+#include "tstring.h"
 #include "mpcfile.h"
 
 using namespace TagLib;
 
-namespace
-{
-  const unsigned int HeaderSize = 56;
-}
-
-class MPC::AudioProperties::PropertiesPrivate
+class MPC::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    version(0),
-    length(0),
-    bitrate(0),
-    sampleRate(0),
-    channels(0),
-    totalFrames(0),
-    sampleFrames(0),
-    trackGain(0),
-    trackPeak(0),
-    albumGain(0),
-    albumPeak(0) {}
-
-  int          version;
-  int          length;
-  int          bitrate;
-  int          sampleRate;
-  int          channels;
-  unsigned int totalFrames;
-  unsigned int sampleFrames;
-  unsigned int trackGain;
-  unsigned int trackPeak;
-  unsigned int albumGain;
-  unsigned int albumPeak;
-  String       flags;
+  int version { 0 };
+  int length { 0 };
+  int bitrate { 0 };
+  int sampleRate { 0 };
+  int channels { 0 };
+  unsigned int totalFrames { 0 };
+  unsigned int sampleFrames { 0 };
+  int trackGain { 0 };
+  int trackPeak { 0 };
+  int albumGain { 0 };
+  int albumPeak { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-MPC::AudioProperties::AudioProperties(File *file, long long streamLength, ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+MPC::Properties::Properties(File *file, offset_t streamLength, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   ByteVector magic = file->readBlock(4);
   if(magic == "MPCK") {
@@ -83,76 +65,63 @@ MPC::AudioProperties::AudioProperties(File *file, long long streamLength, ReadSt
   }
   else {
     // Musepack version 7 or older, fixed size header
-    readSV7(magic + file->readBlock(HeaderSize - 4), streamLength);
+    readSV7(magic + file->readBlock(MPC::HeaderSize - 4), streamLength);
   }
 }
 
-MPC::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+MPC::Properties::~Properties() = default;
 
-int MPC::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int MPC::AudioProperties::lengthInSeconds() const
-{
-  return d->length / 1000;
-}
-
-int MPC::AudioProperties::lengthInMilliseconds() const
+int MPC::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int MPC::AudioProperties::bitrate() const
+int MPC::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int MPC::AudioProperties::sampleRate() const
+int MPC::Properties::sampleRate() const
 {
   return d->sampleRate;
 }
 
-int MPC::AudioProperties::channels() const
+int MPC::Properties::channels() const
 {
   return d->channels;
 }
 
-int MPC::AudioProperties::mpcVersion() const
+int MPC::Properties::mpcVersion() const
 {
   return d->version;
 }
 
-unsigned int MPC::AudioProperties::totalFrames() const
+unsigned int MPC::Properties::totalFrames() const
 {
   return d->totalFrames;
 }
 
-unsigned int MPC::AudioProperties::sampleFrames() const
+unsigned int MPC::Properties::sampleFrames() const
 {
   return d->sampleFrames;
 }
 
-int MPC::AudioProperties::trackGain() const
+int MPC::Properties::trackGain() const
 {
   return d->trackGain;
 }
 
-int MPC::AudioProperties::trackPeak() const
+int MPC::Properties::trackPeak() const
 {
   return d->trackPeak;
 }
 
-int MPC::AudioProperties::albumGain() const
+int MPC::Properties::albumGain() const
 {
   return d->albumGain;
 }
 
-int MPC::AudioProperties::albumPeak() const
+int MPC::Properties::albumPeak() const
 {
   return d->albumPeak;
 }
@@ -163,7 +132,7 @@ int MPC::AudioProperties::albumPeak() const
 
 namespace
 {
-  unsigned long readSize(File *file, size_t &sizeLength, bool &eof)
+  unsigned long readSize(File *file, unsigned int &sizeLength, bool &eof)
   {
     sizeLength = 0;
     eof = false;
@@ -181,11 +150,11 @@ namespace
       tmp = b[0];
       size = (size << 7) | (tmp & 0x7F);
       sizeLength++;
-    } while((tmp & 0x80));
+    } while(tmp & 0x80);
     return size;
   }
 
-  unsigned long readSize(const ByteVector &data, size_t &pos)
+  unsigned long readSize(const ByteVector &data, unsigned int &pos)
   {
     unsigned char tmp;
     unsigned long size = 0;
@@ -199,29 +168,29 @@ namespace
 
   // This array looks weird, but the same as original MusePack code found at:
   // https://www.musepack.net/index.php?pg=src
-  const unsigned short sftable [8] = { 44100, 48000, 37800, 32000, 0, 0, 0, 0 };
-}
+  constexpr std::array sftable { 44100, 48000, 37800, 32000, 0, 0, 0, 0 };
+}  // namespace
 
-void MPC::AudioProperties::readSV8(File *file, long long streamLength)
+void MPC::Properties::readSV8(File *file, offset_t streamLength)
 {
   bool readSH = false, readRG = false;
 
   while(!readSH && !readRG) {
     const ByteVector packetType = file->readBlock(2);
 
-    size_t packetSizeLength;
+    unsigned int packetSizeLength;
     bool eof;
-    const size_t packetSize = readSize(file, packetSizeLength, eof);
+    const unsigned long packetSize = readSize(file, packetSizeLength, eof);
     if(eof) {
-      debug("MPC::AudioProperties::readSV8() - Reached to EOF.");
+      debug("MPC::Properties::readSV8() - Reached to EOF.");
       break;
     }
 
-    const size_t dataSize = packetSize - 2 - packetSizeLength;
+    const unsigned long dataSize = packetSize - 2 - packetSizeLength;
 
     const ByteVector data = file->readBlock(dataSize);
     if(data.size() != dataSize) {
-      debug("MPC::AudioProperties::readSV8() - dataSize doesn't match the actual data size.");
+      debug("MPC::Properties::readSV8() - dataSize doesn't match the actual data size.");
       break;
     }
 
@@ -230,29 +199,28 @@ void MPC::AudioProperties::readSV8(File *file, long long streamLength)
       // http://trac.musepack.net/wiki/SV8Specification#StreamHeaderPacket
 
       if(dataSize <= 5) {
-        debug("MPC::AudioProperties::readSV8() - \"SH\" packet is too short to parse.");
+        debug("MPC::Properties::readSV8() - \"SH\" packet is too short to parse.");
         break;
       }
 
       readSH = true;
 
-      size_t pos = 4;
+      unsigned int pos = 4;
       d->version = data[pos];
       pos += 1;
-
       d->sampleFrames = readSize(data, pos);
       if(pos > dataSize - 3) {
-        debug("MPC::AudioProperties::readSV8() - \"SH\" packet is corrupt.");
+        debug("MPC::Properties::readSV8() - \"SH\" packet is corrupt.");
         break;
       }
 
       const unsigned long begSilence = readSize(data, pos);
       if(pos > dataSize - 2) {
-        debug("MPC::AudioProperties::readSV8() - \"SH\" packet is corrupt.");
+        debug("MPC::Properties::readSV8() - \"SH\" packet is corrupt.");
         break;
       }
 
-      const unsigned short flags = data.toUInt16BE(pos);
+      const unsigned short flags = data.toUShort(pos, true);
       pos += 2;
 
       d->sampleRate = sftable[(flags >> 13) & 0x07];
@@ -270,7 +238,7 @@ void MPC::AudioProperties::readSV8(File *file, long long streamLength)
       // http://trac.musepack.net/wiki/SV8Specification#ReplaygainPacket
 
       if(dataSize <= 9) {
-        debug("MPC::AudioProperties::readSV8() - \"RG\" packet is too short to parse.");
+        debug("MPC::Properties::readSV8() - \"RG\" packet is too short to parse.");
         break;
       }
 
@@ -278,10 +246,10 @@ void MPC::AudioProperties::readSV8(File *file, long long streamLength)
 
       const int replayGainVersion = data[0];
       if(replayGainVersion == 1) {
-        d->trackGain = data.toUInt16BE(1);
-        d->trackPeak = data.toUInt16BE(3);
-        d->albumGain = data.toUInt16BE(5);
-        d->albumPeak = data.toUInt16BE(7);
+        d->trackGain = data.toShort(1, true);
+        d->trackPeak = data.toShort(3, true);
+        d->albumGain = data.toShort(5, true);
+        d->albumPeak = data.toShort(7, true);
       }
     }
 
@@ -295,44 +263,47 @@ void MPC::AudioProperties::readSV8(File *file, long long streamLength)
   }
 }
 
-void MPC::AudioProperties::readSV7(const ByteVector &data, long long streamLength)
+void MPC::Properties::readSV7(const ByteVector &data, offset_t streamLength)
 {
   if(data.startsWith("MP+")) {
+    if(data.size() < 4)
+      return;
+
     d->version = data[3] & 15;
     if(d->version < 7)
       return;
 
-    d->totalFrames = data.toUInt32LE(4);
+    d->totalFrames = data.toUInt(4, false);
 
-    const unsigned int flags = data.toUInt32LE(8);
+    const unsigned int flags = data.toUInt(8, false);
     d->sampleRate = sftable[(flags >> 16) & 0x03];
     d->channels   = 2;
 
-    const unsigned int gapless = data.toUInt32LE(5);
+    const unsigned int gapless = data.toUInt(5, false);
 
-    d->trackGain = data.toUInt16LE(14);
-    d->trackPeak = data.toUInt16LE(12);
-    d->albumGain = data.toUInt16LE(18);
-    d->albumPeak = data.toUInt16LE(16);
+    d->trackGain = data.toShort(14, false);
+    d->trackPeak = data.toUShort(12, false);
+    d->albumGain = data.toShort(18, false);
+    d->albumPeak = data.toUShort(16, false);
 
     // convert gain info
     if(d->trackGain != 0) {
-      int tmp = (int)((64.82 - (short)d->trackGain / 100.) * 256. + .5);
+      auto tmp = static_cast<int>((64.82 - static_cast<short>(d->trackGain) / 100.) * 256. + .5);
       if(tmp >= (1 << 16) || tmp < 0) tmp = 0;
       d->trackGain = tmp;
     }
 
     if(d->albumGain != 0) {
-      int tmp = (int)((64.82 - d->albumGain / 100.) * 256. + .5);
+      auto tmp = static_cast<int>((64.82 - d->albumGain / 100.) * 256. + .5);
       if(tmp >= (1 << 16) || tmp < 0) tmp = 0;
       d->albumGain = tmp;
     }
 
     if (d->trackPeak != 0)
-      d->trackPeak = (int)(log10((double)d->trackPeak) * 20 * 256 + .5);
+      d->trackPeak = static_cast<int>(log10(static_cast<double>(d->trackPeak)) * 20 * 256 + .5);
 
     if (d->albumPeak != 0)
-      d->albumPeak = (int)(log10((double)d->albumPeak) * 20 * 256 + .5);
+      d->albumPeak = static_cast<int>(log10(static_cast<double>(d->albumPeak)) * 20 * 256 + .5);
 
     bool trueGapless = (gapless >> 31) & 0x0001;
     if(trueGapless) {
@@ -343,7 +314,7 @@ void MPC::AudioProperties::readSV7(const ByteVector &data, long long streamLengt
       d->sampleFrames = d->totalFrames * 1152 - 576;
   }
   else {
-    const unsigned int headerData = data.toUInt32LE(0);
+    const unsigned int headerData = data.toUInt(0, false);
 
     d->bitrate    = (headerData >> 23) & 0x01ff;
     d->version    = (headerData >> 11) & 0x03ff;
@@ -351,9 +322,9 @@ void MPC::AudioProperties::readSV7(const ByteVector &data, long long streamLengt
     d->channels   = 2;
 
     if(d->version >= 5)
-      d->totalFrames = data.toUInt32LE(4);
+      d->totalFrames = data.toUInt(4, false);
     else
-      d->totalFrames = data.toUInt16LE(6);
+      d->totalFrames = data.toUShort(6, false);
 
     d->sampleFrames = d->totalFrames * 1152 - 576;
   }

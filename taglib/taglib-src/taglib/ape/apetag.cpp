@@ -31,15 +31,14 @@
 #define WANT_CLASS_INSTANTIATION_OF_MAP (1)
 #endif
 
-#include <tfile.h>
-#include <tstring.h>
-#include <tmap.h>
-#include <tpicturemap.h>
-#include <tpropertymap.h>
-#include "tdebug.h"
-#include "tutils.h"
-
 #include "apetag.h"
+
+#include <array>
+#include <utility>
+
+#include "tdebug.h"
+#include "tfile.h"
+#include "tpropertymap.h"
 #include "apefooter.h"
 #include "apeitem.h"
 
@@ -51,37 +50,26 @@ namespace
   const unsigned int MinKeyLength = 2;
   const unsigned int MaxKeyLength = 255;
 
+  const String FRONT_COVER("COVER ART (FRONT)");
+  const String BACK_COVER("COVER ART (BACK)");
+
   bool isKeyValid(const ByteVector &key)
   {
-    const char *invalidKeys[] = { "ID3", "TAG", "OGGS", "MP+", 0 };
+    static constexpr std::array invalidKeys { "ID3", "TAG", "OGGS", "MP+" };
 
     // only allow printable ASCII including space (32..126)
-
-    for(ByteVector::ConstIterator it = key.begin(); it != key.end(); ++it) {
-      const int c = static_cast<unsigned char>(*it);
-      if(c < 32 || c > 126)
-        return false;
-    }
-
-    const String upperKey = String(key).upper();
-    for(size_t i = 0; invalidKeys[i] != 0; ++i) {
-      if(upperKey == invalidKeys[i])
-        return false;
-    }
-
-    return true;
+    return std::none_of(key.begin(), key.end(),
+             [](unsigned char c) { return c < 32 || c > 126; })
+        && std::none_of(invalidKeys.begin(), invalidKeys.end(),
+             [upperKey = String(key).upper()](auto k) { return upperKey == k; });
   }
-}
+}  // namespace
 
 class APE::Tag::TagPrivate
 {
 public:
-  TagPrivate() :
-    file(0),
-    footerLocation(0) {}
-
-  File *file;
-  long long footerLocation;
+  File *file { nullptr };
+  offset_t footerLocation { 0 };
 
   Footer footer;
   ItemListMap itemListMap;
@@ -92,14 +80,12 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 APE::Tag::Tag() :
-  TagLib::Tag(),
-  d(new TagPrivate())
+  d(std::make_unique<TagPrivate>())
 {
 }
 
-APE::Tag::Tag(TagLib::File *file, long long footerLocation) :
-  TagLib::Tag(),
-  d(new TagPrivate())
+APE::Tag::Tag(TagLib::File *file, offset_t footerLocation) :
+  d(std::make_unique<TagPrivate>())
 {
   d->file = file;
   d->footerLocation = footerLocation;
@@ -107,10 +93,7 @@ APE::Tag::Tag(TagLib::File *file, long long footerLocation) :
   read();
 }
 
-APE::Tag::~Tag()
-{
-  delete d;
-}
+APE::Tag::~Tag() = default;
 
 ByteVector APE::Tag::fileIdentifier()
 {
@@ -119,87 +102,44 @@ ByteVector APE::Tag::fileIdentifier()
 
 String APE::Tag::title() const
 {
-  if(d->itemListMap["TITLE"].isEmpty())
-    return String();
-  return d->itemListMap["TITLE"].values().toString();
+  Item value = d->itemListMap.value("TITLE");
+  return value.isEmpty() ? String() : value.values().toString();
 }
 
 String APE::Tag::artist() const
 {
-  if(d->itemListMap["ARTIST"].isEmpty())
-    return String();
-  return d->itemListMap["ARTIST"].values().toString();
+  Item value = d->itemListMap.value("ARTIST");
+  return value.isEmpty() ? String() : value.values().toString();
 }
 
 String APE::Tag::album() const
 {
-  if(d->itemListMap["ALBUM"].isEmpty())
-    return String();
-  return d->itemListMap["ALBUM"].values().toString();
+  Item value = d->itemListMap.value("ALBUM");
+  return value.isEmpty() ? String() : value.values().toString();
 }
 
 String APE::Tag::comment() const
 {
-  if(d->itemListMap["COMMENT"].isEmpty())
-    return String();
-  return d->itemListMap["COMMENT"].values().toString();
+  Item value = d->itemListMap.value("COMMENT");
+  return value.isEmpty() ? String() : value.values().toString();
 }
 
 String APE::Tag::genre() const
 {
-  if(d->itemListMap["GENRE"].isEmpty())
-    return String();
-  return d->itemListMap["GENRE"].values().toString();
+  Item value = d->itemListMap.value("GENRE");
+  return value.isEmpty() ? String() : value.values().toString();
 }
 
 unsigned int APE::Tag::year() const
 {
-  if(d->itemListMap["YEAR"].isEmpty())
-    return 0;
-  return d->itemListMap["YEAR"].toString().toInt();
+  Item value = d->itemListMap.value("YEAR");
+  return value.isEmpty() ? 0 : value.toString().toInt();
 }
 
 unsigned int APE::Tag::track() const
 {
-  if(d->itemListMap["TRACK"].isEmpty())
-    return 0;
-  return d->itemListMap["TRACK"].toString().toInt();
-}
-
-TagLib::PictureMap APE::Tag::pictures() const
-{
-  PictureMap map;
-  if(d->itemListMap.contains(FRONT_COVER)) {
-    Item front = d->itemListMap[FRONT_COVER];
-    if(Item::Binary == front.type()) {
-      ByteVector picture = front.binaryData();
-      const size_t index = picture.find('\0');
-      if(index < picture.size()) {
-        ByteVector desc = picture.mid(0, index + 1);
-        String mime = "image/jpeg";
-        ByteVector data = picture.mid(index + 1);
-        Picture p(data, Picture::FrontCover, mime, desc);
-        map.insert(p);
-      }
-    }
-  }
-
-  if(d->itemListMap.contains(BACK_COVER)) {
-    Item back = d->itemListMap[BACK_COVER];
-    if(Item::Binary == back.type()) {
-      ByteVector picture = back.binaryData();
-      const size_t index = picture.find('\0');
-      if(index < picture.size()) {
-        ByteVector desc = picture.mid(0, index + 1);
-        String mime = "image/jpeg";
-        ByteVector data = picture.mid(index + 1);
-        Picture p(data, Picture::BackCover, mime, desc);
-        map.insert(p);
-      }
-    }
-  }
-
-  return PictureMap(map);
+  Item value = d->itemListMap.value("TRACK");
+  return value.isEmpty() ? 0 : value.toString().toInt();
 }
 
 void APE::Tag::setTitle(const String &s)
@@ -243,94 +183,39 @@ void APE::Tag::setTrack(unsigned int i)
     addValue("TRACK", String::number(i), true);
 }
 
-void APE::Tag::setPictures(const PictureMap &l)
-{
-  removeItem(FRONT_COVER);
-  removeItem(BACK_COVER);
-  for(PictureMap::ConstIterator pictureMapIt = l.begin();
-      pictureMapIt != l.end();
-      ++pictureMapIt) {
-    Picture::Type type = pictureMapIt->first;
-    if(Picture::FrontCover != type && Picture::BackCover != type) {
-      std::cout << "APE: Trying to add a picture with wrong type"
-                << std::endl;
-      continue;
-    }
-
-    const char *id;
-    switch(type) {
-    case Picture::FrontCover:
-      id = FRONT_COVER;
-      break;
-    case Picture::BackCover:
-      id = BACK_COVER;
-      break;
-    default:
-      id = FRONT_COVER;
-      break;
-    }
-
-    PictureList list = pictureMapIt->second;
-    for(PictureList::ConstIterator pictureListIt = list.begin();
-        pictureListIt != list.end();
-        ++pictureListIt) {
-      Picture picture = *pictureListIt;
-      if(d->itemListMap.contains(id)) {
-        std::cout << "APE: Already added a picture of type "
-                  << id
-                  << " '"
-                  << picture.description()
-                  << "' "
-                  << "and next are being ignored"
-                  << std::endl;
-        break;
-      }
-
-      ByteVector data = picture.description().data(String::Latin1)
-                        .append('\0')
-                        .append(picture.data());
-
-      Item item;
-      item.setKey(id);
-      item.setType(Item::Binary);
-      item.setBinaryData(data);
-      setItem(item.key(), item);
-    }
-  }
-
-}
-
 namespace
 {
   // conversions of tag keys between what we use in PropertyMap and what's usual
   // for APE tags
-  //                                    usual,         APE
-  const char *keyConversions[][2] =  {{"TRACKNUMBER", "TRACK"       },
-                                      {"DATE",        "YEAR"        },
-                                      {"ALBUMARTIST", "ALBUM ARTIST"},
-                                      {"DISCNUMBER",  "DISC"        },
-                                      {"REMIXER",     "MIXARTIST"   }};
-  const size_t keyConversionsSize = sizeof(keyConversions) / sizeof(keyConversions[0]);
-}
+  //                usual,         APE
+  constexpr std::array keyConversions {
+    std::pair("TRACKNUMBER", "TRACK"),
+    std::pair("DATE", "YEAR"),
+    std::pair("ALBUMARTIST", "ALBUM ARTIST"),
+    std::pair("DISCNUMBER", "DISC"),
+    std::pair("REMIXER", "MIXARTIST"),
+    std::pair("RELEASESTATUS", "MUSICBRAINZ_ALBUMSTATUS"),
+    std::pair("RELEASETYPE", "MUSICBRAINZ_ALBUMTYPE"),
+  };
+}  // namespace
 
 PropertyMap APE::Tag::properties() const
 {
   PropertyMap properties;
-  ItemListMap::ConstIterator it = itemListMap().begin();
-  for(; it != itemListMap().end(); ++it) {
-    String tagName = it->first.upper();
+  for(const auto &[tag, item] : std::as_const(itemListMap())) {
+    String tagName = tag.upper();
     // if the item is Binary or Locator, or if the key is an invalid string,
     // add to unsupportedData
-    if(it->second.type() != Item::Text || tagName.isEmpty()) {
-      properties.unsupportedData().append(it->first);
+    if(item.type() != Item::Text || tagName.isEmpty()) {
+      properties.unsupportedData().append(tag);
     }
     else {
       // Some tags need to be handled specially
-      for(size_t i = 0; i < keyConversionsSize; ++i) {
-        if(tagName == keyConversions[i][1])
-          tagName = keyConversions[i][0];
+      for(const auto &[k, t] : keyConversions) {
+        if(tagName == t)
+          tagName = k;
       }
-      properties[tagName].append(it->second.values());
+      properties[tagName].append(item.toStringList());
     }
   }
   return properties;
@@ -338,9 +223,8 @@ PropertyMap APE::Tag::properties() const
 
 void APE::Tag::removeUnsupportedProperties(const StringList &properties)
 {
-  StringList::ConstIterator it = properties.begin();
-  for(; it != properties.end(); ++it)
-    removeItem(*it);
+  for(const auto &property : properties)
+    removeItem(property);
 }
 
 PropertyMap APE::Tag::setProperties(const PropertyMap &origProps)
@@ -348,45 +232,130 @@ PropertyMap APE::Tag::setProperties(const PropertyMap &origProps)
   PropertyMap properties(origProps); // make a local copy that can be modified
 
   // see comment in properties()
-  for(size_t i = 0; i < keyConversionsSize; ++i)
-    if(properties.contains(keyConversions[i][0])) {
-      properties.insert(keyConversions[i][1], properties[keyConversions[i][0]]);
-      properties.erase(keyConversions[i][0]);
+  for(const auto &[k, t] : keyConversions)
+    if(properties.contains(k)) {
+      properties.insert(t, properties[k]);
+      properties.erase(k);
     }
 
   // first check if tags need to be removed completely
   StringList toRemove;
-  ItemListMap::ConstIterator remIt = itemListMap().begin();
-  for(; remIt != itemListMap().end(); ++remIt) {
-    String key = remIt->first.upper();
+  for(const auto &[k, t] : std::as_const(itemListMap())) {
+    String key = k.upper();
     // only remove if a) key is valid, b) type is text, c) key not contained in new properties
-    if(!key.isEmpty() && remIt->second.type() == APE::Item::Text && !properties.contains(key))
-      toRemove.append(remIt->first);
+    if(!key.isEmpty() && t.type() == APE::Item::Text && !properties.contains(key))
+      toRemove.append(k);
   }
 
-  for(StringList::ConstIterator removeIt = toRemove.begin(); removeIt != toRemove.end(); removeIt++)
-    removeItem(*removeIt);
+  for(const auto &item : std::as_const(toRemove))
+    removeItem(item);
 
   // now sync in the "forward direction"
-  PropertyMap::ConstIterator it = properties.begin();
   PropertyMap invalid;
-  for(; it != properties.end(); ++it) {
-    const String &tagName = it->first;
+  for(const auto &[tagName, value] : std::as_const(properties)) {
     if(!checkKey(tagName))
-      invalid.insert(it->first, it->second);
-    else if(!(itemListMap().contains(tagName)) || !(itemListMap()[tagName].values() == it->second)) {
-      if(it->second.isEmpty())
+      invalid.insert(tagName, value);
+    else if(!(itemListMap().contains(tagName)) || !(itemListMap()[tagName].values() == value)) {
+      if(value.isEmpty())
         removeItem(tagName);
       else {
-        StringList::ConstIterator valueIt = it->second.begin();
-        addValue(tagName, *valueIt, true);
-        ++valueIt;
-        for(; valueIt != it->second.end(); ++valueIt)
-          addValue(tagName, *valueIt, false);
+        addValue(tagName, *value.begin(), true);
+        for(auto it = std::next(value.begin()); it != value.end(); ++it)
+          addValue(tagName, *it, false);
       }
     }
   }
   return invalid;
+}
+
+StringList APE::Tag::complexPropertyKeys() const
+{
+  StringList keys;
+  if(d->itemListMap.contains(FRONT_COVER) ||
+     d->itemListMap.contains(BACK_COVER)) {
+    keys.append("PICTURE");
+  }
+  return keys;
+}
+
+List<VariantMap> APE::Tag::complexProperties(const String &key) const
+{
+  List<VariantMap> properties;
+  const String uppercaseKey = key.upper();
+  if(uppercaseKey == "PICTURE") {
+    const StringList itemNames = StringList(FRONT_COVER).append(BACK_COVER);
+    for(const auto &itemName: itemNames) {
+      if(d->itemListMap.contains(itemName)) {
+        Item picture = d->itemListMap.value(itemName);
+        if(picture.type() == Item::Binary) {
+          ByteVector data = picture.binaryData();
+          // Do not search for a description if the first byte could start JPG or PNG
+          // data.
+          int index = data.isEmpty() || data.at(0) == '\xff' || data.at(0) == '\x89'
+              ? -1 : data.find('\0');
+          String description;
+          if(index >= 0) {
+            description = String(data.mid(0, index), String::UTF8);
+            data = data.mid(index + 1);
+          }
+
+          VariantMap property;
+          property.insert("data", data);
+          if(!description.isEmpty()) {
+            property.insert("description", description);
+          }
+          property.insert("pictureType",
+            itemName == BACK_COVER ? "Back Cover" : "Front Cover");
+          properties.append(property);
+        }
+      }
+    }
+  }
+  return properties;
+}
+
+bool APE::Tag::setComplexProperties(const String &key, const List<VariantMap> &value)
+{
+  const String uppercaseKey = key.upper();
+  if(uppercaseKey == "PICTURE") {
+    removeItem(FRONT_COVER);
+    removeItem(BACK_COVER);
+
+    auto frontItems = List<Item>();
+    auto backItems = List<Item>();
+    for(auto property : value) {
+      ByteVector data = property.value("description").value<String>().data(String::UTF8)
+                        .append('\0')
+                        .append(property.value("data").value<ByteVector>());
+      String pictureType = property.value("pictureType").value<String>();
+      Item item;
+      item.setType(Item::Binary);
+      item.setBinaryData(data);
+      if(pictureType == "Back Cover") {
+        item.setKey(BACK_COVER);
+        backItems.append(item);
+      }
+      else if(pictureType == "Front Cover") {
+        item.setKey(FRONT_COVER);
+        // prioritize pictures with correct type
+        frontItems.prepend(item);
+      }
+      else {
+        item.setKey(FRONT_COVER);
+        frontItems.append(item);
+      }
+    }
+    if(!frontItems.isEmpty()) {
+      setItem(FRONT_COVER, frontItems.front());
+    }
+    if(!backItems.isEmpty()) {
+      setItem(BACK_COVER, backItems.front());
+    }
+  }
+  else {
+    return false;
+  }
+  return true;
 }
 
 bool APE::Tag::checkKey(const String &key)
@@ -423,7 +392,7 @@ void APE::Tag::addValue(const String &key, const String &value, bool replace)
   // Text items may contain more than one value.
   // Binary or locator items may have only one value, hence always replaced.
 
-  ItemListMap::Iterator it = d->itemListMap.find(key.upper());
+  auto it = d->itemListMap.find(key.upper());
 
   if(it != d->itemListMap.end() && it->second.type() == Item::Text)
     it->second.appendValue(value);
@@ -481,13 +450,13 @@ ByteVector APE::Tag::render() const
   ByteVector data;
   unsigned int itemCount = 0;
 
-  for(ItemListMap::ConstIterator it = d->itemListMap.begin(); it != d->itemListMap.end(); ++it) {
-    data.append(it->second.render());
+  for(const auto &[_, list] : std::as_const(d->itemListMap)) {
+    data.append(list.render());
     itemCount++;
   }
 
   d->footer.setItemCount(itemCount);
-  d->footer.setTagSize(static_cast<unsigned int>(data.size() + Footer::size()));
+  d->footer.setTagSize(data.size() + Footer::size());
   d->footer.setHeaderPresent(true);
 
   return d->footer.renderHeader() + data + d->footer.renderFooter();
@@ -500,18 +469,23 @@ void APE::Tag::parse(const ByteVector &data)
   if(data.size() < 11)
     return;
 
-  size_t pos = 0;
+  unsigned int pos = 0;
 
   for(unsigned int i = 0; i < d->footer.itemCount() && pos <= data.size() - 11; i++) {
 
-    const size_t nullPos = data.find('\0', pos + 8);
-    if(nullPos == ByteVector::npos()) {
+    const int nullPos = data.find('\0', pos + 8);
+    if(nullPos < 0) {
       debug("APE::Tag::parse() - Couldn't find a key/value separator. Stopped parsing.");
       return;
     }
 
-    const size_t keyLength = nullPos - pos - 8;
-    const size_t valLegnth = data.toUInt32LE(pos);
+    const unsigned int keyLength = nullPos - pos - 8;
+    const unsigned int valLength = data.toUInt(pos, false);
+
+    if(valLength >= data.size() || pos > data.size() - valLength) {
+      debug("APE::Tag::parse() - Invalid val length. Stopped parsing.");
+      return;
+    }
 
     if(keyLength >= MinKeyLength
       && keyLength <= MaxKeyLength
@@ -526,6 +500,6 @@ void APE::Tag::parse(const ByteVector &data)
       debug("APE::Tag::parse() - Skipped an item due to an invalid key.");
     }
 
-    pos += keyLength + valLegnth + 9;
+    pos += keyLength + valLength + 9;
   }
 }

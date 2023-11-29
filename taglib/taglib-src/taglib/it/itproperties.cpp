@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
     copyright           :(C) 2011 by Mathias Panzenböck
     email               : grosser.meister.morti@gmx.net
  ***************************************************************************/
@@ -23,244 +23,190 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-
 #include "itproperties.h"
 
 using namespace TagLib;
 using namespace IT;
 
-class IT::AudioProperties::PropertiesPrivate
+class IT::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    channels(0),
-    lengthInPatterns(0),
-    instrumentCount(0),
-    sampleCount(0),
-    patternCount(0),
-    version(0),
-    compatibleVersion(0),
-    flags(0),
-    special(0),
-    globalVolume(0),
-    mixVolume(0),
-    tempo(0),
-    bpmSpeed(0),
-    panningSeparation(0),
-    pitchWheelDepth(0) {}
-
-  int            channels;
-  unsigned short lengthInPatterns;
-  unsigned short instrumentCount;
-  unsigned short sampleCount;
-  unsigned short patternCount;
-  unsigned short version;
-  unsigned short compatibleVersion;
-  unsigned short flags;
-  unsigned short special;
-  unsigned char  globalVolume;
-  unsigned char  mixVolume;
-  unsigned char  tempo;
-  unsigned char  bpmSpeed;
-  unsigned char  panningSeparation;
-  unsigned char  pitchWheelDepth;
+  int channels { 0 };
+  unsigned short lengthInPatterns { 0 };
+  unsigned short instrumentCount { 0 };
+  unsigned short sampleCount { 0 };
+  unsigned short patternCount { 0 };
+  unsigned short version { 0 };
+  unsigned short compatibleVersion { 0 };
+  unsigned short flags { 0 };
+  unsigned short special { 0 };
+  unsigned char globalVolume { 0 };
+  unsigned char mixVolume { 0 };
+  unsigned char tempo { 0 };
+  unsigned char bpmSpeed { 0 };
+  unsigned char panningSeparation { 0 };
+  unsigned char pitchWheelDepth { 0 };
 };
 
-////////////////////////////////////////////////////////////////////////////////
-// public members
-////////////////////////////////////////////////////////////////////////////////
-
-IT::AudioProperties::AudioProperties(AudioProperties::ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+IT::Properties::Properties(AudioProperties::ReadStyle propertiesStyle) :
+  AudioProperties(propertiesStyle),
+  d(std::make_unique<PropertiesPrivate>())
 {
 }
 
-IT::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+IT::Properties::~Properties() = default;
 
-int IT::AudioProperties::length() const
-{
-  return 0;
-}
-
-int IT::AudioProperties::lengthInSeconds() const
-{
-  return 0;
-}
-
-int IT::AudioProperties::lengthInMilliseconds() const
-{
-  return 0;
-}
-
-int IT::AudioProperties::bitrate() const
-{
-  return 0;
-}
-
-int IT::AudioProperties::sampleRate() const
-{
-  return 0;
-}
-
-int IT::AudioProperties::channels() const
+int IT::Properties::channels() const
 {
   return d->channels;
 }
 
-unsigned short IT::AudioProperties::lengthInPatterns() const
+unsigned short IT::Properties::lengthInPatterns() const
 {
   return d->lengthInPatterns;
 }
 
-bool IT::AudioProperties::stereo() const
+bool IT::Properties::stereo() const
 {
   return d->flags & Stereo;
 }
 
-unsigned short IT::AudioProperties::instrumentCount() const
+unsigned short IT::Properties::instrumentCount() const
 {
   return d->instrumentCount;
 }
 
-unsigned short IT::AudioProperties::sampleCount() const
+unsigned short IT::Properties::sampleCount() const
 {
   return d->sampleCount;
 }
 
-unsigned short IT::AudioProperties::patternCount() const
+unsigned short IT::Properties::patternCount() const
 {
   return d->patternCount;
 }
 
-unsigned short IT::AudioProperties::version() const
+unsigned short IT::Properties::version() const
 {
   return d->version;
 }
 
-unsigned short IT::AudioProperties::compatibleVersion() const
+unsigned short IT::Properties::compatibleVersion() const
 {
   return d->compatibleVersion;
 }
 
-unsigned short IT::AudioProperties::flags() const
+unsigned short IT::Properties::flags() const
 {
   return d->flags;
 }
 
-unsigned short IT::AudioProperties::special() const
+unsigned short IT::Properties::special() const
 {
   return d->special;
 }
 
-unsigned char IT::AudioProperties::globalVolume() const
+unsigned char IT::Properties::globalVolume() const
 {
   return d->globalVolume;
 }
 
-unsigned char IT::AudioProperties::mixVolume() const
+unsigned char IT::Properties::mixVolume() const
 {
   return d->mixVolume;
 }
 
-unsigned char IT::AudioProperties::tempo() const
+unsigned char IT::Properties::tempo() const
 {
   return d->tempo;
 }
 
-unsigned char IT::AudioProperties::bpmSpeed() const
+unsigned char IT::Properties::bpmSpeed() const
 {
   return d->bpmSpeed;
 }
 
-unsigned char IT::AudioProperties::panningSeparation() const
+unsigned char IT::Properties::panningSeparation() const
 {
   return d->panningSeparation;
 }
 
-unsigned char IT::AudioProperties::pitchWheelDepth() const
+unsigned char IT::Properties::pitchWheelDepth() const
 {
   return d->pitchWheelDepth;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// private members
-////////////////////////////////////////////////////////////////////////////////
-
-void IT::AudioProperties::setChannels(int channels)
+void IT::Properties::setChannels(int channels)
 {
   d->channels = channels;
 }
 
-void IT::AudioProperties::setLengthInPatterns(unsigned short lengthInPatterns)
+void IT::Properties::setLengthInPatterns(unsigned short lengthInPatterns)
 {
   d->lengthInPatterns = lengthInPatterns;
 }
 
-void IT::AudioProperties::setInstrumentCount(unsigned short instrumentCount)
+void IT::Properties::setInstrumentCount(unsigned short instrumentCount)
 {
   d->instrumentCount = instrumentCount;
 }
 
-void IT::AudioProperties::setSampleCount(unsigned short sampleCount)
+void IT::Properties::setSampleCount(unsigned short sampleCount)
 {
   d->sampleCount = sampleCount;
 }
 
-void IT::AudioProperties::setPatternCount(unsigned short patternCount)
+void IT::Properties::setPatternCount(unsigned short patternCount)
 {
   d->patternCount = patternCount;
 }
 
-void IT::AudioProperties::setFlags(unsigned short flags)
+void IT::Properties::setFlags(unsigned short flags)
 {
   d->flags = flags;
 }
 
-void IT::AudioProperties::setSpecial(unsigned short special)
+void IT::Properties::setSpecial(unsigned short special)
 {
   d->special = special;
 }
 
-void IT::AudioProperties::setCompatibleVersion(unsigned short compatibleVersion)
+void IT::Properties::setCompatibleVersion(unsigned short compatibleVersion)
 {
   d->compatibleVersion = compatibleVersion;
 }
 
-void IT::AudioProperties::setVersion(unsigned short version)
+void IT::Properties::setVersion(unsigned short version)
 {
   d->version = version;
 }
 
-void IT::AudioProperties::setGlobalVolume(unsigned char globalVolume)
+void IT::Properties::setGlobalVolume(unsigned char globalVolume)
 {
   d->globalVolume = globalVolume;
 }
 
-void IT::AudioProperties::setMixVolume(unsigned char mixVolume)
+void IT::Properties::setMixVolume(unsigned char mixVolume)
 {
   d->mixVolume = mixVolume;
 }
 
-void IT::AudioProperties::setTempo(unsigned char tempo)
+void IT::Properties::setTempo(unsigned char tempo)
 {
   d->tempo = tempo;
 }
 
-void IT::AudioProperties::setBpmSpeed(unsigned char bpmSpeed)
+void IT::Properties::setBpmSpeed(unsigned char bpmSpeed)
 {
   d->bpmSpeed = bpmSpeed;
 }
 
-void IT::AudioProperties::setPanningSeparation(unsigned char panningSeparation)
+void IT::Properties::setPanningSeparation(unsigned char panningSeparation)
 {
   d->panningSeparation = panningSeparation;
 }
 
-void IT::AudioProperties::setPitchWheelDepth(unsigned char pitchWheelDepth)
+void IT::Properties::setPitchWheelDepth(unsigned char pitchWheelDepth)
 {
   d->pitchWheelDepth = pitchWheelDepth;
 }

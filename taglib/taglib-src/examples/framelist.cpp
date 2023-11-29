@@ -23,19 +23,16 @@
  */
 
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 
-#include <tbytevector.h>
-
-#include <mpegfile.h>
-
-#include <id3v2tag.h>
-#include <id3v2frame.h>
-#include <id3v2header.h>
-
-#include <id3v1tag.h>
-
-#include <apetag.h>
+#include "tbytevector.h"
+#include "mpegfile.h"
+#include "id3v2tag.h"
+#include "id3v2frame.h"
+#include "id3v2header.h"
+#include "commentsframe.h"
+#include "id3v1tag.h"
+#include "apetag.h"
 
 using namespace std;
 using namespace TagLib;
@@ -64,9 +61,16 @@ int main(int argc, char *argv[])
            << " bytes in tag"
            << endl;
 
-      ID3v2::FrameList::ConstIterator it = id3v2tag->frameList().begin();
-      for(; it != id3v2tag->frameList().end(); it++)
-        cout << (*it)->frameID() << " - \"" << (*it)->toString() << "\"" << endl;
+      const auto &frames = id3v2tag->frameList();
+      for(auto it = frames.begin(); it != frames.end(); it++) {
+        cout << (*it)->frameID();
+
+        if(auto comment = dynamic_cast<ID3v2::CommentsFrame *>(*it))
+          if(!comment->description().isEmpty())
+            cout << " [" << comment->description() << "]";
+
+        cout << " - \"" << (*it)->toString() << "\"" << endl;
+      }
     }
     else
       cout << "file does not have a valid id3v2 tag" << endl;
@@ -92,8 +96,8 @@ int main(int argc, char *argv[])
     cout << endl << "APE" << endl;
 
     if(ape) {
-      for(APE::ItemListMap::ConstIterator it = ape->itemListMap().begin();
-          it != ape->itemListMap().end(); ++it)
+      const auto &items = ape->itemListMap();
+      for(auto it = items.begin(); it != items.end(); ++it)
       {
         if((*it).second.type() != APE::Item::Binary)
           cout << (*it).first << " - \"" << (*it).second.toString() << "\"" << endl;

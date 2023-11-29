@@ -26,45 +26,37 @@
 #ifndef TAGLIB_XMPROPERTIES_H
 #define TAGLIB_XMPROPERTIES_H
 
-#include <taglib/taglib.h>
 #include <taglib/tstring.h>
+#include <taglib/taglib.h>
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
-
   namespace XM {
-
-    class File;
-
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
-    {
+    class TAGLIB_EXPORT Properties : public AudioProperties {
     public:
       /*! Flag bits. */
       enum {
-        LinearFreqTable = 1 // otherwise its the amiga freq. table
+        LinearFreqTable = 1 // otherwise it is the amiga freq. table
       };
 
-      explicit AudioProperties(AudioProperties::ReadStyle propertiesStyle);
-      virtual ~AudioProperties();
+      Properties(AudioProperties::ReadStyle propertiesStyle);
+      ~Properties() override;
 
-      int length()               const;
-      int lengthInSeconds()      const;
-      int lengthInMilliseconds() const;
-      int bitrate()              const;
-      int sampleRate()           const;
-      int channels()             const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
+
+      int channels() const override;
 
       unsigned short lengthInPatterns() const;
-      unsigned short version()          const;
-      unsigned short restartPosition()  const;
-      unsigned short patternCount()     const;
-      unsigned short instrumentCount()  const;
-      unsigned int   sampleCount()      const;
-      unsigned short flags()            const;
-      unsigned short tempo()            const;
-      unsigned short bpmSpeed()         const;
+      unsigned short version() const;
+      unsigned short restartPosition() const;
+      unsigned short patternCount() const;
+      unsigned short instrumentCount() const;
+      unsigned int sampleCount() const;
+      unsigned short flags() const;
+      unsigned short tempo() const;
+      unsigned short bpmSpeed() const;
 
-    private:
       void setChannels(int channels);
 
       void setLengthInPatterns(unsigned short lengthInPatterns);
@@ -77,12 +69,11 @@ namespace TagLib {
       void setTempo(unsigned short tempo);
       void setBpmSpeed(unsigned short bpmSpeed);
 
-      friend class File;
-
+    private:
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
-}
+  }  // namespace XM
+}  // namespace TagLib
 
 #endif

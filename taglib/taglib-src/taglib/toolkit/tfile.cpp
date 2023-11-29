@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
     copyright            : (C) 2002 - 2008 by Scott Wheeler
     email                : wheeler@kde.org
  ***************************************************************************/
@@ -24,12 +24,26 @@
  ***************************************************************************/
 
 #include "tfile.h"
+
 #include "tfilestream.h"
-#include "tstring.h"
-#include "tdebug.h"
-#include "tsmartptr.h"
 #include "tpropertymap.h"
-#include "audioproperties.h"
+#include "tstring.h"
+
+#ifdef _WIN32
+# include <windows.h>
+# include <io.h>
+#else
+#  include <unistd.h>
+#endif
+
+#ifndef R_OK
+# define R_OK 4
+#endif
+#ifndef W_OK
+# define W_OK 2
+#endif
+
+#include "wavpackfile.h"
 
 using namespace TagLib;
 
@@ -38,8 +52,9 @@ class File::FilePrivate
 public:
   FilePrivate(IOStream *stream, bool owner) :
     stream(stream),
-    streamOwner(owner),
-    valid(true) {}
+    streamOwner(owner)
+  {
+  }
 
   ~FilePrivate()
   {
@@ -47,19 +62,29 @@ public:
       delete stream;
   }
 
+  FilePrivate(const FilePrivate &) = delete;
+  FilePrivate &operator=(const FilePrivate &) = delete;
+
   IOStream *stream;
   bool streamOwner;
-  bool valid;
+  bool valid { true };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-File::~File()
+File::File(FileName fileName) :
+  d(std::make_unique<FilePrivate>(new FileStream(fileName), true))
 {
-  delete d;
 }
+
+File::File(IOStream *stream) :
+  d(std::make_unique<FilePrivate>(stream, false))
+{
+}
+
+File::~File() = default;
 
 FileName File::name() const
 {
@@ -81,6 +106,21 @@ PropertyMap File::setProperties(const PropertyMap &properties)
   return tag()->setProperties(properties);
 }
 
+StringList File::complexPropertyKeys() const
+{
+  return tag()->complexPropertyKeys();
+}
+
+List<VariantMap> File::complexProperties(const String &key) const
+{
+  return tag()->complexProperties(key);
+}
+
+bool File::setComplexProperties(const String &key, const List<VariantMap> &value)
+{
+  return tag()->setComplexProperties(key, value);
+}
+
 ByteVector File::readBlock(size_t length)
 {
   return d->stream->readBlock(length);
@@ -91,25 +131,25 @@ void File::writeBlock(const ByteVector &data)
   d->stream->writeBlock(data);
 }
 
-long long File::find(const ByteVector &pattern, long long fromOffset, const ByteVector &before)
+offset_t File::find(const ByteVector &pattern, offset_t fromOffset, const ByteVector &before)
 {
   if(!d->stream || pattern.size() > bufferSize())
       return -1;
 
   // The position in the file that the current buffer starts at.
 
-  long long bufferOffset = fromOffset;
+  offset_t bufferOffset = fromOffset;
 
   // These variables are used to keep track of a partial match that happens at
   // the end of a buffer.
 
-  size_t previousPartialMatch = ByteVector::npos();
-  size_t beforePreviousPartialMatch = ByteVector::npos();
+  int previousPartialMatch = -1;
+  int beforePreviousPartialMatch = -1;
 
   // Save the location of the current read pointer.  We will restore the
   // position using seek() before all returns.
 
-  long long originalPosition = tell();
+  offset_t originalPosition = tell();
 
   // Start the search at the offset.
 
@@ -133,29 +173,20 @@ long long File::find(const ByteVector &pattern, long long fromOffset, const Byte
   // then check for "before".  The order is important because it gives priority
   // to "real" matches.
 
-  while(true)
-  {
-    ByteVector buffer = readBlock(bufferSize());
-    if(buffer.isEmpty())
-      break;
+  for(auto buffer = readBlock(bufferSize()); !buffer.isEmpty(); buffer = readBlock(bufferSize())) {
 
     // (1) previous partial match
 
-    if(previousPartialMatch != ByteVector::npos()
-      && bufferSize() > previousPartialMatch)
-    {
-      const size_t patternOffset = (bufferSize() - previousPartialMatch);
+    if(previousPartialMatch >= 0 && static_cast<int>(bufferSize()) > previousPartialMatch) {
+      const int patternOffset = (bufferSize() - previousPartialMatch);
       if(buffer.containsAt(pattern, 0, patternOffset)) {
         seek(originalPosition);
         return bufferOffset - bufferSize() + previousPartialMatch;
       }
     }
 
-    if(!before.isEmpty()
-      && beforePreviousPartialMatch != ByteVector::npos()
-      && bufferSize() > beforePreviousPartialMatch)
-    {
-      const size_t beforeOffset = (bufferSize() - beforePreviousPartialMatch);
+    if(!before.isEmpty() && beforePreviousPartialMatch >= 0 && static_cast<int>(bufferSize()) > beforePreviousPartialMatch) {
+      const int beforeOffset = (bufferSize() - beforePreviousPartialMatch);
       if(buffer.containsAt(before, 0, beforeOffset)) {
         seek(originalPosition);
         return -1;
@@ -164,13 +195,13 @@ long long File::find(const ByteVector &pattern, long long fromOffset, const Byte
 
     // (2) pattern contained in current buffer
 
-    size_t location = buffer.find(pattern);
-    if(location != ByteVector::npos()) {
+    long location = buffer.find(pattern);
+    if(location >= 0) {
       seek(originalPosition);
       return bufferOffset + location;
     }
 
-    if(!before.isEmpty() && buffer.find(before) != ByteVector::npos()) {
+    if(!before.isEmpty() && buffer.find(before) >= 0) {
       seek(originalPosition);
       return -1;
     }
@@ -195,23 +226,35 @@ long long File::find(const ByteVector &pattern, long long fromOffset, const Byte
 }
 
 
-long long File::rfind(const ByteVector &pattern, long long fromOffset, const ByteVector &before)
+offset_t File::rfind(const ByteVector &pattern, offset_t fromOffset, const ByteVector &before)
 {
   if(!d->stream || pattern.size() > bufferSize())
       return -1;
 
+  // The position in the file that the current buffer starts at.
+
+  ByteVector buffer;
+
+  // These variables are used to keep track of a partial match that happens at
+  // the end of a buffer.
+
+  /*
+  int previousPartialMatch = -1;
+  int beforePreviousPartialMatch = -1;
+  */
+
   // Save the location of the current read pointer.  We will restore the
   // position using seek() before all returns.
 
-  long long originalPosition = tell();
+  offset_t originalPosition = tell();
 
   // Start the search at the offset.
 
   if(fromOffset == 0)
     fromOffset = length();
 
-  long long bufferLength = bufferSize();
-  long long bufferOffset = fromOffset + pattern.size();
+  offset_t bufferLength = bufferSize();
+  offset_t bufferOffset = fromOffset + pattern.size();
 
   // See the notes in find() for an explanation of this algorithm.
 
@@ -226,7 +269,7 @@ long long File::rfind(const ByteVector &pattern, long long fromOffset, const Byt
     }
     seek(bufferOffset);
 
-    const ByteVector buffer = readBlock(static_cast<size_t>(bufferLength));
+    buffer = readBlock(bufferLength);
     if(buffer.isEmpty())
       break;
 
@@ -234,13 +277,13 @@ long long File::rfind(const ByteVector &pattern, long long fromOffset, const Byt
 
     // (2) pattern contained in current buffer
 
-    const size_t location = buffer.rfind(pattern);
-    if(location != ByteVector::npos()) {
+    const long location = buffer.rfind(pattern);
+    if(location >= 0) {
       seek(originalPosition);
       return bufferOffset + location;
     }
 
-    if(!before.isEmpty() && buffer.find(before) != ByteVector::npos()) {
+    if(!before.isEmpty() && buffer.find(before) >= 0) {
       seek(originalPosition);
       return -1;
     }
@@ -257,12 +300,12 @@ long long File::rfind(const ByteVector &pattern, long long fromOffset, const Byt
   return -1;
 }
 
-void File::insert(const ByteVector &data, long long start, size_t replace)
+void File::insert(const ByteVector &data, offset_t start, size_t replace)
 {
   d->stream->insert(data, start, replace);
 }
 
-void File::removeBlock(long long start, size_t length)
+void File::removeBlock(offset_t start, size_t length)
 {
   d->stream->removeBlock(start, length);
 }
@@ -282,12 +325,12 @@ bool File::isValid() const
   return isOpen() && d->valid;
 }
 
-void File::seek(long long offset, Position p)
+void File::seek(offset_t offset, Position p)
 {
-  d->stream->seek(offset, IOStream::Position(p));
+  d->stream->seek(offset, static_cast<IOStream::Position>(p));
 }
 
-void File::truncate(long long length)
+void File::truncate(offset_t length)
 {
   d->stream->truncate(length);
 }
@@ -297,51 +340,26 @@ void File::clear()
   d->stream->clear();
 }
 
-long long File::tell() const
+offset_t File::tell() const
 {
   return d->stream->tell();
 }
 
-long long File::length()
+offset_t File::length()
 {
   return d->stream->length();
-}
-
-String File::toString() const
-{
-  StringList desc;
-  AudioProperties *properties = audioProperties();
-  if(properties) {
-    desc.append(properties->toString());
-  }
-  Tag *t = tag();
-  if(t) {
-    desc.append(t->toString());
-  }
-  return desc.toString("\n");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // protected members
 ////////////////////////////////////////////////////////////////////////////////
 
-File::File(const FileName &fileName) :
-  d(new FilePrivate(new FileStream(fileName), true))
+unsigned int File::bufferSize()
 {
-}
-
-File::File(IOStream *stream) :
-  d(new FilePrivate(stream, false))
-{
-}
-
-size_t File::bufferSize()
-{
-  return FileStream::bufferSize();
+  return 1024;
 }
 
 void File::setValid(bool valid)
 {
   d->valid = valid;
 }
-

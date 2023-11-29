@@ -23,8 +23,8 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <speexfile.h>
-#include <oggpageheader.h>
+#include "speexfile.h"
+#include "oggpageheader.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -44,7 +44,6 @@ public:
   {
     Ogg::Speex::File f(TEST_FILE_PATH_C("empty.spx"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3685, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(53, f.audioProperties()->bitrate());
@@ -68,12 +67,12 @@ public:
     {
       Ogg::Speex::File f(newname.c_str());
       CPPUNIT_ASSERT(f.isValid());
-      CPPUNIT_ASSERT_EQUAL(156330LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(156330), f.length());
       CPPUNIT_ASSERT_EQUAL(23, f.lastPageHeader()->pageSequenceNumber());
-      CPPUNIT_ASSERT_EQUAL((size_t)80, f.packet(0).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)131116, f.packet(1).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)93, f.packet(2).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)93, f.packet(3).size());
+      CPPUNIT_ASSERT_EQUAL(80U, f.packet(0).size());
+      CPPUNIT_ASSERT_EQUAL(131116U, f.packet(1).size());
+      CPPUNIT_ASSERT_EQUAL(93U, f.packet(2).size());
+      CPPUNIT_ASSERT_EQUAL(93U, f.packet(3).size());
       CPPUNIT_ASSERT_EQUAL(text, f.tag()->title());
 
       CPPUNIT_ASSERT(f.audioProperties());
@@ -85,12 +84,12 @@ public:
     {
       Ogg::Speex::File f(newname.c_str());
       CPPUNIT_ASSERT(f.isValid());
-      CPPUNIT_ASSERT_EQUAL(24317LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(24317), f.length());
       CPPUNIT_ASSERT_EQUAL(7, f.lastPageHeader()->pageSequenceNumber());
-      CPPUNIT_ASSERT_EQUAL((size_t)80, f.packet(0).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)49, f.packet(1).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)93, f.packet(2).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)93, f.packet(3).size());
+      CPPUNIT_ASSERT_EQUAL(80U, f.packet(0).size());
+      CPPUNIT_ASSERT_EQUAL(49U, f.packet(1).size());
+      CPPUNIT_ASSERT_EQUAL(93U, f.packet(2).size());
+      CPPUNIT_ASSERT_EQUAL(93U, f.packet(3).size());
       CPPUNIT_ASSERT_EQUAL(String("ABCDE"), f.tag()->title());
 
       CPPUNIT_ASSERT(f.audioProperties());

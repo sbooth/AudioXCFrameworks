@@ -23,11 +23,10 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include "tdebug.h"
-#include <tfile.h>
-#include <tpicturemap.h>
-
 #include "id3v1tag.h"
+
+#include "tdebug.h"
+#include "tfile.h"
 #include "id3v1genres.h"
 
 using namespace TagLib;
@@ -35,64 +34,60 @@ using namespace ID3v1;
 
 namespace
 {
-  class DefaultStringHandler : public TagLib::StringHandler
-  {
-  public:
-    DefaultStringHandler() :
-      TagLib::StringHandler() {}
-
-    virtual String parse(const ByteVector &data) const
-    {
-      return String(data, String::Latin1).stripWhiteSpace();
-    }
-
-    virtual ByteVector render(const String &s) const
-    {
-      if(s.isLatin1())
-        return s.data(String::Latin1);
-      else
-        return ByteVector();
-    }
-  };
-
-  const DefaultStringHandler defaultStringHandler;
-  const TagLib::StringHandler *stringHandler = &defaultStringHandler;
-}
+  const ID3v1::StringHandler defaultStringHandler;
+  const ID3v1::StringHandler *stringHandler = &defaultStringHandler;
+} // namespace
 
 class ID3v1::Tag::TagPrivate
 {
 public:
-  TagPrivate() :
-    file(0),
-    tagOffset(0),
-    track(0),
-    genre(255) {}
-
-  File *file;
-  long long tagOffset;
+  File *file { nullptr };
+  offset_t tagOffset { 0 };
 
   String title;
   String artist;
   String album;
   String year;
   String comment;
-  unsigned char track;
-  unsigned char genre;
+  unsigned char track { 0 };
+  unsigned char genre { 255 };
 };
+
+class ID3v1::StringHandler::StringHandlerPrivate
+{
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// StringHandler implementation
+////////////////////////////////////////////////////////////////////////////////
+
+StringHandler::StringHandler() = default;
+
+StringHandler::~StringHandler() = default;
+
+String ID3v1::StringHandler::parse(const ByteVector &data) const
+{
+  return String(data, String::Latin1).stripWhiteSpace();
+}
+
+ByteVector ID3v1::StringHandler::render(const String &s) const
+{
+  if(s.isLatin1())
+    return s.data(String::Latin1);
+  return ByteVector();
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // public methods
 ////////////////////////////////////////////////////////////////////////////////
 
 ID3v1::Tag::Tag() :
-  TagLib::Tag(),
-  d(new TagPrivate())
+  d(std::make_unique<TagPrivate>())
 {
 }
 
-ID3v1::Tag::Tag(File *file, long long tagOffset) :
-  TagLib::Tag(),
-  d(new TagPrivate())
+ID3v1::Tag::Tag(File *file, offset_t tagOffset) :
+  d(std::make_unique<TagPrivate>())
 {
   d->file = file;
   d->tagOffset = tagOffset;
@@ -100,10 +95,7 @@ ID3v1::Tag::Tag(File *file, long long tagOffset) :
   read();
 }
 
-ID3v1::Tag::~Tag()
-{
-  delete d;
-}
+ID3v1::Tag::~Tag() = default;
 
 ByteVector ID3v1::Tag::render() const
 {
@@ -115,9 +107,9 @@ ByteVector ID3v1::Tag::render() const
   data.append(stringHandler->render(d->album).resize(30));
   data.append(stringHandler->render(d->year).resize(4));
   data.append(stringHandler->render(d->comment).resize(28));
-  data.append(char(0));
-  data.append(char(d->track));
-  data.append(char(d->genre));
+  data.append(static_cast<char>(0));
+  data.append(static_cast<char>(d->track));
+  data.append(static_cast<char>(d->genre));
 
   return data;
 }
@@ -162,11 +154,6 @@ unsigned int ID3v1::Tag::track() const
   return d->track;
 }
 
-TagLib::PictureMap ID3v1::Tag::pictures() const
-{
-    return PictureMap();
-}
-
 void ID3v1::Tag::setTitle(const String &s)
 {
   d->title = s;
@@ -202,10 +189,6 @@ void ID3v1::Tag::setTrack(unsigned int i)
   d->track = i < 256 ? i : 0;
 }
 
-void ID3v1::Tag::setPictures(const PictureMap &l)
-{
-}
-
 unsigned int ID3v1::Tag::genreNumber() const
 {
   return d->genre;
@@ -216,7 +199,7 @@ void ID3v1::Tag::setGenreNumber(unsigned int i)
   d->genre = i < 256 ? i : 255;
 }
 
-void ID3v1::Tag::setStringHandler(const TagLib::StringHandler *handler)
+void ID3v1::Tag::setStringHandler(const StringHandler *handler)
 {
   if(handler)
     stringHandler = handler;

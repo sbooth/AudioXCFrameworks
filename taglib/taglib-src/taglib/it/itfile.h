@@ -23,8 +23,8 @@
 #define TAGLIB_ITFILE_H
 
 #include <taglib/tfile.h>
-#include <taglib/audioproperties.h>
 #include <taglib/taglib_export.h>
+#include <taglib/audioproperties.h>
 #include <taglib/modfilebase.h>
 #include <taglib/modtag.h>
 #include <taglib/itproperties.h>
@@ -63,15 +63,18 @@ namespace TagLib {
         /*!
          * Destroys this instance of the File.
          */
-        virtual ~File();
+        ~File() override;
 
-        Mod::Tag *tag() const;
+        File(const File &) = delete;
+        File &operator=(const File &) = delete;
+
+        Mod::Tag *tag() const override;
 
         /*!
          * Returns the IT::Properties for this file. If no audio properties
          * were read then this will return a null pointer.
          */
-        IT::AudioProperties *audioProperties() const;
+        IT::Properties *audioProperties() const override;
 
         /*!
          * Save the file.
@@ -79,19 +82,15 @@ namespace TagLib {
          *
          * \note Saving Impulse Tracker tags is not supported.
          */
-        bool save();
-
+        bool save() override;
 
       private:
-        File(const File &);
-        File &operator=(const File &);
-
         void read(bool readProperties);
 
         class FilePrivate;
-        FilePrivate *d;
+        std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace IT
+}  // namespace TagLib
 
 #endif

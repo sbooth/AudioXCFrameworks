@@ -24,12 +24,13 @@
 
 #include <iostream>
 #include <iomanip>
-#include <stdio.h>
+#include <cstdio>
 
-#include <fileref.h>
-#include <tag.h>
-#include <tpicturemap.h>
-#include <tpropertymap.h>
+#include "tpropertymap.h"
+#include "tstringlist.h"
+#include "tvariant.h"
+#include "fileref.h"
+#include "tag.h"
 
 using namespace std;
 
@@ -46,46 +47,74 @@ int main(int argc, char *argv[])
       TagLib::Tag *tag = f.tag();
 
       cout << "-- TAG (basic) --" << endl;
-      cout << "title    - \"" << tag->title()    << "\"" << endl;
-      cout << "artist   - \"" << tag->artist()   << "\"" << endl;
-      cout << "album    - \"" << tag->album()    << "\"" << endl;
-      cout << "year     - \"" << tag->year()     << "\"" << endl;
-      cout << "comment  - \"" << tag->comment()  << "\"" << endl;
-      cout << "track    - \"" << tag->track()    << "\"" << endl;
-      cout << "genre    - \"" << tag->genre()    << "\"" << endl;
-      if(!tag->pictures().isEmpty())
-        cout << "pictures -"    << tag->pictures() << endl;
+      cout << "title   - \"" << tag->title()   << "\"" << endl;
+      cout << "artist  - \"" << tag->artist()  << "\"" << endl;
+      cout << "album   - \"" << tag->album()   << "\"" << endl;
+      cout << "year    - \"" << tag->year()    << "\"" << endl;
+      cout << "comment - \"" << tag->comment() << "\"" << endl;
+      cout << "track   - \"" << tag->track()   << "\"" << endl;
+      cout << "genre   - \"" << tag->genre()   << "\"" << endl;
 
-      TagLib::PropertyMap tags = f.file()->properties();
+      TagLib::PropertyMap tags = f.properties();
+      if(!tags.isEmpty()) {
+        unsigned int longest = 0;
+        for(auto i = tags.cbegin(); i != tags.cend(); ++i) {
+          if (i->first.size() > longest) {
+            longest = i->first.size();
+          }
+        }
 
-      unsigned int longest = 0;
-      for(TagLib::PropertyMap::ConstIterator i = tags.begin(); i != tags.end(); ++i) {
-        if (i->first.size() > longest) {
-          longest = i->first.size();
+        cout << "-- TAG (properties) --" << endl;
+        for(auto i = tags.cbegin(); i != tags.cend(); ++i) {
+          for(auto j = i->second.begin(); j != i->second.end(); ++j) {
+            cout << left << std::setfill(' ') << std::setw(longest) << i->first << " - " << '"' << *j << '"' << endl;
+          }
         }
       }
 
-      cout << "-- TAG (properties) --" << endl;
-      for(TagLib::PropertyMap::ConstIterator i = tags.begin(); i != tags.end(); ++i) {
-        for(TagLib::StringList::ConstIterator j = i->second.begin(); j != i->second.end(); ++j) {
-          cout << left << std::setw(longest) << i->first << " - " << '"' << *j << '"' << endl;
+      TagLib::StringList names = f.complexPropertyKeys();
+      for(const auto &name : names) {
+        const auto& properties = f.complexProperties(name);
+        for(const auto &property : properties) {
+          cout << name << ":" << endl;
+          for(const auto &[key, value] : property) {
+            cout << "  " << left << std::setfill(' ') << std::setw(11) << key << " - ";
+            if(value.type() == TagLib::Variant::ByteVector) {
+              cout << "(" << value.value<TagLib::ByteVector>().size() << " bytes)" << endl;
+              /* The picture could be extracted using:
+              ofstream picture;
+              TagLib::String fn(argv[i]);
+              int slashPos = fn.rfind('/');
+              int dotPos = fn.rfind('.');
+              if(slashPos >= 0 && dotPos > slashPos) {
+                fn = fn.substr(slashPos + 1, dotPos - slashPos - 1);
+              }
+              fn += ".jpg";
+              picture.open(fn.toCString(), ios_base::out | ios_base::binary);
+              picture << value.value<TagLib::ByteVector>();
+              picture.close();
+              */
+            }
+            else {
+              cout << value << endl;
+            }
+          }
         }
       }
-
     }
 
     if(!f.isNull() && f.audioProperties()) {
 
       TagLib::AudioProperties *properties = f.audioProperties();
 
-      int seconds = properties->length() % 60;
-      int minutes = (properties->length() - seconds) / 60;
+      int seconds = properties->lengthInSeconds() % 60;
+      int minutes = (properties->lengthInSeconds() - seconds) / 60;
 
       cout << "-- AUDIO --" << endl;
       cout << "bitrate     - " << properties->bitrate() << endl;
       cout << "sample rate - " << properties->sampleRate() << endl;
       cout << "channels    - " << properties->channels() << endl;
-      cout << "length      - " << minutes << ":" << setfill('0') << setw(2) << seconds << endl;
+      cout << "length      - " << minutes << ":" << setfill('0') << setw(2) << right << seconds << endl;
     }
   }
   return 0;

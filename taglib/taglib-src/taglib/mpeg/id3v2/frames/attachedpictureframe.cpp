@@ -25,7 +25,7 @@
 
 #include "attachedpictureframe.h"
 
-#include <tstringlist.h>
+#include "tstringlist.h"
 #include "tdebug.h"
 
 using namespace TagLib;
@@ -34,12 +34,9 @@ using namespace ID3v2;
 class AttachedPictureFrame::AttachedPictureFramePrivate
 {
 public:
-  AttachedPictureFramePrivate() : textEncoding(String::Latin1),
-                                  type(AttachedPictureFrame::Other) {}
-
-  String::Type textEncoding;
+  String::Type textEncoding { String::Latin1 };
   String mimeType;
-  AttachedPictureFrame::Type type;
+  AttachedPictureFrame::Type type { AttachedPictureFrame::Other };
   String description;
   ByteVector data;
 };
@@ -50,21 +47,18 @@ public:
 
 AttachedPictureFrame::AttachedPictureFrame() :
   Frame("APIC"),
-  d(new AttachedPictureFramePrivate())
+  d(std::make_unique<AttachedPictureFramePrivate>())
 {
 }
 
 AttachedPictureFrame::AttachedPictureFrame(const ByteVector &data) :
   Frame(data),
-  d(new AttachedPictureFramePrivate())
+  d(std::make_unique<AttachedPictureFramePrivate>())
 {
   setData(data);
 }
 
-AttachedPictureFrame::~AttachedPictureFrame()
-{
-  delete d;
-}
+AttachedPictureFrame::~AttachedPictureFrame() = default;
 
 String AttachedPictureFrame::toString() const
 {
@@ -133,19 +127,19 @@ void AttachedPictureFrame::parseFields(const ByteVector &data)
     return;
   }
 
-  d->textEncoding = String::Type(data[0]);
+  d->textEncoding = static_cast<String::Type>(data[0]);
 
-  size_t pos = 1;
+  int pos = 1;
 
-  d->mimeType = readStringField(data, String::Latin1, pos);
+  d->mimeType = readStringField(data, String::Latin1, &pos);
   /* Now we need at least two more bytes available */
-  if(pos + 1 >= data.size()) {
+  if(static_cast<unsigned int>(pos) + 1 >= data.size()) {
     debug("Truncated picture frame.");
     return;
   }
 
-  d->type = (TagLib::ID3v2::AttachedPictureFrame::Type)data[pos++];
-  d->description = readStringField(data, d->textEncoding, pos);
+  d->type = static_cast<TagLib::ID3v2::AttachedPictureFrame::Type>(data[pos++]);
+  d->description = readStringField(data, d->textEncoding, &pos);
 
   d->data = data.mid(pos);
 }
@@ -156,10 +150,10 @@ ByteVector AttachedPictureFrame::renderFields() const
 
   String::Type encoding = checkTextEncoding(d->description, d->textEncoding);
 
-  data.append(char(encoding));
+  data.append(static_cast<char>(encoding));
   data.append(d->mimeType.data(String::Latin1));
   data.append(textDelimiter(String::Latin1));
-  data.append(char(d->type));
+  data.append(static_cast<char>(d->type));
   data.append(d->description.data(encoding));
   data.append(textDelimiter(encoding));
   data.append(d->data);
@@ -173,7 +167,7 @@ ByteVector AttachedPictureFrame::renderFields() const
 
 AttachedPictureFrame::AttachedPictureFrame(const ByteVector &data, Header *h) :
   Frame(h),
-  d(new AttachedPictureFramePrivate())
+  d(std::make_unique<AttachedPictureFramePrivate>())
 {
   parseFields(fieldData(data));
 }
@@ -189,9 +183,9 @@ void AttachedPictureFrameV22::parseFields(const ByteVector &data)
     return;
   }
 
-  d->textEncoding = String::Type(data[0]);
+  d->textEncoding = static_cast<String::Type>(data[0]);
 
-  size_t pos = 1;
+  int pos = 1;
 
   String fixedString = String(data.mid(pos, 3), String::Latin1);
   pos += 3;
@@ -205,8 +199,8 @@ void AttachedPictureFrameV22::parseFields(const ByteVector &data)
     d->mimeType = "image/" + fixedString;
   }
 
-  d->type = (TagLib::ID3v2::AttachedPictureFrame::Type)data[pos++];
-  d->description = readStringField(data, d->textEncoding, pos);
+  d->type = static_cast<TagLib::ID3v2::AttachedPictureFrame::Type>(data[pos++]);
+  d->description = readStringField(data, d->textEncoding, &pos);
 
   d->data = data.mid(pos);
 }
@@ -219,7 +213,7 @@ AttachedPictureFrameV22::AttachedPictureFrameV22(const ByteVector &data, Header 
   parseFields(fieldData(data));
 
   // now set the v2.4 header
-  Frame::Header *newHeader = new Frame::Header("APIC");
+  auto newHeader = new Frame::Header("APIC");
   newHeader->setFrameSize(h->frameSize());
   setHeader(newHeader, true);
 }

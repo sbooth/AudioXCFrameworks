@@ -27,8 +27,9 @@
 #define TAGLIB_TAG_H
 
 #include <taglib/taglib_export.h>
-
 #include <taglib/tstring.h>
+#include <taglib/tlist.h>
+#include <taglib/tvariant.h>
 
 namespace TagLib {
 
@@ -43,7 +44,6 @@ namespace TagLib {
    */
 
   class PropertyMap;
-  class PictureMap;
 
   class TAGLIB_EXPORT Tag
   {
@@ -53,6 +53,9 @@ namespace TagLib {
      * Destroys this Tag instance.
      */
     virtual ~Tag();
+
+    Tag(const Tag &) = delete;
+    Tag &operator=(const Tag &) = delete;
 
     /*!
      * Exports the tags of the file as dictionary mapping (human readable) tag
@@ -70,12 +73,55 @@ namespace TagLib {
     virtual void removeUnsupportedProperties(const StringList& properties);
 
     /*!
-     * Sets the tags of this File to those specified in \a properties. This default
+     * Sets the tags of this File to those specified in \a origProps. This default
      * implementation sets only the tags for which setter methods exist in this class
      * (artist, album, ...), and only one value per key; the rest will be contained
      * in the returned PropertyMap.
      */
-    virtual PropertyMap setProperties(const PropertyMap &properties);
+    virtual PropertyMap setProperties(const PropertyMap &origProps);
+
+    /*!
+     * Get the keys of complex properties, i.e. properties which cannot be
+     * represented simply by a string.
+     * Because such properties might be expensive to fetch, there are separate
+     * operations to get the available keys - which is expected to be cheap -
+     * and getting and setting the property values.
+     * The default implementation returns only an empty list.  Reimplementations
+     * should provide "PICTURE" if embedded cover art is present, and optionally
+     * support other properties.
+     */
+    virtual StringList complexPropertyKeys() const;
+
+    /*!
+     * Get the complex properties for a given \a key.
+     * In order to be flexible for different metadata formats, the properties
+     * are represented as variant maps.  Despite this dynamic nature, some
+     * degree of standardization should be achieved between formats:
+     *
+     * - PICTURE
+     *   - data: ByteVector with picture data
+     *   - description: String with description
+     *   - pictureType: String with type as specified for ID3v2,
+     *     e.g. "Front Cover", "Back Cover", "Band"
+     *   - mimeType: String with image format, e.g. "image/jpeg"
+     *   - optionally more information found in the tag, such as
+     *     "width", "height", "numColors", "colorDepth" int values
+     *     in FLAC pictures
+     * - GENERALOBJECT
+     *   - data: ByteVector with object data
+     *   - description: String with description
+     *   - fileName: String with file name
+     *   - mimeType: String with MIME type
+     *   - this is currently only implemented for ID3v2 GEOB frames
+     */
+    virtual List<VariantMap> complexProperties(const String &key) const;
+
+    /*!
+     * Set all complex properties for a given \a key using variant maps as
+     * \a value with the same format as returned by complexProperties().
+     * An empty list as \a value removes all complex properties for \a key.
+     */
+    virtual bool setComplexProperties(const String &key, const List<VariantMap> &value);
 
     /*!
      * Returns the track name; if no track name is present in the tag
@@ -117,12 +163,6 @@ namespace TagLib {
      * return 0.
      */
     virtual unsigned int track() const = 0;
-
-    /*!
-     * Returns a list of pictures available; if there is no picture, the list
-     * will be empty
-     */
-    virtual PictureMap pictures() const = 0;
 
     /*!
      * Sets the title to \a s.  If \a s is String::null then this value will be
@@ -168,11 +208,6 @@ namespace TagLib {
     virtual void setTrack(unsigned int i) = 0;
 
     /*!
-     *  Sets the list of pictures
-     */
-    virtual void setPictures( const PictureMap& l ) = 0;
-
-    /*!
      * Returns true if the tag does not contain any data.  This should be
      * reimplemented in subclasses that provide more than the basic tagging
      * abilities in this class.
@@ -192,11 +227,6 @@ namespace TagLib {
      */
     static void duplicate(const Tag *source, Tag *target, bool overwrite = true);
 
-    /*!
-     * Returns description of the tag.
-     */
-    virtual String toString() const;
-
   protected:
     /*!
      * Construct a Tag.  This is protected since tags should only be instantiated
@@ -205,12 +235,9 @@ namespace TagLib {
     Tag();
 
   private:
-    Tag(const Tag &);
-    Tag &operator=(const Tag &);
-
     class TagPrivate;
-    TagPrivate *d;
+    std::unique_ptr<TagPrivate> d;
   };
-}
+}  // namespace TagLib
 
 #endif

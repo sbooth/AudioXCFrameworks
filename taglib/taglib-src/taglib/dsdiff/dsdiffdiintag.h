@@ -1,6 +1,6 @@
 /***************************************************************************
- copyright            : (C) 2016 by Damien Plisson, Audirvana
- email                : damien78@audirvana.com
+    copyright            : (C) 2016 by Damien Plisson, Audirvana
+    email                : damien78@audirvana.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -43,97 +43,87 @@ namespace TagLib {
       {
       public:
         Tag();
-        virtual ~Tag();
+        ~Tag() override;
 
         /*!
          * Returns the track name; if no track name is present in the tag
          * String() will be returned.
          */
-        virtual String title() const;
+        String title() const override;
 
         /*!
          * Returns the artist name; if no artist name is present in the tag
          * String() will be returned.
          */
-        virtual String artist() const;
+        String artist() const override;
 
         /*!
          * Not supported.  Therefore always returns String().
          */
-        virtual String album() const;
+        String album() const override;
 
         /*!
          * Not supported.  Therefore always returns String().
          */
-        virtual String comment() const;
+        String comment() const override;
 
         /*!
          * Not supported.  Therefore always returns String().
          */
-        virtual String genre() const;
+        String genre() const override;
 
         /*!
          * Not supported.  Therefore always returns 0.
          */
-        virtual unsigned int year() const;
+        unsigned int year() const override;
 
         /*!
          * Not supported.  Therefore always returns 0.
          */
-        virtual unsigned int track() const;
-
-        /*!
-         * Not supported.  Therefore always returns an empty list.
-         */
-        virtual PictureMap pictures() const;
+        unsigned int track() const override;
 
         /*!
          * Sets the title to \a title.  If \a title is String() then this
          * value will be cleared.
          */
-        virtual void setTitle(const String &title);
+        void setTitle(const String &title) override;
 
         /*!
          * Sets the artist to \a artist.  If \a artist is String() then this
          * value will be cleared.
          */
-        virtual void setArtist(const String &artist);
+        void setArtist(const String &artist) override;
 
         /*!
          * Not supported and therefore ignored.
          */
-        virtual void setAlbum(const String &album);
+        void setAlbum(const String &album) override;
 
         /*!
          * Not supported and therefore ignored.
          */
-        virtual void setComment(const String &comment);
+        void setComment(const String &comment) override;
 
         /*!
          * Not supported and therefore ignored.
          */
-        virtual void setGenre(const String &genre);
+        void setGenre(const String &genre) override;
 
         /*!
          * Not supported and therefore ignored.
          */
-        virtual void setYear(unsigned int year);
+        void setYear(unsigned int year) override;
 
         /*!
          * Not supported and therefore ignored.
          */
-        virtual void setTrack(unsigned int track);
-
-        /*!
-         * Not supported and therefore ignored.
-         */
-        virtual void setPictures( const PictureMap& l );
+        void setTrack(unsigned int track) override;
 
         /*!
          * Implements the unified property interface -- export function.
          * Since the DIIN tag is very limited, the exported map is as well.
          */
-        PropertyMap properties() const;
+        PropertyMap properties() const override;
 
         /*!
          * Implements the unified property interface -- import function.
@@ -143,18 +133,14 @@ namespace TagLib {
          * all but the first will be contained in the returned map of unsupported
          * properties.
          */
-        PropertyMap setProperties(const PropertyMap &);
+        PropertyMap setProperties(const PropertyMap &) override;
 
       private:
-        Tag(const Tag &);
-        Tag &operator=(const Tag &);
-
         class TagPrivate;
-        TagPrivate *d;
+        std::unique_ptr<TagPrivate> d;
       };
-    }
-  }
-}
+    }  // namespace DIIN
+  }  // namespace DSDIFF
+}  // namespace TagLib
 
 #endif
-

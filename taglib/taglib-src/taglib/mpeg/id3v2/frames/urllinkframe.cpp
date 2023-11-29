@@ -27,10 +27,13 @@
  ***************************************************************************/
 
 #include "urllinkframe.h"
-#include "id3v2tag.h"
+
+#include <utility>
+
 #include "tdebug.h"
-#include <tstringlist.h>
-#include <tpropertymap.h>
+#include "tstringlist.h"
+#include "tpropertymap.h"
+#include "id3v2tag.h"
 
 using namespace TagLib;
 using namespace ID3v2;
@@ -44,8 +47,7 @@ public:
 class UserUrlLinkFrame::UserUrlLinkFramePrivate
 {
 public:
-  UserUrlLinkFramePrivate() : textEncoding(String::Latin1) {}
-  String::Type textEncoding;
+  String::Type textEncoding { String::Latin1 };
   String description;
 };
 
@@ -55,15 +57,12 @@ public:
 
 UrlLinkFrame::UrlLinkFrame(const ByteVector &data) :
   Frame(data),
-  d(new UrlLinkFramePrivate())
+  d(std::make_unique<UrlLinkFramePrivate>())
 {
   setData(data);
 }
 
-UrlLinkFrame::~UrlLinkFrame()
-{
-  delete d;
-}
+UrlLinkFrame::~UrlLinkFrame() = default;
 
 void UrlLinkFrame::setUrl(const String &s)
 {
@@ -113,7 +112,7 @@ ByteVector UrlLinkFrame::renderFields() const
 
 UrlLinkFrame::UrlLinkFrame(const ByteVector &data, Header *h) :
   Frame(h),
-  d(new UrlLinkFramePrivate())
+  d(std::make_unique<UrlLinkFramePrivate>())
 {
   parseFields(fieldData(data));
 }
@@ -124,22 +123,19 @@ UrlLinkFrame::UrlLinkFrame(const ByteVector &data, Header *h) :
 
 UserUrlLinkFrame::UserUrlLinkFrame(String::Type encoding) :
   UrlLinkFrame("WXXX"),
-  d(new UserUrlLinkFramePrivate())
+  d(std::make_unique<UserUrlLinkFramePrivate>())
 {
   d->textEncoding = encoding;
 }
 
 UserUrlLinkFrame::UserUrlLinkFrame(const ByteVector &data) :
   UrlLinkFrame(data),
-  d(new UserUrlLinkFramePrivate())
+  d(std::make_unique<UserUrlLinkFramePrivate>())
 {
   setData(data);
 }
 
-UserUrlLinkFrame::~UserUrlLinkFrame()
-{
-  delete d;
-}
+UserUrlLinkFrame::~UserUrlLinkFrame() = default;
 
 String UserUrlLinkFrame::toString() const
 {
@@ -179,13 +175,12 @@ PropertyMap UserUrlLinkFrame::asProperties() const
 
 UserUrlLinkFrame *UserUrlLinkFrame::find(ID3v2::Tag *tag, const String &description) // static
 {
-  FrameList l = tag->frameList("WXXX");
-  for(FrameList::ConstIterator it = l.begin(); it != l.end(); ++it) {
-    UserUrlLinkFrame *f = dynamic_cast<UserUrlLinkFrame *>(*it);
+  for(const auto &frame : std::as_const(tag->frameList("WXXX"))) {
+    auto f = dynamic_cast<UserUrlLinkFrame *>(frame);
     if(f && f->description() == description)
       return f;
   }
-  return 0;
+  return nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -199,22 +194,22 @@ void UserUrlLinkFrame::parseFields(const ByteVector &data)
     return;
   }
 
-  size_t pos = 0;
+  int pos = 0;
 
-  d->textEncoding = String::Type(data[0]);
+  d->textEncoding = static_cast<String::Type>(data[0]);
   pos += 1;
 
   if(d->textEncoding == String::Latin1 || d->textEncoding == String::UTF8) {
-    const size_t offset = data.find(textDelimiter(d->textEncoding), pos);
-    if(offset == ByteVector::npos() || offset < pos)
+    int offset = data.find(textDelimiter(d->textEncoding), pos);
+    if(offset < pos)
       return;
 
     d->description = String(data.mid(pos, offset - pos), d->textEncoding);
     pos = offset + 1;
   }
   else {
-    const size_t len = data.mid(pos).find(textDelimiter(d->textEncoding), 0, 2);
-    if(len == ByteVector::npos())
+    int len = data.mid(pos).find(textDelimiter(d->textEncoding), 0, 2);
+    if(len < 0)
       return;
 
     d->description = String(data.mid(pos, len), d->textEncoding);
@@ -230,7 +225,7 @@ ByteVector UserUrlLinkFrame::renderFields() const
 
   String::Type encoding = checkTextEncoding(d->description, d->textEncoding);
 
-  v.append(char(encoding));
+  v.append(static_cast<char>(encoding));
   v.append(d->description.data(encoding));
   v.append(textDelimiter(encoding));
   v.append(url().data(String::Latin1));
@@ -240,7 +235,7 @@ ByteVector UserUrlLinkFrame::renderFields() const
 
 UserUrlLinkFrame::UserUrlLinkFrame(const ByteVector &data, Header *h) :
   UrlLinkFrame(data, h),
-  d(new UserUrlLinkFramePrivate())
+  d(std::make_unique<UserUrlLinkFramePrivate>())
 {
   parseFields(fieldData(data));
 }

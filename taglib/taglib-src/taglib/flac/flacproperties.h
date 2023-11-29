@@ -26,14 +26,13 @@
 #ifndef TAGLIB_FLACPROPERTIES_H
 #define TAGLIB_FLACPROPERTIES_H
 
+#include <taglib/tbytevector.h>
 #include <taglib/taglib_export.h>
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
 
   namespace FLAC {
-
-    class File;
 
     //! An implementation of audio property reading for FLAC
 
@@ -42,75 +41,50 @@ namespace TagLib {
      * API.
      */
 
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+    class TAGLIB_EXPORT Properties : public AudioProperties
     {
     public:
       /*!
-       * Creates an instance of FLAC::AudioProperties with the data read from
-       * the ByteVector \a data.
+       * Create an instance of FLAC::Properties with the data read from the
+       * ByteVector \a data.
        */
-      AudioProperties(const ByteVector &data, long long streamLength, ReadStyle style = Average);
+      Properties(const ByteVector &data, offset_t streamLength, ReadStyle style = Average);
 
       /*!
-       * Destroys this FLAC::AudioProperties instance.
+       * Destroys this FLAC::Properties instance.
        */
-      virtual ~AudioProperties();
+      ~Properties() override;
 
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \note This method is just an alias of lengthInSeconds().
-       *
-       * \deprecated
-       */
-      virtual int length() const;
-
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \see lengthInMilliseconds()
-       */
-      virtual int lengthInSeconds() const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
       /*!
        * Returns the length of the file in milliseconds.
        *
        * \see lengthInSeconds()
        */
-      virtual int lengthInMilliseconds() const;
+      int lengthInMilliseconds() const override;
 
       /*!
        * Returns the average bit rate of the file in kb/s.
        */
-      virtual int bitrate() const;
+      int bitrate() const override;
 
       /*!
        * Returns the sample rate in Hz.
        */
-      virtual int sampleRate() const;
+      int sampleRate() const override;
 
       /*!
        * Returns the number of audio channels.
        */
-      virtual int channels() const;
+      int channels() const override;
 
       /*!
        * Returns the number of bits per audio sample as read from the FLAC
        * identification header.
        */
       int bitsPerSample() const;
-
-      /*!
-       * Returns the sample width as read from the FLAC identification
-       * header.
-       *
-       * \note This method is just an alias of bitsPerSample().
-       *
-       * \deprecated
-       */
-      int sampleWidth() const;
 
       /*!
        * Return the number of sample frames.
@@ -124,12 +98,12 @@ namespace TagLib {
       ByteVector signature() const;
 
     private:
-      void read(const ByteVector &data, long long streamLength);
+      void read(const ByteVector &data, offset_t streamLength);
 
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
-}
+  }  // namespace FLAC
+}  // namespace TagLib
 
 #endif

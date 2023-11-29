@@ -23,123 +23,101 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
+#include "mp4properties.h"
+
 #include "tdebug.h"
-#include <tstring.h>
+#include "tstring.h"
 #include "mp4file.h"
 #include "mp4atom.h"
-#include "mp4properties.h"
 
 using namespace TagLib;
 
-class MP4::AudioProperties::PropertiesPrivate
+namespace
+{
+  // Calculate the total bytes used by audio data, used to calculate the bitrate
+  long long calculateMdatLength(const MP4::AtomList &list)
+  {
+    long long totalLength = 0;
+    for(const auto &atom : list) {
+      offset_t length = atom->length;
+      if(length == 0)
+        return 0; // for safety, see checkValid() in mp4file.cpp
+
+      if(atom->name == "mdat")
+        totalLength += length;
+
+      totalLength += calculateMdatLength(atom->children);
+    }
+
+    return totalLength;
+  }
+}  // namespace
+
+class MP4::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    length(0),
-    bitrate(0),
-    sampleRate(0),
-    channels(0),
-    bitsPerSample(0),
-    encrypted(false),
-    codec(MP4::AudioProperties::Unknown) {}
-
-  int length;
-  int bitrate;
-  int sampleRate;
-  int channels;
-  int bitsPerSample;
-  bool encrypted;
-  Codec codec;
+  int length { 0 };
+  int bitrate { 0 };
+  int sampleRate { 0 };
+  int channels { 0 };
+  int bitsPerSample { 0 };
+  bool encrypted { false };
+  Codec codec { MP4::Properties::Unknown };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-MP4::AudioProperties::AudioProperties(File *file, MP4::Atoms *atoms, ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+MP4::Properties::Properties(File *file, MP4::Atoms *atoms, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   read(file, atoms);
 }
 
-MP4::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+MP4::Properties::~Properties() = default;
 
 int
-MP4::AudioProperties::channels() const
+MP4::Properties::channels() const
 {
   return d->channels;
 }
 
 int
-MP4::AudioProperties::sampleRate() const
+MP4::Properties::sampleRate() const
 {
   return d->sampleRate;
 }
 
 int
-MP4::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int
-MP4::AudioProperties::lengthInSeconds() const
-{
-  return d->length / 1000;
-}
-
-int
-MP4::AudioProperties::lengthInMilliseconds() const
+MP4::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
 int
-MP4::AudioProperties::bitrate() const
+MP4::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
 int
-MP4::AudioProperties::bitsPerSample() const
+MP4::Properties::bitsPerSample() const
 {
   return d->bitsPerSample;
 }
 
 bool
-MP4::AudioProperties::isEncrypted() const
+MP4::Properties::isEncrypted() const
 {
   return d->encrypted;
 }
 
-MP4::AudioProperties::Codec
-MP4::AudioProperties::codec() const
+MP4::Properties::Codec
+MP4::Properties::codec() const
 {
   return d->codec;
-}
-
-String
-MP4::AudioProperties::toString() const
-{
-  String format;
-  if(d->codec == AAC) {
-    format = "AAC";
-  }
-  else if(d->codec == ALAC) {
-    format = "ALAC";
-  }
-  else {
-    format = "Unknown";
-  }
-  StringList desc;
-  desc.append("MPEG-4 audio (" + format + ")");
-  desc.append(String::number(length()) + " seconds");
-  desc.append(String::number(bitrate()) + " kbps");
-  return desc.toString(", ");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +125,7 @@ MP4::AudioProperties::toString() const
 ////////////////////////////////////////////////////////////////////////////////
 
 void
-MP4::AudioProperties::read(File *file, Atoms *atoms)
+MP4::Properties::read(File *file, Atoms *atoms)
 {
   MP4::Atom *moov = atoms->find("moov");
   if(!moov) {
@@ -155,23 +133,23 @@ MP4::AudioProperties::read(File *file, Atoms *atoms)
     return;
   }
 
-  MP4::Atom *trak = 0;
+  MP4::Atom *trak = nullptr;
   ByteVector data;
 
   const MP4::AtomList trakList = moov->findall("trak");
-  for(MP4::AtomList::ConstIterator it = trakList.begin(); it != trakList.end(); ++it) {
-    trak = *it;
-    MP4::Atom *hdlr = trak->find("mdia", "hdlr");
+  for(const auto &track : trakList) {
+    MP4::Atom *hdlr = track->find("mdia", "hdlr");
     if(!hdlr) {
       debug("MP4: Atom 'trak.mdia.hdlr' not found");
       return;
     }
+    trak = track;
     file->seek(hdlr->offset);
-    data = file->readBlock(static_cast<size_t>(hdlr->length));
+    data = file->readBlock(hdlr->length);
     if(data.containsAt("soun", 16)) {
       break;
     }
-    trak = 0;
+    trak = nullptr;
   }
   if(!trak) {
     debug("MP4: No audio tracks");
@@ -185,9 +163,9 @@ MP4::AudioProperties::read(File *file, Atoms *atoms)
   }
 
   file->seek(mdhd->offset);
-  data = file->readBlock(static_cast<size_t>(mdhd->length));
+  data = file->readBlock(mdhd->length);
 
-  const unsigned int version = data[8];
+  const unsigned int version = data.at(8);
   long long unit;
   long long length;
   if(version == 1) {
@@ -195,16 +173,27 @@ MP4::AudioProperties::read(File *file, Atoms *atoms)
       debug("MP4: Atom 'trak.mdia.mdhd' is smaller than expected");
       return;
     }
-    unit   = data.toUInt32BE(28);
-    length = data.toInt64BE(32);
+    unit   = data.toUInt(28U);
+    length = data.toLongLong(32U);
   }
   else {
     if(data.size() < 24 + 8) {
       debug("MP4: Atom 'trak.mdia.mdhd' is smaller than expected");
       return;
     }
-    unit   = data.toUInt32BE(20);
-    length = data.toUInt32BE(24);
+    unit   = data.toUInt(20U);
+    length = data.toUInt(24U);
+  }
+  if(length == 0) {
+    // No length found in the media header (mdhd), try the movie header (mvhd)
+    if(MP4::Atom *mvhd = moov->find("mvhd")) {
+      file->seek(mvhd->offset);
+      data = file->readBlock(mvhd->length);
+      if(data.size() >= 24 + 4) {
+        unit   = data.toUInt(20U);
+        length = data.toUInt(24U);
+      }
+    }
   }
   if(unit > 0 && length > 0)
     d->length = static_cast<int>(length * 1000.0 / unit + 0.5);
@@ -215,25 +204,32 @@ MP4::AudioProperties::read(File *file, Atoms *atoms)
   }
 
   file->seek(atom->offset);
-  data = file->readBlock(static_cast<size_t>(atom->length));
+  data = file->readBlock(atom->length);
   if(data.containsAt("mp4a", 20)) {
     d->codec         = AAC;
-    d->channels      = data.toUInt16BE(40);
-    d->bitsPerSample = data.toUInt16BE(42);
-    d->sampleRate    = data.toUInt32BE(46);
-    if(data.containsAt("esds", 56) && data[64] == 0x03) {
+    d->channels      = data.toShort(40U);
+    d->bitsPerSample = data.toShort(42U);
+    d->sampleRate    = data.toUInt(46U);
+    if(data.containsAt("esds", 56) && data.at(64) == 0x03) {
       unsigned int pos = 65;
       if(data.containsAt("\x80\x80\x80", pos)) {
         pos += 3;
       }
       pos += 4;
-      if(data[pos] == 0x04) {
+      if(data.at(pos) == 0x04) {
         pos += 1;
         if(data.containsAt("\x80\x80\x80", pos)) {
           pos += 3;
         }
         pos += 10;
-        d->bitrate = static_cast<int>((data.toUInt32BE(pos) + 500) / 1000.0 + 0.5);
+        const unsigned int bitrateValue = data.toUInt(pos);
+        if(bitrateValue != 0 || d->length <= 0) {
+          d->bitrate = static_cast<int>((bitrateValue + 500) / 1000.0 + 0.5);
+        }
+        else {
+          d->bitrate = static_cast<int>(
+                (calculateMdatLength(atoms->atoms) * 8) / d->length);
+        }
       }
     }
   }
@@ -242,13 +238,19 @@ MP4::AudioProperties::read(File *file, Atoms *atoms)
       d->codec         = ALAC;
       d->bitsPerSample = data.at(69);
       d->channels      = data.at(73);
-      d->bitrate       = static_cast<int>(data.toUInt32BE(80) / 1000.0 + 0.5);
-      d->sampleRate    = data.toUInt32BE(84);
+      d->bitrate       = static_cast<int>(data.toUInt(80U) / 1000.0 + 0.5);
+      d->sampleRate    = data.toUInt(84U);
+
+      if(d->bitrate == 0 && d->length > 0) {
+        // There are files which do not contain a nominal bitrate, e.g. those
+        // generated by refalac64.exe. Calculate the bitrate from the audio
+        // data size (mdat atoms) and the duration.
+        d->bitrate = static_cast<int>((calculateMdatLength(atoms->atoms) * 8) / d->length);
+      }
     }
   }
 
-  MP4::Atom *drms = atom->find("drms");
-  if(drms) {
+  if(atom->find("drms")) {
     d->encrypted = true;
   }
 }

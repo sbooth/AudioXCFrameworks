@@ -23,13 +23,12 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
+#include "tiostream.h"
+
 #ifdef _WIN32
 # include <windows.h>
-# include <tstring.h>
-# include <tsmartptr.h>
+# include "tstring.h"
 #endif
-
-#include "tiostream.h"
 
 using namespace TagLib;
 
@@ -39,79 +38,58 @@ namespace
 {
   std::wstring ansiToUnicode(const char *str)
   {
-    const int len = MultiByteToWideChar(CP_ACP, 0, str, -1, NULL, 0);
+    const int len = MultiByteToWideChar(CP_ACP, 0, str, -1, nullptr, 0);
     if(len == 0)
       return std::wstring();
 
     std::wstring wstr(len - 1, L'\0');
-    MultiByteToWideChar(CP_ACP, 0, str, -1, &wstr[0], len);
+    MultiByteToWideChar(CP_ACP, 0, str, -1, wstr.data(), len);
 
     return wstr;
   }
-}
-
-class FileName::FileNamePrivate
-{
-public:
-  FileNamePrivate() :
-    data(new std::wstring()) {}
-
-  FileNamePrivate(const wchar_t *name) :
-    data(new std::wstring(name)) {}
-
-  FileNamePrivate(const char *name) :
-    data(new std::wstring(ansiToUnicode(name))) {}
-
-  SHARED_PTR<std::wstring> data;
-};
+} // namespace
 
 FileName::FileName(const wchar_t *name) :
-  d(new FileNamePrivate(name))
+  m_wname(name)
 {
 }
 
 FileName::FileName(const char *name) :
-  d(new FileNamePrivate(name))
+  m_wname(ansiToUnicode(name))
 {
 }
 
-FileName::FileName(const FileName &name) :
-  d(new FileNamePrivate())
+FileName::FileName(const FileName &) = default;
+
+FileName::operator const wchar_t *() const
 {
-  *d = *name.d;
+  return m_wname.c_str();
 }
 
-FileName::~FileName()
+const std::wstring &FileName::wstr() const
 {
-  delete d;
+  return m_wname;
 }
 
-FileName &FileName::operator=(const FileName &name)
+String FileName::toString() const
 {
-  *d = *name.d;
-  return *this;
-}
-
-const wchar_t *FileName::wstr() const
-{
-  return d->data->c_str();
+  return String(m_wname.c_str());
 }
 
 #endif  // _WIN32
+
+class IOStream::IOStreamPrivate
+{
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-IOStream::IOStream()
-{
-}
+IOStream::IOStream() = default;
 
-IOStream::~IOStream()
-{
-}
+IOStream::~IOStream() = default;
 
 void IOStream::clear()
 {
 }
-

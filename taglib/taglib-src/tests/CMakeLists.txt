@@ -1,6 +1,7 @@
 INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/toolkit
+  ${CMAKE_CURRENT_SOURCE_DIR}/../bindings/c
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/ape
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/asf
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/mpeg/id3v1
@@ -25,8 +26,6 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/it
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/xm
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/dsf
-  ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/ebml
-  ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/ebml/matroska
   ${CMAKE_CURRENT_SOURCE_DIR}/../taglib/dsdiff
 )
 
@@ -34,7 +33,6 @@ SET(test_runner_SRCS
   main.cpp
   test_list.cpp
   test_map.cpp
-  test_smartptr.cpp
   test_mpeg.cpp
   test_synchdata.cpp
   test_trueaudio.cpp
@@ -43,10 +41,13 @@ SET(test_runner_SRCS
   test_bytevectorstream.cpp
   test_string.cpp
   test_propertymap.cpp
+  test_variant.cpp
+  test_complexproperties.cpp
   test_file.cpp
   test_fileref.cpp
   test_id3v1.cpp
   test_id3v2.cpp
+  test_id3v2framefactory.cpp
   test_xiphcomment.cpp
   test_aiff.cpp
   test_riff.cpp
@@ -72,14 +73,16 @@ SET(test_runner_SRCS
   test_opus.cpp
   test_speex.cpp
   test_dsf.cpp
-  test_matroska.cpp
   test_dsdiff.cpp
+  test_sizes.cpp
+  test_versionnumber.cpp
+  test_tag_c.cpp
 )
 
 INCLUDE_DIRECTORIES(${CPPUNIT_INCLUDE_DIR})
 
 ADD_EXECUTABLE(test_runner ${test_runner_SRCS})
-TARGET_LINK_LIBRARIES(test_runner tag ${CPPUNIT_LIBRARIES})
+TARGET_LINK_LIBRARIES(test_runner tag tag_c ${CPPUNIT_LIBRARIES})
 
 ADD_TEST(test_runner test_runner)
 ADD_CUSTOM_TARGET(check COMMAND ${CMAKE_CTEST_COMMAND} -V

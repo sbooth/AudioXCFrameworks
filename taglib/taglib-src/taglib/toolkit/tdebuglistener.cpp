@@ -26,7 +26,6 @@
 #include "tdebuglistener.h"
 
 #include <iostream>
-#include <bitset>
 
 #ifdef _WIN32
 # include <windows.h>
@@ -39,41 +38,41 @@ namespace
   class DefaultListener : public DebugListener
   {
   public:
-    virtual void printMessage(const String &msg)
+    void printMessage(const String &msg) override
     {
 #ifdef _WIN32
 
-      const std::wstring wstr = msg.toWString();
-      const int len = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, NULL, 0, NULL, NULL);
+      const wstring wstr = msg.toWString();
+      const int len = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
       if(len != 0) {
         std::vector<char> buf(len);
-        WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, &buf[0], len, NULL, NULL);
+        WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, buf.data(), len, nullptr, nullptr);
 
-        std::cerr << std::string(&buf[0]);
+        std::cerr << std::string(buf.begin(), buf.end());
       }
 
 #else
 
       std::cerr << msg;
 
-#endif 
+#endif
     }
   };
 
   DefaultListener defaultListener;
-}
+}  // namespace
 
 namespace TagLib
 {
+  class DebugListener::DebugListenerPrivate
+  {
+  };
+
   DebugListener *debugListener = &defaultListener;
 
-  DebugListener::DebugListener()
-  {
-  }
+  DebugListener::DebugListener() = default;
 
-  DebugListener::~DebugListener()
-  {
-  }
+  DebugListener::~DebugListener() = default;
 
   void setDebugListener(DebugListener *listener)
   {
@@ -82,4 +81,4 @@ namespace TagLib
     else
       debugListener = &defaultListener;
   }
-}
+}  // namespace TagLib

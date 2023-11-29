@@ -24,13 +24,14 @@
  ***************************************************************************/
 
 #include <string>
-#include <stdio.h>
-#include <apetag.h>
-#include <id3v1tag.h>
-#include <tstringlist.h>
-#include <tbytevectorlist.h>
-#include <tpropertymap.h>
-#include <mpcfile.h>
+#include <cstdio>
+
+#include "tstringlist.h"
+#include "tbytevectorlist.h"
+#include "tpropertymap.h"
+#include "apetag.h"
+#include "id3v1tag.h"
+#include "mpcfile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -59,7 +60,6 @@ public:
     MPC::File f(TEST_FILE_PATH_C("sv8_header.mpc"));
     CPPUNIT_ASSERT(f.audioProperties());
     CPPUNIT_ASSERT_EQUAL(8, f.audioProperties()->mpcVersion());
-    CPPUNIT_ASSERT_EQUAL(1, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(1, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(1497, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(1, f.audioProperties()->bitrate());
@@ -73,7 +73,6 @@ public:
     MPC::File f(TEST_FILE_PATH_C("click.mpc"));
     CPPUNIT_ASSERT(f.audioProperties());
     CPPUNIT_ASSERT_EQUAL(7, f.audioProperties()->mpcVersion());
-    CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(40, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(318, f.audioProperties()->bitrate());
@@ -91,7 +90,6 @@ public:
     MPC::File f(TEST_FILE_PATH_C("sv5_header.mpc"));
     CPPUNIT_ASSERT(f.audioProperties());
     CPPUNIT_ASSERT_EQUAL(5, f.audioProperties()->mpcVersion());
-    CPPUNIT_ASSERT_EQUAL(26, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(26, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(26371, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->bitrate());
@@ -105,7 +103,6 @@ public:
     MPC::File f(TEST_FILE_PATH_C("sv4_header.mpc"));
     CPPUNIT_ASSERT(f.audioProperties());
     CPPUNIT_ASSERT_EQUAL(4, f.audioProperties()->mpcVersion());
-    CPPUNIT_ASSERT_EQUAL(26, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(26, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(26371, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->bitrate());
@@ -154,6 +151,14 @@ public:
       f.strip(MPC::File::APE);
       CPPUNIT_ASSERT_EQUAL(String("ID3v1"), f.properties()["TITLE"].front());
       f.strip(MPC::File::ID3v1);
+      CPPUNIT_ASSERT(f.properties().isEmpty());
+      f.save();
+    }
+    {
+      MPC::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(!f.hasAPETag());
+      CPPUNIT_ASSERT(!f.hasID3v1Tag());
+      CPPUNIT_ASSERT(f.properties()["TITLE"].isEmpty());
       CPPUNIT_ASSERT(f.properties().isEmpty());
     }
   }

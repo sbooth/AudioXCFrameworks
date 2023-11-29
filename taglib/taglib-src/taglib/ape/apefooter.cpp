@@ -24,13 +24,9 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <iostream>
-#include <bitset>
-
-#include <tstring.h>
-#include "tdebug.h"
-
 #include "apefooter.h"
+
+#include <bitset>
 
 using namespace TagLib;
 using namespace APE;
@@ -38,23 +34,15 @@ using namespace APE;
 class APE::Footer::FooterPrivate
 {
 public:
-  FooterPrivate() :
-    version(0),
-    footerPresent(true),
-    headerPresent(false),
-    isHeader(false),
-    itemCount(0),
-    tagSize(0) {}
+  unsigned int version { 0 };
 
-  unsigned int version;
+  bool footerPresent { true };
+  bool headerPresent { false };
 
-  bool footerPresent;
-  bool headerPresent;
+  bool isHeader { false };
 
-  bool isHeader;
-
-  unsigned int itemCount;
-  unsigned int tagSize;
+  unsigned int itemCount { 0 };
+  unsigned int tagSize { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,20 +64,17 @@ ByteVector APE::Footer::fileIdentifier()
 ////////////////////////////////////////////////////////////////////////////////
 
 APE::Footer::Footer() :
-  d(new FooterPrivate())
+  d(std::make_unique<FooterPrivate>())
 {
 }
 
 APE::Footer::Footer(const ByteVector &data) :
-  d(new FooterPrivate())
+  d(std::make_unique<FooterPrivate>())
 {
   parse(data);
 }
 
-APE::Footer::~Footer()
-{
-  delete d;
-}
+APE::Footer::~Footer() = default;
 
 unsigned int APE::Footer::version() const
 {
@@ -135,8 +120,7 @@ unsigned int APE::Footer::completeTagSize() const
 {
   if(d->headerPresent)
     return d->tagSize + size();
-  else
-    return d->tagSize;
+  return d->tagSize;
 }
 
 void APE::Footer::setTagSize(unsigned int s)
@@ -158,8 +142,7 @@ ByteVector APE::Footer::renderHeader() const
 {
   if(!d->headerPresent)
     return ByteVector();
-  else
-    return render(true);
+  return render(true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -175,19 +158,19 @@ void APE::Footer::parse(const ByteVector &data)
 
   // Read the version number
 
-  d->version = data.toUInt32LE(8);
+  d->version = data.toUInt(8, false);
 
   // Read the tag size
 
-  d->tagSize = data.toUInt32LE(12);
+  d->tagSize = data.toUInt(12, false);
 
   // Read the item count
 
-  d->itemCount = data.toUInt32LE(16);
+  d->itemCount = data.toUInt(16, false);
 
   // Read the flags
 
-  std::bitset<32> flags(TAGLIB_CONSTRUCT_BITSET(data.toUInt32LE(20)));
+  std::bitset<32> flags(TAGLIB_CONSTRUCT_BITSET(data.toUInt(20, false)));
 
   d->headerPresent = flags[31];
   d->footerPresent = !flags[30];
@@ -206,15 +189,15 @@ ByteVector APE::Footer::render(bool isHeader) const
   // add the version number -- we always render a 2.000 tag regardless of what
   // the tag originally was.
 
-  v.append(ByteVector::fromUInt32LE(2000));
+  v.append(ByteVector::fromUInt(2000, false));
 
   // add the tag size
 
-  v.append(ByteVector::fromUInt32LE(d->tagSize));
+  v.append(ByteVector::fromUInt(d->tagSize, false));
 
   // add the item count
 
-  v.append(ByteVector::fromUInt32LE(d->itemCount));
+  v.append(ByteVector::fromUInt(d->itemCount, false));
 
   // render and add the flags
 
@@ -224,11 +207,11 @@ ByteVector APE::Footer::render(bool isHeader) const
   flags[30] = false; // footer is always present
   flags[29] = isHeader;
 
-  v.append(ByteVector::fromUInt32LE(flags.to_ulong()));
+  v.append(ByteVector::fromUInt(flags.to_ulong(), false));
 
   // add the reserved 64bit
 
-  v.append(ByteVector::fromUInt64BE(0));
+  v.append(ByteVector::fromLongLong(0));
 
   return v;
 }

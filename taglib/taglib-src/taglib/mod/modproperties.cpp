@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
     copyright           : (C) 2011 by Mathias Panzenböck
     email               : grosser.meister.morti@gmx.net
  ***************************************************************************/
@@ -23,95 +23,63 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-
 #include "modproperties.h"
 
 using namespace TagLib;
 using namespace Mod;
 
-class Mod::AudioProperties::PropertiesPrivate
+class Mod::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    channels(0),
-    instrumentCount(0),
-    lengthInPatterns(0) {}
-
-  int           channels;
-  unsigned int  instrumentCount;
-  unsigned char lengthInPatterns;
+  int channels { 0 };
+  unsigned int instrumentCount { 0 };
+  unsigned char lengthInPatterns { 0 };
 };
 
-////////////////////////////////////////////////////////////////////////////////
-// public members
-////////////////////////////////////////////////////////////////////////////////
-
-Mod::AudioProperties::AudioProperties(AudioProperties::ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+Mod::Properties::Properties(AudioProperties::ReadStyle propertiesStyle) :
+  AudioProperties(propertiesStyle),
+  d(std::make_unique<PropertiesPrivate>())
 {
 }
 
-Mod::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+Mod::Properties::~Properties() = default;
 
-int Mod::AudioProperties::length() const
+int Mod::Properties::bitrate() const
 {
   return 0;
 }
 
-int Mod::AudioProperties::lengthInSeconds() const
+int Mod::Properties::sampleRate() const
 {
   return 0;
 }
 
-int Mod::AudioProperties::lengthInMilliseconds() const
-{
-  return 0;
-}
-
-int Mod::AudioProperties::bitrate() const
-{
-  return 0;
-}
-
-int Mod::AudioProperties::sampleRate() const
-{
-  return 0;
-}
-
-int Mod::AudioProperties::channels() const
+int Mod::Properties::channels() const
 {
   return d->channels;
 }
 
-unsigned int Mod::AudioProperties::instrumentCount() const
+unsigned int Mod::Properties::instrumentCount() const
 {
   return d->instrumentCount;
 }
 
-unsigned char Mod::AudioProperties::lengthInPatterns() const
+unsigned char Mod::Properties::lengthInPatterns() const
 {
   return d->lengthInPatterns;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// private members
-////////////////////////////////////////////////////////////////////////////////
-
-void Mod::AudioProperties::setChannels(int channels)
+void Mod::Properties::setChannels(int channels)
 {
   d->channels = channels;
 }
 
-void Mod::AudioProperties::setInstrumentCount(unsigned int instrumentCount)
+void Mod::Properties::setInstrumentCount(unsigned int instrumentCount)
 {
   d->instrumentCount = instrumentCount;
 }
 
-void Mod::AudioProperties::setLengthInPatterns(unsigned char lengthInPatterns)
+void Mod::Properties::setLengthInPatterns(unsigned char lengthInPatterns)
 {
   d->lengthInPatterns = lengthInPatterns;
 }

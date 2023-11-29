@@ -29,13 +29,12 @@
 #include <taglib/tlist.h>
 #include <taglib/tstring.h>
 #include <taglib/tbytevector.h>
+#include <taglib/tpicturetype.h>
 #include <taglib/taglib_export.h>
 #include <taglib/flacmetadatablock.h>
 
 namespace TagLib {
-
   namespace FLAC {
-
     class TAGLIB_EXPORT Picture : public MetadataBlock
     {
     public:
@@ -43,54 +42,14 @@ namespace TagLib {
       /*!
        * This describes the function or content of the picture.
        */
-      enum Type {
-        //! A type not enumerated below
-        Other              = 0x00,
-        //! 32x32 PNG image that should be used as the file icon
-        FileIcon           = 0x01,
-        //! File icon of a different size or format
-        OtherFileIcon      = 0x02,
-        //! Front cover image of the album
-        FrontCover         = 0x03,
-        //! Back cover image of the album
-        BackCover          = 0x04,
-        //! Inside leaflet page of the album
-        LeafletPage        = 0x05,
-        //! Image from the album itself
-        Media              = 0x06,
-        //! Picture of the lead artist or soloist
-        LeadArtist         = 0x07,
-        //! Picture of the artist or performer
-        Artist             = 0x08,
-        //! Picture of the conductor
-        Conductor          = 0x09,
-        //! Picture of the band or orchestra
-        Band               = 0x0A,
-        //! Picture of the composer
-        Composer           = 0x0B,
-        //! Picture of the lyricist or text writer
-        Lyricist           = 0x0C,
-        //! Picture of the recording location or studio
-        RecordingLocation  = 0x0D,
-        //! Picture of the artists during recording
-        DuringRecording    = 0x0E,
-        //! Picture of the artists during performance
-        DuringPerformance  = 0x0F,
-        //! Picture from a movie or video related to the track
-        MovieScreenCapture = 0x10,
-        //! Picture of a large, coloured fish
-        ColouredFish       = 0x11,
-        //! Illustration related to the track
-        Illustration       = 0x12,
-        //! Logo of the band or performer
-        BandLogo           = 0x13,
-        //! Logo of the publisher (record company)
-        PublisherLogo      = 0x14
-      };
+      DECLARE_PICTURE_TYPE_ENUM(Type)
 
       Picture();
-      explicit Picture(const ByteVector &data);
-      ~Picture();
+      Picture(const ByteVector &data);
+      ~Picture() override;
+
+      Picture(const Picture &item) = delete;
+      Picture &operator=(const Picture &item) = delete;
 
       /*!
        * Returns the type of the image.
@@ -179,12 +138,12 @@ namespace TagLib {
       /*!
        * Returns the FLAC metadata block type.
        */
-      int code() const;
+      int code() const override;
 
       /*!
        * Render the content to the FLAC picture block format.
        */
-      ByteVector render() const;
+      ByteVector render() const override;
 
       /*!
        * Parse the picture data in the FLAC picture block format.
@@ -192,15 +151,11 @@ namespace TagLib {
       bool parse(const ByteVector &rawData);
 
     private:
-      Picture(const Picture &item);
-      Picture &operator=(const Picture &item);
-
       class PicturePrivate;
-      PicturePrivate *d;
+      std::unique_ptr<PicturePrivate> d;
     };
 
-  }
-
-}
-
+    using PictureList = List<Picture>;
+  }  // namespace FLAC
+}  // namespace TagLib
 #endif

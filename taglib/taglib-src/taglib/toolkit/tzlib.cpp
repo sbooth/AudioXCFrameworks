@@ -23,17 +23,17 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
+#include "tzlib.h"
+
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "config.h"
 #endif
 
 #ifdef HAVE_ZLIB
 # include <zlib.h>
-# include <tstring.h>
-# include <tdebug.h>
+# include "tstring.h"
+# include "tdebug.h"
 #endif
-
-#include "tzlib.h"
 
 using namespace TagLib;
 
@@ -50,14 +50,14 @@ bool zlib::isAvailable()
 #endif
 }
 
-ByteVector zlib::decompress(const ByteVector &data)
+ByteVector zlib::decompress([[maybe_unused]] const ByteVector &data)
 {
 #ifdef HAVE_ZLIB
 
   z_stream stream = {};
 
   if(inflateInit(&stream) != Z_OK) {
-    debug("zlib::decompress() - Failed to initizlize zlib.");
+    debug("zlib::decompress() - Failed to initialize zlib.");
     return ByteVector();
   }
 

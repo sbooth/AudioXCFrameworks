@@ -23,8 +23,9 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include <string.h>
+#include <cstring>
+
+#include "tstring.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 using namespace std;
@@ -58,24 +59,20 @@ public:
 
   void testString()
   {
-    // Needs to know the system byte order for some Unicode tests.
-    bool littleEndian;
-    {
-      union {
-        int  i;
-        char c;
-      } u;
-
-      u.i = 1;
-      littleEndian = (u.c == 1) ? true : false;
-    }
-
     String s = "taglib string";
     ByteVector v = "taglib string";
     CPPUNIT_ASSERT(v == s.data(String::Latin1));
 
     char str[] = "taglib string";
     CPPUNIT_ASSERT(strcmp(s.toCString(), str) == 0);
+    CPPUNIT_ASSERT(s == "taglib string");
+    CPPUNIT_ASSERT(s != "taglib STRING");
+    CPPUNIT_ASSERT(s != "taglib");
+    CPPUNIT_ASSERT(s != "taglib string taglib");
+    CPPUNIT_ASSERT(s == L"taglib string");
+    CPPUNIT_ASSERT(s != L"taglib STRING");
+    CPPUNIT_ASSERT(s != L"taglib");
+    CPPUNIT_ASSERT(s != L"taglib string taglib");
 
     s.clear();
     CPPUNIT_ASSERT(s.isEmpty());
@@ -99,14 +96,19 @@ public:
     String unicode3(L"\u65E5\u672C\u8A9E");
     CPPUNIT_ASSERT(*(unicode3.toCWString() + 1) == L'\u672C');
 
-    String unicode4(L"\u65e5\u672c\u8a9e");
+    String unicode4(L"\u65e5\u672c\u8a9e", String::UTF16BE);
     CPPUNIT_ASSERT(unicode4[1] == L'\u672c');
 
-    String unicode5(L"\u65e5\u672c\u8a9e", String::UTF16BE);
-    CPPUNIT_ASSERT(unicode5[1] == (littleEndian ? L'\u2c67' : L'\u672c'));
+    String unicode5(L"\u65e5\u672c\u8a9e", String::UTF16LE);
+    CPPUNIT_ASSERT(unicode5[1] == L'\u2c67');
 
-    String unicode6(L"\u65e5\u672c\u8a9e", String::UTF16LE);
-    CPPUNIT_ASSERT(unicode6[1] == (littleEndian ? L'\u672c' : L'\u2c67'));
+    std::wstring stduni = L"\u65e5\u672c\u8a9e";
+
+    String unicode6(stduni, String::UTF16BE);
+    CPPUNIT_ASSERT(unicode6[1] == L'\u672c');
+
+    String unicode7(stduni, String::UTF16LE);
+    CPPUNIT_ASSERT(unicode7[1] == L'\u2c67');
 
     CPPUNIT_ASSERT(String("  foo  ").stripWhiteSpace() == String("foo"));
     CPPUNIT_ASSERT(String("foo    ").stripWhiteSpace() == String("foo"));
@@ -142,7 +144,7 @@ public:
     CPPUNIT_ASSERT_EQUAL(a, String(d, String::UTF16));
   }
 
-  // this test is expected to print "TagLib: String::copyFromUTF16() -
+  // this test is expected to print "TagLib: String::prepare() -
   // Invalid UTF16 string." on the console 3 times
   void testUTF16DecodeInvalidBOM()
   {
@@ -188,43 +190,33 @@ public:
 
   void testAppendStringDetach()
   {
-    String a("abc");
+    String a("a");
     String b = a;
-    String c = a;
-
-    b += "def";
-    c += L"def";
-
-    CPPUNIT_ASSERT_EQUAL(String("abc"), a);
-    CPPUNIT_ASSERT_EQUAL(String("abcdef"), b);
-    CPPUNIT_ASSERT_EQUAL(String("abcdef"), c);
+    a += "b";
+    CPPUNIT_ASSERT_EQUAL(String("ab"), a);
+    CPPUNIT_ASSERT_EQUAL(String("a"), b);
   }
 
   void testAppendCharDetach()
   {
-    String a("abc");
+    String a("a");
     String b = a;
-    String c = a;
-
-    b += 'd';
-    c += L'd';
-
-    CPPUNIT_ASSERT_EQUAL(String("abc"), a);
-    CPPUNIT_ASSERT_EQUAL(String("abcd"), b);
-    CPPUNIT_ASSERT_EQUAL(String("abcd"), c);
+    a += 'b';
+    CPPUNIT_ASSERT_EQUAL(String("ab"), a);
+    CPPUNIT_ASSERT_EQUAL(String("a"), b);
   }
 
   void testRfind()
   {
-    CPPUNIT_ASSERT_EQUAL(String::npos(), String("foo.bar").rfind(".", 0));
-    CPPUNIT_ASSERT_EQUAL(String::npos(), String("foo.bar").rfind(".", 1));
-    CPPUNIT_ASSERT_EQUAL(String::npos(), String("foo.bar").rfind(".", 2));
-    CPPUNIT_ASSERT_EQUAL((size_t)3, String("foo.bar").rfind(".", 3));
-    CPPUNIT_ASSERT_EQUAL((size_t)3, String("foo.bar").rfind(".", 4));
-    CPPUNIT_ASSERT_EQUAL((size_t)3, String("foo.bar").rfind(".", 5));
-    CPPUNIT_ASSERT_EQUAL((size_t)3, String("foo.bar").rfind(".", 6));
-    CPPUNIT_ASSERT_EQUAL((size_t)3, String("foo.bar").rfind(".", 7));
-    CPPUNIT_ASSERT_EQUAL((size_t)3, String("foo.bar").rfind("."));
+    CPPUNIT_ASSERT_EQUAL(-1, String("foo.bar").rfind(".", 0));
+    CPPUNIT_ASSERT_EQUAL(-1, String("foo.bar").rfind(".", 1));
+    CPPUNIT_ASSERT_EQUAL(-1, String("foo.bar").rfind(".", 2));
+    CPPUNIT_ASSERT_EQUAL(3, String("foo.bar").rfind(".", 3));
+    CPPUNIT_ASSERT_EQUAL(3, String("foo.bar").rfind(".", 4));
+    CPPUNIT_ASSERT_EQUAL(3, String("foo.bar").rfind(".", 5));
+    CPPUNIT_ASSERT_EQUAL(3, String("foo.bar").rfind(".", 6));
+    CPPUNIT_ASSERT_EQUAL(3, String("foo.bar").rfind(".", 7));
+    CPPUNIT_ASSERT_EQUAL(3, String("foo.bar").rfind("."));
   }
 
   void testToInt()
@@ -235,12 +227,6 @@ public:
 
     CPPUNIT_ASSERT_EQUAL(String("-123").toInt(&ok), -123);
     CPPUNIT_ASSERT_EQUAL(ok, true);
-
-    CPPUNIT_ASSERT_EQUAL(String("123aa").toInt(&ok), 123);
-    CPPUNIT_ASSERT_EQUAL(ok, false);
-
-    CPPUNIT_ASSERT_EQUAL(String("-123aa").toInt(&ok), -123);
-    CPPUNIT_ASSERT_EQUAL(ok, false);
 
     CPPUNIT_ASSERT_EQUAL(String("abc").toInt(&ok), 0);
     CPPUNIT_ASSERT_EQUAL(ok, false);
@@ -254,8 +240,10 @@ public:
     CPPUNIT_ASSERT_EQUAL(String("-").toInt(&ok), 0);
     CPPUNIT_ASSERT_EQUAL(ok, false);
 
-    String("9999999999").toInt(&ok);
-    CPPUNIT_ASSERT_EQUAL(ok, false);
+    CPPUNIT_ASSERT_EQUAL(String("123").toInt(), 123);
+    CPPUNIT_ASSERT_EQUAL(String("-123").toInt(), -123);
+    CPPUNIT_ASSERT_EQUAL(String("123aa").toInt(), 123);
+    CPPUNIT_ASSERT_EQUAL(String("-123aa").toInt(), -123);
 
     CPPUNIT_ASSERT_EQUAL(String("0000").toInt(), 0);
     CPPUNIT_ASSERT_EQUAL(String("0001").toInt(), 1);
@@ -289,9 +277,9 @@ public:
     ByteVector lf("abc\x0axyz", 7);
     ByteVector crlf("abc\x0d\x0axyz", 8);
 
-    CPPUNIT_ASSERT_EQUAL((size_t)7, String(cr).size());
-    CPPUNIT_ASSERT_EQUAL((size_t)7, String(lf).size());
-    CPPUNIT_ASSERT_EQUAL((size_t)8, String(crlf).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(7), String(cr).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(7), String(lf).size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(8), String(crlf).size());
 
     CPPUNIT_ASSERT_EQUAL(L'\x0d', String(cr)[3]);
     CPPUNIT_ASSERT_EQUAL(L'\x0a', String(lf)[3]);
@@ -381,4 +369,3 @@ public:
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestString);
-
