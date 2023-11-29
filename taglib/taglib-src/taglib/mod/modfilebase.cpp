@@ -23,12 +23,16 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-
-#include "tdebug.h"
 #include "modfilebase.h"
 
 using namespace TagLib;
 using namespace Mod;
+
+class Mod::FileBase::FileBasePrivate
+{
+};
+
+Mod::FileBase::~FileBase() = default;
 
 Mod::FileBase::FileBase(FileName file) : TagLib::File(file)
 {
@@ -38,19 +42,20 @@ Mod::FileBase::FileBase(IOStream *stream) : TagLib::File(stream)
 {
 }
 
-void Mod::FileBase::writeString(const String &s, unsigned int size, char padding)
+void Mod::FileBase::writeString(const String &s, unsigned long size, char padding)
 {
   ByteVector data(s.data(String::Latin1));
   data.resize(size, padding);
   writeBlock(data);
 }
 
-bool Mod::FileBase::readString(String &s, unsigned int size)
+bool Mod::FileBase::readString(String &s, unsigned long size)
 {
   ByteVector data(readBlock(size));
   if(data.size() < size) return false;
-  const size_t index = data.find((char) 0);
-  if(index != ByteVector::npos()) {
+  int index = data.find(static_cast<char>(0));
+  if(index > -1)
+  {
     data.resize(index);
   }
   data.replace('\xff', ' ');
@@ -67,22 +72,22 @@ void Mod::FileBase::writeByte(unsigned char byte)
 
 void Mod::FileBase::writeU16L(unsigned short number)
 {
-  writeBlock(ByteVector::fromUInt16LE(number));
+  writeBlock(ByteVector::fromShort(number, false));
 }
 
-void Mod::FileBase::writeU32L(unsigned int number)
+void Mod::FileBase::writeU32L(unsigned long number)
 {
-  writeBlock(ByteVector::fromUInt32LE(number));
+  writeBlock(ByteVector::fromUInt(number, false));
 }
 
 void Mod::FileBase::writeU16B(unsigned short number)
 {
-  writeBlock(ByteVector::fromUInt16BE(number));
+  writeBlock(ByteVector::fromShort(number, true));
 }
 
-void Mod::FileBase::writeU32B(unsigned int number)
+void Mod::FileBase::writeU32B(unsigned long number)
 {
-  writeBlock(ByteVector::fromUInt32BE(number));
+  writeBlock(ByteVector::fromUInt(number, true));
 }
 
 bool Mod::FileBase::readByte(unsigned char &byte)
@@ -97,14 +102,14 @@ bool Mod::FileBase::readU16L(unsigned short &number)
 {
   ByteVector data(readBlock(2));
   if(data.size() < 2) return false;
-  number = data.toUInt16LE(0);
+  number = data.toUShort(false);
   return true;
 }
 
-bool Mod::FileBase::readU32L(unsigned int &number) {
+bool Mod::FileBase::readU32L(unsigned long &number) {
   ByteVector data(readBlock(4));
   if(data.size() < 4) return false;
-  number = data.toUInt32LE(0);
+  number = data.toUInt(false);
   return true;
 }
 
@@ -112,13 +117,13 @@ bool Mod::FileBase::readU16B(unsigned short &number)
 {
   ByteVector data(readBlock(2));
   if(data.size() < 2) return false;
-  number = data.toUInt16BE(0);
+  number = data.toUShort(true);
   return true;
 }
 
-bool Mod::FileBase::readU32B(unsigned int &number) {
+bool Mod::FileBase::readU32B(unsigned long &number) {
   ByteVector data(readBlock(4));
   if(data.size() < 4) return false;
-  number = data.toUInt32BE(0);
+  number = data.toUInt(true);
   return true;
 }

@@ -24,10 +24,13 @@
  ***************************************************************************/
 
 #include "eventtimingcodesframe.h"
-#include <tbytevectorlist.h>
-#include <id3v2tag.h>
+
+#include <utility>
+
+#include "tbytevectorlist.h"
 #include "tdebug.h"
-#include <tpropertymap.h>
+#include "tpropertymap.h"
+#include "id3v2tag.h"
 
 using namespace TagLib;
 using namespace ID3v2;
@@ -35,9 +38,7 @@ using namespace ID3v2;
 class EventTimingCodesFrame::EventTimingCodesFramePrivate
 {
 public:
-  EventTimingCodesFramePrivate() :
-    timestampFormat(EventTimingCodesFrame::AbsoluteMilliseconds) {}
-  EventTimingCodesFrame::TimestampFormat timestampFormat;
+  EventTimingCodesFrame::TimestampFormat timestampFormat { EventTimingCodesFrame::AbsoluteMilliseconds };
   EventTimingCodesFrame::SynchedEventList synchedEvents;
 };
 
@@ -47,21 +48,18 @@ public:
 
 EventTimingCodesFrame::EventTimingCodesFrame() :
   Frame("ETCO"),
-  d(new EventTimingCodesFramePrivate())
+  d(std::make_unique<EventTimingCodesFramePrivate>())
 {
 }
 
 EventTimingCodesFrame::EventTimingCodesFrame(const ByteVector &data) :
   Frame(data),
-  d(new EventTimingCodesFramePrivate())
+  d(std::make_unique<EventTimingCodesFramePrivate>())
 {
   setData(data);
 }
 
-EventTimingCodesFrame::~EventTimingCodesFrame()
-{
-  delete d;
-}
+EventTimingCodesFrame::~EventTimingCodesFrame() = default;
 
 String EventTimingCodesFrame::toString() const
 {
@@ -98,19 +96,19 @@ void EventTimingCodesFrame::setSynchedEvents(
 
 void EventTimingCodesFrame::parseFields(const ByteVector &data)
 {
-  const size_t end = data.size();
+  const int end = data.size();
   if(end < 1) {
     debug("An event timing codes frame must contain at least 1 byte.");
     return;
   }
 
-  d->timestampFormat = TimestampFormat(data[0]);
+  d->timestampFormat = static_cast<TimestampFormat>(data[0]);
 
-  size_t pos = 1;
+  int pos = 1;
   d->synchedEvents.clear();
   while(pos + 4 < end) {
-    EventType type = static_cast<EventType>(static_cast<unsigned char>(data[pos++]));
-    unsigned int time = data.toUInt32BE(pos);
+    auto type = static_cast<EventType>(static_cast<unsigned char>(data[pos++]));
+    unsigned int time = data.toUInt(pos, true);
     pos += 4;
     d->synchedEvents.append(SynchedEvent(time, type));
   }
@@ -120,13 +118,10 @@ ByteVector EventTimingCodesFrame::renderFields() const
 {
   ByteVector v;
 
-  v.append(char(d->timestampFormat));
-  for(SynchedEventList::ConstIterator it = d->synchedEvents.begin();
-      it != d->synchedEvents.end();
-      ++it) {
-    const SynchedEvent &entry = *it;
-    v.append(char(entry.type));
-    v.append(ByteVector::fromUInt32BE(entry.time));
+  v.append(static_cast<char>(d->timestampFormat));
+  for(const auto &entry : std::as_const(d->synchedEvents)) {
+    v.append(static_cast<char>(entry.type));
+    v.append(ByteVector::fromUInt(entry.time));
   }
 
   return v;
@@ -138,7 +133,7 @@ ByteVector EventTimingCodesFrame::renderFields() const
 
 EventTimingCodesFrame::EventTimingCodesFrame(const ByteVector &data, Header *h) :
   Frame(h),
-  d(new EventTimingCodesFramePrivate())
+  d(std::make_unique<EventTimingCodesFramePrivate>())
 {
   parseFields(fieldData(data));
 }

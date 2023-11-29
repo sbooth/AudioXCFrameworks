@@ -1,6 +1,6 @@
 /***************************************************************************
-    copyright            : (C) 2013 - 2018 by Stephen F. Booth
-    email                : me@sbooth.org
+    copyright           : (C) 2013-2023 Stephen F. Booth
+    email               : me@sbooth.org
  ***************************************************************************/
 
 /***************************************************************************
@@ -26,102 +26,110 @@
 #ifndef TAGLIB_DSFFILE_H
 #define TAGLIB_DSFFILE_H
 
-#include <taglib/tfile.h>
-#include <taglib/id3v2tag.h>
-#include <taglib/dsfproperties.h>
+#include <memory>
+
+#include "taglib_export.h"
+#include "tfile.h"
+
+#include "dsfproperties.h"
+
+#include "id3v2tag.h"
 
 namespace TagLib {
-
-  //! An implementation of DSF metadata
-
-  /*!
-   * This is implementation of DSF metadata.
-   *
-   * This supports an ID3v2 tag as well as properties from the file.
-   */
-
   namespace DSF {
+    class TAGLIB_EXPORT File : public TagLib::File {
+      public:
+        /*!
+         * Constructs a DSD stream file from \a file.
+         *
+         * \note In the current implementation, both \a readProperties and
+         * \a propertiesStyle are ignored.  The audio properties are always
+         * read.
+         *
+         * If this file contains an ID3v2 tag, the frames will be created using
+         * \a frameFactory (default if null).
+         */
+        File(FileName file, bool readProperties = true,
+             AudioProperties::ReadStyle propertiesStyle =
+             AudioProperties::Average,
+             ID3v2::FrameFactory *frameFactory = nullptr);
 
-    //! An implementation of TagLib::File with DSF specific methods
+        /*!
+         * Constructs a DSD stream file from \a stream.
+         *
+         * \note In the current implementation, both \a readProperties and
+         * \a propertiesStyle are ignored.  The audio properties are always
+         * read.
+         *
+         * If this file contains an ID3v2 tag, the frames will be created using
+         * \a frameFactory (default if null).
+         *
+         * \note TagLib will *not* take ownership of the stream, the caller is
+         * responsible for deleting it after the File object.
+         */
+        File(IOStream *stream, bool readProperties = true,
+             AudioProperties::ReadStyle propertiesStyle =
+             AudioProperties::Average,
+             ID3v2::FrameFactory *frameFactory = nullptr);
 
-    /*!
-     * This implements and provides an interface for DSF files to the
-     * TagLib::Tag and TagLib::AudioProperties interfaces by way of implementing
-     * the abstract TagLib::File API as well as providing some additional
-     * information specific to DSF files.
-     */
+        /*!
+         * Destroys this instance of the File.
+         */
+        ~File() override;
 
-    class TAGLIB_EXPORT File : public TagLib::File
-    {
-    public:
-      /*!
-       * Contructs an DSF file from \a file.  If \a readProperties is true the
-       * file's audio properties will also be read using \a propertiesStyle.  If
-       * false, \a propertiesStyle is ignored.
-       */
-      File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+        /*!
+         * Returns the ID3v2 Tag for this file.
+         */
+        ID3v2::Tag *tag() const override;
 
-      /*!
-       * Contructs an DSF file from \a file.  If \a readProperties is true the
-       * file's audio properties will also be read using \a propertiesStyle.  If
-       * false, \a propertiesStyle is ignored.
-       */
-      File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+        /*!
+         * Implements the unified property interface -- export function.
+         * Forwards to ID3v2::Tag::properties().
+         */
+        PropertyMap properties() const override;
 
-      /*!
-       * Destroys this instance of the File.
-       */
-      virtual ~File();
+        /*!
+         * Implements the unified property interface -- import function.
+         * Forwards to ID3v2::Tag::setProperties().
+         */
+        PropertyMap setProperties(const PropertyMap &) override;
 
-      /*!
-       * Returns the Tag for this file.
-       */
-      virtual ID3v2::Tag *tag() const;
+        /*!
+         * Returns the DSF::Properties for this file. If no audio properties
+         * were read then this will return a null pointer.
+         */
+        Properties *audioProperties() const override;
 
-      /*!
-       * Returns the DSF::AudioProperties for this file.  If no audio properties
-       * were read then this will return a null pointer.
-       */
-      virtual AudioProperties *audioProperties() const;
+        /*!
+         * Save the file.
+         *
+         * This returns true if the save was successful.
+         */
+        bool save() override;
 
-       /*!
-        * Implements the unified property interface -- export function.
-        * This method forwards to ID3v2::Tag::properties().
-        */
-      virtual PropertyMap properties() const;
+        /*!
+         * Save the file.
+         *
+         * \a version specifies the ID3v2 version to be used for writing tags.
+         */
+        bool save(ID3v2::Version version);
 
-       /*!
-        * Implements the unified property interface -- import function.
-        * This method forwards to ID3v2::Tag::setProperties().
-        */
-       virtual PropertyMap setProperties(const PropertyMap &);
+        /*!
+         * Returns whether or not the given \a stream can be opened as a DSF
+         * file.
+         *
+         * \note This method is designed to do a quick check.  The result may
+         * not necessarily be correct.
+         */
+        static bool isSupported(IOStream *stream);
 
-      /*!
-       * Saves the file.
-       */
-      virtual bool save();
+      private:
+        void read(AudioProperties::ReadStyle propertiesStyle);
 
-      /*!
-       * Returns whether or not the given \a stream can be opened as a DSF
-       * file.
-       *
-       * \note This method is designed to do a quick check.  The result may
-       * not necessarily be correct.
-       */
-      static bool isSupported(IOStream *stream);
-
-    private:
-      File(const File &);
-      File &operator=(const File &);
-
-      void read(bool readProperties, AudioProperties::ReadStyle propertiesStyle);
-
-      class FilePrivate;
-      FilePrivate *d;
+        class FilePrivate;
+        std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace DSF
+}  // namespace TagLib
 
 #endif

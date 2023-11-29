@@ -26,8 +26,8 @@
 #ifndef TAGLIB_COMMENTSFRAME_H
 #define TAGLIB_COMMENTSFRAME_H
 
-#include <taglib/id3v2frame.h>
-#include <taglib/taglib_export.h>
+#include "taglib_export.h"
+#include "id3v2frame.h"
 
 namespace TagLib {
 
@@ -59,14 +59,17 @@ namespace TagLib {
       /*!
        * Destroys this CommentFrame instance.
        */
-      virtual ~CommentsFrame();
+      ~CommentsFrame() override;
+
+      CommentsFrame(const CommentsFrame &) = delete;
+      CommentsFrame &operator=(const CommentsFrame &) = delete;
 
       /*!
        * Returns the text of this comment.
        *
        * \see text()
        */
-      virtual String toString() const;
+      String toString() const override;
 
       /*!
        * Returns the language encoding as a 3 byte encoding as specified by
@@ -97,11 +100,11 @@ namespace TagLib {
       /*!
        * Set the language using the 3 byte language code from
        * <a href="http://en.wikipedia.org/wiki/ISO_639">ISO-639-2</a> to
-       * \a languageCode.
+       * \a languageEncoding.
        *
        * \see language()
        */
-      void setLanguage(const ByteVector &languageCode);
+      void setLanguage(const ByteVector &languageEncoding);
 
       /*!
        * Sets the description of the comment to \a s.
@@ -115,7 +118,7 @@ namespace TagLib {
        *
        * \see text()
        */
-      virtual void setText(const String &s);
+      void setText(const String &s) override;
 
       /*!
        * Returns the text encoding that will be used in rendering this frame.
@@ -145,7 +148,7 @@ namespace TagLib {
        * - otherwise, the key will be "COMMENT:<description>"
        * - The single value will be the frame's text().
        */
-      PropertyMap asProperties() const;
+      PropertyMap asProperties() const override;
 
       /*!
        * Comments each have a unique description.  This searches for a comment
@@ -159,21 +162,19 @@ namespace TagLib {
     protected:
       // Reimplementations.
 
-      virtual void parseFields(const ByteVector &data);
-      virtual ByteVector renderFields() const;
+      void parseFields(const ByteVector &data) override;
+      ByteVector renderFields() const override;
 
     private:
       /*!
        * The constructor used by the FrameFactory.
        */
       CommentsFrame(const ByteVector &data, Header *h);
-      CommentsFrame(const CommentsFrame &);
-      CommentsFrame &operator=(const CommentsFrame &);
 
       class CommentsFramePrivate;
-      CommentsFramePrivate *d;
+      std::unique_ptr<CommentsFramePrivate> d;
     };
 
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 #endif

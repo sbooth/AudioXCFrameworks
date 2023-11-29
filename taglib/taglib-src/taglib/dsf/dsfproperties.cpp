@@ -1,6 +1,6 @@
 /***************************************************************************
- copyright            : (C) 2013 by Stephen F. Booth
- email                : me@sbooth.org
+    copyright           : (C) 2013-2023 Stephen F. Booth
+    email               : me@sbooth.org
  ***************************************************************************/
 
 /***************************************************************************
@@ -23,115 +23,90 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
 
 #include "dsfproperties.h"
 
 using namespace TagLib;
 
-class DSF::AudioProperties::PropertiesPrivate
+class DSF::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    formatVersion(0),
-    formatID(0),
-    channelType(0),
-    channelNum(0),
-    samplingFrequency(0),
-    bitsPerSample(0),
-    sampleCount(0),
-    blockSizePerChannel(0),
-    bitrate(0),
-    length(0) {}
+  PropertiesPrivate() = default;
+  ~PropertiesPrivate() = default;
+
+  PropertiesPrivate(const PropertiesPrivate &) = delete;
+  PropertiesPrivate &operator=(const PropertiesPrivate &) = delete;
 
   // Nomenclature is from DSF file format specification
-  unsigned int formatVersion;
-  unsigned int formatID;
-  unsigned int channelType;
-  unsigned int channelNum;
-  unsigned int samplingFrequency;
-  unsigned int bitsPerSample;
-  long long sampleCount;
-  unsigned int blockSizePerChannel;
+  unsigned int formatVersion = 0;
+  unsigned int formatID = 0;
+  unsigned int channelType = 0;
+  unsigned int channelNum = 0;
+  unsigned int samplingFrequency = 0;
+  unsigned int bitsPerSample = 0;
+  long long sampleCount = 0;
+  unsigned int blockSizePerChannel = 0;
 
   // Computed
-  int bitrate;
-  int length;
+  unsigned int bitrate = 0;
+  unsigned int length = 0;
 };
 
-////////////////////////////////////////////////////////////////////////////////
-// public members
-////////////////////////////////////////////////////////////////////////////////
-
-DSF::AudioProperties::AudioProperties(const ByteVector &data, ReadStyle style) :
-  d(new PropertiesPrivate())
+DSF::Properties::Properties(const ByteVector &data, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   read(data);
 }
 
-DSF::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+DSF::Properties::~Properties() = default;
 
-int DSF::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int DSF::AudioProperties::lengthInSeconds() const
-{
-  return d->length / 1000;
-}
-
-int DSF::AudioProperties::lengthInMilliseconds() const
+int DSF::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int DSF::AudioProperties::bitrate() const
+int DSF::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int DSF::AudioProperties::sampleRate() const
+int DSF::Properties::sampleRate() const
 {
   return d->samplingFrequency;
 }
 
-int DSF::AudioProperties::channels() const
+int DSF::Properties::channels() const
 {
   return d->channelNum;
 }
 
-// DSF specific
-int DSF::AudioProperties::formatVersion() const
+int DSF::Properties::formatVersion() const
 {
   return d->formatVersion;
 }
 
-int DSF::AudioProperties::formatID() const
+int DSF::Properties::formatID() const
 {
   return d->formatID;
 }
 
-int DSF::AudioProperties::channelType() const
+int DSF::Properties::channelType() const
 {
   return d->channelType;
 }
 
-int DSF::AudioProperties::bitsPerSample() const
+int DSF::Properties::bitsPerSample() const
 {
   return d->bitsPerSample;
 }
 
-long long DSF::AudioProperties::sampleCount() const
+long long DSF::Properties::sampleCount() const
 {
   return d->sampleCount;
 }
 
-int DSF::AudioProperties::blockSizePerChannel() const
+int DSF::Properties::blockSizePerChannel() const
 {
   return d->blockSizePerChannel;
 }
@@ -140,19 +115,20 @@ int DSF::AudioProperties::blockSizePerChannel() const
 // private members
 ////////////////////////////////////////////////////////////////////////////////
 
-void DSF::AudioProperties::read(const ByteVector &data)
+void DSF::Properties::read(const ByteVector &data)
 {
-  d->formatVersion       = data.toUInt32LE(0);
-  d->formatID            = data.toUInt32LE(4);
-  d->channelType         = data.toUInt32LE(8);
-  d->channelNum          = data.toUInt32LE(12);
-  d->samplingFrequency   = data.toUInt32LE(16);
-  d->bitsPerSample       = data.toUInt32LE(20);
-  d->sampleCount         = data.toInt64LE(24);
-  d->blockSizePerChannel = data.toUInt32LE(32);
+  d->formatVersion = data.toUInt(0U,false);
+  d->formatID = data.toUInt(4U,false);
+  d->channelType = data.toUInt(8U,false);
+  d->channelNum = data.toUInt(12U,false);
+  d->samplingFrequency = data.toUInt(16U,false);
+  d->bitsPerSample = data.toUInt(20U,false);
+  d->sampleCount = data.toLongLong(24U,false);
+  d->blockSizePerChannel = data.toUInt(32U,false);
 
-  d->bitrate = static_cast<int>(d->samplingFrequency * d->bitsPerSample * d->channelNum / 1000.0 + 0.5);
-
-  if(d->samplingFrequency > 0)
-    d->length = static_cast<int>(d->sampleCount * 1000.0 / d->samplingFrequency + 0.5);
+  d->bitrate = static_cast<unsigned int>(
+      (d->samplingFrequency * d->bitsPerSample * d->channelNum) / 1000.0 + 0.5);
+  d->length = d->samplingFrequency > 0
+      ? static_cast<unsigned int>(d->sampleCount * 1000.0 / d->samplingFrequency + 0.5)
+      : 0;
 }

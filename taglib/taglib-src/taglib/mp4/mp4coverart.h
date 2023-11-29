@@ -26,15 +26,13 @@
 #ifndef TAGLIB_MP4COVERART_H
 #define TAGLIB_MP4COVERART_H
 
-#include <taglib/tlist.h>
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
-#include <taglib/mp4atom.h>
+#include "tlist.h"
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "mp4atom.h"
 
 namespace TagLib {
-
   namespace MP4 {
-
     class TAGLIB_EXPORT CoverArt
     {
     public:
@@ -50,7 +48,7 @@ namespace TagLib {
       };
 
       CoverArt(Format format, const ByteVector &data);
-      ~CoverArt();
+      virtual ~CoverArt();
 
       CoverArt(const CoverArt &item);
 
@@ -72,11 +70,10 @@ namespace TagLib {
 
     private:
       class CoverArtPrivate;
-      CoverArtPrivate *d;
+      std::shared_ptr<CoverArtPrivate> d;
     };
 
-    typedef List<CoverArt> CoverArtList;
-  }
-}
-
+    using CoverArtList = List<CoverArt>;
+  }  // namespace MP4
+}  // namespace TagLib
 #endif

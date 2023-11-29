@@ -26,9 +26,9 @@
 #ifndef TAGLIB_BYTEVECTORLIST_H
 #define TAGLIB_BYTEVECTORLIST_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/tbytevector.h>
-#include <taglib/tlist.h>
+#include "tbytevector.h"
+#include "tlist.h"
+#include "taglib_export.h"
 
 namespace TagLib {
 
@@ -48,6 +48,11 @@ namespace TagLib {
     ByteVectorList();
 
     /*!
+     * Destroys this ByteVectorList instance.
+     */
+    ~ByteVectorList();
+
+    /*!
      * Make a shallow, implicitly shared, copy of \a l.  Because this is
      * implicitly shared, this method is lightweight and suitable for
      * pass-by-value usage.
@@ -55,11 +60,12 @@ namespace TagLib {
     ByteVectorList(const ByteVectorList &l);
 
     /*!
-     * Make a shallow, implicitly shared, copy of \a l.  Because this is
-     * implicitly shared, this method is lightweight and suitable for
-     * pass-by-value usage.
+     * Construct a ByteVectorList with the contents of the braced initializer list.
      */
-    ByteVectorList &operator=(const ByteVectorList &l);
+    ByteVectorList(std::initializer_list<ByteVector> init);
+
+    ByteVectorList &operator=(const ByteVectorList &);
+    ByteVectorList &operator=(std::initializer_list<ByteVector> init);
 
     /*!
      * Convert the ByteVectorList to a ByteVector separated by \a separator.  By
@@ -74,10 +80,19 @@ namespace TagLib {
      * is 2 then a maximum of 1 match will be found and the vector will be split
      * on that match.
      */
-    static ByteVectorList split(
-      const ByteVector &v, const ByteVector &pattern, size_t byteAlign = 1, size_t max = 0);
+    static ByteVectorList split(const ByteVector &v, const ByteVector &pattern,
+                                int byteAlign = 1, int max = 0);
+  private:
+    class ByteVectorListPrivate;
+    std::unique_ptr<ByteVectorListPrivate> d;
   };
 
-}
+}  // namespace TagLib
+
+/*!
+ * \related TagLib::ByteVectorList
+ * Send the ByteVectorList to an output stream.
+ */
+std::ostream TAGLIB_EXPORT &operator<<(std::ostream &s, const TagLib::ByteVectorList &l);
 
 #endif

@@ -26,22 +26,17 @@
 #ifndef TAGLIB_ASFPROPERTIES_H
 #define TAGLIB_ASFPROPERTIES_H
 
-#include <taglib/audioproperties.h>
-#include <taglib/tstring.h>
-#include <taglib/taglib_export.h>
+#include "tstring.h"
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
-
   namespace ASF {
-
-    class File;
-
     //! An implementation of ASF audio properties
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+    class TAGLIB_EXPORT Properties : public AudioProperties
     {
-      friend class File;
-
     public:
+
       /*!
        * Audio codec types can be used in ASF file.
        */
@@ -74,54 +69,39 @@ namespace TagLib {
       };
 
       /*!
-       * Creates an instance of ASF::AudioProperties.
+       * Creates an instance of ASF::Properties.
        */
-      AudioProperties();
+      Properties();
 
       /*!
-       * Destroys this ASF::AudioProperties instance.
+       * Destroys this ASF::Properties instance.
        */
-      virtual ~AudioProperties();
+      ~Properties() override;
 
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \note This method is just an alias of lengthInSeconds().
-       *
-       * \deprecated
-       */
-      virtual int length() const;
-
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \see lengthInMilliseconds()
-       */
-      virtual int lengthInSeconds() const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
       /*!
        * Returns the length of the file in milliseconds.
        *
        * \see lengthInSeconds()
        */
-      virtual int lengthInMilliseconds() const;
+      int lengthInMilliseconds() const override;
 
       /*!
        * Returns the average bit rate of the file in kb/s.
        */
-      virtual int bitrate() const;
+      int bitrate() const override;
 
       /*!
        * Returns the sample rate in Hz.
        */
-      virtual int sampleRate() const;
+      int sampleRate() const override;
 
       /*!
        * Returns the number of audio channels.
        */
-      virtual int channels() const;
+      int channels() const override;
 
       /*!
        * Returns the number of bits per audio sample.
@@ -160,7 +140,7 @@ namespace TagLib {
        */
       bool isEncrypted() const;
 
-    private:
+#ifndef DO_NOT_DOCUMENT
       void setLengthInMilliseconds(int value);
       void setBitrate(int value);
       void setSampleRate(int value);
@@ -170,13 +150,12 @@ namespace TagLib {
       void setCodecName(const String &value);
       void setCodecDescription(const String &value);
       void setEncrypted(bool value);
+#endif
 
+    private:
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-
-  }
-
-}
-
+  }  // namespace ASF
+}  // namespace TagLib
 #endif

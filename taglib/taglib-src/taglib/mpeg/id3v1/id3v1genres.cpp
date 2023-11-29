@@ -25,11 +25,13 @@
 
 #include "id3v1genres.h"
 
+#include <array>
+
 using namespace TagLib;
 
 namespace
 {
-  const wchar_t *genres[] = {
+  constexpr std::array genres {
     L"Blues",
     L"Classic Rock",
     L"Country",
@@ -59,7 +61,7 @@ namespace
     L"Ambient",
     L"Trip-Hop",
     L"Vocal",
-    L"Jazz+Funk",
+    L"Jazz-Funk",
     L"Fusion",
     L"Trance",
     L"Classical",
@@ -111,16 +113,16 @@ namespace
     L"Rock & Roll",
     L"Hard Rock",
     L"Folk",
-    L"Folk/Rock",
+    L"Folk Rock",
     L"National Folk",
     L"Swing",
-    L"Fusion",
-    L"Bebob",
+    L"Fast Fusion",
+    L"Bebop",
     L"Latin",
     L"Revival",
     L"Celtic",
     L"Bluegrass",
-    L"Avantgarde",
+    L"Avant-garde",
     L"Gothic Rock",
     L"Progressive Rock",
     L"Psychedelic Rock",
@@ -155,15 +157,15 @@ namespace
     L"Drum Solo",
     L"A Cappella",
     L"Euro-House",
-    L"Dance Hall",
+    L"Dancehall",
     L"Goa",
     L"Drum & Bass",
     L"Club-House",
-    L"Hardcore",
+    L"Hardcore Techno",
     L"Terror",
     L"Indie",
-    L"BritPop",
-    L"Negerpunk",
+    L"Britpop",
+    L"Worldbeat",
     L"Polsk Punk",
     L"Beat",
     L"Christian Gangsta Rap",
@@ -223,14 +225,13 @@ namespace
     L"Garage Rock",
     L"Psybient"
   };
-  const int genresSize = sizeof(genres) / sizeof(genres[0]);
-}
+}  // namespace
 
 StringList ID3v1::genreList()
 {
   StringList l;
-  for(int i = 0; i < genresSize; i++) {
-    l.append(genres[i]);
+  for(auto g : genres) {
+    l.append(g);
   }
 
   return l;
@@ -239,8 +240,8 @@ StringList ID3v1::genreList()
 ID3v1::GenreMap ID3v1::genreMap()
 {
   GenreMap m;
-  for(int i = 0; i < genresSize; i++) {
-    m.insert(genres[i], i);
+  for(size_t i = 0; i < genres.size(); i++) {
+    m.insert(genres[i], static_cast<int>(i));
   }
 
   return m;
@@ -248,17 +249,32 @@ ID3v1::GenreMap ID3v1::genreMap()
 
 String ID3v1::genre(int i)
 {
-  if(i >= 0 && i < genresSize)
+  if(i >= 0 && static_cast<size_t>(i) < genres.size())
     return String(genres[i]); // always make a copy
-  else
-    return String();
+  return String();
 }
 
 int ID3v1::genreIndex(const String &name)
 {
-  for(int i = 0; i < genresSize; ++i) {
+  for(size_t i = 0; i < genres.size(); ++i) {
     if(name == genres[i])
-      return i;
+      return static_cast<int>(i);
+  }
+
+  // If the name was not found, try the names which have been changed
+  static constexpr std::array fixUpGenres {
+    std::pair(L"Jazz+Funk", 29),
+    std::pair(L"Folk/Rock", 81),
+    std::pair(L"Bebob", 85),
+    std::pair(L"Avantgarde", 90),
+    std::pair(L"Dance Hall", 125),
+    std::pair(L"Hardcore", 129),
+    std::pair(L"BritPop", 132),
+    std::pair(L"Negerpunk", 133),
+  };
+  for(const auto &[genre, code] : fixUpGenres) {
+    if(name == genre)
+      return code;
   }
 
   return 255;

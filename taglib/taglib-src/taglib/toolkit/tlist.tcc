@@ -1,4 +1,3 @@
-
 /***************************************************************************
     copyright            : (C) 2002 - 2008 by Scott Wheeler
     email                : wheeler@kde.org
@@ -25,7 +24,7 @@
  ***************************************************************************/
 
 #include <algorithm>
-#include <taglib/trefcounter.h>
+#include <memory>
 
 namespace TagLib {
 
@@ -37,30 +36,27 @@ namespace TagLib {
 // template specialization.  This is implemented in such a way that calling
 // setAutoDelete() on non-pointer types will simply have no effect.
 
+// A base for the generic and specialized private class types.  New
+// non-templatized members should be added here.
+
+class ListPrivateBase
+{
+public:
+  bool autoDelete{};
+};
+
 // A generic implementation
 
 template <class T>
-template <class TP> class List<T>::ListPrivate : public RefCounter
+template <class TP> class List<T>::ListPrivate  : public ListPrivateBase
 {
 public:
-  ListPrivate()
-  {
+  using ListPrivateBase::ListPrivateBase;
+  ListPrivate(const std::list<TP> &l) : list(l) {}
+  ListPrivate(std::initializer_list<TP> init) : list(init) {}
+  void clear() {
+    list.clear();
   }
-
-  ListPrivate(const std::list<TP> &l)
-    : list(l)
-  {
-  }
-
-  void clear()
-  {
-    std::list<TP>().swap(list);
-  }
-
-  void setAutoDelete(bool)
-  {
-  }
-
   std::list<TP> list;
 };
 
@@ -68,49 +64,25 @@ public:
 // setAutoDelete() functionality.
 
 template <class T>
-template <class TP> class List<T>::ListPrivate<TP *> : public RefCounter
+template <class TP> class List<T>::ListPrivate<TP *> : public ListPrivateBase
 {
 public:
-  ListPrivate()
-    : autoDelete(false)
-  {
+  using ListPrivateBase::ListPrivateBase;
+  ListPrivate(const std::list<TP *> &l) : list(l) {}
+  ListPrivate(std::initializer_list<TP *> init) : list(init) {}
+  ~ListPrivate() {
+    clear();
   }
-
-  ListPrivate(const std::list<TP *> &l)
-    : list(l)
-    , autoDelete(false)
-  {
-  }
-
-  ~ListPrivate()
-  {
-    deletePointers();
-  }
-
-  void clear()
-  {
-    deletePointers();
-    std::list<TP *>().swap(list);
-  }
-
-  void setAutoDelete(bool del)
-  {
-    autoDelete = del;
-  }
-
-  std::list<TP *> list;
-
-private:
-  void deletePointers()
-  {
+  ListPrivate(const ListPrivate &) = delete;
+  ListPrivate &operator=(const ListPrivate &) = delete;
+  void clear() {
     if(autoDelete) {
-      typename std::list<TP *>::const_iterator it = list.begin();
-      for(; it != list.end(); ++it)
-        delete *it;
+      for(auto &m : list)
+        delete m;
     }
+    list.clear();
   }
-
-  bool autoDelete;
+  std::list<TP *> list;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -119,23 +91,21 @@ private:
 
 template <class T>
 List<T>::List() :
-  d(new ListPrivate<T>())
+  d(std::make_shared<ListPrivate<T>>())
 {
 }
 
 template <class T>
-List<T>::List(const List<T> &l)
-  : d(l.d)
+List<T>::List(const List<T> &) = default;
+
+template <class T>
+List<T>::List(std::initializer_list<T> init) :
+  d(std::make_shared<ListPrivate<T>>(init))
 {
-  d->ref();
 }
 
 template <class T>
-List<T>::~List()
-{
-  if(d->deref())
-    delete d;
-}
+List<T>::~List() = default;
 
 template <class T>
 typename List<T>::Iterator List<T>::begin()
@@ -151,6 +121,12 @@ typename List<T>::ConstIterator List<T>::begin() const
 }
 
 template <class T>
+typename List<T>::ConstIterator List<T>::cbegin() const
+{
+  return d->list.cbegin();
+}
+
+template <class T>
 typename List<T>::Iterator List<T>::end()
 {
   detach();
@@ -161,6 +137,12 @@ template <class T>
 typename List<T>::ConstIterator List<T>::end() const
 {
   return d->list.end();
+}
+
+template <class T>
+typename List<T>::ConstIterator List<T>::cend() const
+{
+  return d->list.cend();
 }
 
 template <class T>
@@ -224,9 +206,9 @@ List<T> &List<T>::clear()
 }
 
 template <class T>
-size_t List<T>::size() const
+unsigned int List<T>::size() const
 {
-  return d->list.size();
+  return static_cast<unsigned int>(d->list.size());
 }
 
 template <class T>
@@ -236,23 +218,26 @@ bool List<T>::isEmpty() const
 }
 
 template <class T>
-template <class U>
-typename List<T>::Iterator List<T>::find(const U &value)
+typename List<T>::Iterator List<T>::find(const T &value)
 {
   detach();
   return std::find(d->list.begin(), d->list.end(), value);
 }
 
 template <class T>
-template <class U>
-typename List<T>::ConstIterator List<T>::find(const U &value) const
+typename List<T>::ConstIterator List<T>::find(const T &value) const
 {
   return std::find(d->list.begin(), d->list.end(), value);
 }
 
 template <class T>
-template <class U>
-bool List<T>::contains(const U &value) const
+typename List<T>::ConstIterator List<T>::cfind(const T &value) const
+{
+  return std::find(d->list.cbegin(), d->list.cend(), value);
+}
+
+template <class T>
+bool List<T>::contains(const T &value) const
 {
   return std::find(d->list.begin(), d->list.end(), value) != d->list.end();
 }
@@ -285,7 +270,7 @@ const T &List<T>::back() const
 template <class T>
 void List<T>::setAutoDelete(bool autoDelete)
 {
-  d->setAutoDelete(autoDelete);
+  d->autoDelete = autoDelete;
 }
 
 template <class T>
@@ -296,27 +281,32 @@ T &List<T>::back()
 }
 
 template <class T>
-T &List<T>::operator[](size_t i)
+T &List<T>::operator[](unsigned int i)
 {
-  Iterator it = d->list.begin();
+  auto it = d->list.begin();
   std::advance(it, i);
 
   return *it;
 }
 
 template <class T>
-const T &List<T>::operator[](size_t i) const
+const T &List<T>::operator[](unsigned int i) const
 {
-  ConstIterator it = d->list.begin();
+  auto it = d->list.begin();
   std::advance(it, i);
 
   return *it;
 }
 
 template <class T>
-List<T> &List<T>::operator=(const List<T> &l)
+List<T> &List<T>::operator=(const List<T> &) = default;
+
+template <class T>
+List<T> &List<T>::operator=(std::initializer_list<T> init)
 {
-  List<T>(l).swap(*this);
+  bool autoDelete = d->autoDelete;
+  List(init).swap(*this);
+  setAutoDelete(autoDelete);
   return *this;
 }
 
@@ -340,6 +330,21 @@ bool List<T>::operator!=(const List<T> &l) const
   return d->list != l.d->list;
 }
 
+template <class T>
+void List<T>::sort()
+{
+  detach();
+  d->list.sort();
+}
+
+template <class T>
+template <class Compare>
+void List<T>::sort(Compare&& comp)
+{
+  detach();
+  d->list.sort(std::forward<Compare>(comp));
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // protected members
 ////////////////////////////////////////////////////////////////////////////////
@@ -347,11 +352,9 @@ bool List<T>::operator!=(const List<T> &l) const
 template <class T>
 void List<T>::detach()
 {
-  if(!d->unique()) {
-    d->deref();
-    d = new ListPrivate<T>(d->list);
+  if(d.use_count() > 1) {
+    d = std::make_shared<ListPrivate<T>>(d->list);
   }
 }
 
 } // namespace TagLib
-

@@ -23,9 +23,14 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tpicturemap.h>
-#include <tpropertymap.h>
 #include "asftag.h"
+
+#include <array>
+#include <utility>
+
+#include "tpropertymap.h"
+#include "asfattribute.h"
+#include "asfpicture.h"
 
 using namespace TagLib;
 
@@ -41,15 +46,11 @@ public:
 };
 
 ASF::Tag::Tag() :
-  TagLib::Tag(),
-  d(new TagPrivate())
+  d(std::make_unique<TagPrivate>())
 {
 }
 
-ASF::Tag::~Tag()
-{
-  delete d;
-}
+ASF::Tag::~Tag() = default;
 
 String ASF::Tag::title() const
 {
@@ -96,8 +97,7 @@ unsigned int ASF::Tag::track() const
     const ASF::Attribute attr = d->attributeListMap["WM/TrackNumber"][0];
     if(attr.type() == ASF::Attribute::DWordType)
       return attr.toUInt();
-    else
-      return attr.toString().toInt();
+    return attr.toString().toInt();
   }
   if(d->attributeListMap.contains("WM/Track"))
     return d->attributeListMap["WM/Track"][0].toUInt();
@@ -109,91 +109,6 @@ String ASF::Tag::genre() const
   if(d->attributeListMap.contains("WM/Genre"))
     return d->attributeListMap["WM/Genre"][0].toString();
   return String();
-}
-
-PictureMap ASF::Tag::pictures() const
-{
-  PictureMap map;
-  if(d->attributeListMap.contains("WM/Picture")) {
-    AttributeList list = d->attributeListMap["WM/Picture"];
-    for(AttributeList::ConstIterator it = list.begin();
-        it != list.end();
-        ++it) {
-      ASF::Picture asfPicture = (*it).toPicture();
-      TagLib::Picture::Type type;
-      switch(asfPicture.type()) {
-      case ASF::Picture::FileIcon:
-        type = TagLib::Picture::FileIcon;
-        break;
-      case ASF::Picture::OtherFileIcon:
-        type = TagLib::Picture::OtherFileIcon;
-        break;
-      case ASF::Picture::FrontCover:
-        type = TagLib::Picture::FrontCover;
-        break;
-      case ASF::Picture::BackCover:
-        type = TagLib::Picture::BackCover;
-        break;
-      case ASF::Picture::LeafletPage:
-        type = TagLib::Picture::LeafletPage;
-        break;
-      case ASF::Picture::Media:
-        type = TagLib::Picture::Media;
-        break;
-      case ASF::Picture::LeadArtist:
-        type = TagLib::Picture::LeadArtist;
-        break;
-      case ASF::Picture::Artist:
-        type = TagLib::Picture::Artist;
-        break;
-      case ASF::Picture::Conductor:
-        type = TagLib::Picture::Conductor;
-        break;
-      case ASF::Picture::Band:
-        type = TagLib::Picture::Band;
-        break;
-      case ASF::Picture::Composer:
-        type = TagLib::Picture::Composer;
-        break;
-      case ASF::Picture::Lyricist:
-        type = TagLib::Picture::Lyricist;
-        break;
-      case ASF::Picture::RecordingLocation:
-        type = TagLib::Picture::RecordingLocation;
-        break;
-      case ASF::Picture::DuringRecording:
-        type = TagLib::Picture::DuringRecording;
-        break;
-      case ASF::Picture::DuringPerformance:
-        type = TagLib::Picture::DuringPerformance;
-        break;
-      case ASF::Picture::MovieScreenCapture:
-        type = TagLib::Picture::MovieScreenCapture;
-        break;
-      case ASF::Picture::ColouredFish:
-        type = TagLib::Picture::ColouredFish;
-        break;
-      case ASF::Picture::Illustration:
-        type = TagLib::Picture::Illustration;
-        break;
-      case ASF::Picture::BandLogo:
-        type = TagLib::Picture::BandLogo;
-        break;
-      case ASF::Picture::PublisherLogo:
-        type = TagLib::Picture::PublisherLogo;
-        break;
-      default:
-        type = TagLib::Picture::Other;
-        break;
-      }
-      TagLib::Picture picture(asfPicture.picture(),
-                              type,
-                              asfPicture.mimeType(),
-                              asfPicture.description());
-      map.insert(picture);
-    }
-  }
-  return PictureMap(map);
 }
 
 void ASF::Tag::setTitle(const String &value)
@@ -239,94 +154,6 @@ void ASF::Tag::setYear(unsigned int value)
 void ASF::Tag::setTrack(unsigned int value)
 {
   setAttribute("WM/TrackNumber", String::number(value));
-}
-
-void ASF::Tag::setPictures(const PictureMap &l)
-{
-    removeItem("WM/Picture");
-    for(PictureMap::ConstIterator pictureMapIt = l.begin();
-        pictureMapIt != l.end();
-        ++pictureMapIt)
-    {
-        PictureList list = pictureMapIt->second;
-        for( PictureList::ConstIterator pictureListIt = list.begin();
-             pictureListIt != list.end();
-             ++pictureListIt)
-        {
-            const TagLib::Picture picture = (*pictureListIt);
-            ASF::Picture asfPicture;
-            asfPicture.setPicture(picture.data());
-            asfPicture.setMimeType(picture.mime());
-            asfPicture.setDescription(picture.description());
-            switch (picture.type()) {
-            case TagLib::Picture::Other:
-                asfPicture.setType(ASF::Picture::Other);
-                break;
-            case TagLib::Picture::FileIcon:
-                asfPicture.setType(ASF::Picture::FileIcon);
-                break;
-            case TagLib::Picture::OtherFileIcon:
-                asfPicture.setType(ASF::Picture::OtherFileIcon);
-                break;
-            case TagLib::Picture::FrontCover:
-                asfPicture.setType(ASF::Picture::FrontCover);
-                break;
-            case TagLib::Picture::BackCover:
-                asfPicture.setType(ASF::Picture::BackCover);
-                break;
-            case TagLib::Picture::LeafletPage:
-                asfPicture.setType(ASF::Picture::LeafletPage);
-                break;
-            case TagLib::Picture::Media:
-                asfPicture.setType(ASF::Picture::Media);
-                break;
-            case TagLib::Picture::LeadArtist:
-                asfPicture.setType(ASF::Picture::LeadArtist);
-                break;
-            case TagLib::Picture::Artist:
-                asfPicture.setType(ASF::Picture::Artist);
-                break;
-            case TagLib::Picture::Conductor:
-                asfPicture.setType(ASF::Picture::Conductor);
-                break;
-            case TagLib::Picture::Band:
-                asfPicture.setType(ASF::Picture::Band);
-                break;
-            case TagLib::Picture::Composer:
-                asfPicture.setType(ASF::Picture::Composer);
-                break;
-            case TagLib::Picture::Lyricist:
-                asfPicture.setType(ASF::Picture::Lyricist);
-                break;
-            case TagLib::Picture::RecordingLocation:
-                asfPicture.setType(ASF::Picture::RecordingLocation);
-                break;
-            case TagLib::Picture::DuringRecording:
-                asfPicture.setType(ASF::Picture::DuringRecording);
-                break;
-            case TagLib::Picture::DuringPerformance:
-                asfPicture.setType(ASF::Picture::DuringPerformance);
-                break;
-            case TagLib::Picture::MovieScreenCapture:
-                asfPicture.setType(ASF::Picture::MovieScreenCapture);
-                break;
-            case TagLib::Picture::ColouredFish:
-                asfPicture.setType(ASF::Picture::ColouredFish);
-                break;
-            case TagLib::Picture::Illustration:
-                asfPicture.setType(ASF::Picture::Illustration);
-                break;
-            case TagLib::Picture::BandLogo:
-                asfPicture.setType(ASF::Picture::BandLogo);
-                break;
-            case TagLib::Picture::PublisherLogo:
-                asfPicture.setType(ASF::Picture::PublisherLogo);
-                break;
-            }
-            addAttribute("WM/Picture", Attribute(asfPicture));
-        }
-    }
-
 }
 
 ASF::AttributeListMap& ASF::Tag::attributeListMap()
@@ -386,59 +213,64 @@ bool ASF::Tag::isEmpty() const
 
 namespace
 {
-  const char *keyTranslation[][2] = {
-    { "WM/AlbumTitle", "ALBUM" },
-    { "WM/AlbumArtist", "ALBUMARTIST" },
-    { "WM/Composer", "COMPOSER" },
-    { "WM/Writer", "WRITER" },
-    { "WM/Conductor", "CONDUCTOR" },
-    { "WM/ModifiedBy", "REMIXER" },
-    { "WM/Year", "DATE" },
-    { "WM/OriginalReleaseYear", "ORIGINALDATE" },
-    { "WM/Producer", "PRODUCER" },
-    { "WM/ContentGroupDescription", "GROUPING" },
-    { "WM/SubTitle", "SUBTITLE" },
-    { "WM/SetSubTitle", "DISCSUBTITLE" },
-    { "WM/TrackNumber", "TRACKNUMBER" },
-    { "WM/PartOfSet", "DISCNUMBER" },
-    { "WM/Genre", "GENRE" },
-    { "WM/BeatsPerMinute", "BPM" },
-    { "WM/Mood", "MOOD" },
-    { "WM/ISRC", "ISRC" },
-    { "WM/Lyrics", "LYRICS" },
-    { "WM/Media", "MEDIA" },
-    { "WM/Publisher", "LABEL" },
-    { "WM/CatalogNo", "CATALOGNUMBER" },
-    { "WM/Barcode", "BARCODE" },
-    { "WM/EncodedBy", "ENCODEDBY" },
-    { "WM/AlbumSortOrder", "ALBUMSORT" },
-    { "WM/AlbumArtistSortOrder", "ALBUMARTISTSORT" },
-    { "WM/ArtistSortOrder", "ARTISTSORT" },
-    { "WM/TitleSortOrder", "TITLESORT" },
-    { "WM/Script", "SCRIPT" },
-    { "WM/Language", "LANGUAGE" },
-    { "MusicBrainz/Track Id", "MUSICBRAINZ_TRACKID" },
-    { "MusicBrainz/Artist Id", "MUSICBRAINZ_ARTISTID" },
-    { "MusicBrainz/Album Id", "MUSICBRAINZ_ALBUMID" },
-    { "MusicBrainz/Album Artist Id", "MUSICBRAINZ_ALBUMARTISTID" },
-    { "MusicBrainz/Release Group Id", "MUSICBRAINZ_RELEASEGROUPID" },
-    { "MusicBrainz/Work Id", "MUSICBRAINZ_WORKID" },
-    { "MusicIP/PUID", "MUSICIP_PUID" },
-    { "Acoustid/Id", "ACOUSTID_ID" },
-    { "Acoustid/Fingerprint", "ACOUSTID_FINGERPRINT" },
+  constexpr std::array keyTranslation {
+    std::pair("WM/AlbumTitle", "ALBUM"),
+    std::pair("WM/AlbumArtist", "ALBUMARTIST"),
+    std::pair("WM/Composer", "COMPOSER"),
+    std::pair("WM/Writer", "LYRICIST"),
+    std::pair("WM/Conductor", "CONDUCTOR"),
+    std::pair("WM/ModifiedBy", "REMIXER"),
+    std::pair("WM/Year", "DATE"),
+    std::pair("WM/OriginalReleaseYear", "ORIGINALDATE"),
+    std::pair("WM/Producer", "PRODUCER"),
+    std::pair("WM/ContentGroupDescription", "WORK"),
+    std::pair("WM/SubTitle", "SUBTITLE"),
+    std::pair("WM/SetSubTitle", "DISCSUBTITLE"),
+    std::pair("WM/TrackNumber", "TRACKNUMBER"),
+    std::pair("WM/PartOfSet", "DISCNUMBER"),
+    std::pair("WM/Genre", "GENRE"),
+    std::pair("WM/BeatsPerMinute", "BPM"),
+    std::pair("WM/Mood", "MOOD"),
+    std::pair("WM/ISRC", "ISRC"),
+    std::pair("WM/Lyrics", "LYRICS"),
+    std::pair("WM/Media", "MEDIA"),
+    std::pair("WM/Publisher", "LABEL"),
+    std::pair("WM/CatalogNo", "CATALOGNUMBER"),
+    std::pair("WM/Barcode", "BARCODE"),
+    std::pair("WM/EncodedBy", "ENCODEDBY"),
+    std::pair("WM/AlbumSortOrder", "ALBUMSORT"),
+    std::pair("WM/AlbumArtistSortOrder", "ALBUMARTISTSORT"),
+    std::pair("WM/ArtistSortOrder", "ARTISTSORT"),
+    std::pair("WM/TitleSortOrder", "TITLESORT"),
+    std::pair("WM/Script", "SCRIPT"),
+    std::pair("WM/Language", "LANGUAGE"),
+    std::pair("WM/ARTISTS", "ARTISTS"),
+    std::pair("ASIN", "ASIN"),
+    std::pair("MusicBrainz/Track Id", "MUSICBRAINZ_TRACKID"),
+    std::pair("MusicBrainz/Artist Id", "MUSICBRAINZ_ARTISTID"),
+    std::pair("MusicBrainz/Album Id", "MUSICBRAINZ_ALBUMID"),
+    std::pair("MusicBrainz/Album Artist Id", "MUSICBRAINZ_ALBUMARTISTID"),
+    std::pair("MusicBrainz/Album Release Country", "RELEASECOUNTRY"),
+    std::pair("MusicBrainz/Album Status", "RELEASESTATUS"),
+    std::pair("MusicBrainz/Album Type", "RELEASETYPE"),
+    std::pair("MusicBrainz/Release Group Id", "MUSICBRAINZ_RELEASEGROUPID"),
+    std::pair("MusicBrainz/Release Track Id", "MUSICBRAINZ_RELEASETRACKID"),
+    std::pair("MusicBrainz/Work Id", "MUSICBRAINZ_WORKID"),
+    std::pair("MusicIP/PUID", "MUSICIP_PUID"),
+    std::pair("Acoustid/Id", "ACOUSTID_ID"),
+    std::pair("Acoustid/Fingerprint", "ACOUSTID_FINGERPRINT"),
   };
-  const size_t keyTranslationSize = sizeof(keyTranslation) / sizeof(keyTranslation[0]);
 
   String translateKey(const String &key)
   {
-    for(size_t i = 0; i < keyTranslationSize; ++i) {
-      if(key == keyTranslation[i][0])
-        return keyTranslation[i][1];
+    for(const auto &[k, t] : keyTranslation) {
+      if(key == k)
+        return t;
     }
 
     return String();
   }
-}
+}  // namespace
 
 PropertyMap ASF::Tag::properties() const
 {
@@ -457,25 +289,23 @@ PropertyMap ASF::Tag::properties() const
     props["COMMENT"] = d->comment;
   }
 
-  ASF::AttributeListMap::ConstIterator it = d->attributeListMap.begin();
-  for(; it != d->attributeListMap.end(); ++it) {
-    const String key = translateKey(it->first);
+  for(const auto &[k, attributes] : std::as_const(d->attributeListMap)) {
+    const String key = translateKey(k);
     if(!key.isEmpty()) {
-      AttributeList::ConstIterator it2 = it->second.begin();
-      for(; it2 != it->second.end(); ++it2) {
+      for(const auto &attribute : attributes) {
         if(key == "TRACKNUMBER") {
-          if(it2->type() == ASF::Attribute::DWordType)
-            props.insert(key, String::number(it2->toUInt()));
+          if(attribute.type() == ASF::Attribute::DWordType)
+            props.insert(key, String::number(attribute.toUInt()));
           else
-            props.insert(key, it2->toString());
+            props.insert(key, attribute.toString());
         }
         else {
-          props.insert(key, it2->toString());
+          props.insert(key, attribute.toString());
         }
       }
     }
     else {
-      props.unsupportedData().append(it->first);
+      props.unsupportedData().append(k);
     }
   }
   return props;
@@ -483,70 +313,116 @@ PropertyMap ASF::Tag::properties() const
 
 void ASF::Tag::removeUnsupportedProperties(const StringList &props)
 {
-  StringList::ConstIterator it = props.begin();
-  for(; it != props.end(); ++it)
-    d->attributeListMap.erase(*it);
+  for(const auto &prop : props)
+    d->attributeListMap.erase(prop);
 }
 
 PropertyMap ASF::Tag::setProperties(const PropertyMap &props)
 {
   static Map<String, String> reverseKeyMap;
   if(reverseKeyMap.isEmpty()) {
-    int numKeys = sizeof(keyTranslation) / sizeof(keyTranslation[0]);
-    for(int i = 0; i < numKeys; i++) {
-      reverseKeyMap[keyTranslation[i][1]] = keyTranslation[i][0];
+    for(const auto &[k, t] : keyTranslation) {
+      reverseKeyMap[t] = k;
     }
   }
 
-  PropertyMap origProps = properties();
-  PropertyMap::ConstIterator it = origProps.begin();
-  for(; it != origProps.end(); ++it) {
-    if(!props.contains(it->first) || props[it->first].isEmpty()) {
-      if(it->first == "TITLE") {
+  const PropertyMap origProps = properties();
+  for(const auto &[prop, _] : origProps) {
+    if(!props.contains(prop) || props[prop].isEmpty()) {
+      if(prop == "TITLE") {
         d->title.clear();
       }
-      else if(it->first == "ARTIST") {
+      else if(prop == "ARTIST") {
         d->artist.clear();
       }
-      else if(it->first == "COMMENT") {
+      else if(prop == "COMMENT") {
         d->comment.clear();
       }
-      else if(it->first == "COPYRIGHT") {
+      else if(prop == "COPYRIGHT") {
         d->copyright.clear();
       }
       else {
-        d->attributeListMap.erase(reverseKeyMap[it->first]);
+        d->attributeListMap.erase(reverseKeyMap[prop]);
       }
     }
   }
 
   PropertyMap ignoredProps;
-  it = props.begin();
-  for(; it != props.end(); ++it) {
-    if(reverseKeyMap.contains(it->first)) {
-      String name = reverseKeyMap[it->first];
+  for(const auto &[prop, attributes] : props) {
+    if(reverseKeyMap.contains(prop)) {
+      String name = reverseKeyMap[prop];
       removeItem(name);
-      StringList::ConstIterator it2 = it->second.begin();
-      for(; it2 != it->second.end(); ++it2) {
-        addAttribute(name, *it2);
+      for(const auto &attribute : attributes) {
+        addAttribute(name, attribute);
       }
     }
-    else if(it->first == "TITLE") {
-      d->title = it->second.toString();
+    else if(prop == "TITLE") {
+      d->title = attributes.toString();
     }
-    else if(it->first == "ARTIST") {
-      d->artist = it->second.toString();
+    else if(prop == "ARTIST") {
+      d->artist = attributes.toString();
     }
-    else if(it->first == "COMMENT") {
-      d->comment = it->second.toString();
+    else if(prop == "COMMENT") {
+      d->comment = attributes.toString();
     }
-    else if(it->first == "COPYRIGHT") {
-      d->copyright = it->second.toString();
+    else if(prop == "COPYRIGHT") {
+      d->copyright = attributes.toString();
     }
     else {
-      ignoredProps.insert(it->first, it->second);
+      ignoredProps.insert(prop, attributes);
     }
   }
 
   return ignoredProps;
+}
+
+StringList ASF::Tag::complexPropertyKeys() const
+{
+  StringList keys;
+  if(d->attributeListMap.contains("WM/Picture")) {
+    keys.append("PICTURE");
+  }
+  return keys;
+}
+
+List<VariantMap> ASF::Tag::complexProperties(const String &key) const
+{
+  List<VariantMap> properties;
+  const String uppercaseKey = key.upper();
+  if(uppercaseKey == "PICTURE") {
+    const AttributeList pictures = d->attributeListMap.value("WM/Picture");
+    for(const Attribute &attribute : pictures) {
+      ASF::Picture picture = attribute.toPicture();
+      VariantMap property;
+      property.insert("data", picture.picture());
+      property.insert("mimeType", picture.mimeType());
+      property.insert("description", picture.description());
+      property.insert("pictureType",
+        ASF::Picture::typeToString(picture.type()));
+      properties.append(property);
+    }
+  }
+  return properties;
+}
+
+bool ASF::Tag::setComplexProperties(const String &key, const List<VariantMap> &value)
+{
+  const String uppercaseKey = key.upper();
+  if(uppercaseKey == "PICTURE") {
+    removeItem("WM/Picture");;
+
+    for(auto property : value) {
+      ASF::Picture picture;
+      picture.setPicture(property.value("data").value<ByteVector>());
+      picture.setMimeType(property.value("mimeType").value<String>());
+      picture.setDescription(property.value("description").value<String>());
+      picture.setType(ASF::Picture::typeFromString(
+        property.value("pictureType").value<String>()));
+      addAttribute("WM/Picture", Attribute(picture));
+    }
+  }
+  else {
+    return false;
+  }
+  return true;
 }

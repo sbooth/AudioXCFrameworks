@@ -25,8 +25,9 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include <tbytevector.h>
-#include <tbytevectorlist.h>
+
+#include "tbytevector.h"
+#include "tbytevectorlist.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 using namespace std;
@@ -64,9 +65,9 @@ public:
     CPPUNIT_ASSERT(ByteVectorList::split(s2, " ").size() == 1);
 
     CPPUNIT_ASSERT(ByteVector().isEmpty());
-    CPPUNIT_ASSERT_EQUAL((size_t)0, ByteVector().size());
+    CPPUNIT_ASSERT_EQUAL(0U, ByteVector().size());
     CPPUNIT_ASSERT(ByteVector("asdf").clear().isEmpty());
-    CPPUNIT_ASSERT_EQUAL((size_t)0, ByteVector("asdf").clear().size());
+    CPPUNIT_ASSERT_EQUAL(0U, ByteVector("asdf").clear().size());
     CPPUNIT_ASSERT_EQUAL(ByteVector(), ByteVector("asdf").clear());
 
     ByteVector i("blah blah");
@@ -81,58 +82,58 @@ public:
 
   void testFind1()
   {
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find("SggO"));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find("SggO", 0));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find("SggO", 1));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find("SggO", 2));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find("SggO", 3));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find("SggO", 4));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find("SggO", 5));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find("SggO", 6));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find("SggO", 7));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find("SggO", 8));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find("SggO"));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find("SggO", 0));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find("SggO", 1));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find("SggO", 2));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find("SggO", 3));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find("SggO", 4));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find("SggO", 5));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find("SggO", 6));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find("SggO", 7));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find("SggO", 8));
 
     // Intentional out-of-bounds access.
     ByteVector v("0123456789x");
     v.resize(10);
     v.data()[10] = 'x';
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), v.find("789x", 7));
+    CPPUNIT_ASSERT_EQUAL(-1, v.find("789x", 7));
   }
 
   void testFind2()
   {
-    CPPUNIT_ASSERT_EQUAL((size_t)0, ByteVector("\x01", 1).find("\x01"));
-    CPPUNIT_ASSERT_EQUAL((size_t)0, ByteVector("\x01\x02", 2).find("\x01\x02"));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("\x01", 1).find("\x02"));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("\x01\x02", 2).find("\x01\x03"));
+    CPPUNIT_ASSERT_EQUAL(0, ByteVector("\x01", 1).find("\x01"));
+    CPPUNIT_ASSERT_EQUAL(0, ByteVector("\x01\x02", 2).find("\x01\x02"));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("\x01", 1).find("\x02"));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("\x01\x02", 2).find("\x01\x03"));
   }
 
   void testFind3()
   {
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find('S'));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find('S', 0));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find('S', 1));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find('S', 2));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find('S', 3));
-    CPPUNIT_ASSERT_EQUAL((size_t)4, ByteVector("....SggO."). find('S', 4));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find('S', 5));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find('S', 6));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find('S', 7));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), ByteVector("....SggO."). find('S', 8));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find('S'));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find('S', 0));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find('S', 1));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find('S', 2));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find('S', 3));
+    CPPUNIT_ASSERT_EQUAL(4, ByteVector("....SggO."). find('S', 4));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find('S', 5));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find('S', 6));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find('S', 7));
+    CPPUNIT_ASSERT_EQUAL(-1, ByteVector("....SggO."). find('S', 8));
   }
 
   void testRfind1()
   {
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 0));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 1));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 2));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 3));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 4));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 5));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 6));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 7));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS", 8));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind("OggS"));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 0));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 1));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 2));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 3));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 4));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 5));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 6));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 7));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS", 8));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind("OggS"));
   }
 
   void testRfind2()
@@ -143,32 +144,32 @@ public:
     ByteVector r3("OggS******OggS");
     ByteVector r4("OggS*OggS*OggS");
 
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), r0.find("OggS"));
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), r0.rfind("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)0, r1.find("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)0, r1.rfind("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)10, r2.find("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)10, r2.rfind("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)0, r3.find("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)10, r3.rfind("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)10, r4.rfind("OggS"));
-    CPPUNIT_ASSERT_EQUAL((size_t)10, r4.rfind("OggS", 0));
-    CPPUNIT_ASSERT_EQUAL((size_t)5, r4.rfind("OggS", 7));
-    CPPUNIT_ASSERT_EQUAL((size_t)10, r4.rfind("OggS", 12));
+    CPPUNIT_ASSERT_EQUAL(-1, r0.find("OggS"));
+    CPPUNIT_ASSERT_EQUAL(-1, r0.rfind("OggS"));
+    CPPUNIT_ASSERT_EQUAL(0, r1.find("OggS"));
+    CPPUNIT_ASSERT_EQUAL(0, r1.rfind("OggS"));
+    CPPUNIT_ASSERT_EQUAL(10, r2.find("OggS"));
+    CPPUNIT_ASSERT_EQUAL(10, r2.rfind("OggS"));
+    CPPUNIT_ASSERT_EQUAL(0, r3.find("OggS"));
+    CPPUNIT_ASSERT_EQUAL(10, r3.rfind("OggS"));
+    CPPUNIT_ASSERT_EQUAL(10, r4.rfind("OggS"));
+    CPPUNIT_ASSERT_EQUAL(10, r4.rfind("OggS", 0));
+    CPPUNIT_ASSERT_EQUAL(5, r4.rfind("OggS", 7));
+    CPPUNIT_ASSERT_EQUAL(10, r4.rfind("OggS", 12));
   }
 
   void testRfind3()
   {
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 0));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 1));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 2));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 3));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 4));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 5));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 6));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 7));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O', 8));
-    CPPUNIT_ASSERT_EQUAL((size_t)1, ByteVector(".OggS....").rfind('O'));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 0));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 1));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 2));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 3));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 4));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 5));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 6));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 7));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O', 8));
+    CPPUNIT_ASSERT_EQUAL(1, ByteVector(".OggS....").rfind('O'));
   }
 
   void testToHex()
@@ -182,41 +183,60 @@ public:
   {
     const ByteVector data("\x00\xff\x01\xff\x00\xff\x01\xff\x00\xff\x01\xff\x00\xff", 14);
 
-    CPPUNIT_ASSERT_EQUAL((short)0x00ff, data.toInt16BE(0));
-    CPPUNIT_ASSERT_EQUAL((short)0xff00, data.toInt16LE(0));
-    CPPUNIT_ASSERT_EQUAL((short)0xff01, data.toInt16BE(5));
-    CPPUNIT_ASSERT_EQUAL((short)0x01ff, data.toInt16LE(5));
-    CPPUNIT_ASSERT_EQUAL((short)0xff, data.toInt16BE(13));
-    CPPUNIT_ASSERT_EQUAL((short)0xff, data.toInt16LE(13));
+    CPPUNIT_ASSERT_EQUAL(static_cast<short>(0x00ff), data.toShort());
+    CPPUNIT_ASSERT_EQUAL(static_cast<short>(0xff00), data.toShort(false));
+    CPPUNIT_ASSERT_EQUAL(static_cast<short>(0xff01), data.toShort(5U));
+    CPPUNIT_ASSERT_EQUAL(static_cast<short>(0x01ff), data.toShort(5U, false));
+    CPPUNIT_ASSERT_EQUAL(static_cast<short>(0xff), data.toShort(13U));
+    CPPUNIT_ASSERT_EQUAL(static_cast<short>(0xff), data.toShort(13U, false));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromShort(0x00ff), ByteVector("\x00\xff", 2));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromShort(0x00ff, false), ByteVector("\xff\x00", 2));
 
-    CPPUNIT_ASSERT_EQUAL((unsigned short)0x00ff, data.toUInt16BE(0));
-    CPPUNIT_ASSERT_EQUAL((unsigned short)0xff00, data.toUInt16LE(0));
-    CPPUNIT_ASSERT_EQUAL((unsigned short)0xff01, data.toUInt16BE(5));
-    CPPUNIT_ASSERT_EQUAL((unsigned short)0x01ff, data.toUInt16LE(5));
-    CPPUNIT_ASSERT_EQUAL((unsigned short)0xff, data.toUInt16BE(13));
-    CPPUNIT_ASSERT_EQUAL((unsigned short)0xff, data.toUInt16LE(13));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0x00ff), data.toUShort());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0xff00), data.toUShort(false));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0xff01), data.toUShort(5U));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0x01ff), data.toUShort(5U, false));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0xff), data.toUShort(13U));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned short>(0xff), data.toUShort(13U, false));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromUShort(0xff00), ByteVector("\xff\x00", 2));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromUShort(0xff00, false), ByteVector("\x00\xff", 2));
 
-    CPPUNIT_ASSERT_EQUAL(0x00ff01ffU, data.toUInt32BE(0));
-    CPPUNIT_ASSERT_EQUAL(0xff01ff00U, data.toUInt32LE(0));
-    CPPUNIT_ASSERT_EQUAL(0xff01ff00U, data.toUInt32BE(5));
-    CPPUNIT_ASSERT_EQUAL(0x00ff01ffU, data.toUInt32LE(5));
-    CPPUNIT_ASSERT_EQUAL(0x00ffU, data.toUInt32BE(12));
-    CPPUNIT_ASSERT_EQUAL(0xff00U, data.toUInt32LE(12));
+    CPPUNIT_ASSERT_EQUAL(0x00ff01ffU, data.toUInt());
+    CPPUNIT_ASSERT_EQUAL(0xff01ff00U, data.toUInt(false));
+    CPPUNIT_ASSERT_EQUAL(0xff01ff00U, data.toUInt(5U));
+    CPPUNIT_ASSERT_EQUAL(0x00ff01ffU, data.toUInt(5U, false));
+    CPPUNIT_ASSERT_EQUAL(0x00ffU, data.toUInt(12U));
+    CPPUNIT_ASSERT_EQUAL(0xff00U, data.toUInt(12U, false));
 
-    CPPUNIT_ASSERT_EQUAL(0x00ff01U, data.toUInt24BE(0));
-    CPPUNIT_ASSERT_EQUAL(0x01ff00U, data.toUInt24LE(0));
-    CPPUNIT_ASSERT_EQUAL(0xff01ffU, data.toUInt24BE(5));
-    CPPUNIT_ASSERT_EQUAL(0xff01ffU, data.toUInt24LE(5));
-    CPPUNIT_ASSERT_EQUAL(0x00ffU, data.toUInt24BE(12));
-    CPPUNIT_ASSERT_EQUAL(0xff00U, data.toUInt24LE(12));
+    CPPUNIT_ASSERT_EQUAL(0x00ff01U, data.toUInt(0U, 3U));
+    CPPUNIT_ASSERT_EQUAL(0x01ff00U, data.toUInt(0U, 3U, false));
+    CPPUNIT_ASSERT_EQUAL(0xff01ffU, data.toUInt(5U, 3U));
+    CPPUNIT_ASSERT_EQUAL(0xff01ffU, data.toUInt(5U, 3U, false));
+    CPPUNIT_ASSERT_EQUAL(0x00ffU, data.toUInt(12U, 3U));
+    CPPUNIT_ASSERT_EQUAL(0xff00U, data.toUInt(12U, 3U, false));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromUInt(0xff00ff00), ByteVector("\xff\x00\xff\x00", 4));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromUInt(0xff00ff00, false), ByteVector("\x00\xff\x00\xff", 4));
 
-    CPPUNIT_ASSERT_EQUAL((long long)0x00ff01ff00ff01ffULL, data.toInt64BE(0));
-    CPPUNIT_ASSERT_EQUAL((long long)0xff01ff00ff01ff00ULL, data.toInt64LE(0));
-    CPPUNIT_ASSERT_EQUAL((long long)0xff01ff00ff01ff00ULL, data.toInt64BE(5));
-    CPPUNIT_ASSERT_EQUAL((long long)0x00ff01ff00ff01ffULL, data.toInt64LE(5));
-    CPPUNIT_ASSERT_EQUAL((long long)0x00ffU, data.toInt64BE(12));
-    CPPUNIT_ASSERT_EQUAL((long long)0xff00U, data.toInt64LE(12));
-}
+    CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0x00ff01ff00ff01ffULL), data.toLongLong());
+    CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0xff01ff00ff01ff00ULL), data.toLongLong(false));
+    CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0xff01ff00ff01ff00ULL), data.toLongLong(5U));
+    CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0x00ff01ff00ff01ffULL), data.toLongLong(5U, false));
+    CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0x00ffU), data.toLongLong(12U));
+    CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0xff00U), data.toLongLong(12U, false));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromLongLong(0x00ff01ff00ff01ff), ByteVector("\x00\xff\x01\xff\x00\xff\x01\xff", 8));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromLongLong(0x00ff01ff00ff01ff, false), ByteVector("\xff\x01\xff\x00\xff\x01\xff\x00", 8));
+
+    const ByteVector data2("\xff\x01\xff\x00\xff\x01\xff\x00\xff\x01\xff\x00\xff\x01", 14);
+    CPPUNIT_ASSERT_EQUAL(0xff01ff00ff01ff00ULL, data2.toULongLong());
+    CPPUNIT_ASSERT_EQUAL(0x00ff01ff00ff01ffULL, data2.toULongLong(false));
+    CPPUNIT_ASSERT_EQUAL(0x01ff00ff01ff00ffULL, data2.toULongLong(5U));
+    CPPUNIT_ASSERT_EQUAL(0xff00ff01ff00ff01ULL, data2.toULongLong(5U, false));
+    CPPUNIT_ASSERT_EQUAL(0xff01ULL, data2.toULongLong(12U));
+    CPPUNIT_ASSERT_EQUAL(0x01ffULL, data2.toULongLong(12U, false));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromULongLong(0xff01ff00ff01ff00ULL), ByteVector("\xff\x01\xff\x00\xff\x01\xff\x00", 8));
+    CPPUNIT_ASSERT_EQUAL(ByteVector::fromULongLong(0xff01ff00ff01ff00ULL, false), ByteVector("\x00\xff\x01\xff\x00\xff\x01\xff", 8));
+  }
+
 
   void testFloatingPointConversion()
   {
@@ -357,8 +377,8 @@ public:
     ByteVector v1("taglib");
     ByteVector v2 = v1;
 
-    ByteVector::Iterator it1 = v1.begin();
-    ByteVector::Iterator it2 = v2.begin();
+    auto it1 = v1.begin();
+    auto it2 = v2.begin();
 
     CPPUNIT_ASSERT_EQUAL('t', *it1);
     CPPUNIT_ASSERT_EQUAL('t', *it2);
@@ -371,8 +391,8 @@ public:
     CPPUNIT_ASSERT_EQUAL(ByteVector("taglib"), v1);
     CPPUNIT_ASSERT_EQUAL(ByteVector("taglIb"), v2);
 
-    ByteVector::ReverseIterator it3 = v1.rbegin();
-    ByteVector::ReverseIterator it4 = v2.rbegin();
+    auto it3 = v1.rbegin();
+    auto it4 = v2.rbegin();
 
     CPPUNIT_ASSERT_EQUAL('b', *it3);
     CPPUNIT_ASSERT_EQUAL('b', *it4);
@@ -404,24 +424,24 @@ public:
     ByteVector a = ByteVector("0123456789");
     ByteVector b = a.mid(3, 4);
     b.resize(6, 'A');
-    CPPUNIT_ASSERT_EQUAL((size_t)6, b.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(6), b.size());
     CPPUNIT_ASSERT_EQUAL('6', b[3]);
     CPPUNIT_ASSERT_EQUAL('A', b[4]);
     CPPUNIT_ASSERT_EQUAL('A', b[5]);
     b.resize(10, 'B');
-    CPPUNIT_ASSERT_EQUAL((size_t)10, b.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(10), b.size());
     CPPUNIT_ASSERT_EQUAL('6', b[3]);
     CPPUNIT_ASSERT_EQUAL('B', b[6]);
     CPPUNIT_ASSERT_EQUAL('B', b[9]);
     b.resize(3, 'C');
-    CPPUNIT_ASSERT_EQUAL((size_t)3, b.size());
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), b.find('C'));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(3), b.size());
+    CPPUNIT_ASSERT_EQUAL(-1, b.find('C'));
     b.resize(3);
-    CPPUNIT_ASSERT_EQUAL((size_t)3, b.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(3), b.size());
 
     // Check if a and b were properly detached.
 
-    CPPUNIT_ASSERT_EQUAL((size_t)10, a.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(10), a.size());
     CPPUNIT_ASSERT_EQUAL('3', a[3]);
     CPPUNIT_ASSERT_EQUAL('5', a[5]);
 
@@ -429,18 +449,18 @@ public:
 
     ByteVector c = ByteVector("0123456789").mid(3, 4);
     c.resize(6, 'A');
-    CPPUNIT_ASSERT_EQUAL(size_t(6), c.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(6), c.size());
     CPPUNIT_ASSERT_EQUAL('6', c[3]);
     CPPUNIT_ASSERT_EQUAL('A', c[4]);
     CPPUNIT_ASSERT_EQUAL('A', c[5]);
     c.resize(10, 'B');
-    CPPUNIT_ASSERT_EQUAL((size_t)10, c.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(10), c.size());
     CPPUNIT_ASSERT_EQUAL('6', c[3]);
     CPPUNIT_ASSERT_EQUAL('B', c[6]);
     CPPUNIT_ASSERT_EQUAL('B', c[9]);
     c.resize(3, 'C');
-    CPPUNIT_ASSERT_EQUAL((size_t)3, c.size());
-    CPPUNIT_ASSERT_EQUAL(ByteVector::npos(), c.find('C'));
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(3), c.size());
+    CPPUNIT_ASSERT_EQUAL(-1, c.find('C'));
   }
 
   void testAppend1()
@@ -524,12 +544,12 @@ public:
     CPPUNIT_ASSERT_EQUAL(t2, ByteVector::fromBase64(s2.toBase64()));
     CPPUNIT_ASSERT_EQUAL(t3, ByteVector::fromBase64(s3.toBase64()));
 
-    ByteVector all((size_t)256, '\0');
+    ByteVector all(static_cast<unsigned int>(256));
 
     // in order
     {
       for(int i = 0; i < 256; i++){
-        all[i]=(unsigned char)i;
+        all[i]=static_cast<unsigned char>(i);
         }
       ByteVector b64 = all.toBase64();
       ByteVector original = ByteVector::fromBase64(b64);
@@ -539,7 +559,7 @@ public:
     // reverse
     {
       for(int i = 0; i < 256; i++){
-        all[i]=(unsigned char)255-i;
+        all[i]=static_cast<unsigned char>(255)-i;
         }
       ByteVector b64 = all.toBase64();
       ByteVector original = ByteVector::fromBase64(b64);
@@ -559,7 +579,7 @@ public:
     // all ones
     {
       for(int i = 0; i < 256; i++){
-        all[i]=(unsigned char)0xff;
+        all[i]=static_cast<unsigned char>(0xff);
         }
       ByteVector b64 = all.toBase64();
       ByteVector original = ByteVector::fromBase64(b64);
@@ -596,4 +616,3 @@ public:
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestByteVector);
-

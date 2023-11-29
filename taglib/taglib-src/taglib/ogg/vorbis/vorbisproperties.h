@@ -26,12 +26,23 @@
 #ifndef TAGLIB_VORBISPROPERTIES_H
 #define TAGLIB_VORBISPROPERTIES_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/audioproperties.h>
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
 
+/*
+ * This is just to make this appear to be in the Ogg namespace in the
+ * documentation.  The typedef below will make this work with the current code.
+ * In the next BIC version of TagLib this will be really moved into the Ogg
+ * namespace.
+ * Kept for source compatibility, the typedef in vorbisproperties.h was not
+ * correct in TagLib 1.
+ */
+
+#ifdef DOXYGEN
   namespace Ogg {
+#endif
 
   namespace Vorbis {
 
@@ -44,60 +55,44 @@ namespace TagLib {
      * API.
      */
 
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+    class TAGLIB_EXPORT Properties : public AudioProperties
     {
     public:
       /*!
-       * Creates an instance of Vorbis::Properties with the data read from the
+       * Create an instance of Vorbis::Properties with the data read from the
        * Vorbis::File \a file.
        */
-      AudioProperties(File *file, ReadStyle style = Average);
+      Properties(File *file, ReadStyle style = Average);
 
       /*!
        * Destroys this VorbisProperties instance.
        */
-      virtual ~AudioProperties();
+      ~Properties() override;
 
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \note This method is just an alias of lengthInSeconds().
-       *
-       * \deprecated
-       */
-      virtual int length() const;
-
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \see lengthInMilliseconds()
-       */
-      virtual int lengthInSeconds() const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
       /*!
        * Returns the length of the file in milliseconds.
        *
        * \see lengthInSeconds()
        */
-      virtual int lengthInMilliseconds() const;
+      int lengthInMilliseconds() const override;
 
       /*!
        * Returns the average bit rate of the file in kb/s.
        */
-      virtual int bitrate() const;
+      int bitrate() const override;
 
       /*!
        * Returns the sample rate in Hz.
        */
-      virtual int sampleRate() const;
+      int sampleRate() const override;
 
       /*!
        * Returns the number of audio channels.
        */
-      virtual int channels() const;
-      virtual String toString() const;
+      int channels() const override;
 
       /*!
        * Returns the Vorbis version, currently "0" (as specified by the spec).
@@ -107,24 +102,18 @@ namespace TagLib {
       /*!
        * Returns the maximum bitrate as read from the Vorbis identification
        * header.
-       *
-       * \note The value is in bits per second unlike bitrate().
        */
       int bitrateMaximum() const;
 
       /*!
        * Returns the nominal bitrate as read from the Vorbis identification
        * header.
-       *
-       * \note The value is in bits per second unlike bitrate().
        */
       int bitrateNominal() const;
 
       /*!
        * Returns the minimum bitrate as read from the Vorbis identification
        * header.
-       *
-       * \note The value is in bits per second unlike bitrate().
        */
       int bitrateMinimum() const;
 
@@ -132,12 +121,28 @@ namespace TagLib {
       void read(File *file);
 
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
+  }  // namespace Vorbis
 
-  }
+/*
+ * To keep compatibility with the current version put Vorbis in the Ogg namespace
+ * only in the docs and provide a typedef to make it work.  In the next BIC
+ * version this will be removed and it will only exist in the Ogg namespace.
+ * Kept for source compatibility, the typedef in vorbisproperties.h was not
+ * correct in TagLib 1.
+ */
 
-}
+#ifdef DOXYGEN
+  }
+#else
+  namespace Ogg {
+    namespace Vorbis {
+      using Properties = TagLib::Vorbis::Properties;
+    }
+  }
+#endif
+
+}  // namespace TagLib
 
 #endif

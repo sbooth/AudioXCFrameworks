@@ -26,8 +26,8 @@
 #ifndef TAGLIB_ID3V2SYNCHDATA_H
 #define TAGLIB_ID3V2SYNCHDATA_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/taglib.h>
+#include "tbytevector.h"
+#include "taglib.h"
 
 namespace TagLib {
 
@@ -62,9 +62,9 @@ namespace TagLib {
        * Convert the data from unsynchronized data to its original format.
        */
       TAGLIB_EXPORT ByteVector decode(const ByteVector &input);
-    }
+    }  // namespace SynchData
 
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 
 #endif

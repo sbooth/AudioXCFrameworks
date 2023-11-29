@@ -26,8 +26,8 @@
 #ifndef TAGLIB_RIFFFILE_H
 #define TAGLIB_RIFFFILE_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/tfile.h>
+#include "tfile.h"
+#include "taglib_export.h"
 
 namespace TagLib {
 
@@ -49,11 +49,17 @@ namespace TagLib {
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
     protected:
-      File(FileName file, ByteOrder endianness);
-      File(IOStream *stream, ByteOrder endianness);
+
+      enum Endianness { BigEndian, LittleEndian };
+
+      File(FileName file, Endianness endianness);
+      File(IOStream *stream, Endianness endianness);
 
       /*!
        * \return The size of the main RIFF chunk.
@@ -63,12 +69,12 @@ namespace TagLib {
       /*!
        * \return The number of chunks in the file.
        */
-      size_t chunkCount() const;
+      unsigned int chunkCount() const;
 
       /*!
        * \return The offset within the file for the selected chunk number.
        */
-      long long chunkOffset(unsigned int i) const;
+      offset_t chunkOffset(unsigned int i) const;
 
       /*!
        * \return The size of the chunk data.
@@ -137,12 +143,9 @@ namespace TagLib {
       void removeChunk(const ByteVector &name);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
-
       void read();
       void writeChunk(const ByteVector &name, const ByteVector &data,
-                      long long offset, size_t replace = 0);
+                      offset_t offset, unsigned long replace = 0);
 
       /*!
        * Update the global RIFF size based on the current internal structure.
@@ -150,9 +153,9 @@ namespace TagLib {
       void updateGlobalSize();
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace RIFF
+}  // namespace TagLib
 
 #endif

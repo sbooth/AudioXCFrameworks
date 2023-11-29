@@ -26,9 +26,11 @@
 #ifndef TAGLIB_FILE_H
 #define TAGLIB_FILE_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/tag.h>
-#include <taglib/tiostream.h>
+#include "tbytevector.h"
+#include "tiostream.h"
+#include "taglib_export.h"
+#include "taglib.h"
+#include "tag.h"
 
 namespace TagLib {
 
@@ -61,9 +63,29 @@ namespace TagLib {
     };
 
     /*!
+     * Specify which tags to strip either explicitly, or on save.
+     */
+    enum StripTags {
+      StripNone,  //!< Don't strip any tags
+      StripOthers //!< Strip all tags not explicitly referenced in method call
+    };
+
+    /*!
+     * Used to specify if when saving files, if values between different tag
+     * types should be synchronized.
+     */
+    enum DuplicateTags {
+      Duplicate,     //!< Synchronize values between different tag types
+      DoNotDuplicate //!< Do not synchronize values between different tag types
+    };
+
+    /*!
      * Destroys this File instance.
      */
     virtual ~File();
+
+    File(const File &) = delete;
+    File &operator=(const File &) = delete;
 
     /*!
      * Returns the file name in the local file system encoding.
@@ -100,7 +122,7 @@ namespace TagLib {
      * Sets the tags of this File to those specified in \a properties. Calls the
      * according specialization method in the subclasses of File to do the translation
      * into the format-specific details.
-     * If some value(s) could not be written imported to the specific metadata format,
+     * If some value(s) could not be written to the specific metadata format,
      * the returned PropertyMap will contain those value(s). Otherwise it will be empty,
      * indicating that no problems occurred.
      * With file types that support several tag formats (for instance, MP3 files can have
@@ -110,6 +132,28 @@ namespace TagLib {
      * See the documentation of the subclass implementations for detailed descriptions.
      */
     virtual PropertyMap setProperties(const PropertyMap &properties);
+
+    /*!
+     * Get the keys of complex properties, i.e. properties which cannot be
+     * represented simply by a string.
+     * The default implementation calls Tag::complexPropertyKeys().
+     * \see Tag::complexPropertyKeys()
+     */
+    virtual StringList complexPropertyKeys() const;
+
+    /*!
+     * Get the complex properties for a given \a key.
+     * The default implementation calls Tag::complexProperties().
+     * \see Tag::complexProperties()
+     */
+    virtual List<VariantMap> complexProperties(const String &key) const;
+
+    /*!
+     * Set all complex properties for \a key using the variant maps \a value.
+     * The default implementation calls Tag::setComplexProperties().
+     * \see Tag::setComplexProperties()
+     */
+    virtual bool setComplexProperties(const String &key, const List<VariantMap> &value);
 
     /*!
      * Returns a pointer to this file's audio properties.  This should be
@@ -158,9 +202,9 @@ namespace TagLib {
      * \note This has the practical limitation that \a pattern can not be longer
      * than the buffer size used by readBlock().  Currently this is 1024 bytes.
      */
-    long long find(const ByteVector &pattern,
-                   long long fromOffset = 0,
-                   const ByteVector &before = ByteVector());
+    offset_t find(const ByteVector &pattern,
+              offset_t fromOffset = 0,
+              const ByteVector &before = ByteVector());
 
     /*!
      * Returns the offset in the file that \a pattern occurs at or -1 if it can
@@ -174,9 +218,9 @@ namespace TagLib {
      * \note This has the practical limitation that \a pattern can not be longer
      * than the buffer size used by readBlock().  Currently this is 1024 bytes.
      */
-    long long rfind(const ByteVector &pattern,
-                    long long fromOffset = 0,
-                    const ByteVector &before = ByteVector());
+    offset_t rfind(const ByteVector &pattern,
+               offset_t fromOffset = 0,
+               const ByteVector &before = ByteVector());
 
     /*!
      * Insert \a data at position \a start in the file overwriting \a replace
@@ -185,7 +229,7 @@ namespace TagLib {
      * \note This method is slow since it requires rewriting all of the file
      * after the insertion point.
      */
-    void insert(const ByteVector &data, long long start = 0, size_t replace = 0);
+    void insert(const ByteVector &data, offset_t start = 0, size_t replace = 0);
 
     /*!
      * Removes a block of the file starting a \a start and continuing for
@@ -194,7 +238,7 @@ namespace TagLib {
      * \note This method is slow since it involves rewriting all of the file
      * after the removed portion.
      */
-    void removeBlock(long long start = 0, size_t length = 0);
+    void removeBlock(offset_t start = 0, size_t length = 0);
 
     /*!
      * Returns true if the file is read only (or if the file can not be opened).
@@ -218,7 +262,7 @@ namespace TagLib {
      *
      * \see Position
      */
-    void seek(long long offset, Position p = Beginning);
+    void seek(offset_t offset, Position p = Beginning);
 
     /*!
      * Reset the end-of-file and error flags on the file.
@@ -228,26 +272,22 @@ namespace TagLib {
     /*!
      * Returns the current offset within the file.
      */
-    long long tell() const;
+    offset_t tell() const;
 
     /*!
      * Returns the length of the file.
      */
-    long long length();
-
-    /*!
-     * Returns description of the audio file and its tags.
-     */
-    virtual String toString() const;
+    offset_t length();
 
   protected:
     /*!
-     * Construct a File object and opens the file specified by \a fileName.
+     * Construct a File object and opens the \a file.  \a file should be a
+     * be a C-string in the local file system encoding.
      *
      * \note Constructor is protected since this class should only be
      * instantiated through subclasses.
      */
-    explicit File(const FileName &fileName);
+    File(FileName file);
 
     /*!
      * Construct a File object and use the \a stream instance.
@@ -258,7 +298,7 @@ namespace TagLib {
      * \note Constructor is protected since this class should only be
      * instantiated through subclasses.
      */
-    explicit File(IOStream *stream);
+    File(IOStream *stream);
 
     /*!
      * Marks the file as valid or invalid.
@@ -270,22 +310,18 @@ namespace TagLib {
     /*!
      * Truncates the file to a \a length.
      */
-    void truncate(long long length);
+    void truncate(offset_t length);
 
     /*!
      * Returns the buffer size that is used for internal buffering.
      */
-    static size_t bufferSize();
+    static unsigned int bufferSize();
 
   private:
-    // Noncopyable. Derived classes as well.
-    File(const File &);
-    File &operator=(const File &);
-
     class FilePrivate;
-    FilePrivate *d;
+    std::unique_ptr<FilePrivate> d;
   };
 
-}
+}  // namespace TagLib
 
 #endif

@@ -24,13 +24,17 @@
  ***************************************************************************/
 
 #include <string>
-#include <stdio.h>
-#include <tag.h>
-#include <mp4tag.h>
-#include <tbytevectorlist.h>
-#include <tpropertymap.h>
-#include <mp4atom.h>
-#include <mp4file.h>
+#include <cstdio>
+
+#include "tbytevectorlist.h"
+#include "tbytevectorstream.h"
+#include "tpropertymap.h"
+#include "tag.h"
+#include "mp4tag.h"
+#include "mp4atom.h"
+#include "mp4file.h"
+#include "mp4itemfactory.h"
+#include "plainfile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -41,7 +45,10 @@ class TestMP4 : public CppUnit::TestFixture
 {
   CPPUNIT_TEST_SUITE(TestMP4);
   CPPUNIT_TEST(testPropertiesAAC);
+  CPPUNIT_TEST(testPropertiesAACWithoutBitrate);
   CPPUNIT_TEST(testPropertiesALAC);
+  CPPUNIT_TEST(testPropertiesALACWithoutBitrate);
+  CPPUNIT_TEST(testPropertiesAACWithoutLength);
   CPPUNIT_TEST(testPropertiesM4V);
   CPPUNIT_TEST(testFreeForm);
   CPPUNIT_TEST(testCheckValid);
@@ -55,10 +62,15 @@ class TestMP4 : public CppUnit::TestFixture
   CPPUNIT_TEST(testCovrWrite);
   CPPUNIT_TEST(testCovrRead2);
   CPPUNIT_TEST(testProperties);
+  CPPUNIT_TEST(testPropertiesAllSupported);
   CPPUNIT_TEST(testPropertiesMovement);
   CPPUNIT_TEST(testFuzzedFile);
   CPPUNIT_TEST(testRepeatedSave);
   CPPUNIT_TEST(testWithZeroLengthAtom);
+  CPPUNIT_TEST(testEmptyValuesRemoveItems);
+  CPPUNIT_TEST(testRemoveMetadata);
+  CPPUNIT_TEST(testNonFullMetaAtom);
+  CPPUNIT_TEST(testItemFactory);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -67,7 +79,6 @@ public:
   {
     MP4::File f(TEST_FILE_PATH_C("has-tags.m4a"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3708, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->bitrate());
@@ -75,14 +86,35 @@ public:
     CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
     CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
     CPPUNIT_ASSERT_EQUAL(false, f.audioProperties()->isEncrypted());
-    CPPUNIT_ASSERT_EQUAL(MP4::AudioProperties::AAC, f.audioProperties()->codec());
+    CPPUNIT_ASSERT_EQUAL(MP4::Properties::AAC, f.audioProperties()->codec());
+  }
+
+  void testPropertiesAACWithoutBitrate()
+  {
+    ByteVector aacData = PlainFile(TEST_FILE_PATH_C("has-tags.m4a")).readAll();
+    CPPUNIT_ASSERT_GREATER(1960U, aacData.size());
+    CPPUNIT_ASSERT_EQUAL(ByteVector("mp4a"), aacData.mid(1890, 4));
+    // Set the bitrate to zero
+    for (int offset = 1956; offset < 1960; ++offset) {
+      aacData[offset] = 0;
+    }
+    ByteVectorStream aacStream(aacData);
+    MP4::File f(&aacStream);
+    CPPUNIT_ASSERT(f.audioProperties());
+    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
+    CPPUNIT_ASSERT_EQUAL(3708, f.audioProperties()->lengthInMilliseconds());
+    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->bitrate());
+    CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->channels());
+    CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
+    CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
+    CPPUNIT_ASSERT_EQUAL(false, f.audioProperties()->isEncrypted());
+    CPPUNIT_ASSERT_EQUAL(MP4::Properties::AAC, f.audioProperties()->codec());
   }
 
   void testPropertiesALAC()
   {
     MP4::File f(TEST_FILE_PATH_C("empty_alac.m4a"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3705, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->bitrate());
@@ -90,14 +122,57 @@ public:
     CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
     CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
     CPPUNIT_ASSERT_EQUAL(false, f.audioProperties()->isEncrypted());
-    CPPUNIT_ASSERT_EQUAL(MP4::AudioProperties::ALAC, f.audioProperties()->codec());
+    CPPUNIT_ASSERT_EQUAL(MP4::Properties::ALAC, f.audioProperties()->codec());
+  }
+
+  void testPropertiesALACWithoutBitrate()
+  {
+    ByteVector alacData = PlainFile(TEST_FILE_PATH_C("empty_alac.m4a")).readAll();
+    CPPUNIT_ASSERT_GREATER(474U, alacData.size());
+    CPPUNIT_ASSERT_EQUAL(ByteVector("alac"), alacData.mid(446, 4));
+    // Set the bitrate to zero
+    for (int offset = 470; offset < 474; ++offset) {
+      alacData[offset] = 0;
+    }
+    ByteVectorStream alacStream(alacData);
+    MP4::File f(&alacStream);
+    CPPUNIT_ASSERT(f.audioProperties());
+    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
+    CPPUNIT_ASSERT_EQUAL(3705, f.audioProperties()->lengthInMilliseconds());
+    CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->bitrate());
+    CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->channels());
+    CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
+    CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
+    CPPUNIT_ASSERT_EQUAL(false, f.audioProperties()->isEncrypted());
+    CPPUNIT_ASSERT_EQUAL(MP4::Properties::ALAC, f.audioProperties()->codec());
+  }
+
+  void testPropertiesAACWithoutLength()
+  {
+    ByteVector m4aData = PlainFile(TEST_FILE_PATH_C("no-tags.m4a")).readAll();
+    CPPUNIT_ASSERT_EQUAL(2898U, m4aData.size());
+    CPPUNIT_ASSERT_EQUAL(ByteVector("mdhd"), m4aData.mid(1749, 4));
+    // Set the length to zero
+    for (int offset = 1769; offset < 1773; ++offset) {
+      m4aData[offset] = 0;
+    }
+    ByteVectorStream m4aStream(m4aData);
+    MP4::File f(&m4aStream);
+    CPPUNIT_ASSERT(f.audioProperties());
+    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
+    CPPUNIT_ASSERT_EQUAL(3707, f.audioProperties()->lengthInMilliseconds());
+    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->bitrate());
+    CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->channels());
+    CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
+    CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
+    CPPUNIT_ASSERT_EQUAL(false, f.audioProperties()->isEncrypted());
+    CPPUNIT_ASSERT_EQUAL(MP4::Properties::AAC, f.audioProperties()->codec());
   }
 
   void testPropertiesM4V()
   {
     MP4::File f(TEST_FILE_PATH_C("blank_video.m4v"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(975, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(96, f.audioProperties()->bitrate());
@@ -105,7 +180,7 @@ public:
     CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
     CPPUNIT_ASSERT_EQUAL(16, f.audioProperties()->bitsPerSample());
     CPPUNIT_ASSERT_EQUAL(false, f.audioProperties()->isEncrypted());
-    CPPUNIT_ASSERT_EQUAL(MP4::AudioProperties::AAC, f.audioProperties()->codec());
+    CPPUNIT_ASSERT_EQUAL(MP4::Properties::AAC, f.audioProperties()->codec());
   }
 
   void testCheckValid()
@@ -164,11 +239,11 @@ public:
       MP4::Atoms a(&f);
       MP4::Atom *stco = a.find("moov")->findall("stco", true)[0];
       f.seek(stco->offset + 12);
-      ByteVector data = f.readBlock(static_cast<size_t>(stco->length - 12));
-      unsigned int count = data.mid(0, 4).toUInt32BE(0);
+      ByteVector data = f.readBlock(stco->length - 12);
+      unsigned int count = data.mid(0, 4).toUInt();
       int pos = 4;
       while (count--) {
-        unsigned int offset = data.mid(pos, 4).toUInt32BE(0);
+        unsigned int offset = data.mid(pos, 4).toUInt();
         f.seek(offset);
         data1.append(f.readBlock(20));
         pos += 4;
@@ -183,11 +258,11 @@ public:
       MP4::Atoms a(&f);
       MP4::Atom *stco = a.find("moov")->findall("stco", true)[0];
       f.seek(stco->offset + 12);
-      ByteVector data = f.readBlock(static_cast<size_t>(stco->length - 12));
-      unsigned int count = data.mid(0, 4).toUInt32BE(0);
+      ByteVector data = f.readBlock(stco->length - 12);
+      unsigned int count = data.mid(0, 4).toUInt();
       int pos = 4, i = 0;
       while (count--) {
-        unsigned int offset = data.mid(pos, 4).toUInt32BE(0);
+        unsigned int offset = data.mid(pos, 4).toUInt();
         f.seek(offset);
         CPPUNIT_ASSERT_EQUAL(data1[i], f.readBlock(20));
         pos += 4;
@@ -249,7 +324,7 @@ public:
 
       MP4::Atoms atoms(&f);
       MP4::Atom *moov = atoms.atoms[0];
-      CPPUNIT_ASSERT_EQUAL(77LL, moov->length);
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(77), moov->length);
 
       f.tag()->setItem("pgap", true);
       f.save();
@@ -262,7 +337,7 @@ public:
       MP4::Atoms atoms(&f);
       MP4::Atom *moov = atoms.atoms[0];
       // original size + 'pgap' size + padding
-      CPPUNIT_ASSERT_EQUAL(77 + 25 + 974LL, moov->length);
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(77 + 25 + 974), moov->length);
     }
   }
 
@@ -277,11 +352,11 @@ public:
     MP4::File f(TEST_FILE_PATH_C("has-tags.m4a"));
     CPPUNIT_ASSERT(f.tag()->contains("covr"));
     MP4::CoverArtList l = f.tag()->item("covr").toCoverArtList();
-    CPPUNIT_ASSERT_EQUAL((size_t)2, l.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(2), l.size());
     CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::PNG, l[0].format());
-    CPPUNIT_ASSERT_EQUAL((size_t)79, l[0].data().size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(79), l[0].data().size());
     CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::JPEG, l[1].format());
-    CPPUNIT_ASSERT_EQUAL((size_t)287, l[1].data().size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(287), l[1].data().size());
   }
 
   void testCovrWrite()
@@ -301,13 +376,13 @@ public:
       MP4::File f(filename.c_str());
       CPPUNIT_ASSERT(f.tag()->contains("covr"));
       MP4::CoverArtList l = f.tag()->item("covr").toCoverArtList();
-      CPPUNIT_ASSERT_EQUAL((size_t)3, l.size());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(3), l.size());
       CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::PNG, l[0].format());
-      CPPUNIT_ASSERT_EQUAL((size_t)79, l[0].data().size());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(79), l[0].data().size());
       CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::JPEG, l[1].format());
-      CPPUNIT_ASSERT_EQUAL((size_t)287, l[1].data().size());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(287), l[1].data().size());
       CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::PNG, l[2].format());
-      CPPUNIT_ASSERT_EQUAL((size_t)3, l[2].data().size());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(3), l[2].data().size());
     }
   }
 
@@ -316,11 +391,11 @@ public:
     MP4::File f(TEST_FILE_PATH_C("covr-junk.m4a"));
     CPPUNIT_ASSERT(f.tag()->contains("covr"));
     MP4::CoverArtList l = f.tag()->item("covr").toCoverArtList();
-    CPPUNIT_ASSERT_EQUAL((size_t)2, l.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(2), l.size());
     CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::PNG, l[0].format());
-    CPPUNIT_ASSERT_EQUAL((size_t)79, l[0].data().size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(79), l[0].data().size());
     CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::JPEG, l[1].format());
-    CPPUNIT_ASSERT_EQUAL((size_t)287, l[1].data().size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(287), l[1].data().size());
   }
 
   void testProperties()
@@ -380,6 +455,97 @@ public:
     f.setProperties(tags);
   }
 
+  void testPropertiesAllSupported()
+  {
+    PropertyMap tags;
+    tags["ALBUM"] = StringList("Album");
+    tags["ALBUMARTIST"] = StringList("Album Artist");
+    tags["ALBUMARTISTSORT"] = StringList("Album Artist Sort");
+    tags["ALBUMSORT"] = StringList("Album Sort");
+    tags["ARTIST"] = StringList("Artist");
+    tags["ARTISTS"] = StringList("Artists");
+    tags["ARTISTSORT"] = StringList("Artist Sort");
+    tags["ASIN"] = StringList("ASIN");
+    tags["BARCODE"] = StringList("Barcode");
+    tags["BPM"] = StringList("123");
+    tags["CATALOGNUMBER"] = StringList("Catalog Number");
+    tags["COMMENT"] = StringList("Comment");
+    tags["COMPILATION"] = StringList("1");
+    tags["COMPOSER"] = StringList("Composer");
+    tags["COMPOSERSORT"] = StringList("Composer Sort");
+    tags["CONDUCTOR"] = StringList("Conductor");
+    tags["COPYRIGHT"] = StringList("2021 Copyright");
+    tags["DATE"] = StringList("2021-01-03 12:29:23");
+    tags["DISCNUMBER"] = StringList("3/5");
+    tags["DISCSUBTITLE"] = StringList("Disc Subtitle");
+    tags["DJMIXER"] = StringList("DJ Mixer");
+    tags["ENCODEDBY"] = StringList("Encoded by");
+    tags["ENGINEER"] = StringList("Engineer");
+    tags["GAPLESSPLAYBACK"] = StringList("1");
+    tags["GENRE"] = StringList("Genre");
+    tags["GROUPING"] = StringList("Grouping");
+    tags["ISRC"] = StringList("UKAAA0500001");
+    tags["LABEL"] = StringList("Label");
+    tags["LANGUAGE"] = StringList("eng");
+    tags["LICENSE"] = StringList("License");
+    tags["LYRICIST"] = StringList("Lyricist");
+    tags["LYRICS"] = StringList("Lyrics");
+    tags["MEDIA"] = StringList("Media");
+    tags["MIXER"] = StringList("Mixer");
+    tags["MOOD"] = StringList("Mood");
+    tags["MOVEMENTCOUNT"] = StringList("3");
+    tags["MOVEMENTNAME"] = StringList("Movement Name");
+    tags["MOVEMENTNUMBER"] = StringList("2");
+    tags["MUSICBRAINZ_ALBUMARTISTID"] = StringList("MusicBrainz_AlbumartistID");
+    tags["MUSICBRAINZ_ALBUMID"] = StringList("MusicBrainz_AlbumID");
+    tags["MUSICBRAINZ_ARTISTID"] = StringList("MusicBrainz_ArtistID");
+    tags["MUSICBRAINZ_RELEASEGROUPID"] = StringList("MusicBrainz_ReleasegroupID");
+    tags["MUSICBRAINZ_RELEASETRACKID"] = StringList("MusicBrainz_ReleasetrackID");
+    tags["MUSICBRAINZ_TRACKID"] = StringList("MusicBrainz_TrackID");
+    tags["MUSICBRAINZ_WORKID"] = StringList("MusicBrainz_WorkID");
+    tags["ORIGINALDATE"] = StringList("2021-01-03 13:52:19");
+    tags["PODCAST"] = StringList("1");
+    tags["PODCASTCATEGORY"] = StringList("Podcast Category");
+    tags["PODCASTDESC"] = StringList("Podcast Description");
+    tags["PODCASTID"] = StringList("Podcast ID");
+    tags["PODCASTURL"] = StringList("Podcast URL");
+    tags["PRODUCER"] = StringList("Producer");
+    tags["RELEASECOUNTRY"] = StringList("Release Country");
+    tags["RELEASESTATUS"] = StringList("Release Status");
+    tags["RELEASETYPE"] = StringList("Release Type");
+    tags["REMIXER"] = StringList("Remixer");
+    tags["SCRIPT"] = StringList("Script");
+    tags["SHOWSORT"] = StringList("Show Sort");
+    tags["SHOWWORKMOVEMENT"] = StringList("1");
+    tags["SUBTITLE"] = StringList("Subtitle");
+    tags["TITLE"] = StringList("Title");
+    tags["TITLESORT"] = StringList("Title Sort");
+    tags["TRACKNUMBER"] = StringList("2/4");
+    tags["TVEPISODE"] = StringList("3");
+    tags["TVEPISODEID"] = StringList("TV Episode ID");
+    tags["TVNETWORK"] = StringList("TV Network");
+    tags["TVSEASON"] = StringList("2");
+    tags["TVSHOW"] = StringList("TV Show");
+    tags["WORK"] = StringList("Work");
+
+    ScopedFileCopy copy("no-tags", ".m4a");
+    {
+      MP4::File f(copy.fileName().c_str());
+      PropertyMap properties = f.properties();
+      CPPUNIT_ASSERT(properties.isEmpty());
+      f.setProperties(tags);
+      f.save();
+    }
+    {
+      const MP4::File f(copy.fileName().c_str());
+      PropertyMap properties = f.properties();
+      if (tags != properties) {
+        CPPUNIT_ASSERT_EQUAL(tags.toString(), properties.toString());
+      }
+      CPPUNIT_ASSERT(tags == properties);
+    }
+  }
+
   void testPropertiesMovement()
   {
     MP4::File f(TEST_FILE_PATH_C("has-tags.m4a"));
@@ -435,7 +601,10 @@ public:
   void testFuzzedFile()
   {
     MP4::File f(TEST_FILE_PATH_C("infloop.m4a"));
-    CPPUNIT_ASSERT(f.isValid());
+    // The file has an invalid atom length of 2775 in the last atom
+    // ("free", offset 0xc521, 00000ad7 66726565), whereas the remaining file
+    // length is 2727 bytes, therefore the file is now considered invalid.
+    CPPUNIT_ASSERT(!f.isValid());
   }
 
   void testRepeatedSave()
@@ -446,8 +615,8 @@ public:
     f.tag()->setTitle("0123456789");
     f.save();
     f.save();
-    CPPUNIT_ASSERT_EQUAL(2862LL, f.find("0123456789"));
-    CPPUNIT_ASSERT_EQUAL(-1LL, f.find("0123456789", 2863));
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(2862), f.find("0123456789"));
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(-1), f.find("0123456789", 2863));
   }
 
   void testWithZeroLengthAtom()
@@ -458,6 +627,215 @@ public:
     CPPUNIT_ASSERT_EQUAL(22050, f.audioProperties()->sampleRate());
   }
 
+  void testEmptyValuesRemoveItems()
+  {
+    const MP4::File f(TEST_FILE_PATH_C("has-tags.m4a"));
+    MP4::Tag *tag = f.tag();
+    const String testTitle("Title");
+    const String testArtist("Artist");
+    const String testAlbum("Album");
+    const String testComment("Comment");
+    const String testGenre("Genre");
+    const String nullString;
+    const unsigned int testYear = 2020;
+    const unsigned int testTrack = 1;
+    const unsigned int zeroUInt = 0;
+
+    tag->setTitle(testTitle);
+    CPPUNIT_ASSERT_EQUAL(testTitle, tag->title());
+    CPPUNIT_ASSERT(tag->contains("\251nam"));
+    tag->setArtist(testArtist);
+    CPPUNIT_ASSERT_EQUAL(testArtist, tag->artist());
+    CPPUNIT_ASSERT(tag->contains("\251ART"));
+    tag->setAlbum(testAlbum);
+    CPPUNIT_ASSERT_EQUAL(testAlbum, tag->album());
+    CPPUNIT_ASSERT(tag->contains("\251alb"));
+    tag->setComment(testComment);
+    CPPUNIT_ASSERT_EQUAL(testComment, tag->comment());
+    CPPUNIT_ASSERT(tag->contains("\251cmt"));
+    tag->setGenre(testGenre);
+    CPPUNIT_ASSERT_EQUAL(testGenre, tag->genre());
+    CPPUNIT_ASSERT(tag->contains("\251gen"));
+    tag->setYear(testYear);
+    CPPUNIT_ASSERT_EQUAL(testYear, tag->year());
+    CPPUNIT_ASSERT(tag->contains("\251day"));
+    tag->setTrack(testTrack);
+    CPPUNIT_ASSERT_EQUAL(testTrack, tag->track());
+    CPPUNIT_ASSERT(tag->contains("trkn"));
+
+    tag->setTitle(nullString);
+    CPPUNIT_ASSERT_EQUAL(nullString, tag->title());
+    CPPUNIT_ASSERT(!tag->contains("\251nam"));
+    tag->setArtist(nullString);
+    CPPUNIT_ASSERT_EQUAL(nullString, tag->artist());
+    CPPUNIT_ASSERT(!tag->contains("\251ART"));
+    tag->setAlbum(nullString);
+    CPPUNIT_ASSERT_EQUAL(nullString, tag->album());
+    CPPUNIT_ASSERT(!tag->contains("\251alb"));
+    tag->setComment(nullString);
+    CPPUNIT_ASSERT_EQUAL(nullString, tag->comment());
+    CPPUNIT_ASSERT(!tag->contains("\251cmt"));
+    tag->setGenre(nullString);
+    CPPUNIT_ASSERT_EQUAL(nullString, tag->genre());
+    CPPUNIT_ASSERT(!tag->contains("\251gen"));
+    tag->setYear(zeroUInt);
+    CPPUNIT_ASSERT_EQUAL(zeroUInt, tag->year());
+    CPPUNIT_ASSERT(!tag->contains("\251day"));
+    tag->setTrack(zeroUInt);
+    CPPUNIT_ASSERT_EQUAL(zeroUInt, tag->track());
+    CPPUNIT_ASSERT(!tag->contains("trkn"));
+  }
+
+  void testRemoveMetadata()
+  {
+    ScopedFileCopy copy("no-tags", ".m4a");
+
+    {
+      MP4::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(!f.hasMP4Tag());
+      MP4::Tag *tag = f.tag();
+      CPPUNIT_ASSERT(tag->isEmpty());
+      tag->setTitle("TITLE");
+      f.save();
+    }
+    {
+      MP4::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(f.hasMP4Tag());
+      CPPUNIT_ASSERT(!f.tag()->isEmpty());
+      f.strip();
+    }
+    {
+      MP4::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(!f.hasMP4Tag());
+      CPPUNIT_ASSERT(f.tag()->isEmpty());
+      CPPUNIT_ASSERT(fileEqual(
+        copy.fileName(),
+        TEST_FILE_PATH_C("no-tags.m4a")));
+    }
+  }
+
+  void testNonFullMetaAtom()
+  {
+    {
+      MP4::File f(TEST_FILE_PATH_C("non-full-meta.m4a"));
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(f.hasMP4Tag());
+
+      CPPUNIT_ASSERT(f.tag()->contains("covr"));
+      MP4::CoverArtList l = f.tag()->item("covr").toCoverArtList();
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(2), l.size());
+      CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::PNG, l[0].format());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(79), l[0].data().size());
+      CPPUNIT_ASSERT_EQUAL(MP4::CoverArt::JPEG, l[1].format());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(287), l[1].data().size());
+
+      PropertyMap properties = f.properties();
+      CPPUNIT_ASSERT_EQUAL(StringList("Test Artist!!!!"), properties["ARTIST"]);
+      CPPUNIT_ASSERT_EQUAL(StringList("FAAC 1.24"), properties["ENCODEDBY"]);
+    }
+  }
+
+  void testItemFactory()
+  {
+    class CustomItemFactory : public MP4::ItemFactory {
+    protected:
+      NameHandlerMap nameHandlerMap() const override
+      {
+        return MP4::ItemFactory::nameHandlerMap()
+          .insert("tsti", ItemHandlerType::Int)
+          .insert("tstt", ItemHandlerType::Text);
+      }
+
+      Map<ByteVector, String> namePropertyMap() const override
+      {
+        return MP4::ItemFactory::namePropertyMap()
+          .insert("tsti", "TESTINTEGER");
+      }
+    };
+
+    CustomItemFactory factory;
+
+    ScopedFileCopy copy("no-tags", ".m4a");
+    {
+      MP4::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(!f.hasMP4Tag());
+      MP4::Tag *tag = f.tag();
+      tag->setItem("tsti", MP4::Item(123));
+      tag->setItem("tstt", MP4::Item(StringList("Test text")));
+      f.save();
+    }
+    {
+      MP4::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(f.hasMP4Tag());
+      MP4::Tag *tag = f.tag();
+      // Without a custom item factory, only custom text atoms with four
+      // letter names are possible.
+      MP4::Item item = tag->item("tsti");
+      CPPUNIT_ASSERT(!item.isValid());
+      CPPUNIT_ASSERT(item.toInt() != 123);
+      item = tag->item("tstt");
+      CPPUNIT_ASSERT(item.isValid());
+      CPPUNIT_ASSERT_EQUAL(StringList("Test text"), item.toStringList());
+      f.strip();
+    }
+    {
+      MP4::File f(copy.fileName().c_str(),
+                  true, MP4::Properties::Average, &factory);
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(!f.hasMP4Tag());
+      MP4::Tag *tag = f.tag();
+      tag->setItem("tsti", MP4::Item(123));
+      tag->setItem("tstt", MP4::Item(StringList("Test text")));
+      tag->setItem("trkn", MP4::Item(2, 10));
+      tag->setItem("rate", MP4::Item(80));
+      tag->setItem("plID", MP4::Item(1540934238LL));
+      tag->setItem("rtng", MP4::Item(static_cast<unsigned char>(2)));
+      f.save();
+    }
+    {
+      MP4::File f(copy.fileName().c_str(),
+                  true, MP4::Properties::Average, &factory);
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(f.hasMP4Tag());
+      MP4::Tag *tag = f.tag();
+      MP4::Item item = tag->item("tsti");
+      CPPUNIT_ASSERT(item.isValid());
+      CPPUNIT_ASSERT_EQUAL(123, item.toInt());
+      item = tag->item("tstt");
+      CPPUNIT_ASSERT(item.isValid());
+      CPPUNIT_ASSERT_EQUAL(StringList("Test text"), item.toStringList());
+      item = tag->item("trkn");
+      CPPUNIT_ASSERT(item.isValid());
+      CPPUNIT_ASSERT_EQUAL(2, item.toIntPair().first);
+      CPPUNIT_ASSERT_EQUAL(10, item.toIntPair().second);
+      CPPUNIT_ASSERT_EQUAL(80, tag->item("rate").toInt());
+      CPPUNIT_ASSERT_EQUAL(1540934238LL, tag->item("plID").toLongLong());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned char>(2), tag->item("rtng").toByte());
+      PropertyMap properties = tag->properties();
+      CPPUNIT_ASSERT_EQUAL(StringList("123"), properties.value("TESTINTEGER"));
+      CPPUNIT_ASSERT_EQUAL(StringList("2/10"), properties.value("TRACKNUMBER"));
+      properties["TESTINTEGER"] = StringList("456");
+      tag->setProperties(properties);
+      f.save();
+    }
+    {
+      MP4::File f(copy.fileName().c_str(),
+                  true, MP4::Properties::Average, &factory);
+      CPPUNIT_ASSERT(f.isValid());
+      CPPUNIT_ASSERT(f.hasMP4Tag());
+      MP4::Tag *tag = f.tag();
+      MP4::Item item = tag->item("tsti");
+      CPPUNIT_ASSERT(item.isValid());
+      CPPUNIT_ASSERT_EQUAL(456, item.toInt());
+      PropertyMap properties = tag->properties();
+      CPPUNIT_ASSERT_EQUAL(StringList("456"), properties.value("TESTINTEGER"));
+    }
+  }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestMP4);

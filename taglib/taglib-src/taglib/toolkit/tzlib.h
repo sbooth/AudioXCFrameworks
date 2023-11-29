@@ -26,7 +26,7 @@
 #ifndef TAGLIB_TZLIB_H
 #define TAGLIB_TZLIB_H
 
-#include <tbytevector.h>
+#include "tbytevector.h"
 
 // THIS FILE IS NOT A PART OF THE TAGLIB API
 
@@ -39,15 +39,15 @@ namespace TagLib {
      /*!
       * Returns whether or not zlib is installed and ready to use.
       */
-     bool isAvailable();
+     bool TAGLIB_EXPORT isAvailable();
 
      /*!
       * Decompress \a data by zlib.
       */
      ByteVector decompress(const ByteVector &data);
 
-  }
-}
+  }  // namespace zlib
+}  // namespace TagLib
 
 #endif
 

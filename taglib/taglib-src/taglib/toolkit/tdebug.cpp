@@ -24,18 +24,17 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #if !defined(NDEBUG) || defined(TRACE_IN_RELEASE)
 
+#include <bitset>
+
 #include "tdebug.h"
 #include "tstring.h"
-#include "tutils.h"
 #include "tdebuglistener.h"
 #include "tutils.h"
-
-#include <bitset>
 
 namespace TagLib
 {
@@ -58,6 +57,6 @@ namespace TagLib
       debugListener->printMessage(msg);
     }
   }
-}
+}  // namespace TagLib
 
 #endif

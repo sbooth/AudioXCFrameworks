@@ -24,9 +24,10 @@
  ***************************************************************************/
 
 #include <string>
-#include <stdio.h>
-#include <tag.h>
-#include <mp4coverart.h>
+#include <cstdio>
+
+#include "tag.h"
+#include "mp4coverart.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 

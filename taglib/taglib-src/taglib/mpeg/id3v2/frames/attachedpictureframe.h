@@ -26,9 +26,10 @@
 #ifndef TAGLIB_ATTACHEDPICTUREFRAME_H
 #define TAGLIB_ATTACHEDPICTUREFRAME_H
 
-#include <taglib/id3v2frame.h>
-#include <taglib/id3v2header.h>
-#include <taglib/taglib_export.h>
+#include "taglib_export.h"
+#include "tpicturetype.h"
+#include "id3v2frame.h"
+#include "id3v2header.h"
 
 namespace TagLib {
 
@@ -52,50 +53,7 @@ namespace TagLib {
       /*!
        * This describes the function or content of the picture.
        */
-      enum Type {
-        //! A type not enumerated below
-        Other              = 0x00,
-        //! 32x32 PNG image that should be used as the file icon
-        FileIcon           = 0x01,
-        //! File icon of a different size or format
-        OtherFileIcon      = 0x02,
-        //! Front cover image of the album
-        FrontCover         = 0x03,
-        //! Back cover image of the album
-        BackCover          = 0x04,
-        //! Inside leaflet page of the album
-        LeafletPage        = 0x05,
-        //! Image from the album itself
-        Media              = 0x06,
-        //! Picture of the lead artist or soloist
-        LeadArtist         = 0x07,
-        //! Picture of the artist or performer
-        Artist             = 0x08,
-        //! Picture of the conductor
-        Conductor          = 0x09,
-        //! Picture of the band or orchestra
-        Band               = 0x0A,
-        //! Picture of the composer
-        Composer           = 0x0B,
-        //! Picture of the lyricist or text writer
-        Lyricist           = 0x0C,
-        //! Picture of the recording location or studio
-        RecordingLocation  = 0x0D,
-        //! Picture of the artists during recording
-        DuringRecording    = 0x0E,
-        //! Picture of the artists during performance
-        DuringPerformance  = 0x0F,
-        //! Picture from a movie or video related to the track
-        MovieScreenCapture = 0x10,
-        //! Picture of a large, coloured fish
-        ColouredFish       = 0x11,
-        //! Illustration related to the track
-        Illustration       = 0x12,
-        //! Logo of the band or performer
-        BandLogo           = 0x13,
-        //! Logo of the publisher (record company)
-        PublisherLogo      = 0x14
-      };
+      DECLARE_PICTURE_TYPE_ENUM(Type)
 
       /*!
        * Constructs an empty picture frame.  The description, content and text
@@ -111,12 +69,15 @@ namespace TagLib {
       /*!
        * Destroys the AttahcedPictureFrame instance.
        */
-      virtual ~AttachedPictureFrame();
+      ~AttachedPictureFrame() override;
+
+      AttachedPictureFrame(const AttachedPictureFrame &) = delete;
+      AttachedPictureFrame &operator=(const AttachedPictureFrame &) = delete;
 
       /*!
        * Returns a string containing the description and mime-type
        */
-      virtual String toString() const;
+      String toString() const override;
 
       /*!
        * Returns the text encoding used for the description.
@@ -203,28 +164,25 @@ namespace TagLib {
       void setPicture(const ByteVector &p);
 
     protected:
-      virtual void parseFields(const ByteVector &data);
-      virtual ByteVector renderFields() const;
+      void parseFields(const ByteVector &data) override;
+      ByteVector renderFields() const override;
       class AttachedPictureFramePrivate;
-      AttachedPictureFramePrivate *d;
+      std::unique_ptr<AttachedPictureFramePrivate> d;
 
     private:
-      AttachedPictureFrame(const AttachedPictureFrame &);
-      AttachedPictureFrame &operator=(const AttachedPictureFrame &);
       AttachedPictureFrame(const ByteVector &data, Header *h);
-
     };
 
     //! support for ID3v2.2 PIC frames
     class TAGLIB_EXPORT AttachedPictureFrameV22 : public AttachedPictureFrame
     {
     protected:
-      virtual void parseFields(const ByteVector &data);
+      void parseFields(const ByteVector &data) override;
     private:
       AttachedPictureFrameV22(const ByteVector &data, Header *h);
       friend class FrameFactory;
     };
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 
 #endif

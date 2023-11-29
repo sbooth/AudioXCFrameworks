@@ -1,6 +1,6 @@
 /***************************************************************************
- copyright            : (C) 2016 by Damien Plisson, Audirvana
- email                : damien78@audirvana.com
+    copyright            : (C) 2016 by Damien Plisson, Audirvana
+    email                : damien78@audirvana.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -26,10 +26,10 @@
 #ifndef TAGLIB_DSDIFFFILE_H
 #define TAGLIB_DSDIFFFILE_H
 
-#include <taglib/rifffile.h>
-#include <taglib/id3v2tag.h>
-#include <taglib/dsdiffproperties.h>
-#include <taglib/dsdiffdiintag.h>
+#include "rifffile.h"
+#include "id3v2tag.h"
+#include "dsdiffproperties.h"
+#include "dsdiffdiintag.h"
 
 namespace TagLib {
 
@@ -42,7 +42,7 @@ namespace TagLib {
    * chunk as well as properties from the file.
    * Description of the DSDIFF format is available
    * at http://dsd-guide.com/sites/default/files/white-papers/DSDIFF_1.5_Spec.pdf
-   * DSDIFF standard does not explictly specify the ID3V2 chunk
+   * DSDIFF standard does not explicitly specify the ID3V2 chunk
    * It can be found at the root level, but also sometimes inside the PROP chunk
    * In addition, title and artist info are stored as part of the standard
    */
@@ -61,18 +61,41 @@ namespace TagLib {
     class TAGLIB_EXPORT File : public TagLib::File
     {
     public:
+
       /*!
-       * Constructs an DSDIFF file from \a file.  If \a readProperties is true
+       * This set of flags is used for various operations and is suitable for
+       * being OR-ed together.
+       */
+      enum TagTypes {
+        //! Empty set.  Matches no tag types.
+        NoTags  = 0x0000,
+        //! Matches DIIN tags.
+        DIIN    = 0x0001,
+        //! Matches ID3v2 tags.
+        ID3v2   = 0x0002,
+        //! Matches all tag types.
+        AllTags = 0xffff
+      };
+
+      /*!
+       * Constructs a DSDIFF file from \a file.  If \a readProperties is true
        * the file's audio properties will also be read.
        *
        * \note In the current implementation, \a propertiesStyle is ignored.
+       *
+       * If this file contains an ID3v2 tag, the frames will be created using
+       * \a frameFactory (default if null).
        */
       File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average,
+           ID3v2::FrameFactory *frameFactory = nullptr);
 
       /*!
        * Constructs an DSDIFF file from \a stream.  If \a readProperties is true
        * the file's audio properties will also be read.
+       *
+       * If this file contains an ID3v2 tag, the frames will be created using
+       * \a frameFactory (default if null).
        *
        * \note TagLib will *not* take ownership of the stream, the caller is
        * responsible for deleting it after the File object.
@@ -80,12 +103,13 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average,
+           ID3v2::FrameFactory *frameFactory = nullptr);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
 
       /*!
        * Returns a pointer to a tag that is the union of the ID3v2 and DIIN
@@ -103,7 +127,7 @@ namespace TagLib {
        * \see ID3v2Tag()
        * \see DIINTag()
        */
-      virtual Tag *tag() const;
+      Tag *tag() const override;
 
       /*!
        * Returns the ID3V2 Tag for this file.
@@ -114,33 +138,33 @@ namespace TagLib {
        *
        * \see hasID3v2Tag()
        */
-      virtual ID3v2::Tag *ID3v2Tag() const;
+      ID3v2::Tag *ID3v2Tag(bool create = false) const;
 
       /*!
        * Returns the DSDIFF DIIN Tag for this file
        *
        */
-      DSDIFF::DIIN::Tag *DIINTag() const;
+      DSDIFF::DIIN::Tag *DIINTag(bool create = false) const;
 
       /*!
        * Implements the unified property interface -- export function.
        * This method forwards to ID3v2::Tag::properties().
        */
-      PropertyMap properties() const;
+      PropertyMap properties() const override;
 
-      void removeUnsupportedProperties(const StringList &properties);
+      void removeUnsupportedProperties(const StringList &properties) override;
 
       /*!
        * Implements the unified property interface -- import function.
        * This method forwards to ID3v2::Tag::setProperties().
        */
-      PropertyMap setProperties(const PropertyMap &);
+      PropertyMap setProperties(const PropertyMap &) override;
 
       /*!
-       * Returns the DSDIFF::Properties for this file.  If no audio properties
+       * Returns the AIFF::Properties for this file.  If no audio properties
        * were read then this will return a null pointer.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
 
       /*!
        * Save the file.  If at least one tag -- ID3v1 or DIIN -- exists this
@@ -157,18 +181,24 @@ namespace TagLib {
        *
        * \see save(int tags)
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
-       * Save the file.  This will attempt to save all of the tag types that are
-       * specified by OR-ing together TagTypes values.  The save() method above
-       * uses AllTags.  This returns true if saving was successful.
-       *
-       * This strips all tags not included in the mask, but does not modify them
-       * in memory, so later calls to save() which make use of these tags will
-       * remain valid.  This also strips empty tags.
+       * Save the file.  If \a strip is specified, it is possible to choose if
+       * tags not specified in \a tags should be stripped from the file or
+       * retained.  With \a version, it is possible to specify whether ID3v2.4
+       * or ID3v2.3 should be used.
        */
-      bool save(int tags);
+      bool save(int tags, StripTags strip = StripOthers, ID3v2::Version version = ID3v2::v4);
+
+      /*!
+       * This will strip the tags that match the OR-ed together TagTypes from the
+       * file.  By default it strips all tags.  It returns true if the tags are
+       * successfully stripped.
+       *
+       * \note This will update the file immediately.
+       */
+      void strip(int tags = AllTags);
 
       /*!
        * Returns whether or not the file on disk actually has an ID3v2 tag.
@@ -179,7 +209,7 @@ namespace TagLib {
 
       /*!
        * Returns whether or not the file on disk actually has the DSDIFF
-       * Title & Artist tag.
+       * title and artist tags.
        *
        * \see DIINTag()
        */
@@ -201,8 +231,10 @@ namespace TagLib {
       File(IOStream *stream, Endianness endianness);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
+      void removeRootChunk(const ByteVector &id);
+      void removeRootChunk(unsigned int i);
+      void removeChildChunk(const ByteVector &id, unsigned int childChunkNum);
+      void removeChildChunk(unsigned int i, unsigned int childChunkNum);
 
       /*!
        * Sets the data for the the specified chunk at root level to \a data.
@@ -245,16 +277,15 @@ namespace TagLib {
 
       void updateRootChunksStructure(unsigned int startingChunk);
 
-      void read(bool readProperties, AudioProperties::ReadStyle propertiesStyle);
+      void read(bool readProperties, Properties::ReadStyle propertiesStyle);
       void writeChunk(const ByteVector &name, const ByteVector &data,
                       unsigned long long offset, unsigned long replace = 0,
                       unsigned int leadingPadding = 0);
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace DSDIFF
+}  // namespace TagLib
 
 #endif
-

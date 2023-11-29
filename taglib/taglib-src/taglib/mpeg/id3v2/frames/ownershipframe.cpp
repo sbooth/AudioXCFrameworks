@@ -23,11 +23,10 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include "tdebug.h"
-#include <tstringlist.h>
-#include <id3v2tag.h>
-
 #include "ownershipframe.h"
+
+#include "tstringlist.h"
+#include "id3v2tag.h"
 
 using namespace TagLib;
 using namespace ID3v2;
@@ -47,22 +46,19 @@ public:
 
 OwnershipFrame::OwnershipFrame(String::Type encoding) :
   Frame("OWNE"),
-  d(new OwnershipFramePrivate())
+  d(std::make_unique<OwnershipFramePrivate>())
 {
   d->textEncoding = encoding;
 }
 
 OwnershipFrame::OwnershipFrame(const ByteVector &data) :
   Frame(data),
-  d(new OwnershipFramePrivate())
+  d(std::make_unique<OwnershipFramePrivate>())
 {
   setData(data);
 }
 
-OwnershipFrame::~OwnershipFrame()
-{
-  delete d;
-}
+OwnershipFrame::~OwnershipFrame() = default;
 
 String OwnershipFrame::toString() const
 {
@@ -115,14 +111,19 @@ void OwnershipFrame::setTextEncoding(String::Type encoding)
 
 void OwnershipFrame::parseFields(const ByteVector &data)
 {
-  size_t pos = 0;
+  int pos = 0;
+
+  // Need at least 1 byte for the encoding
+  if(data.isEmpty()) {
+    return;
+  }
 
   // Get the text encoding
-  d->textEncoding = String::Type(data[0]);
+  d->textEncoding = static_cast<String::Type>(data[0]);
   pos += 1;
 
   // Read the price paid this is a null terminate string
-  d->pricePaid = readStringField(data, String::Latin1, pos);
+  d->pricePaid = readStringField(data, String::Latin1, &pos);
 
   // If we don't have at least 8 bytes left then don't parse the rest of the
   // data
@@ -150,7 +151,7 @@ ByteVector OwnershipFrame::renderFields() const
 
   ByteVector v;
 
-  v.append(char(encoding));
+  v.append(static_cast<char>(encoding));
   v.append(d->pricePaid.data(String::Latin1));
   v.append(textDelimiter(String::Latin1));
   v.append(d->datePurchased.data(String::Latin1));
@@ -165,7 +166,7 @@ ByteVector OwnershipFrame::renderFields() const
 
 OwnershipFrame::OwnershipFrame(const ByteVector &data, Header *h) :
   Frame(h),
-  d(new OwnershipFramePrivate())
+  d(std::make_unique<OwnershipFramePrivate>())
 {
   parseFields(fieldData(data));
 }

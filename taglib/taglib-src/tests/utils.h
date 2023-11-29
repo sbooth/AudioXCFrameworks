@@ -24,7 +24,7 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #ifdef _WIN32
@@ -35,9 +35,9 @@
 #include <sys/fcntl.h>
 #include <sys/stat.h>
 #endif
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #include <fstream>
 
@@ -120,7 +120,7 @@ namespace TagLib {
 
     return String(text);
   }
-}
+} // namespace TagLib
 
 #endif
 
@@ -138,6 +138,9 @@ public:
     if(m_deleteFile)
       deleteFile(m_filename);
   }
+
+  ScopedFileCopy(const ScopedFileCopy &) = delete;
+  ScopedFileCopy &operator=(const ScopedFileCopy &) = delete;
 
   string fileName() const
   {

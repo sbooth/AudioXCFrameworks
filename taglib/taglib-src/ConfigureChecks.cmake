@@ -1,8 +1,6 @@
 include(CheckLibraryExists)
 include(CheckTypeSize)
-include(CheckCXXCompilerFlag)
 include(CheckCXXSourceCompiles)
-include(TestLargeFiles)
 
 # Check if the size of numeric types are suitable.
 
@@ -36,92 +34,6 @@ if(NOT ${SIZEOF_DOUBLE} EQUAL 8)
   message(FATAL_ERROR "TagLib requires that double is 64-bit wide.")
 endif()
 
-# Determine whether your compiler supports large files.
-
-if(NOT WIN32)
-  test_large_files(SUPPORT_LARGE_FILES)
-  if(NOT SUPPORT_LARGE_FILES)
-    MESSAGE(FATAL_ERROR "TagLib requires large files support.")
-  endif()
-endif()
-
-# Enable check_cxx_source_compiles() to work with Boost "header-only" libraries.
-
-find_package(Boost)
-if(Boost_FOUND)
-  set(CMAKE_REQUIRED_INCLUDES "${CMAKE_REQUIRED_INCLUDES};${Boost_INCLUDE_DIRS}")
-endif()
-
-# Determine which kind of atomic operations your compiler supports.
-
-check_cxx_source_compiles("
-  #include <atomic>
-  int main() {
-    std::atomic_int x(1);
-    ++x;
-    --x;
-    return 0;
-  }
-" HAVE_STD_ATOMIC)
-
-if(NOT HAVE_STD_ATOMIC)
-  check_cxx_source_compiles("
-    int main() {
-      volatile int x;
-      __sync_add_and_fetch(&x, 1);
-      int y = __sync_sub_and_fetch(&x, 1);
-      return 0;
-    }
-  " HAVE_GCC_ATOMIC)
-
-  if(NOT HAVE_GCC_ATOMIC)
-    check_cxx_source_compiles("
-      #include <libkern/OSAtomic.h>
-      int main() {
-        volatile int32_t x;
-        OSAtomicIncrement32Barrier(&x);
-        int32_t y = OSAtomicDecrement32Barrier(&x);
-        return 0;
-      }
-    " HAVE_MAC_ATOMIC)
-
-    if(NOT HAVE_MAC_ATOMIC)
-      check_cxx_source_compiles("
-        #include <windows.h>
-        int main() {
-          volatile LONG x;
-          InterlockedIncrement(&x);
-          LONG y = InterlockedDecrement(&x);
-          return 0;
-        }
-      " HAVE_WIN_ATOMIC)
-
-      if(NOT HAVE_WIN_ATOMIC)
-        check_cxx_source_compiles("
-          #include <ia64intrin.h>
-          int main() {
-            volatile int x;
-            __sync_add_and_fetch(&x, 1);
-            int y = __sync_sub_and_fetch(&x, 1);
-            return 0;
-          }
-        " HAVE_IA64_ATOMIC)
-      endif()
-    endif()
-  endif()
-endif()
-
-# Determine which kind of smart pointers your compiler supports.
-
-check_cxx_source_compiles("
-  #include <memory>
-  int main() {
-    std::shared_ptr<int> x;
-    std::unique_ptr<int> y;
-    return 0;
-  }
-" HAVE_STD_SMART_PTR)
-
 # Determine which kind of byte swap functions your compiler supports.
 
 check_cxx_source_compiles("
@@ -146,7 +58,7 @@ if(NOT HAVE_GCC_BYTESWAP)
 
   if(NOT HAVE_GLIBC_BYTESWAP)
     check_cxx_source_compiles("
-      #include <stdlib.h>
+      #include <cstdlib>
       int main() {
         _byteswap_ushort(0);
         _byteswap_ulong(0);
@@ -181,32 +93,6 @@ if(NOT HAVE_GCC_BYTESWAP)
   endif()
 endif()
 
-# Determine whether your compiler supports some safer version of vsprintf.
-
-check_cxx_source_compiles("
-  #include <cstdio>
-  #include <cstdarg>
-  int main() {
-    char buf[20];
-    va_list args;
-    vsnprintf(buf, 20, \"%d\", args);
-    return 0;
-  }
-" HAVE_VSNPRINTF)
-
-if(NOT HAVE_VSNPRINTF)
-  check_cxx_source_compiles("
-    #include <cstdio>
-    #include <cstdarg>
-    int main() {
-      char buf[20];
-      va_list args;
-      vsprintf_s(buf, \"%d\", args);
-      return 0;
-    }
-  " HAVE_VSPRINTF_S)
-endif()
-
 # Determine whether your compiler supports ISO _strdup.
 
 check_cxx_source_compiles("
@@ -217,28 +103,7 @@ check_cxx_source_compiles("
   }
 " HAVE_ISO_STRDUP)
 
-# Determine whether zlib is installed.
-
-if(NOT ZLIB_SOURCE)
-  find_package(ZLIB)
-  if(ZLIB_FOUND)
-    set(HAVE_ZLIB 1)
-  else()
-    set(HAVE_ZLIB 0)
-  endif()
-endif()
-
-# Determine whether CppUnit is installed.
-
-if(BUILD_TESTS AND NOT BUILD_SHARED_LIBS)
-  find_package(CppUnit)
-  if(NOT CppUnit_FOUND)
-    message(STATUS "CppUnit not found, disabling tests.")
-    set(BUILD_TESTS OFF)
-  endif()
-endif()
-
 # Detect WinRT mode
 if(CMAKE_SYSTEM_NAME STREQUAL "WindowsStore")
-	set(PLATFORM_WINRT 1)
+  set(PLATFORM_WINRT 1)
 endif()

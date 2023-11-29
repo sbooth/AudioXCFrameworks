@@ -26,8 +26,9 @@
 #ifndef TAGLIB_ID3V2HEADER_H
 #define TAGLIB_ID3V2HEADER_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "id3v2.h"
 
 namespace TagLib {
 
@@ -56,12 +57,15 @@ namespace TagLib {
        * Constructs an ID3v2 header based on \a data.  parse() is called
        * immediately.
        */
-      explicit Header(const ByteVector &data);
+      Header(const ByteVector &data);
 
       /*!
        * Destroys the header.
        */
       virtual ~Header();
+
+      Header(const Header &) = delete;
+      Header &operator=(const Header &) = delete;
 
       /*!
        * Returns the major version number.  (Note: This is the 4, not the 2 in
@@ -162,14 +166,11 @@ namespace TagLib {
       void parse(const ByteVector &data);
 
     private:
-      Header(const Header &);
-      Header &operator=(const Header &);
-
       class HeaderPrivate;
-      HeaderPrivate *d;
+      std::unique_ptr<HeaderPrivate> d;
     };
 
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 
 #endif

@@ -24,49 +24,41 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/s3m
   ${CMAKE_CURRENT_SOURCE_DIR}/it
   ${CMAKE_CURRENT_SOURCE_DIR}/xm
-  ${CMAKE_CURRENT_SOURCE_DIR}/ebml
-  ${CMAKE_CURRENT_SOURCE_DIR}/ebml/matroska
   ${CMAKE_CURRENT_SOURCE_DIR}/dsf
   ${CMAKE_CURRENT_SOURCE_DIR}/dsdiff
-  ${CMAKE_SOURCE_DIR}/3rdparty
 )
-
-if(ZLIB_FOUND)
-  include_directories(${ZLIB_INCLUDE_DIR})
-elseif(HAVE_ZLIB_SOURCE)
-  include_directories(${ZLIB_SOURCE})
-endif()
 
 set(tag_HDRS
   tag.h
   fileref.h
   audioproperties.h
   taglib_export.h
+  ${CMAKE_CURRENT_BINARY_DIR}/../taglib_config.h
   toolkit/taglib.h
   toolkit/tstring.h
   toolkit/tlist.h
   toolkit/tlist.tcc
   toolkit/tstringlist.h
-  toolkit/tstringhandler.h
   toolkit/tbytevector.h
   toolkit/tbytevectorlist.h
+  toolkit/tvariant.h
   toolkit/tbytevectorstream.h
   toolkit/tiostream.h
   toolkit/tfile.h
   toolkit/tfilestream.h
   toolkit/tmap.h
   toolkit/tmap.tcc
-  toolkit/tpicture.h
-  toolkit/tpicturemap.h
+  toolkit/tpicturetype.h
   toolkit/tpropertymap.h
-  toolkit/trefcounter.h
   toolkit/tdebuglistener.h
+  toolkit/tversionnumber.h
   mpeg/mpegfile.h
   mpeg/mpegproperties.h
   mpeg/mpegheader.h
   mpeg/xingheader.h
   mpeg/id3v1/id3v1tag.h
   mpeg/id3v1/id3v1genres.h
+  mpeg/id3v2/id3v2.h
   mpeg/id3v2/id3v2extendedheader.h
   mpeg/id3v2/id3v2frame.h
   mpeg/id3v2/id3v2header.h
@@ -134,6 +126,7 @@ set(tag_HDRS
   mp4/mp4item.h
   mp4/mp4properties.h
   mp4/mp4coverart.h
+  mp4/mp4itemfactory.h
   mod/modfilebase.h
   mod/modfile.h
   mod/modtag.h
@@ -144,12 +137,6 @@ set(tag_HDRS
   s3m/s3mproperties.h
   xm/xmfile.h
   xm/xmproperties.h
-  ebml/ebmlfile.h
-  ebml/ebmlelement.h
-  ebml/ebmlconstants.h
-  ebml/matroska/ebmlmatroskafile.h
-  ebml/matroska/ebmlmatroskaconstants.h
-  ebml/matroska/ebmlmatroskaaudio.h
   dsf/dsffile.h
   dsf/dsfproperties.h
   dsdiff/dsdifffile.h
@@ -235,6 +222,7 @@ set(mp4_SRCS
   mp4/mp4item.cpp
   mp4/mp4properties.cpp
   mp4/mp4coverart.cpp
+  mp4/mp4itemfactory.cpp
 )
 
 set(ape_SRCS
@@ -315,16 +303,6 @@ set(dsf_SRCS
   dsf/dsfproperties.cpp
 )
 
-set(ebml_SRCS
-  ebml/ebmlfile.cpp
-  ebml/ebmlelement.cpp
-)
-
-set(matroska_SRCS
-  ebml/matroska/ebmlmatroskafile.cpp
-  ebml/matroska/ebmlmatroskaaudio.cpp
-)
-
 set(dsdiff_SRCS
   dsdiff/dsdifffile.cpp
   dsdiff/dsdiffproperties.cpp
@@ -332,43 +310,29 @@ set(dsdiff_SRCS
 )
 
 set(toolkit_SRCS
-  toolkit/taglib.cpp
   toolkit/tstring.cpp
   toolkit/tstringlist.cpp
-  toolkit/tstringhandler.cpp
   toolkit/tbytevector.cpp
   toolkit/tbytevectorlist.cpp
+  toolkit/tvariant.cpp
   toolkit/tbytevectorstream.cpp
   toolkit/tiostream.cpp
   toolkit/tfile.cpp
   toolkit/tfilestream.cpp
   toolkit/tdebug.cpp
-  toolkit/tpicture.cpp
-  toolkit/tpicturemap.cpp
+  toolkit/tpicturetype.cpp
   toolkit/tpropertymap.cpp
-  toolkit/trefcounter.cpp
   toolkit/tdebuglistener.cpp
   toolkit/tzlib.cpp
+  toolkit/tversionnumber.cpp
 )
-
-if(HAVE_ZLIB_SOURCE)
-  set(zlib_SRCS
-    ${ZLIB_SOURCE}/adler32.c
-    ${ZLIB_SOURCE}/crc32.c
-    ${ZLIB_SOURCE}/inffast.c
-    ${ZLIB_SOURCE}/inflate.c
-    ${ZLIB_SOURCE}/inftrees.c
-    ${ZLIB_SOURCE}/zutil.c
-  )
-endif()
 
 set(tag_LIB_SRCS
   ${mpeg_SRCS} ${id3v1_SRCS} ${id3v2_SRCS} ${frames_SRCS} ${ogg_SRCS}
   ${vorbis_SRCS} ${oggflacs_SRCS} ${mpc_SRCS} ${ape_SRCS} ${toolkit_SRCS} ${flacs_SRCS}
   ${wavpack_SRCS} ${speex_SRCS} ${trueaudio_SRCS} ${riff_SRCS} ${aiff_SRCS} ${wav_SRCS}
   ${asf_SRCS} ${mp4_SRCS} ${mod_SRCS} ${s3m_SRCS} ${it_SRCS} ${xm_SRCS} ${opus_SRCS}
-  ${ebml_SRCS} ${matroska_SRCS} ${dsf_SRCS} ${dsdiff_SRCS}
-  ${zlib_SRCS}
+  ${dsf_SRCS} ${dsdiff_SRCS}
   tag.cpp
   tagunion.cpp
   fileref.cpp
@@ -378,26 +342,31 @@ set(tag_LIB_SRCS
 
 add_library(tag ${tag_LIB_SRCS} ${tag_HDRS})
 
-if(HAVE_ZLIB AND NOT HAVE_ZLIB_SOURCE)
-  target_link_libraries(tag ${ZLIB_LIBRARIES})
-endif()
+target_include_directories(tag INTERFACE
+  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:include/taglib>
+)
+
+target_link_libraries(tag
+  PRIVATE $<$<TARGET_EXISTS:utf8::cpp>:utf8::cpp>
+          $<$<TARGET_EXISTS:ZLIB::ZLIB>:ZLIB::ZLIB>
+)
 
 set_target_properties(tag PROPERTIES
   VERSION ${TAGLIB_SOVERSION_MAJOR}.${TAGLIB_SOVERSION_MINOR}.${TAGLIB_SOVERSION_PATCH}
   SOVERSION ${TAGLIB_SOVERSION_MAJOR}
-  INSTALL_NAME_DIR ${LIB_INSTALL_DIR}
+  INSTALL_NAME_DIR ${CMAKE_INSTALL_FULL_LIBDIR}
   DEFINE_SYMBOL MAKE_TAGLIB_LIB
-  LINK_INTERFACE_LIBRARIES ""
+  INTERFACE_LINK_LIBRARIES "${ZLIB_INTERFACE_LINK_LIBRARIES}"
   PUBLIC_HEADER "${tag_HDRS}"
 )
 if(VISIBILITY_HIDDEN)
-	set_target_properties(tag PROPERTIES C_VISIBILITY_PRESET hidden
-	)
+  set_target_properties(tag PROPERTIES C_VISIBILITY_PRESET hidden)
 endif()
 
 if(BUILD_FRAMEWORK)
   unset(INSTALL_NAME_DIR)
-  set_target_properties(tag PROPERTIES 
+  set_target_properties(tag PROPERTIES
       FRAMEWORK TRUE
       MACOSX_RPATH 1
       VERSION "A"
@@ -406,9 +375,33 @@ if(BUILD_FRAMEWORK)
 endif()
 
 install(TARGETS tag
+  EXPORT taglibTargets
   FRAMEWORK DESTINATION ${FRAMEWORK_INSTALL_DIR}
-  LIBRARY DESTINATION ${LIB_INSTALL_DIR}
-  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-  ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
-  PUBLIC_HEADER DESTINATION ${INCLUDE_INSTALL_DIR}/taglib
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/taglib
+)
+
+configure_package_config_file(
+  "${PROJECT_SOURCE_DIR}/taglib-config.cmake.in"
+  "${PROJECT_BINARY_DIR}/taglib-config.cmake"
+  INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/taglib
+)
+
+write_basic_package_version_file(
+  "${PROJECT_BINARY_DIR}/taglib-config-version.cmake"
+  VERSION "${TAGLIB_LIB_VERSION_STRING}"
+  COMPATIBILITY AnyNewerVersion
+)
+
+install(EXPORT taglibTargets
+  FILE taglib-targets.cmake
+  NAMESPACE TagLib::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/taglib
+)
+
+install(FILES "${PROJECT_BINARY_DIR}/taglib-config.cmake"
+              "${PROJECT_BINARY_DIR}/taglib-config-version.cmake"
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/taglib
 )

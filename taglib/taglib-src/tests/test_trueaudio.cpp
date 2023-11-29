@@ -24,11 +24,12 @@
  ***************************************************************************/
 
 #include <string>
-#include <stdio.h>
-#include <id3v1tag.h>
-#include <id3v2tag.h>
-#include <tpropertymap.h>
-#include <trueaudiofile.h>
+#include <cstdio>
+
+#include "tpropertymap.h"
+#include "id3v1tag.h"
+#include "id3v2tag.h"
+#include "trueaudiofile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -50,7 +51,6 @@ public:
   {
     TrueAudio::File f(TEST_FILE_PATH_C("empty.tta"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3685, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(173, f.audioProperties()->bitrate());
@@ -65,7 +65,6 @@ public:
   {
     TrueAudio::File f(TEST_FILE_PATH_C("tagged.tta"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3685, f.audioProperties()->lengthInMilliseconds());
     CPPUNIT_ASSERT_EQUAL(173, f.audioProperties()->bitrate());
@@ -88,10 +87,20 @@ public:
     }
     {
       TrueAudio::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(f.hasID3v1Tag());
+      CPPUNIT_ASSERT(f.hasID3v2Tag());
       CPPUNIT_ASSERT_EQUAL(String("ID3v2"), f.properties()["TITLE"].front());
       f.strip(TrueAudio::File::ID3v2);
       CPPUNIT_ASSERT_EQUAL(String("ID3v1"), f.properties()["TITLE"].front());
       f.strip(TrueAudio::File::ID3v1);
+      CPPUNIT_ASSERT(f.properties().isEmpty());
+      f.save();
+    }
+    {
+      TrueAudio::File f(copy.fileName().c_str());
+      CPPUNIT_ASSERT(!f.hasID3v1Tag());
+      CPPUNIT_ASSERT(!f.hasID3v2Tag());
+      CPPUNIT_ASSERT(f.properties()["TITLE"].isEmpty());
       CPPUNIT_ASSERT(f.properties().isEmpty());
     }
   }

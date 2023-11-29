@@ -26,7 +26,7 @@
 #ifndef TAGLIB_DSDIFFPROPERTIES_H
 #define TAGLIB_DSDIFFPROPERTIES_H
 
-#include <taglib/audioproperties.h>
+#include "audioproperties.h"
 
 namespace TagLib {
 
@@ -41,43 +41,38 @@ namespace TagLib {
      * API.
      */
 
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+    class TAGLIB_EXPORT Properties : public AudioProperties
     {
     public:
       /*!
-       * Create an instance of DSDIFF::AudioProperties with the data read from the
+       * Create an instance of DSDIFF::Properties with the data read from the
        * ByteVector \a data.
        */
-      AudioProperties(const unsigned int sampleRate, const unsigned short channels,
-                      const unsigned long long samplesCount, const int bitrate,
-                      ReadStyle style);
+      Properties(const unsigned int sampleRate, const unsigned short channels,
+                 const unsigned long long samplesCount, const int bitrate,
+                 ReadStyle style);
 
       /*!
-       * Destroys this DSDIFF::AudioProperties instance.
+       * Destroys this DSDIFF::Properties instance.
        */
-      virtual ~AudioProperties();
+      ~Properties() override;
 
       // Reimplementations.
 
-      virtual int length() const;
-      virtual int lengthInSeconds() const;
-      virtual int lengthInMilliseconds() const;
-      virtual int bitrate() const;
-      virtual int sampleRate() const;
-      virtual int channels() const;
+      int lengthInSeconds() const override;
+      int lengthInMilliseconds() const override;
+      int bitrate() const override;
+      int sampleRate() const override;
+      int channels() const override;
 
       int bitsPerSample() const;
       long long sampleCount() const;
 
     private:
-      AudioProperties(const AudioProperties &);
-      AudioProperties &operator=(const AudioProperties &);
-
-      class AudioPropertiesPrivate;
-      AudioPropertiesPrivate *d;
+      class PropertiesPrivate;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
-}
+  }  // namespace DSDIFF
+}  // namespace TagLib
 
 #endif
-

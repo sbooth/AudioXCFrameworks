@@ -26,19 +26,12 @@
 #ifndef TAGLIB_S3MPROPERTIES_H
 #define TAGLIB_S3MPROPERTIES_H
 
-#include <taglib/taglib.h>
-#include <taglib/audioproperties.h>
+#include "taglib.h"
+#include "audioproperties.h"
 
 namespace TagLib {
-
   namespace S3M {
-
-    class File;
-
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties 
-    {
-      friend class File;
-
+    class TAGLIB_EXPORT Properties : public AudioProperties {
     public:
       /*! Flag bits. */
       enum {
@@ -51,47 +44,45 @@ namespace TagLib {
         CustomData           = 128
       };
 
-      explicit AudioProperties(AudioProperties::ReadStyle propertiesStyle);
-      virtual ~AudioProperties();
+      Properties(AudioProperties::ReadStyle propertiesStyle);
+      ~Properties() override;
 
-      int length()               const;
-      int lengthInSeconds()      const;
-      int lengthInMilliseconds() const;
-      int bitrate()              const;
-      int sampleRate()           const;
-      int channels()             const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
-      unsigned short lengthInPatterns()  const;
-      bool           stereo()            const;
-      unsigned short sampleCount()       const;
-      unsigned short patternCount()      const;
-      unsigned short flags()             const;
-      unsigned short trackerVersion()    const;
+      int channels() const override;
+
+      unsigned short lengthInPatterns() const;
+      bool stereo() const;
+      unsigned short sampleCount() const;
+      unsigned short patternCount() const;
+      unsigned short flags() const;
+      unsigned short trackerVersion() const;
       unsigned short fileFormatVersion() const;
-      unsigned char  globalVolume()      const;
-      unsigned char  masterVolume()      const;
-      unsigned char  tempo()             const;
-      unsigned char  bpmSpeed()          const;
+      unsigned char globalVolume() const;
+      unsigned char masterVolume() const;
+      unsigned char tempo() const;
+      unsigned char bpmSpeed() const;
 
-    private:
       void setChannels(int channels);
 
-      void setLengthInPatterns (unsigned short lengthInPatterns);
-      void setStereo           (bool stereo);
-      void setSampleCount      (unsigned short sampleCount);
-      void setPatternCount     (unsigned short patternCount);
-      void setFlags            (unsigned short flags);
-      void setTrackerVersion   (unsigned short trackerVersion);
+      void setLengthInPatterns(unsigned short lengthInPatterns);
+      void setStereo(bool stereo);
+      void setSampleCount(unsigned short sampleCount);
+      void setPatternCount(unsigned short patternCount);
+      void setFlags(unsigned short flags);
+      void setTrackerVersion(unsigned short trackerVersion);
       void setFileFormatVersion(unsigned short fileFormatVersion);
-      void setGlobalVolume     (unsigned char globalVolume);
-      void setMasterVolume     (unsigned char masterVolume);
-      void setTempo            (unsigned char tempo);
-      void setBpmSpeed         (unsigned char bpmSpeed);
+      void setGlobalVolume(unsigned char globalVolume);
+      void setMasterVolume(unsigned char masterVolume);
+      void setTempo(unsigned char tempo);
+      void setBpmSpeed(unsigned char bpmSpeed);
 
+    private:
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
-}
+  }  // namespace S3M
+}  // namespace TagLib
 
 #endif

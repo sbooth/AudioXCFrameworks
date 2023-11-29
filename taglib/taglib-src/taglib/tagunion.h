@@ -26,9 +26,7 @@
 #ifndef TAGLIB_TAGUNION_H
 #define TAGLIB_TAGUNION_H
 
-// This file is not a part of TagLib public interface. This is not installed.
-
-#include <taglib/tag.h>
+#include "tag.h"
 
 #ifndef DO_NOT_DOCUMENT
 
@@ -38,7 +36,6 @@ namespace TagLib {
    * \internal
    */
 
-  template <size_t COUNT>
   class TagUnion : public Tag
   {
   public:
@@ -46,42 +43,47 @@ namespace TagLib {
     enum AccessType { Read, Write };
 
     /*!
-     * Creates a TagLib::Tag that is the union of \a count tags.
+     * Creates a TagLib::Tag that is the union of \a first, \a second, and
+     * \a third.  The TagUnion takes ownership of these tags and will handle
+     * their deletion.
      */
-    TagUnion();
+    TagUnion(Tag *first = nullptr, Tag *second = nullptr, Tag *third = nullptr);
 
-    virtual ~TagUnion();
+    ~TagUnion() override;
 
-    Tag *operator[](size_t index) const;
-    Tag *tag(size_t index) const;
+    TagUnion(const TagUnion &) = delete;
+    TagUnion &operator=(const TagUnion &) = delete;
 
-    void set(size_t index, Tag *tag);
+    Tag *operator[](int index) const;
+    Tag *tag(int index) const;
 
-    virtual PropertyMap properties() const;
-    virtual void removeUnsupportedProperties(const StringList& properties);
-    virtual PropertyMap setProperties(const PropertyMap& properties);
+    void set(int index, Tag *tag);
 
-    virtual String title() const;
-    virtual String artist() const;
-    virtual String album() const;
-    virtual String comment() const;
-    virtual String genre() const;
-    virtual unsigned int year() const;
-    virtual unsigned int track() const;
-    virtual PictureMap pictures() const;
+    PropertyMap properties() const override;
+    void removeUnsupportedProperties(const StringList &unsupported) override;
 
-    virtual void setTitle(const String &s);
-    virtual void setArtist(const String &s);
-    virtual void setAlbum(const String &s);
-    virtual void setComment(const String &s);
-    virtual void setGenre(const String &s);
-    virtual void setYear(unsigned int i);
-    virtual void setTrack(unsigned int i);
-    virtual void setPictures( const PictureMap& l );
+    StringList complexPropertyKeys() const override;
+    List<VariantMap> complexProperties(const String &key) const override;
+    bool setComplexProperties(const String &key, const List<VariantMap> &value) override;
 
-    virtual bool isEmpty() const;
+    String title() const override;
+    String artist() const override;
+    String album() const override;
+    String comment() const override;
+    String genre() const override;
+    unsigned int year() const override;
+    unsigned int track() const override;
 
-    template <class T> T *access(size_t index, bool create)
+    void setTitle(const String &s) override;
+    void setArtist(const String &s) override;
+    void setAlbum(const String &s) override;
+    void setComment(const String &s) override;
+    void setGenre(const String &s) override;
+    void setYear(unsigned int i) override;
+    void setTrack(unsigned int i) override;
+    bool isEmpty() const override;
+
+    template <class T> T *access(int index, bool create)
     {
       if(!create || tag(index))
         return static_cast<T *>(tag(index));
@@ -90,17 +92,23 @@ namespace TagLib {
       return static_cast<T *>(tag(index));
     }
 
+    template <class T, class F> T *access(int index, bool create, const F *factory)
+    {
+      if(!create || tag(index))
+        return static_cast<T *>(tag(index));
+
+      set(index, new T(nullptr, 0, factory));
+      return static_cast<T *>(tag(index));
+    }
+
   private:
+    TagUnion(const Tag &);
+    TagUnion &operator=(const Tag &);
+
     class TagUnionPrivate;
-    TagUnionPrivate *d;
+    std::unique_ptr<TagUnionPrivate> d;
   };
-
-  // If you add a new typedef here, add a corresponding explicit instantiation
-  // at the end of tagunion.cpp as well.
-
-  typedef TagUnion<2> DoubleTagUnion;
-  typedef TagUnion<3> TripleTagUnion;
-}
+}  // namespace TagLib
 
 #endif
 #endif

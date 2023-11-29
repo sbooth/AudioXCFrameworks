@@ -23,48 +23,37 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <taglib.h>
-#include "tdebug.h"
 #include "flacpicture.h"
+
+#include "tdebug.h"
 
 using namespace TagLib;
 
 class FLAC::Picture::PicturePrivate
 {
 public:
-  PicturePrivate() :
-    type(FLAC::Picture::Other),
-    width(0),
-    height(0),
-    colorDepth(0),
-    numColors(0)
-    {}
-
-  Type type;
+  Type type { FLAC::Picture::Other };
   String mimeType;
   String description;
-  int width;
-  int height;
-  int colorDepth;
-  int numColors;
+  int width { 0 };
+  int height { 0 };
+  int colorDepth { 0 };
+  int numColors { 0 };
   ByteVector data;
 };
 
 FLAC::Picture::Picture() :
-  d(new PicturePrivate())
+  d(std::make_unique<PicturePrivate>())
 {
 }
 
 FLAC::Picture::Picture(const ByteVector &data) :
-  d(new PicturePrivate())
+  d(std::make_unique<PicturePrivate>())
 {
   parse(data);
 }
 
-FLAC::Picture::~Picture()
-{
-  delete d;
-}
+FLAC::Picture::~Picture() = default;
 
 int FLAC::Picture::code() const
 {
@@ -78,10 +67,10 @@ bool FLAC::Picture::parse(const ByteVector &data)
     return false;
   }
 
-  size_t pos = 0;
-  d->type = FLAC::Picture::Type(data.toUInt32BE(pos));
+  unsigned int pos = 0;
+  d->type = static_cast<FLAC::Picture::Type>(data.toUInt(pos));
   pos += 4;
-  const unsigned int mimeTypeLength = data.toUInt32BE(pos);
+  unsigned int mimeTypeLength = data.toUInt(pos);
   pos += 4;
   if(pos + mimeTypeLength + 24 > data.size()) {
     debug("Invalid picture block.");
@@ -89,7 +78,7 @@ bool FLAC::Picture::parse(const ByteVector &data)
   }
   d->mimeType = String(data.mid(pos, mimeTypeLength), String::UTF8);
   pos += mimeTypeLength;
-  const unsigned int descriptionLength = data.toUInt32BE(pos);
+  unsigned int descriptionLength = data.toUInt(pos);
   pos += 4;
   if(pos + descriptionLength + 20 > data.size()) {
     debug("Invalid picture block.");
@@ -97,15 +86,15 @@ bool FLAC::Picture::parse(const ByteVector &data)
   }
   d->description = String(data.mid(pos, descriptionLength), String::UTF8);
   pos += descriptionLength;
-  d->width = data.toUInt32BE(pos);
+  d->width = data.toUInt(pos);
   pos += 4;
-  d->height = data.toUInt32BE(pos);
+  d->height = data.toUInt(pos);
   pos += 4;
-  d->colorDepth = data.toUInt32BE(pos);
+  d->colorDepth = data.toUInt(pos);
   pos += 4;
-  d->numColors = data.toUInt32BE(pos);
+  d->numColors = data.toUInt(pos);
   pos += 4;
-  const unsigned int dataLength = data.toUInt32BE(pos);
+  unsigned int dataLength = data.toUInt(pos);
   pos += 4;
   if(pos + dataLength > data.size()) {
     debug("Invalid picture block.");
@@ -119,18 +108,18 @@ bool FLAC::Picture::parse(const ByteVector &data)
 ByteVector FLAC::Picture::render() const
 {
   ByteVector result;
-  result.append(ByteVector::fromUInt32BE(d->type));
+  result.append(ByteVector::fromUInt(d->type));
   ByteVector mimeTypeData = d->mimeType.data(String::UTF8);
-  result.append(ByteVector::fromUInt32BE(mimeTypeData.size()));
+  result.append(ByteVector::fromUInt(mimeTypeData.size()));
   result.append(mimeTypeData);
   ByteVector descriptionData = d->description.data(String::UTF8);
-  result.append(ByteVector::fromUInt32BE(descriptionData.size()));
+  result.append(ByteVector::fromUInt(descriptionData.size()));
   result.append(descriptionData);
-  result.append(ByteVector::fromUInt32BE(d->width));
-  result.append(ByteVector::fromUInt32BE(d->height));
-  result.append(ByteVector::fromUInt32BE(d->colorDepth));
-  result.append(ByteVector::fromUInt32BE(d->numColors));
-  result.append(ByteVector::fromUInt32BE(d->data.size()));
+  result.append(ByteVector::fromUInt(d->width));
+  result.append(ByteVector::fromUInt(d->height));
+  result.append(ByteVector::fromUInt(d->colorDepth));
+  result.append(ByteVector::fromUInt(d->numColors));
+  result.append(ByteVector::fromUInt(d->data.size()));
   result.append(d->data);
   return result;
 }
@@ -214,4 +203,3 @@ void FLAC::Picture::setData(const ByteVector &data)
 {
   d->data = data;
 }
-

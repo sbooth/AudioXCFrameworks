@@ -1,6 +1,6 @@
 /***************************************************************************
-    copyright            : (C) 2013 by Stephen F. Booth
-    email                : me@sbooth.org
+    copyright           : (C) 2013-2023 Stephen F. Booth
+    email               : me@sbooth.org
  ***************************************************************************/
 
 /***************************************************************************
@@ -26,43 +26,26 @@
 #ifndef TAGLIB_DSFPROPERTIES_H
 #define TAGLIB_DSFPROPERTIES_H
 
-#include <taglib/audioproperties.h>
+#include <memory>
+
+#include "taglib_export.h"
+#include "tbytevector.h"
+#include "audioproperties.h"
 
 namespace TagLib {
-
   namespace DSF {
-
-    class File;
-
-    //! An implementation of audio property reading for DSF
-
-    /*!
-     * This reads the data from a DSF stream found in the AudioProperties
-     * API.
-     */
-
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
-    {
+    class TAGLIB_EXPORT Properties : public AudioProperties {
     public:
-      /*!
-       * Create an instance of DSF::AudioProperties with the data read from the
-       * ByteVector \a data.
-       */
-      AudioProperties(const ByteVector &data, ReadStyle style);
+      Properties(const ByteVector &data, ReadStyle style);
+      ~Properties() override;
 
-      /*!
-       * Destroys this DSF::AudioProperties instance.
-        */
-      virtual ~AudioProperties();
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
-      // Reimplementations.
-
-      virtual int length() const;
-      virtual int lengthInSeconds() const;
-      virtual int lengthInMilliseconds() const;
-      virtual int bitrate() const;
-      virtual int sampleRate() const;
-      virtual int channels() const;
+      int lengthInMilliseconds() const override;
+      int bitrate() const override;
+      int sampleRate() const override;
+      int channels() const override;
 
       int formatVersion() const;
       int formatID() const;
@@ -77,15 +60,12 @@ namespace TagLib {
       int blockSizePerChannel() const;
 
     private:
-      AudioProperties(const AudioProperties &);
-      AudioProperties &operator=(const AudioProperties &);
-
       void read(const ByteVector &data);
 
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
-}
+  }  // namespace DSF
+}  // namespace TagLib
 
 #endif

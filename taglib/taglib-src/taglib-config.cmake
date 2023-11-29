@@ -2,22 +2,32 @@
 
 usage()
 {
-	echo "usage: $0 [OPTIONS]"
+  echo "usage: $0 [OPTIONS]"
 cat << EOH
 
 options:
-	[--libs]
-	[--cflags]
-	[--version]
-	[--prefix]
+  [--libs]
+  [--cflags]
+  [--version]
+  [--prefix]
 EOH
-	exit 1;
+  exit 1
 }
 
-prefix=${CMAKE_INSTALL_PREFIX}
-exec_prefix=${CMAKE_INSTALL_PREFIX}
-libdir=${LIB_INSTALL_DIR}
-includedir=${INCLUDE_INSTALL_DIR}
+# Looks useless as it is, but could be replaced with a "pcfiledir" by Buildroot.
+prefix=
+exec_prefix=
+
+if test -z "$prefix"; then
+  includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+else
+  includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+fi
+if test -z "$exec_prefix"; then
+  libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+else
+  libdir=${exec_prefix}/@CMAKE_INSTALL_LIBDIR@
+fi
 
 flags=""
 
@@ -29,22 +39,22 @@ while test $# -gt 0
 do
   case $1 in
     --libs)
-	  flags="$flags -L$libdir -ltag"
-	  ;;
+      flags="$flags -L$libdir -ltag @ZLIB_LIBRARIES_FLAGS@"
+      ;;
     --cflags)
-	  flags="$flags -I$includedir/taglib"
-	  ;;
+      flags="$flags -I$includedir -I$includedir/taglib"
+      ;;
     --version)
-	  echo ${TAGLIB_LIB_VERSION_STRING}
-	  ;;
+      echo @TAGLIB_LIB_VERSION_STRING@
+      ;;
     --prefix)
-	  echo $prefix
-	  ;;
-	*)
-	  echo "$0: unknown option $1"
-	  echo
-	  usage
-	  ;;
+      echo ${prefix:-@CMAKE_INSTALL_PREFIX@}
+      ;;
+    *)
+      echo "$0: unknown option $1"
+      echo
+      usage
+      ;;
   esac
   shift
 done

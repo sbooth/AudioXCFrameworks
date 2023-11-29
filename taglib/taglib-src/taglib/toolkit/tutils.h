@@ -30,24 +30,25 @@
 
 #ifndef DO_NOT_DOCUMENT  // tell Doxygen not to document this header
 
+#include <cstdio>
+#include <cstdarg>
+#include <cstring>
+
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+# include "config.h"
 #endif
 
 #if defined(HAVE_MSC_BYTESWAP)
-# include <stdlib.h>
+# include "stdlib.h"
 #elif defined(HAVE_GLIBC_BYTESWAP)
-# include <byteswap.h>
+# include "byteswap.h"
 #elif defined(HAVE_MAC_BYTESWAP)
 # include <libkern/OSByteOrder.h>
 #elif defined(HAVE_OPENBSD_BYTESWAP)
 # include <sys/endian.h>
 #endif
 
-#include <tstring.h>
-#include <cstdio>
-#include <cstdarg>
-#include <cstring>
+#include "tstring.h"
 
 namespace TagLib
 {
@@ -179,33 +180,25 @@ namespace TagLib
         char buf[BufferSize];
         int length;
 
-#if defined(HAVE_VSNPRINTF)
-
-        length = vsnprintf(buf, BufferSize, format, args);
-
-#elif defined(HAVE_VSPRINTF_S)
-
-        length = vsprintf_s(buf, format, args);
-
-#else
-
-        // The last resort. May cause a buffer overflow.
-
-        length = vsprintf(buf, format, args);
-        if(length >= BufferSize) {
-          debug("Utils::formatString() - Buffer overflow! Returning an empty string.");
-          length = -1;
-        }
-
-#endif
+        length = std::vsnprintf(buf, BufferSize, format, args);
 
         va_end(args);
 
         if(length > 0)
           return String(buf);
-        else
-          return String();
+        return String();
       }
+
+      /*!
+       * The types of byte order of the running system.
+       */
+      enum ByteOrder
+      {
+        //! Little endian systems.
+        LittleEndian,
+        //! Big endian systems.
+        BigEndian
+      };
 
       /*!
        * Returns the byte order of the system.
@@ -220,12 +213,11 @@ namespace TagLib
         u.i = 1;
         if(u.c == 1)
           return LittleEndian;
-        else
-          return BigEndian;
+        return BigEndian;
       }
-    }
-  }
-}
+    }  // namespace
+  }  // namespace Utils
+}  // namespace TagLib
 
 #endif
 

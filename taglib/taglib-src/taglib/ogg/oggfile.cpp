@@ -23,12 +23,12 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tbytevectorlist.h>
-#include <tmap.h>
-#include <tstring.h>
-#include "tdebug.h"
-
 #include "oggfile.h"
+
+#include <utility>
+
+#include "tdebug.h"
+#include "tmap.h"
 #include "oggpage.h"
 #include "oggpageheader.h"
 
@@ -41,31 +41,22 @@ namespace
   {
     if(page->header()->lastPacketCompleted())
       return page->firstPacketIndex() + page->packetCount();
-    else
-      return page->firstPacketIndex() + page->packetCount() - 1;
+    return page->firstPacketIndex() + page->packetCount() - 1;
   }
-}
+}  // namespace
 
 class Ogg::File::FilePrivate
 {
 public:
-  FilePrivate() :
-    firstPageHeader(0),
-    lastPageHeader(0)
+  FilePrivate()
   {
     pages.setAutoDelete(true);
   }
 
-  ~FilePrivate()
-  {
-    delete firstPageHeader;
-    delete lastPageHeader;
-  }
-
   unsigned int streamSerialNumber;
   List<Page *> pages;
-  PageHeader *firstPageHeader;
-  PageHeader *lastPageHeader;
+  std::unique_ptr<PageHeader> firstPageHeader;
+  std::unique_ptr<PageHeader> lastPageHeader;
   Map<unsigned int, ByteVector> dirtyPackets;
 };
 
@@ -73,10 +64,7 @@ public:
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-Ogg::File::~File()
-{
-  delete d;
-}
+Ogg::File::~File() = default;
 
 ByteVector Ogg::File::packet(unsigned int i)
 {
@@ -96,7 +84,7 @@ ByteVector Ogg::File::packet(unsigned int i)
 
   // Look for the first page in which the requested packet starts.
 
-  List<Page *>::ConstIterator it = d->pages.begin();
+  auto it = d->pages.cbegin();
   while((*it)->containsPacket(i) == Page::DoesNotContainPacket)
     ++it;
 
@@ -130,27 +118,27 @@ void Ogg::File::setPacket(unsigned int i, const ByteVector &p)
 const Ogg::PageHeader *Ogg::File::firstPageHeader()
 {
   if(!d->firstPageHeader) {
-    const long long firstPageHeaderOffset = find("OggS");
+    const offset_t firstPageHeaderOffset = find("OggS");
     if(firstPageHeaderOffset < 0)
-      return 0;
+      return nullptr;
 
-    d->firstPageHeader = new PageHeader(this, firstPageHeaderOffset);
+    d->firstPageHeader = std::make_unique<PageHeader>(this, firstPageHeaderOffset);
   }
 
-  return d->firstPageHeader->isValid() ? d->firstPageHeader : 0;
+  return d->firstPageHeader->isValid() ? d->firstPageHeader.get() : nullptr;
 }
 
 const Ogg::PageHeader *Ogg::File::lastPageHeader()
 {
   if(!d->lastPageHeader) {
-    const long long lastPageHeaderOffset = rfind("OggS");
+    const offset_t lastPageHeaderOffset = rfind("OggS");
     if(lastPageHeaderOffset < 0)
-      return 0;
+      return nullptr;
 
-    d->lastPageHeader = new PageHeader(this, lastPageHeaderOffset);
+    d->lastPageHeader = std::make_unique<PageHeader>(this, lastPageHeaderOffset);
   }
 
-  return d->lastPageHeader->isValid() ? d->lastPageHeader : 0;
+  return d->lastPageHeader->isValid() ? d->lastPageHeader.get() : nullptr;
 }
 
 bool Ogg::File::save()
@@ -160,9 +148,8 @@ bool Ogg::File::save()
     return false;
   }
 
-  Map<unsigned int, ByteVector>::ConstIterator it;
-  for(it = d->dirtyPackets.begin(); it != d->dirtyPackets.end(); ++it)
-    writePacket(it->first, it->second);
+  for(const auto &[i, packet] : std::as_const(d->dirtyPackets))
+    writePacket(i, packet);
 
   d->dirtyPackets.clear();
 
@@ -175,13 +162,13 @@ bool Ogg::File::save()
 
 Ogg::File::File(FileName file) :
   TagLib::File(file),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
 }
 
 Ogg::File::File(IOStream *stream) :
   TagLib::File(stream),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
 }
 
@@ -193,7 +180,7 @@ bool Ogg::File::readPages(unsigned int i)
 {
   while(true) {
     unsigned int packetIndex;
-    long long offset;
+    offset_t offset;
 
     if(d->pages.isEmpty()) {
       packetIndex = 0;
@@ -214,7 +201,7 @@ bool Ogg::File::readPages(unsigned int i)
 
     // Read the next page and add it to the page list.
 
-    Page *nextPage = new Page(this, offset);
+    auto nextPage = new Page(this, offset);
     if(!nextPage->header()->isValid()) {
       delete nextPage;
       return false;
@@ -237,7 +224,7 @@ void Ogg::File::writePacket(unsigned int i, const ByteVector &packet)
 
   // Look for the pages where the requested packet should belong to.
 
-  List<Page *>::ConstIterator it = d->pages.begin();
+  auto it = d->pages.cbegin();
   while((*it)->containsPacket(i) == Page::DoesNotContainPacket)
     ++it;
 
@@ -273,13 +260,13 @@ void Ogg::File::writePacket(unsigned int i, const ByteVector &packet)
   // Write the pages.
 
   ByteVector data;
-  for(it = pages.begin(); it != pages.end(); ++it)
-    data.append((*it)->render());
+  for(const auto &page : pages)
+    data.append(page->render());
 
-  const long long originalOffset = firstPage->fileOffset();
-  const long long originalLength = lastPage->fileOffset() + lastPage->size() - originalOffset;
+  const offset_t originalOffset = firstPage->fileOffset();
+  const offset_t originalLength = lastPage->fileOffset() + lastPage->size() - originalOffset;
 
-  insert(data, originalOffset, static_cast<size_t>(originalLength));
+  insert(data, originalOffset, originalLength);
 
   // Renumber the following pages if the pages have been split or merged.
 
@@ -287,7 +274,7 @@ void Ogg::File::writePacket(unsigned int i, const ByteVector &packet)
     = pages.back()->pageSequenceNumber() - lastPage->pageSequenceNumber();
 
   if(numberOfNewPages != 0) {
-    long long pageOffset = originalOffset + data.size();
+    offset_t pageOffset = originalOffset + data.size();
 
     while(true) {
       Page page(this, pageOffset);

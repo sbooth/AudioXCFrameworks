@@ -26,13 +26,11 @@
 #ifndef TAGLIB_MPCFILE_H
 #define TAGLIB_MPCFILE_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/tfile.h>
-#include <taglib/tag.h>
-
-#include <taglib/mpcproperties.h>
-
-#include <taglib/tlist.h>
+#include "tfile.h"
+#include "tlist.h"
+#include "taglib_export.h"
+#include "tag.h"
+#include "mpcproperties.h"
 
 namespace TagLib {
 
@@ -90,7 +88,7 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Constructs an MPC file from \a stream.  If \a readProperties is true the
@@ -102,38 +100,50 @@ namespace TagLib {
        * \note In the current implementation, \a propertiesStyle is ignored.
        */
       File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
       /*!
        * Returns the Tag for this file.  This will be an APE tag, an ID3v1 tag
        * or a combination of the two.
        */
-      virtual TagLib::Tag *tag() const;
+      TagLib::Tag *tag() const override;
+
+      /*!
+       * Implements the unified property interface -- export function.
+       * If the file contains both an APE and an ID3v1 tag, only the APE
+       * tag  will be converted to the PropertyMap.
+       */
+      PropertyMap properties() const override;
+
+      void removeUnsupportedProperties(const StringList &properties) override;
 
       /*!
        * Implements the unified property interface -- import function.
        * Affects only the APEv2 tag which will be created if necessary.
        * If an ID3v1 tag exists, it will be updated as well.
        */
-      virtual PropertyMap setProperties(const PropertyMap &);
+      PropertyMap setProperties(const PropertyMap &) override;
 
       /*!
        * Returns the MPC::Properties for this file.  If no audio properties
        * were read then this will return a null pointer.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
 
       /*!
        * Saves the file.
        *
        * This returns true if the save was successful.
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
        * Returns a pointer to the ID3v1 tag of the file.
@@ -186,12 +196,6 @@ namespace TagLib {
       void strip(int tags = AllTags);
 
       /*!
-       * \deprecated
-       * \see strip
-       */
-      void remove(int tags = AllTags);
-
-      /*!
        * Returns whether or not the file on disk actually has an ID3v1 tag.
        *
        * \see ID3v1Tag()
@@ -215,15 +219,12 @@ namespace TagLib {
       static bool isSupported(IOStream *stream);
 
     private:
-      File(const File &);
-      File &operator=(const File &);
-
       void read(bool readProperties);
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-  }
-}
+  }  // namespace MPC
+}  // namespace TagLib
 
 #endif

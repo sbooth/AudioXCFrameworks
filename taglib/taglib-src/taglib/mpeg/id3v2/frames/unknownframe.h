@@ -26,8 +26,8 @@
 #ifndef TAGLIB_UNKNOWNFRAME_H
 #define TAGLIB_UNKNOWNFRAME_H
 
-#include <taglib/id3v2frame.h>
-#include <taglib/taglib_export.h>
+#include "taglib_export.h"
+#include "id3v2frame.h"
 
 namespace TagLib {
 
@@ -51,10 +51,13 @@ namespace TagLib {
       friend class FrameFactory;
 
     public:
-      explicit UnknownFrame(const ByteVector &data);
-      virtual ~UnknownFrame();
+      UnknownFrame(const ByteVector &data);
+      ~UnknownFrame() override;
 
-      virtual String toString() const;
+      UnknownFrame(const UnknownFrame &) = delete;
+      UnknownFrame &operator=(const UnknownFrame &) = delete;
+
+      String toString() const override;
 
       /*!
        * Returns the field data (everything but the header) for this frame.
@@ -62,18 +65,16 @@ namespace TagLib {
       ByteVector data() const;
 
     protected:
-      virtual void parseFields(const ByteVector &data);
-      virtual ByteVector renderFields() const;
+      void parseFields(const ByteVector &data) override;
+      ByteVector renderFields() const override;
 
     private:
       UnknownFrame(const ByteVector &data, Header *h);
-      UnknownFrame(const UnknownFrame &);
-      UnknownFrame &operator=(const UnknownFrame &);
 
       class UnknownFramePrivate;
-      UnknownFramePrivate *d;
+      std::unique_ptr<UnknownFramePrivate> d;
     };
 
-  }
-}
+  }  // namespace ID3v2
+}  // namespace TagLib
 #endif

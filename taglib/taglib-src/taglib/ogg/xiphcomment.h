@@ -26,14 +26,19 @@
 #ifndef TAGLIB_VORBISCOMMENT_H
 #define TAGLIB_VORBISCOMMENT_H
 
-#include <taglib/tag.h>
-#include <taglib/tlist.h>
-#include <taglib/tmap.h>
-#include <taglib/tstring.h>
-#include <taglib/tstringlist.h>
-#include <taglib/tbytevector.h>
-#include <taglib/flacpicture.h>
-#include <taglib/taglib_export.h>
+#include "tlist.h"
+#include "tmap.h"
+#include "tstring.h"
+#include "tstringlist.h"
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "tag.h"
+#include "flacpicture.h"
+
+#ifdef _MSC_VER
+// Explained at end of tpropertymap.cpp
+extern template class TAGLIB_EXPORT TagLib::Map<TagLib::String, TagLib::StringList>;
+#endif
 
 namespace TagLib {
 
@@ -45,7 +50,7 @@ namespace TagLib {
      *
      * \see XiphComment::fieldListMap()
      */
-    typedef Map<String, StringList> FieldListMap;
+    using FieldListMap = Map<String, StringList>;
 
     //! Ogg Vorbis comment implementation
 
@@ -78,28 +83,28 @@ namespace TagLib {
       /*!
        * Destroys this instance of the XiphComment.
        */
-      virtual ~XiphComment();
+      ~XiphComment() override;
 
-      virtual String title() const;
-      virtual String artist() const;
-      virtual String album() const;
-      virtual String comment() const;
-      virtual String genre() const;
-      virtual unsigned int year() const;
-      virtual unsigned int track() const;
-      virtual PictureMap pictures() const;
+      XiphComment(const XiphComment &) = delete;
+      XiphComment &operator=(const XiphComment &) = delete;
 
-      virtual void setTitle(const String &s);
-      virtual void setArtist(const String &s);
-      virtual void setAlbum(const String &s);
-      virtual void setComment(const String &s);
-      virtual void setGenre(const String &s);
-      virtual void setYear(unsigned int i);
-      virtual void setTrack(unsigned int i);
-      virtual void setPictures( const PictureMap &l );
+      String title() const override;
+      String artist() const override;
+      String album() const override;
+      String comment() const override;
+      String genre() const override;
+      unsigned int year() const override;
+      unsigned int track() const override;
 
-      virtual bool isEmpty() const;
-      virtual String toString() const;
+      void setTitle(const String &s) override;
+      void setArtist(const String &s) override;
+      void setAlbum(const String &s) override;
+      void setComment(const String &s) override;
+      void setGenre(const String &s) override;
+      void setYear(unsigned int i) override;
+      void setTrack(unsigned int i) override;
+
+      bool isEmpty() const override;
 
       /*!
        * Returns the number of fields present in the comment.
@@ -151,7 +156,7 @@ namespace TagLib {
        * comment is nothing more than a map from tag names to list of values,
        * as is the dict interface).
        */
-      virtual PropertyMap properties() const;
+      PropertyMap properties() const override;
 
       /*!
        * Implements the unified property interface -- import function.
@@ -160,7 +165,11 @@ namespace TagLib {
        * containing '=' or '~') in which case the according values will
        * be contained in the returned PropertyMap.
        */
-      virtual PropertyMap setProperties(const PropertyMap&);
+      PropertyMap setProperties(const PropertyMap&) override;
+
+      StringList complexPropertyKeys() const override;
+      List<VariantMap> complexProperties(const String &key) const override;
+      bool setComplexProperties(const String &key, const List<VariantMap> &value) override;
 
       /*!
        * Check if the given String is a valid Xiph comment key.
@@ -252,13 +261,10 @@ namespace TagLib {
       void parse(const ByteVector &data);
 
     private:
-      XiphComment(const XiphComment &);
-      XiphComment &operator=(const XiphComment &);
-
       class XiphCommentPrivate;
-      XiphCommentPrivate *d;
+      std::unique_ptr<XiphCommentPrivate> d;
     };
-  }
-}
+  }  // namespace Ogg
+}  // namespace TagLib
 
 #endif

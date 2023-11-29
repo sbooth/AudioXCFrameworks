@@ -1,4 +1,4 @@
-﻿/***************************************************************************
+/***************************************************************************
     copyright           : (C) 2011 by Mathias Panzenböck
     email               : grosser.meister.morti@gmx.net
  ***************************************************************************/
@@ -23,174 +23,130 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-
 #include "xmproperties.h"
 
 using namespace TagLib;
 using namespace XM;
 
-class XM::AudioProperties::PropertiesPrivate
+class XM::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    lengthInPatterns(0),
-    channels(0),
-    version(0),
-    restartPosition(0),
-    patternCount(0),
-    instrumentCount(0),
-    sampleCount(0),
-    flags(0),
-    tempo(0),
-    bpmSpeed(0) {}
-
-  unsigned short lengthInPatterns;
-  int            channels;
-  unsigned short version;
-  unsigned short restartPosition;
-  unsigned short patternCount;
-  unsigned short instrumentCount;
-  unsigned int   sampleCount;
-  unsigned short flags;
-  unsigned short tempo;
-  unsigned short bpmSpeed;
+  unsigned short lengthInPatterns { 0 };
+  int channels { 0 };
+  unsigned short version { 0 };
+  unsigned short restartPosition { 0 };
+  unsigned short patternCount { 0 };
+  unsigned short instrumentCount { 0 };
+  unsigned int sampleCount { 0 };
+  unsigned short flags { 0 };
+  unsigned short tempo { 0 };
+  unsigned short bpmSpeed { 0 };
 };
 
-XM::AudioProperties::AudioProperties(AudioProperties::ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+XM::Properties::Properties(AudioProperties::ReadStyle propertiesStyle) :
+  AudioProperties(propertiesStyle),
+  d(std::make_unique<PropertiesPrivate>())
 {
 }
 
-XM::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+XM::Properties::~Properties() = default;
 
-int XM::AudioProperties::length() const
-{
-  return 0;
-}
-
-int XM::AudioProperties::lengthInSeconds() const
-{
-  return 0;
-}
-
-int XM::AudioProperties::lengthInMilliseconds() const
-{
-  return 0;
-}
-
-int XM::AudioProperties::bitrate() const
-{
-  return 0;
-}
-
-int XM::AudioProperties::sampleRate() const
-{
-  return 0;
-}
-
-int XM::AudioProperties::channels() const
+int XM::Properties::channels() const
 {
   return d->channels;
 }
 
-unsigned short XM::AudioProperties::lengthInPatterns() const
+unsigned short XM::Properties::lengthInPatterns() const
 {
   return d->lengthInPatterns;
 }
 
-unsigned short XM::AudioProperties::version() const
+unsigned short XM::Properties::version() const
 {
   return d->version;
 }
 
-unsigned short XM::AudioProperties::restartPosition() const
+unsigned short XM::Properties::restartPosition() const
 {
   return d->restartPosition;
 }
 
-unsigned short XM::AudioProperties::patternCount() const
+unsigned short XM::Properties::patternCount() const
 {
   return d->patternCount;
 }
 
-unsigned short XM::AudioProperties::instrumentCount() const
+unsigned short XM::Properties::instrumentCount() const
 {
   return d->instrumentCount;
 }
 
-unsigned int XM::AudioProperties::sampleCount() const
+unsigned int XM::Properties::sampleCount() const
 {
   return d->sampleCount;
 }
-unsigned short XM::AudioProperties::flags() const
+
+unsigned short XM::Properties::flags() const
 {
   return d->flags;
 }
 
-unsigned short XM::AudioProperties::tempo() const
+unsigned short XM::Properties::tempo() const
 {
   return d->tempo;
 }
 
-unsigned short XM::AudioProperties::bpmSpeed() const
+unsigned short XM::Properties::bpmSpeed() const
 {
   return d->bpmSpeed;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// private members
-////////////////////////////////////////////////////////////////////////////////
-
-void XM::AudioProperties::setLengthInPatterns(unsigned short lengthInPatterns)
+void XM::Properties::setLengthInPatterns(unsigned short lengthInPatterns)
 {
   d->lengthInPatterns = lengthInPatterns;
 }
 
-void XM::AudioProperties::setChannels(int channels)
+void XM::Properties::setChannels(int channels)
 {
   d->channels = channels;
 }
 
-void XM::AudioProperties::setVersion(unsigned short version)
+void XM::Properties::setVersion(unsigned short version)
 {
   d->version = version;
 }
 
-void XM::AudioProperties::setRestartPosition(unsigned short restartPosition)
+void XM::Properties::setRestartPosition(unsigned short restartPosition)
 {
   d->restartPosition = restartPosition;
 }
 
-void XM::AudioProperties::setPatternCount(unsigned short patternCount)
+void XM::Properties::setPatternCount(unsigned short patternCount)
 {
   d->patternCount = patternCount;
 }
 
-void XM::AudioProperties::setInstrumentCount(unsigned short instrumentCount)
+void XM::Properties::setInstrumentCount(unsigned short instrumentCount)
 {
   d->instrumentCount = instrumentCount;
 }
 
-void XM::AudioProperties::setSampleCount(unsigned int sampleCount)
+void XM::Properties::setSampleCount(unsigned int sampleCount)
 {
   d->sampleCount = sampleCount;
 }
 
-void XM::AudioProperties::setFlags(unsigned short flags)
+void XM::Properties::setFlags(unsigned short flags)
 {
   d->flags = flags;
 }
 
-void XM::AudioProperties::setTempo(unsigned short tempo)
+void XM::Properties::setTempo(unsigned short tempo)
 {
   d->tempo = tempo;
 }
 
-void XM::AudioProperties::setBpmSpeed(unsigned short bpmSpeed)
+void XM::Properties::setBpmSpeed(unsigned short bpmSpeed)
 {
   d->bpmSpeed = bpmSpeed;
 }

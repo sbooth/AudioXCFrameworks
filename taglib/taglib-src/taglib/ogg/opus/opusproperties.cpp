@@ -27,70 +27,50 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
-#include <oggpageheader.h>
-
 #include "opusproperties.h"
+
+#include "tstring.h"
+#include "tdebug.h"
+#include "oggpageheader.h"
 #include "opusfile.h"
 
 using namespace TagLib;
 using namespace TagLib::Ogg;
 
-class Opus::AudioProperties::PropertiesPrivate
+class Opus::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    length(0),
-    bitrate(0),
-    inputSampleRate(0),
-    channels(0),
-    opusVersion(0) {}
-
-  int length;
-  int bitrate;
-  int inputSampleRate;
-  int channels;
-  int opusVersion;
+  int length { 0 };
+  int bitrate { 0 };
+  int inputSampleRate { 0 };
+  int channels { 0 };
+  int opusVersion { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-Opus::AudioProperties::AudioProperties(File *file, ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+Opus::Properties::Properties(File *file, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   read(file);
 }
 
-Opus::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+Opus::Properties::~Properties() = default;
 
-int Opus::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int Opus::AudioProperties::lengthInSeconds() const
-{
-  return d->length / 1000;
-}
-
-int Opus::AudioProperties::lengthInMilliseconds() const
+int Ogg::Opus::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int Opus::AudioProperties::bitrate() const
+int Opus::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int Opus::AudioProperties::sampleRate() const
+int Opus::Properties::sampleRate() const
 {
   // Opus can decode any stream at a sample rate of 8, 12, 16, 24, or 48 kHz,
   // so there is no single sample rate. Let's assume it's the highest
@@ -98,17 +78,17 @@ int Opus::AudioProperties::sampleRate() const
   return 48000;
 }
 
-int Opus::AudioProperties::channels() const
+int Opus::Properties::channels() const
 {
   return d->channels;
 }
 
-int Opus::AudioProperties::inputSampleRate() const
+int Opus::Properties::inputSampleRate() const
 {
   return d->inputSampleRate;
 }
 
-int Opus::AudioProperties::opusVersion() const
+int Opus::Properties::opusVersion() const
 {
   return d->opusVersion;
 }
@@ -117,7 +97,7 @@ int Opus::AudioProperties::opusVersion() const
 // private members
 ////////////////////////////////////////////////////////////////////////////////
 
-void Opus::AudioProperties::read(File *file)
+void Opus::Properties::read(File *file)
 {
   // Get the identification header from the Ogg implementation.
 
@@ -126,7 +106,7 @@ void Opus::AudioProperties::read(File *file)
   const ByteVector data = file->packet(0);
 
   // *Magic Signature*
-  size_t pos = 8;
+  unsigned int pos = 8;
 
   // *Version* (8 bits, unsigned)
   d->opusVersion = static_cast<unsigned char>(data.at(pos));
@@ -137,11 +117,11 @@ void Opus::AudioProperties::read(File *file)
   pos += 1;
 
   // *Pre-skip* (16 bits, unsigned, little endian)
-  const unsigned short preSkip = data.toUInt16LE(pos);
+  const unsigned short preSkip = data.toUShort(pos, false);
   pos += 2;
 
   // *Input Sample Rate* (32 bits, unsigned, little endian)
-  d->inputSampleRate = data.toUInt32LE(pos);
+  d->inputSampleRate = data.toUInt(pos, false);
   pos += 4;
 
   // *Output Gain* (16 bits, signed, little endian)
@@ -162,15 +142,21 @@ void Opus::AudioProperties::read(File *file)
 
       if(frameCount > 0) {
         const double length = frameCount * 1000.0 / 48000.0;
+        offset_t fileLengthWithoutOverhead = file->length();
+        // Ignore the two mandatory header packets, see "3. Packet Organization"
+        // in https://tools.ietf.org/html/rfc7845.html
+        for (unsigned int i = 0; i < 2; ++i) {
+          fileLengthWithoutOverhead -= file->packet(i).size();
+        }
         d->length  = static_cast<int>(length + 0.5);
-        d->bitrate = static_cast<int>(file->length() * 8.0 / length + 0.5);
+        d->bitrate = static_cast<int>(fileLengthWithoutOverhead * 8.0 / length + 0.5);
       }
     }
     else {
-      debug("Opus::AudioProperties::read() -- The PCM values for the start or "
+      debug("Opus::Properties::read() -- The PCM values for the start or "
             "end of this file was incorrect.");
     }
   }
   else
-    debug("Opus::AudioProperties::read() -- Could not find valid first and last Ogg pages.");
+    debug("Opus::Properties::read() -- Could not find valid first and last Ogg pages.");
 }

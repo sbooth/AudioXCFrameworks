@@ -26,8 +26,10 @@
 #ifndef TAGLIB_AUDIOPROPERTIES_H
 #define TAGLIB_AUDIOPROPERTIES_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/tstring.h>
+#include <memory>
+
+#include "taglib.h"
+#include "taglib_export.h"
 
 namespace TagLib {
 
@@ -65,10 +67,19 @@ namespace TagLib {
      */
     virtual ~AudioProperties();
 
+    AudioProperties(const AudioProperties &) = delete;
+    AudioProperties &operator=(const AudioProperties &) = delete;
+
     /*!
-     * Returns the length of the file in seconds.
-     */
-    virtual int length() const = 0;
+      * Returns the length of the file in seconds.  The length is rounded down to
+      * the nearest whole second.
+      *
+      * \note This method is just an alias of lengthInSeconds().
+      *
+      * \deprecated Use lengthInSeconds().
+      */
+    TAGLIB_DEPRECATED
+    virtual int length() const;
 
     /*!
      * Returns the length of the file in seconds.  The length is rounded down to
@@ -76,55 +87,48 @@ namespace TagLib {
      *
      * \see lengthInMilliseconds()
      */
-    virtual int lengthInSeconds() const = 0;
+    virtual int lengthInSeconds() const;
 
     /*!
      * Returns the length of the file in milliseconds.
      *
      * \see lengthInSeconds()
      */
-    virtual int lengthInMilliseconds() const = 0;
+    virtual int lengthInMilliseconds() const;
 
     /*!
      * Returns the most appropriate bit rate for the file in kb/s.  For constant
      * bitrate formats this is simply the bitrate of the file.  For variable
      * bitrate formats this is either the average or nominal bitrate.
      */
-    virtual int bitrate() const = 0;
+    virtual int bitrate() const;
 
     /*!
      * Returns the sample rate in Hz.
      */
-    virtual int sampleRate() const = 0;
+    virtual int sampleRate() const;
 
     /*!
      * Returns the number of audio channels.
      */
     virtual int channels() const = 0;
 
-    /*!
-     * Returns description of the audio file.
-     */
-    virtual String toString() const;
-
   protected:
 
     /*!
-     * Constructs an audio properties instance.  This is protected as this class
+     * Construct an audio properties instance.  This is protected as this class
      * should not be instantiated directly, but should be instantiated via its
      * subclasses and can be fetched from the FileRef or File APIs.
+     *
+     * \see ReadStyle
      */
-    AudioProperties();
+    AudioProperties(ReadStyle style);
 
   private:
-    // Noncopyable. Derived classes as well.
-    AudioProperties(const AudioProperties &);
-    AudioProperties &operator=(const AudioProperties &);
-
-    class PropertiesPrivate;
-    PropertiesPrivate *d;
+    class AudioPropertiesPrivate;
+    std::unique_ptr<AudioPropertiesPrivate> d;
   };
 
-}
+}  // namespace TagLib
 
 #endif

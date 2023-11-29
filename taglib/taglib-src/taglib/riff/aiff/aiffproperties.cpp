@@ -23,113 +23,82 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
+#include "aiffproperties.h"
+
 #include "tdebug.h"
 #include "aifffile.h"
-#include "aiffproperties.h"
 
 using namespace TagLib;
 
-class RIFF::AIFF::AudioProperties::PropertiesPrivate
+class RIFF::AIFF::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    length(0),
-    bitrate(0),
-    sampleRate(0),
-    channels(0),
-    bitsPerSample(0),
-    sampleFrames(0) {}
-
-  int length;
-  int bitrate;
-  int sampleRate;
-  int channels;
-  int bitsPerSample;
+  int length { 0 };
+  int bitrate { 0 };
+  int sampleRate { 0 };
+  int channels { 0 };
+  int bitsPerSample { 0 };
 
   ByteVector compressionType;
   String compressionName;
 
-  unsigned int sampleFrames;
+  unsigned int sampleFrames { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-RIFF::AIFF::AudioProperties::AudioProperties(File *file, ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+RIFF::AIFF::Properties::Properties(File *file, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   read(file);
 }
 
-RIFF::AIFF::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+RIFF::AIFF::Properties::~Properties() = default;
 
-bool RIFF::AIFF::AudioProperties::isNull() const
-{
-  return (d == 0);
-}
-
-int RIFF::AIFF::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int RIFF::AIFF::AudioProperties::lengthInSeconds() const
-{
-  return d->length / 1000;
-}
-
-int RIFF::AIFF::AudioProperties::lengthInMilliseconds() const
+int RIFF::AIFF::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int RIFF::AIFF::AudioProperties::bitrate() const
+int RIFF::AIFF::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int RIFF::AIFF::AudioProperties::sampleRate() const
+int RIFF::AIFF::Properties::sampleRate() const
 {
   return d->sampleRate;
 }
 
-int RIFF::AIFF::AudioProperties::channels() const
+int RIFF::AIFF::Properties::channels() const
 {
   return d->channels;
 }
 
-int RIFF::AIFF::AudioProperties::bitsPerSample() const
+int RIFF::AIFF::Properties::bitsPerSample() const
 {
   return d->bitsPerSample;
 }
 
-int RIFF::AIFF::AudioProperties::sampleWidth() const
-{
-  return bitsPerSample();
-}
-
-unsigned int RIFF::AIFF::AudioProperties::sampleFrames() const
+unsigned int RIFF::AIFF::Properties::sampleFrames() const
 {
   return d->sampleFrames;
 }
 
-bool RIFF::AIFF::AudioProperties::isAiffC() const
+bool RIFF::AIFF::Properties::isAiffC() const
 {
   return (!d->compressionType.isEmpty());
 }
 
-ByteVector RIFF::AIFF::AudioProperties::compressionType() const
+ByteVector RIFF::AIFF::Properties::compressionType() const
 {
   return d->compressionType;
 }
 
-String RIFF::AIFF::AudioProperties::compressionName() const
+String RIFF::AIFF::Properties::compressionName() const
 {
   return d->compressionName;
 }
@@ -138,7 +107,7 @@ String RIFF::AIFF::AudioProperties::compressionName() const
 // private members
 ////////////////////////////////////////////////////////////////////////////////
 
-void RIFF::AIFF::AudioProperties::read(File *file)
+void RIFF::AIFF::Properties::read(File *file)
 {
   ByteVector data;
   unsigned int streamLength = 0;
@@ -148,29 +117,29 @@ void RIFF::AIFF::AudioProperties::read(File *file)
       if(data.isEmpty())
         data = file->chunkData(i);
       else
-        debug("RIFF::AIFF::AudioProperties::read() - Duplicate 'COMM' chunk found.");
+        debug("RIFF::AIFF::Properties::read() - Duplicate 'COMM' chunk found.");
     }
     else if(name == "SSND") {
       if(streamLength == 0)
         streamLength = file->chunkDataSize(i) + file->chunkPadding(i);
       else
-        debug("RIFF::AIFF::AudioProperties::read() - Duplicate 'SSND' chunk found.");
+        debug("RIFF::AIFF::Properties::read() - Duplicate 'SSND' chunk found.");
     }
   }
 
   if(data.size() < 18) {
-    debug("RIFF::AIFF::AudioProperties::read() - 'COMM' chunk not found or too short.");
+    debug("RIFF::AIFF::Properties::read() - 'COMM' chunk not found or too short.");
     return;
   }
 
   if(streamLength == 0) {
-    debug("RIFF::AIFF::AudioProperties::read() - 'SSND' chunk not found.");
+    debug("RIFF::AIFF::Properties::read() - 'SSND' chunk not found.");
     return;
   }
 
-  d->channels      = data.toUInt16BE(0);
-  d->sampleFrames  = data.toUInt32BE(2);
-  d->bitsPerSample = data.toUInt16BE(6);
+  d->channels      = data.toShort(0U);
+  d->sampleFrames  = data.toUInt(2U);
+  d->bitsPerSample = data.toShort(6U);
 
   const long double sampleRate = data.toFloat80BE(8);
   if(sampleRate >= 1.0)

@@ -27,92 +27,74 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
-
 #include "trueaudioproperties.h"
-#include "trueaudiofile.h"
+
+#include "tdebug.h"
+#include "tstring.h"
 
 using namespace TagLib;
 
-class TrueAudio::AudioProperties::PropertiesPrivate
+class TrueAudio::Properties::PropertiesPrivate
 {
 public:
-  PropertiesPrivate() :
-    version(0),
-    length(0),
-    bitrate(0),
-    sampleRate(0),
-    channels(0),
-    bitsPerSample(0),
-    sampleFrames(0) {}
-
-  int version;
-  int length;
-  int bitrate;
-  int sampleRate;
-  int channels;
-  int bitsPerSample;
-  unsigned int sampleFrames;
+  int version { 0 };
+  int length { 0 };
+  int bitrate { 0 };
+  int sampleRate { 0 };
+  int channels { 0 };
+  int bitsPerSample { 0 };
+  unsigned int sampleFrames { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-TrueAudio::AudioProperties::AudioProperties(const ByteVector &data, long long streamLength, ReadStyle) :
-  TagLib::AudioProperties(),
-  d(new PropertiesPrivate())
+TrueAudio::Properties::Properties(const ByteVector &data, offset_t streamLength, ReadStyle style) :
+  AudioProperties(style),
+  d(std::make_unique<PropertiesPrivate>())
 {
   read(data, streamLength);
 }
 
-TrueAudio::AudioProperties::~AudioProperties()
-{
-  delete d;
-}
+TrueAudio::Properties::~Properties() = default;
 
-int TrueAudio::AudioProperties::length() const
-{
-  return lengthInSeconds();
-}
-
-int TrueAudio::AudioProperties::lengthInSeconds() const
+int TrueAudio::Properties::lengthInSeconds() const
 {
   return d->length / 1000;
 }
 
-int TrueAudio::AudioProperties::lengthInMilliseconds() const
+int TrueAudio::Properties::lengthInMilliseconds() const
 {
   return d->length;
 }
 
-int TrueAudio::AudioProperties::bitrate() const
+int TrueAudio::Properties::bitrate() const
 {
   return d->bitrate;
 }
 
-int TrueAudio::AudioProperties::sampleRate() const
+int TrueAudio::Properties::sampleRate() const
 {
   return d->sampleRate;
 }
 
-int TrueAudio::AudioProperties::bitsPerSample() const
+int TrueAudio::Properties::bitsPerSample() const
 {
   return d->bitsPerSample;
 }
 
-int TrueAudio::AudioProperties::channels() const
+int TrueAudio::Properties::channels() const
 {
   return d->channels;
 }
 
-unsigned int TrueAudio::AudioProperties::sampleFrames() const
+unsigned int TrueAudio::Properties::sampleFrames() const
 {
   return d->sampleFrames;
 }
 
-int TrueAudio::AudioProperties::ttaVersion() const
+int TrueAudio::Properties::ttaVersion() const
 {
   return d->version;
 }
@@ -121,19 +103,19 @@ int TrueAudio::AudioProperties::ttaVersion() const
 // private members
 ////////////////////////////////////////////////////////////////////////////////
 
-void TrueAudio::AudioProperties::read(const ByteVector &data, long long streamLength)
+void TrueAudio::Properties::read(const ByteVector &data, offset_t streamLength)
 {
   if(data.size() < 4) {
-    debug("TrueAudio::AudioProperties::read() -- data is too short.");
+    debug("TrueAudio::Properties::read() -- data is too short.");
     return;
   }
 
   if(!data.startsWith("TTA")) {
-    debug("TrueAudio::AudioProperties::read() -- invalid header signature.");
+    debug("TrueAudio::Properties::read() -- invalid header signature.");
     return;
   }
 
-  size_t pos = 3;
+  unsigned int pos = 3;
 
   d->version = data[pos] - '0';
   pos += 1;
@@ -142,23 +124,23 @@ void TrueAudio::AudioProperties::read(const ByteVector &data, long long streamLe
   // TTA2 headers are in development, and have a different format
   if(1 == d->version) {
     if(data.size() < 18) {
-      debug("TrueAudio::AudioProperties::read() -- data is too short.");
+      debug("TrueAudio::Properties::read() -- data is too short.");
       return;
     }
 
     // Skip the audio format
     pos += 2;
 
-    d->channels = data.toUInt16LE(pos);
+    d->channels = data.toShort(pos, false);
     pos += 2;
 
-    d->bitsPerSample = data.toUInt16LE(pos);
+    d->bitsPerSample = data.toShort(pos, false);
     pos += 2;
 
-    d->sampleRate = data.toUInt32LE(pos);
+    d->sampleRate = data.toUInt(pos, false);
     pos += 4;
 
-    d->sampleFrames = data.toUInt32LE(pos);
+    d->sampleFrames = data.toUInt(pos, false);
     pos += 4;
 
     if(d->sampleFrames > 0 && d->sampleRate > 0) {

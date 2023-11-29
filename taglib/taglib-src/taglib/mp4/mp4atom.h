@@ -25,23 +25,22 @@
 
 // This file is not part of the public API!
 
-#ifndef DO_NOT_DOCUMENT
-
 #ifndef TAGLIB_MP4ATOM_H
 #define TAGLIB_MP4ATOM_H
 
-#include <taglib/tfile.h>
-#include <taglib/tlist.h>
+#include <array>
+
+#include "tfile.h"
+#include "tlist.h"
+
+#ifndef DO_NOT_DOCUMENT
 
 namespace TagLib {
-
   namespace MP4 {
-
     class Atom;
-    typedef TagLib::List<Atom *> AtomList;
+    using AtomList = TagLib::List<Atom *>;
 
-    enum AtomDataType
-    {
+    enum AtomDataType {
       TypeImplicit  = 0,  // for use with tags for which no type needs to be indicated because only one type is allowed
       TypeUTF8      = 1,  // without any count or null terminator
       TypeUTF16     = 2,  // also known as UTF-16BE
@@ -66,45 +65,45 @@ namespace TagLib {
     };
 
     struct AtomData {
-      AtomData(AtomDataType type, ByteVector data) : type(type), locale(0), data(data) {}
+      AtomData(AtomDataType type, const ByteVector &data) :
+        type(type), data(data) { }
       AtomDataType type;
-      int locale;
+      int locale { 0 };
       ByteVector data;
     };
 
-    typedef TagLib::List<AtomData> AtomDataList;
+    using AtomDataList = TagLib::List<AtomData>;
 
-    class Atom
+    class TAGLIB_EXPORT Atom
     {
     public:
-      explicit Atom(File *file);
+      Atom(File *file);
       ~Atom();
-      Atom *find(const char *name1, const char *name2 = 0, const char *name3 = 0, const char *name4 = 0);
-      bool path(AtomList &path, const char *name1, const char *name2 = 0, const char *name3 = 0);
+      Atom(const Atom &) = delete;
+      Atom &operator=(const Atom &) = delete;
+      Atom *find(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr);
+      bool path(AtomList &path, const char *name1, const char *name2 = nullptr, const char *name3 = nullptr);
       AtomList findall(const char *name, bool recursive = false);
-      long long offset;
-      long long length;
+      offset_t offset;
+      offset_t length;
       TagLib::ByteVector name;
       AtomList children;
-    private:
-      static const int numContainers = 11;
-      static const char *containers[11];
     };
 
     //! Root-level atoms
-    class Atoms
+    class TAGLIB_EXPORT Atoms
     {
     public:
-      explicit Atoms(File *file);
+      Atoms(File *file);
       ~Atoms();
-      Atom *find(const char *name1, const char *name2 = 0, const char *name3 = 0, const char *name4 = 0);
-      AtomList path(const char *name1, const char *name2 = 0, const char *name3 = 0, const char *name4 = 0);
+      Atoms(const Atoms &) = delete;
+      Atoms &operator=(const Atoms &) = delete;
+      Atom *find(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr);
+      AtomList path(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr);
       AtomList atoms;
     };
-
-  }
-
-}
+  } // namespace MP4
+} // namespace TagLib
 
 #endif
 

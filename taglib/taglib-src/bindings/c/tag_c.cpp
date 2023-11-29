@@ -19,28 +19,35 @@
  *   USA                                                                   *
  ***************************************************************************/
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#endif
-
-#include <stdlib.h>
-#include <fileref.h>
-#include <tfile.h>
-#include <asffile.h>
-#include <vorbisfile.h>
-#include <mpegfile.h>
-#include <flacfile.h>
-#include <oggflacfile.h>
-#include <mpcfile.h>
-#include <wavpackfile.h>
-#include <speexfile.h>
-#include <trueaudiofile.h>
-#include <mp4file.h>
-#include <tag.h>
-#include <string.h>
-#include <id3v2framefactory.h>
-
 #include "tag_c.h"
+
+#include <cstdlib>
+#include <cstring>
+#include <sstream>
+#include <utility>
+
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+#include "tstringlist.h"
+#include "tbytevectorlist.h"
+#include "tbytevectorstream.h"
+#include "tiostream.h"
+#include "tfile.h"
+#include "tpropertymap.h"
+#include "fileref.h"
+#include "asffile.h"
+#include "vorbisfile.h"
+#include "mpegfile.h"
+#include "flacfile.h"
+#include "oggflacfile.h"
+#include "mpcfile.h"
+#include "wavpackfile.h"
+#include "speexfile.h"
+#include "trueaudiofile.h"
+#include "mp4file.h"
+#include "tag.h"
+#include "id3v2framefactory.h"
 
 using namespace TagLib;
 
@@ -69,7 +76,7 @@ namespace
   {
     return String(s, unicodeStrings ? String::UTF8 : String::Latin1);
   }
-}
+}  // namespace
 
 void taglib_set_strings_unicode(BOOL unicode)
 {
@@ -87,7 +94,22 @@ void taglib_free(void* pointer)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// TagLib::File wrapper
+// TagLib::IOStream wrapper
+////////////////////////////////////////////////////////////////////////////////
+
+TagLib_IOStream *taglib_memory_iostream_new(const char *data, unsigned int size)
+{
+  return reinterpret_cast<TagLib_IOStream *>(
+    new ByteVectorStream(ByteVector(data, size)));
+}
+
+void taglib_iostream_free(TagLib_IOStream *stream)
+{
+  delete reinterpret_cast<IOStream *>(stream);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// TagLib::FileRef wrapper
 ////////////////////////////////////////////////////////////////////////////////
 
 TagLib_File *taglib_file_new(const char *filename)
@@ -97,30 +119,48 @@ TagLib_File *taglib_file_new(const char *filename)
 
 TagLib_File *taglib_file_new_type(const char *filename, TagLib_File_Type type)
 {
+  File *file = NULL;
   switch(type) {
   case TagLib_File_MPEG:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new MPEG::File(filename)));
+    file = new MPEG::File(filename);
+      break;
   case TagLib_File_OggVorbis:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new Ogg::Vorbis::File(filename)));
+    file = new Ogg::Vorbis::File(filename);
+    break;
   case TagLib_File_FLAC:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new FLAC::File(filename)));
+    file = new FLAC::File(filename);
+    break;
   case TagLib_File_MPC:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new MPC::File(filename)));
+    file = new MPC::File(filename);
+    break;
   case TagLib_File_OggFlac:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new Ogg::FLAC::File(filename)));
+    file = new Ogg::FLAC::File(filename);
+    break;
   case TagLib_File_WavPack:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new WavPack::File(filename)));
+    file = new WavPack::File(filename);
+    break;
   case TagLib_File_Speex:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new Ogg::Speex::File(filename)));
+    file = new Ogg::Speex::File(filename);
+    break;
   case TagLib_File_TrueAudio:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new TrueAudio::File(filename)));
+    file = new TrueAudio::File(filename);
+    break;
   case TagLib_File_MP4:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new MP4::File(filename)));
+    file = new MP4::File(filename);
+    break;
   case TagLib_File_ASF:
-    return reinterpret_cast<TagLib_File *>(new FileRef(new ASF::File(filename)));
+    file = new ASF::File(filename);
+    break;
   default:
-    return 0;
+    break;
   }
+  return file ? reinterpret_cast<TagLib_File *>(new FileRef(file)) : NULL;
+}
+
+TagLib_File *taglib_file_new_iostream(TagLib_IOStream *stream)
+{
+  return reinterpret_cast<TagLib_File *>(
+    new FileRef(reinterpret_cast<IOStream *>(stream)));
 }
 
 void taglib_file_free(TagLib_File *file)
@@ -130,18 +170,18 @@ void taglib_file_free(TagLib_File *file)
 
 BOOL taglib_file_is_valid(const TagLib_File *file)
 {
-  return reinterpret_cast<const FileRef *>(file)->isValid();
+  return !reinterpret_cast<const FileRef *>(file)->isNull();
 }
 
 TagLib_Tag *taglib_file_tag(const TagLib_File *file)
 {
-  const FileRef *f = reinterpret_cast<const FileRef *>(file);
+  auto f = reinterpret_cast<const FileRef *>(file);
   return reinterpret_cast<TagLib_Tag *>(f->tag());
 }
 
 const TagLib_AudioProperties *taglib_file_audioproperties(const TagLib_File *file)
 {
-  const FileRef *f = reinterpret_cast<const FileRef *>(file);
+  auto f = reinterpret_cast<const FileRef *>(file);
   return reinterpret_cast<const TagLib_AudioProperties *>(f->audioProperties());
 }
 
@@ -258,8 +298,8 @@ void taglib_tag_free_strings()
   if(!stringManagementEnabled)
     return;
 
-  for(List<char *>::ConstIterator it = strings.begin(); it != strings.end(); ++it)
-    free(*it);
+  for(auto &string : std::as_const(strings))
+    free(string);
   strings.clear();
 }
 
@@ -269,25 +309,25 @@ void taglib_tag_free_strings()
 
 int taglib_audioproperties_length(const TagLib_AudioProperties *audioProperties)
 {
-  const AudioProperties *p = reinterpret_cast<const AudioProperties *>(audioProperties);
-  return p->length();
+  auto p = reinterpret_cast<const AudioProperties *>(audioProperties);
+  return p->lengthInSeconds();
 }
 
 int taglib_audioproperties_bitrate(const TagLib_AudioProperties *audioProperties)
 {
-  const AudioProperties *p = reinterpret_cast<const AudioProperties *>(audioProperties);
+  auto p = reinterpret_cast<const AudioProperties *>(audioProperties);
   return p->bitrate();
 }
 
 int taglib_audioproperties_samplerate(const TagLib_AudioProperties *audioProperties)
 {
-  const AudioProperties *p = reinterpret_cast<const AudioProperties *>(audioProperties);
+  auto p = reinterpret_cast<const AudioProperties *>(audioProperties);
   return p->sampleRate();
 }
 
 int taglib_audioproperties_channels(const TagLib_AudioProperties *audioProperties)
 {
-  const AudioProperties *p = reinterpret_cast<const AudioProperties *>(audioProperties);
+  auto p = reinterpret_cast<const AudioProperties *>(audioProperties);
   return p->channels();
 }
 
@@ -312,4 +352,418 @@ void taglib_id3v2_set_default_text_encoding(TagLib_ID3v2_Encoding encoding)
   }
 
   ID3v2::FrameFactory::instance()->setDefaultTextEncoding(type);
+}
+
+
+/******************************************************************************
+ * Properties API
+ ******************************************************************************/
+namespace {
+
+void _taglib_property_set(TagLib_File *file, const char* prop, const char* value, bool append)
+{
+  if(file == NULL || prop == NULL)
+    return;
+
+  auto tfile = reinterpret_cast<FileRef *>(file);
+  PropertyMap map = tfile->tag()->properties();
+
+  if(value) {
+    auto property = map.find(prop);
+    if(property == map.end()) {
+      map.insert(prop, StringList(value));
+    }
+    else {
+      if(append) {
+        property->second.append(value);
+      }
+      else {
+        property->second = StringList(value);
+      }
+    }
+  }
+  else {
+    map.erase(prop);
+  }
+
+  tfile->setProperties(map);
+}
+
+}  // namespace
+
+void taglib_property_set(TagLib_File *f, const char *prop, const char *value)
+{
+  _taglib_property_set(f, prop, value, false);
+}
+
+void taglib_property_set_append(TagLib_File *f, const char *prop, const char *value)
+{
+  _taglib_property_set(f, prop, value, true);
+}
+
+char** taglib_property_keys(TagLib_File *file)
+{
+  if(file == NULL)
+    return NULL;
+
+  const PropertyMap map = reinterpret_cast<const FileRef *>(file)->properties();
+  if(map.isEmpty())
+    return NULL;
+
+  auto props = static_cast<char **>(malloc(sizeof(char *) * (map.size() + 1)));
+  char **pp = props;
+
+  for(const auto &i : map) {
+    *pp++ = stringToCharArray(i.first);
+  }
+  *pp = NULL;
+
+  return props;
+}
+
+char **taglib_property_get(TagLib_File *file, const char *prop)
+{
+  if(file == NULL || prop == NULL)
+    return NULL;
+
+  const PropertyMap map = reinterpret_cast<const FileRef *>(file)->properties();
+
+  auto property = map.find(prop);
+  if(property == map.end())
+    return NULL;
+
+  auto props = static_cast<char **>(malloc(sizeof(char *) * (property->second.size() + 1)));
+  char **pp = props;
+
+  for(const auto &i : property->second) {
+    *pp++ = stringToCharArray(i);
+  }
+  *pp = NULL;
+
+  return props;
+}
+
+void taglib_property_free(char **props)
+{
+  if(props == NULL)
+    return;
+
+  char **p = props;
+  while(*p) {
+    free(*p++);
+  }
+  free(props);
+}
+
+
+/******************************************************************************
+ * Complex Properties API
+ ******************************************************************************/
+
+namespace {
+
+bool _taglib_complex_property_set(
+  TagLib_File *file, const char *key,
+  const TagLib_Complex_Property_Attribute **value, bool append)
+{
+  if(file == NULL || key == NULL)
+    return false;
+
+  auto tfile = reinterpret_cast<FileRef *>(file);
+
+  if(value == NULL) {
+    return tfile->setComplexProperties(key, {});
+  }
+
+  VariantMap map;
+  const TagLib_Complex_Property_Attribute** attrPtr = value;
+  while(*attrPtr) {
+    const TagLib_Complex_Property_Attribute *attr = *attrPtr;
+    String attrKey(attr->key);
+    TagLib_Variant_Type type = attr->value.type;
+    switch(type) {
+    case TagLib_Variant_Void:
+      map.insert(attrKey, Variant());
+      break;
+    case TagLib_Variant_Bool:
+      map.insert(attrKey, attr->value.value.boolValue != 0);
+      break;
+    case TagLib_Variant_Int:
+      map.insert(attrKey, attr->value.value.intValue);
+      break;
+    case TagLib_Variant_UInt:
+      map.insert(attrKey, attr->value.value.uIntValue);
+      break;
+    case TagLib_Variant_LongLong:
+      map.insert(attrKey, attr->value.value.longLongValue);
+      break;
+    case TagLib_Variant_ULongLong:
+      map.insert(attrKey, attr->value.value.uLongLongValue);
+      break;
+    case TagLib_Variant_Double:
+      map.insert(attrKey, attr->value.value.doubleValue);
+      break;
+    case TagLib_Variant_String:
+      map.insert(attrKey, attr->value.value.stringValue);
+      break;
+    case TagLib_Variant_StringList: {
+      StringList strs;
+      if(attr->value.value.stringListValue) {
+        char **s = attr->value.value.stringListValue;;
+        while(*s) {
+          strs.append(*s++);
+        }
+      }
+      map.insert(attrKey, strs);
+      break;
+    }
+    case TagLib_Variant_ByteVector:
+      map.insert(attrKey, ByteVector(attr->value.value.byteVectorValue,
+                                     attr->value.size));
+      break;
+    }
+    ++attrPtr;
+  }
+
+  return append ? tfile->setComplexProperties(key, tfile->complexProperties(key).append(map))
+                : tfile->setComplexProperties(key, {map});
+}
+
+}  // namespace
+
+BOOL taglib_complex_property_set(
+  TagLib_File *file, const char *key,
+  const TagLib_Complex_Property_Attribute **value)
+{
+  return _taglib_complex_property_set(file, key, value, false);
+}
+
+BOOL taglib_complex_property_set_append(
+  TagLib_File *file, const char *key,
+  const TagLib_Complex_Property_Attribute **value)
+{
+  return _taglib_complex_property_set(file, key, value, true);
+}
+
+char** taglib_complex_property_keys(TagLib_File *file)
+{
+  if(file == NULL) {
+    return NULL;
+  }
+
+  const StringList strs = reinterpret_cast<const FileRef *>(file)->complexPropertyKeys();
+  if(strs.isEmpty()) {
+    return NULL;
+  }
+
+  auto keys = static_cast<char **>(malloc(sizeof(char *) * (strs.size() + 1)));
+  char **keyPtr = keys;
+
+  for(const auto &str : strs) {
+    *keyPtr++ = stringToCharArray(str);
+  }
+  *keyPtr = NULL;
+
+  return keys;
+}
+
+TagLib_Complex_Property_Attribute*** taglib_complex_property_get(
+  TagLib_File *file, const char *key)
+{
+  if(file == NULL || key == NULL) {
+    return NULL;
+  }
+
+  const auto variantMaps = reinterpret_cast<const FileRef *>(file)->complexProperties(key);
+  if(variantMaps.isEmpty()) {
+    return NULL;
+  }
+
+  TagLib_Complex_Property_Attribute ***props = static_cast<TagLib_Complex_Property_Attribute ***>(
+    malloc(sizeof(TagLib_Complex_Property_Attribute **) * (variantMaps.size() + 1)));
+  TagLib_Complex_Property_Attribute ***propPtr = props;
+
+  for(const auto &variantMap : variantMaps) {
+    TagLib_Complex_Property_Attribute **attrs = static_cast<TagLib_Complex_Property_Attribute **>(
+      malloc(sizeof(TagLib_Complex_Property_Attribute *) * (variantMap.size() + 1)));
+    TagLib_Complex_Property_Attribute *attr = static_cast<TagLib_Complex_Property_Attribute *>(
+      malloc(sizeof(TagLib_Complex_Property_Attribute) * variantMap.size()));
+    TagLib_Complex_Property_Attribute **attrPtr = attrs;
+    for (const auto &[k, v] : variantMap) {
+      attr->key = stringToCharArray(k);
+      attr->value.size = 0;
+      switch(v.type()) {
+      case Variant::Void:
+        attr->value.type = TagLib_Variant_Void;
+        attr->value.value.stringValue = NULL;
+        break;
+      case Variant::Bool:
+        attr->value.type = TagLib_Variant_Bool;
+        attr->value.value.boolValue = v.value<bool>();
+        break;
+      case Variant::Int:
+        attr->value.type = TagLib_Variant_Int;
+        attr->value.value.intValue = v.value<int>();
+        break;
+      case Variant::UInt:
+        attr->value.type = TagLib_Variant_UInt;
+        attr->value.value.uIntValue = v.value<unsigned int>();
+        break;
+      case Variant::LongLong:
+        attr->value.type = TagLib_Variant_LongLong;
+        attr->value.value.longLongValue = v.value<long long>();
+        break;
+      case Variant::ULongLong:
+        attr->value.type = TagLib_Variant_ULongLong;
+        attr->value.value.uLongLongValue = v.value<unsigned long long>();
+        break;
+      case Variant::Double:
+        attr->value.type = TagLib_Variant_Double;
+        attr->value.value.doubleValue = v.value<double>();
+        break;
+      case Variant::String: {
+        attr->value.type = TagLib_Variant_String;
+        auto str = v.value<String>();
+        attr->value.value.stringValue = stringToCharArray(str);
+        attr->value.size = str.size();
+        break;
+      }
+      case Variant::StringList: {
+        attr->value.type = TagLib_Variant_StringList;
+        StringList strs = v.value<StringList>();
+        auto strPtr = static_cast<char **>(malloc(sizeof(char *) * (strs.size() + 1)));
+        attr->value.value.stringListValue = strPtr;
+        attr->value.size = strs.size();
+        for(const auto &str : strs) {
+          *strPtr++ = stringToCharArray(str);
+        }
+        *strPtr = NULL;
+        break;
+      }
+      case Variant::ByteVector: {
+        attr->value.type = TagLib_Variant_ByteVector;
+        const ByteVector data = v.value<ByteVector>();
+        auto bytePtr = static_cast<char *>(malloc(data.size()));
+        attr->value.value.byteVectorValue = bytePtr;
+        attr->value.size = data.size();
+        ::memcpy(bytePtr, data.data(), data.size());
+        break;
+      }
+      case Variant::ByteVectorList:
+      case Variant::VariantList:
+      case Variant::VariantMap: {
+        attr->value.type = TagLib_Variant_String;
+        std::stringstream ss;
+        ss << v;
+        attr->value.value.stringValue = stringToCharArray(ss.str());
+        break;
+      }
+      }
+      *attrPtr++ = attr++;
+    }
+    *attrPtr++ = NULL;
+    *propPtr++ = attrs;
+  }
+  *propPtr = NULL;
+  return props;
+}
+
+void taglib_picture_from_complex_property(
+  TagLib_Complex_Property_Attribute*** properties,
+  TagLib_Complex_Property_Picture_Data *picture)
+{
+  if(!properties || !picture) {
+    return;
+  }
+  std::memset(picture, 0, sizeof(*picture));
+  TagLib_Complex_Property_Attribute*** propPtr = properties;
+  while(!picture->data && *propPtr) {
+    TagLib_Complex_Property_Attribute** attrPtr = *propPtr;
+    while(*attrPtr) {
+      TagLib_Complex_Property_Attribute *attr = *attrPtr;
+      TagLib_Variant_Type type = attr->value.type;
+      switch(type) {
+      case TagLib_Variant_String:
+        if(strcmp("mimeType", attr->key) == 0) {
+          picture->mimeType = attr->value.value.stringValue;
+        }
+        else if(strcmp("description", attr->key) == 0) {
+          picture->description = attr->value.value.stringValue;
+        }
+        else if(strcmp("pictureType", attr->key) == 0) {
+          picture->pictureType = attr->value.value.stringValue;
+        }
+        break;
+      case TagLib_Variant_ByteVector:
+        if(strcmp("data", attr->key) == 0) {
+          picture->data = attr->value.value.byteVectorValue;
+          picture->size = attr->value.size;
+        }
+        break;
+      default:
+        break;
+      }
+      ++attrPtr;
+    }
+    ++propPtr;
+  }
+}
+
+void taglib_complex_property_free_keys(char **keys)
+{
+  if(keys == NULL) {
+    return;
+  }
+
+  char **k = keys;
+  while(*k) {
+    free(*k++);
+  }
+  free(keys);
+}
+
+void taglib_complex_property_free(
+  TagLib_Complex_Property_Attribute ***props)
+{
+  if(props == NULL) {
+    return;
+  }
+  TagLib_Complex_Property_Attribute*** propPtr = props;
+  while(*propPtr) {
+    TagLib_Complex_Property_Attribute** attrPtr = *propPtr;
+    while(*attrPtr) {
+      TagLib_Complex_Property_Attribute *attr = *attrPtr;
+      TagLib_Variant_Type type = attr->value.type;
+      switch(type) {
+      case TagLib_Variant_String:
+        free(attr->value.value.stringValue);
+        break;
+      case TagLib_Variant_StringList:
+        if(attr->value.value.stringListValue) {
+          char **s = attr->value.value.stringListValue;
+          while(*s) {
+            free(*s++);
+          }
+          free(attr->value.value.stringListValue);
+        }
+        break;
+      case TagLib_Variant_ByteVector:
+        free(attr->value.value.byteVectorValue);
+        break;
+      case TagLib_Variant_Void:
+      case TagLib_Variant_Bool:
+      case TagLib_Variant_Int:
+      case TagLib_Variant_UInt:
+      case TagLib_Variant_LongLong:
+      case TagLib_Variant_ULongLong:
+      case TagLib_Variant_Double:
+        break;
+      }
+      free(attr->key);
+      ++attrPtr;
+    }
+    free(**propPtr);
+    free(*propPtr++);
+  }
+  free(props);
 }

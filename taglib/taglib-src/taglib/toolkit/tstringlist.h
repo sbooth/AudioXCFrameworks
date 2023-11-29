@@ -26,12 +26,12 @@
 #ifndef TAGLIB_STRINGLIST_H
 #define TAGLIB_STRINGLIST_H
 
-#include <taglib/tstring.h>
-#include <taglib/tlist.h>
-#include <taglib/tbytevectorlist.h>
-#include <taglib/taglib_export.h>
-
 #include <iostream>
+
+#include "tstring.h"
+#include "tlist.h"
+#include "tbytevectorlist.h"
+#include "taglib_export.h"
 
 namespace TagLib {
 
@@ -59,17 +59,30 @@ namespace TagLib {
     StringList(const StringList &l);
 
     /*!
+     * Construct a StringList with the contents of the braced initializer list.
+     */
+    StringList(std::initializer_list<String> init);
+
+    StringList &operator=(const StringList &);
+    StringList &operator=(std::initializer_list<String> init);
+
+    /*!
      * Constructs a StringList with \a s as a member.
      */
     StringList(const String &s);
 
     /*!
-     * Makes a deep copy of the data in \a vl.
+     * Makes a deep copy of the data in \a bl.
      *
      * \note This should only be used with the 8-bit codecs Latin1 and UTF8, when
      * used with other codecs it will simply print a warning and exit.
      */
-    StringList(const ByteVectorList &vl, String::Type t = String::Latin1);
+    StringList(const ByteVectorList &bl, String::Type t = String::Latin1);
+
+    /*!
+     * Destroys this StringList instance.
+     */
+    ~StringList();
 
     /*!
      * Concatenate the list of strings into one string separated by \a separator.
@@ -89,25 +102,22 @@ namespace TagLib {
     StringList &append(const StringList &l);
 
     /*!
-     * Make a shallow, implicitly shared, copy of \a l.  Because this is
-     * implicitly shared, this method is lightweight and suitable for
-     * pass-by-value usage.
-     */
-    StringList &operator=(const StringList &l);
-
-    /*!
      * Splits the String \a s into several strings at \a pattern.  This will not include
      * the pattern in the returned strings.
      */
     static StringList split(const String &s, const String &pattern);
+
+  private:
+    class StringListPrivate;
+    std::unique_ptr<StringListPrivate> d;
   };
 
-  /*!
-   * \related TagLib::StringList
-   * Send the StringList to an output stream.
-   */
-  TAGLIB_EXPORT std::ostream &operator<<(std::ostream &s, const TagLib::StringList &l);
+}  // namespace TagLib
 
-}
+/*!
+ * \related TagLib::StringList
+ * Send the StringList to an output stream.
+ */
+std::ostream TAGLIB_EXPORT &operator<<(std::ostream &s, const TagLib::StringList &l);
 
 #endif

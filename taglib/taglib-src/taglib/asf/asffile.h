@@ -26,17 +26,15 @@
 #ifndef TAGLIB_ASFFILE_H
 #define TAGLIB_ASFFILE_H
 
-#include <taglib/tag.h>
-#include <taglib/tfile.h>
-#include <taglib/taglib_export.h>
-#include <taglib/asfproperties.h>
-#include <taglib/asftag.h>
+#include "tfile.h"
+#include "taglib_export.h"
+#include "tag.h"
+#include "asfproperties.h"
+#include "asftag.h"
 
 namespace TagLib {
-
   //! An implementation of ASF (WMA) metadata
   namespace ASF {
-
     /*!
      * This implements and provides an interface for ASF files to the
      * TagLib::Tag and TagLib::AudioProperties interfaces by way of implementing
@@ -48,21 +46,17 @@ namespace TagLib {
     public:
 
       /*!
-       * Contructs an ASF file from \a file.  If \a readProperties is true the
-       * file's audio properties will also be read using \a propertiesStyle.  If
-       * false, \a propertiesStyle is ignored.
+       * Constructs an ASF file from \a file.
        *
        * \note In the current implementation, both \a readProperties and
        * \a propertiesStyle are ignored.  The audio properties are always
        * read.
        */
       File(FileName file, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
-       * Contructs an ASF file from \a file.  If \a readProperties is true the
-       * file's audio properties will also be read using \a propertiesStyle.  If
-       * false, \a propertiesStyle is ignored.
+       * Constructs an ASF file from \a stream.
        *
        * \note In the current implementation, both \a readProperties and
        * \a propertiesStyle are ignored.  The audio properties are always
@@ -72,12 +66,15 @@ namespace TagLib {
        * responsible for deleting it after the File object.
        */
       File(IOStream *stream, bool readProperties = true,
-           AudioProperties::ReadStyle propertiesStyle = AudioProperties::Average);
+           Properties::ReadStyle propertiesStyle = Properties::Average);
 
       /*!
        * Destroys this instance of the File.
        */
-      virtual ~File();
+      ~File() override;
+
+      File(const File &) = delete;
+      File &operator=(const File &) = delete;
 
       /*!
        * Returns a pointer to the ASF tag of the file.
@@ -89,19 +86,35 @@ namespace TagLib {
        * deleted by the user.  It will be deleted when the file (object) is
        * destroyed.
        */
-      virtual Tag *tag() const;
+      Tag *tag() const override;
+
+      /*!
+       * Implements the unified property interface -- export function.
+       */
+      PropertyMap properties() const override;
+
+      /*!
+       * Removes unsupported properties. Forwards to the actual Tag's
+       * removeUnsupportedProperties() function.
+       */
+      void removeUnsupportedProperties(const StringList &properties) override;
+
+      /*!
+       * Implements the unified property interface -- import function.
+       */
+      PropertyMap setProperties(const PropertyMap &) override;
 
       /*!
        * Returns the ASF audio properties for this file.
        */
-      virtual AudioProperties *audioProperties() const;
+      Properties *audioProperties() const override;
 
       /*!
        * Save the file.
        *
        * This returns true if the save was successful.
        */
-      virtual bool save();
+      bool save() override;
 
       /*!
        * Returns whether or not the given \a stream can be opened as an ASF
@@ -116,11 +129,9 @@ namespace TagLib {
       void read();
 
       class FilePrivate;
-      FilePrivate *d;
+      std::unique_ptr<FilePrivate> d;
     };
-
-  }
-
-}
+  }  // namespace ASF
+}  // namespace TagLib
 
 #endif

@@ -30,8 +30,9 @@
 #ifndef TAGLIB_APEPROPERTIES_H
 #define TAGLIB_APEPROPERTIES_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/audioproperties.h>
+#include "taglib.h"
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
 
@@ -46,59 +47,44 @@ namespace TagLib {
      * API.
      */
 
-    class TAGLIB_EXPORT AudioProperties : public TagLib::AudioProperties
+    class TAGLIB_EXPORT Properties : public AudioProperties
     {
     public:
       /*!
        * Create an instance of APE::Properties with the data read from the
        * APE::File \a file.
        */
-      AudioProperties(File *file, long long streamLength, ReadStyle style = Average);
+      Properties(File *file, offset_t streamLength, ReadStyle style = Average);
 
       /*!
-       * Destroys this APE::AudioProperties instance.
+       * Destroys this APE::Properties instance.
        */
-      virtual ~AudioProperties();
+      ~Properties() override;
 
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \note This method is just an alias of lengthInSeconds().
-       *
-       * \deprecated
-       */
-      virtual int length() const;
-
-      /*!
-       * Returns the length of the file in seconds.  The length is rounded down to
-       * the nearest whole second.
-       *
-       * \see lengthInMilliseconds()
-       */
-      virtual int lengthInSeconds() const;
+      Properties(const Properties &) = delete;
+      Properties &operator=(const Properties &) = delete;
 
       /*!
        * Returns the length of the file in milliseconds.
        *
        * \see lengthInSeconds()
        */
-      virtual int lengthInMilliseconds() const;
+      int lengthInMilliseconds() const override;
 
       /*!
        * Returns the average bit rate of the file in kb/s.
        */
-      virtual int bitrate() const;
+      int bitrate() const override;
 
       /*!
        * Returns the sample rate in Hz.
        */
-      virtual int sampleRate() const;
+      int sampleRate() const override;
 
       /*!
        * Returns the number of audio channels.
        */
-      virtual int channels() const;
+      int channels() const override;
 
       /*!
        * Returns the number of bits per audio sample.
@@ -116,14 +102,15 @@ namespace TagLib {
       int version() const;
 
     private:
-      void read(File *file, long long streamLength);
+      void read(File *file, offset_t streamLength);
+
       void analyzeCurrent(File *file);
       void analyzeOld(File *file);
 
       class PropertiesPrivate;
-      PropertiesPrivate *d;
+      std::unique_ptr<PropertiesPrivate> d;
     };
-  }
-}
+  }  // namespace APE
+}  // namespace TagLib
 
 #endif

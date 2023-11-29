@@ -26,9 +26,12 @@
 #ifndef TAGLIB_MAP_H
 #define TAGLIB_MAP_H
 
-#include <taglib/taglib.h>
-#include <cstddef>
 #include <map>
+#include <memory>
+#include <initializer_list>
+#include <utility>
+
+#include "taglib.h"
 
 namespace TagLib {
 
@@ -42,7 +45,7 @@ namespace TagLib {
 
   template <class Key, class T> class Map
   {
-  private:
+  public:
 #ifndef DO_NOT_DOCUMENT
 #ifdef WANT_CLASS_INSTANTIATION_OF_MAP
     // Some STL implementations get snippy over the use of the
@@ -53,16 +56,12 @@ namespace TagLib {
     // Not all the specializations of Map can use the class keyword
     // (when T is not actually a class type), so don't apply this
     // generally.
-    typedef std::map<class Key, class T> MapType;
+    using Iterator = typename std::map<class Key, class T>::iterator;
+    using ConstIterator = typename std::map<class Key, class T>::const_iterator;
 #else
-    typedef std::map<Key, T> MapType;
+    using Iterator = typename std::map<Key, T>::iterator;
+    using ConstIterator = typename std::map<Key, T>::const_iterator;
 #endif
-#endif
-
- public:
-#ifndef DO_NOT_DOCUMENT
-    typedef typename MapType::iterator Iterator;
-    typedef typename MapType::const_iterator ConstIterator;
 #endif
 
     /*!
@@ -78,9 +77,14 @@ namespace TagLib {
     Map(const Map<Key, T> &m);
 
     /*!
+     * Constructs a Map with the contents of the braced initializer list.
+     */
+    Map(std::initializer_list<std::pair<const Key, T>> init);
+
+    /*!
      * Destroys this instance of the Map.
      */
-    virtual ~Map();
+    ~Map();
 
     /*!
      * Returns an STL style iterator to the beginning of the map.  See
@@ -95,6 +99,12 @@ namespace TagLib {
     ConstIterator begin() const;
 
     /*!
+     * Returns an STL style iterator to the beginning of the map.  See
+     * std::map::const_iterator for the semantics.
+     */
+    ConstIterator cbegin() const;
+
+    /*!
      * Returns an STL style iterator to the end of the map.  See
      * std::map::iterator for the semantics.
      */
@@ -105,6 +115,12 @@ namespace TagLib {
      * std::map::const_iterator for the semantics.
      */
     ConstIterator end() const;
+
+    /*!
+     * Returns an STL style iterator to the end of the map.  See
+     * std::map::const_iterator for the semantics.
+     */
+    ConstIterator cend() const;
 
     /*!
      * Inserts \a value under \a key in the map.  If a value for \a key already
@@ -123,7 +139,7 @@ namespace TagLib {
      *
      * \see isEmpty()
      */
-    size_t size() const;
+    unsigned int size() const;
 
     /*!
      * Returns true if the map is empty.
@@ -158,6 +174,14 @@ namespace TagLib {
     Map<Key, T> &erase(const Key &key);
 
     /*!
+     * Returns the value associated with \a key.
+     *
+     * If the map does not contain \a key, it returns defaultValue.
+     * If no defaultValue is specified, it returns a default-constructed value.
+     */
+    T value(const Key &key, const T &defaultValue = T()) const;
+
+    /*!
      * Returns a reference to the value associated with \a key.
      *
      * \note This has undefined behavior if the key is not present in the map.
@@ -179,9 +203,25 @@ namespace TagLib {
     Map<Key, T> &operator=(const Map<Key, T> &m);
 
     /*!
+     * Replace the contents of the map with those of the braced initializer list
+     */
+    Map<Key, T> &operator=(std::initializer_list<std::pair<const Key, T>> init);
+
+    /*!
      * Exchanges the content of this map by the content of \a m.
      */
     void swap(Map<Key, T> &m);
+
+    /*!
+     * Compares this map with \a m and returns true if all of the elements are
+     * the same.
+     */
+    bool operator==(const Map<Key, T> &m) const;
+
+    /*!
+     * Compares this map with \a m and returns true if the maps differ.
+     */
+    bool operator!=(const Map<Key, T> &m) const;
 
   protected:
     /*
@@ -194,14 +234,15 @@ namespace TagLib {
   private:
 #ifndef DO_NOT_DOCUMENT
     template <class KeyP, class TP> class MapPrivate;
-    MapPrivate<Key, T> *d;
+    std::shared_ptr<MapPrivate<Key, T>> d;
 #endif
   };
-}
+
+}  // namespace TagLib
 
 // Since GCC doesn't support the "export" keyword, we have to include the
 // implementation.
 
-#include <taglib/tmap.tcc>
+#include "tmap.tcc"
 
 #endif

@@ -24,14 +24,15 @@
  ***************************************************************************/
 
 #include <string>
-#include <stdio.h>
-#include <tag.h>
-#include <tstringlist.h>
-#include <tbytevectorlist.h>
-#include <tpropertymap.h>
-#include <oggfile.h>
-#include <vorbisfile.h>
-#include <oggpageheader.h>
+#include <cstdio>
+
+#include "tag.h"
+#include "tstringlist.h"
+#include "tbytevectorlist.h"
+#include "tpropertymap.h"
+#include "oggfile.h"
+#include "vorbisfile.h"
+#include "oggpageheader.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -48,6 +49,7 @@ class TestOGG : public CppUnit::TestFixture
   CPPUNIT_TEST(testDictInterface2);
   CPPUNIT_TEST(testAudioProperties);
   CPPUNIT_TEST(testPageChecksum);
+  CPPUNIT_TEST(testPageGranulePosition);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -58,12 +60,12 @@ public:
     string newname = copy.fileName();
 
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       f.tag()->setArtist("The Artist");
       f.save();
     }
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       CPPUNIT_ASSERT_EQUAL(String("The Artist"), f.tag()->artist());
     }
   }
@@ -76,18 +78,18 @@ public:
     const String text = longText(128 * 1024, true);
 
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       f.tag()->setTitle(text);
       f.save();
     }
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       CPPUNIT_ASSERT(f.isValid());
-      CPPUNIT_ASSERT_EQUAL(136383LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(136383), f.length());
       CPPUNIT_ASSERT_EQUAL(19, f.lastPageHeader()->pageSequenceNumber());
-      CPPUNIT_ASSERT_EQUAL((size_t)30, f.packet(0).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)131127, f.packet(1).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)3832, f.packet(2).size());
+      CPPUNIT_ASSERT_EQUAL(30U, f.packet(0).size());
+      CPPUNIT_ASSERT_EQUAL(131127U, f.packet(1).size());
+      CPPUNIT_ASSERT_EQUAL(3832U, f.packet(2).size());
       CPPUNIT_ASSERT_EQUAL(text, f.tag()->title());
 
       CPPUNIT_ASSERT(f.audioProperties());
@@ -97,13 +99,13 @@ public:
       f.save();
     }
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       CPPUNIT_ASSERT(f.isValid());
-      CPPUNIT_ASSERT_EQUAL(4370LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4370), f.length());
       CPPUNIT_ASSERT_EQUAL(3, f.lastPageHeader()->pageSequenceNumber());
-      CPPUNIT_ASSERT_EQUAL((size_t)30, f.packet(0).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)60, f.packet(1).size());
-      CPPUNIT_ASSERT_EQUAL((size_t)3832, f.packet(2).size());
+      CPPUNIT_ASSERT_EQUAL(30U, f.packet(0).size());
+      CPPUNIT_ASSERT_EQUAL(60U, f.packet(1).size());
+      CPPUNIT_ASSERT_EQUAL(3832U, f.packet(2).size());
       CPPUNIT_ASSERT_EQUAL(String("ABCDE"), f.tag()->title());
 
       CPPUNIT_ASSERT(f.audioProperties());
@@ -119,12 +121,12 @@ public:
     const String text = longText(60890, true);
 
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       f.tag()->setTitle(text);
       f.save();
     }
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       CPPUNIT_ASSERT(f.isValid());
       CPPUNIT_ASSERT_EQUAL(text, f.tag()->title());
 
@@ -132,7 +134,7 @@ public:
       f.save();
     }
     {
-      Ogg::Vorbis::File f(newname.c_str());
+      Vorbis::File f(newname.c_str());
       CPPUNIT_ASSERT(f.isValid());
       CPPUNIT_ASSERT_EQUAL(String("ABCDE"), f.tag()->title());
     }
@@ -143,9 +145,9 @@ public:
     ScopedFileCopy copy("empty", ".ogg");
     string newname = copy.fileName();
 
-    Ogg::Vorbis::File f(newname.c_str());
+    Vorbis::File f(newname.c_str());
 
-    CPPUNIT_ASSERT_EQUAL((size_t)0, f.tag()->properties().size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(0), f.tag()->properties().size());
 
     PropertyMap newTags;
     StringList values("value 1");
@@ -154,8 +156,8 @@ public:
     f.tag()->setProperties(newTags);
 
     PropertyMap map = f.tag()->properties();
-    CPPUNIT_ASSERT_EQUAL((size_t)1, map.size());
-    CPPUNIT_ASSERT_EQUAL((size_t)2, map["ARTIST"].size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(1), map.size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(2), map["ARTIST"].size());
     CPPUNIT_ASSERT_EQUAL(String("value 1"), map["ARTIST"][0]);
   }
 
@@ -164,10 +166,10 @@ public:
     ScopedFileCopy copy("test", ".ogg");
     string newname = copy.fileName();
 
-    Ogg::Vorbis::File f(newname.c_str());
+    Vorbis::File f(newname.c_str());
     PropertyMap tags = f.tag()->properties();
 
-    CPPUNIT_ASSERT_EQUAL((size_t)2, tags["UNUSUALTAG"].size());
+    CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(2), tags["UNUSUALTAG"].size());
     CPPUNIT_ASSERT_EQUAL(String("usual value"), tags["UNUSUALTAG"][0]);
     CPPUNIT_ASSERT_EQUAL(String("another value"), tags["UNUSUALTAG"][1]);
     CPPUNIT_ASSERT_EQUAL(
@@ -188,10 +190,9 @@ public:
   {
     Ogg::Vorbis::File f(TEST_FILE_PATH_C("empty.ogg"));
     CPPUNIT_ASSERT(f.audioProperties());
-    CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->length());
     CPPUNIT_ASSERT_EQUAL(3, f.audioProperties()->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(3685, f.audioProperties()->lengthInMilliseconds());
-    CPPUNIT_ASSERT_EQUAL(9, f.audioProperties()->bitrate());
+    CPPUNIT_ASSERT_EQUAL(1, f.audioProperties()->bitrate());
     CPPUNIT_ASSERT_EQUAL(2, f.audioProperties()->channels());
     CPPUNIT_ASSERT_EQUAL(44100, f.audioProperties()->sampleRate());
     CPPUNIT_ASSERT_EQUAL(0, f.audioProperties()->vorbisVersion());
@@ -205,24 +206,51 @@ public:
     ScopedFileCopy copy("empty", ".ogg");
 
     {
-      Ogg::Vorbis::File f(copy.fileName().c_str());
+      Vorbis::File f(copy.fileName().c_str());
       f.tag()->setArtist("The Artist");
       f.save();
 
       f.seek(0x50);
-      CPPUNIT_ASSERT_EQUAL((unsigned int)0x3d3bd92d, f.readBlock(4).toUInt32BE(0));
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(0x3d3bd92d), f.readBlock(4).toUInt(0, true));
     }
     {
-      Ogg::Vorbis::File f(copy.fileName().c_str());
+      Vorbis::File f(copy.fileName().c_str());
       f.tag()->setArtist("The Artist 2");
       f.save();
 
       f.seek(0x50);
-      CPPUNIT_ASSERT_EQUAL((unsigned int)0xd985291c, f.readBlock(4).toUInt32BE(0));
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(0xd985291c), f.readBlock(4).toUInt(0, true));
     }
 
   }
 
+  void testPageGranulePosition()
+  {
+    ScopedFileCopy copy("empty", ".ogg");
+    {
+      Vorbis::File f(copy.fileName().c_str());
+      // Force the Vorbis comment packet to span more than one page and
+      // check if the granule position is -1 indicating that no packets
+      // finish on this page.
+      f.tag()->setComment(String(ByteVector(70000, 'A')));
+      f.save();
+
+      f.seek(0x3a);
+      CPPUNIT_ASSERT_EQUAL(ByteVector("OggS\0\0", 6), f.readBlock(6));
+      CPPUNIT_ASSERT_EQUAL(static_cast<long long>(-1), f.readBlock(8).toLongLong());
+    }
+    {
+      Vorbis::File f(copy.fileName().c_str());
+      // Use a small Vorbis comment package which ends on the seconds page and
+      // check if the granule position is zero.
+      f.tag()->setComment("A small comment");
+      f.save();
+
+      f.seek(0x3a);
+      CPPUNIT_ASSERT_EQUAL(ByteVector("OggS\0\0", 6), f.readBlock(6));
+      CPPUNIT_ASSERT_EQUAL(static_cast<long long>(0), f.readBlock(8).toLongLong());
+    }
+  }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestOGG);

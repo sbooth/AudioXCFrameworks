@@ -23,13 +23,12 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
+#include "oggpageheader.h"
+
 #include <bitset>
 
-#include <tstring.h>
 #include "tdebug.h"
-#include <taglib.h>
-
-#include "oggpageheader.h"
+#include "tstring.h"
 #include "oggfile.h"
 
 using namespace TagLib;
@@ -37,46 +36,31 @@ using namespace TagLib;
 class Ogg::PageHeader::PageHeaderPrivate
 {
 public:
-  PageHeaderPrivate() :
-    isValid(false),
-    firstPacketContinued(false),
-    lastPacketCompleted(false),
-    firstPageOfStream(false),
-    lastPageOfStream(false),
-    absoluteGranularPosition(0),
-    streamSerialNumber(0),
-    pageSequenceNumber(-1),
-    size(0),
-    dataSize(0) {}
-
-  bool isValid;
+  bool isValid { false };
   List<int> packetSizes;
-  bool firstPacketContinued;
-  bool lastPacketCompleted;
-  bool firstPageOfStream;
-  bool lastPageOfStream;
-  long long absoluteGranularPosition;
-  unsigned int streamSerialNumber;
-  int pageSequenceNumber;
-  int size;
-  int dataSize;
+  bool firstPacketContinued { false };
+  bool lastPacketCompleted { false };
+  bool firstPageOfStream { false };
+  bool lastPageOfStream { false };
+  long long absoluteGranularPosition { 0 };
+  unsigned int streamSerialNumber { 0 };
+  int pageSequenceNumber { -1 };
+  int size { 0 };
+  int dataSize { 0 };
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-Ogg::PageHeader::PageHeader(Ogg::File *file, long long pageOffset) :
-  d(new PageHeaderPrivate())
+Ogg::PageHeader::PageHeader(Ogg::File *file, offset_t pageOffset) :
+  d(std::make_unique<PageHeaderPrivate>())
 {
   if(file && pageOffset >= 0)
     read(file, pageOffset);
 }
 
-Ogg::PageHeader::~PageHeader()
-{
-  delete d;
-}
+Ogg::PageHeader::~PageHeader() = default;
 
 bool Ogg::PageHeader::isValid() const
 {
@@ -183,7 +167,7 @@ ByteVector Ogg::PageHeader::render() const
 
   // stream structure version
 
-  data.append(char(0));
+  data.append(static_cast<char>(0));
 
   // header type flag
 
@@ -192,19 +176,19 @@ ByteVector Ogg::PageHeader::render() const
   flags[1] = d->pageSequenceNumber == 0;
   flags[2] = d->lastPageOfStream;
 
-  data.append(char(flags.to_ulong()));
+  data.append(static_cast<char>(flags.to_ulong()));
 
   // absolute granular position
 
-  data.append(ByteVector::fromUInt64LE(d->absoluteGranularPosition));
+  data.append(ByteVector::fromLongLong(d->absoluteGranularPosition, false));
 
   // stream serial number
 
-  data.append(ByteVector::fromUInt32LE(d->streamSerialNumber));
+  data.append(ByteVector::fromUInt(d->streamSerialNumber, false));
 
   // page sequence number
 
-  data.append(ByteVector::fromUInt32LE(d->pageSequenceNumber));
+  data.append(ByteVector::fromUInt(d->pageSequenceNumber, false));
 
   // checksum -- this is left empty and should be filled in by the Ogg::Page
   // class
@@ -225,7 +209,7 @@ ByteVector Ogg::PageHeader::render() const
 // private members
 ////////////////////////////////////////////////////////////////////////////////
 
-void Ogg::PageHeader::read(Ogg::File *file, long long pageOffset)
+void Ogg::PageHeader::read(Ogg::File *file, offset_t pageOffset)
 {
   file->seek(pageOffset);
 
@@ -248,9 +232,9 @@ void Ogg::PageHeader::read(Ogg::File *file, long long pageOffset)
   d->firstPageOfStream    = flags.test(1);
   d->lastPageOfStream     = flags.test(2);
 
-  d->absoluteGranularPosition = data.toInt64LE(6);
-  d->streamSerialNumber = data.toUInt32LE(14);
-  d->pageSequenceNumber = data.toUInt32LE(18);
+  d->absoluteGranularPosition = data.toLongLong(6, false);
+  d->streamSerialNumber = data.toUInt(14, false);
+  d->pageSequenceNumber = data.toUInt(18, false);
 
   // Byte number 27 is the number of page segments, which is the only variable
   // length portion of the page header.  After reading the number of page
@@ -262,7 +246,7 @@ void Ogg::PageHeader::read(Ogg::File *file, long long pageOffset)
 
   // Another sanity check.
 
-  if(pageSegmentCount < 1 || int(pageSegments.size()) != pageSegmentCount)
+  if(pageSegmentCount < 1 || static_cast<int>(pageSegments.size()) != pageSegmentCount)
     return;
 
   // The base size of an Ogg page 27 bytes plus the number of lacing values.
@@ -295,7 +279,7 @@ ByteVector Ogg::PageHeader::lacingValues() const
 {
   ByteVector data;
 
-  for(List<int>::ConstIterator it = d->packetSizes.begin(); it != d->packetSizes.end(); ++it) {
+  for(auto it = d->packetSizes.cbegin(); it != d->packetSizes.cend(); ++it) {
 
     // The size of a packet in an Ogg page is indicated by a series of "lacing
     // values" where the sum of the values is the packet size in bytes.  Each of
@@ -304,7 +288,7 @@ ByteVector Ogg::PageHeader::lacingValues() const
 
     data.resize(data.size() + (*it / 255), '\xff');
 
-    if(it != --d->packetSizes.end() || d->lastPacketCompleted)
+    if(it != std::prev(d->packetSizes.cend()) || d->lastPacketCompleted)
       data.append(static_cast<unsigned char>(*it % 255));
   }
 

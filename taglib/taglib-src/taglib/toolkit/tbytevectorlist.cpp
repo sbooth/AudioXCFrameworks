@@ -27,18 +27,22 @@
 
 using namespace TagLib;
 
+class ByteVectorList::ByteVectorListPrivate
+{
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // static members
 ////////////////////////////////////////////////////////////////////////////////
 
-ByteVectorList ByteVectorList::split(
-  const ByteVector &v, const ByteVector &pattern, size_t byteAlign, size_t max)
+ByteVectorList ByteVectorList::split(const ByteVector &v, const ByteVector &pattern,
+                                     int byteAlign, int max)
 {
   ByteVectorList l;
 
-  size_t previousOffset = 0;
-  for(size_t offset = v.find(pattern, 0, byteAlign);
-      offset != ByteVector::npos() && (max == 0 || max > l.size() + 1);
+  unsigned int previousOffset = 0;
+  for(int offset = v.find(pattern, 0, byteAlign);
+      offset != -1 && (max == 0 || max > static_cast<int>(l.size()) + 1);
       offset = v.find(pattern, offset + pattern.size(), byteAlign))
   {
     if(offset - previousOffset >= 1)
@@ -59,18 +63,32 @@ ByteVectorList ByteVectorList::split(
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-ByteVectorList::ByteVectorList() : List<ByteVector>()
-{
+ByteVectorList::ByteVectorList() = default;
 
+ByteVectorList::~ByteVectorList() = default;
+
+ByteVectorList::ByteVectorList(const ByteVectorList &l) :
+  List<ByteVector>(l)
+{
 }
 
-ByteVectorList::ByteVectorList(const ByteVectorList &l) : List<ByteVector>(l)
+ByteVectorList::ByteVectorList(std::initializer_list<ByteVector> init) :
+  List<ByteVector>(init)
 {
 }
 
 ByteVectorList &ByteVectorList::operator=(const ByteVectorList &l)
 {
+  if(this == &l)
+    return *this;
+
   List<ByteVector>::operator=(l);
+  return *this;
+}
+
+ByteVectorList &ByteVectorList::operator=(std::initializer_list<ByteVector> init)
+{
+  List<ByteVector>::operator=(init);
   return *this;
 }
 
@@ -78,14 +96,26 @@ ByteVector ByteVectorList::toByteVector(const ByteVector &separator) const
 {
   ByteVector v;
 
-  ConstIterator it = begin();
-
-  while(it != end()) {
+  for(auto it = begin(); it != end(); ++it) {
     v.append(*it);
-    it++;
-    if(it != end())
+    if(std::next(it) != end())
       v.append(separator);
   }
 
   return v;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// related functions
+////////////////////////////////////////////////////////////////////////////////
+
+std::ostream &operator<<(std::ostream &s, const ByteVectorList &l)
+{
+  for(auto it = l.begin(); it != l.end(); ++it) {
+    if(it != l.begin()) {
+      s << ' ';
+    }
+    s << *it;
+  }
+  return s;
 }

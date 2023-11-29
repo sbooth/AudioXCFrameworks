@@ -23,21 +23,12 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tfile.h>
+#include "tfile.h"
+#include "plainfile.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
 using namespace TagLib;
-
-// File subclass that gives tests access to filesystem operations
-class PlainFile : public File {
-public:
-  explicit PlainFile(FileName name) : File(name) { }
-  Tag *tag() const { return NULL; }
-  AudioProperties *audioProperties() const { return NULL; }
-  bool save(){ return false; }
-  void truncate(long length) { File::truncate(length); }
-};
 
 class TestFile : public CppUnit::TestFixture
 {
@@ -62,19 +53,19 @@ public:
     }
     {
       PlainFile file(name.c_str());
-      CPPUNIT_ASSERT_EQUAL(10LL, file.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(10), file.length());
 
-      CPPUNIT_ASSERT_EQUAL(2LL, file.find(ByteVector("23", 2)));
-      CPPUNIT_ASSERT_EQUAL(2LL, file.find(ByteVector("23", 2), 2));
-      CPPUNIT_ASSERT_EQUAL(7LL, file.find(ByteVector("23", 2), 3));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(2), file.find(ByteVector("23", 2)));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(2), file.find(ByteVector("23", 2), 2));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(7), file.find(ByteVector("23", 2), 3));
 
       file.seek(0);
-      const ByteVector v = file.readBlock(static_cast<size_t>(file.length()));
-      CPPUNIT_ASSERT_EQUAL((size_t)10, v.size());
+      const ByteVector v = file.readBlock(file.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(10), v.size());
 
-      CPPUNIT_ASSERT_EQUAL((long long)v.find("23"),    file.find("23"));
-      CPPUNIT_ASSERT_EQUAL((long long)v.find("23", 2), file.find("23", 2));
-      CPPUNIT_ASSERT_EQUAL((long long)v.find("23", 3), file.find("23", 3));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(v.find("23")),    file.find("23"));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(v.find("23", 2)), file.find("23", 2));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(v.find("23", 3)), file.find("23", 3));
     }
   }
 
@@ -90,19 +81,19 @@ public:
     }
     {
       PlainFile file(name.c_str());
-      CPPUNIT_ASSERT_EQUAL(10LL, file.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(10), file.length());
 
-      CPPUNIT_ASSERT_EQUAL(7LL, file.rfind(ByteVector("23", 2)));
-      CPPUNIT_ASSERT_EQUAL(7LL, file.rfind(ByteVector("23", 2), 7));
-      CPPUNIT_ASSERT_EQUAL(2LL, file.rfind(ByteVector("23", 2), 6));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(7), file.rfind(ByteVector("23", 2)));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(7), file.rfind(ByteVector("23", 2), 7));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(2), file.rfind(ByteVector("23", 2), 6));
 
       file.seek(0);
-      const ByteVector v = file.readBlock(static_cast<size_t>(file.length()));
-      CPPUNIT_ASSERT_EQUAL((size_t)10, v.size());
+      const ByteVector v = file.readBlock(file.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(10), v.size());
 
-      CPPUNIT_ASSERT_EQUAL((long long)v.rfind("23"),    file.rfind("23"));
-      CPPUNIT_ASSERT_EQUAL((long long)v.rfind("23", 7), file.rfind("23", 7));
-      CPPUNIT_ASSERT_EQUAL((long long)v.rfind("23", 6), file.rfind("23", 6));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(v.rfind("23")),    file.rfind("23"));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(v.rfind("23", 7)), file.rfind("23", 7));
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(v.rfind("23", 6)), file.rfind("23", 6));
     }
   }
 
@@ -112,22 +103,22 @@ public:
     std::string name = copy.fileName();
 
     PlainFile f(name.c_str());
-    CPPUNIT_ASSERT_EQUAL(0LL, f.tell());
-    CPPUNIT_ASSERT_EQUAL(4328LL, f.length());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(0), f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4328), f.length());
 
     f.seek(100, File::Beginning);
-    CPPUNIT_ASSERT_EQUAL(100LL, f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(100), f.tell());
     f.seek(100, File::Current);
-    CPPUNIT_ASSERT_EQUAL(200LL, f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(200), f.tell());
     f.seek(-300, File::Current);
-    CPPUNIT_ASSERT_EQUAL(200LL, f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(200), f.tell());
 
     f.seek(-100, File::End);
-    CPPUNIT_ASSERT_EQUAL(4228LL, f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4228), f.tell());
     f.seek(-100, File::Current);
-    CPPUNIT_ASSERT_EQUAL(4128LL, f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4128), f.tell());
     f.seek(300, File::Current);
-    CPPUNIT_ASSERT_EQUAL(4428LL, f.tell());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4428), f.tell());
   }
 
   void testTruncate()
@@ -137,18 +128,17 @@ public:
 
     {
       PlainFile f(name.c_str());
-      CPPUNIT_ASSERT_EQUAL(4328LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4328), f.length());
 
       f.truncate(2000);
-      CPPUNIT_ASSERT_EQUAL(2000LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(2000), f.length());
     }
     {
       PlainFile f(name.c_str());
-      CPPUNIT_ASSERT_EQUAL(2000LL, f.length());
+      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(2000), f.length());
     }
   }
 
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestFile);
-

@@ -23,34 +23,49 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstringlist.h>
-
 #include "audioproperties.h"
 
 using namespace TagLib;
+
+class AudioProperties::AudioPropertiesPrivate
+{
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // public methods
 ////////////////////////////////////////////////////////////////////////////////
 
-AudioProperties::~AudioProperties()
+AudioProperties::~AudioProperties() = default;
+
+int AudioProperties::length() const
 {
+  return lengthInSeconds();
 }
 
-String AudioProperties::toString() const
+int AudioProperties::lengthInSeconds() const
 {
-  StringList desc;
-  desc.append("Audio");
-  desc.append(String::number(length()) + " seconds");
-  desc.append(String::number(bitrate()) + " kbps");
-  return desc.toString(", ");
+  return lengthInMilliseconds() / 1000;
+}
+
+int AudioProperties::lengthInMilliseconds() const
+{
+  return 0;
+}
+
+int AudioProperties::bitrate() const
+{
+  return 0;
+}
+
+int AudioProperties::sampleRate() const
+{
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // protected methods
 ////////////////////////////////////////////////////////////////////////////////
 
-AudioProperties::AudioProperties() :
-  d(0)
+AudioProperties::AudioProperties(ReadStyle)
 {
 }

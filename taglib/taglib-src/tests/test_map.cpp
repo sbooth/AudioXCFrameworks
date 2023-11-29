@@ -23,8 +23,8 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include <tmap.h>
+#include "tstring.h"
+#include "tmap.h"
 #include <cppunit/extensions/HelperMacros.h>
 
 using namespace std;
@@ -35,6 +35,7 @@ class TestMap : public CppUnit::TestFixture
   CPPUNIT_TEST_SUITE(TestMap);
   CPPUNIT_TEST(testInsert);
   CPPUNIT_TEST(testDetach);
+  CPPUNIT_TEST(testBracedInit);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -44,11 +45,11 @@ public:
     Map<String, int> m1;
     m1.insert("foo", 3);
     m1.insert("bar", 5);
-    CPPUNIT_ASSERT_EQUAL((size_t)2, m1.size());
+    CPPUNIT_ASSERT_EQUAL(2U, m1.size());
     CPPUNIT_ASSERT_EQUAL(3, m1["foo"]);
     CPPUNIT_ASSERT_EQUAL(5, m1["bar"]);
     m1.insert("foo", 7);
-    CPPUNIT_ASSERT_EQUAL((size_t)2, m1.size());
+    CPPUNIT_ASSERT_EQUAL(2U, m1.size());
     CPPUNIT_ASSERT_EQUAL(7, m1["foo"]);
     CPPUNIT_ASSERT_EQUAL(5, m1["bar"]);
   }
@@ -61,10 +62,33 @@ public:
     m1.insert("carol", 11);
 
     Map<String, int> m2 = m1;
-    Map<String, int>::Iterator it = m2.find("bob");
+    auto it = m2.find("bob");
     (*it).second = 99;
     CPPUNIT_ASSERT_EQUAL(9,  m1["bob"]);
     CPPUNIT_ASSERT_EQUAL(99, m2["bob"]);
+  }
+
+  void testBracedInit()
+  {
+    Map<String, int> m1 {
+      {"ONE", 1},
+      {"TWO", 2},
+      {"THREE", 3}
+    };
+    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(m1.size()));
+    CPPUNIT_ASSERT(m1.contains("ONE") && m1["ONE"] == 1);
+    CPPUNIT_ASSERT(m1.contains("TWO") && m1["TWO"] == 2);
+    CPPUNIT_ASSERT(m1.contains("THREE") && m1["THREE"] == 3);
+
+    Map<String, int> m2 = {
+      {"FOUR", 4},
+      {"FIVE", 5},
+      {"SIX", 6}
+    };
+    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(m2.size()));
+    CPPUNIT_ASSERT(m2.contains("FOUR") && m2["FOUR"] == 4);
+    CPPUNIT_ASSERT(m2.contains("FIVE") && m2["FIVE"] == 5);
+    CPPUNIT_ASSERT(m2.contains("SIX") && m2["SIX"] == 6);
   }
 
 };

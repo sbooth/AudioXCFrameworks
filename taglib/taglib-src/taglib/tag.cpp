@@ -24,26 +24,21 @@
  ***************************************************************************/
 
 #include "tag.h"
+
+#include <utility>
+
 #include "tstringlist.h"
-#include "tpicturemap.h"
 #include "tpropertymap.h"
 
 using namespace TagLib;
 
 class Tag::TagPrivate
 {
-
 };
 
-Tag::Tag()
-{
+Tag::Tag() = default;
 
-}
-
-Tag::~Tag()
-{
-
-}
+Tag::~Tag() = default;
 
 bool Tag::isEmpty() const
 {
@@ -53,8 +48,7 @@ bool Tag::isEmpty() const
           comment().isEmpty() &&
           genre().isEmpty() &&
           year() == 0 &&
-          track() == 0 &&
-          pictures().isEmpty());
+          track() == 0);
 }
 
 PropertyMap Tag::properties() const
@@ -70,9 +64,9 @@ PropertyMap Tag::properties() const
     map["COMMENT"].append(comment());
   if(!(genre().isEmpty()))
     map["GENRE"].append(genre());
-  if(!(year() == 0))
+  if(year() != 0)
     map["DATE"].append(String::number(year()));
-  if(!(track() == 0))
+  if(track() != 0)
     map["TRACKNUMBER"].append(String::number(track()));
   return map;
 }
@@ -143,13 +137,28 @@ PropertyMap Tag::setProperties(const PropertyMap &origProps)
 
   // for each tag that has been set above, remove the first entry in the corresponding
   // value list. The others will be returned as unsupported by this format.
-  for(StringList::ConstIterator it = oneValueSet.begin(); it != oneValueSet.end(); ++it) {
-    if(properties[*it].size() == 1)
-      properties.erase(*it);
+  for(const auto &entry : std::as_const(oneValueSet)) {
+    if(properties[entry].size() == 1)
+      properties.erase(entry);
     else
-      properties[*it].erase( properties[*it].begin() );
+      properties[entry].erase(properties[entry].begin());
   }
   return properties;
+}
+
+StringList Tag::complexPropertyKeys() const
+{
+  return StringList();
+}
+
+List<VariantMap> Tag::complexProperties(const String &) const
+{
+  return {};
+}
+
+bool Tag::setComplexProperties(const String &, const List<VariantMap> &)
+{
+  return false;
 }
 
 void Tag::duplicate(const Tag *source, Tag *target, bool overwrite) // static
@@ -162,7 +171,6 @@ void Tag::duplicate(const Tag *source, Tag *target, bool overwrite) // static
     target->setGenre(source->genre());
     target->setYear(source->year());
     target->setTrack(source->track());
-    target->setPictures(source->pictures());
   }
   else {
     if(target->title().isEmpty())
@@ -179,21 +187,5 @@ void Tag::duplicate(const Tag *source, Tag *target, bool overwrite) // static
       target->setYear(source->year());
     if(target->track() <= 0)
       target->setTrack(source->track());
-    if(target->pictures().isEmpty() )
-        target->setPictures(source->pictures());
   }
 }
-
-String Tag::toString() const
-{
-  StringList desc;
-  desc.append("title=" + title());
-  desc.append("artist=" + artist());
-  desc.append("album=" + album());
-  desc.append("comment=" + comment());
-  desc.append("genre=" + genre());
-  desc.append("year=" + String::number(year()));
-  desc.append("track=" + String::number(track()));
-  return desc.toString("\n");
-}
-

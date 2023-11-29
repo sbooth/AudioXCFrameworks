@@ -27,6 +27,10 @@
 
 using namespace TagLib;
 
+class StringList::StringListPrivate
+{
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // static members
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,11 +39,8 @@ StringList StringList::split(const String &s, const String &pattern)
 {
   StringList l;
 
-  size_t previousOffset = 0;
-  for(size_t offset = s.find(pattern);
-    offset != String::npos();
-    offset = s.find(pattern, offset + 1))
-  {
+  int previousOffset = 0;
+  for(int offset = s.find(pattern); offset != -1; offset = s.find(pattern, offset + 1)) {
     l.append(s.substr(previousOffset, offset - previousOffset));
     previousOffset = offset + 1;
   }
@@ -53,38 +54,54 @@ StringList StringList::split(const String &s, const String &pattern)
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-StringList::StringList() : List<String>()
+StringList::StringList() = default;
+
+StringList::StringList(const StringList &l) :
+  List<String>(l)
 {
 }
 
-StringList::StringList(const StringList &l) : List<String>(l)
+StringList::StringList(std::initializer_list<String> init) :
+  List<String>(init)
 {
 }
 
-StringList::StringList(const String &s) : List<String>()
+StringList &StringList::operator=(const StringList &l)
+{
+  if(this == &l)
+    return *this;
+
+  List<String>::operator=(l);
+  return *this;
+}
+
+StringList &StringList::operator=(std::initializer_list<String> init)
+{
+  List<String>::operator=(init);
+  return *this;
+}
+
+StringList::StringList(const String &s)
 {
   append(s);
 }
 
-StringList::StringList(const ByteVectorList &bl, String::Type t) : List<String>()
+StringList::StringList(const ByteVectorList &bl, String::Type t)
 {
-  ByteVectorList::ConstIterator i = bl.begin();
-  for(;i != bl.end(); i++) {
-    append(String(*i, t));
+  for(const auto &byte : bl) {
+    append(String(byte, t));
   }
 }
+
+StringList::~StringList() = default;
 
 String StringList::toString(const String &separator) const
 {
   String s;
 
-  ConstIterator it = begin();
-  ConstIterator itEnd = end();
-
-  while(it != itEnd) {
+  for(auto it = begin(); it != end(); ++it) {
     s += *it;
-    it++;
-    if(it != itEnd)
+    if(std::next(it) != end())
       s += separator;
   }
 
@@ -103,17 +120,11 @@ StringList &StringList::append(const StringList &l)
   return *this;
 }
 
-StringList &StringList::operator=(const StringList &l)
-{
-  List<String>::operator=(l);
-  return *this;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // related functions
 ////////////////////////////////////////////////////////////////////////////////
 
-std::ostream &TagLib::operator<<(std::ostream &s, const StringList &l)
+std::ostream &operator<<(std::ostream &s, const StringList &l)
 {
   s << l.toString();
   return s;

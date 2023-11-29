@@ -26,9 +26,11 @@
 #ifndef TAGLIB_LIST_H
 #define TAGLIB_LIST_H
 
-#include <taglib/taglib.h>
-#include <cstddef>
 #include <list>
+#include <initializer_list>
+#include <memory>
+
+#include "taglib.h"
 
 namespace TagLib {
 
@@ -54,8 +56,8 @@ namespace TagLib {
   {
   public:
 #ifndef DO_NOT_DOCUMENT
-    typedef typename std::list<T>::iterator Iterator;
-    typedef typename std::list<T>::const_iterator ConstIterator;
+    using Iterator = typename std::list<T>::iterator;
+    using ConstIterator = typename std::list<T>::const_iterator;
 #endif
 
     /*!
@@ -71,10 +73,15 @@ namespace TagLib {
     List(const List<T> &l);
 
     /*!
+     * Construct a List with the contents of the braced initializer list.
+     */
+    List(std::initializer_list<T> init);
+
+    /*!
      * Destroys this List instance.  If auto deletion is enabled and this list
      * contains a pointer type all of the members are also deleted.
      */
-    virtual ~List();
+    ~List();
 
     /*!
      * Returns an STL style iterator to the beginning of the list.  See
@@ -89,6 +96,12 @@ namespace TagLib {
     ConstIterator begin() const;
 
     /*!
+     * Returns an STL style constant iterator to the beginning of the list.  See
+     * std::list::iterator for the semantics.
+     */
+    ConstIterator cbegin() const;
+
+    /*!
      * Returns an STL style iterator to the end of the list.  See
      * std::list::iterator for the semantics.
      */
@@ -101,9 +114,15 @@ namespace TagLib {
     ConstIterator end() const;
 
     /*!
-     * Inserts a copy of \a value before \a it.
+     * Returns an STL style constant iterator to the end of the list.  See
+     * std::list::const_iterator for the semantics.
      */
-    Iterator insert(Iterator it, const T &value);
+    ConstIterator cend() const;
+
+    /*!
+     * Inserts a copy of \a item before \a it.
+     */
+    Iterator insert(Iterator it, const T &item);
 
     /*!
      * Inserts the \a value into the list.  This assumes that the list is
@@ -149,7 +168,7 @@ namespace TagLib {
      *
      * \see isEmpty()
      */
-    size_t size() const;
+    unsigned int size() const;
 
     /*!
      * Returns whether or not the list is empty.
@@ -161,20 +180,22 @@ namespace TagLib {
     /*!
      * Find the first occurrence of \a value.
      */
-    template <class U>
-    Iterator find(const U &value);
+    Iterator find(const T &value);
 
     /*!
      * Find the first occurrence of \a value.
      */
-    template <class U>
-    ConstIterator find(const U &value) const;
+    ConstIterator find(const T &value) const;
+
+    /*!
+     * Find the first occurrence of \a value.
+     */
+    ConstIterator cfind(const T &value) const;
 
     /*!
      * Returns true if the list contains \a value.
      */
-    template <class U>
-    bool contains(const U &value) const;
+    bool contains(const T &value) const;
 
     /*!
      * Erase the item at \a it from the list.
@@ -216,14 +237,14 @@ namespace TagLib {
      *
      * \warning This method is slow.  Use iterators to loop through the list.
      */
-    T &operator[](size_t i);
+    T &operator[](unsigned int i);
 
     /*!
      * Returns a const reference to item \a i in the list.
      *
      * \warning This method is slow.  Use iterators to loop through the list.
      */
-    const T &operator[](size_t i) const;
+    const T &operator[](unsigned int i) const;
 
     /*!
      * Make a shallow, implicitly shared, copy of \a l.  Because this is
@@ -231,6 +252,13 @@ namespace TagLib {
      * pass-by-value usage.
      */
     List<T> &operator=(const List<T> &l);
+
+    /*!
+     * Replace the contents of the list with those of the braced initializer list.
+     *
+     * If auto deletion is enabled and the list contains a pointer type, the members are also deleted
+     */
+    List<T> &operator=(std::initializer_list<T> init);
 
     /*!
      * Exchanges the content of this list by the content of \a l.
@@ -248,6 +276,19 @@ namespace TagLib {
      */
     bool operator!=(const List<T> &l) const;
 
+    /*!
+     * Sorts this list in ascending order using operator< of T.
+     */
+    void sort();
+
+    /*!
+     * Sorts this list in ascending order using the comparison
+     * function object \a comp which returns true if the first argument is
+     * less than the second.
+     */
+    template<class Compare>
+    void sort(Compare&& comp);
+
   protected:
     /*
      * If this List is being shared via implicit sharing, do a deep copy of the
@@ -259,15 +300,15 @@ namespace TagLib {
   private:
 #ifndef DO_NOT_DOCUMENT
     template <class TP> class ListPrivate;
-    ListPrivate<T> *d;
+    std::shared_ptr<ListPrivate<T>> d;
 #endif
   };
 
-}
+}  // namespace TagLib
 
 // Since GCC doesn't support the "export" keyword, we have to include the
 // implementation.
 
-#include <taglib/tlist.tcc>
+#include "tlist.tcc"
 
 #endif

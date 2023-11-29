@@ -27,12 +27,11 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
-#include <tstring.h>
-#include "tdebug.h"
-#include <tpropertymap.h>
-#include "tagutils.h"
-
 #include "speexfile.h"
+
+#include "tdebug.h"
+#include "tpropertymap.h"
+#include "tagutils.h"
 
 using namespace TagLib;
 using namespace TagLib::Ogg;
@@ -40,18 +39,8 @@ using namespace TagLib::Ogg;
 class Speex::File::FilePrivate
 {
 public:
-  FilePrivate() :
-    comment(0),
-    properties(0) {}
-
-  ~FilePrivate()
-  {
-    delete comment;
-    delete properties;
-  }
-
-  Ogg::XiphComment *comment;
-  AudioProperties *properties;
+  std::unique_ptr<Ogg::XiphComment> comment;
+  std::unique_ptr<Properties> properties;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -63,49 +52,55 @@ bool Ogg::Speex::File::isSupported(IOStream *stream)
   // A Speex file has IDs "OggS" and "Speex   " somewhere.
 
   const ByteVector buffer = Utils::readHeader(stream, bufferSize(), false);
-  return (buffer.find("OggS") != ByteVector::npos()
-    && buffer.find("Speex   ") != ByteVector::npos());
+  return (buffer.find("OggS") >= 0 && buffer.find("Speex   ") >= 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-Speex::File::File(FileName file, bool readProperties, AudioProperties::ReadStyle) :
+Speex::File::File(FileName file, bool readProperties, Properties::ReadStyle) :
   Ogg::File(file),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
   if(isOpen())
     read(readProperties);
 }
 
-Speex::File::File(IOStream *stream, bool readProperties, AudioProperties::ReadStyle) :
+Speex::File::File(IOStream *stream, bool readProperties, Properties::ReadStyle) :
   Ogg::File(stream),
-  d(new FilePrivate())
+  d(std::make_unique<FilePrivate>())
 {
   if(isOpen())
     read(readProperties);
 }
 
-Speex::File::~File()
-{
-  delete d;
-}
+Speex::File::~File() = default;
 
 Ogg::XiphComment *Speex::File::tag() const
 {
-  return d->comment;
+  return d->comment.get();
 }
 
-Speex::AudioProperties *Speex::File::audioProperties() const
+PropertyMap Speex::File::properties() const
 {
-  return d->properties;
+  return d->comment->properties();
+}
+
+PropertyMap Speex::File::setProperties(const PropertyMap &properties)
+{
+  return d->comment->setProperties(properties);
+}
+
+Speex::Properties *Speex::File::audioProperties() const
+{
+  return d->properties.get();
 }
 
 bool Speex::File::save()
 {
   if(!d->comment)
-    d->comment = new Ogg::XiphComment();
+    d->comment = std::make_unique<Ogg::XiphComment>();
 
   setPacket(1, d->comment->render());
 
@@ -122,13 +117,14 @@ void Speex::File::read(bool readProperties)
 
   if(!speexHeaderData.startsWith("Speex   ")) {
     debug("Speex::File::read() -- invalid Speex identification header");
+    setValid(false);
     return;
   }
 
   ByteVector commentHeaderData = packet(1);
 
-  d->comment = new Ogg::XiphComment(commentHeaderData);
+  d->comment = std::make_unique<Ogg::XiphComment>(commentHeaderData);
 
   if(readProperties)
-    d->properties = new AudioProperties(this);
+    d->properties = std::make_unique<Properties>(this);
 }
