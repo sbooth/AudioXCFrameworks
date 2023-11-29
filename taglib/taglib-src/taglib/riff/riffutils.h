@@ -26,7 +26,7 @@
 #ifndef TAGLIB_RIFFUTILS_H
 #define TAGLIB_RIFFUTILS_H
 
-#include <tbytevector.h>
+#include "tbytevector.h"
 
 // THIS FILE IS NOT A PART OF THE TAGLIB API
 

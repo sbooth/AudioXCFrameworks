@@ -26,9 +26,9 @@
 #ifndef TAGLIB_FLACPROPERTIES_H
 #define TAGLIB_FLACPROPERTIES_H
 
-#include <tbytevector.h>
-#include <taglib_export.h>
-#include <audioproperties.h>
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
 

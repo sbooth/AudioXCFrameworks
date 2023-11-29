@@ -48,7 +48,7 @@
 # include <sys/endian.h>
 #endif
 
-#include <tstring.h>
+#include "tstring.h"
 
 namespace TagLib
 {

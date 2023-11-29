@@ -29,9 +29,9 @@
 #include <memory.h>
 #include <iostream>
 
-#include <tlist.h>
-#include <tmap.h>
-#include <taglib_export.h>
+#include "tlist.h"
+#include "tmap.h"
+#include "taglib_export.h"
 
 // Forward declaration needed for friend function
 namespace TagLib { class Variant; }
