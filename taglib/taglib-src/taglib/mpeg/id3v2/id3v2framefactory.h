@@ -26,10 +26,10 @@
 #ifndef TAGLIB_ID3V2FRAMEFACTORY_H
 #define TAGLIB_ID3V2FRAMEFACTORY_H
 
-#include "tbytevector.h"
-#include "taglib_export.h"
-#include "id3v2frame.h"
-#include "id3v2header.h"
+#include <taglib/tbytevector.h>
+#include <taglib/taglib_export.h>
+#include <taglib/id3v2frame.h>
+#include <taglib/id3v2header.h>
 
 namespace TagLib {
 

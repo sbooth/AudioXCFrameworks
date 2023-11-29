@@ -30,8 +30,8 @@
 
 #include <array>
 
-#include "tfile.h"
-#include "tlist.h"
+#include <taglib/tfile.h>
+#include <taglib/tlist.h>
 
 #ifndef DO_NOT_DOCUMENT
 

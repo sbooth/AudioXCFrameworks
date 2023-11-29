@@ -26,11 +26,11 @@
 #ifndef TAGLIB_ASFFILE_H
 #define TAGLIB_ASFFILE_H
 
-#include "tfile.h"
-#include "taglib_export.h"
-#include "tag.h"
-#include "asfproperties.h"
-#include "asftag.h"
+#include <taglib/tfile.h>
+#include <taglib/taglib_export.h>
+#include <taglib/tag.h>
+#include <taglib/asfproperties.h>
+#include <taglib/asftag.h>
 
 namespace TagLib {
   //! An implementation of ASF (WMA) metadata

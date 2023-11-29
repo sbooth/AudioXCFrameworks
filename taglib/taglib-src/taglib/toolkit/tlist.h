@@ -30,7 +30,7 @@
 #include <initializer_list>
 #include <memory>
 
-#include "taglib.h"
+#include <taglib/taglib.h>
 
 namespace TagLib {
 

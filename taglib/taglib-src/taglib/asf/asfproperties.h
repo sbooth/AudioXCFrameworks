@@ -26,9 +26,9 @@
 #ifndef TAGLIB_ASFPROPERTIES_H
 #define TAGLIB_ASFPROPERTIES_H
 
-#include "tstring.h"
-#include "taglib_export.h"
-#include "audioproperties.h"
+#include <taglib/tstring.h>
+#include <taglib/taglib_export.h>
+#include <taglib/audioproperties.h>
 
 namespace TagLib {
   namespace ASF {

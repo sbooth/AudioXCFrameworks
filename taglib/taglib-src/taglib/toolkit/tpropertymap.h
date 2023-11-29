@@ -26,8 +26,8 @@
 #ifndef TAGLIB_PROPERTYMAP_H
 #define TAGLIB_PROPERTYMAP_H
 
-#include "tmap.h"
-#include "tstringlist.h"
+#include <taglib/tmap.h>
+#include <taglib/tstringlist.h>
 
 #ifdef _MSC_VER
 // Explained at end of tpropertymap.cpp
