@@ -122,6 +122,11 @@ void Frame::setText(const String &)
 {
 }
 
+StringList Frame::toStringList() const
+{
+  return toString();
+}
+
 ByteVector Frame::render() const
 {
   ByteVector fieldData = renderFields();
@@ -364,12 +369,12 @@ PropertyMap Frame::asProperties() const
 {
   if(dynamic_cast< const UnknownFrame *>(this)) {
     PropertyMap m;
-    m.unsupportedData().append("UNKNOWN/" + frameID());
+    m.addUnsupportedData("UNKNOWN/" + frameID());
     return m;
   }
   const ByteVector &id = frameID();
   PropertyMap m;
-  m.unsupportedData().append(id);
+  m.addUnsupportedData(id);
   return m;
 }
 

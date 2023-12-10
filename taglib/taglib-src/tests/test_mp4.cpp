@@ -504,6 +504,7 @@ public:
     tags["MUSICBRAINZ_TRACKID"] = StringList("MusicBrainz_TrackID");
     tags["MUSICBRAINZ_WORKID"] = StringList("MusicBrainz_WorkID");
     tags["ORIGINALDATE"] = StringList("2021-01-03 13:52:19");
+    tags["OWNER"] = StringList("Owner");
     tags["PODCAST"] = StringList("1");
     tags["PODCASTCATEGORY"] = StringList("Podcast Category");
     tags["PODCASTDESC"] = StringList("Podcast Description");
@@ -601,10 +602,7 @@ public:
   void testFuzzedFile()
   {
     MP4::File f(TEST_FILE_PATH_C("infloop.m4a"));
-    // The file has an invalid atom length of 2775 in the last atom
-    // ("free", offset 0xc521, 00000ad7 66726565), whereas the remaining file
-    // length is 2727 bytes, therefore the file is now considered invalid.
-    CPPUNIT_ASSERT(!f.isValid());
+    CPPUNIT_ASSERT(f.isValid());
   }
 
   void testRepeatedSave()
@@ -713,7 +711,7 @@ public:
       CPPUNIT_ASSERT(f.tag()->isEmpty());
       CPPUNIT_ASSERT(fileEqual(
         copy.fileName(),
-        TEST_FILE_PATH_C("no-tags.m4a")));
+        testFilePath("no-tags.m4a")));
     }
   }
 

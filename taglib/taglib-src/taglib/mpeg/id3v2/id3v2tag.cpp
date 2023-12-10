@@ -121,21 +121,21 @@ ID3v2::Tag::~Tag() = default;
 String ID3v2::Tag::title() const
 {
   if(!d->frameListMap["TIT2"].isEmpty())
-    return d->frameListMap["TIT2"].front()->toString();
+    return joinTagValues(d->frameListMap["TIT2"].front()->toStringList());
   return String();
 }
 
 String ID3v2::Tag::artist() const
 {
   if(!d->frameListMap["TPE1"].isEmpty())
-    return d->frameListMap["TPE1"].front()->toString();
+    return joinTagValues(d->frameListMap["TPE1"].front()->toStringList());
   return String();
 }
 
 String ID3v2::Tag::album() const
 {
   if(!d->frameListMap["TALB"].isEmpty())
-    return d->frameListMap["TALB"].front()->toString();
+    return joinTagValues(d->frameListMap["TALB"].front()->toStringList());
   return String();
 }
 
@@ -146,10 +146,10 @@ String ID3v2::Tag::comment() const
   if(comments.isEmpty())
     return String();
 
-  for(const auto &comment : comments) {
-    auto frame = dynamic_cast<CommentsFrame *>(comment);
+  for(const auto &commFrame : comments) {
+    auto frame = dynamic_cast<CommentsFrame *>(commFrame);
     if(frame && frame->description().isEmpty())
-      return comment->toString();
+      return commFrame->toString();
   }
 
   return comments.front()->toString();
@@ -157,10 +157,6 @@ String ID3v2::Tag::comment() const
 
 String ID3v2::Tag::genre() const
 {
-  // TODO: In the next major version (TagLib 2.0) a list of multiple genres
-  // should be separated by " / " instead of " ".  For the moment to keep
-  // the behavior the same as released versions it is being left with " ".
-
   const FrameList &tconFrames = d->frameListMap["TCON"];
   if(tconFrames.isEmpty())
   {
@@ -196,7 +192,7 @@ String ID3v2::Tag::genre() const
       genres.append(field);
   }
 
-  return genres.toString();
+  return joinTagValues(genres);
 }
 
 unsigned int ID3v2::Tag::year() const
@@ -238,10 +234,10 @@ void ID3v2::Tag::setComment(const String &s)
   const FrameList &comments = d->frameListMap["COMM"];
 
   if(!comments.isEmpty()) {
-    for(const auto &comment : comments) {
-      auto frame = dynamic_cast<CommentsFrame *>(comment);
+    for(const auto &commFrame : comments) {
+      auto frame = dynamic_cast<CommentsFrame *>(commFrame);
       if(frame && frame->description().isEmpty()) {
-        comment->setText(s);
+        commFrame->setText(s);
         return;
       }
     }
@@ -412,10 +408,10 @@ PropertyMap ID3v2::Tag::setProperties(const PropertyMap &origProps)
   FrameList framesToDelete;
   // we split up the PropertyMap into the "normal" keys and the "complicated" ones,
   // which are those according to TIPL or TMCL frames.
-  PropertyMap properties;
+  PropertyMap singleFrameProperties;
   PropertyMap tiplProperties;
   PropertyMap tmclProperties;
-  Frame::splitProperties(origProps, properties, tiplProperties, tmclProperties);
+  Frame::splitProperties(origProps, singleFrameProperties, tiplProperties, tmclProperties);
   for(const auto &[tag, frames] : std::as_const(frameListMap())) {
     for(const auto &frame : frames) {
       PropertyMap frameProperties = frame->asProperties();
@@ -431,10 +427,10 @@ PropertyMap ID3v2::Tag::setProperties(const PropertyMap &origProps)
         else
           tmclProperties.erase(frameProperties);
       }
-      else if(!properties.contains(frameProperties))
+      else if(!singleFrameProperties.contains(frameProperties))
         framesToDelete.append(frame);
       else
-        properties.erase(frameProperties);
+        singleFrameProperties.erase(frameProperties);
     }
   }
   for(const auto &frame : std::as_const(framesToDelete))
@@ -448,7 +444,7 @@ PropertyMap ID3v2::Tag::setProperties(const PropertyMap &origProps)
   if(!tmclProperties.isEmpty())
     addFrame(TextIdentificationFrame::createTMCLFrame(tmclProperties));
   // now create the "one key per frame" frames
-  for(const auto &[tag, frames] : std::as_const(properties))
+  for(const auto &[tag, frames] : std::as_const(singleFrameProperties))
     addFrame(d->factory->createFrameForProperty(tag, frames));
   return PropertyMap(); // ID3 implements the complete PropertyMap interface, so an empty map is returned
 }
@@ -467,7 +463,7 @@ StringList ID3v2::Tag::complexPropertyKeys() const
 
 List<VariantMap> ID3v2::Tag::complexProperties(const String &key) const
 {
-  List<VariantMap> properties;
+  List<VariantMap> props;
   const String uppercaseKey = key.upper();
   if(uppercaseKey == "PICTURE") {
     const FrameList pictures = d->frameListMap.value("APIC");
@@ -479,7 +475,7 @@ List<VariantMap> ID3v2::Tag::complexProperties(const String &key) const
         property.insert("description", picture->description());
         property.insert("pictureType",
           AttachedPictureFrame::typeToString(picture->type()));
-        properties.append(property);
+        props.append(property);
       }
     }
   }
@@ -492,11 +488,11 @@ List<VariantMap> ID3v2::Tag::complexProperties(const String &key) const
         property.insert("mimeType", geob->mimeType());
         property.insert("description", geob->description());
         property.insert("fileName", geob->fileName());
-        properties.append(property);
+        props.append(property);
       }
     }
   }
-  return properties;
+  return props;
 }
 
 bool ID3v2::Tag::setComplexProperties(const String &key, const List<VariantMap> &value)
@@ -683,12 +679,12 @@ ByteVector ID3v2::Tag::render(Version version) const
   FrameList newFrames;
   newFrames.setAutoDelete(true);
 
-  FrameList frameList;
+  FrameList frames;
   if(version == v4) {
-    frameList = d->frameList;
+    frames = d->frameList;
   }
   else {
-    downgradeFrames(&frameList, &newFrames);
+    downgradeFrames(&frames, &newFrames);
   }
 
   // Reserve a 10-byte blank space for an ID3v2 tag header.
@@ -697,7 +693,7 @@ ByteVector ID3v2::Tag::render(Version version) const
 
   // Loop through the frames rendering them and adding them to the tagData.
 
-  for(const auto &frame : std::as_const(frameList)) {
+  for(const auto &frame : std::as_const(frames)) {
     frame->header()->setVersion(version == v3 ? 3 : 4);
     if(frame->header()->frameID().size() != 4) {
       debug("An ID3v2 frame of unsupported or unknown type \'"
