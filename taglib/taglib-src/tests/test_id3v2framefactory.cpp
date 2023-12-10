@@ -74,9 +74,8 @@ namespace
     }
 
   private:
-    CustomFrame(const ByteVector &data, Header *h) : Frame(h) {
-      parseFields(fieldData(data));
-    }
+    CustomFrame(const ByteVector &data, Header *h)
+      : Frame(h), m_value(fieldData(data).toUInt()) {}
     unsigned int m_value;
   };
 
@@ -131,9 +130,9 @@ public:
       auto f = std::unique_ptr<File>(createFileWithDefaultFactory(fileName));
       CPPUNIT_ASSERT(f->isValid());
       ID3v2::Tag *tag = getID3v2Tag(*f);
-      const ID3v2::FrameList frames = tag->frameList();
-      for(const auto &frame : frames) {
-        tag->removeFrame(frame, false);
+      ID3v2::FrameList frames = tag->frameList();
+      for(auto it = frames.begin(); it != frames.end(); it = frames.erase(it)) {
+        tag->removeFrame(*it);
       }
       tag->setArtist("An artist");
       tag->setTitle("A title");
@@ -290,7 +289,7 @@ public:
         return static_cast<const RIFF::WAV::File &>(f).hasID3v2Tag();
       },
       [](File &f) {
-          return static_cast<RIFF::WAV::File &>(f).tag();
+          return static_cast<RIFF::WAV::File &>(f).ID3v2Tag();
       },
       [](File &f) {
         static_cast<RIFF::WAV::File &>(f).strip();

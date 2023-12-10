@@ -110,6 +110,11 @@ String TextIdentificationFrame::toString() const
   return d->fieldList.toString();
 }
 
+StringList TextIdentificationFrame::toStringList() const
+{
+  return d->fieldList;
+}
+
 StringList TextIdentificationFrame::fieldList() const
 {
   return d->fieldList;
@@ -171,7 +176,7 @@ PropertyMap TextIdentificationFrame::asProperties() const
   PropertyMap map;
   String tagName = frameIDToKey(frameID());
   if(tagName.isEmpty()) {
-    map.unsupportedData().append(frameID());
+    map.addUnsupportedData(frameID());
     return map;
   }
   StringList values = fieldList();
@@ -304,7 +309,7 @@ PropertyMap TextIdentificationFrame::makeTIPLProperties() const
   PropertyMap map;
   if(fieldList().size() % 2 != 0){
     // according to the ID3 spec, TIPL must contain an even number of entries
-    map.unsupportedData().append(frameID());
+    map.addUnsupportedData(frameID());
     return map;
   }
   const StringList l = fieldList();
@@ -317,7 +322,7 @@ PropertyMap TextIdentificationFrame::makeTIPLProperties() const
     else {
       // invalid involved role -> mark whole frame as unsupported in order to be consistent with writing
       map.clear();
-      map.unsupportedData().append(frameID());
+      map.addUnsupportedData(frameID());
       return map;
     }
   }
@@ -329,19 +334,21 @@ PropertyMap TextIdentificationFrame::makeTMCLProperties() const
   PropertyMap map;
   if(fieldList().size() % 2 != 0){
     // according to the ID3 spec, TMCL must contain an even number of entries
-    map.unsupportedData().append(frameID());
+    map.addUnsupportedData(frameID());
     return map;
   }
   const StringList l = fieldList();
   for(auto it = l.begin(); it != l.end(); ++it) {
     String instrument = it->upper();
-    if(instrument.isEmpty()) {
+    // ++it == l.end() is not possible with size check above,
+    // verified to silence cppcheck.
+    if(instrument.isEmpty() || ++it == l.end()) {
       // instrument is not a valid key -> frame unsupported
       map.clear();
-      map.unsupportedData().append(frameID());
+      map.addUnsupportedData(frameID());
       return map;
     }
-    map.insert(L"PERFORMER:" + instrument, (++it)->split(","));
+    map.insert(L"PERFORMER:" + instrument, it->split(","));
   }
   return map;
 }
@@ -389,13 +396,6 @@ String UserTextIdentificationFrame::description() const
   return !TextIdentificationFrame::fieldList().isEmpty()
     ? TextIdentificationFrame::fieldList().front()
     : String();
-}
-
-StringList UserTextIdentificationFrame::fieldList() const
-{
-  // TODO: remove this function
-
-  return TextIdentificationFrame::fieldList();
 }
 
 void UserTextIdentificationFrame::setText(const String &text)

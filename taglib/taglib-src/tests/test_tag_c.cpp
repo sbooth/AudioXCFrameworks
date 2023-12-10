@@ -108,6 +108,7 @@ public:
       taglib_property_set_append(file, "COMPOSER", "Composer 2");
       taglib_property_set(file, "ALBUMARTIST", "Album Artist");
 
+      // cppcheck-suppress cstyleCast
       TAGLIB_COMPLEX_PROPERTY_PICTURE(props, "JPEG Data", 9, "Written by TagLib",
                                       "image/jpeg", "Front Cover");
       taglib_complex_property_set(file, "PICTURE", props);
@@ -181,7 +182,7 @@ public:
 
       TagLib_Tag *tag = taglib_file_tag(file);
       CPPUNIT_ASSERT_EQUAL("Quod Libet Test Data"s, std::string(taglib_tag_album(tag)));
-      CPPUNIT_ASSERT_EQUAL("piman jzig"s, std::string(taglib_tag_artist(tag)));
+      CPPUNIT_ASSERT_EQUAL("piman / jzig"s, std::string(taglib_tag_artist(tag)));
       CPPUNIT_ASSERT_EQUAL("Silence"s, std::string(taglib_tag_genre(tag)));
       CPPUNIT_ASSERT_EQUAL(""s, std::string(taglib_tag_comment(tag)));
       CPPUNIT_ASSERT_EQUAL("Silence"s, std::string(taglib_tag_title(tag)));
