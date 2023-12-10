@@ -24,8 +24,8 @@
  ***************************************************************************/
 
 #include <string>
-#include <cstdio>
 #include <utility>
+#include <cassert>
 
 #include "tdebug.h"
 #include "tpropertymap.h"
@@ -307,6 +307,7 @@ public:
       dynamic_cast<TagLib::ID3v2::AttachedPictureFrame *>(factory->createFrame(data, &header));
 
     CPPUNIT_ASSERT(frame);
+    assert(frame != nullptr); // to silence the clang analyzer
     CPPUNIT_ASSERT_EQUAL(String("image/jpeg"), frame->mimeType());
     CPPUNIT_ASSERT_EQUAL(ID3v2::AttachedPictureFrame::FileIcon, frame->type());
     CPPUNIT_ASSERT_EQUAL(String("d"), frame->description());
@@ -957,7 +958,7 @@ public:
 
     ID3v2::Tag tag;
     tag.addFrame(frame);
-    CPPUNIT_ASSERT_EQUAL(String("Disco Eurodisco"), tag.genre());
+    CPPUNIT_ASSERT_EQUAL(String("Disco / Eurodisco"), tag.genre());
   }
 
   void testUpdateGenre23_3()
@@ -980,7 +981,7 @@ public:
 
     ID3v2::Tag tag;
     tag.addFrame(frame);
-    CPPUNIT_ASSERT_EQUAL(String("Metal Black Metal Viking Metal"), tag.genre());
+    CPPUNIT_ASSERT_EQUAL(String("Metal / Black Metal / Viking Metal"), tag.genre());
   }
 
   void testUpdateGenre24()
@@ -1000,7 +1001,7 @@ public:
 
     ID3v2::Tag tag;
     tag.addFrame(frame);
-    CPPUNIT_ASSERT_EQUAL(String("R&B Eurodisco"), tag.genre());
+    CPPUNIT_ASSERT_EQUAL(String("R&B / Eurodisco"), tag.genre());
   }
 
   void testUpdateDate22()
@@ -1126,6 +1127,7 @@ public:
       ID3v2::AttachedPictureFrame *frame
         = dynamic_cast<TagLib::ID3v2::AttachedPictureFrame*>(f.ID3v2Tag()->frameListMap()["APIC"].front());
       CPPUNIT_ASSERT(frame);
+      assert(frame != nullptr); // to silence the clang analyzer
       CPPUNIT_ASSERT_EQUAL(String("image/bmp"), frame->mimeType());
       CPPUNIT_ASSERT_EQUAL(ID3v2::AttachedPictureFrame::Other, frame->type());
       CPPUNIT_ASSERT_EQUAL(String(""), frame->description());
@@ -1148,6 +1150,7 @@ public:
     ID3v2::UrlLinkFrame *frame =
     dynamic_cast<TagLib::ID3v2::UrlLinkFrame*>(f.ID3v2Tag()->frameListMap()["W000"].front());
     CPPUNIT_ASSERT(frame);
+    assert(frame != nullptr); // to silence the clang analyzer
     CPPUNIT_ASSERT_EQUAL(String("lukas.lalinsky@example.com____"), frame->url());
   }
 
@@ -1533,11 +1536,11 @@ public:
   {
     ID3v2::Header header;
     ID3v2::TableOfContentsFrame f(&header, "CTOC");
-    f.setElementID(ByteVector("\x54\x00", 2));
+    f.setElementID("T");
     f.setIsTopLevel(false);
     f.setIsOrdered(true);
-    f.addChildElement(ByteVector("\x43\x00", 2));
-    f.addChildElement(ByteVector("\x44\x00", 2));
+    f.addChildElement("C");
+    f.addChildElement("D");
     auto eF = new ID3v2::TextIdentificationFrame("TIT2");
     eF->setText("TC1");
     f.addEmbeddedFrame(eF);

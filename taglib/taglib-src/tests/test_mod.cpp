@@ -23,6 +23,7 @@
  *   http://www.mozilla.org/MPL/                                           *
  ***************************************************************************/
 
+#include <cassert>
 #include "tpropertymap.h"
 #include "modfile.h"
 #include <cppunit/extensions/HelperMacros.h>
@@ -78,7 +79,7 @@ public:
     testRead(copy.fileName().c_str(), titleAfter, commentAfter);
     CPPUNIT_ASSERT(fileEqual(
       copy.fileName(),
-      TEST_FILE_PATH_C("changed.mod")));
+      testFilePath("changed.mod")));
   }
 
   void testPropertyInterface()
@@ -112,6 +113,7 @@ private:
 
     CPPUNIT_ASSERT(nullptr != p);
     CPPUNIT_ASSERT(nullptr != t);
+    assert(p != nullptr); // to silence the clang analyzer
 
     CPPUNIT_ASSERT_EQUAL(0, p->lengthInSeconds());
     CPPUNIT_ASSERT_EQUAL(0, p->bitrate());
