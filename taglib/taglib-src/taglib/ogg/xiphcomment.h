@@ -37,7 +37,7 @@
 
 #ifdef _MSC_VER
 // Explained at end of tpropertymap.cpp
-extern template class TAGLIB_EXPORT TagLib::Map<TagLib::String, TagLib::StringList>;
+extern template class TagLib::Map<TagLib::String, TagLib::StringList>;
 #endif
 
 namespace TagLib {
@@ -262,6 +262,7 @@ namespace TagLib {
 
     private:
       class XiphCommentPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<XiphCommentPrivate> d;
     };
   }  // namespace Ogg

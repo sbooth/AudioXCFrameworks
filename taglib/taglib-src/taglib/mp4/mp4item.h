@@ -50,7 +50,7 @@ namespace TagLib {
       /*!
        * Exchanges the content of the Item by the content of \a item.
        */
-      void swap(Item &item);
+      void swap(Item &item) noexcept;
 
       virtual ~Item();
 
@@ -81,6 +81,7 @@ namespace TagLib {
 
     private:
       class ItemPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::shared_ptr<ItemPrivate> d;
     };
 

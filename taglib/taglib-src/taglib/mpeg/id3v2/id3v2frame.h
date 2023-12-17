@@ -264,6 +264,7 @@ namespace TagLib {
     private:
       class FramePrivate;
       friend class FramePrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<FramePrivate> d;
     };
 
@@ -410,10 +411,6 @@ namespace TagLib {
        */
       bool encryption() const;
 
-#ifndef DO_NOT_DOCUMENT
-      bool unsycronisation() const;
-#endif
-
       /*!
        * Returns true if unsynchronisation is enabled for this frame.
        */
@@ -431,6 +428,7 @@ namespace TagLib {
 
     private:
       class HeaderPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<HeaderPrivate> d;
     };
 

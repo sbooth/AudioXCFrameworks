@@ -26,12 +26,12 @@
 #ifndef TAGLIB_XMFILE_H
 #define TAGLIB_XMFILE_H
 
-#include <taglib/tfile.h>
-#include <taglib/taglib_export.h>
-#include <taglib/audioproperties.h>
-#include <taglib/modfilebase.h>
-#include <taglib/modtag.h>
-#include <taglib/xmproperties.h>
+#include "tfile.h"
+#include "taglib_export.h"
+#include "audioproperties.h"
+#include "modfilebase.h"
+#include "modtag.h"
+#include "xmproperties.h"
 
 namespace TagLib {
 
@@ -104,6 +104,7 @@ namespace TagLib {
         void read(bool readProperties);
 
         class FilePrivate;
+        TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
         std::unique_ptr<FilePrivate> d;
     };
   }  // namespace XM

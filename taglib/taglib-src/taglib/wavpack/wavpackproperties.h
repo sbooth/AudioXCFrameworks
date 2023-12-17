@@ -30,9 +30,9 @@
 #ifndef TAGLIB_WVPROPERTIES_H
 #define TAGLIB_WVPROPERTIES_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
-#include <taglib/audioproperties.h>
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
 
@@ -112,6 +112,7 @@ namespace TagLib {
       unsigned int seekFinalIndex(File *file, offset_t streamLength);
 
       class PropertiesPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<PropertiesPrivate> d;
     };
   }  // namespace WavPack

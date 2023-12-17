@@ -29,9 +29,9 @@
 #include <memory.h>
 #include <iostream>
 
-#include <taglib/tlist.h>
-#include <taglib/tmap.h>
-#include <taglib/taglib_export.h>
+#include "tlist.h"
+#include "tmap.h"
+#include "taglib_export.h"
 
 // Forward declaration needed for friend function
 namespace TagLib { class Variant; }
@@ -174,8 +174,9 @@ namespace TagLib {
     Variant &operator=(const Variant &v);
 
   private:
-    friend std::ostream& ::operator<<(std::ostream &s, const TagLib::Variant &v);
+    friend TAGLIB_EXPORT std::ostream& ::operator<<(std::ostream &s, const TagLib::Variant &v);
     class VariantPrivate;
+    TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
     std::shared_ptr<VariantPrivate> d;
   };
 
