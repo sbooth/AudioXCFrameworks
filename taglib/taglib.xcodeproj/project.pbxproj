@@ -214,7 +214,6 @@
 		327C56CF2B17AC4400F2C4BA /* tversionnumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55DE2B17AC4400F2C4BA /* tversionnumber.cpp */; };
 		327C56D02B17AC4400F2C4BA /* tmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55DF2B17AC4400F2C4BA /* tmap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56D12B17AC4400F2C4BA /* taglib.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E02B17AC4400F2C4BA /* taglib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56D22B17AC4400F2C4BA /* trefcounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E12B17AC4400F2C4BA /* trefcounter.h */; };
 		327C56D32B17AC4400F2C4BA /* tlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E22B17AC4400F2C4BA /* tlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56D42B17AC4400F2C4BA /* tpropertymap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55E32B17AC4400F2C4BA /* tpropertymap.cpp */; };
 		327C56D52B17AC4400F2C4BA /* tdebuglistener.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E42B17AC4400F2C4BA /* tdebuglistener.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -448,7 +447,6 @@
 		327C57BF2B17AD9500F2C4BA /* tbytevector.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CC2B17AC4400F2C4BA /* tbytevector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C57C02B17AD9500F2C4BA /* tdebuglistener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55D72B17AC4400F2C4BA /* tdebuglistener.cpp */; };
 		327C57C22B17AD9500F2C4BA /* tfilestream.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55DB2B17AC4400F2C4BA /* tfilestream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C32B17AD9500F2C4BA /* trefcounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E12B17AC4400F2C4BA /* trefcounter.h */; };
 		327C57C42B17AD9500F2C4BA /* tstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CE2B17AC4400F2C4BA /* tstring.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C57C52B17AD9500F2C4BA /* tstringlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D82B17AC4400F2C4BA /* tstringlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C57C62B17AD9500F2C4BA /* tfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CB2B17AC4400F2C4BA /* tfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -737,7 +735,6 @@
 		327C55DE2B17AC4400F2C4BA /* tversionnumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tversionnumber.cpp; sourceTree = "<group>"; };
 		327C55DF2B17AC4400F2C4BA /* tmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmap.h; sourceTree = "<group>"; };
 		327C55E02B17AC4400F2C4BA /* taglib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = taglib.h; sourceTree = "<group>"; };
-		327C55E12B17AC4400F2C4BA /* trefcounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trefcounter.h; sourceTree = "<group>"; };
 		327C55E22B17AC4400F2C4BA /* tlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tlist.h; sourceTree = "<group>"; };
 		327C55E32B17AC4400F2C4BA /* tpropertymap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tpropertymap.cpp; sourceTree = "<group>"; };
 		327C55E42B17AC4400F2C4BA /* tdebuglistener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tdebuglistener.h; sourceTree = "<group>"; };
@@ -1267,7 +1264,6 @@
 				327C55E92B17AC4400F2C4BA /* tpicturetype.h */,
 				327C55E32B17AC4400F2C4BA /* tpropertymap.cpp */,
 				327C55DA2B17AC4400F2C4BA /* tpropertymap.h */,
-				327C55E12B17AC4400F2C4BA /* trefcounter.h */,
 				327C55DD2B17AC4400F2C4BA /* tstring.cpp */,
 				327C55CE2B17AC4400F2C4BA /* tstring.h */,
 				327C55CD2B17AC4400F2C4BA /* tstringlist.cpp */,
@@ -1362,7 +1358,6 @@
 				327C56052B17AC4400F2C4BA /* oggfile.h in Headers */,
 				327C56B02B17AC4400F2C4BA /* asffile.h in Headers */,
 				327C56452B17AC4400F2C4BA /* commentsframe.h in Headers */,
-				327C56D22B17AC4400F2C4BA /* trefcounter.h in Headers */,
 				327C56362B17AC4400F2C4BA /* attachedpictureframe.h in Headers */,
 				327C56252B17AC4400F2C4BA /* tagunion.h in Headers */,
 				327C56612B17AC4400F2C4BA /* mpegproperties.h in Headers */,
@@ -1446,7 +1441,6 @@
 				327C579D2B17AD6400F2C4BA /* aifffile.h in Headers */,
 				327C56E72B17AC8800F2C4BA /* apetag.h in Headers */,
 				327C57192B17ACB300F2C4BA /* dsffile.h in Headers */,
-				327C57C32B17AD9500F2C4BA /* trefcounter.h in Headers */,
 				327C57162B17ACA900F2C4BA /* dsdiffdiintag.h in Headers */,
 				327C56E82B17AC8800F2C4BA /* apeproperties.h in Headers */,
 				327C57CA2B17AD9500F2C4BA /* tzlib.h in Headers */,
