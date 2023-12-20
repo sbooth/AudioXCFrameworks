@@ -30,8 +30,8 @@
 #ifndef TAGLIB_TRUEAUDIOFILE_H
 #define TAGLIB_TRUEAUDIOFILE_H
 
-#include <taglib/tfile.h>
-#include <taglib/trueaudioproperties.h>
+#include "tfile.h"
+#include "trueaudioproperties.h"
 
 namespace TagLib {
 
@@ -243,6 +243,7 @@ namespace TagLib {
       void read(bool readProperties);
 
       class FilePrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<FilePrivate> d;
     };
   }  // namespace TrueAudio

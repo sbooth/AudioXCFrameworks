@@ -26,9 +26,9 @@
 #ifndef TAGLIB_XMPROPERTIES_H
 #define TAGLIB_XMPROPERTIES_H
 
-#include <taglib/tstring.h>
-#include <taglib/taglib.h>
-#include <taglib/audioproperties.h>
+#include "tstring.h"
+#include "taglib.h"
+#include "audioproperties.h"
 
 namespace TagLib {
   namespace XM {
@@ -71,6 +71,7 @@ namespace TagLib {
 
     private:
       class PropertiesPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<PropertiesPrivate> d;
     };
   }  // namespace XM

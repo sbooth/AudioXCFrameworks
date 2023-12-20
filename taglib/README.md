@@ -1,6 +1,6 @@
 ## Version
 
-[491322d](https://github.com/taglib/taglib/tree/491322d1ba294ac072fe4c357cea2d3da83ae15d)
+[1ee7493](https://github.com/taglib/taglib/tree/1ee7493abcb8c96834084f873d5639831fe33b0d)
 
 ## License
 

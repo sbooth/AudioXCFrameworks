@@ -60,7 +60,7 @@ namespace TagLib {
       /*!
        * Exchanges the content of the CoverArt by the content of \a item.
        */
-      void swap(CoverArt &item);
+      void swap(CoverArt &item) noexcept;
 
       //! Format of the image
       Format format() const;
@@ -70,6 +70,7 @@ namespace TagLib {
 
     private:
       class CoverArtPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::shared_ptr<CoverArtPrivate> d;
     };
 

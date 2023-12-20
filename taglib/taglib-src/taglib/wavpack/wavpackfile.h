@@ -30,9 +30,9 @@
 #ifndef TAGLIB_WVFILE_H
 #define TAGLIB_WVFILE_H
 
-#include <taglib/tfile.h>
-#include <taglib/taglib_export.h>
-#include <taglib/wavpackproperties.h>
+#include "tfile.h"
+#include "taglib_export.h"
+#include "wavpackproperties.h"
 
 namespace TagLib {
 
@@ -215,6 +215,7 @@ namespace TagLib {
       void read(bool readProperties);
 
       class FilePrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<FilePrivate> d;
     };
   }  // namespace WavPack

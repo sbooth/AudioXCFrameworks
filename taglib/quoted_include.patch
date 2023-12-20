@@ -5,9 +5,9 @@ Only in taglib-src/3rdparty/utfcpp: samples
 Only in taglib-src/3rdparty/utfcpp: source
 Only in taglib-src/3rdparty/utfcpp: tests
 Only in taglib-src/3rdparty/utfcpp: utf8cppConfig.cmake.in
-diff -ru taglib-491322d/taglib/ape/apefile.h taglib-src/taglib/ape/apefile.h
---- taglib-491322d/taglib/ape/apefile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ape/apefile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ape/apefile.h taglib-src/taglib/ape/apefile.h
+--- taglib-1ee7493/taglib/ape/apefile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ape/apefile.h	2023-12-20 10:37:37
 @@ -34,9 +34,9 @@
  #ifndef TAGLIB_APEFILE_H
  #define TAGLIB_APEFILE_H
@@ -21,9 +21,9 @@ diff -ru taglib-491322d/taglib/ape/apefile.h taglib-src/taglib/ape/apefile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ape/apefooter.h taglib-src/taglib/ape/apefooter.h
---- taglib-491322d/taglib/ape/apefooter.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ape/apefooter.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ape/apefooter.h taglib-src/taglib/ape/apefooter.h
+--- taglib-1ee7493/taglib/ape/apefooter.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ape/apefooter.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_APEFOOTER_H
  #define TAGLIB_APEFOOTER_H
@@ -35,9 +35,9 @@ diff -ru taglib-491322d/taglib/ape/apefooter.h taglib-src/taglib/ape/apefooter.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ape/apeitem.h taglib-src/taglib/ape/apeitem.h
---- taglib-491322d/taglib/ape/apeitem.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ape/apeitem.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ape/apeitem.h taglib-src/taglib/ape/apeitem.h
+--- taglib-1ee7493/taglib/ape/apeitem.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ape/apeitem.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_APEITEM_H
  #define TAGLIB_APEITEM_H
@@ -51,9 +51,9 @@ diff -ru taglib-491322d/taglib/ape/apeitem.h taglib-src/taglib/ape/apeitem.h
  
  namespace TagLib {
    namespace APE {
-diff -ru taglib-491322d/taglib/ape/apeproperties.h taglib-src/taglib/ape/apeproperties.h
---- taglib-491322d/taglib/ape/apeproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ape/apeproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ape/apeproperties.h taglib-src/taglib/ape/apeproperties.h
+--- taglib-1ee7493/taglib/ape/apeproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ape/apeproperties.h	2023-12-20 10:37:37
 @@ -30,9 +30,9 @@
  #ifndef TAGLIB_APEPROPERTIES_H
  #define TAGLIB_APEPROPERTIES_H
@@ -67,9 +67,9 @@ diff -ru taglib-491322d/taglib/ape/apeproperties.h taglib-src/taglib/ape/apeprop
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ape/apetag.h taglib-src/taglib/ape/apetag.h
---- taglib-491322d/taglib/ape/apetag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ape/apetag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ape/apetag.h taglib-src/taglib/ape/apetag.h
+--- taglib-1ee7493/taglib/ape/apetag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ape/apetag.h	2023-12-20 10:37:37
 @@ -26,12 +26,12 @@
  #ifndef TAGLIB_APETAG_H
  #define TAGLIB_APETAG_H
@@ -89,9 +89,9 @@ diff -ru taglib-491322d/taglib/ape/apetag.h taglib-src/taglib/ape/apetag.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/asf/asfattribute.h taglib-src/taglib/asf/asfattribute.h
---- taglib-491322d/taglib/asf/asfattribute.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/asf/asfattribute.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/asf/asfattribute.h taglib-src/taglib/asf/asfattribute.h
+--- taglib-1ee7493/taglib/asf/asfattribute.h	2023-12-20 05:05:26
++++ taglib-src/taglib/asf/asfattribute.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_ASFATTRIBUTE_H
  #define TAGLIB_ASFATTRIBUTE_H
@@ -107,9 +107,9 @@ diff -ru taglib-491322d/taglib/asf/asfattribute.h taglib-src/taglib/asf/asfattri
  
  namespace TagLib
  {
-diff -ru taglib-491322d/taglib/asf/asffile.h taglib-src/taglib/asf/asffile.h
---- taglib-491322d/taglib/asf/asffile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/asf/asffile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/asf/asffile.h taglib-src/taglib/asf/asffile.h
+--- taglib-1ee7493/taglib/asf/asffile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/asf/asffile.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_ASFFILE_H
  #define TAGLIB_ASFFILE_H
@@ -127,9 +127,9 @@ diff -ru taglib-491322d/taglib/asf/asffile.h taglib-src/taglib/asf/asffile.h
  
  namespace TagLib {
    //! An implementation of ASF (WMA) metadata
-diff -ru taglib-491322d/taglib/asf/asfpicture.h taglib-src/taglib/asf/asfpicture.h
---- taglib-491322d/taglib/asf/asfpicture.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/asf/asfpicture.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/asf/asfpicture.h taglib-src/taglib/asf/asfpicture.h
+--- taglib-1ee7493/taglib/asf/asfpicture.h	2023-12-20 05:05:26
++++ taglib-src/taglib/asf/asfpicture.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef ASFPICTURE_H
  #define ASFPICTURE_H
@@ -147,9 +147,9 @@ diff -ru taglib-491322d/taglib/asf/asfpicture.h taglib-src/taglib/asf/asfpicture
  
  namespace TagLib
  {
-diff -ru taglib-491322d/taglib/asf/asfproperties.h taglib-src/taglib/asf/asfproperties.h
---- taglib-491322d/taglib/asf/asfproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/asf/asfproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/asf/asfproperties.h taglib-src/taglib/asf/asfproperties.h
+--- taglib-1ee7493/taglib/asf/asfproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/asf/asfproperties.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_ASFPROPERTIES_H
  #define TAGLIB_ASFPROPERTIES_H
@@ -163,9 +163,9 @@ diff -ru taglib-491322d/taglib/asf/asfproperties.h taglib-src/taglib/asf/asfprop
  
  namespace TagLib {
    namespace ASF {
-diff -ru taglib-491322d/taglib/asf/asftag.h taglib-src/taglib/asf/asftag.h
---- taglib-491322d/taglib/asf/asftag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/asf/asftag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/asf/asftag.h taglib-src/taglib/asf/asftag.h
+--- taglib-1ee7493/taglib/asf/asftag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/asf/asftag.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_ASFTAG_H
  #define TAGLIB_ASFTAG_H
@@ -183,9 +183,9 @@ diff -ru taglib-491322d/taglib/asf/asftag.h taglib-src/taglib/asf/asftag.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/audioproperties.h taglib-src/taglib/audioproperties.h
---- taglib-491322d/taglib/audioproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/audioproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/audioproperties.h taglib-src/taglib/audioproperties.h
+--- taglib-1ee7493/taglib/audioproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/audioproperties.h	2023-12-20 10:37:37
 @@ -28,8 +28,8 @@
  
  #include <memory>
@@ -197,9 +197,9 @@ diff -ru taglib-491322d/taglib/audioproperties.h taglib-src/taglib/audioproperti
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/dsdiff/dsdiffdiintag.h taglib-src/taglib/dsdiff/dsdiffdiintag.h
---- taglib-491322d/taglib/dsdiff/dsdiffdiintag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/dsdiff/dsdiffdiintag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/dsdiff/dsdiffdiintag.h taglib-src/taglib/dsdiff/dsdiffdiintag.h
+--- taglib-1ee7493/taglib/dsdiff/dsdiffdiintag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/dsdiff/dsdiffdiintag.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_DSDIFFDIINTAG_H
  #define TAGLIB_DSDIFFDIINTAG_H
@@ -209,9 +209,9 @@ diff -ru taglib-491322d/taglib/dsdiff/dsdiffdiintag.h taglib-src/taglib/dsdiff/d
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/dsdiff/dsdifffile.h taglib-src/taglib/dsdiff/dsdifffile.h
---- taglib-491322d/taglib/dsdiff/dsdifffile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/dsdiff/dsdifffile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/dsdiff/dsdifffile.h taglib-src/taglib/dsdiff/dsdifffile.h
+--- taglib-1ee7493/taglib/dsdiff/dsdifffile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/dsdiff/dsdifffile.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_DSDIFFFILE_H
  #define TAGLIB_DSDIFFFILE_H
@@ -227,9 +227,9 @@ diff -ru taglib-491322d/taglib/dsdiff/dsdifffile.h taglib-src/taglib/dsdiff/dsdi
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/dsdiff/dsdiffproperties.h taglib-src/taglib/dsdiff/dsdiffproperties.h
---- taglib-491322d/taglib/dsdiff/dsdiffproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/dsdiff/dsdiffproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/dsdiff/dsdiffproperties.h taglib-src/taglib/dsdiff/dsdiffproperties.h
+--- taglib-1ee7493/taglib/dsdiff/dsdiffproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/dsdiff/dsdiffproperties.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_DSDIFFPROPERTIES_H
  #define TAGLIB_DSDIFFPROPERTIES_H
@@ -239,9 +239,9 @@ diff -ru taglib-491322d/taglib/dsdiff/dsdiffproperties.h taglib-src/taglib/dsdif
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/dsf/dsffile.h taglib-src/taglib/dsf/dsffile.h
---- taglib-491322d/taglib/dsf/dsffile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/dsf/dsffile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/dsf/dsffile.h taglib-src/taglib/dsf/dsffile.h
+--- taglib-1ee7493/taglib/dsf/dsffile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/dsf/dsffile.h	2023-12-20 10:37:37
 @@ -28,12 +28,12 @@
  
  #include <memory>
@@ -259,9 +259,9 @@ diff -ru taglib-491322d/taglib/dsf/dsffile.h taglib-src/taglib/dsf/dsffile.h
  
  namespace TagLib {
    namespace DSF {
-diff -ru taglib-491322d/taglib/dsf/dsfproperties.h taglib-src/taglib/dsf/dsfproperties.h
---- taglib-491322d/taglib/dsf/dsfproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/dsf/dsfproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/dsf/dsfproperties.h taglib-src/taglib/dsf/dsfproperties.h
+--- taglib-1ee7493/taglib/dsf/dsfproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/dsf/dsfproperties.h	2023-12-20 10:37:37
 @@ -28,9 +28,9 @@
  
  #include <memory>
@@ -275,9 +275,9 @@ diff -ru taglib-491322d/taglib/dsf/dsfproperties.h taglib-src/taglib/dsf/dsfprop
  
  namespace TagLib {
    namespace DSF {
-diff -ru taglib-491322d/taglib/fileref.h taglib-src/taglib/fileref.h
---- taglib-491322d/taglib/fileref.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/fileref.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/fileref.h taglib-src/taglib/fileref.h
+--- taglib-1ee7493/taglib/fileref.h	2023-12-20 05:05:26
++++ taglib-src/taglib/fileref.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_FILEREF_H
  #define TAGLIB_FILEREF_H
@@ -294,9 +294,9 @@ diff -ru taglib-491322d/taglib/fileref.h taglib-src/taglib/fileref.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/flac/flacfile.h taglib-src/taglib/flac/flacfile.h
---- taglib-491322d/taglib/flac/flacfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/flac/flacfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/flac/flacfile.h taglib-src/taglib/flac/flacfile.h
+--- taglib-1ee7493/taglib/flac/flacfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/flac/flacfile.h	2023-12-20 10:37:37
 @@ -26,12 +26,12 @@
  #ifndef TAGLIB_FLACFILE_H
  #define TAGLIB_FLACFILE_H
@@ -316,9 +316,9 @@ diff -ru taglib-491322d/taglib/flac/flacfile.h taglib-src/taglib/flac/flacfile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/flac/flacmetadatablock.h taglib-src/taglib/flac/flacmetadatablock.h
---- taglib-491322d/taglib/flac/flacmetadatablock.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/flac/flacmetadatablock.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/flac/flacmetadatablock.h taglib-src/taglib/flac/flacmetadatablock.h
+--- taglib-1ee7493/taglib/flac/flacmetadatablock.h	2023-12-20 05:05:26
++++ taglib-src/taglib/flac/flacmetadatablock.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_FLACMETADATABLOCK_H
  #define TAGLIB_FLACMETADATABLOCK_H
@@ -332,9 +332,9 @@ diff -ru taglib-491322d/taglib/flac/flacmetadatablock.h taglib-src/taglib/flac/f
  
  namespace TagLib {
    namespace FLAC {
-diff -ru taglib-491322d/taglib/flac/flacpicture.h taglib-src/taglib/flac/flacpicture.h
---- taglib-491322d/taglib/flac/flacpicture.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/flac/flacpicture.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/flac/flacpicture.h taglib-src/taglib/flac/flacpicture.h
+--- taglib-1ee7493/taglib/flac/flacpicture.h	2023-12-20 05:05:26
++++ taglib-src/taglib/flac/flacpicture.h	2023-12-20 10:37:37
 @@ -26,12 +26,12 @@
  #ifndef TAGLIB_FLACPICTURE_H
  #define TAGLIB_FLACPICTURE_H
@@ -354,9 +354,9 @@ diff -ru taglib-491322d/taglib/flac/flacpicture.h taglib-src/taglib/flac/flacpic
  
  namespace TagLib {
    namespace FLAC {
-diff -ru taglib-491322d/taglib/flac/flacproperties.h taglib-src/taglib/flac/flacproperties.h
---- taglib-491322d/taglib/flac/flacproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/flac/flacproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/flac/flacproperties.h taglib-src/taglib/flac/flacproperties.h
+--- taglib-1ee7493/taglib/flac/flacproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/flac/flacproperties.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_FLACPROPERTIES_H
  #define TAGLIB_FLACPROPERTIES_H
@@ -370,9 +370,9 @@ diff -ru taglib-491322d/taglib/flac/flacproperties.h taglib-src/taglib/flac/flac
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/flac/flacunknownmetadatablock.h taglib-src/taglib/flac/flacunknownmetadatablock.h
---- taglib-491322d/taglib/flac/flacunknownmetadatablock.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/flac/flacunknownmetadatablock.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/flac/flacunknownmetadatablock.h taglib-src/taglib/flac/flacunknownmetadatablock.h
+--- taglib-1ee7493/taglib/flac/flacunknownmetadatablock.h	2023-12-20 05:05:26
++++ taglib-src/taglib/flac/flacunknownmetadatablock.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_FLACUNKNOWNMETADATABLOCK_H
  #define TAGLIB_FLACUNKNOWNMETADATABLOCK_H
@@ -388,9 +388,9 @@ diff -ru taglib-491322d/taglib/flac/flacunknownmetadatablock.h taglib-src/taglib
  
  namespace TagLib {
    namespace FLAC {
-diff -ru taglib-491322d/taglib/it/itfile.h taglib-src/taglib/it/itfile.h
---- taglib-491322d/taglib/it/itfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/it/itfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/it/itfile.h taglib-src/taglib/it/itfile.h
+--- taglib-1ee7493/taglib/it/itfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/it/itfile.h	2023-12-20 10:37:37
 @@ -22,12 +22,12 @@
  #ifndef TAGLIB_ITFILE_H
  #define TAGLIB_ITFILE_H
@@ -410,9 +410,9 @@ diff -ru taglib-491322d/taglib/it/itfile.h taglib-src/taglib/it/itfile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/it/itproperties.h taglib-src/taglib/it/itproperties.h
---- taglib-491322d/taglib/it/itproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/it/itproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/it/itproperties.h taglib-src/taglib/it/itproperties.h
+--- taglib-1ee7493/taglib/it/itproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/it/itproperties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_ITPROPERTIES_H
  #define TAGLIB_ITPROPERTIES_H
@@ -424,9 +424,9 @@ diff -ru taglib-491322d/taglib/it/itproperties.h taglib-src/taglib/it/itproperti
  
  namespace TagLib {
    namespace IT {
-diff -ru taglib-491322d/taglib/mod/modfile.h taglib-src/taglib/mod/modfile.h
---- taglib-491322d/taglib/mod/modfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mod/modfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mod/modfile.h taglib-src/taglib/mod/modfile.h
+--- taglib-1ee7493/taglib/mod/modfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mod/modfile.h	2023-12-20 10:37:37
 @@ -26,12 +26,12 @@
  #ifndef TAGLIB_MODFILE_H
  #define TAGLIB_MODFILE_H
@@ -446,9 +446,9 @@ diff -ru taglib-491322d/taglib/mod/modfile.h taglib-src/taglib/mod/modfile.h
  
  namespace TagLib {
    namespace Mod {
-diff -ru taglib-491322d/taglib/mod/modfilebase.h taglib-src/taglib/mod/modfilebase.h
---- taglib-491322d/taglib/mod/modfilebase.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mod/modfilebase.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mod/modfilebase.h taglib-src/taglib/mod/modfilebase.h
+--- taglib-1ee7493/taglib/mod/modfilebase.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mod/modfilebase.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_MODFILEBASE_H
  #define TAGLIB_MODFILEBASE_H
@@ -466,9 +466,9 @@ diff -ru taglib-491322d/taglib/mod/modfilebase.h taglib-src/taglib/mod/modfileba
  
  #include <algorithm>
  
-diff -ru taglib-491322d/taglib/mod/modproperties.h taglib-src/taglib/mod/modproperties.h
---- taglib-491322d/taglib/mod/modproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mod/modproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mod/modproperties.h taglib-src/taglib/mod/modproperties.h
+--- taglib-1ee7493/taglib/mod/modproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mod/modproperties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_MODPROPERTIES_H
  #define TAGLIB_MODPROPERTIES_H
@@ -480,9 +480,9 @@ diff -ru taglib-491322d/taglib/mod/modproperties.h taglib-src/taglib/mod/modprop
  
  namespace TagLib {
    namespace Mod {
-diff -ru taglib-491322d/taglib/mod/modtag.h taglib-src/taglib/mod/modtag.h
---- taglib-491322d/taglib/mod/modtag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mod/modtag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mod/modtag.h taglib-src/taglib/mod/modtag.h
+--- taglib-1ee7493/taglib/mod/modtag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mod/modtag.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_MODTAG_H
  #define TAGLIB_MODTAG_H
@@ -492,9 +492,9 @@ diff -ru taglib-491322d/taglib/mod/modtag.h taglib-src/taglib/mod/modtag.h
  
  namespace TagLib {
    namespace Mod {
-diff -ru taglib-491322d/taglib/mp4/mp4atom.h taglib-src/taglib/mp4/mp4atom.h
---- taglib-491322d/taglib/mp4/mp4atom.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4atom.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4atom.h taglib-src/taglib/mp4/mp4atom.h
+--- taglib-1ee7493/taglib/mp4/mp4atom.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4atom.h	2023-12-20 10:37:37
 @@ -30,8 +30,8 @@
  
  #include <array>
@@ -506,9 +506,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4atom.h taglib-src/taglib/mp4/mp4atom.h
  
  #ifndef DO_NOT_DOCUMENT
  
-diff -ru taglib-491322d/taglib/mp4/mp4coverart.h taglib-src/taglib/mp4/mp4coverart.h
---- taglib-491322d/taglib/mp4/mp4coverart.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4coverart.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4coverart.h taglib-src/taglib/mp4/mp4coverart.h
+--- taglib-1ee7493/taglib/mp4/mp4coverart.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4coverart.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_MP4COVERART_H
  #define TAGLIB_MP4COVERART_H
@@ -524,9 +524,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4coverart.h taglib-src/taglib/mp4/mp4covera
  
  namespace TagLib {
    namespace MP4 {
-diff -ru taglib-491322d/taglib/mp4/mp4file.h taglib-src/taglib/mp4/mp4file.h
---- taglib-491322d/taglib/mp4/mp4file.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4file.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4file.h taglib-src/taglib/mp4/mp4file.h
+--- taglib-1ee7493/taglib/mp4/mp4file.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4file.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_MP4FILE_H
  #define TAGLIB_MP4FILE_H
@@ -544,9 +544,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4file.h taglib-src/taglib/mp4/mp4file.h
  
  namespace TagLib {
    //! An implementation of MP4 (AAC, ALAC, ...) metadata
-diff -ru taglib-491322d/taglib/mp4/mp4item.h taglib-src/taglib/mp4/mp4item.h
---- taglib-491322d/taglib/mp4/mp4item.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4item.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4item.h taglib-src/taglib/mp4/mp4item.h
+--- taglib-1ee7493/taglib/mp4/mp4item.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4item.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_MP4ITEM_H
  #define TAGLIB_MP4ITEM_H
@@ -560,9 +560,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4item.h taglib-src/taglib/mp4/mp4item.h
  
  namespace TagLib {
    namespace MP4 {
-diff -ru taglib-491322d/taglib/mp4/mp4itemfactory.h taglib-src/taglib/mp4/mp4itemfactory.h
---- taglib-491322d/taglib/mp4/mp4itemfactory.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4itemfactory.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4itemfactory.h taglib-src/taglib/mp4/mp4itemfactory.h
+--- taglib-1ee7493/taglib/mp4/mp4itemfactory.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4itemfactory.h	2023-12-20 10:37:37
 @@ -27,8 +27,8 @@
  #define TAGLIB_MP4ITEMFACTORY_H
  
@@ -574,9 +574,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4itemfactory.h taglib-src/taglib/mp4/mp4ite
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mp4/mp4properties.h taglib-src/taglib/mp4/mp4properties.h
---- taglib-491322d/taglib/mp4/mp4properties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4properties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4properties.h taglib-src/taglib/mp4/mp4properties.h
+--- taglib-1ee7493/taglib/mp4/mp4properties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4properties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_MP4PROPERTIES_H
  #define TAGLIB_MP4PROPERTIES_H
@@ -588,9 +588,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4properties.h taglib-src/taglib/mp4/mp4prop
  
  namespace TagLib {
    namespace MP4 {
-diff -ru taglib-491322d/taglib/mp4/mp4tag.h taglib-src/taglib/mp4/mp4tag.h
---- taglib-491322d/taglib/mp4/mp4tag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mp4/mp4tag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mp4/mp4tag.h taglib-src/taglib/mp4/mp4tag.h
+--- taglib-1ee7493/taglib/mp4/mp4tag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mp4/mp4tag.h	2023-12-20 10:37:37
 @@ -26,14 +26,14 @@
  #ifndef TAGLIB_MP4TAG_H
  #define TAGLIB_MP4TAG_H
@@ -614,9 +614,9 @@ diff -ru taglib-491322d/taglib/mp4/mp4tag.h taglib-src/taglib/mp4/mp4tag.h
  
  namespace TagLib {
    namespace MP4 {
-diff -ru taglib-491322d/taglib/mpc/mpcfile.h taglib-src/taglib/mpc/mpcfile.h
---- taglib-491322d/taglib/mpc/mpcfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpc/mpcfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpc/mpcfile.h taglib-src/taglib/mpc/mpcfile.h
+--- taglib-1ee7493/taglib/mpc/mpcfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpc/mpcfile.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_MPCFILE_H
  #define TAGLIB_MPCFILE_H
@@ -634,9 +634,9 @@ diff -ru taglib-491322d/taglib/mpc/mpcfile.h taglib-src/taglib/mpc/mpcfile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpc/mpcproperties.h taglib-src/taglib/mpc/mpcproperties.h
---- taglib-491322d/taglib/mpc/mpcproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpc/mpcproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpc/mpcproperties.h taglib-src/taglib/mpc/mpcproperties.h
+--- taglib-1ee7493/taglib/mpc/mpcproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpc/mpcproperties.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_MPCPROPERTIES_H
  #define TAGLIB_MPCPROPERTIES_H
@@ -650,9 +650,9 @@ diff -ru taglib-491322d/taglib/mpc/mpcproperties.h taglib-src/taglib/mpc/mpcprop
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v1/id3v1genres.h taglib-src/taglib/mpeg/id3v1/id3v1genres.h
---- taglib-491322d/taglib/mpeg/id3v1/id3v1genres.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v1/id3v1genres.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v1/id3v1genres.h taglib-src/taglib/mpeg/id3v1/id3v1genres.h
+--- taglib-1ee7493/taglib/mpeg/id3v1/id3v1genres.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v1/id3v1genres.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_ID3V1GENRE_H
  #define TAGLIB_ID3V1GENRE_H
@@ -666,9 +666,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v1/id3v1genres.h taglib-src/taglib/mpeg/i
  
  namespace TagLib {
    namespace ID3v1 {
-diff -ru taglib-491322d/taglib/mpeg/id3v1/id3v1tag.h taglib-src/taglib/mpeg/id3v1/id3v1tag.h
---- taglib-491322d/taglib/mpeg/id3v1/id3v1tag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v1/id3v1tag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v1/id3v1tag.h taglib-src/taglib/mpeg/id3v1/id3v1tag.h
+--- taglib-1ee7493/taglib/mpeg/id3v1/id3v1tag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v1/id3v1tag.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_ID3V1TAG_H
  #define TAGLIB_ID3V1TAG_H
@@ -682,9 +682,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v1/id3v1tag.h taglib-src/taglib/mpeg/id3v
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/attachedpictureframe.h taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/attachedpictureframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/attachedpictureframe.h taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/attachedpictureframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/attachedpictureframe.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_ATTACHEDPICTUREFRAME_H
  #define TAGLIB_ATTACHEDPICTUREFRAME_H
@@ -700,9 +700,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/attachedpictureframe.h taglib-s
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/chapterframe.h taglib-src/taglib/mpeg/id3v2/frames/chapterframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/chapterframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/chapterframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/chapterframe.h taglib-src/taglib/mpeg/id3v2/frames/chapterframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/chapterframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/chapterframe.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_CHAPTERFRAME
  #define TAGLIB_CHAPTERFRAME
@@ -716,9 +716,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/chapterframe.h taglib-src/tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/commentsframe.h taglib-src/taglib/mpeg/id3v2/frames/commentsframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/commentsframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/commentsframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/commentsframe.h taglib-src/taglib/mpeg/id3v2/frames/commentsframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/commentsframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/commentsframe.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_COMMENTSFRAME_H
  #define TAGLIB_COMMENTSFRAME_H
@@ -730,9 +730,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/commentsframe.h taglib-src/tagl
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_EVENTTIMINGCODESFRAME_H
  #define TAGLIB_EVENTTIMINGCODESFRAME_H
@@ -744,9 +744,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/eventtimingcodesframe.h taglib-
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.h	2023-12-20 10:37:37
 @@ -29,9 +29,9 @@
  #ifndef TAGLIB_GENERALENCAPSULATEDOBJECT_H
  #define TAGLIB_GENERALENCAPSULATEDOBJECT_H
@@ -760,9 +760,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/generalencapsulatedobjectframe.
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/ownershipframe.h taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/ownershipframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/ownershipframe.h taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/ownershipframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/ownershipframe.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_OWNERSHIPFRAME_H
  #define TAGLIB_OWNERSHIPFRAME_H
@@ -774,9 +774,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/ownershipframe.h taglib-src/tag
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/podcastframe.h taglib-src/taglib/mpeg/id3v2/frames/podcastframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/podcastframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/podcastframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/podcastframe.h taglib-src/taglib/mpeg/id3v2/frames/podcastframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/podcastframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/podcastframe.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_PODCASTFRAME_H
  #define TAGLIB_PODCASTFRAME_H
@@ -788,9 +788,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/podcastframe.h taglib-src/tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/popularimeterframe.h taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/popularimeterframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/popularimeterframe.h taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/popularimeterframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/popularimeterframe.h	2023-12-20 10:37:37
 @@ -27,8 +27,8 @@
  #ifndef TAGLIB_POPULARIMETERFRAME_H
  #define TAGLIB_POPULARIMETERFRAME_H
@@ -802,9 +802,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/popularimeterframe.h taglib-src
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/privateframe.h taglib-src/taglib/mpeg/id3v2/frames/privateframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/privateframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/privateframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/privateframe.h taglib-src/taglib/mpeg/id3v2/frames/privateframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/privateframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/privateframe.h	2023-12-20 10:37:37
 @@ -27,8 +27,8 @@
  #ifndef TAGLIB_PRIVATEFRAME_H
  #define TAGLIB_PRIVATEFRAME_H
@@ -816,9 +816,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/privateframe.h taglib-src/tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/relativevolumeframe.h taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/relativevolumeframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/relativevolumeframe.h taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/relativevolumeframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/relativevolumeframe.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_RELATIVEVOLUMEFRAME_H
  #define TAGLIB_RELATIVEVOLUMEFRAME_H
@@ -832,9 +832,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/relativevolumeframe.h taglib-sr
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_SYNCHRONIZEDLYRICSFRAME_H
  #define TAGLIB_SYNCHRONIZEDLYRICSFRAME_H
@@ -846,9 +846,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/synchronizedlyricsframe.h tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/tableofcontentsframe.h taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/tableofcontentsframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/tableofcontentsframe.h taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/tableofcontentsframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/tableofcontentsframe.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_TABLEOFCONTENTSFRAME
  #define TAGLIB_TABLEOFCONTENTSFRAME
@@ -862,9 +862,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/tableofcontentsframe.h taglib-s
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/textidentificationframe.h taglib-src/taglib/mpeg/id3v2/frames/textidentificationframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/textidentificationframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/textidentificationframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/textidentificationframe.h taglib-src/taglib/mpeg/id3v2/frames/textidentificationframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/textidentificationframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/textidentificationframe.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_TEXTIDENTIFICATIONFRAME_H
  #define TAGLIB_TEXTIDENTIFICATIONFRAME_H
@@ -880,9 +880,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/textidentificationframe.h tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_UNIQUEFILEIDENTIFIERFRAME
  #define TAGLIB_UNIQUEFILEIDENTIFIERFRAME
@@ -892,9 +892,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/uniquefileidentifierframe.h tag
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/unknownframe.h taglib-src/taglib/mpeg/id3v2/frames/unknownframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/unknownframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/unknownframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/unknownframe.h taglib-src/taglib/mpeg/id3v2/frames/unknownframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/unknownframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/unknownframe.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_UNKNOWNFRAME_H
  #define TAGLIB_UNKNOWNFRAME_H
@@ -906,9 +906,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/unknownframe.h taglib-src/tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h	2023-12-20 10:37:37
 @@ -28,7 +28,7 @@
  #ifndef TAGLIB_UNSYNCHRONIZEDLYRICSFRAME_H
  #define TAGLIB_UNSYNCHRONIZEDLYRICSFRAME_H
@@ -918,9 +918,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/unsynchronizedlyricsframe.h tag
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/urllinkframe.h taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.h
---- taglib-491322d/taglib/mpeg/id3v2/frames/urllinkframe.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/frames/urllinkframe.h taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/frames/urllinkframe.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/frames/urllinkframe.h	2023-12-20 10:37:37
 @@ -29,7 +29,7 @@
  #ifndef TAGLIB_URLLINKFRAME_H
  #define TAGLIB_URLLINKFRAME_H
@@ -930,9 +930,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/frames/urllinkframe.h taglib-src/tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2extendedheader.h taglib-src/taglib/mpeg/id3v2/id3v2extendedheader.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2extendedheader.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2extendedheader.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2extendedheader.h taglib-src/taglib/mpeg/id3v2/id3v2extendedheader.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2extendedheader.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2extendedheader.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_ID3V2EXTENDEDHEADER_H
  #define TAGLIB_ID3V2EXTENDEDHEADER_H
@@ -946,9 +946,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2extendedheader.h taglib-src/tagli
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2footer.h taglib-src/taglib/mpeg/id3v2/id3v2footer.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2footer.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2footer.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2footer.h taglib-src/taglib/mpeg/id3v2/id3v2footer.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2footer.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2footer.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_ID3V2FOOTER_H
  #define TAGLIB_ID3V2FOOTER_H
@@ -960,9 +960,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2footer.h taglib-src/taglib/mpeg/i
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2frame.h taglib-src/taglib/mpeg/id3v2/id3v2frame.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2frame.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2frame.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2frame.h taglib-src/taglib/mpeg/id3v2/id3v2frame.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2frame.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2frame.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_ID3V2FRAME_H
  #define TAGLIB_ID3V2FRAME_H
@@ -976,9 +976,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2frame.h taglib-src/taglib/mpeg/id
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2framefactory.h taglib-src/taglib/mpeg/id3v2/id3v2framefactory.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2framefactory.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2framefactory.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2framefactory.h taglib-src/taglib/mpeg/id3v2/id3v2framefactory.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2framefactory.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2framefactory.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_ID3V2FRAMEFACTORY_H
  #define TAGLIB_ID3V2FRAMEFACTORY_H
@@ -994,9 +994,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2framefactory.h taglib-src/taglib/
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2header.h taglib-src/taglib/mpeg/id3v2/id3v2header.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2header.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2header.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2header.h taglib-src/taglib/mpeg/id3v2/id3v2header.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2header.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2header.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_ID3V2HEADER_H
  #define TAGLIB_ID3V2HEADER_H
@@ -1010,9 +1010,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2header.h taglib-src/taglib/mpeg/i
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2synchdata.h taglib-src/taglib/mpeg/id3v2/id3v2synchdata.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2synchdata.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2synchdata.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2synchdata.h taglib-src/taglib/mpeg/id3v2/id3v2synchdata.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2synchdata.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2synchdata.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_ID3V2SYNCHDATA_H
  #define TAGLIB_ID3V2SYNCHDATA_H
@@ -1024,9 +1024,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2synchdata.h taglib-src/taglib/mpe
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2tag.h taglib-src/taglib/mpeg/id3v2/id3v2tag.h
---- taglib-491322d/taglib/mpeg/id3v2/id3v2tag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/id3v2/id3v2tag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/id3v2/id3v2tag.h taglib-src/taglib/mpeg/id3v2/id3v2tag.h
+--- taglib-1ee7493/taglib/mpeg/id3v2/id3v2tag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/id3v2/id3v2tag.h	2023-12-20 10:37:37
 @@ -26,14 +26,14 @@
  #ifndef TAGLIB_ID3V2TAG_H
  #define TAGLIB_ID3V2TAG_H
@@ -1050,9 +1050,9 @@ diff -ru taglib-491322d/taglib/mpeg/id3v2/id3v2tag.h taglib-src/taglib/mpeg/id3v
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/mpegfile.h taglib-src/taglib/mpeg/mpegfile.h
---- taglib-491322d/taglib/mpeg/mpegfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/mpegfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/mpegfile.h taglib-src/taglib/mpeg/mpegfile.h
+--- taglib-1ee7493/taglib/mpeg/mpegfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/mpegfile.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_MPEGFILE_H
  #define TAGLIB_MPEGFILE_H
@@ -1070,9 +1070,9 @@ diff -ru taglib-491322d/taglib/mpeg/mpegfile.h taglib-src/taglib/mpeg/mpegfile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/mpegheader.h taglib-src/taglib/mpeg/mpegheader.h
---- taglib-491322d/taglib/mpeg/mpegheader.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/mpegheader.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/mpegheader.h taglib-src/taglib/mpeg/mpegheader.h
+--- taglib-1ee7493/taglib/mpeg/mpegheader.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/mpegheader.h	2023-12-20 10:37:37
 @@ -28,8 +28,8 @@
  
  #include <memory>
@@ -1084,9 +1084,9 @@ diff -ru taglib-491322d/taglib/mpeg/mpegheader.h taglib-src/taglib/mpeg/mpeghead
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/mpegproperties.h taglib-src/taglib/mpeg/mpegproperties.h
---- taglib-491322d/taglib/mpeg/mpegproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/mpegproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/mpegproperties.h taglib-src/taglib/mpeg/mpegproperties.h
+--- taglib-1ee7493/taglib/mpeg/mpegproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/mpegproperties.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_MPEGPROPERTIES_H
  #define TAGLIB_MPEGPROPERTIES_H
@@ -1100,9 +1100,9 @@ diff -ru taglib-491322d/taglib/mpeg/mpegproperties.h taglib-src/taglib/mpeg/mpeg
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/mpeg/xingheader.h taglib-src/taglib/mpeg/xingheader.h
---- taglib-491322d/taglib/mpeg/xingheader.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/mpeg/xingheader.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/mpeg/xingheader.h taglib-src/taglib/mpeg/xingheader.h
+--- taglib-1ee7493/taglib/mpeg/xingheader.h	2023-12-20 05:05:26
++++ taglib-src/taglib/mpeg/xingheader.h	2023-12-20 10:37:37
 @@ -28,8 +28,8 @@
  
  #include <memory>
@@ -1114,9 +1114,9 @@ diff -ru taglib-491322d/taglib/mpeg/xingheader.h taglib-src/taglib/mpeg/xinghead
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/flac/oggflacfile.h taglib-src/taglib/ogg/flac/oggflacfile.h
---- taglib-491322d/taglib/ogg/flac/oggflacfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/flac/oggflacfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/flac/oggflacfile.h taglib-src/taglib/ogg/flac/oggflacfile.h
+--- taglib-1ee7493/taglib/ogg/flac/oggflacfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/flac/oggflacfile.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_OGGFLACFILE_H
  #define TAGLIB_OGGFLACFILE_H
@@ -1132,9 +1132,9 @@ diff -ru taglib-491322d/taglib/ogg/flac/oggflacfile.h taglib-src/taglib/ogg/flac
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/oggfile.h taglib-src/taglib/ogg/oggfile.h
---- taglib-491322d/taglib/ogg/oggfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/oggfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/oggfile.h taglib-src/taglib/ogg/oggfile.h
+--- taglib-1ee7493/taglib/ogg/oggfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/oggfile.h	2023-12-20 10:37:37
 @@ -23,9 +23,9 @@
   *   http://www.mozilla.org/MPL/                                           *
   ***************************************************************************/
@@ -1148,9 +1148,9 @@ diff -ru taglib-491322d/taglib/ogg/oggfile.h taglib-src/taglib/ogg/oggfile.h
  
  #ifndef TAGLIB_OGGFILE_H
  #define TAGLIB_OGGFILE_H
-diff -ru taglib-491322d/taglib/ogg/oggpage.h taglib-src/taglib/ogg/oggpage.h
---- taglib-491322d/taglib/ogg/oggpage.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/oggpage.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/oggpage.h taglib-src/taglib/ogg/oggpage.h
+--- taglib-1ee7493/taglib/ogg/oggpage.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/oggpage.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_OGGPAGE_H
  #define TAGLIB_OGGPAGE_H
@@ -1162,9 +1162,9 @@ diff -ru taglib-491322d/taglib/ogg/oggpage.h taglib-src/taglib/ogg/oggpage.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/oggpageheader.h taglib-src/taglib/ogg/oggpageheader.h
---- taglib-491322d/taglib/ogg/oggpageheader.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/oggpageheader.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/oggpageheader.h taglib-src/taglib/ogg/oggpageheader.h
+--- taglib-1ee7493/taglib/ogg/oggpageheader.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/oggpageheader.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_OGGPAGEHEADER_H
  #define TAGLIB_OGGPAGEHEADER_H
@@ -1178,9 +1178,9 @@ diff -ru taglib-491322d/taglib/ogg/oggpageheader.h taglib-src/taglib/ogg/oggpage
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/opus/opusfile.h taglib-src/taglib/ogg/opus/opusfile.h
---- taglib-491322d/taglib/ogg/opus/opusfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/opus/opusfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/opus/opusfile.h taglib-src/taglib/ogg/opus/opusfile.h
+--- taglib-1ee7493/taglib/ogg/opus/opusfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/opus/opusfile.h	2023-12-20 10:37:37
 @@ -30,9 +30,9 @@
  #ifndef TAGLIB_OPUSFILE_H
  #define TAGLIB_OPUSFILE_H
@@ -1194,9 +1194,9 @@ diff -ru taglib-491322d/taglib/ogg/opus/opusfile.h taglib-src/taglib/ogg/opus/op
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/opus/opusproperties.h taglib-src/taglib/ogg/opus/opusproperties.h
---- taglib-491322d/taglib/ogg/opus/opusproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/opus/opusproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/opus/opusproperties.h taglib-src/taglib/ogg/opus/opusproperties.h
+--- taglib-1ee7493/taglib/ogg/opus/opusproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/opus/opusproperties.h	2023-12-20 10:37:37
 @@ -30,7 +30,7 @@
  #ifndef TAGLIB_OPUSPROPERTIES_H
  #define TAGLIB_OPUSPROPERTIES_H
@@ -1206,9 +1206,9 @@ diff -ru taglib-491322d/taglib/ogg/opus/opusproperties.h taglib-src/taglib/ogg/o
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/speex/speexfile.h taglib-src/taglib/ogg/speex/speexfile.h
---- taglib-491322d/taglib/ogg/speex/speexfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/speex/speexfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/speex/speexfile.h taglib-src/taglib/ogg/speex/speexfile.h
+--- taglib-1ee7493/taglib/ogg/speex/speexfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/speex/speexfile.h	2023-12-20 10:37:37
 @@ -30,9 +30,9 @@
  #ifndef TAGLIB_SPEEXFILE_H
  #define TAGLIB_SPEEXFILE_H
@@ -1222,9 +1222,9 @@ diff -ru taglib-491322d/taglib/ogg/speex/speexfile.h taglib-src/taglib/ogg/speex
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/speex/speexproperties.h taglib-src/taglib/ogg/speex/speexproperties.h
---- taglib-491322d/taglib/ogg/speex/speexproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/speex/speexproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/speex/speexproperties.h taglib-src/taglib/ogg/speex/speexproperties.h
+--- taglib-1ee7493/taglib/ogg/speex/speexproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/speex/speexproperties.h	2023-12-20 10:37:37
 @@ -30,7 +30,7 @@
  #ifndef TAGLIB_SPEEXPROPERTIES_H
  #define TAGLIB_SPEEXPROPERTIES_H
@@ -1234,9 +1234,9 @@ diff -ru taglib-491322d/taglib/ogg/speex/speexproperties.h taglib-src/taglib/ogg
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/vorbis/vorbisfile.h taglib-src/taglib/ogg/vorbis/vorbisfile.h
---- taglib-491322d/taglib/ogg/vorbis/vorbisfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/vorbis/vorbisfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/vorbis/vorbisfile.h taglib-src/taglib/ogg/vorbis/vorbisfile.h
+--- taglib-1ee7493/taglib/ogg/vorbis/vorbisfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/vorbis/vorbisfile.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_VORBISFILE_H
  #define TAGLIB_VORBISFILE_H
@@ -1252,9 +1252,9 @@ diff -ru taglib-491322d/taglib/ogg/vorbis/vorbisfile.h taglib-src/taglib/ogg/vor
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/vorbis/vorbisproperties.h taglib-src/taglib/ogg/vorbis/vorbisproperties.h
---- taglib-491322d/taglib/ogg/vorbis/vorbisproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/vorbis/vorbisproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/vorbis/vorbisproperties.h taglib-src/taglib/ogg/vorbis/vorbisproperties.h
+--- taglib-1ee7493/taglib/ogg/vorbis/vorbisproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/vorbis/vorbisproperties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_VORBISPROPERTIES_H
  #define TAGLIB_VORBISPROPERTIES_H
@@ -1266,9 +1266,9 @@ diff -ru taglib-491322d/taglib/ogg/vorbis/vorbisproperties.h taglib-src/taglib/o
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/ogg/xiphcomment.h taglib-src/taglib/ogg/xiphcomment.h
---- taglib-491322d/taglib/ogg/xiphcomment.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/ogg/xiphcomment.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/ogg/xiphcomment.h taglib-src/taglib/ogg/xiphcomment.h
+--- taglib-1ee7493/taglib/ogg/xiphcomment.h	2023-12-20 05:05:26
++++ taglib-src/taglib/ogg/xiphcomment.h	2023-12-20 10:37:37
 @@ -26,14 +26,14 @@
  #ifndef TAGLIB_VORBISCOMMENT_H
  #define TAGLIB_VORBISCOMMENT_H
@@ -1292,9 +1292,9 @@ diff -ru taglib-491322d/taglib/ogg/xiphcomment.h taglib-src/taglib/ogg/xiphcomme
  
  #ifdef _MSC_VER
  // Explained at end of tpropertymap.cpp
-diff -ru taglib-491322d/taglib/riff/aiff/aifffile.h taglib-src/taglib/riff/aiff/aifffile.h
---- taglib-491322d/taglib/riff/aiff/aifffile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/aiff/aifffile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/aiff/aifffile.h taglib-src/taglib/riff/aiff/aifffile.h
+--- taglib-1ee7493/taglib/riff/aiff/aifffile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/aiff/aifffile.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_AIFFFILE_H
  #define TAGLIB_AIFFFILE_H
@@ -1308,9 +1308,9 @@ diff -ru taglib-491322d/taglib/riff/aiff/aifffile.h taglib-src/taglib/riff/aiff/
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/riff/aiff/aiffproperties.h taglib-src/taglib/riff/aiff/aiffproperties.h
---- taglib-491322d/taglib/riff/aiff/aiffproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/aiff/aiffproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/aiff/aiffproperties.h taglib-src/taglib/riff/aiff/aiffproperties.h
+--- taglib-1ee7493/taglib/riff/aiff/aiffproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/aiff/aiffproperties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_AIFFPROPERTIES_H
  #define TAGLIB_AIFFPROPERTIES_H
@@ -1322,9 +1322,9 @@ diff -ru taglib-491322d/taglib/riff/aiff/aiffproperties.h taglib-src/taglib/riff
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/riff/rifffile.h taglib-src/taglib/riff/rifffile.h
---- taglib-491322d/taglib/riff/rifffile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/rifffile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/rifffile.h taglib-src/taglib/riff/rifffile.h
+--- taglib-1ee7493/taglib/riff/rifffile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/rifffile.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_RIFFFILE_H
  #define TAGLIB_RIFFFILE_H
@@ -1336,9 +1336,9 @@ diff -ru taglib-491322d/taglib/riff/rifffile.h taglib-src/taglib/riff/rifffile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/riff/riffutils.h taglib-src/taglib/riff/riffutils.h
---- taglib-491322d/taglib/riff/riffutils.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/riffutils.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/riffutils.h taglib-src/taglib/riff/riffutils.h
+--- taglib-1ee7493/taglib/riff/riffutils.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/riffutils.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_RIFFUTILS_H
  #define TAGLIB_RIFFUTILS_H
@@ -1348,9 +1348,9 @@ diff -ru taglib-491322d/taglib/riff/riffutils.h taglib-src/taglib/riff/riffutils
  
  // THIS FILE IS NOT A PART OF THE TAGLIB API
  
-diff -ru taglib-491322d/taglib/riff/wav/infotag.h taglib-src/taglib/riff/wav/infotag.h
---- taglib-491322d/taglib/riff/wav/infotag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/wav/infotag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/wav/infotag.h taglib-src/taglib/riff/wav/infotag.h
+--- taglib-1ee7493/taglib/riff/wav/infotag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/wav/infotag.h	2023-12-20 10:37:37
 @@ -26,12 +26,12 @@
  #ifndef TAGLIB_INFOTAG_H
  #define TAGLIB_INFOTAG_H
@@ -1370,9 +1370,9 @@ diff -ru taglib-491322d/taglib/riff/wav/infotag.h taglib-src/taglib/riff/wav/inf
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/riff/wav/wavfile.h taglib-src/taglib/riff/wav/wavfile.h
---- taglib-491322d/taglib/riff/wav/wavfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/wav/wavfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/wav/wavfile.h taglib-src/taglib/riff/wav/wavfile.h
+--- taglib-1ee7493/taglib/riff/wav/wavfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/wav/wavfile.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_WAVFILE_H
  #define TAGLIB_WAVFILE_H
@@ -1388,9 +1388,9 @@ diff -ru taglib-491322d/taglib/riff/wav/wavfile.h taglib-src/taglib/riff/wav/wav
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/riff/wav/wavproperties.h taglib-src/taglib/riff/wav/wavproperties.h
---- taglib-491322d/taglib/riff/wav/wavproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/riff/wav/wavproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/riff/wav/wavproperties.h taglib-src/taglib/riff/wav/wavproperties.h
+--- taglib-1ee7493/taglib/riff/wav/wavproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/riff/wav/wavproperties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_WAVPROPERTIES_H
  #define TAGLIB_WAVPROPERTIES_H
@@ -1402,9 +1402,9 @@ diff -ru taglib-491322d/taglib/riff/wav/wavproperties.h taglib-src/taglib/riff/w
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/s3m/s3mfile.h taglib-src/taglib/s3m/s3mfile.h
---- taglib-491322d/taglib/s3m/s3mfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/s3m/s3mfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/s3m/s3mfile.h taglib-src/taglib/s3m/s3mfile.h
+--- taglib-1ee7493/taglib/s3m/s3mfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/s3m/s3mfile.h	2023-12-20 10:37:37
 @@ -26,12 +26,12 @@
  #ifndef TAGLIB_S3MFILE_H
  #define TAGLIB_S3MFILE_H
@@ -1424,9 +1424,9 @@ diff -ru taglib-491322d/taglib/s3m/s3mfile.h taglib-src/taglib/s3m/s3mfile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/s3m/s3mproperties.h taglib-src/taglib/s3m/s3mproperties.h
---- taglib-491322d/taglib/s3m/s3mproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/s3m/s3mproperties.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/s3m/s3mproperties.h taglib-src/taglib/s3m/s3mproperties.h
+--- taglib-1ee7493/taglib/s3m/s3mproperties.h	2023-12-20 05:05:26
++++ taglib-src/taglib/s3m/s3mproperties.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_S3MPROPERTIES_H
  #define TAGLIB_S3MPROPERTIES_H
@@ -1438,9 +1438,9 @@ diff -ru taglib-491322d/taglib/s3m/s3mproperties.h taglib-src/taglib/s3m/s3mprop
  
  namespace TagLib {
    namespace S3M {
-diff -ru taglib-491322d/taglib/tag.h taglib-src/taglib/tag.h
---- taglib-491322d/taglib/tag.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/tag.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/tag.h taglib-src/taglib/tag.h
+--- taglib-1ee7493/taglib/tag.h	2023-12-20 05:05:26
++++ taglib-src/taglib/tag.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_TAG_H
  #define TAGLIB_TAG_H
@@ -1456,9 +1456,9 @@ diff -ru taglib-491322d/taglib/tag.h taglib-src/taglib/tag.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/tagunion.h taglib-src/taglib/tagunion.h
---- taglib-491322d/taglib/tagunion.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/tagunion.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/tagunion.h taglib-src/taglib/tagunion.h
+--- taglib-1ee7493/taglib/tagunion.h	2023-12-20 05:05:26
++++ taglib-src/taglib/tagunion.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_TAGUNION_H
  #define TAGLIB_TAGUNION_H
@@ -1468,9 +1468,9 @@ diff -ru taglib-491322d/taglib/tagunion.h taglib-src/taglib/tagunion.h
  
  #ifndef DO_NOT_DOCUMENT
  
-diff -ru taglib-491322d/taglib/tagutils.h taglib-src/taglib/tagutils.h
---- taglib-491322d/taglib/tagutils.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/tagutils.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/tagutils.h taglib-src/taglib/tagutils.h
+--- taglib-1ee7493/taglib/tagutils.h	2023-12-20 05:05:26
++++ taglib-src/taglib/tagutils.h	2023-12-20 10:37:37
 @@ -30,7 +30,7 @@
  
  #ifndef DO_NOT_DOCUMENT  // tell Doxygen not to document this header
@@ -1480,9 +1480,9 @@ diff -ru taglib-491322d/taglib/tagutils.h taglib-src/taglib/tagutils.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/taglib.h taglib-src/taglib/toolkit/taglib.h
---- taglib-491322d/taglib/toolkit/taglib.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/taglib.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/taglib.h taglib-src/taglib/toolkit/taglib.h
+--- taglib-1ee7493/taglib/toolkit/taglib.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/taglib.h	2023-12-20 10:37:37
 @@ -26,7 +26,7 @@
  #ifndef TAGLIB_H
  #define TAGLIB_H
@@ -1492,9 +1492,9 @@ diff -ru taglib-491322d/taglib/toolkit/taglib.h taglib-src/taglib/toolkit/taglib
  
  #define TAGLIB_MAJOR_VERSION 2
  #define TAGLIB_MINOR_VERSION 0
-diff -ru taglib-491322d/taglib/toolkit/tbytevector.h taglib-src/taglib/toolkit/tbytevector.h
---- taglib-491322d/taglib/toolkit/tbytevector.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tbytevector.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tbytevector.h taglib-src/taglib/toolkit/tbytevector.h
+--- taglib-1ee7493/taglib/toolkit/tbytevector.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tbytevector.h	2023-12-20 10:37:37
 @@ -30,8 +30,8 @@
  #include <memory>
  #include <vector>
@@ -1506,9 +1506,9 @@ diff -ru taglib-491322d/taglib/toolkit/tbytevector.h taglib-src/taglib/toolkit/t
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/tbytevectorlist.h taglib-src/taglib/toolkit/tbytevectorlist.h
---- taglib-491322d/taglib/toolkit/tbytevectorlist.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tbytevectorlist.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tbytevectorlist.h taglib-src/taglib/toolkit/tbytevectorlist.h
+--- taglib-1ee7493/taglib/toolkit/tbytevectorlist.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tbytevectorlist.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_BYTEVECTORLIST_H
  #define TAGLIB_BYTEVECTORLIST_H
@@ -1522,9 +1522,9 @@ diff -ru taglib-491322d/taglib/toolkit/tbytevectorlist.h taglib-src/taglib/toolk
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/tbytevectorstream.h taglib-src/taglib/toolkit/tbytevectorstream.h
---- taglib-491322d/taglib/toolkit/tbytevectorstream.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tbytevectorstream.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tbytevectorstream.h taglib-src/taglib/toolkit/tbytevectorstream.h
+--- taglib-1ee7493/taglib/toolkit/tbytevectorstream.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tbytevectorstream.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_BYTEVECTORSTREAM_H
  #define TAGLIB_BYTEVECTORSTREAM_H
@@ -1540,9 +1540,9 @@ diff -ru taglib-491322d/taglib/toolkit/tbytevectorstream.h taglib-src/taglib/too
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/tdebuglistener.h taglib-src/taglib/toolkit/tdebuglistener.h
---- taglib-491322d/taglib/toolkit/tdebuglistener.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tdebuglistener.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tdebuglistener.h taglib-src/taglib/toolkit/tdebuglistener.h
+--- taglib-1ee7493/taglib/toolkit/tdebuglistener.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tdebuglistener.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_DEBUGLISTENER_H
  #define TAGLIB_DEBUGLISTENER_H
@@ -1554,9 +1554,9 @@ diff -ru taglib-491322d/taglib/toolkit/tdebuglistener.h taglib-src/taglib/toolki
  
  namespace TagLib
  {
-diff -ru taglib-491322d/taglib/toolkit/tfile.h taglib-src/taglib/toolkit/tfile.h
---- taglib-491322d/taglib/toolkit/tfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tfile.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tfile.h taglib-src/taglib/toolkit/tfile.h
+--- taglib-1ee7493/taglib/toolkit/tfile.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tfile.h	2023-12-20 10:37:37
 @@ -26,11 +26,11 @@
  #ifndef TAGLIB_FILE_H
  #define TAGLIB_FILE_H
@@ -1574,9 +1574,9 @@ diff -ru taglib-491322d/taglib/toolkit/tfile.h taglib-src/taglib/toolkit/tfile.h
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/tfilestream.h taglib-src/taglib/toolkit/tfilestream.h
---- taglib-491322d/taglib/toolkit/tfilestream.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tfilestream.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tfilestream.h taglib-src/taglib/toolkit/tfilestream.h
+--- taglib-1ee7493/taglib/toolkit/tfilestream.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tfilestream.h	2023-12-20 10:37:37
 @@ -26,10 +26,10 @@
  #ifndef TAGLIB_FILESTREAM_H
  #define TAGLIB_FILESTREAM_H
@@ -1592,9 +1592,9 @@ diff -ru taglib-491322d/taglib/toolkit/tfilestream.h taglib-src/taglib/toolkit/t
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/tiostream.h taglib-src/taglib/toolkit/tiostream.h
---- taglib-491322d/taglib/toolkit/tiostream.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tiostream.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tiostream.h taglib-src/taglib/toolkit/tiostream.h
+--- taglib-1ee7493/taglib/toolkit/tiostream.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tiostream.h	2023-12-20 10:37:37
 @@ -26,9 +26,9 @@
  #ifndef TAGLIB_IOSTREAM_H
  #define TAGLIB_IOSTREAM_H
@@ -1608,9 +1608,9 @@ diff -ru taglib-491322d/taglib/toolkit/tiostream.h taglib-src/taglib/toolkit/tio
  
  namespace TagLib {
  
-diff -ru taglib-491322d/taglib/toolkit/tlist.h taglib-src/taglib/toolkit/tlist.h
---- taglib-491322d/taglib/toolkit/tlist.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tlist.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tlist.h taglib-src/taglib/toolkit/tlist.h
+--- taglib-1ee7493/taglib/toolkit/tlist.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tlist.h	2023-12-20 10:37:37
 @@ -30,7 +30,7 @@
  #include <initializer_list>
  #include <memory>
@@ -1628,9 +1628,9 @@ diff -ru taglib-491322d/taglib/toolkit/tlist.h taglib-src/taglib/toolkit/tlist.h
 +#include <taglib/tlist.tcc>
  
  #endif
-diff -ru taglib-491322d/taglib/toolkit/tmap.h taglib-src/taglib/toolkit/tmap.h
---- taglib-491322d/taglib/toolkit/tmap.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tmap.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tmap.h taglib-src/taglib/toolkit/tmap.h
+--- taglib-1ee7493/taglib/toolkit/tmap.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tmap.h	2023-12-20 10:37:37
 @@ -31,7 +31,7 @@
  #include <initializer_list>
  #include <utility>
@@ -1648,9 +1648,9 @@ diff -ru taglib-491322d/taglib/toolkit/tmap.h taglib-src/taglib/toolkit/tmap.h
 +#include <taglib/tmap.tcc>
  
  #endif
-diff -ru taglib-491322d/taglib/toolkit/tpicturetype.h taglib-src/taglib/toolkit/tpicturetype.h
---- taglib-491322d/taglib/toolkit/tpicturetype.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tpicturetype.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tpicturetype.h taglib-src/taglib/toolkit/tpicturetype.h
+--- taglib-1ee7493/taglib/toolkit/tpicturetype.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tpicturetype.h	2023-12-20 10:37:37
 @@ -30,7 +30,7 @@
  
  #ifndef DO_NOT_DOCUMENT  // tell Doxygen not to document this header
@@ -1660,9 +1660,9 @@ diff -ru taglib-491322d/taglib/toolkit/tpicturetype.h taglib-src/taglib/toolkit/
  
  /*!
   * Declare a picture type \a name enumeration inside a class.
-diff -ru taglib-491322d/taglib/toolkit/tpropertymap.h taglib-src/taglib/toolkit/tpropertymap.h
---- taglib-491322d/taglib/toolkit/tpropertymap.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tpropertymap.h	2023-12-10 09:47:30
+diff -ur taglib-1ee7493/taglib/toolkit/tpropertymap.h taglib-src/taglib/toolkit/tpropertymap.h
+--- taglib-1ee7493/taglib/toolkit/tpropertymap.h	2023-12-20 05:05:26
++++ taglib-src/taglib/toolkit/tpropertymap.h	2023-12-20 10:37:37
 @@ -26,8 +26,8 @@
  #ifndef TAGLIB_PROPERTYMAP_H
  #define TAGLIB_PROPERTYMAP_H
@@ -1674,201 +1674,4 @@ diff -ru taglib-491322d/taglib/toolkit/tpropertymap.h taglib-src/taglib/toolkit/
  
  #ifdef _MSC_VER
  // Explained at end of tpropertymap.cpp
-diff -ru taglib-491322d/taglib/toolkit/trefcounter.h taglib-src/taglib/toolkit/trefcounter.h
---- taglib-491322d/taglib/toolkit/trefcounter.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/trefcounter.h	2023-12-10 09:47:30
-@@ -26,8 +26,8 @@
- #ifndef TAGLIB_REFCOUNTER_H
- #define TAGLIB_REFCOUNTER_H
- 
--#include "taglib_export.h"
--#include "taglib.h"
-+#include <taglib/taglib_export.h>
-+#include <taglib/taglib.h>
- 
- #ifndef DO_NOT_DOCUMENT // Tell Doxygen to skip this class.
- /*!
-diff -ru taglib-491322d/taglib/toolkit/tstring.h taglib-src/taglib/toolkit/tstring.h
---- taglib-491322d/taglib/toolkit/tstring.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tstring.h	2023-12-10 09:47:30
-@@ -29,9 +29,9 @@
- #include <iostream>
- #include <string>
- 
--#include "tbytevector.h"
--#include "taglib_export.h"
--#include "taglib.h"
-+#include <taglib/tbytevector.h>
-+#include <taglib/taglib_export.h>
-+#include <taglib/taglib.h>
- 
- /*!
-  * \relates TagLib::String
-diff -ru taglib-491322d/taglib/toolkit/tstringlist.h taglib-src/taglib/toolkit/tstringlist.h
---- taglib-491322d/taglib/toolkit/tstringlist.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tstringlist.h	2023-12-10 09:47:30
-@@ -28,10 +28,10 @@
- 
- #include <iostream>
- 
--#include "tstring.h"
--#include "tlist.h"
--#include "tbytevectorlist.h"
--#include "taglib_export.h"
-+#include <taglib/tstring.h>
-+#include <taglib/tlist.h>
-+#include <taglib/tbytevectorlist.h>
-+#include <taglib/taglib_export.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/toolkit/tutils.h taglib-src/taglib/toolkit/tutils.h
---- taglib-491322d/taglib/toolkit/tutils.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tutils.h	2023-12-10 09:47:30
-@@ -48,7 +48,7 @@
- # include <sys/endian.h>
- #endif
- 
--#include "tstring.h"
-+#include <taglib/tstring.h>
- 
- namespace TagLib
- {
-diff -ru taglib-491322d/taglib/toolkit/tvariant.h taglib-src/taglib/toolkit/tvariant.h
---- taglib-491322d/taglib/toolkit/tvariant.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tvariant.h	2023-12-10 09:47:30
-@@ -29,9 +29,9 @@
- #include <memory.h>
- #include <iostream>
- 
--#include "tlist.h"
--#include "tmap.h"
--#include "taglib_export.h"
-+#include <taglib/tlist.h>
-+#include <taglib/tmap.h>
-+#include <taglib/taglib_export.h>
- 
- // Forward declaration needed for friend function
- namespace TagLib { class Variant; }
-diff -ru taglib-491322d/taglib/toolkit/tversionnumber.h taglib-src/taglib/toolkit/tversionnumber.h
---- taglib-491322d/taglib/toolkit/tversionnumber.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tversionnumber.h	2023-12-10 09:47:30
-@@ -29,7 +29,7 @@
- #ifndef TAGLIB_VERSIONNUMBER_H
- #define TAGLIB_VERSIONNUMBER_H
- 
--#include "taglib_export.h"
-+#include <taglib/taglib_export.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/toolkit/tzlib.h taglib-src/taglib/toolkit/tzlib.h
---- taglib-491322d/taglib/toolkit/tzlib.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/toolkit/tzlib.h	2023-12-10 09:47:30
-@@ -26,7 +26,7 @@
- #ifndef TAGLIB_TZLIB_H
- #define TAGLIB_TZLIB_H
- 
--#include "tbytevector.h"
-+#include <taglib/tbytevector.h>
- 
- // THIS FILE IS NOT A PART OF THE TAGLIB API
- 
-diff -ru taglib-491322d/taglib/trueaudio/trueaudiofile.h taglib-src/taglib/trueaudio/trueaudiofile.h
---- taglib-491322d/taglib/trueaudio/trueaudiofile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/trueaudio/trueaudiofile.h	2023-12-10 09:47:30
-@@ -30,8 +30,8 @@
- #ifndef TAGLIB_TRUEAUDIOFILE_H
- #define TAGLIB_TRUEAUDIOFILE_H
- 
--#include "tfile.h"
--#include "trueaudioproperties.h"
-+#include <taglib/tfile.h>
-+#include <taglib/trueaudioproperties.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/trueaudio/trueaudioproperties.h taglib-src/taglib/trueaudio/trueaudioproperties.h
---- taglib-491322d/taglib/trueaudio/trueaudioproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/trueaudio/trueaudioproperties.h	2023-12-10 09:47:30
-@@ -30,8 +30,8 @@
- #ifndef TAGLIB_TRUEAUDIOPROPERTIES_H
- #define TAGLIB_TRUEAUDIOPROPERTIES_H
- 
--#include "tbytevector.h"
--#include "audioproperties.h"
-+#include <taglib/tbytevector.h>
-+#include <taglib/audioproperties.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/wavpack/wavpackfile.h taglib-src/taglib/wavpack/wavpackfile.h
---- taglib-491322d/taglib/wavpack/wavpackfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/wavpack/wavpackfile.h	2023-12-10 09:47:30
-@@ -30,9 +30,9 @@
- #ifndef TAGLIB_WVFILE_H
- #define TAGLIB_WVFILE_H
- 
--#include "tfile.h"
--#include "taglib_export.h"
--#include "wavpackproperties.h"
-+#include <taglib/tfile.h>
-+#include <taglib/taglib_export.h>
-+#include <taglib/wavpackproperties.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/wavpack/wavpackproperties.h taglib-src/taglib/wavpack/wavpackproperties.h
---- taglib-491322d/taglib/wavpack/wavpackproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/wavpack/wavpackproperties.h	2023-12-10 09:47:30
-@@ -30,9 +30,9 @@
- #ifndef TAGLIB_WVPROPERTIES_H
- #define TAGLIB_WVPROPERTIES_H
- 
--#include "tbytevector.h"
--#include "taglib_export.h"
--#include "audioproperties.h"
-+#include <taglib/tbytevector.h>
-+#include <taglib/taglib_export.h>
-+#include <taglib/audioproperties.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/xm/xmfile.h taglib-src/taglib/xm/xmfile.h
---- taglib-491322d/taglib/xm/xmfile.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/xm/xmfile.h	2023-12-10 09:47:30
-@@ -26,12 +26,12 @@
- #ifndef TAGLIB_XMFILE_H
- #define TAGLIB_XMFILE_H
- 
--#include "tfile.h"
--#include "taglib_export.h"
--#include "audioproperties.h"
--#include "modfilebase.h"
--#include "modtag.h"
--#include "xmproperties.h"
-+#include <taglib/tfile.h>
-+#include <taglib/taglib_export.h>
-+#include <taglib/audioproperties.h>
-+#include <taglib/modfilebase.h>
-+#include <taglib/modtag.h>
-+#include <taglib/xmproperties.h>
- 
- namespace TagLib {
- 
-diff -ru taglib-491322d/taglib/xm/xmproperties.h taglib-src/taglib/xm/xmproperties.h
---- taglib-491322d/taglib/xm/xmproperties.h	2023-12-08 08:58:01
-+++ taglib-src/taglib/xm/xmproperties.h	2023-12-10 09:47:30
-@@ -26,9 +26,9 @@
- #ifndef TAGLIB_XMPROPERTIES_H
- #define TAGLIB_XMPROPERTIES_H
- 
--#include "tstring.h"
--#include "taglib.h"
--#include "audioproperties.h"
-+#include <taglib/tstring.h>
-+#include <taglib/taglib.h>
-+#include <taglib/audioproperties.h>
- 
- namespace TagLib {
-   namespace XM {
+Only in taglib-src: taglib_config.h

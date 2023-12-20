@@ -90,7 +90,7 @@ namespace TagLib {
       int mpcVersion() const;
 
       unsigned int totalFrames() const;
-      unsigned int sampleFrames() const;
+      unsigned long sampleFrames() const;
 
       /*!
       * Returns the track gain as an integer value,
@@ -123,6 +123,7 @@ namespace TagLib {
       void readSV8(File *file, offset_t streamLength);
 
       class PropertiesPrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<PropertiesPrivate> d;
     };
   }  // namespace MPC

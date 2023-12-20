@@ -116,7 +116,7 @@ namespace TagLib
       /*!
        * Exchanges the content of the Attribute by the content of \a other.
        */
-      void swap(Attribute &other);
+      void swap(Attribute &other) noexcept;
 
       /*!
        * Destroys the attribute.
@@ -197,6 +197,7 @@ namespace TagLib
       ByteVector render(const String &name, int kind = 0) const;
 
       class AttributePrivate;
+      TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::shared_ptr<AttributePrivate> d;
     };
   }  // namespace ASF
