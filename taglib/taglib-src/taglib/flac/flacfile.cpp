@@ -93,9 +93,12 @@ bool FLAC::File::isSupported(IOStream *stream)
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-FLAC::File::File(FileName file, bool readProperties, Properties::ReadStyle) :
+FLAC::File::File(FileName file, bool readProperties,
+                 Properties::ReadStyle,
+                 ID3v2::FrameFactory *frameFactory) :
   TagLib::File(file),
-  d(std::make_unique<FilePrivate>())
+  d(std::make_unique<FilePrivate>(
+    frameFactory ? frameFactory : ID3v2::FrameFactory::instance()))
 {
   if(isOpen())
     read(readProperties);
@@ -105,6 +108,17 @@ FLAC::File::File(FileName file, ID3v2::FrameFactory *frameFactory,
                  bool readProperties, Properties::ReadStyle) :
   TagLib::File(file),
   d(std::make_unique<FilePrivate>(frameFactory))
+{
+  if(isOpen())
+    read(readProperties);
+}
+
+FLAC::File::File(IOStream *stream, bool readProperties,
+                 Properties::ReadStyle,
+                 ID3v2::FrameFactory *frameFactory) :
+  TagLib::File(stream),
+  d(std::make_unique<FilePrivate>(
+    frameFactory ? frameFactory : ID3v2::FrameFactory::instance()))
 {
   if(isOpen())
     read(readProperties);
@@ -186,8 +200,8 @@ bool FLAC::File::setComplexProperties(const String &key, const List<VariantMap> 
   if(uppercaseKey == "PICTURE") {
     removePictures();
 
-    for(auto property : value) {
-      FLAC::Picture *picture = new FLAC::Picture;
+    for(const auto &property : value) {
+      auto picture = new FLAC::Picture;
       picture->setData(property.value("data").value<ByteVector>());
       picture->setMimeType(property.value("mimeType").value<String>());
       picture->setDescription(property.value("description").value<String>());
