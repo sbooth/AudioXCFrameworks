@@ -28,7 +28,6 @@
 
 #include <taglib/tbytevector.h>
 #include <taglib/taglib_export.h>
-#include <taglib/id3v2.h>
 
 namespace TagLib {
 
@@ -42,7 +41,8 @@ namespace TagLib {
      * the ID3v2 standard.  The API is based on the properties of ID3v2 headers
      * specified there.  If any of the terms used in this documentation are
      * unclear please check the specification in the linked section.
-     * (Structure, <a href="id3v2-structure.html#3.1">3.1</a>)
+     * (<a href="https://github.com/taglib/taglib/blob/master/taglib/mpeg/id3v2/id3v2.4.0-structure.txt">
+     * id3v2.4.0-structure.txt</a>, 3.1)
      */
 
     class TAGLIB_EXPORT Header
@@ -62,7 +62,7 @@ namespace TagLib {
       /*!
        * Destroys the header.
        */
-      virtual ~Header();
+      ~Header();
 
       Header(const Header &) = delete;
       Header &operator=(const Header &) = delete;
@@ -74,7 +74,7 @@ namespace TagLib {
       unsigned int majorVersion() const;
 
       /*!
-       * Set the the major version number to \a version.  (Note: This is
+       * Set the major version number to \a version.  (Note: This is
        * the 4, not the 2 in ID3v2.4.0.  The 2 is implied.)
        * \see majorVersion()
        *
@@ -91,22 +91,22 @@ namespace TagLib {
       unsigned int revisionNumber() const;
 
       /*!
-       * Returns true if unsynchronisation has been applied to all frames.
+       * Returns \c true if unsynchronisation has been applied to all frames.
        */
       bool unsynchronisation() const;
 
       /*!
-       * Returns true if an extended header is present in the tag.
+       * Returns \c true if an extended header is present in the tag.
        */
       bool extendedHeader() const;
 
       /*!
-       * Returns true if the experimental indicator flag is set.
+       * Returns \c true if the experimental indicator flag is set.
        */
       bool experimentalIndicator() const;
 
       /*!
-       * Returns true if a footer is present in the tag.
+       * Returns \c true if a footer is present in the tag.
        */
       bool footerPresent() const;
       /*!
@@ -142,7 +142,7 @@ namespace TagLib {
       static unsigned int size();
 
       /*!
-       * Returns the string used to identify and ID3v2 tag inside of a file.
+       * Returns the string used to identify an ID3v2 tag inside of a file.
        * Presently this is always "ID3".
        */
       static ByteVector fileIdentifier();

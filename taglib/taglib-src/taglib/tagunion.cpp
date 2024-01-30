@@ -106,7 +106,7 @@ void TagUnion::set(int index, Tag *tag)
 
 PropertyMap TagUnion::properties() const
 {
-  auto it = std::find_if(d->tags.cbegin(), d->tags.cend(), [](Tag *t) {
+  auto it = std::find_if(d->tags.cbegin(), d->tags.cend(), [](const Tag *t) {
     return t && !t->isEmpty();
   });
   return it != d->tags.cend() ? (*it)->properties() : PropertyMap();
@@ -125,8 +125,7 @@ StringList TagUnion::complexPropertyKeys() const
 {
   for(const auto &t : d->tags) {
     if(t) {
-      const StringList keys = t->complexPropertyKeys();
-      if(!keys.isEmpty()) {
+      if(const StringList keys = t->complexPropertyKeys(); !keys.isEmpty()) {
         return keys;
       }
     }
@@ -138,8 +137,8 @@ List<VariantMap> TagUnion::complexProperties(const String &key) const
 {
   for(const auto &t : d->tags) {
     if(t) {
-      const List<VariantMap> props = t->complexProperties(key);
-      if(!props.isEmpty()) {
+      if(const List<VariantMap> props = t->complexProperties(key);
+         !props.isEmpty()) {
         return props;
       }
     }

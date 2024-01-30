@@ -26,11 +26,11 @@
 #ifndef TAGLIB_MODPROPERTIES_H
 #define TAGLIB_MODPROPERTIES_H
 
-#include <taglib/taglib.h>
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
   namespace Mod {
+    //! An implementation of audio property reading for Mod
     class TAGLIB_EXPORT Properties : public AudioProperties
     {
     public:

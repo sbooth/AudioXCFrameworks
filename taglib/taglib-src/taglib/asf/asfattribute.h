@@ -38,6 +38,8 @@ namespace TagLib
     class File;
     class Picture;
 
+    //! Attribute of ASF (WMA) metadata
+
     class TAGLIB_EXPORT Attribute
     {
     public:
@@ -114,17 +116,17 @@ namespace TagLib
       Attribute &operator=(const Attribute &other);
 
       /*!
-       * Exchanges the content of the Attribute by the content of \a other.
+       * Exchanges the content of the Attribute with the content of \a other.
        */
       void swap(Attribute &other) noexcept;
 
       /*!
        * Destroys the attribute.
        */
-      virtual ~Attribute();
+      ~Attribute();
 
       /*!
-       * Returns type of the value.
+       * Returns the type of the value.
        */
       AttributeTypes type() const;
 

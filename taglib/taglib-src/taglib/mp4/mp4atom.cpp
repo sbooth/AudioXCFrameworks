@@ -25,6 +25,7 @@
 
 #include "mp4atom.h"
 
+#include <array>
 #include <climits>
 #include <utility>
 
@@ -73,8 +74,8 @@ MP4::Atom::Atom(File *file)
   }
   else if(d->length == 1) {
     // The atom has a 64-bit length.
-    const long long longLength = file->readBlock(8).toLongLong();
-    if(longLength <= LONG_MAX) {
+    if(const long long longLength = file->readBlock(8).toLongLong();
+       longLength <= LONG_MAX) {
       // The actual length fits in long. That's always the case if long is 64-bit.
       d->length = static_cast<long>(longLength);
     }
@@ -95,8 +96,7 @@ MP4::Atom::Atom(File *file)
 
   d->name = header.mid(4, 4);
   for(int i = 0; i < 4; ++i) {
-    const char ch = d->name.at(i);
-    if((ch < ' ' || ch > '~') && ch != '\251') {
+    if(const char ch = d->name.at(i); (ch < ' ' || ch > '~') && ch != '\251') {
       debug("MP4: Invalid atom type");
       d->length = 0;
       file->seek(0, File::End);
@@ -143,12 +143,12 @@ MP4::Atom::find(const char *name1, const char *name2, const char *name3, const c
     return this;
   }
   auto it = std::find_if(d->children.cbegin(), d->children.cend(),
-      [&name1](Atom *child) { return child->d->name == name1; });
+      [&name1](const Atom *child) { return child->d->name == name1; });
   return it != d->children.cend() ? (*it)->find(name2, name3, name4) : nullptr;
 }
 
 MP4::AtomList
-MP4::Atom::findall(const char *name, bool recursive)
+MP4::Atom::findall(const char *name, bool recursive) const
 {
   MP4::AtomList result;
   for(const auto &child : std::as_const(d->children)) {
@@ -170,7 +170,7 @@ MP4::Atom::path(MP4::AtomList &path, const char *name1, const char *name2, const
     return true;
   }
   auto it = std::find_if(d->children.cbegin(), d->children.cend(),
-      [&name1](Atom *child) { return child->d->name == name1; });
+      [&name1](const Atom *child) { return child->d->name == name1; });
   return it != d->children.cend() ? (*it)->path(path, name2, name3) : false;
 }
 
@@ -240,19 +240,19 @@ MP4::Atoms::Atoms(File *file) :
 MP4::Atoms::~Atoms() = default;
 
 MP4::Atom *
-MP4::Atoms::find(const char *name1, const char *name2, const char *name3, const char *name4)
+MP4::Atoms::find(const char *name1, const char *name2, const char *name3, const char *name4) const
 {
   auto it = std::find_if(d->atoms.cbegin(), d->atoms.cend(),
-      [&name1](Atom *atom) { return atom->name() == name1; });
+      [&name1](const Atom *atom) { return atom->name() == name1; });
   return it != d->atoms.cend() ? (*it)->find(name2, name3, name4) : nullptr;
 }
 
 MP4::AtomList
-MP4::Atoms::path(const char *name1, const char *name2, const char *name3, const char *name4)
+MP4::Atoms::path(const char *name1, const char *name2, const char *name3, const char *name4) const
 {
   MP4::AtomList path;
   auto it = std::find_if(d->atoms.cbegin(), d->atoms.cend(),
-      [&name1](Atom *atom) { return atom->name() == name1; });
+      [&name1](const Atom *atom) { return atom->name() == name1; });
   if(it != d->atoms.cend()) {
     if(!(*it)->path(path, name2, name3, name4)) {
       path.clear();
@@ -271,28 +271,25 @@ namespace
   }
 }  // namespace
 
-bool MP4::Atoms::checkRootLevelAtoms()
-{
+bool MP4::Atoms::checkRootLevelAtoms() {
   bool moovValid = false;
   for(auto it = d->atoms.begin(); it != d->atoms.end(); ++it) {
-      bool invalid = (*it)->length() == 0 || !checkValid((*it)->children());
-      if(!moovValid && !invalid && (*it)->name() == "moov") {
+    bool invalid = (*it)->length() == 0 || !checkValid((*it)->children());
+    if(!moovValid && !invalid && (*it)->name() == "moov") {
       moovValid = true;
+    }
+    if(invalid) {
+      if(!moovValid || (*it)->name() == "moof")
+        return false;
+
+      // Only the root level atoms "moov" and (if present) "moof" are
+      // modified.  If they are valid, ignore following invalid root level
+      // atoms as trailing garbage.
+      while(it != d->atoms.end()) {
+        delete *it;
+        it = d->atoms.erase(it);
       }
-      if(invalid) {
-      if(moovValid && (*it)->name() != "moof") {
-          // Only the root level atoms "moov" and (if present) "moof" are
-          // modified.  If they are valid, ignore following invalid root level
-          // atoms as trailing garbage.
-          while(it != d->atoms.end()) {
-          delete *it;
-          it = d->atoms.erase(it);
-          }
-          return true;
-      }
-      else {
-          return false;
-      }
+      return true;
     }
   }
 

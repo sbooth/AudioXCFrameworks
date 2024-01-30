@@ -30,7 +30,6 @@
 #ifndef TAGLIB_WVPROPERTIES_H
 #define TAGLIB_WVPROPERTIES_H
 
-#include <taglib/tbytevector.h>
 #include <taglib/taglib_export.h>
 #include <taglib/audioproperties.h>
 
@@ -40,12 +39,12 @@ namespace TagLib {
 
     class File;
 
-    static const unsigned int HeaderSize = 32;
+    static constexpr unsigned int HeaderSize = 32;
 
     //! An implementation of audio property reading for WavPack
 
     /*!
-     * This reads the data from an WavPack stream found in the AudioProperties
+     * This reads the data from a WavPack stream found in the AudioProperties
      * API.
      */
 
@@ -103,7 +102,7 @@ namespace TagLib {
       unsigned int sampleFrames() const;
 
       /*!
-       * Returns WavPack version.
+       * Returns the WavPack version.
        */
       int version() const;
 

@@ -158,7 +158,7 @@ namespace TagLib {
 
       /*!
        * Parses the UserUrlLinkFrame as PropertyMap. The description() is taken as key,
-       * and the URL as single value.
+       * and the URL as a single value.
        * - if description() is empty, the key will be "URL".
        * - otherwise, if description() is not a valid key (e.g. containing non-ASCII
        *   characters), the returned map will contain an entry "WXXX/<description>"
@@ -170,7 +170,7 @@ namespace TagLib {
        * Searches for the user defined url frame with the description \a description
        * in \a tag.  This returns null if no matching frames were found.
        */
-      static UserUrlLinkFrame *find(Tag *tag, const String &description);
+      static UserUrlLinkFrame *find(const Tag *tag, const String &description);
 
     protected:
       void parseFields(const ByteVector &data) override;

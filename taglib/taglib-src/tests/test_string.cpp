@@ -84,8 +84,7 @@ public:
     String latin = "Jos\xe9 Carlos";
     CPPUNIT_ASSERT(strcmp(latin.toCString(true), "José Carlos") == 0);
 
-    String c;
-    c = "1";
+    String c = "1";
     CPPUNIT_ASSERT(c == L"1");
 
     c = L'\u4E00';
@@ -97,8 +96,8 @@ public:
     String unicode3(L"\u65E5\u672C\u8A9E");
     CPPUNIT_ASSERT(*(unicode3.toCWString() + 1) == L'\u672C');
 
-    const wchar_t wcSystemOrder[] = {L'\u65E5', L'\u672C', L'\u8A9E', 0};
-    const wchar_t wcSwappedOrder[] = {L'\uE565', L'\u2C67', L'\u9E8A', 0};
+    constexpr wchar_t wcSystemOrder[] = {L'\u65E5', L'\u672C', L'\u8A9E', 0};
+    constexpr wchar_t wcSwappedOrder[] = {L'\uE565', L'\u2C67', L'\u9E8A', 0};
     const std::wstring wsSystemOrder = L"\u65e5\u672c\u8a9e";
     const std::wstring wsSwappedOrder = L"\ue565\u2c67\u9e8a";
     const bool isLe = Utils::systemByteOrder() == Utils::LittleEndian;

@@ -26,8 +26,6 @@
 #ifndef TAGLIB_H
 #define TAGLIB_H
 
-#include <taglib/taglib_config.h>
-
 #define TAGLIB_MAJOR_VERSION 2
 #define TAGLIB_MINOR_VERSION 0
 #define TAGLIB_PATCH_VERSION 0
@@ -44,8 +42,6 @@
 #include <sys/types.h>
 #endif
 
-#include <string>
-
 //! A namespace for all TagLib related classes and functions
 
 /*!
@@ -60,15 +56,6 @@ namespace TagLib {
 
   class String;
 
-  // These integer types are deprecated. Do not use them.
-
-  using wchar = wchar_t; // Assumed to be sufficient to store a UTF-16 char.
-  using uchar = unsigned char;
-  using ushort = unsigned short;
-  using uint = unsigned int;
-  using ulong = unsigned long;
-  using ulonglong = unsigned long long;
-
   // Offset or length type for I/O streams.
   // In Win32, always 64bit. Otherwise, equivalent to off_t.
 #ifdef _WIN32
@@ -77,11 +64,6 @@ namespace TagLib {
   using offset_t = off_t;
 #endif
 
-  /*!
-   * Unfortunately std::wstring isn't defined on some systems, (i.e. GCC < 3)
-   * so I'm providing something here that should be constant.
-   */
-  using wstring = std::basic_string<wchar_t>;
 }  // namespace TagLib
 
 /*!
@@ -89,10 +71,10 @@ namespace TagLib {
  *
  * \section intro Introduction
  *
- * TagLib is a library for reading and editing audio meta data, commonly know as \e tags.
+ * TagLib is a library for reading and editing audio metadata, commonly known as \e tags.
  *
  * Features:
- * - A clean, high level, C++ API to handling audio meta data.
+ * - A clean, high level, C++ API for handling audio metadata.
  * - Format specific APIs for advanced API users.
  * - ID3v1, ID3v2, APE, FLAC, Xiph, iTunes-style MP4 and WMA tag formats.
  * - MP3, MPC, FLAC, MP4, ASF, AIFF, WAV, DSF, DFF, TrueAudio, WavPack, Ogg FLAC, Ogg Vorbis, Speex and Opus file formats.
@@ -109,12 +91,12 @@ namespace TagLib {
  * TagLib originally was written to provide an updated and improved ID3v2 implementation in C++ for use
  * in a variety of Open Source projects.  Since development began in 2002 and the 1.0 release in 2004
  * it has expanded to cover a wide variety of tag and file formats and is used in a wide variety of
- * Open Source and proprietary applications.  It now supports a variety of UNIXes, including Apple's OS
- * X, as well as Microsoft Windows.
+ * Open Source and proprietary applications.  It now supports a variety of UNIXes, including Apple's
+ * macOS, as well as Microsoft Windows.
  *
  * \section commercial Usage in Commercial Applications
  *
- * TagLib's licenses \e do allow usage within propriety (\e closed) applications, however TagLib is \e not
+ * TagLib's licenses \e do allow usage within proprietary (\e closed) applications, however TagLib is \e not
  * public domain.  Please note the requirements of the LGPL or MPL, and adhere to at least one of them.
  * In simple terms, you must at a minimum note your usage of TagLib, note the licensing terms of TagLib and
  * if you make changes to TagLib publish them.  Please review the licenses above before using TagLib in your
@@ -138,15 +120,17 @@ namespace TagLib {
  *
  * TagLib provides both simple, abstract APIs which make it possible to ignore the differences between tagging
  * formats and format specific APIs which allow programmers to work with the features of specific tagging
- * schemes.  There is a similar abstraction mechanism for AudioProperties.
+ * schemes.  There is a similar abstraction mechanism for \link TagLib::AudioProperties AudioProperties \endlink.
  *
- * The best place to start is with the <b>Class Hierarchy</b> linked at the top of the page.  The File and
- * AudioProperties classes and their subclasses are the core of TagLib.  The FileRef class is also a convenient
- * way for using a value-based handle.
+ * The best place to start is with the <b>Class Hierarchy</b> linked at the top of the page.
+ * The \link TagLib::File File \endlink and \link TagLib::AudioProperties AudioProperties \endlink
+ * classes and their subclasses are the core of TagLib.  The \link TagLib::FileRef FileRef \endlink
+ * class is also a convenient way for using a value-based handle.
  *
- * \note When working with FileRef please consider that it has only the most basic (extension-based) file
- * type resolution.  Please see its documentation on how to plug in more advanced file type resolution.  (Such
- * resolution may be part of later TagLib releases by default.)
+ * \note When working with \link TagLib::FileRef FileRef \endlink please consider that it has only
+ * the most basic (extension-based) file type resolution.  Please see its documentation on how to
+ * plug in more advanced file type resolution.
+ * (Such resolution may be part of later TagLib releases by default.)
  *
  * Here's a very simple example with TagLib:
  *
@@ -186,7 +170,7 @@ namespace TagLib {
  * f.save();
  * \endcode
  *
- * An additional \link FileRef::complexProperties() abstraction \endlink is
+ * An additional \link TagLib::FileRef::complexProperties() abstraction \endlink is
  * provided to handle complex (i.e. non textual) properties.
  *
  * \code {.cpp}

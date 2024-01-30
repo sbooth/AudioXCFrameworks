@@ -30,7 +30,6 @@
 #include "tbytevectorlist.h"
 #include "tag.h"
 #include "flacfile.h"
-#include "flacmetadatablock.h"
 #include <cppunit/extensions/HelperMacros.h>
 #include "utils.h"
 
@@ -53,7 +52,7 @@ public:
 
     FLAC::Picture pic(ByteVector(pdata, 199));
 
-    CPPUNIT_ASSERT_EQUAL(3, int(pic.type()));
+    CPPUNIT_ASSERT_EQUAL(3, static_cast<int>(pic.type()));
     CPPUNIT_ASSERT_EQUAL(1, pic.width());
     CPPUNIT_ASSERT_EQUAL(1, pic.height());
     CPPUNIT_ASSERT_EQUAL(24, pic.colorDepth());

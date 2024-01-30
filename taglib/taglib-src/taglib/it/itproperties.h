@@ -26,11 +26,11 @@
 #ifndef TAGLIB_ITPROPERTIES_H
 #define TAGLIB_ITPROPERTIES_H
 
-#include <taglib/taglib.h>
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
   namespace IT {
+    //! An implementation of audio property reading for IT
     class TAGLIB_EXPORT Properties : public AudioProperties {
     public:
       /*! Flag bits. */

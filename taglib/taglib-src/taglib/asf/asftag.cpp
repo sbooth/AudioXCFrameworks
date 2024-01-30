@@ -259,6 +259,8 @@ namespace
     std::pair("WM/Barcode", "BARCODE"),
     std::pair("WM/EncodedBy", "ENCODEDBY"),
     std::pair("WM/EncodingSettings", "ENCODING"),
+    std::pair("WM/EncodingTime", "ENCODINGTIME"),
+    std::pair("WM/AudioFileURL", "FILEWEBPAGE"),
     std::pair("WM/AlbumSortOrder", "ALBUMSORT"),
     std::pair("WM/AlbumArtistSortOrder", "ALBUMARTISTSORT"),
     std::pair("WM/ArtistSortOrder", "ARTISTSORT"),
@@ -311,8 +313,7 @@ PropertyMap ASF::Tag::properties() const
   }
 
   for(const auto &[k, attributes] : std::as_const(d->attributeListMap)) {
-    const String key = translateKey(k);
-    if(!key.isEmpty()) {
+    if(const String key = translateKey(k); !key.isEmpty()) {
       for(const auto &attr : attributes) {
         if(key == "TRACKNUMBER") {
           if(attr.type() == ASF::Attribute::DWordType)
@@ -409,8 +410,7 @@ StringList ASF::Tag::complexPropertyKeys() const
 List<VariantMap> ASF::Tag::complexProperties(const String &key) const
 {
   List<VariantMap> props;
-  const String uppercaseKey = key.upper();
-  if(uppercaseKey == "PICTURE") {
+  if(const String uppercaseKey = key.upper(); uppercaseKey == "PICTURE") {
     const AttributeList pictures = d->attributeListMap.value("WM/Picture");
     for(const Attribute &attr : pictures) {
       ASF::Picture picture = attr.toPicture();
@@ -428,8 +428,7 @@ List<VariantMap> ASF::Tag::complexProperties(const String &key) const
 
 bool ASF::Tag::setComplexProperties(const String &key, const List<VariantMap> &value)
 {
-  const String uppercaseKey = key.upper();
-  if(uppercaseKey == "PICTURE") {
+  if(const String uppercaseKey = key.upper(); uppercaseKey == "PICTURE") {
     removeItem("WM/Picture");
 
     for(const auto &property : value) {

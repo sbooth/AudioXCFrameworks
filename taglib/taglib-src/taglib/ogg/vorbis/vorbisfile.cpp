@@ -43,7 +43,7 @@ namespace TagLib {
    * Vorbis headers can be found with one type ID byte and the string "vorbis" in
    * an Ogg stream.  0x03 indicates the comment header.
    */
-  static const char vorbisCommentHeaderID[] = { 0x03, 'v', 'o', 'r', 'b', 'i', 's', 0 };
+  static constexpr char vorbisCommentHeaderID[] = { 0x03, 'v', 'o', 'r', 'b', 'i', 's', 0 };
 } // namespace TagLib
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ bool Vorbis::File::isSupported(IOStream *stream)
   // An Ogg Vorbis file has IDs "OggS" and "\x01vorbis" somewhere.
 
   const ByteVector buffer = Utils::readHeader(stream, bufferSize(), false);
-  return (buffer.find("OggS") >= 0 && buffer.find("\x01vorbis") >= 0);
+  return buffer.find("OggS") >= 0 && buffer.find("\x01vorbis") >= 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

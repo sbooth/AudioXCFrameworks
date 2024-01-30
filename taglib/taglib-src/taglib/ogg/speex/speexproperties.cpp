@@ -154,10 +154,8 @@ void Speex::Properties::read(File *file)
     const long long end   = last->absoluteGranularPosition();
 
     if(start >= 0 && end >= 0 && d->sampleRate > 0) {
-      const long long frameCount = end - start;
-
-      if(frameCount > 0) {
-        const double length = frameCount * 1000.0 / d->sampleRate;
+      if(const long long frameCount = end - start; frameCount > 0) {
+        const auto length = static_cast<double>(frameCount) * 1000.0 / d->sampleRate;
         offset_t fileLengthWithoutOverhead = file->length();
         // Ignore the two header packets, see "Ogg file format" in
         // https://www.speex.org/docs/manual/speex-manual/node8.html

@@ -26,7 +26,6 @@
 #ifndef TAGLIB_MP4TAG_H
 #define TAGLIB_MP4TAG_H
 
-#include <taglib/tbytevectorlist.h>
 #include <taglib/tfile.h>
 #include <taglib/tmap.h>
 #include <taglib/tstringlist.h>
@@ -40,6 +39,7 @@ namespace TagLib {
 
     class ItemFactory;
 
+    //! An MP4 tag implementation
     class TAGLIB_EXPORT Tag: public TagLib::Tag
     {
     public:
@@ -91,7 +91,7 @@ namespace TagLib {
         void removeItem(const String &key);
 
         /*!
-         * \return True if the tag contains an entry for \a key.
+         * \return \c true if the tag contains an entry for \a key.
          */
         bool contains(const String &key) const;
 

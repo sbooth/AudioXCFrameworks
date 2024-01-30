@@ -49,7 +49,7 @@ public:
   {
   }
 
-  const Endianness endianness;
+  Endianness endianness;
 
   unsigned int size { 0 };
   offset_t sizeOffset { 0 };
@@ -281,7 +281,7 @@ void RIFF::File::removeChunk(const ByteVector &name)
 
 void RIFF::File::read()
 {
-  const bool bigEndian = (d->endianness == BigEndian);
+  const bool bigEndian = d->endianness == BigEndian;
 
   offset_t offset = tell();
 
@@ -322,13 +322,12 @@ void RIFF::File::read()
 
     if(offset & 1) {
       seek(offset);
-      const ByteVector iByte = readBlock(1);
-      if(iByte.size() == 1) {
+      if(const ByteVector iByte = readBlock(1); iByte.size() == 1) {
         bool skipPadding = iByte[0] == '\0';
         if(!skipPadding) {
           // Padding byte is not zero, check if it is good to ignore it
-          const ByteVector fourCcAfterPadding = readBlock(4);
-          if(isValidChunkName(fourCcAfterPadding)) {
+          if(const ByteVector fourCcAfterPadding = readBlock(4);
+             isValidChunkName(fourCcAfterPadding)) {
             // Use the padding, it is followed by a valid chunk name.
             skipPadding = true;
           }

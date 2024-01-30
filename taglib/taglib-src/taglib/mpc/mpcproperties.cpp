@@ -162,7 +162,7 @@ namespace
     do {
       tmp = data[pos++];
       size = (size << 7) | (tmp & 0x7F);
-    } while((tmp & 0x80) && (pos < data.size()));
+    } while((tmp & 0x80) && pos < data.size());
     return size;
   }
 
@@ -225,9 +225,9 @@ void MPC::Properties::readSV8(File *file, offset_t streamLength)
       d->sampleRate = sftable[(flags >> 13) & 0x07];
       d->channels   = ((flags >> 4) & 0x0F) + 1;
 
-      const auto frameCount = d->sampleFrames - begSilence;
-      if(frameCount > 0 && d->sampleRate > 0) {
-        const double length = frameCount * 1000.0 / d->sampleRate;
+      if(const auto frameCount = d->sampleFrames - begSilence;
+         frameCount > 0 && d->sampleRate > 0) {
+        const auto length = static_cast<double>(frameCount) * 1000.0 / d->sampleRate;
         d->length  = static_cast<int>(length + 0.5);
         d->bitrate = static_cast<int>(streamLength * 8.0 / length + 0.5);
       }
@@ -243,8 +243,7 @@ void MPC::Properties::readSV8(File *file, offset_t streamLength)
 
       readRG = true;
 
-      const int replayGainVersion = data[0];
-      if(replayGainVersion == 1) {
+      if(const int replayGainVersion = data[0]; replayGainVersion == 1) {
         d->trackGain = data.toShort(1, true);
         d->trackPeak = data.toShort(3, true);
         d->albumGain = data.toShort(5, true);
@@ -304,8 +303,7 @@ void MPC::Properties::readSV7(const ByteVector &data, offset_t streamLength)
     if (d->albumPeak != 0)
       d->albumPeak = static_cast<int>(log10(static_cast<double>(d->albumPeak)) * 20 * 256 + .5);
 
-    bool trueGapless = (gapless >> 31) & 0x0001;
-    if(trueGapless) {
+    if((gapless >> 31) & 0x0001) {
       unsigned int lastFrameSamples = (gapless >> 20) & 0x07FF;
       d->sampleFrames = d->totalFrames * 1152 - lastFrameSamples;
     }
@@ -329,7 +327,7 @@ void MPC::Properties::readSV7(const ByteVector &data, offset_t streamLength)
   }
 
   if(d->sampleFrames > 0 && d->sampleRate > 0) {
-    const double length = d->sampleFrames * 1000.0 / d->sampleRate;
+    const auto length = static_cast<double>(d->sampleFrames) * 1000.0 / d->sampleRate;
     d->length = static_cast<int>(length + 0.5);
 
     if(d->bitrate == 0)

@@ -26,7 +26,6 @@
 #ifndef TAGLIB_WAVPROPERTIES_H
 #define TAGLIB_WAVPROPERTIES_H
 
-#include <taglib/taglib.h>
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
@@ -42,7 +41,7 @@ namespace TagLib {
       //! An implementation of audio property reading for WAV
 
       /*!
-       * This reads the data from an WAV stream found in the AudioProperties
+       * This reads the data from a WAV stream found in the AudioProperties
        * API.
        */
 

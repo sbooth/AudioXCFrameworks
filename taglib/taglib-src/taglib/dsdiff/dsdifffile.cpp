@@ -48,7 +48,7 @@ namespace
     char padding;
   };
 
-  typedef std::vector<Chunk64> ChunkList;
+  using ChunkList = std::vector<Chunk64>;
 
   int chunkIndex(const ChunkList &chunks, const ByteVector &id)
   {
@@ -86,7 +86,7 @@ namespace
 class DSDIFF::File::FilePrivate
 {
 public:
-  FilePrivate(ID3v2::FrameFactory *frameFactory)
+  FilePrivate(const ID3v2::FrameFactory *frameFactory)
         : ID3v2FrameFactory(frameFactory ? frameFactory
                                          : ID3v2::FrameFactory::instance())
   {
@@ -130,7 +130,7 @@ bool DSDIFF::File::isSupported(IOStream *stream)
 {
   // A DSDIFF file has to start with "FRM8????????DSD ".
   const ByteVector id = Utils::readHeader(stream, 16, false);
-  return (id.startsWith("FRM8") && id.containsAt("DSD ", 12));
+  return id.startsWith("FRM8") && id.containsAt("DSD ", 12);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -189,9 +189,9 @@ PropertyMap DSDIFF::File::properties() const
   return d->tag.properties();
 }
 
-void DSDIFF::File::removeUnsupportedProperties(const StringList &unsupported)
+void DSDIFF::File::removeUnsupportedProperties(const StringList &properties)
 {
-  d->tag.removeUnsupportedProperties(unsupported);
+  d->tag.removeUnsupportedProperties(properties);
 }
 
 PropertyMap DSDIFF::File::setProperties(const PropertyMap &properties)
@@ -226,9 +226,7 @@ bool DSDIFF::File::save(int tags, StripTags strip, ID3v2::Version version)
 
   // First: save ID3V2 chunk
 
-  ID3v2::Tag *id3v2Tag = ID3v2Tag();
-
-  if((tags & ID3v2) && id3v2Tag) {
+  if(const ID3v2::Tag *id3v2Tag = ID3v2Tag(); (tags & ID3v2) && id3v2Tag) {
     if(d->isID3InPropChunk) {
       if(!id3v2Tag->isEmpty()) {
         setChildChunkData(d->id3v2TagChunkID, id3v2Tag->render(version), PROPChunk);
@@ -255,9 +253,7 @@ bool DSDIFF::File::save(int tags, StripTags strip, ID3v2::Version version)
 
   // Second: save the DIIN chunk
 
-  DSDIFF::DIIN::Tag *diinTag = DIINTag();
-
-  if((tags & DIIN) && diinTag) {
+  if(const DSDIFF::DIIN::Tag *diinTag = DIINTag(); (tags & DIIN) && diinTag) {
     if(!diinTag->title().isEmpty()) {
       ByteVector diinTitle;
       diinTitle.append(ByteVector::fromUInt(diinTag->title().size(), d->endianness == BigEndian));
@@ -433,7 +429,7 @@ void DSDIFF::File::removeChildChunk(unsigned int i, unsigned int childChunkNum)
     // Update the internal offsets
     // For child chunks
 
-    if((i + 1) < childChunks.size()) {
+    if(i + 1 < childChunks.size()) {
       childChunks[i + 1].offset = childChunks[i].offset;
       for(unsigned int c = i + 2; c < childChunks.size(); ++c)
         childChunks[c].offset = childChunks[c - 1].offset + 12
@@ -527,8 +523,8 @@ void DSDIFF::File::setChildChunkData(const ByteVector &name,
     int i = d->childChunkIndex[DIINChunk];
     if(i < 0) {
       setRootChunkData("DIIN", ByteVector());
-      const int lastChunkIndex = static_cast<int>(d->chunks.size()) - 1;
-      if(lastChunkIndex >= 0 && d->chunks[lastChunkIndex].name == "DIIN") {
+      if(const int lastChunkIndex = static_cast<int>(d->chunks.size()) - 1;
+         lastChunkIndex >= 0 && d->chunks[lastChunkIndex].name == "DIIN") {
         i = lastChunkIndex;
         d->childChunkIndex[DIINChunk] = lastChunkIndex;
         d->hasDiin = true;
@@ -559,13 +555,13 @@ void DSDIFF::File::setChildChunkData(const ByteVector &name,
   // Now add the chunk to the file
 
   unsigned long long nextRootChunkIdx = length();
-  if((d->childChunkIndex[childChunkNum] + 1) < static_cast<int>(d->chunks.size()))
+  if(d->childChunkIndex[childChunkNum] + 1 < static_cast<int>(d->chunks.size()))
     nextRootChunkIdx = d->chunks[d->childChunkIndex[childChunkNum] + 1].offset - 12;
 
   writeChunk(name, data, offset,
              static_cast<unsigned long>(
                 nextRootChunkIdx > offset ? nextRootChunkIdx - offset : 0),
-             (offset & 1) ? 1 : 0);
+             offset & 1 ? 1 : 0);
 
   // For root chunks
 
@@ -575,7 +571,7 @@ void DSDIFF::File::setChildChunkData(const ByteVector &name,
   chunk.name = name;
   chunk.size = data.size();
   chunk.offset = offset + 12;
-  chunk.padding = (data.size() & 0x01) ? 1 : 0;
+  chunk.padding = data.size() & 0x01 ? 1 : 0;
 
   childChunks.push_back(chunk);
 }
@@ -589,8 +585,8 @@ void DSDIFF::File::updateRootChunksStructure(unsigned int startingChunk)
   // Update child chunks structure as well
 
   if(d->childChunkIndex[PROPChunk] >= static_cast<int>(startingChunk)) {
-    ChunkList &childChunksToUpdate = d->childChunks[PROPChunk];
-    if(!childChunksToUpdate.empty()) {
+    if(ChunkList &childChunksToUpdate = d->childChunks[PROPChunk];
+       !childChunksToUpdate.empty()) {
       childChunksToUpdate[0].offset = d->chunks[d->childChunkIndex[PROPChunk]].offset + 12;
       for(unsigned int i = 1; i < childChunksToUpdate.size(); i++)
         childChunksToUpdate[i].offset = childChunksToUpdate[i - 1].offset + 12
@@ -599,8 +595,8 @@ void DSDIFF::File::updateRootChunksStructure(unsigned int startingChunk)
 
   }
   if(d->childChunkIndex[DIINChunk] >= static_cast<int>(startingChunk)) {
-    ChunkList &childChunksToUpdate = d->childChunks[DIINChunk];
-    if(!childChunksToUpdate.empty()) {
+    if(ChunkList &childChunksToUpdate = d->childChunks[DIINChunk];
+       !childChunksToUpdate.empty()) {
       childChunksToUpdate[0].offset = d->chunks[d->childChunkIndex[DIINChunk]].offset + 12;
       for(unsigned int i = 1; i < childChunksToUpdate.size(); i++)
         childChunksToUpdate[i].offset = childChunksToUpdate[i - 1].offset + 12
@@ -647,10 +643,9 @@ void DSDIFF::File::read(bool readProperties, Properties::ReadStyle propertiesSty
     // Check padding
 
     chunk.padding = 0;
-    offset_t uPosNotPadded = tell();
-    if((uPosNotPadded & 0x01) != 0) {
-      ByteVector iByte = readBlock(1);
-      if((iByte.size() != 1) || (iByte[0] != 0))
+    if(offset_t uPosNotPadded = tell(); (uPosNotPadded & 0x01) != 0) {
+      if(ByteVector iByte = readBlock(1);
+         iByte.size() != 1 || iByte[0] != 0)
         // Not well formed, re-seek
         seek(uPosNotPadded, Beginning);
       else
@@ -708,10 +703,9 @@ void DSDIFF::File::read(bool readProperties, Properties::ReadStyle propertiesSty
         seek(dstChunkSize, Current);
 
         // Check padding
-        offset_t uPosNotPadded = tell();
-        if((uPosNotPadded & 0x01) != 0) {
-          ByteVector iByte = readBlock(1);
-          if((iByte.size() != 1) || (iByte[0] != 0))
+        if(offset_t uPosNotPadded = tell(); (uPosNotPadded & 0x01) != 0) {
+          if(ByteVector iByte = readBlock(1);
+             iByte.size() != 1 || iByte[0] != 0)
             // Not well formed, re-seek
             seek(uPosNotPadded, Beginning);
         }
@@ -749,10 +743,9 @@ void DSDIFF::File::read(bool readProperties, Properties::ReadStyle propertiesSty
 
         // Check padding
         chunk.padding = 0;
-        offset_t uPosNotPadded = tell();
-        if((uPosNotPadded & 0x01) != 0) {
-          ByteVector iByte = readBlock(1);
-          if((iByte.size() != 1) || (iByte[0] != 0))
+        if(offset_t uPosNotPadded = tell(); (uPosNotPadded & 0x01) != 0) {
+          if(ByteVector iByte = readBlock(1);
+             iByte.size() != 1 || iByte[0] != 0)
             // Not well formed, re-seek
             seek(uPosNotPadded, Beginning);
           else
@@ -797,11 +790,10 @@ void DSDIFF::File::read(bool readProperties, Properties::ReadStyle propertiesSty
         // Check padding
 
         chunk.padding = 0;
-        offset_t uPosNotPadded = tell();
 
-        if((uPosNotPadded & 0x01) != 0) {
-          ByteVector iByte = readBlock(1);
-          if((iByte.size() != 1) || (iByte[0] != 0))
+        if(offset_t uPosNotPadded = tell(); (uPosNotPadded & 0x01) != 0) {
+          if(ByteVector iByte = readBlock(1);
+             iByte.size() != 1 || iByte[0] != 0)
             // Not well formed, re-seek
             seek(uPosNotPadded, Beginning);
           else
@@ -867,16 +859,16 @@ void DSDIFF::File::read(bool readProperties, Properties::ReadStyle propertiesSty
     for(unsigned int i = 0; i < d->childChunks[DIINChunk].size(); i++) {
       if(d->childChunks[DIINChunk][i].name == "DITI") {
         seek(d->childChunks[DIINChunk][i].offset);
-        unsigned int titleStrLength = readBlock(4).toUInt(0, 4, bigEndian);
-        if(titleStrLength <= d->childChunks[DIINChunk][i].size) {
+        if(unsigned int titleStrLength = readBlock(4).toUInt(0, 4, bigEndian);
+           titleStrLength <= d->childChunks[DIINChunk][i].size) {
           ByteVector titleStr = readBlock(titleStrLength);
           d->tag.access<DSDIFF::DIIN::Tag>(DIINIndex, false)->setTitle(titleStr);
         }
       }
       else if(d->childChunks[DIINChunk][i].name == "DIAR") {
         seek(d->childChunks[DIINChunk][i].offset);
-        unsigned int artistStrLength = readBlock(4).toUInt(0, 4, bigEndian);
-        if(artistStrLength <= d->childChunks[DIINChunk][i].size) {
+        if(unsigned int artistStrLength = readBlock(4).toUInt(0, 4, bigEndian);
+           artistStrLength <= d->childChunks[DIINChunk][i].size) {
           ByteVector artistStr = readBlock(artistStrLength);
           d->tag.access<DSDIFF::DIIN::Tag>(DIINIndex, false)->setArtist(artistStr);
         }
@@ -902,7 +894,7 @@ void DSDIFF::File::read(bool readProperties, Properties::ReadStyle propertiesSty
     int bitrate = 0;
     if(lengthDSDSamplesTimeChannels > 0)
       bitrate = static_cast<int>(
-        (audioDataSizeinBytes * 8 * sampleRate) / lengthDSDSamplesTimeChannels / 1000);
+        audioDataSizeinBytes * 8 * sampleRate / lengthDSDSamplesTimeChannels / 1000);
 
     d->properties = std::make_unique<Properties>(sampleRate, channels,
       lengthDSDSamplesTimeChannels, bitrate, propertiesStyle);

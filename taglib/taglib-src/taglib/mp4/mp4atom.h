@@ -28,17 +28,11 @@
 #ifndef TAGLIB_MP4ATOM_H
 #define TAGLIB_MP4ATOM_H
 
-#include <array>
-
 #include <taglib/tfile.h>
 #include <taglib/tlist.h>
 
-#ifndef DO_NOT_DOCUMENT
-
 namespace TagLib {
   namespace MP4 {
-    class Atom;
-    using AtomList = TagLib::List<Atom *>;
 
     enum AtomDataType {
       TypeImplicit  = 0,  // for use with tags for which no type needs to be indicated because only one type is allowed
@@ -64,6 +58,7 @@ namespace TagLib {
       TypeUndefined = 255 // undefined
     };
 
+#ifndef DO_NOT_DOCUMENT
     struct AtomData {
       AtomData(AtomDataType type, const ByteVector &data) :
         type(type), data(data) { }
@@ -72,6 +67,8 @@ namespace TagLib {
       ByteVector data;
     };
 
+    class Atom;
+    using AtomList = TagLib::List<Atom *>;
     using AtomDataList = TagLib::List<AtomData>;
 
     class TAGLIB_EXPORT Atom
@@ -83,7 +80,7 @@ namespace TagLib {
       Atom &operator=(const Atom &) = delete;
       Atom *find(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr);
       bool path(AtomList &path, const char *name1, const char *name2 = nullptr, const char *name3 = nullptr);
-      AtomList findall(const char *name, bool recursive = false);
+      AtomList findall(const char *name, bool recursive = false) const;
       void addToOffset(offset_t delta);
       void prependChild(Atom *atom);
       bool removeChild(Atom *meta);
@@ -106,8 +103,8 @@ namespace TagLib {
       ~Atoms();
       Atoms(const Atoms &) = delete;
       Atoms &operator=(const Atoms &) = delete;
-      Atom *find(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr);
-      AtomList path(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr);
+      Atom *find(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr) const;
+      AtomList path(const char *name1, const char *name2 = nullptr, const char *name3 = nullptr, const char *name4 = nullptr) const;
       bool checkRootLevelAtoms();
       const AtomList &atoms() const;
 
@@ -116,9 +113,8 @@ namespace TagLib {
       TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
       std::unique_ptr<AtomsPrivate> d;
     };
+#endif  // DO_NOT_DOCUMENT
   } // namespace MP4
 } // namespace TagLib
-
-#endif
 
 #endif

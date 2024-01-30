@@ -30,7 +30,6 @@
 #include <taglib/tbytevector.h>
 #include <taglib/tpicturetype.h>
 #include <taglib/taglib_export.h>
-#include <taglib/attachedpictureframe.h>
 
 namespace TagLib
 {
@@ -40,9 +39,9 @@ namespace TagLib
     //! An ASF attached picture interface implementation
 
     /*!
-     * This is an implementation of ASF attached pictures interface.  Pictures may be
+     * This is an implementation of ASF attached pictures.  Pictures may be
      * included in attributes, one per WM/Picture attribute (but there may be multiple WM/Picture
-     * attribute in a single tag).  These pictures are usually in either JPEG or
+     * attributes in a single tag).  These pictures are usually in either JPEG or
      * PNG format.
      * \see Attribute::toPicture()
      * \see Attribute::Attribute(const Picture& picture)
@@ -50,7 +49,7 @@ namespace TagLib
     class TAGLIB_EXPORT Picture {
     public:
 
-      /*!
+      /*
        * This describes the function or content of the picture.
        */
       DECLARE_PICTURE_TYPE_ENUM(Type)
@@ -61,14 +60,14 @@ namespace TagLib
       Picture();
 
       /*!
-       * Construct an picture as a copy of \a other.
+       * Construct a picture as a copy of \a other.
        */
       Picture(const Picture& other);
 
       /*!
        * Destroys the picture.
        */
-      virtual ~Picture();
+      ~Picture();
 
       /*!
        * Copies the contents of \a other into this picture.
@@ -76,12 +75,12 @@ namespace TagLib
       Picture& operator=(const Picture& other);
 
       /*!
-       * Exchanges the content of the Picture by the content of \a other.
+       * Exchanges the content of the Picture with the content of \a other.
        */
       void swap(Picture &other) noexcept;
 
       /*!
-       * Returns true if Picture stores valid picture
+       * Returns \c true if Picture stores valid picture
        */
       bool isValid() const;
 
@@ -136,7 +135,7 @@ namespace TagLib
       /*!
        * Returns the image data as a ByteVector.
        *
-       * \note ByteVector has a data() method that returns a const char * which
+       * \note ByteVector has a data() method that returns a <tt>const char *</tt> which
        * should make it easy to export this data to external programs.
        *
        * \see setPicture()

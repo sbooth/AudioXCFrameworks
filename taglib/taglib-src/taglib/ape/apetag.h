@@ -29,6 +29,7 @@
 #include <taglib/tbytevector.h>
 #include <taglib/tmap.h>
 #include <taglib/tstring.h>
+#include <taglib/taglib.h>
 #include <taglib/taglib_export.h>
 #include <taglib/tag.h>
 #include <taglib/apeitem.h>
@@ -116,6 +117,7 @@ namespace TagLib {
        *
        * The only conversion done by this export function is to rename the APE tags
        * TRACK to TRACKNUMBER, YEAR to DATE, and ALBUM ARTIST to ALBUMARTIST, respectively,
+       * (and a few other keys, see \ref p_propertymapping)
        * in order to be compliant with the names used in other formats.
        */
       PropertyMap properties() const override;
@@ -165,7 +167,7 @@ namespace TagLib {
 
       /*!
        * Adds to the text item specified by \a key the data \a value.  If \a replace
-       * is true, then all of the other values on the same key will be removed
+       * is \c true, then all of the other values on the same key will be removed
        * first.  If a binary item exists for \a key it will be removed first.
        */
       void addValue(const String &key, const String &value, bool replace = true);
@@ -184,7 +186,7 @@ namespace TagLib {
       void setItem(const String &key, const Item &item);
 
       /*!
-       * Returns true if the tag does not contain any data.
+       * Returns \c true if the tag does not contain any data.
        */
       bool isEmpty() const override;
 

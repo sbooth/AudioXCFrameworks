@@ -28,7 +28,6 @@
 
 #include <taglib/tbytevector.h>
 #include <taglib/taglib_export.h>
-#include <taglib/taglib.h>
 
 namespace TagLib {
 
@@ -42,7 +41,8 @@ namespace TagLib {
      * the ID3v2 standard.  The API is based on the properties of ID3v2 extended
      * headers specified there.  If any of the terms used in this documentation
      * are unclear please check the specification in the linked section.
-     * (Structure, <a href="id3v2-structure.html#3.2">3.2</a>)
+     * (<a href="https://github.com/taglib/taglib/blob/master/taglib/mpeg/id3v2/id3v2.4.0-structure.txt">
+     * id3v2.4.0-structure.txt</a>, 3.2)
      */
 
     class TAGLIB_EXPORT ExtendedHeader
@@ -56,7 +56,7 @@ namespace TagLib {
       /*!
        * Destroys the extended header.
        */
-      virtual ~ExtendedHeader();
+      ~ExtendedHeader();
 
       ExtendedHeader(const ExtendedHeader &) = delete;
       ExtendedHeader &operator=(const ExtendedHeader &) = delete;

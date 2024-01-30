@@ -26,11 +26,11 @@
 #ifndef TAGLIB_S3MPROPERTIES_H
 #define TAGLIB_S3MPROPERTIES_H
 
-#include <taglib/taglib.h>
 #include <taglib/audioproperties.h>
 
 namespace TagLib {
   namespace S3M {
+    //! An implementation of audio property reading for S3M
     class TAGLIB_EXPORT Properties : public AudioProperties {
     public:
       /*! Flag bits. */

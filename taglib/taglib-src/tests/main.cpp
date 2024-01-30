@@ -37,7 +37,7 @@
 
 int main(int argc, char* argv[])
 {
-  std::string testPath = (argc > 1) ? std::string(argv[1]) : "";
+  std::string testPath = argc > 1 ? std::string(argv[1]) : "";
 
   // Create the event manager and test controller
   CppUnit::TestResult controller;
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
     std::cout << "Running "  << testPath;
     runner.run(controller, testPath);
 
-    std::cerr << std::endl;
+    std::cerr << '\n';
 
     // Print test in a compiler compatible format.
     CppUnit::CompilerOutputter outputter(&result, std::cerr);
@@ -80,9 +80,9 @@ int main(int argc, char* argv[])
 #endif
   }
   catch(std::invalid_argument &e){
-    std::cerr << std::endl
+    std::cerr << '\n'
               << "ERROR: " << e.what()
-              << std::endl;
+              << '\n';
     return 0;
   }
 

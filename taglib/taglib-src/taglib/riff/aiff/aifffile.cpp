@@ -34,7 +34,7 @@ using namespace TagLib;
 class RIFF::AIFF::File::FilePrivate
 {
 public:
-  FilePrivate(ID3v2::FrameFactory *frameFactory)
+  FilePrivate(const ID3v2::FrameFactory *frameFactory)
         : ID3v2FrameFactory(frameFactory ? frameFactory
                                          : ID3v2::FrameFactory::instance())
   {
@@ -58,7 +58,7 @@ bool RIFF::AIFF::File::isSupported(IOStream *stream)
   // An AIFF file has to start with "FORM????AIFF" or "FORM????AIFC".
 
   const ByteVector id = Utils::readHeader(stream, 12, false);
-  return (id.startsWith("FORM") && (id.containsAt("AIFF", 8) || id.containsAt("AIFC", 8)));
+  return id.startsWith("FORM") && (id.containsAt("AIFF", 8) || id.containsAt("AIFC", 8));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -153,8 +153,7 @@ bool RIFF::AIFF::File::hasID3v2Tag() const
 void RIFF::AIFF::File::read(bool readProperties)
 {
   for(unsigned int i = 0; i < chunkCount(); ++i) {
-    const ByteVector name = chunkName(i);
-    if(name == "ID3 " || name == "id3 ") {
+    if(const ByteVector name = chunkName(i); name == "ID3 " || name == "id3 ") {
       if(!d->tag) {
         d->tag = std::make_unique<ID3v2::Tag>(this, chunkOffset(i),
                                               d->ID3v2FrameFactory);
