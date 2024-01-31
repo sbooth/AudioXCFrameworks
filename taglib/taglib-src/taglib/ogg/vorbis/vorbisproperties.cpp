@@ -50,7 +50,7 @@ namespace TagLib {
    * Vorbis headers can be found with one type ID byte and the string "vorbis" in
    * an Ogg stream.  0x01 indicates the setup header.
    */
-  static const char vorbisSetupHeaderID[] = { 0x01, 'v', 'o', 'r', 'b', 'i', 's', 0 };
+  static constexpr char vorbisSetupHeaderID[] = { 0x01, 'v', 'o', 'r', 'b', 'i', 's', 0 };
 } // namespace TagLib
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -157,10 +157,8 @@ void Vorbis::Properties::read(File *file)
     const long long end   = last->absoluteGranularPosition();
 
     if(start >= 0 && end >= 0 && d->sampleRate > 0) {
-      const long long frameCount = end - start;
-
-      if(frameCount > 0) {
-        const double length = frameCount * 1000.0 / d->sampleRate;
+      if(const long long frameCount = end - start; frameCount > 0) {
+        const auto length = static_cast<double>(frameCount) * 1000.0 / d->sampleRate;
         offset_t fileLengthWithoutOverhead = file->length();
         // Ignore the three initial header packets, see "1.3.1. Decode Setup" in
         // https://xiph.org/vorbis/doc/Vorbis_I_spec.html

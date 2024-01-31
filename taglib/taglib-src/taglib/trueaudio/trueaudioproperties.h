@@ -37,12 +37,12 @@ namespace TagLib {
 
   namespace TrueAudio {
 
-    static const unsigned int HeaderSize = 18;
+    static constexpr unsigned int HeaderSize = 18;
 
     //! An implementation of audio property reading for TrueAudio
 
     /*!
-     * This reads the data from an TrueAudio stream found in the AudioProperties
+     * This reads the data from a TrueAudio stream found in the AudioProperties
      * API.
      */
 

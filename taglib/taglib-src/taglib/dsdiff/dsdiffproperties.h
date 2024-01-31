@@ -37,7 +37,7 @@ namespace TagLib {
     //! An implementation of audio property reading for DSDIFF
 
     /*!
-     * This reads the data from an DSDIFF stream found in the AudioProperties
+     * This reads the data from a DSDIFF stream found in the AudioProperties
      * API.
      */
 
@@ -48,8 +48,8 @@ namespace TagLib {
        * Create an instance of DSDIFF::Properties with the data read from the
        * ByteVector \a data.
        */
-      Properties(const unsigned int sampleRate, const unsigned short channels,
-                 const unsigned long long samplesCount, const int bitrate,
+      Properties(unsigned int sampleRate, unsigned short channels,
+                 unsigned long long samplesCount, int bitrate,
                  ReadStyle style);
 
       /*!

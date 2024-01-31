@@ -41,7 +41,7 @@ namespace
 class RIFF::WAV::File::FilePrivate
 {
 public:
-  FilePrivate(ID3v2::FrameFactory *frameFactory)
+  FilePrivate(const ID3v2::FrameFactory *frameFactory)
         : ID3v2FrameFactory(frameFactory ? frameFactory
                                          : ID3v2::FrameFactory::instance())
   {
@@ -66,7 +66,7 @@ bool RIFF::WAV::File::isSupported(IOStream *stream)
   // A WAV file has to start with "RIFF????WAVE".
 
   const ByteVector id = Utils::readHeader(stream, 12, false);
-  return (id.startsWith("RIFF") && id.containsAt("WAVE", 8));
+  return id.startsWith("RIFF") && id.containsAt("WAVE", 8);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -198,8 +198,7 @@ bool RIFF::WAV::File::hasInfoTag() const
 void RIFF::WAV::File::read(bool readProperties)
 {
   for(unsigned int i = 0; i < chunkCount(); ++i) {
-    const ByteVector name = chunkName(i);
-    if(name == "ID3 " || name == "id3 ") {
+    if(const ByteVector name = chunkName(i); name == "ID3 " || name == "id3 ") {
       if(!d->tag[ID3v2Index]) {
         d->tag.set(ID3v2Index, new ID3v2::Tag(this, chunkOffset(i),
                                               d->ID3v2FrameFactory));
@@ -210,8 +209,7 @@ void RIFF::WAV::File::read(bool readProperties)
       }
     }
     else if(name == "LIST") {
-      const ByteVector data = chunkData(i);
-      if(data.startsWith("INFO")) {
+      if(const ByteVector data = chunkData(i); data.startsWith("INFO")) {
         if(!d->tag[InfoIndex]) {
           d->tag.set(InfoIndex, new RIFF::Info::Tag(data));
           d->hasInfo = true;

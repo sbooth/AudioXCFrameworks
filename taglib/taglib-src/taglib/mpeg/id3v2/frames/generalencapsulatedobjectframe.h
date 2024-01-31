@@ -31,7 +31,6 @@
 
 #include <taglib/taglib_export.h>
 #include <taglib/id3v2frame.h>
-#include <taglib/id3v2header.h>
 
 namespace TagLib {
 
@@ -42,7 +41,7 @@ namespace TagLib {
     /*!
      * This is an implementation of ID3v2 general encapsulated objects.
      * Arbitrary binary data may be included in tags, stored in GEOB frames.
-     * There may be multiple GEOB frames in a single tag.  Each GEOB it
+     * There may be multiple GEOB frames in a single tag.  Each GEOB is
      * labelled with a content description (which may be blank), a required
      * mime-type, and a file name (may be blank).  The content description
      * uniquely identifies the GEOB frame in the tag.
@@ -151,7 +150,7 @@ namespace TagLib {
       /*!
        * Returns the object data as a ByteVector.
        *
-       * \note ByteVector has a data() method that returns a const char * which
+       * \note ByteVector has a data() method that returns a <tt>const char *</tt> which
        * should make it easy to export this data to external programs.
        *
        * \see setObject()

@@ -240,7 +240,7 @@ public:
 
   void testFloatingPointConversion()
   {
-    const double Tolerance = 1.0e-7;
+    constexpr double Tolerance = 1.0e-7;
 
     const ByteVector pi32le("\xdb\x0f\x49\x40", 4);
     CPPUNIT_ASSERT(std::abs(pi32le.toFloat32LE(0) - M_PI) < Tolerance);
@@ -405,8 +405,7 @@ public:
     CPPUNIT_ASSERT_EQUAL(ByteVector("taglib"), v1);
     CPPUNIT_ASSERT_EQUAL(ByteVector("tAglIb"), v2);
 
-    ByteVector v3;
-    v3 = ByteVector("0123456789").mid(3, 4);
+    ByteVector v3 = ByteVector("0123456789").mid(3, 4);
 
     it1 = v3.begin();
     it2 = v3.end() - 1;
@@ -421,7 +420,7 @@ public:
 
   void testResize()
   {
-    ByteVector a = ByteVector("0123456789");
+    auto a = ByteVector("0123456789");
     ByteVector b = a.mid(3, 4);
     b.resize(6, 'A');
     CPPUNIT_ASSERT_EQUAL(static_cast<unsigned int>(6), b.size());

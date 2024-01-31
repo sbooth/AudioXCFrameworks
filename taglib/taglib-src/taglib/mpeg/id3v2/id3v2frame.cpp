@@ -35,12 +35,7 @@
 #include "id3v2tag.h"
 #include "id3v2synchdata.h"
 #include "frames/textidentificationframe.h"
-#include "frames/urllinkframe.h"
-#include "frames/unsynchronizedlyricsframe.h"
-#include "frames/commentsframe.h"
-#include "frames/uniquefileidentifierframe.h"
 #include "frames/unknownframe.h"
-#include "frames/podcastframe.h"
 
 using namespace TagLib;
 using namespace ID3v2;
@@ -92,7 +87,7 @@ const String Frame::urlPrefix("URL:");
 // public members
 ////////////////////////////////////////////////////////////////////////////////
 
-unsigned int Frame::headerSize()
+unsigned int Frame::headerSize() const
 {
   return d->header->size();
 }
@@ -421,7 +416,7 @@ public:
 // public members (Frame::Header)
 ////////////////////////////////////////////////////////////////////////////////
 
-unsigned int Frame::Header::size()
+unsigned int Frame::Header::size() const
 {
   switch(d->version) {
   case 0:

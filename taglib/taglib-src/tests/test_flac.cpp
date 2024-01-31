@@ -27,7 +27,6 @@
 #include <cstdio>
 
 #include "tstringlist.h"
-#include "tbytevectorlist.h"
 #include "tpropertymap.h"
 #include "tag.h"
 #include "flacfile.h"
@@ -445,24 +444,20 @@ public:
   void testSaveID3v1()
   {
     ScopedFileCopy copy("no-tags", ".flac");
+    FLAC::File f(copy.fileName().c_str());
+    CPPUNIT_ASSERT(!f.hasID3v1Tag());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4692), f.length());
 
-    ByteVector audioStream;
-    {
-      FLAC::File f(copy.fileName().c_str());
-      CPPUNIT_ASSERT(!f.hasID3v1Tag());
-      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4692), f.length());
+    f.seek(0x0100);
+    ByteVector audioStream = f.readBlock(4436);
 
-      f.seek(0x0100);
-      audioStream = f.readBlock(4436);
+    f.ID3v1Tag(true)->setTitle("01234 56789 ABCDE FGHIJ");
+    f.save();
+    CPPUNIT_ASSERT(f.hasID3v1Tag());
+    CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4820), f.length());
 
-      f.ID3v1Tag(true)->setTitle("01234 56789 ABCDE FGHIJ");
-      f.save();
-      CPPUNIT_ASSERT(f.hasID3v1Tag());
-      CPPUNIT_ASSERT_EQUAL(static_cast<offset_t>(4820), f.length());
-
-      f.seek(0x0100);
-      CPPUNIT_ASSERT_EQUAL(audioStream, f.readBlock(4436));
-    }
+    f.seek(0x0100);
+    CPPUNIT_ASSERT_EQUAL(audioStream, f.readBlock(4436));
   }
 
   void testUpdateID3v2()
@@ -648,7 +643,7 @@ public:
       CPPUNIT_ASSERT_EQUAL(String("Title"), f.xiphComment(false)->title());
     }
 
-    const unsigned char expectedHeadData[] = {
+    constexpr unsigned char expectedHeadData[] = {
        'f',  'L',  'a',  'C', 0x00, 0x00, 0x00, 0x22, 0x12, 0x00, 0x12, 0x00,
       0x00, 0x00, 0x0e, 0x00, 0x00, 0x10, 0x0a, 0xc4, 0x42, 0xf0, 0x00, 0x02,
       0x7a, 0xc0, 0xa1, 0xb1, 0x41, 0xf7, 0x66, 0xe9, 0x84, 0x9a, 0xc3, 0xdb,

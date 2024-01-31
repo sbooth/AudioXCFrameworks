@@ -35,11 +35,12 @@
 
 namespace TagLib {
   namespace FLAC {
+    //! FLAC picture
     class TAGLIB_EXPORT Picture : public MetadataBlock
     {
     public:
 
-      /*!
+      /*
        * This describes the function or content of the picture.
        */
       DECLARE_PICTURE_TYPE_ENUM(Type)
@@ -71,7 +72,7 @@ namespace TagLib {
        * Sets the mime type of the image.  This should in most cases be
        * "image/png" or "image/jpeg".
        */
-      void setMimeType(const String &m);
+      void setMimeType(const String &mimeType);
 
       /*!
        * Returns a text description of the image.
@@ -80,10 +81,10 @@ namespace TagLib {
       String description() const;
 
       /*!
-       * Sets a textual description of the image to \a desc.
+       * Sets a textual description of the image to \a description.
        */
 
-      void setDescription(const String &desc);
+      void setDescription(const String &description);
 
       /*!
        * Returns the width of the image.
@@ -93,7 +94,7 @@ namespace TagLib {
       /*!
        * Sets the width of the image.
        */
-      void setWidth(int w);
+      void setWidth(int width);
 
       /*!
        * Returns the height of the image.
@@ -103,7 +104,7 @@ namespace TagLib {
       /*!
        * Sets the height of the image.
        */
-      void setHeight(int h);
+      void setHeight(int height);
 
       /*!
        * Returns the color depth (in bits-per-pixel) of the image.
@@ -113,7 +114,7 @@ namespace TagLib {
       /*!
        * Sets the color depth (in bits-per-pixel) of the image.
        */
-      void setColorDepth(int depth);
+      void setColorDepth(int colorDepth);
 
       /*!
        * Returns the number of colors used on the image..
@@ -148,7 +149,7 @@ namespace TagLib {
       /*!
        * Parse the picture data in the FLAC picture block format.
        */
-      bool parse(const ByteVector &rawData);
+      bool parse(const ByteVector &data);
 
     private:
       class PicturePrivate;

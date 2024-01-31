@@ -41,6 +41,36 @@
 using namespace std;
 using namespace TagLib;
 
+namespace
+{
+
+  class CustomItemFactory : public MP4::ItemFactory {
+  public:
+    CustomItemFactory(const CustomItemFactory &) = delete;
+    CustomItemFactory &operator=(const CustomItemFactory &) = delete;
+    static CustomItemFactory *instance() { return &factory; }
+  protected:
+    CustomItemFactory() = default;
+    ~CustomItemFactory() = default;
+    NameHandlerMap nameHandlerMap() const override
+    {
+      return MP4::ItemFactory::nameHandlerMap()
+        .insert("tsti", ItemHandlerType::Int)
+        .insert("tstt", ItemHandlerType::Text);
+    }
+
+    Map<ByteVector, String> namePropertyMap() const override
+    {
+      return MP4::ItemFactory::namePropertyMap()
+        .insert("tsti", "TESTINTEGER");
+    }
+  private:
+    static CustomItemFactory factory;
+  };
+
+  CustomItemFactory CustomItemFactory::factory;
+}  // namespace
+
 class TestMP4 : public CppUnit::TestFixture
 {
   CPPUNIT_TEST_SUITE(TestMP4);
@@ -480,6 +510,7 @@ public:
     tags["DISCSUBTITLE"] = StringList("Disc Subtitle");
     tags["DJMIXER"] = StringList("DJ Mixer");
     tags["ENCODEDBY"] = StringList("Encoded by");
+    tags["ENCODING"] = StringList("Encoding");
     tags["ENGINEER"] = StringList("Engineer");
     tags["GAPLESSPLAYBACK"] = StringList("1");
     tags["GENRE"] = StringList("Genre");
@@ -635,9 +666,9 @@ public:
     const String testComment("Comment");
     const String testGenre("Genre");
     const String nullString;
-    const unsigned int testYear = 2020;
-    const unsigned int testTrack = 1;
-    const unsigned int zeroUInt = 0;
+    constexpr unsigned int testYear = 2020;
+    constexpr unsigned int testTrack = 1;
+    constexpr unsigned int zeroUInt = 0;
 
     tag->setTitle(testTitle);
     CPPUNIT_ASSERT_EQUAL(testTitle, tag->title());
@@ -732,30 +763,12 @@ public:
 
       PropertyMap properties = f.properties();
       CPPUNIT_ASSERT_EQUAL(StringList("Test Artist!!!!"), properties["ARTIST"]);
-      CPPUNIT_ASSERT_EQUAL(StringList("FAAC 1.24"), properties["ENCODEDBY"]);
+      CPPUNIT_ASSERT_EQUAL(StringList("FAAC 1.24"), properties["ENCODING"]);
     }
   }
 
   void testItemFactory()
   {
-    class CustomItemFactory : public MP4::ItemFactory {
-    protected:
-      NameHandlerMap nameHandlerMap() const override
-      {
-        return MP4::ItemFactory::nameHandlerMap()
-          .insert("tsti", ItemHandlerType::Int)
-          .insert("tstt", ItemHandlerType::Text);
-      }
-
-      Map<ByteVector, String> namePropertyMap() const override
-      {
-        return MP4::ItemFactory::namePropertyMap()
-          .insert("tsti", "TESTINTEGER");
-      }
-    };
-
-    CustomItemFactory factory;
-
     ScopedFileCopy copy("no-tags", ".m4a");
     {
       MP4::File f(copy.fileName().c_str());
@@ -783,7 +796,7 @@ public:
     }
     {
       MP4::File f(copy.fileName().c_str(),
-                  true, MP4::Properties::Average, &factory);
+                  true, MP4::Properties::Average, CustomItemFactory::instance());
       CPPUNIT_ASSERT(f.isValid());
       CPPUNIT_ASSERT(!f.hasMP4Tag());
       MP4::Tag *tag = f.tag();
@@ -797,7 +810,7 @@ public:
     }
     {
       MP4::File f(copy.fileName().c_str(),
-                  true, MP4::Properties::Average, &factory);
+                  true, MP4::Properties::Average, CustomItemFactory::instance());
       CPPUNIT_ASSERT(f.isValid());
       CPPUNIT_ASSERT(f.hasMP4Tag());
       MP4::Tag *tag = f.tag();
@@ -823,7 +836,7 @@ public:
     }
     {
       MP4::File f(copy.fileName().c_str(),
-                  true, MP4::Properties::Average, &factory);
+                  true, MP4::Properties::Average, CustomItemFactory::instance());
       CPPUNIT_ASSERT(f.isValid());
       CPPUNIT_ASSERT(f.hasMP4Tag());
       MP4::Tag *tag = f.tag();

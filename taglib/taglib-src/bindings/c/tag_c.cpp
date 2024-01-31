@@ -30,7 +30,6 @@
 # include "config.h"
 #endif
 #include "tstringlist.h"
-#include "tbytevectorlist.h"
 #include "tbytevectorstream.h"
 #include "tiostream.h"
 #include "tfile.h"
@@ -236,7 +235,7 @@ BOOL taglib_file_save(TagLib_File *file)
 
 char *taglib_tag_title(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   char *s = stringToCharArray(t->title());
   if(stringManagementEnabled)
     strings.append(s);
@@ -245,7 +244,7 @@ char *taglib_tag_title(const TagLib_Tag *tag)
 
 char *taglib_tag_artist(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   char *s = stringToCharArray(t->artist());
   if(stringManagementEnabled)
     strings.append(s);
@@ -254,7 +253,7 @@ char *taglib_tag_artist(const TagLib_Tag *tag)
 
 char *taglib_tag_album(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   char *s = stringToCharArray(t->album());
   if(stringManagementEnabled)
     strings.append(s);
@@ -263,7 +262,7 @@ char *taglib_tag_album(const TagLib_Tag *tag)
 
 char *taglib_tag_comment(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   char *s = stringToCharArray(t->comment());
   if(stringManagementEnabled)
     strings.append(s);
@@ -272,7 +271,7 @@ char *taglib_tag_comment(const TagLib_Tag *tag)
 
 char *taglib_tag_genre(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   char *s = stringToCharArray(t->genre());
   if(stringManagementEnabled)
     strings.append(s);
@@ -281,55 +280,55 @@ char *taglib_tag_genre(const TagLib_Tag *tag)
 
 unsigned int taglib_tag_year(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   return t->year();
 }
 
 unsigned int taglib_tag_track(const TagLib_Tag *tag)
 {
-  const Tag *t = reinterpret_cast<const Tag *>(tag);
+  auto t = reinterpret_cast<const Tag *>(tag);
   return t->track();
 }
 
 void taglib_tag_set_title(TagLib_Tag *tag, const char *title)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setTitle(charArrayToString(title));
 }
 
 void taglib_tag_set_artist(TagLib_Tag *tag, const char *artist)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setArtist(charArrayToString(artist));
 }
 
 void taglib_tag_set_album(TagLib_Tag *tag, const char *album)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setAlbum(charArrayToString(album));
 }
 
 void taglib_tag_set_comment(TagLib_Tag *tag, const char *comment)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setComment(charArrayToString(comment));
 }
 
 void taglib_tag_set_genre(TagLib_Tag *tag, const char *genre)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setGenre(charArrayToString(genre));
 }
 
 void taglib_tag_set_year(TagLib_Tag *tag, unsigned int year)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setYear(year);
 }
 
 void taglib_tag_set_track(TagLib_Tag *tag, unsigned int track)
 {
-  Tag *t = reinterpret_cast<Tag *>(tag);
+  auto t = reinterpret_cast<Tag *>(tag);
   t->setTrack(track);
 }
 
@@ -431,17 +430,17 @@ void _taglib_property_set(TagLib_File *file, const char* prop, const char* value
 
 }  // namespace
 
-void taglib_property_set(TagLib_File *f, const char *prop, const char *value)
+void taglib_property_set(TagLib_File *file, const char *prop, const char *value)
 {
-  _taglib_property_set(f, prop, value, false);
+  _taglib_property_set(file, prop, value, false);
 }
 
-void taglib_property_set_append(TagLib_File *f, const char *prop, const char *value)
+void taglib_property_set_append(TagLib_File *file, const char *prop, const char *value)
 {
-  _taglib_property_set(f, prop, value, true);
+  _taglib_property_set(file, prop, value, true);
 }
 
-char** taglib_property_keys(TagLib_File *file)
+char** taglib_property_keys(const TagLib_File *file)
 {
   if(file == NULL)
     return NULL;
@@ -461,7 +460,7 @@ char** taglib_property_keys(TagLib_File *file)
   return props;
 }
 
-char **taglib_property_get(TagLib_File *file, const char *prop)
+char **taglib_property_get(const TagLib_File *file, const char *prop)
 {
   if(file == NULL || prop == NULL)
     return NULL;
@@ -520,8 +519,7 @@ bool _taglib_complex_property_set(
   while(*attrPtr) {
     const TagLib_Complex_Property_Attribute *attr = *attrPtr;
     String attrKey(attr->key);
-    TagLib_Variant_Type type = attr->value.type;
-    switch(type) {
+    switch(attr->value.type) {
     case TagLib_Variant_Void:
       map.insert(attrKey, Variant());
       break;
@@ -585,7 +583,7 @@ BOOL taglib_complex_property_set_append(
   return _taglib_complex_property_set(file, key, value, true);
 }
 
-char** taglib_complex_property_keys(TagLib_File *file)
+char** taglib_complex_property_keys(const TagLib_File *file)
 {
   if(file == NULL) {
     return NULL;
@@ -608,7 +606,7 @@ char** taglib_complex_property_keys(TagLib_File *file)
 }
 
 TagLib_Complex_Property_Attribute*** taglib_complex_property_get(
-  TagLib_File *file, const char *key)
+  const TagLib_File *file, const char *key)
 {
   if(file == NULL || key == NULL) {
     return NULL;
@@ -619,15 +617,15 @@ TagLib_Complex_Property_Attribute*** taglib_complex_property_get(
     return NULL;
   }
 
-  TagLib_Complex_Property_Attribute ***props = static_cast<TagLib_Complex_Property_Attribute ***>(
+  auto props = static_cast<TagLib_Complex_Property_Attribute ***>(
     malloc(sizeof(TagLib_Complex_Property_Attribute **) * (variantMaps.size() + 1)));
   TagLib_Complex_Property_Attribute ***propPtr = props;
 
   for(const auto &variantMap : variantMaps) {
     if(!variantMap.isEmpty()) {
-      TagLib_Complex_Property_Attribute **attrs = static_cast<TagLib_Complex_Property_Attribute **>(
+      auto attrs = static_cast<TagLib_Complex_Property_Attribute **>(
         malloc(sizeof(TagLib_Complex_Property_Attribute *) * (variantMap.size() + 1)));
-      TagLib_Complex_Property_Attribute *attr = static_cast<TagLib_Complex_Property_Attribute *>(
+      auto attr = static_cast<TagLib_Complex_Property_Attribute *>(
         malloc(sizeof(TagLib_Complex_Property_Attribute) * variantMap.size()));
       TagLib_Complex_Property_Attribute **attrPtr = attrs;
       // The next assignment is redundant to silence the clang analyzer,
@@ -675,7 +673,7 @@ TagLib_Complex_Property_Attribute*** taglib_complex_property_get(
         }
         case Variant::StringList: {
           attr->value.type = TagLib_Variant_StringList;
-          StringList strs = v.value<StringList>();
+          auto strs = v.value<StringList>();
           auto strPtr = static_cast<char **>(malloc(sizeof(char *) * (strs.size() + 1)));
           attr->value.value.stringListValue = strPtr;
           attr->value.size = strs.size();
@@ -727,8 +725,7 @@ void taglib_picture_from_complex_property(
     TagLib_Complex_Property_Attribute** attrPtr = *propPtr;
     while(*attrPtr) {
       TagLib_Complex_Property_Attribute *attr = *attrPtr;
-      TagLib_Variant_Type type = attr->value.type;
-      switch(type) {
+      switch(attr->value.type) {
       case TagLib_Variant_String:
         if(strcmp("mimeType", attr->key) == 0) {
           picture->mimeType = attr->value.value.stringValue;
@@ -779,8 +776,7 @@ void taglib_complex_property_free(
     TagLib_Complex_Property_Attribute** attrPtr = *propPtr;
     while(*attrPtr) {
       TagLib_Complex_Property_Attribute *attr = *attrPtr;
-      TagLib_Variant_Type type = attr->value.type;
-      switch(type) {
+      switch(attr->value.type) {
       case TagLib_Variant_String:
         free(attr->value.value.stringValue);
         break;

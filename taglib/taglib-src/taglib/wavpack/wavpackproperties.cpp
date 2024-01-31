@@ -191,8 +191,8 @@ namespace
       // if we got DSD block, return the specified rate shift amount
 
       if(id == ID_DSD_BLOCK && (metaId & ID_UNIQUE) == ID_DSD_BLOCK && metaBc > 0) {
-        const auto rateShift = static_cast<unsigned char>(block[index]);
-        if(rateShift <= 31)
+        if(const auto rateShift = static_cast<unsigned char>(block[index]);
+           rateShift <= 31)
           return rateShift;
       }
 
@@ -306,7 +306,7 @@ void WavPack::Properties::read(File *file, offset_t streamLength)
     d->sampleFrames = seekFinalIndex(file, streamLength);
 
   if(d->sampleFrames > 0 && d->sampleRate > 0) {
-    const double length = d->sampleFrames * 1000.0 / d->sampleRate;
+    const auto length = static_cast<double>(d->sampleFrames) * 1000.0 / d->sampleRate;
     d->length  = static_cast<int>(length + 0.5);
     d->bitrate = static_cast<int>(streamLength * 8.0 / length + 0.5);
   }

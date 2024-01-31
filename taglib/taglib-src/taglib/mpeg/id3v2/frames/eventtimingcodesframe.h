@@ -124,7 +124,7 @@ namespace TagLib {
       explicit EventTimingCodesFrame();
 
       /*!
-       * Construct a event timing codes frame based on the data in \a data.
+       * Construct an event timing codes frame based on the data in \a data.
        */
       explicit EventTimingCodesFrame(const ByteVector &data);
 
@@ -137,7 +137,7 @@ namespace TagLib {
       EventTimingCodesFrame &operator=(const EventTimingCodesFrame &) = delete;
 
       /*!
-       * Returns a null string.
+       * Returns an empty string.
        */
       String toString() const override;
 

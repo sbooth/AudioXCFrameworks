@@ -28,6 +28,7 @@
 
 #include <taglib/tlist.h>
 #include <taglib/tbytevector.h>
+#include <taglib/taglib.h>
 #include <taglib/taglib_export.h>
 
 namespace TagLib {
@@ -57,19 +58,19 @@ namespace TagLib {
       /*!
        * Deletes this instance of the PageHeader.
        */
-      virtual ~PageHeader();
+      ~PageHeader();
 
       PageHeader(const PageHeader &) = delete;
       PageHeader &operator=(const PageHeader &) = delete;
 
       /*!
-       * Returns true if the header parsed properly and is valid.
+       * Returns \c true if the header parsed properly and is valid.
        */
       bool isValid() const;
 
       /*!
        * Ogg pages contain a list of packets (which are used by the contained
-       * codecs).  The sizes of these pages is encoded in the page header.  This
+       * codecs).  The sizes of these pages are encoded in the page header.  This
        * returns a list of the packet sizes in bytes.
        *
        * \see setPacketSizes()
@@ -87,7 +88,7 @@ namespace TagLib {
       /*!
        * Some packets can be <i>continued</i> across multiple pages.  If the
        * first packet in the current page is a continuation this will return
-       * true.  If this is page starts with a new packet this will return false.
+       * \c true.  If this page starts with a new packet this will return \c false.
        *
        * \see lastPacketCompleted()
        * \see setFirstPacketContinued()
@@ -103,7 +104,7 @@ namespace TagLib {
       void setFirstPacketContinued(bool continued);
 
       /*!
-       * Returns true if the last packet of this page is completely contained in
+       * Returns \c true if the last packet of this page is completely contained in
        * this page.
        *
        * \see firstPacketContinued()
@@ -120,7 +121,7 @@ namespace TagLib {
       void setLastPacketCompleted(bool completed);
 
       /*!
-       * This returns true if this is the first page of the Ogg (logical) stream.
+       * This returns \c true if this is the first page of the Ogg (logical) stream.
        *
        * \see setFirstPageOfStream()
        */
@@ -134,7 +135,7 @@ namespace TagLib {
       void setFirstPageOfStream(bool first);
 
       /*!
-       * This returns true if this is the last page of the Ogg (logical) stream.
+       * This returns \c true if this is the last page of the Ogg (logical) stream.
        *
        * \see setLastPageOfStream()
        */

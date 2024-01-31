@@ -27,6 +27,7 @@
 #define TAGLIB_OGGPAGE_H
 
 #include <taglib/tbytevectorlist.h>
+#include <taglib/taglib.h>
 #include <taglib/taglib_export.h>
 
 namespace TagLib {
@@ -46,7 +47,7 @@ namespace TagLib {
      *
      * In most Xiph.org formats the comments are found in the first few packets,
      * this however is a reasonably complete implementation of Ogg pages that
-     * could potentially be useful for non-meta data purposes.
+     * could potentially be useful for non-metadata purposes.
      */
 
     class TAGLIB_EXPORT Page
@@ -57,7 +58,7 @@ namespace TagLib {
        */
       Page(File *file, offset_t pageOffset);
 
-      virtual ~Page();
+      ~Page();
 
       Page(const Page &) = delete;
       Page &operator=(const Page &) = delete;
@@ -105,7 +106,7 @@ namespace TagLib {
 
       /*!
        * When checking to see if a page contains a given packet this set of flags
-       * represents the possible values for that packets status in the page.
+       * represents the possible values for that packet's status in the page.
        *
        * \see containsPacket()
        */
@@ -174,7 +175,7 @@ namespace TagLib {
        * Pack \a packets into Ogg pages using the \a strategy for pagination.
        * The page number indicator inside of the rendered packets will start
        * with \a firstPage and be incremented for each page rendered.
-       * \a containsLastPacket should be set to true if \a packets contains the
+       * \a containsLastPacket should be set to \c true if \a packets contains the
        * last page in the stream and will set the appropriate flag in the last
        * rendered Ogg page's header.  \a streamSerialNumber should be set to
        * the serial number for this stream.

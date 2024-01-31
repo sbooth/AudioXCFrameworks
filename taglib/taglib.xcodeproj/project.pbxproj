@@ -473,8 +473,6 @@
 		327C57DB2B17ADBB00F2C4BA /* xmfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C42B17AC4400F2C4BA /* xmfile.cpp */; };
 		327C57DC2B17ADBB00F2C4BA /* xmproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C52B17AC4400F2C4BA /* xmproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C57DD2B17ADBB00F2C4BA /* xmproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C62B17AC4400F2C4BA /* xmproperties.cpp */; };
-		327C57DF2B17AEC300F2C4BA /* taglib_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C57DE2B17AEC300F2C4BA /* taglib_config.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57E02B17AEC300F2C4BA /* taglib_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C57DE2B17AEC300F2C4BA /* taglib_config.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C57E32B17B39A00F2C4BA /* tmap.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55E82B17AC4400F2C4BA /* tmap.tcc */; };
 		327C57E42B17B3AB00F2C4BA /* tlist.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55D62B17AC4400F2C4BA /* tlist.tcc */; };
 		327C57E52B17B3B700F2C4BA /* tlist.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55D62B17AC4400F2C4BA /* tlist.tcc */; };
@@ -678,7 +676,6 @@
 		327C55A12B17AC4300F2C4BA /* mpcfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mpcfile.cpp; sourceTree = "<group>"; };
 		327C55A22B17AC4300F2C4BA /* mpcproperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mpcproperties.h; sourceTree = "<group>"; };
 		327C55A32B17AC4300F2C4BA /* tagutils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tagutils.cpp; sourceTree = "<group>"; };
-		327C55A42B17AC4300F2C4BA /* taglib_config.h.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = taglib_config.h.cmake; sourceTree = "<group>"; };
 		327C55A62B17AC4300F2C4BA /* mp4file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mp4file.h; sourceTree = "<group>"; };
 		327C55A72B17AC4300F2C4BA /* mp4item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mp4item.h; sourceTree = "<group>"; };
 		327C55A82B17AC4300F2C4BA /* mp4itemfactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mp4itemfactory.h; sourceTree = "<group>"; };
@@ -755,7 +752,6 @@
 		327C55F42B17AC4400F2C4BA /* modtag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modtag.h; sourceTree = "<group>"; };
 		327C55F52B17AC4400F2C4BA /* modproperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modproperties.cpp; sourceTree = "<group>"; };
 		327C55F62B17AC4400F2C4BA /* modfilebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modfilebase.h; sourceTree = "<group>"; };
-		327C57DE2B17AEC300F2C4BA /* taglib_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = taglib_config.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -797,7 +793,6 @@
 		32677E65254DB4C90041B063 /* taglib-src */ = {
 			isa = PBXGroup;
 			children = (
-				327C57DE2B17AEC300F2C4BA /* taglib_config.h */,
 				326782A5254DBAAF0041B063 /* 3rdparty */,
 				327C54EC2B17AC4300F2C4BA /* taglib */,
 			);
@@ -864,7 +859,6 @@
 				327C54F22B17AC4300F2C4BA /* s3m */,
 				327C55922B17AC4300F2C4BA /* tag.cpp */,
 				327C556C2B17AC4300F2C4BA /* tag.h */,
-				327C55A42B17AC4300F2C4BA /* taglib_config.h.cmake */,
 				327C55912B17AC4300F2C4BA /* taglib_export.h */,
 				327C55C02B17AC4400F2C4BA /* tagunion.cpp */,
 				327C55242B17AC4300F2C4BA /* tagunion.h */,
@@ -1318,7 +1312,6 @@
 				327C56162B17AC4400F2C4BA /* trueaudiofile.h in Headers */,
 				327C563D2B17AC4400F2C4BA /* tableofcontentsframe.h in Headers */,
 				327C56D12B17AC4400F2C4BA /* taglib.h in Headers */,
-				327C57DF2B17AEC300F2C4BA /* taglib_config.h in Headers */,
 				327C56B22B17AC4400F2C4BA /* asfutils.h in Headers */,
 				327C56712B17AC4400F2C4BA /* aiffproperties.h in Headers */,
 				327C56B42B17AC4400F2C4BA /* tagutils.h in Headers */,
@@ -1448,7 +1441,6 @@
 				327C57A52B17AD7000F2C4BA /* wavproperties.h in Headers */,
 				327C575E2B17AD0A00F2C4BA /* id3v2.h in Headers */,
 				327C57722B17AD1D00F2C4BA /* synchronizedlyricsframe.h in Headers */,
-				327C57E02B17AEC300F2C4BA /* taglib_config.h in Headers */,
 				327C57752B17AD1D00F2C4BA /* textidentificationframe.h in Headers */,
 				327C578A2B17AD2F00F2C4BA /* oggfile.h in Headers */,
 				327C57792B17AD1D00F2C4BA /* ownershipframe.h in Headers */,

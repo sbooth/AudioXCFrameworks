@@ -141,10 +141,10 @@ void APE::Item::setValue(const String &value)
   d->value.clear();
 }
 
-void APE::Item::setValues(const StringList &value)
+void APE::Item::setValues(const StringList &values)
 {
   d->type = Text;
-  d->text = value;
+  d->text = values;
   d->value.clear();
 }
 
@@ -241,7 +241,7 @@ void APE::Item::parse(const ByteVector &data)
 ByteVector APE::Item::render() const
 {
   ByteVector data;
-  unsigned int flags = ((d->readOnly) ? 1 : 0) | (d->type << 1);
+  unsigned int flags = (d->readOnly ? 1 : 0) | (d->type << 1);
   ByteVector val;
 
   if(isEmpty())

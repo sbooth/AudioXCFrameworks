@@ -74,12 +74,23 @@ TagLib 2.0 (Jan 24, 2024)
    - String::null
    - TrueAudio::File::setID3v2FrameFactory(): Use constructor
    - WavPack::Properties::Properties(const ByteVector &, long, ReadStyle)
+* Made methods const: Frame::Header::size(), Frame::headerSize(),
+  MP4::Atom::findall(), MP4::Atoms::find(), MP4::Atoms::path().
+* Made classes non-virtual: APE::Footer, APE::Item, ASF::Attribute,
+  ASF::Picture, MP4::CoverArt, MP4::Item, ID3v2::ExtendedHeader, ID3v2::Footer,
+  ID3v2::Header, MPEG::Header, MPEG::XingHeader, Ogg::Page, Ogg::PageHeader.
+* Removed type definitions in TagLib namespace: wchar, uchar, ushort, uint,
+  ulong, ulonglong, wstring: Use the standard types.
+* Removed include file taglib_config.h and its defines TAGLIB_WITH_ASF,
+  TAGLIB_WITH_MP4: They were always 1 since version 1.8.
 * Behavioral changes:
    - The basic tag methods (e.g. genre()) separate multiple values with " / "
      instead of " ".
    - The stream operator for String uses UTF-8 instead of ISO-8859-1 encoding.
    - MP4 property ORIGINALDATE is mapped to "----:com.apple.iTunes:ORIGINALDATE"
      instead of "----:com.apple.iTunes:originaldate".
+   - MP4 property ENCODEDBY is mapped to "©enc" instead of "©too", which is now
+     mapped to ENCODING.
  * Unified interface for complex properties like pictures.
  * Simplified the unified properties interface by providing its methods on
    FileRef.
@@ -97,8 +108,9 @@ TagLib 2.0 (Jan 24, 2024)
  * Build system: Fixed PackageConfig to support both relative and absolute paths.
  * Build system: utf8cpp is no longer included, it can be provided via a system
    package or a Git submodule.
- * ASF: Support additional properties ARTISTWEBPAGE, ENCODING, INITIALKEY,
-   ORIGINALALBUM, ORIGINALARTIST, ORIGINALFILENAME, ORIGINALLYRICIST.
+ * ASF: Support additional properties ARTISTWEBPAGE, ENCODING, ENCODINGTIME,
+   FILEWEBPAGE, INITIALKEY, ORIGINALALBUM, ORIGINALARTIST, ORIGINALFILENAME,
+   ORIGINALLYRICIST.
  * ID3v2: Fixed extensibility of FrameFactory, use it also for WAV and AIFF
    files.
  * MP4: Support additional properties OWNER, RELEASEDATE.
