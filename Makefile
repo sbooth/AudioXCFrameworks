@@ -6,7 +6,7 @@ install: $(SUBDIRS)
 xz: $(SUBDIRS)
 clean: $(SUBDIRS)
 uninstall: $(SUBDIRS)
-.PHONY: all install xz clean uninstall
+.PHONY: all install xz zip clean uninstall
 
 $(SUBDIRS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
