@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -69,6 +69,39 @@
 		32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677E5B254DAFFD0041B063 /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
 		32677E5C254DAFFD0041B063 /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
+		328F5C122B8BAAF6006C3ECF /* datatypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE1254C7D570041B063 /* datatypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C132B8BAAF6006C3ECF /* minimax.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDF254C7D570041B063 /* minimax.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C142B8BAAF6006C3ECF /* mpcdec.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE2254C7D570041B063 /* mpcdec.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C152B8BAAF6006C3ECF /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EB2DF3257AA3BC006330CC /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C162B8BAAF6006C3ECF /* mpc_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE0254C7D570041B063 /* mpc_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C172B8BAAF6006C3ECF /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C182B8BAAF6006C3ECF /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDD254C7D570041B063 /* reader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C192B8BAAF6006C3ECF /* streaminfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE3254C7D570041B063 /* streaminfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C1A2B8BAAF6006C3ECF /* libmpcenc.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE8254C7D570041B063 /* libmpcenc.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C1B2B8BAAF6006C3ECF /* mpcmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDE254C7D570041B063 /* mpcmath.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5C1D2B8BAAF6006C3ECF /* huffman-bcl.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C15254C7D570041B063 /* huffman-bcl.c */; };
+		328F5C1E2B8BAAF6006C3ECF /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BF8254C7D570041B063 /* huffman.c */; };
+		328F5C1F2B8BAAF6006C3ECF /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
+		328F5C202B8BAAF6006C3ECF /* streaminfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEE254C7D570041B063 /* streaminfo.c */; };
+		328F5C212B8BAAF6006C3ECF /* mpc_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BF6254C7D570041B063 /* mpc_reader.c */; };
+		328F5C222B8BAAF6006C3ECF /* analy_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BE9254C7D570041B063 /* analy_filter.c */; };
+		328F5C232B8BAAF6006C3ECF /* fft4g.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0B254C7D570041B063 /* fft4g.c */; };
+		328F5C242B8BAAF6006C3ECF /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
+		328F5C252B8BAAF6006C3ECF /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BE5254C7D570041B063 /* bitstream.c */; };
+		328F5C262B8BAAF6006C3ECF /* cvd.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C11254C7D570041B063 /* cvd.c */; };
+		328F5C272B8BAAF6006C3ECF /* mpc_decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEF254C7D570041B063 /* mpc_decoder.c */; };
+		328F5C282B8BAAF6006C3ECF /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
+		328F5C292B8BAAF6006C3ECF /* fft_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0D254C7D570041B063 /* fft_routines.c */; };
+		328F5C2A2B8BAAF6006C3ECF /* encode_sv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEC254C7D570041B063 /* encode_sv7.c */; };
+		328F5C2B2B8BAAF6006C3ECF /* mpc_bits_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BF3254C7D570041B063 /* mpc_bits_reader.c */; };
+		328F5C2C2B8BAAF6006C3ECF /* huffsv7.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEA254C7D570041B063 /* huffsv7.c */; };
+		328F5C2D2B8BAAF6006C3ECF /* ans.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0E254C7D570041B063 /* ans.c */; };
+		328F5C2E2B8BAAF6006C3ECF /* synth_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BFF254C7D570041B063 /* synth_filter.c */; };
+		328F5C2F2B8BAAF6006C3ECF /* requant.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BF2254C7D570041B063 /* requant.c */; };
+		328F5C302B8BAAF6006C3ECF /* mpc_demux.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BFC254C7D570041B063 /* mpc_demux.c */; };
+		328F5C312B8BAAF6006C3ECF /* quant.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BEB254C7D570041B063 /* quant.c */; };
+		328F5C322B8BAAF6006C3ECF /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C16254C7D570041B063 /* crc32.c */; };
+		328F5C332B8BAAF6006C3ECF /* profile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C12254C7D570041B063 /* profile.c */; };
 		32EB2DF4257AA3BC006330CC /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
 		32EB2DF5257AA3BC006330CC /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
 		32EB2DF6257AA3BC006330CC /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EB2DF3257AA3BC006330CC /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -118,6 +151,7 @@
 		32677C15254C7D570041B063 /* huffman-bcl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "huffman-bcl.c"; sourceTree = "<group>"; };
 		32677C16254C7D570041B063 /* crc32.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		32677C17254C7D570041B063 /* fastmath.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = fastmath.c; sourceTree = "<group>"; };
+		328F5C392B8BAAF6006C3ECF /* mpc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = mpc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3295D9232884673E006AA170 /* mpc.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = mpc.modulemap; sourceTree = "<group>"; };
 		32EB2DF2257AA3BC006330CC /* stream_encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stream_encoder.c; sourceTree = "<group>"; };
 		32EB2DF3257AA3BC006330CC /* stream_encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stream_encoder.h; sourceTree = "<group>"; };
@@ -132,6 +166,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32028DD4254AFEA000A537DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5C342B8BAAF6006C3ECF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -158,6 +199,7 @@
 			children = (
 				32028D08254AE93F00A537DE /* mpc.framework */,
 				32028DD9254AFEA000A537DE /* mpc.framework */,
+				328F5C392B8BAAF6006C3ECF /* mpc.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -293,6 +335,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		328F5C112B8BAAF6006C3ECF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5C122B8BAAF6006C3ECF /* datatypes.h in Headers */,
+				328F5C132B8BAAF6006C3ECF /* minimax.h in Headers */,
+				328F5C142B8BAAF6006C3ECF /* mpcdec.h in Headers */,
+				328F5C152B8BAAF6006C3ECF /* stream_encoder.h in Headers */,
+				328F5C162B8BAAF6006C3ECF /* mpc_types.h in Headers */,
+				328F5C172B8BAAF6006C3ECF /* libmpcpsy.h in Headers */,
+				328F5C182B8BAAF6006C3ECF /* reader.h in Headers */,
+				328F5C192B8BAAF6006C3ECF /* streaminfo.h in Headers */,
+				328F5C1A2B8BAAF6006C3ECF /* libmpcenc.h in Headers */,
+				328F5C1B2B8BAAF6006C3ECF /* mpcmath.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -332,13 +391,32 @@
 			productReference = 32028DD9254AFEA000A537DE /* mpc.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		328F5C102B8BAAF6006C3ECF /* tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 328F5C362B8BAAF6006C3ECF /* Build configuration list for PBXNativeTarget "tvOS" */;
+			buildPhases = (
+				328F5C112B8BAAF6006C3ECF /* Headers */,
+				328F5C1C2B8BAAF6006C3ECF /* Sources */,
+				328F5C342B8BAAF6006C3ECF /* Frameworks */,
+				328F5C352B8BAAF6006C3ECF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tvOS;
+			productName = mpc;
+			productReference = 328F5C392B8BAAF6006C3ECF /* mpc.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		32028CFF254AE93F00A537DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1220;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -360,6 +438,7 @@
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
 				32028DCC254AFEA000A537DE /* iOS */,
+				328F5C102B8BAAF6006C3ECF /* tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -373,6 +452,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32028DD5254AFEA000A537DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5C352B8BAAF6006C3ECF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -442,6 +528,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		328F5C1C2B8BAAF6006C3ECF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5C1D2B8BAAF6006C3ECF /* huffman-bcl.c in Sources */,
+				328F5C1E2B8BAAF6006C3ECF /* huffman.c in Sources */,
+				328F5C1F2B8BAAF6006C3ECF /* psy_tab.c in Sources */,
+				328F5C202B8BAAF6006C3ECF /* streaminfo.c in Sources */,
+				328F5C212B8BAAF6006C3ECF /* mpc_reader.c in Sources */,
+				328F5C222B8BAAF6006C3ECF /* analy_filter.c in Sources */,
+				328F5C232B8BAAF6006C3ECF /* fft4g.c in Sources */,
+				328F5C242B8BAAF6006C3ECF /* psy.c in Sources */,
+				328F5C252B8BAAF6006C3ECF /* bitstream.c in Sources */,
+				328F5C262B8BAAF6006C3ECF /* cvd.c in Sources */,
+				328F5C272B8BAAF6006C3ECF /* mpc_decoder.c in Sources */,
+				328F5C282B8BAAF6006C3ECF /* stream_encoder.c in Sources */,
+				328F5C292B8BAAF6006C3ECF /* fft_routines.c in Sources */,
+				328F5C2A2B8BAAF6006C3ECF /* encode_sv7.c in Sources */,
+				328F5C2B2B8BAAF6006C3ECF /* mpc_bits_reader.c in Sources */,
+				328F5C2C2B8BAAF6006C3ECF /* huffsv7.c in Sources */,
+				328F5C2D2B8BAAF6006C3ECF /* ans.c in Sources */,
+				328F5C2E2B8BAAF6006C3ECF /* synth_filter.c in Sources */,
+				328F5C2F2B8BAAF6006C3ECF /* requant.c in Sources */,
+				328F5C302B8BAAF6006C3ECF /* mpc_demux.c in Sources */,
+				328F5C312B8BAAF6006C3ECF /* quant.c in Sources */,
+				328F5C322B8BAAF6006C3ECF /* crc32.c in Sources */,
+				328F5C332B8BAAF6006C3ECF /* profile.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -481,9 +597,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -545,9 +663,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -571,11 +691,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -584,6 +706,8 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = mpc.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -595,11 +719,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -608,6 +734,8 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = mpc.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -617,6 +745,7 @@
 		32028DD7254AFEA000A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -624,6 +753,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -632,6 +762,8 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = mpc.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -643,6 +775,7 @@
 		32028DD8254AFEA000A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -650,6 +783,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -658,11 +792,75 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = mpc.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
 				PRODUCT_NAME = mpc;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		328F5C372B8BAAF6006C3ECF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = mpc.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
+				PRODUCT_NAME = mpc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+			};
+			name = Debug;
+		};
+		328F5C382B8BAAF6006C3ECF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = mpc.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = net.musepack;
+				PRODUCT_NAME = mpc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
 			};
 			name = Release;
 		};
@@ -692,6 +890,15 @@
 			buildConfigurations = (
 				32028DD7254AFEA000A537DE /* Debug */,
 				32028DD8254AFEA000A537DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		328F5C362B8BAAF6006C3ECF /* Build configuration list for PBXNativeTarget "tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				328F5C372B8BAAF6006C3ECF /* Debug */,
+				328F5C382B8BAAF6006C3ECF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
