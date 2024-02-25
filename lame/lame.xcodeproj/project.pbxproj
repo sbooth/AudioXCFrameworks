@@ -69,6 +69,37 @@
 		32850197256A9855009140DE /* tabinit.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFF9256A954F009140DE /* tabinit.c */; };
 		3285019A256A9856009140DE /* tabinit.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFF9256A954F009140DE /* tabinit.c */; };
 		328501A3256A9A45009140DE /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 3285016E256A9734009140DE /* config.h */; };
+		328F5BE92B8BA9EF006C3ECF /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 3285016E256A9734009140DE /* config.h */; };
+		328F5BEA2B8BA9EF006C3ECF /* lame.h in Headers */ = {isa = PBXBuildFile; fileRef = 3285003E256A954F009140DE /* lame.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5BEC2B8BA9EF006C3ECF /* layer2.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFED256A954F009140DE /* layer2.c */; };
+		328F5BED2B8BA9EF006C3ECF /* presets.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500D7256A9550009140DE /* presets.c */; };
+		328F5BEE2B8BA9EF006C3ECF /* set_get.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500D0256A9550009140DE /* set_get.c */; };
+		328F5BEF2B8BA9EF006C3ECF /* quantize_pvt.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500A9256A9550009140DE /* quantize_pvt.c */; };
+		328F5BF02B8BA9EF006C3ECF /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500B4256A9550009140DE /* util.c */; };
+		328F5BF12B8BA9EF006C3ECF /* decode_i386.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFF7256A954F009140DE /* decode_i386.c */; };
+		328F5BF22B8BA9EF006C3ECF /* tabinit.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFF9256A954F009140DE /* tabinit.c */; };
+		328F5BF32B8BA9EF006C3ECF /* encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500B6256A9550009140DE /* encoder.c */; };
+		328F5BF42B8BA9EF006C3ECF /* mpglib_interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500DE256A9550009140DE /* mpglib_interface.c */; };
+		328F5BF52B8BA9EF006C3ECF /* id3tag.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500CA256A9550009140DE /* id3tag.c */; };
+		328F5BF62B8BA9EF006C3ECF /* version.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500DB256A9550009140DE /* version.c */; };
+		328F5BF72B8BA9EF006C3ECF /* bitstream.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500AC256A9550009140DE /* bitstream.c */; };
+		328F5BF82B8BA9EF006C3ECF /* interface.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFEA256A954F009140DE /* interface.c */; };
+		328F5BF92B8BA9EF006C3ECF /* tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500B0256A9550009140DE /* tables.c */; };
+		328F5BFA2B8BA9EF006C3ECF /* dct64_i386.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFEF256A954F009140DE /* dct64_i386.c */; };
+		328F5BFB2B8BA9EF006C3ECF /* xmm_quantize_sub.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500E0256A9550009140DE /* xmm_quantize_sub.c */; };
+		328F5BFC2B8BA9EF006C3ECF /* psymodel.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500E4256A9550009140DE /* psymodel.c */; };
+		328F5BFD2B8BA9EF006C3ECF /* gain_analysis.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500E6256A9550009140DE /* gain_analysis.c */; };
+		328F5BFE2B8BA9EF006C3ECF /* newmdct.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500D6256A9550009140DE /* newmdct.c */; };
+		328F5BFF2B8BA9EF006C3ECF /* layer3.c in Sources */ = {isa = PBXBuildFile; fileRef = 32850000256A954F009140DE /* layer3.c */; };
+		328F5C002B8BA9EF006C3ECF /* quantize.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500CF256A9550009140DE /* quantize.c */; };
+		328F5C012B8BA9EF006C3ECF /* takehiro.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500CC256A9550009140DE /* takehiro.c */; };
+		328F5C022B8BA9EF006C3ECF /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500D2256A9550009140DE /* fft.c */; };
+		328F5C032B8BA9EF006C3ECF /* layer1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFF2256A954F009140DE /* layer1.c */; };
+		328F5C042B8BA9EF006C3ECF /* vbrquantize.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500B3256A9550009140DE /* vbrquantize.c */; };
+		328F5C052B8BA9EF006C3ECF /* lame.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500C6256A9550009140DE /* lame.c */; };
+		328F5C062B8BA9EF006C3ECF /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 3285FFE9256A954F009140DE /* common.c */; };
+		328F5C072B8BA9EF006C3ECF /* VbrTag.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500CE256A9550009140DE /* VbrTag.c */; };
+		328F5C082B8BA9EF006C3ECF /* reservoir.c in Sources */ = {isa = PBXBuildFile; fileRef = 328500D9256A9550009140DE /* reservoir.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +172,7 @@
 		3285FFFC256A954F009140DE /* huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = huffman.h; sourceTree = "<group>"; };
 		3285FFFE256A954F009140DE /* layer1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = layer1.h; sourceTree = "<group>"; };
 		3285FFFF256A954F009140DE /* dct64_i386.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dct64_i386.h; sourceTree = "<group>"; };
+		328F5C0E2B8BA9EF006C3ECF /* lame.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = lame.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3295D92228846580006AA170 /* lame.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = lame.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +185,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32028DD4254AFEA000A537DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5C092B8BA9EF006C3ECF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -177,6 +216,7 @@
 			children = (
 				32028D08254AE93F00A537DE /* lame.framework */,
 				32028DD9254AFEA000A537DE /* lame.framework */,
+				328F5C0E2B8BA9EF006C3ECF /* lame.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -307,6 +347,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		328F5BE82B8BA9EF006C3ECF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5BE92B8BA9EF006C3ECF /* config.h in Headers */,
+				328F5BEA2B8BA9EF006C3ECF /* lame.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -346,6 +395,24 @@
 			productReference = 32028DD9254AFEA000A537DE /* lame.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		328F5BE72B8BA9EF006C3ECF /* tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 328F5C0B2B8BA9EF006C3ECF /* Build configuration list for PBXNativeTarget "tvOS" */;
+			buildPhases = (
+				328F5BE82B8BA9EF006C3ECF /* Headers */,
+				328F5BEB2B8BA9EF006C3ECF /* Sources */,
+				328F5C092B8BA9EF006C3ECF /* Frameworks */,
+				328F5C0A2B8BA9EF006C3ECF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tvOS;
+			productName = lame;
+			productReference = 328F5C0E2B8BA9EF006C3ECF /* lame.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -375,6 +442,7 @@
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
 				32028DCC254AFEA000A537DE /* iOS */,
+				328F5BE72B8BA9EF006C3ECF /* tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -388,6 +456,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32028DD5254AFEA000A537DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5C0A2B8BA9EF006C3ECF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -466,6 +541,42 @@
 				3285017D256A976D009140DE /* common.c in Sources */,
 				3285015B256A95D8009140DE /* VbrTag.c in Sources */,
 				3285015E256A95D8009140DE /* reservoir.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5BEB2B8BA9EF006C3ECF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5BEC2B8BA9EF006C3ECF /* layer2.c in Sources */,
+				328F5BED2B8BA9EF006C3ECF /* presets.c in Sources */,
+				328F5BEE2B8BA9EF006C3ECF /* set_get.c in Sources */,
+				328F5BEF2B8BA9EF006C3ECF /* quantize_pvt.c in Sources */,
+				328F5BF02B8BA9EF006C3ECF /* util.c in Sources */,
+				328F5BF12B8BA9EF006C3ECF /* decode_i386.c in Sources */,
+				328F5BF22B8BA9EF006C3ECF /* tabinit.c in Sources */,
+				328F5BF32B8BA9EF006C3ECF /* encoder.c in Sources */,
+				328F5BF42B8BA9EF006C3ECF /* mpglib_interface.c in Sources */,
+				328F5BF52B8BA9EF006C3ECF /* id3tag.c in Sources */,
+				328F5BF62B8BA9EF006C3ECF /* version.c in Sources */,
+				328F5BF72B8BA9EF006C3ECF /* bitstream.c in Sources */,
+				328F5BF82B8BA9EF006C3ECF /* interface.c in Sources */,
+				328F5BF92B8BA9EF006C3ECF /* tables.c in Sources */,
+				328F5BFA2B8BA9EF006C3ECF /* dct64_i386.c in Sources */,
+				328F5BFB2B8BA9EF006C3ECF /* xmm_quantize_sub.c in Sources */,
+				328F5BFC2B8BA9EF006C3ECF /* psymodel.c in Sources */,
+				328F5BFD2B8BA9EF006C3ECF /* gain_analysis.c in Sources */,
+				328F5BFE2B8BA9EF006C3ECF /* newmdct.c in Sources */,
+				328F5BFF2B8BA9EF006C3ECF /* layer3.c in Sources */,
+				328F5C002B8BA9EF006C3ECF /* quantize.c in Sources */,
+				328F5C012B8BA9EF006C3ECF /* takehiro.c in Sources */,
+				328F5C022B8BA9EF006C3ECF /* fft.c in Sources */,
+				328F5C032B8BA9EF006C3ECF /* layer1.c in Sources */,
+				328F5C042B8BA9EF006C3ECF /* vbrquantize.c in Sources */,
+				328F5C052B8BA9EF006C3ECF /* lame.c in Sources */,
+				328F5C062B8BA9EF006C3ECF /* common.c in Sources */,
+				328F5C072B8BA9EF006C3ECF /* VbrTag.c in Sources */,
+				328F5C082B8BA9EF006C3ECF /* reservoir.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +806,60 @@
 			};
 			name = Release;
 		};
+		328F5C0C2B8BA9EF006C3ECF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = lame.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = io.sourceforge.lame;
+				PRODUCT_NAME = lame;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+			};
+			name = Debug;
+		};
+		328F5C0D2B8BA9EF006C3ECF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = lame.modulemap;
+				PRODUCT_BUNDLE_IDENTIFIER = io.sourceforge.lame;
+				PRODUCT_NAME = lame;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -721,6 +886,15 @@
 			buildConfigurations = (
 				32028DD7254AFEA000A537DE /* Debug */,
 				32028DD8254AFEA000A537DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		328F5C0B2B8BA9EF006C3ECF /* Build configuration list for PBXNativeTarget "tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				328F5C0C2B8BA9EF006C3ECF /* Debug */,
+				328F5C0D2B8BA9EF006C3ECF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
