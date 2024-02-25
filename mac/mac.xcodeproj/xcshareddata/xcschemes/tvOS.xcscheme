@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "328F5F122B8BB750006C3ECF"
-               BuildableName = "tvOS.framework"
+               BuildableName = "MAC.framework"
                BlueprintName = "tvOS"
                ReferencedContainer = "container:mac.xcodeproj">
             </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "328F5F122B8BB750006C3ECF"
-            BuildableName = "tvOS.framework"
+            BuildableName = "MAC.framework"
             BlueprintName = "tvOS"
             ReferencedContainer = "container:mac.xcodeproj">
          </BuildableReference>
