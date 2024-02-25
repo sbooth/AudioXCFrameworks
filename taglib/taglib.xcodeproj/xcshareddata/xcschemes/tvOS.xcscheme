@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "328F5CB32B8BB183006C3ECF"
-               BuildableName = "tvOS.framework"
+               BuildableName = "taglib.framework"
                BlueprintName = "tvOS"
                ReferencedContainer = "container:taglib.xcodeproj">
             </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "328F5CB32B8BB183006C3ECF"
-            BuildableName = "tvOS.framework"
+            BuildableName = "taglib.framework"
             BlueprintName = "tvOS"
             ReferencedContainer = "container:taglib.xcodeproj">
          </BuildableReference>

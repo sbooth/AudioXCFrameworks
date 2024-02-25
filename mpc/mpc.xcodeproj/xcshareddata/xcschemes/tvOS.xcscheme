@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "328F5C102B8BAAF6006C3ECF"
-               BuildableName = "tvOS.framework"
+               BuildableName = "mpc.framework"
                BlueprintName = "tvOS"
                ReferencedContainer = "container:mpc.xcodeproj">
             </BuildableReference>
@@ -50,7 +50,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "328F5C102B8BAAF6006C3ECF"
-            BuildableName = "tvOS.framework"
+            BuildableName = "mpc.framework"
             BlueprintName = "tvOS"
             ReferencedContainer = "container:mpc.xcodeproj">
          </BuildableReference>
