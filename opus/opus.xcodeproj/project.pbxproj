@@ -537,7 +537,7 @@
 		328F5F012B8BB5D1006C3ECF /* NSQ_del_dec.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714846254F365E00029BD7 /* NSQ_del_dec.c */; };
 		328F5F022B8BB5D1006C3ECF /* stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714B672550439700029BD7 /* stream.c */; };
 		328F5F032B8BB5D1006C3ECF /* control_codec.c in Sources */ = {isa = PBXBuildFile; fileRef = 3271481E254F365E00029BD7 /* control_codec.c */; };
-		328F5F052B8BB5D1006C3ECF /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3260C6BB255461BD00E8C286 /* ogg.framework */; };
+		328F600B2B8BC540006C3ECF /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 328F5F0F2B8BB5D1006C3ECF /* ogg.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -923,7 +923,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				328F5F052B8BB5D1006C3ECF /* ogg.framework in Frameworks */,
+				328F600B2B8BC540006C3ECF /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
