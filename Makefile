@@ -1,4 +1,4 @@
-SUBDIRS := dumb flac lame mac mpc mpg123 ogg opus sndfile speex taglib tta-cpp vorbis wavpack
+SUBDIRS := dumb ebur128 fishsound flac lame mac mpc mpg123 ogg oggz opus sndfile speex taglib tta-cpp vorbis wavpack
 export PREFIX ?= $(CURDIR)
 
 all: $(SUBDIRS)
