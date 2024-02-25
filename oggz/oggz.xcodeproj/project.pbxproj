@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,6 +63,34 @@
 		325A44242885C18D00DD12AC /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 325A441F2885C17500DD12AC /* ogg.framework */; };
 		325A44302885C25100DD12AC /* oggz_off_t_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A442B2885C25100DD12AC /* oggz_off_t_generated.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325A44312885C25100DD12AC /* oggz_off_t_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A442B2885C25100DD12AC /* oggz_off_t_generated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DAC2B8BB29D006C3ECF /* oggz_constants.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CD2885C0DA00DD12AC /* oggz_constants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DAD2B8BB29D006C3ECF /* oggz_packet.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CF2885C0DA00DD12AC /* oggz_packet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DAE2B8BB29D006C3ECF /* oggz_off_t.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D52885C0DA00DD12AC /* oggz_off_t.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DAF2B8BB29D006C3ECF /* oggz_read.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D32885C0DA00DD12AC /* oggz_read.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB02B8BB29D006C3ECF /* oggz_comments.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D42885C0DA00DD12AC /* oggz_comments.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB12B8BB29D006C3ECF /* oggz_off_t_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A442B2885C25100DD12AC /* oggz_off_t_generated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB22B8BB29D006C3ECF /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 321657B228872441003BBB50 /* config.h */; };
+		328F5DB32B8BB29D006C3ECF /* oggz_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D62885C0DA00DD12AC /* oggz_io.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB42B8BB29D006C3ECF /* oggz_table.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D12885C0DA00DD12AC /* oggz_table.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB52B8BB29D006C3ECF /* oggz.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42C92885C0DA00DD12AC /* oggz.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB62B8BB29D006C3ECF /* oggz_stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42D22885C0DA00DD12AC /* oggz_stream.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB72B8BB29D006C3ECF /* oggz_write.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CE2885C0DA00DD12AC /* oggz_write.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB82B8BB29D006C3ECF /* oggz_deprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CC2885C0DA00DD12AC /* oggz_deprecated.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DB92B8BB29D006C3ECF /* oggz_seek.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A42CB2885C0DA00DD12AC /* oggz_seek.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		328F5DBB2B8BB29D006C3ECF /* oggz_stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43772885C0DA00DD12AC /* oggz_stream.c */; };
+		328F5DBC2B8BB29D006C3ECF /* oggz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43822885C0DA00DD12AC /* oggz.c */; };
+		328F5DBD2B8BB29D006C3ECF /* metric_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43742885C0DA00DD12AC /* metric_internal.c */; };
+		328F5DBE2B8BB29D006C3ECF /* oggz_auto.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43792885C0DA00DD12AC /* oggz_auto.c */; };
+		328F5DBF2B8BB29D006C3ECF /* oggz_comments.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437F2885C0DA00DD12AC /* oggz_comments.c */; };
+		328F5DC02B8BB29D006C3ECF /* dirac.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43762885C0DA00DD12AC /* dirac.c */; };
+		328F5DC12B8BB29D006C3ECF /* oggz_write.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43872885C0DA00DD12AC /* oggz_write.c */; };
+		328F5DC22B8BB29D006C3ECF /* oggz_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43722885C0DA00DD12AC /* oggz_table.c */; };
+		328F5DC32B8BB29D006C3ECF /* oggz_dlist.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43892885C0DA00DD12AC /* oggz_dlist.c */; };
+		328F5DC42B8BB29D006C3ECF /* oggz_io.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437B2885C0DA00DD12AC /* oggz_io.c */; };
+		328F5DC52B8BB29D006C3ECF /* oggz_vector.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43812885C0DA00DD12AC /* oggz_vector.c */; };
+		328F5DC62B8BB29D006C3ECF /* oggz_read.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A437A2885C0DA00DD12AC /* oggz_read.c */; };
+		328F5DC72B8BB29D006C3ECF /* oggz_seek.c in Sources */ = {isa = PBXBuildFile; fileRef = 325A43842885C0DA00DD12AC /* oggz_seek.c */; };
+		328F5DC92B8BB29D006C3ECF /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 325A441F2885C17500DD12AC /* ogg.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +107,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 32028DD9254AFEA000A537DE;
 			remoteInfo = iOS;
+		};
+		328F5DD22B8BB29D006C3ECF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 325A44172885C17500DD12AC /* ogg.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 328F5B722B8B7F7D006C3ECF;
+			remoteInfo = tvOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -209,6 +244,7 @@
 		325A44172885C17500DD12AC /* ogg.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ogg.xcodeproj; path = ../ogg/ogg.xcodeproj; sourceTree = "<group>"; };
 		325A442B2885C25100DD12AC /* oggz_off_t_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = oggz_off_t_generated.h; sourceTree = "<group>"; };
 		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		328F5DCE2B8BB29D006C3ECF /* oggz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = oggz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3295D90E288461F7006AA170 /* oggz.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = oggz.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,6 +262,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				325A44242885C18D00DD12AC /* ogg.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5DC82B8BB29D006C3ECF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5DC92B8BB29D006C3ECF /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +293,7 @@
 			children = (
 				32028D08254AE93F00A537DE /* oggz.framework */,
 				32028DD9254AFEA000A537DE /* oggz.framework */,
+				328F5DCE2B8BB29D006C3ECF /* oggz.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -451,6 +496,7 @@
 			children = (
 				325A441D2885C17500DD12AC /* ogg.framework */,
 				325A441F2885C17500DD12AC /* ogg.framework */,
+				328F5DD32B8BB29D006C3ECF /* ogg.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -507,6 +553,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		328F5DAB2B8BB29D006C3ECF /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5DAC2B8BB29D006C3ECF /* oggz_constants.h in Headers */,
+				328F5DAD2B8BB29D006C3ECF /* oggz_packet.h in Headers */,
+				328F5DAE2B8BB29D006C3ECF /* oggz_off_t.h in Headers */,
+				328F5DAF2B8BB29D006C3ECF /* oggz_read.h in Headers */,
+				328F5DB02B8BB29D006C3ECF /* oggz_comments.h in Headers */,
+				328F5DB12B8BB29D006C3ECF /* oggz_off_t_generated.h in Headers */,
+				328F5DB22B8BB29D006C3ECF /* config.h in Headers */,
+				328F5DB32B8BB29D006C3ECF /* oggz_io.h in Headers */,
+				328F5DB42B8BB29D006C3ECF /* oggz_table.h in Headers */,
+				328F5DB52B8BB29D006C3ECF /* oggz.h in Headers */,
+				328F5DB62B8BB29D006C3ECF /* oggz_stream.h in Headers */,
+				328F5DB72B8BB29D006C3ECF /* oggz_write.h in Headers */,
+				328F5DB82B8BB29D006C3ECF /* oggz_deprecated.h in Headers */,
+				328F5DB92B8BB29D006C3ECF /* oggz_seek.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -546,13 +613,32 @@
 			productReference = 32028DD9254AFEA000A537DE /* oggz.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		328F5DAA2B8BB29D006C3ECF /* tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 328F5DCB2B8BB29D006C3ECF /* Build configuration list for PBXNativeTarget "tvOS" */;
+			buildPhases = (
+				328F5DAB2B8BB29D006C3ECF /* Headers */,
+				328F5DBA2B8BB29D006C3ECF /* Sources */,
+				328F5DC82B8BB29D006C3ECF /* Frameworks */,
+				328F5DCA2B8BB29D006C3ECF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tvOS;
+			productName = oggz;
+			productReference = 328F5DCE2B8BB29D006C3ECF /* oggz.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		32028CFF254AE93F00A537DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1220;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -566,7 +652,6 @@
 			knownRegions = (
 				en,
 				Base,
-				English,
 			);
 			mainGroup = 32028CFE254AE93F00A537DE;
 			productRefGroup = 32028D09254AE93F00A537DE /* Products */;
@@ -581,6 +666,7 @@
 			targets = (
 				32028D07254AE93F00A537DE /* macOS */,
 				32028DCC254AFEA000A537DE /* iOS */,
+				328F5DAA2B8BB29D006C3ECF /* tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -600,6 +686,13 @@
 			remoteRef = 325A441E2885C17500DD12AC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		328F5DD32B8BB29D006C3ECF /* ogg.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ogg.framework;
+			remoteRef = 328F5DD22B8BB29D006C3ECF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -611,6 +704,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32028DD5254AFEA000A537DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		328F5DCA2B8BB29D006C3ECF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -660,6 +760,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		328F5DBA2B8BB29D006C3ECF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				328F5DBB2B8BB29D006C3ECF /* oggz_stream.c in Sources */,
+				328F5DBC2B8BB29D006C3ECF /* oggz.c in Sources */,
+				328F5DBD2B8BB29D006C3ECF /* metric_internal.c in Sources */,
+				328F5DBE2B8BB29D006C3ECF /* oggz_auto.c in Sources */,
+				328F5DBF2B8BB29D006C3ECF /* oggz_comments.c in Sources */,
+				328F5DC02B8BB29D006C3ECF /* dirac.c in Sources */,
+				328F5DC12B8BB29D006C3ECF /* oggz_write.c in Sources */,
+				328F5DC22B8BB29D006C3ECF /* oggz_table.c in Sources */,
+				328F5DC32B8BB29D006C3ECF /* oggz_dlist.c in Sources */,
+				328F5DC42B8BB29D006C3ECF /* oggz_io.c in Sources */,
+				328F5DC52B8BB29D006C3ECF /* oggz_vector.c in Sources */,
+				328F5DC62B8BB29D006C3ECF /* oggz_read.c in Sources */,
+				328F5DC72B8BB29D006C3ECF /* oggz_seek.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -668,6 +788,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -699,9 +820,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -722,6 +845,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -732,6 +856,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -763,9 +888,11 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -779,6 +906,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -789,11 +917,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -802,6 +932,8 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = oggz.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
 				PRODUCT_NAME = oggz;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -813,11 +945,13 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -826,6 +960,8 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = oggz.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
 				PRODUCT_NAME = oggz;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -835,6 +971,7 @@
 		32028DD7254AFEA000A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -842,6 +979,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -850,6 +988,8 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = oggz.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
 				PRODUCT_NAME = oggz;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -861,6 +1001,7 @@
 		32028DD8254AFEA000A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -868,6 +1009,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -876,11 +1018,75 @@
 					"@loader_path/Frameworks",
 				);
 				MODULEMAP_FILE = oggz.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
 				PRODUCT_NAME = oggz;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		328F5DCC2B8BB29D006C3ECF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = oggz.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
+				PRODUCT_NAME = oggz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+			};
+			name = Debug;
+		};
+		328F5DCD2B8BB29D006C3ECF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = oggz.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
+				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.liboggz;
+				PRODUCT_NAME = oggz;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 14.0;
 			};
 			name = Release;
 		};
@@ -910,6 +1116,15 @@
 			buildConfigurations = (
 				32028DD7254AFEA000A537DE /* Debug */,
 				32028DD8254AFEA000A537DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		328F5DCB2B8BB29D006C3ECF /* Build configuration list for PBXNativeTarget "tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				328F5DCC2B8BB29D006C3ECF /* Debug */,
+				328F5DCD2B8BB29D006C3ECF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
