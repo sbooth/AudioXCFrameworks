@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "MAC.framework"
+               BuildableName = "speex.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:mac.xcodeproj">
+               ReferencedContainer = "container:speex.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,6 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+            BuildableName = "speex.framework"
+            BlueprintName = "iOS"
+            ReferencedContainer = "container:speex.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

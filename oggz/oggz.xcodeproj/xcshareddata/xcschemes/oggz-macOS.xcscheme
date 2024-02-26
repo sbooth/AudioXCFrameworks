@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "MAC.framework"
-               BlueprintName = "iOS"
-               ReferencedContainer = "container:mac.xcodeproj">
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "oggz.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:oggz.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,6 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "32028D07254AE93F00A537DE"
+            BuildableName = "oggz.framework"
+            BlueprintName = "macOS"
+            ReferencedContainer = "container:oggz.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
