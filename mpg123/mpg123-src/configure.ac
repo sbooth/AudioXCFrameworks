@@ -32,7 +32,7 @@ m4_undefine([V_HEADER])
 
 AC_INIT([mpg123], V_MAJOR.V_MINOR.V_PATCH[]V_SUFFIX, [maintainer@mpg123.org])
 
-m4_define([V_HEADER], m4_esyscmd(grep -e _API_VERSION -e _PATCHLEVEL src/libmpg123/mpg123.h src/libout123/out123.h src/libsyn123/syn123.h))
+m4_define([V_HEADER], m4_esyscmd(grep -e _API_VERSION -e _PATCHLEVEL src/include/mpg123.h src/include/out123.h src/include/syn123.h))
 
 dnl libmpg123
 m4_define([API_VERSION], m4_bregexp(V_HEADER,
@@ -362,6 +362,137 @@ fi
 AC_SUBST(LIB_CFLAGS)
 AC_SUBST(LT_LDFLAGS)
 AC_SUBST(EXEC_LT_LDFLAGS)
+
+dnl ############## Component selection
+
+AC_ARG_ENABLE(components,
+  [AS_HELP_STRING([--disable-components], [(not) build end-user programs with default components, select individual components via --enable-libmpg123 etc.])],
+  [
+    if test "x$enableval" = xyes
+    then
+      build_all=yes
+    else
+      build_all=no
+    fi
+  ],
+  [
+    build_all=yes
+  ]
+)
+
+AC_ARG_ENABLE(programs,
+  [AS_HELP_STRING([--enable-programs], [build (only) programs (with --disable-components)])],
+  [
+    if test "x$enableval" = xyes
+    then
+      build_programs=yes
+    else
+      build_programs=no
+    fi
+  ],
+  [
+    build_programs=no
+  ]
+)
+
+AC_ARG_ENABLE(libmpg123,
+  [AS_HELP_STRING([--enable-libmpg123], [build (only) libmpg123 (with --disable-components)])],
+  [
+    if test "x$enableval" = xyes
+    then
+      build_libmpg123=yes
+    else
+      build_libmpg123=no
+    fi
+  ],
+  [
+    build_libmpg123=no
+  ]
+)
+
+AC_ARG_ENABLE(libout123,
+  [AS_HELP_STRING([--enable-libout123], [build (only) libout123 (with --disable-components)])],
+  [
+    if test "x$enableval" = xyes
+    then
+      build_libout123=yes
+    else
+      build_libout123=no
+    fi
+  ],
+  [
+    build_libout123=no
+  ]
+)
+
+AC_ARG_ENABLE(libout123-modules,
+  [AS_HELP_STRING([--enable-libout123-modules], [build (only) libout123 modules (with --disable-components)])],
+  [
+    if test "x$enableval" = xyes
+    then
+      build_libout123_modules=yes
+    else
+      build_libout123_modules=no
+    fi
+  ],
+  [
+    build_libout123_modules=no
+  ]
+)
+
+AC_ARG_ENABLE(libsyn123,
+  [AS_HELP_STRING([--enable-libsyn123], [build (only) libsyn123 (with --disable-components)])],
+  [
+    if test "x$enableval" = xyes
+    then
+      build_libsyn123=yes
+    else
+      build_libsyn123=no
+    fi
+  ],
+  [
+    build_libsyn123=no
+  ]
+)
+
+if test "x$build_all" = xyes; then
+  build_programs=yes
+  build_libmpg123=yes
+  build_libout123=yes
+  build_libout123_modules=yes
+  build_libsyn123=yes
+fi
+
+AM_CONDITIONAL([BUILD_PROGRAMS],  [ test "x$build_programs" = xyes ])
+AM_CONDITIONAL([BUILD_LIBMPG123], [ test "x$build_libmpg123" = xyes ])
+AM_CONDITIONAL([BUILD_LIBOUT123], [ test "x$build_libout123" = xyes ])
+AM_CONDITIONAL([BUILD_LIBOUT123_MODULES], [ test "x$build_libout123_modules" = xyes ])
+AM_CONDITIONAL([BUILD_LIBOUT123_OR_MODULES], [ test "x$build_libout123" = xyes || test "x$build_libout123_modules" = xyes ])
+AM_CONDITIONAL([BUILD_LIBSYN123], [ test "x$build_libsyn123" = xyes ])
+# If we install libraries, prompting pkgconfig and include directories.
+AM_CONDITIONAL([NEED_LIB], [ test "x$build_libmpg123" = xyes || test "x$build_libout123" = xyes || test "x$build_libout123_modules" = xyes || test "x$build_libsyn123" = xyes ])
+AM_CONDITIONAL([NEED_MAINLIB], [ test "x$build_libmpg123" = xyes || test "x$build_libout123" = xyes || test "x$build_libsyn123" = xyes ])
+
+components=""
+
+if test "x$build_programs" = xyes; then
+  components="$components programs"
+fi
+
+if test "x$build_libmpg123" = xyes; then
+  components="$components libmpg123"
+fi
+if test "x$build_libout123" = xyes; then
+  components="$components libout123"
+fi
+if test "x$build_libout123_modules" = xyes; then
+  components="$components libout123-modules"
+fi
+if test "x$build_libsyn123" = xyes; then
+  components="$components libsyn123"
+fi
+
+components=$(echo $components)
 
 dnl ############## Configurable Options
 
@@ -1183,30 +1314,18 @@ AC_SUBST(YASMFLAGS)
 
 dnl ############## Really basic headers, needed for other checks.
 
+AC_MSG_CHECKING([for basic C99 features])
+AC_LINK_IFELSE(
+   [AC_LANG_SOURCE([`cat "$srcdir/test_c99.c"`])],
+   [have_c99=yes; AC_MSG_RESULT([yes])],
+   [have_c99=no; AC_MSG_RESULT([no])]
+)
+if test "x$have_c99" = xno; then
+  AC_MSG_ERROR([Your toolchain lacks basic C99 features. See test_c99.c for the requirements.])
+fi
+
 dnl Is it too paranoid to specifically check for stdint.h and limits.h?
-AC_CHECK_HEADERS([stdio.h stdlib.h string.h unistd.h sched.h sys/ioctl.h sys/types.h stdint.h limits.h inttypes.h sys/time.h sys/wait.h sys/resource.h sys/signal.h signal.h sys/select.h dirent.h sys/stat.h])
-
-dnl ############## Types
-
-# Using the lower level macros instead of AC_TYPE_* for compatibility with not freshest autoconf.
-# Re-think this list. Some things just should be a given. We assume C99 now.
-# Rather think about assumptions like int64_t >= ptrdiff_t.
-AC_CHECK_TYPE(size_t, unsigned long)
-AC_CHECK_TYPE(uintptr_t, unsigned long)
-AC_CHECK_TYPE(ssize_t, long)
-AC_CHECK_TYPE(ptrdiff_t, long)
-AC_CHECK_TYPE(int32_t, int)
-AC_CHECK_TYPE(int64_t, long long)
-AC_CHECK_TYPE(uint32_t, unsigned int)
-AC_CHECK_TYPE(int16_t, short)
-AC_CHECK_TYPE(uint16_t, unsigned short)
-AC_CHECK_SIZEOF(size_t)
-AC_CHECK_SIZEOF(ssize_t)
-AC_CHECK_SIZEOF(int32_t)
-AC_CHECK_SIZEOF(long)
-
-# We do not need to know if off_t actually changes size using
-# _FILE_OFFSET_BITS, only need to know what size it has.
+AC_CHECK_HEADERS([unistd.h sched.h sys/ioctl.h sys/types.h sys/time.h sys/wait.h sys/resource.h sys/signal.h signal.h sys/select.h dirent.h sys/stat.h])
 
 dnl ############## LFS stuff
 
@@ -1236,8 +1355,13 @@ AC_COMPUTE_INT(switched_off_size, sizeof(off_t), [
 #include <sys/types.h>
 ])
 AC_MSG_RESULT([$switched_off_size])
-# If you have predefined _FILE_OFFSET_BITS, I will treat that as a system
-# property.
+AC_MSG_CHECKING([unswitched off_t size])
+AC_COMPUTE_INT(unswitched_off_size, sizeof(off_t), [
+#undef  _FILE_OFFSET_BITS
+#include <sys/types.h>
+])
+AC_MSG_RESULT([$unswitched_off_size])
+# Now the size without meddling, possibly enforced to 64 bits by system settings.
 AC_CHECK_SIZEOF(off_t, [], [
 #include <sys/types.h>
 ])
@@ -1260,6 +1384,15 @@ if test "x$ac_cv_sizeof_off_t" != "x$switched_off_size"; then
   AC_DEFINE(LFS_SENSITIVE, 1, [ System redefines off_t when defining _FILE_OFFSET_BITS to 64. ])
 else
   lfs_sensitive=no
+fi
+
+forced_off_64=no
+if test "x$unswitched_off_size" != "x$ac_cv_sizeof_off_t"; then
+  if test "x$ac_cv_sizeof_off_t" = x8; then
+    AC_MSG_NOTICE([Detected system with enforced 64 bit offsets, dropping suffixless symbols for uncryptic ABI breakage.])
+    AC_DEFINE([FORCED_OFF_64], 1, [System setup enforces 64 bit offsets where 32 bit would be native.])
+    forced_off_64=yes
+  fi
 fi
 
 use_largefile=auto
@@ -1766,7 +1899,7 @@ fi
 dnl ############## Output module choice
 
 # The full list of supported modules to check, first come, first serve.
-check_modules="pulse alsa tinyalsa oss coreaudio sndio sun win32 win32_wasapi os2 esd jack portaudio sdl nas arts openal dummy"
+check_modules="pulse alsa tinyalsa oss coreaudio sndio sun win32 win32_wasapi os2 esd jack portaudio sdl nas arts openal"
 # Only check qsa before all else on QNX.
 # It would mask ALSA otherwise.
 case $host in
@@ -1782,11 +1915,14 @@ check_forced=no
 check_failed=no
 if test "x$with_audio" != "x"; then
 	check_modules=`echo $with_audio|tr , ' '`
-	if ! echo "$check_modules" | grep -qw dummy; then
-		check_modules="$check_modules dummy"
-	fi
 	echo "Limiting outputs to build according to your preference: $check_modules"
 	check_forced=yes
+fi
+
+# Dummy output module is always built alongside libout123, but not
+# when just building the modules.
+if test "x$build_libout123" = xyes && ! echo "$check_modules" | grep -qw dummy; then
+	check_modules="$check_modules dummy"
 fi
 
 PKG_PROG_PKG_CONFIG([])
@@ -2787,119 +2923,6 @@ if test x"$ipv6" = xenabled; then
 	fi
 fi
 
-dnl ############## Component selection
-
-AC_ARG_ENABLE(components,
-  [AS_HELP_STRING([--disable-components], [(not) build end-user programs with default components, select individual components via --enable-libmpg123 etc.])],
-  [
-    if test "x$enableval" = xyes
-    then
-      build_all=yes
-    else
-      build_all=no
-    fi
-  ],
-  [
-    build_all=yes
-  ]
-)
-
-AC_ARG_ENABLE(libmpg123,
-  [AS_HELP_STRING([--enable-libmpg123], [build (only) libmpg123 (with --disable-components)])],
-  [
-    if test "x$enableval" = xyes
-    then
-      build_libmpg123=yes
-    else
-      build_libmpg123=no
-    fi
-  ],
-  [
-    build_libmpg123=no
-  ]
-)
-
-AC_ARG_ENABLE(libout123,
-  [AS_HELP_STRING([--enable-libout123], [build (only) libout123 (with --disable-components)])],
-  [
-    if test "x$enableval" = xyes
-    then
-      build_libout123=yes
-    else
-      build_libout123=no
-    fi
-  ],
-  [
-    build_libout123=no
-  ]
-)
-
-AC_ARG_ENABLE(libout123-modules,
-  [AS_HELP_STRING([--enable-libout123-modules], [build (only) libout123 modules (with --disable-components)])],
-  [
-    if test "x$enableval" = xyes
-    then
-      build_libout123_modules=yes
-    else
-      build_libout123_modules=no
-    fi
-  ],
-  [
-    build_libout123_modules=no
-  ]
-)
-
-AC_ARG_ENABLE(libsyn123,
-  [AS_HELP_STRING([--enable-libsyn123], [build (only) libsyn123 (with --disable-components)])],
-  [
-    if test "x$enableval" = xyes
-    then
-      build_libsyn123=yes
-    else
-      build_libsyn123=no
-    fi
-  ],
-  [
-    build_libsyn123=no
-  ]
-)
-
-if test "x$build_all" = xyes; then
-  build_programs=yes
-  build_libmpg123=yes
-  build_libout123=yes
-  build_libout123_modules=yes
-  build_libsyn123=yes
-  components="programs"
-else
-  build_programs=no
-fi
-
-AM_CONDITIONAL([BUILD_PROGRAMS],  [ test "x$build_programs" = xyes ])
-AM_CONDITIONAL([BUILD_LIBMPG123], [ test "x$build_libmpg123" = xyes ])
-AM_CONDITIONAL([BUILD_LIBOUT123], [ test "x$build_libout123" = xyes ])
-AM_CONDITIONAL([BUILD_LIBOUT123_MODULES], [ test "x$build_libout123_modules" = xyes ])
-AM_CONDITIONAL([BUILD_LIBSYN123], [ test "x$build_libsyn123" = xyes ])
-AM_CONDITIONAL([NEED_FMT123], [ test "x$build_libmpg123" = xyes || test "x$build_libout123" = xyes || test "x$build_libsyn123" = xyes ])
-# If we install libraries, prompting pkgconfig and include directories.
-AM_CONDITIONAL([NEED_LIB], [ test "x$build_libmpg123" = xyes || test "x$build_libout123" = xyes || test "x$build_libout123_modules" = xyes || test "x$build_libsyn123" = xyes ])
-AM_CONDITIONAL([NEED_MAINLIB], [ test "x$build_libmpg123" = xyes || test "x$build_libout123" = xyes || test "x$build_libsyn123" = xyes ])
-
-
-if test "x$build_libmpg123" = xyes; then
-  components="$components libmpg123"
-fi
-if test "x$build_libout123" = xyes; then
-  components="$components libout123"
-fi
-if test "x$build_libout123_modules" = xyes; then
-  components="$components libout123-modules"
-fi
-if test "x$build_libsyn123" = xyes; then
-  components="$components libsyn123"
-fi
-components=$(echo $components)
-
 dnl ############## Library cleanup
 
 PROG_LIBS=$LIBS
@@ -2960,7 +2983,15 @@ fi
 echo "  largefile sensitive ..... $lfs_sensitive"
 echo "  default offsets ......... $default_offset_bits"
 echo "  explicit 64 bit offsets . $use_largefile"
+echo "  forced 64 bit offsets ... $forced_off_64"
 echo "  only portable API ....... $portable_api"
+
+if test "x$forced_off_64" = xyes; then
+  echo
+  echo "Note: Ensure that client programs are built with _FILE_OFFSET_BITS defined to 64, too."
+  echo "      Old binaries built for 32 bit off_t may fail missing symbols in mpg123 libraries."
+  echo
+fi
 
 echo "
   Core libmpg123 features:
@@ -3019,6 +3050,14 @@ if test x"$cpu_type" = xi486; then
   echo "to perform better nowadays. Also, the decoder misses features like volume"
   echo "scaling and has clipping issues. Continue if you are into software archeology"
   echo "only."
+fi
+
+if test "x$use_extlib" = xyes; then
+  echo
+  echo "Warning: You opted to use external builds of the mpg123 libraries. They need to"
+  echo "         match the headers shipped with this source (which are used during build"
+  echo "         regardless)."
+  echo
 fi
 
 echo

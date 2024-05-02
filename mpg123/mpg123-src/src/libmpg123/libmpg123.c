@@ -7,19 +7,19 @@
 */
 
 #include "mpg123lib_intern.h"
-#include "version.h"
+#include "../version.h"
 #include "icy2utf8.h"
 
 #include "gapless.h"
 /* Want accurate rounding function regardless of decoder setup. */
 #define FORCE_ACCURATE
-#include "sample.h"
+#include "../common/sample.h"
 #include "parse.h"
 #ifndef PORTABLE_API
 #include "lfs_wrap.h"
 #endif
 
-#include "debug.h"
+#include "../common/debug.h"
 
 #define SEEKFRAME(mh) ((mh)->ignoreframe < 0 ? 0 : (mh)->ignoreframe)
 
@@ -560,6 +560,15 @@ double attribute_align_arg mpg123_geteq2(mpg123_handle *mh, int channel, int ban
 }
 
 #ifndef PORTABLE_API
+
+#ifdef FORCED_OFF_64
+// Only _64 symbols for a system-wide enforced _FILE_OFFSET_BITS=64.
+#define mpg123_open mpg123_open_64
+#define mpg123_open_fixed mpg123_open_fixed_64
+#define mpg123_open_fd mpg123_open_fd_64
+#define mpg123_open_handle mpg123_open_handle_64
+#endif
+
 /* plain file access, no http! */
 int attribute_align_arg mpg123_open(mpg123_handle *mh, const char *path)
 {
@@ -579,7 +588,9 @@ int attribute_align_arg mpg123_open(mpg123_handle *mh, const char *path)
 // The convenience function mpg123_open_fixed() wraps over acual mpg123_open
 // and hence needs to have the exact same code in lfs_wrap.c. The flesh is
 // in INT123_open_fixed_pre() and INT123_open_fixed_post(), wich are only defined here.
-int INT123_open_fixed_pre(mpg123_handle *mh, int channels, int encoding)
+// Update: The open routines are just alias calls now, since the conversion to
+// int64_t internally.
+static int INT123_open_fixed_pre(mpg123_handle *mh, int channels, int encoding)
 {
 	if(!mh)
 		return MPG123_BAD_HANDLE;
@@ -590,7 +601,7 @@ int INT123_open_fixed_pre(mpg123_handle *mh, int channels, int encoding)
 	return err;
 }
 
-int INT123_open_fixed_post(mpg123_handle *mh, int channels, int encoding)
+static int INT123_open_fixed_post(mpg123_handle *mh, int channels, int encoding)
 {
 	if(!mh)
 		return MPG123_BAD_HANDLE;
@@ -637,7 +648,7 @@ int attribute_align_arg mpg123_open_fd(mpg123_handle *mh, int fd)
 		ret = INT123_open_stream_handle(mh, mh->wrapperdata);
 	return ret;
 }
-#endif
+#endif // PORTABLE_API
 
 int attribute_align_arg mpg123_open_handle(mpg123_handle *mh, void *iohandle)
 {
@@ -648,9 +659,10 @@ int attribute_align_arg mpg123_open_handle(mpg123_handle *mh, void *iohandle)
 #ifndef PORTABLE_API
 	ret = INT123_wrap_open( mh, iohandle, NULL, -1
 	,	mh->p.timeout, mh->p.flags & MPG123_QUIET );
+	iohandle = ret == LFS_WRAP_NONE ? iohandle : mh->wrapperdata;
 	if(ret >= 0)
 #endif
-		ret = INT123_open_stream_handle(mh, ret == LFS_WRAP_NONE ? iohandle : mh->wrapperdata);
+		ret = INT123_open_stream_handle(mh, iohandle);
 	return ret;
 }
 
@@ -911,7 +923,8 @@ static void decode_the_frame(mpg123_handle *fr)
 		if(fr->buffer.fill < needed_bytes)
 		{
 			if(VERBOSE2)
-			fprintf(stderr, "Note: broken frame %li, filling up with %"SIZE_P" zeroes, from %"SIZE_P"\n", (long)fr->num, (size_p)(needed_bytes-fr->buffer.fill), (size_p)fr->buffer.fill);
+				fprintf( stderr, "Note: broken frame %li, filling up with %zu zeroes, from %zu\n"
+				,	(long)fr->num, (needed_bytes-fr->buffer.fill), fr->buffer.fill );
 
 			/*
 				One could do a loop with individual samples instead... but zero is zero
@@ -931,7 +944,7 @@ static void decode_the_frame(mpg123_handle *fr)
 		else
 		{
 			if(NOQUIET)
-			error2("I got _more_ bytes than expected (%"SIZE_P" / %"SIZE_P"), that should not be possible!", (size_p)fr->buffer.fill, (size_p)needed_bytes);
+			error2("I got _more_ bytes than expected (%zu / %zu), that should not be possible!", fr->buffer.fill, needed_bytes);
 		}
 	}
 #endif

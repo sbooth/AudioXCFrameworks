@@ -1,3 +1,42 @@
+1.32.6
+------
+- build: Detect forced 64 bit offsets on a dual-mode system that used
+  to default to 32 bits and drop ambiguous suffix-less symbols in that
+  case. This avoids subtle ABI breakage (causing memory corruption)
+  with existing binaries and instead has them fail during runtime linking.
+  You trigger that when having -D_FILE_OFFSET_BITS=64 in your compiler
+  flags during mpg123 build.
+
+1.32.5
+------
+
+- build:
+-- CMake port uses CFLAGS for pulse/jack/tinyalsa properly now (bug 366).
+-- CMake port links libsyn123 with libm now (bug 370).
+- libmpg123:
+-- Fix --enable-portable (no usage of LFS_WRAP_NONE, bug 368).
+-- Fix dct36 wrapper usage for x86-64 and NEON. Stupid (bug 367) and
+   also avoid returning void.
+-- Make ARM builds work with nagging (missing feature macros for std=c99).
+
+1.32.4
+------
+- build:
+-- Reorganize shared headers, API headers into src/include.
+-- Use relative include paths, avoiding internal directories in
+   CPPFLAGS except for config.h.
+-- Group C99 feature checks and make several standard headers
+   mandatory.
+-- Get rid of SIZE_P, OFF_P and friends.
+-- Only enforce dummy module together with libout123, to be able
+   to build individual modules using --disable-components logic.
+- out123:
+-- added --libversion
+- libmpg123:
+-- Avoid indirect branches into the assembly routines by using C wrappers
+   also for dct36, relieving us of the need to care for bti / endbr
+   instructions for control flow integrity.
+
 1.32.3
 ------
 - ports/cmake: Only enable modules with GetThreadErrorMode() on Windows.
@@ -8,7 +47,6 @@
 
 1.32.2
 ------
-
 - libmpg123: Re-introduce _64 symbols on native 64 bit offset platforms. This
   was a regression since 1.31 series. Sorry, too much cleanup, not enough
   testing.

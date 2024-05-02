@@ -37,6 +37,9 @@
 /* Define if FIFO support is enabled. */
 #undef FIFO
 
+/* System setup enforces 64 bit offsets where 32 bit would be native. */
+#undef FORCED_OFF_64
+
 /* Define if frame index should be used. */
 #undef FRAME_INDEX
 
@@ -132,9 +135,6 @@
 
 /* Define to 1 if you have the `mx' library (-lmx). */
 #undef HAVE_LIBMX
-
-/* Define to 1 if you have the <limits.h> header file. */
-#undef HAVE_LIMITS_H
 
 /* Define to 1 if you have the <linux/soundcard.h> header file. */
 #undef HAVE_LINUX_SOUNDCARD_H
@@ -458,20 +458,8 @@
 /* Define for calculating tables at runtime. */
 #undef RUNTIME_TABLES
 
-/* The size of `int32_t', as computed by sizeof. */
-#undef SIZEOF_INT32_T
-
-/* The size of `long', as computed by sizeof. */
-#undef SIZEOF_LONG
-
 /* The size of `off_t', as computed by sizeof. */
 #undef SIZEOF_OFF_T
-
-/* The size of `size_t', as computed by sizeof. */
-#undef SIZEOF_SIZE_T
-
-/* The size of `ssize_t', as computed by sizeof. */
-#undef SIZEOF_SSIZE_T
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
@@ -534,30 +522,3 @@
 #ifndef __cplusplus
 #undef inline
 #endif
-
-/* Define to `short' if <sys/types.h> does not define. */
-#undef int16_t
-
-/* Define to `int' if <sys/types.h> does not define. */
-#undef int32_t
-
-/* Define to `long long' if <sys/types.h> does not define. */
-#undef int64_t
-
-/* Define to `long' if <sys/types.h> does not define. */
-#undef ptrdiff_t
-
-/* Define to `unsigned long' if <sys/types.h> does not define. */
-#undef size_t
-
-/* Define to `long' if <sys/types.h> does not define. */
-#undef ssize_t
-
-/* Define to `unsigned short' if <sys/types.h> does not define. */
-#undef uint16_t
-
-/* Define to `unsigned int' if <sys/types.h> does not define. */
-#undef uint32_t
-
-/* Define to `unsigned long' if <sys/types.h> does not define. */
-#undef uintptr_t
