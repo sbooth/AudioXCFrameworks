@@ -15,8 +15,24 @@ EXTRA_DIST = \
 	cmake/CheckCLinkerFlag.cmake \
 	cmake/modules/FindIconv.cmake \
 	cmake/TestLargeFiles.cmake \
-	wavpackdll/resource.h \
-	wavpackdll/wavpackdll.rc
+	\
+	cli/Makefile.w32 \
+	src/Makefile.os2 \
+	src/Makefile.w32 \
+	src/wavpack.exports \
+	src/pack_x64.asm \
+	src/pack_x86.asm \
+	src/unpack_x64.asm \
+	src/unpack_x86.asm \
+	\
+	src/libwavpack.vcxproj \
+	wavpackexe/wavpack.vcxproj \
+	wavpackdll/wavpackdll.vcxproj \
+	wvgainexe/wvgain.vcxproj \
+	wvunpackexe/wvunpack.vcxproj \
+	wvtagexe/wvtag.vcxproj \
+	wvtestexe/wvtest.vcxproj \
+	wavpack.sln masm.rules
 
 MAINTAINERCLEANFILES = \
 	aclocal.m4 \
@@ -80,13 +96,14 @@ cli_wvtag_LDFLAGS = -rpath $(libdir)
 endif
 cli_wvtag_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) $(LIBICONV)
 
+# FIXME: wvtest relies on pthreads only and doesn't use win32 threads
 check_PROGRAMS = cli/wvtest
 cli_wvtest_SOURCES = cli/wvtest.c cli/md5.c
 cli_wvtest_CFLAGS = $(AM_CFLAGS) -I$(top_srcdir)/include
 if ENABLE_RPATH
 cli_wvtest_LDFLAGS = -rpath $(libdir)
 endif
-cli_wvtest_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) -lpthread
+cli_wvtest_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) $(LIBTHREAD)
 
 TESTS = cli/fast-tests
 TESTS_ENVIRONMENT = $(SHELL)
@@ -104,26 +121,11 @@ pkginclude_HEADERS = include/wavpack.h
 ########
 # man/ #
 ########
-if ENABLE_MAN
-.xml.1:
-	$(XSLTPROC) -nonet -o man/ http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
-
-SUFFIXES = .1 .xml
-endif
-
 dist_man_MANS = \
 	man/wavpack.1 \
 	man/wvgain.1 \
 	man/wvunpack.1 \
 	man/wvtag.1
-
-EXTRA_DIST += \
-	man/wavpack.xml \
-	man/wvgain.xml \
-	man/wvunpack.xml \
-	man/wvtag.xml
-
-MAINTAINERCLEANFILES += $(man_MANS)
 
 ########
 # src/ #
@@ -177,6 +179,18 @@ if ENABLE_ARMASM
 src_libwavpack_la_SOURCES += src/unpack_armv7.S
 endif
 
+if WINDOWS_HOST
+if HAVE_WINDRES
+src_libwavpack_la_SOURCES += wavpackdll/dummy.c wavpackdll/wavpackdll.rc wavpackdll/resource.h
+src_libwavpack_la_DEPENDENCIES = wavpackdll/wavpackdll.o
+win32res_link = -Wl,wavpackdll/wavpackdll.o
+wavpackdll/wavpackdll.o: wavpackdll/wavpackdll.rc
+endif
+endif
+
 src_libwavpack_la_CFLAGS = $(AM_CFLAGS) -I$(top_srcdir)/include
-src_libwavpack_la_LIBADD = $(AM_LDADD) $(LIBM)
-src_libwavpack_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -export-symbols-regex '^Wavpack.*$$' -no-undefined
+src_libwavpack_la_LIBADD = $(AM_LDADD) $(LIBM) $(LIBTHREAD)
+src_libwavpack_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) $(win32res_link) -export-symbols-regex '^Wavpack.*$$' -no-undefined
+
+.rc.o:
+	$(RC) $(AM_CPPFLAGS) -i $< $@

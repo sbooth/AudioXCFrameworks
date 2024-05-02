@@ -104,10 +104,16 @@ check_PROGRAMS = cli/wvtest$(EXEEXT)
 @ENABLE_X86ASM_TRUE@am__append_7 = src/pack_x86.S src/unpack_x86.S
 @ENABLE_X64ASM_TRUE@am__append_8 = src/pack_x64.S src/unpack_x64.S
 @ENABLE_ARMASM_TRUE@am__append_9 = src/unpack_armv7.S
+@HAVE_WINDRES_TRUE@@WINDOWS_HOST_TRUE@am__append_10 = wavpackdll/dummy.c wavpackdll/wavpackdll.rc wavpackdll/resource.h
+@HAVE_WINDRES_FALSE@src_libwavpack_la_DEPENDENCIES =  \
+@HAVE_WINDRES_FALSE@	$(am__DEPENDENCIES_1) \
+@HAVE_WINDRES_FALSE@	$(am__DEPENDENCIES_1)
+@WINDOWS_HOST_FALSE@src_libwavpack_la_DEPENDENCIES =  \
+@WINDOWS_HOST_FALSE@	$(am__DEPENDENCIES_1) \
+@WINDOWS_HOST_FALSE@	$(am__DEPENDENCIES_1)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
@@ -153,7 +159,6 @@ am__uninstall_files_from_dir = { \
   }
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
-src_libwavpack_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__src_libwavpack_la_SOURCES_DIST = src/common_utils.c \
 	src/decorr_utils.c src/entropy_utils.c src/extra1.c \
 	src/extra2.c src/open_utils.c src/open_filename.c \
@@ -165,7 +170,8 @@ am__src_libwavpack_la_SOURCES_DIST = src/common_utils.c \
 	src/wavpack_version.h src/unpack3.c src/unpack3_open.c \
 	src/unpack3_seek.c src/pack_dsd.c src/unpack_dsd.c \
 	src/pack_x86.S src/unpack_x86.S src/pack_x64.S \
-	src/unpack_x64.S src/unpack_armv7.S
+	src/unpack_x64.S src/unpack_armv7.S wavpackdll/dummy.c \
+	wavpackdll/wavpackdll.rc wavpackdll/resource.h
 am__dirstamp = $(am__leading_dot)dirstamp
 @ENABLE_LEGACY_TRUE@am__objects_1 = src/libwavpack_la-unpack3.lo \
 @ENABLE_LEGACY_TRUE@	src/libwavpack_la-unpack3_open.lo \
@@ -175,6 +181,7 @@ am__dirstamp = $(am__leading_dot)dirstamp
 @ENABLE_X86ASM_TRUE@am__objects_3 = src/pack_x86.lo src/unpack_x86.lo
 @ENABLE_X64ASM_TRUE@am__objects_4 = src/pack_x64.lo src/unpack_x64.lo
 @ENABLE_ARMASM_TRUE@am__objects_5 = src/unpack_armv7.lo
+@HAVE_WINDRES_TRUE@@WINDOWS_HOST_TRUE@am__objects_6 = wavpackdll/src_libwavpack_la-dummy.lo
 am_src_libwavpack_la_OBJECTS = src/libwavpack_la-common_utils.lo \
 	src/libwavpack_la-decorr_utils.lo \
 	src/libwavpack_la-entropy_utils.lo src/libwavpack_la-extra1.lo \
@@ -191,7 +198,7 @@ am_src_libwavpack_la_OBJECTS = src/libwavpack_la-common_utils.lo \
 	src/libwavpack_la-unpack_utils.lo \
 	src/libwavpack_la-write_words.lo $(am__objects_1) \
 	$(am__objects_2) $(am__objects_3) $(am__objects_4) \
-	$(am__objects_5)
+	$(am__objects_5) $(am__objects_6)
 src_libwavpack_la_OBJECTS = $(am_src_libwavpack_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -204,13 +211,13 @@ src_libwavpack_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 am__cli_wavpack_SOURCES_DIST = cli/wavpack.c cli/riff.c cli/wave64.c \
 	cli/caff.c cli/dsdiff.c cli/dsf.c cli/aiff.c cli/utils.c \
 	cli/md5.c cli/import_id3.c cli/win32_unicode_support.c
-@WINDOWS_HOST_TRUE@am__objects_6 = cli/wavpack-win32_unicode_support.$(OBJEXT)
+@WINDOWS_HOST_TRUE@am__objects_7 = cli/wavpack-win32_unicode_support.$(OBJEXT)
 am_cli_wavpack_OBJECTS = cli/wavpack-wavpack.$(OBJEXT) \
 	cli/wavpack-riff.$(OBJEXT) cli/wavpack-wave64.$(OBJEXT) \
 	cli/wavpack-caff.$(OBJEXT) cli/wavpack-dsdiff.$(OBJEXT) \
 	cli/wavpack-dsf.$(OBJEXT) cli/wavpack-aiff.$(OBJEXT) \
 	cli/wavpack-utils.$(OBJEXT) cli/wavpack-md5.$(OBJEXT) \
-	cli/wavpack-import_id3.$(OBJEXT) $(am__objects_6)
+	cli/wavpack-import_id3.$(OBJEXT) $(am__objects_7)
 cli_wavpack_OBJECTS = $(am_cli_wavpack_OBJECTS)
 cli_wavpack_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
@@ -219,10 +226,10 @@ cli_wavpack_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(CFLAGS) $(cli_wavpack_LDFLAGS) $(LDFLAGS) -o $@
 am__cli_wvgain_SOURCES_DIST = cli/wvgain.c cli/utils.c \
 	cli/win32_unicode_support.c
-@WINDOWS_HOST_TRUE@am__objects_7 =  \
+@WINDOWS_HOST_TRUE@am__objects_8 =  \
 @WINDOWS_HOST_TRUE@	cli/wvgain-win32_unicode_support.$(OBJEXT)
 am_cli_wvgain_OBJECTS = cli/wvgain-wvgain.$(OBJEXT) \
-	cli/wvgain-utils.$(OBJEXT) $(am__objects_7)
+	cli/wvgain-utils.$(OBJEXT) $(am__objects_8)
 cli_wvgain_OBJECTS = $(am_cli_wvgain_OBJECTS)
 cli_wvgain_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1)
 cli_wvgain_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -230,11 +237,11 @@ cli_wvgain_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(CFLAGS) $(cli_wvgain_LDFLAGS) $(LDFLAGS) -o $@
 am__cli_wvtag_SOURCES_DIST = cli/wvtag.c cli/utils.c cli/import_id3.c \
 	cli/win32_unicode_support.c
-@WINDOWS_HOST_TRUE@am__objects_8 =  \
+@WINDOWS_HOST_TRUE@am__objects_9 =  \
 @WINDOWS_HOST_TRUE@	cli/wvtag-win32_unicode_support.$(OBJEXT)
 am_cli_wvtag_OBJECTS = cli/wvtag-wvtag.$(OBJEXT) \
 	cli/wvtag-utils.$(OBJEXT) cli/wvtag-import_id3.$(OBJEXT) \
-	$(am__objects_8)
+	$(am__objects_9)
 cli_wvtag_OBJECTS = $(am_cli_wvtag_OBJECTS)
 cli_wvtag_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
@@ -244,7 +251,8 @@ cli_wvtag_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 am_cli_wvtest_OBJECTS = cli/wvtest-wvtest.$(OBJEXT) \
 	cli/wvtest-md5.$(OBJEXT)
 cli_wvtest_OBJECTS = $(am_cli_wvtest_OBJECTS)
-cli_wvtest_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1)
+cli_wvtest_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 cli_wvtest_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(cli_wvtest_CFLAGS) \
 	$(CFLAGS) $(cli_wvtest_LDFLAGS) $(LDFLAGS) -o $@
@@ -252,7 +260,7 @@ am__cli_wvunpack_SOURCES_DIST = cli/wvunpack.c cli/riff_write.c \
 	cli/wave64_write.c cli/caff_write.c cli/dsdiff_write.c \
 	cli/aiff_write.c cli/dsf_write.c cli/utils.c cli/md5.c \
 	cli/win32_unicode_support.c
-@WINDOWS_HOST_TRUE@am__objects_9 = cli/wvunpack-win32_unicode_support.$(OBJEXT)
+@WINDOWS_HOST_TRUE@am__objects_10 = cli/wvunpack-win32_unicode_support.$(OBJEXT)
 am_cli_wvunpack_OBJECTS = cli/wvunpack-wvunpack.$(OBJEXT) \
 	cli/wvunpack-riff_write.$(OBJEXT) \
 	cli/wvunpack-wave64_write.$(OBJEXT) \
@@ -260,7 +268,7 @@ am_cli_wvunpack_OBJECTS = cli/wvunpack-wvunpack.$(OBJEXT) \
 	cli/wvunpack-dsdiff_write.$(OBJEXT) \
 	cli/wvunpack-aiff_write.$(OBJEXT) \
 	cli/wvunpack-dsf_write.$(OBJEXT) cli/wvunpack-utils.$(OBJEXT) \
-	cli/wvunpack-md5.$(OBJEXT) $(am__objects_9)
+	cli/wvunpack-md5.$(OBJEXT) $(am__objects_10)
 cli_wvunpack_OBJECTS = $(am_cli_wvunpack_OBJECTS)
 cli_wvunpack_DEPENDENCIES = src/libwavpack.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
@@ -335,7 +343,8 @@ am__depfiles_remade = cli/$(DEPDIR)/wavpack-aiff.Po \
 	src/$(DEPDIR)/libwavpack_la-write_words.Plo \
 	src/$(DEPDIR)/pack_x64.Plo src/$(DEPDIR)/pack_x86.Plo \
 	src/$(DEPDIR)/unpack_armv7.Plo src/$(DEPDIR)/unpack_x64.Plo \
-	src/$(DEPDIR)/unpack_x86.Plo
+	src/$(DEPDIR)/unpack_x86.Plo \
+	wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Plo
 am__mv = mv -f
 CPPASCOMPILE = $(CCAS) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CCASFLAGS) $(CCASFLAGS)
@@ -479,7 +488,6 @@ EGREP = @EGREP@
 ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
-FILECMD = @FILECMD@
 GREP = @GREP@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -492,6 +500,7 @@ LIBICONV = @LIBICONV@
 LIBM = @LIBM@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
+LIBTHREAD = @LIBTHREAD@
 LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
@@ -520,14 +529,12 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 RANLIB = @RANLIB@
+RC = @RC@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-XMLCATALOG = @XMLCATALOG@
-XML_CATALOG_FILE = @XML_CATALOG_FILE@
-XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -593,13 +600,44 @@ dist_html_DATA = \
 	doc/wavpack_doc.html \
 	doc/style.css
 
-EXTRA_DIST = CMakeLists.txt cmake/CheckCLinkerFlag.cmake \
-	cmake/modules/FindIconv.cmake cmake/TestLargeFiles.cmake \
-	wavpackdll/resource.h wavpackdll/wavpackdll.rc man/wavpack.xml \
-	man/wvgain.xml man/wvunpack.xml man/wvtag.xml
-MAINTAINERCLEANFILES = aclocal.m4 ar-lib compile config.guess \
-	config.rpath config.sub configure depcomp install-sh ltmain.sh \
-	Makefile.in missing $(man_MANS)
+EXTRA_DIST = \
+	CMakeLists.txt \
+	cmake/CheckCLinkerFlag.cmake \
+	cmake/modules/FindIconv.cmake \
+	cmake/TestLargeFiles.cmake \
+	\
+	cli/Makefile.w32 \
+	src/Makefile.os2 \
+	src/Makefile.w32 \
+	src/wavpack.exports \
+	src/pack_x64.asm \
+	src/pack_x86.asm \
+	src/unpack_x64.asm \
+	src/unpack_x86.asm \
+	\
+	src/libwavpack.vcxproj \
+	wavpackexe/wavpack.vcxproj \
+	wavpackdll/wavpackdll.vcxproj \
+	wvgainexe/wvgain.vcxproj \
+	wvunpackexe/wvunpack.vcxproj \
+	wvtagexe/wvtag.vcxproj \
+	wvtestexe/wvtest.vcxproj \
+	wavpack.sln masm.rules
+
+MAINTAINERCLEANFILES = \
+	aclocal.m4 \
+	ar-lib \
+	compile \
+	config.guess \
+	config.rpath \
+	config.sub \
+	configure \
+	depcomp \
+	install-sh \
+	ltmain.sh \
+	Makefile.in \
+	missing
+
 cli_wavpack_SOURCES = cli/wavpack.c cli/riff.c cli/wave64.c cli/caff.c \
 	cli/dsdiff.c cli/dsf.c cli/aiff.c cli/utils.c cli/md5.c \
 	cli/import_id3.c $(am__append_1)
@@ -625,7 +663,7 @@ cli_wvtag_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) $(LIBICONV)
 cli_wvtest_SOURCES = cli/wvtest.c cli/md5.c
 cli_wvtest_CFLAGS = $(AM_CFLAGS) -I$(top_srcdir)/include
 @ENABLE_RPATH_TRUE@cli_wvtest_LDFLAGS = -rpath $(libdir)
-cli_wvtest_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) -lpthread
+cli_wvtest_LDADD = $(AM_LDADD) src/libwavpack.la $(LIBM) $(LIBTHREAD)
 TESTS = cli/fast-tests
 TESTS_ENVIRONMENT = $(SHELL)
 noinst_HEADERS = \
@@ -638,7 +676,10 @@ noinst_HEADERS = \
 # include/ #
 ############
 pkginclude_HEADERS = include/wavpack.h
-@ENABLE_MAN_TRUE@SUFFIXES = .1 .xml
+
+########
+# man/ #
+########
 dist_man_MANS = \
 	man/wavpack.1 \
 	man/wvgain.1 \
@@ -659,14 +700,16 @@ src_libwavpack_la_SOURCES = src/common_utils.c src/decorr_utils.c \
 	src/write_words.c src/decorr_tables.h src/unpack3.h \
 	src/wavpack_local.h src/wavpack_version.h $(am__append_5) \
 	$(am__append_6) $(am__append_7) $(am__append_8) \
-	$(am__append_9)
+	$(am__append_9) $(am__append_10)
+@HAVE_WINDRES_TRUE@@WINDOWS_HOST_TRUE@src_libwavpack_la_DEPENDENCIES = wavpackdll/wavpackdll.o
+@HAVE_WINDRES_TRUE@@WINDOWS_HOST_TRUE@win32res_link = -Wl,wavpackdll/wavpackdll.o
 src_libwavpack_la_CFLAGS = $(AM_CFLAGS) -I$(top_srcdir)/include
-src_libwavpack_la_LIBADD = $(AM_LDADD) $(LIBM)
-src_libwavpack_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -export-symbols-regex '^Wavpack.*$$' -no-undefined
+src_libwavpack_la_LIBADD = $(AM_LDADD) $(LIBM) $(LIBTHREAD)
+src_libwavpack_la_LDFLAGS = -version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) $(win32res_link) -export-symbols-regex '^Wavpack.*$$' -no-undefined
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .1 .xml .S .c .lo .o .obj
+.SUFFIXES: .S .c .lo .o .obj .rc
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__configure_deps)
@@ -858,6 +901,14 @@ src/unpack_x86.lo: src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/pack_x64.lo: src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/unpack_x64.lo: src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 src/unpack_armv7.lo: src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
+wavpackdll/$(am__dirstamp):
+	@$(MKDIR_P) wavpackdll
+	@: > wavpackdll/$(am__dirstamp)
+wavpackdll/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) wavpackdll/$(DEPDIR)
+	@: > wavpackdll/$(DEPDIR)/$(am__dirstamp)
+wavpackdll/src_libwavpack_la-dummy.lo: wavpackdll/$(am__dirstamp) \
+	wavpackdll/$(DEPDIR)/$(am__dirstamp)
 
 src/libwavpack.la: $(src_libwavpack_la_OBJECTS) $(src_libwavpack_la_DEPENDENCIES) $(EXTRA_src_libwavpack_la_DEPENDENCIES) src/$(am__dirstamp)
 	$(AM_V_CCLD)$(src_libwavpack_la_LINK) -rpath $(libdir) $(src_libwavpack_la_OBJECTS) $(src_libwavpack_la_LIBADD) $(LIBS)
@@ -953,6 +1004,8 @@ mostlyclean-compile:
 	-rm -f cli/*.$(OBJEXT)
 	-rm -f src/*.$(OBJEXT)
 	-rm -f src/*.lo
+	-rm -f wavpackdll/*.$(OBJEXT)
+	-rm -f wavpackdll/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -1018,6 +1071,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/unpack_armv7.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/unpack_x64.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/unpack_x86.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -1254,6 +1308,13 @@ src/libwavpack_la-unpack_dsd.lo: src/unpack_dsd.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='src/unpack_dsd.c' object='src/libwavpack_la-unpack_dsd.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(src_libwavpack_la_CFLAGS) $(CFLAGS) -c -o src/libwavpack_la-unpack_dsd.lo `test -f 'src/unpack_dsd.c' || echo '$(srcdir)/'`src/unpack_dsd.c
+
+wavpackdll/src_libwavpack_la-dummy.lo: wavpackdll/dummy.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(src_libwavpack_la_CFLAGS) $(CFLAGS) -MT wavpackdll/src_libwavpack_la-dummy.lo -MD -MP -MF wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Tpo -c -o wavpackdll/src_libwavpack_la-dummy.lo `test -f 'wavpackdll/dummy.c' || echo '$(srcdir)/'`wavpackdll/dummy.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Tpo wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='wavpackdll/dummy.c' object='wavpackdll/src_libwavpack_la-dummy.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(src_libwavpack_la_CFLAGS) $(CFLAGS) -c -o wavpackdll/src_libwavpack_la-dummy.lo `test -f 'wavpackdll/dummy.c' || echo '$(srcdir)/'`wavpackdll/dummy.c
 
 cli/wavpack-wavpack.o: cli/wavpack.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(cli_wavpack_CFLAGS) $(CFLAGS) -MT cli/wavpack-wavpack.o -MD -MP -MF cli/$(DEPDIR)/wavpack-wavpack.Tpo -c -o cli/wavpack-wavpack.o `test -f 'cli/wavpack.c' || echo '$(srcdir)/'`cli/wavpack.c
@@ -1682,6 +1743,7 @@ clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf cli/.libs cli/_libs
 	-rm -rf src/.libs src/_libs
+	-rm -rf wavpackdll/.libs wavpackdll/_libs
 
 distclean-libtool:
 	-rm -f libtool config.lt
@@ -2199,6 +2261,8 @@ distclean-generic:
 	-rm -f cli/$(am__dirstamp)
 	-rm -f src/$(DEPDIR)/$(am__dirstamp)
 	-rm -f src/$(am__dirstamp)
+	-rm -f wavpackdll/$(DEPDIR)/$(am__dirstamp)
+	-rm -f wavpackdll/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -2272,6 +2336,7 @@ distclean: distclean-am
 	-rm -f src/$(DEPDIR)/unpack_armv7.Plo
 	-rm -f src/$(DEPDIR)/unpack_x64.Plo
 	-rm -f src/$(DEPDIR)/unpack_x86.Plo
+	-rm -f wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-libtool distclean-tags
@@ -2382,6 +2447,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f src/$(DEPDIR)/unpack_armv7.Plo
 	-rm -f src/$(DEPDIR)/unpack_x64.Plo
 	-rm -f src/$(DEPDIR)/unpack_x86.Plo
+	-rm -f wavpackdll/$(DEPDIR)/src_libwavpack_la-dummy.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -2434,12 +2500,10 @@ uninstall-man: uninstall-man1
 
 .PRECIOUS: Makefile
 
+@HAVE_WINDRES_TRUE@@WINDOWS_HOST_TRUE@wavpackdll/wavpackdll.o: wavpackdll/wavpackdll.rc
 
-########
-# man/ #
-########
-@ENABLE_MAN_TRUE@.xml.1:
-@ENABLE_MAN_TRUE@	$(XSLTPROC) -nonet -o man/ http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
+.rc.o:
+	$(RC) $(AM_CPPFLAGS) -i $< $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

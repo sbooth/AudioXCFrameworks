@@ -1,6 +1,6 @@
 ## Version
 
-[5.6.0](https://github.com/dbry/WavPack/releases/tag/5.6.0)
+[5.7.0](https://github.com/dbry/WavPack/releases/tag/5.7.0)
 
 ## License
 
