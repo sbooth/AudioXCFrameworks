@@ -19,7 +19,7 @@
  */
 #define MPG123_API_VERSION 48
 /** library patch level at client build time */
-#define MPG123_PATCHLEVEL  1
+#define MPG123_PATCHLEVEL  2
 
 #ifndef MPG123_EXPORT
 /** Defines needed for MS Visual Studio(tm) DLL builds.
@@ -1327,7 +1327,7 @@ MPG123_EXPORT int mpg123_volume_change(mpg123_handle *mh, double change);
 
 /** Adjust output volume including the RVA setting by chosen amount
  *  \param mh handle
- *  \param change volume adjustment in decibels (limited to +/- 60 dB)
+ *  \param db volume adjustment in decibels (limited to +/- 60 dB)
  *  \return MPG123_OK on success
  */
 MPG123_EXPORT int mpg123_volume_change_db(mpg123_handle *mh, double db);
