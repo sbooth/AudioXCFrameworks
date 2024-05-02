@@ -1,4 +1,5 @@
-#pragma once
+#ifndef APE_ALL_INCLUDE // use the ifdef because Clang warns about a pragma once in this file
+#define APE_ALL_INCLUDE
 
 /**************************************************************************************************
 Platform
@@ -23,7 +24,7 @@ PLATFORM_ANDROID
 /**************************************************************************************************
 Warnings
 **************************************************************************************************/
-#include <MAC/Warnings.h>
+#include "Warnings.h"
 
 /**************************************************************************************************
 Override (define in MSVC)
@@ -74,7 +75,7 @@ Global includes
     #include <sys/types.h>
     #include <sys/stat.h>
     #include <wchar.h>
-    #include <MAC/NoWindows.h>
+    #include "NoWindows.h"
 #endif
 #define ape_max(a,b)    (((a) > (b)) ? (a) : (b))
 #define ape_min(a,b)    (((a) < (b)) ? (a) : (b))
@@ -92,12 +93,12 @@ warnings on Linux.
 /**************************************************************************************************
 Smart pointer
 **************************************************************************************************/
-#include <MAC/SmartPtr.h>
+#include "SmartPtr.h"
 
 /**************************************************************************************************
 Version
 **************************************************************************************************/
-#include <MAC/Version.h>
+#include "Version.h"
 
 // year in the copyright strings
 #define APE_YEAR 2024
@@ -403,3 +404,5 @@ Error Codes
 
 // unknown error
 #define ERROR_UNDEFINED                                -1
+
+#endif

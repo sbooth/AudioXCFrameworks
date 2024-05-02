@@ -150,7 +150,7 @@ BOOL CFormatPlugin::BuildMenu(CMenu * pMenu, int nBaseID)
         pMenu->AppendMenu(MF_STRING, UINT_PTR(nBaseID) + 1, _T("Info..."));
     }
 
-    return ((pMenu->GetSafeHmenu() != NULL) && m_bIsValid) ? TRUE : FALSE;
+    return ((pMenu->GetSafeHmenu() != APE_NULL) && m_bIsValid) ? TRUE : FALSE;
 }
 
 BOOL CFormatPlugin::ProcessMenuCommand(int nCommand)
@@ -196,13 +196,13 @@ CString CFormatPlugin::GetOutputExtension(APE_MODES Mode, const CString & strInp
     CString strExtension;
 
     CFormatPluginLevelInfo * pLevelInfo = GetLevelInfo(Mode, strInputFilename, nLevel);
-    if (pLevelInfo != NULL)
+    if (pLevelInfo != APE_NULL)
     {
         strExtension = pLevelInfo->m_strOutputExtension;
     }
 
     // custom code for WavPack
-    if ((m_strName == _T("WavPack")) && (pLevelInfo != NULL) && ((Mode == MODE_DECOMPRESS) || (Mode == MODE_CONVERT)))
+    if ((m_strName == _T("WavPack")) && (pLevelInfo != APE_NULL) && ((Mode == MODE_DECOMPRESS) || (Mode == MODE_CONVERT)))
     {
         CString strPath = GetProgramPath() + _T("External\\");
         CString strApplication = strPath + pLevelInfo->m_strApplication;
@@ -233,7 +233,7 @@ int CFormatPlugin::Process(MAC_FILE * pInfo)
     int nRetVal = ERROR_UNDEFINED;
 
     CFormatPluginLevelInfo * pLevelInfo = GetLevelInfo(pInfo->Mode, pInfo->strInputFilename, pInfo->nLevel);
-    if (pLevelInfo != NULL)
+    if (pLevelInfo != APE_NULL)
     {
         CString strCommandLine = pLevelInfo->m_strCommandLine;
         strCommandLine.Replace(_T("[INPUT]"), _T("\"") + pInfo->strInputFilename + _T("\""));
@@ -290,8 +290,8 @@ CString CFormatPlugin::GetInputExtensions(APE_MODES Mode)
 
 CFormatPluginLevelInfo * CFormatPlugin::GetLevelInfo(APE_MODES Mode, const CString & strInputFilename, int nLevel)
 {
-    // start with NULL
-    CFormatPluginLevelInfo * pLevelInfo = NULL;
+    // start with APE_NULL
+    CFormatPluginLevelInfo * pLevelInfo = APE_NULL;
 
     // for decompress and verify, we pick the level info based on the input filename
     if (Mode == MODE_DECOMPRESS || Mode == MODE_VERIFY || Mode == MODE_CONVERT)

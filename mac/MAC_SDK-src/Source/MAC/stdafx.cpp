@@ -28,7 +28,7 @@ CString GetInstallPath()
 CString GetProgramPath(BOOL bAppendProgramName)
 {
     CString strProgramPath;
-    GetModuleFileName(NULL, strProgramPath.GetBuffer(_MAX_PATH), _MAX_PATH);
+    GetModuleFileName(APE_NULL, strProgramPath.GetBuffer(_MAX_PATH), _MAX_PATH);
     strProgramPath.ReleaseBuffer();
 
     if (bAppendProgramName == FALSE)
@@ -43,9 +43,9 @@ CString GetProgramPath(BOOL bAppendProgramName)
 CString GetUserDataPath()
 {
     size_t nRequired = 0;
-    _tgetenv_s(&nRequired, NULL, 0, _T("APPDATA"));
+    _tgetenv_s(&nRequired, APE_NULL, 0, _T("APPDATA"));
 
-    CSmartPtr<wchar_t> spAppData(new wchar_t[nRequired + 1], true);
+    CSmartPtr<wchar_t> spAppData(new wchar_t [nRequired + 1], true);
     memset(spAppData, 0, nRequired + 1);
     _tgetenv_s(&nRequired, spAppData, nRequired, _T("APPDATA"));
 
@@ -76,7 +76,7 @@ void CreateDirectoryEx(CString strDirectory)
     CreateDirectoryEx(strDirectory.Left(nFound));
 
     // actual work
-    CreateDirectory(strDirectory,NULL);
+    CreateDirectory(strDirectory,APE_NULL);
 }
 
 void ListFiles(CStringArray * pStringArray, CString strPath, BOOL bRecurse)
@@ -162,7 +162,7 @@ CString GetUniqueFilename(CString strFilename)
         nNumber++;
 
         CString strTemp; strTemp.Format(_T("%s (%d)"), strName.GetString(), nNumber);
-        CString strNewFilename = fnFilename.BuildFilename(NULL, NULL, strTemp, NULL);
+        CString strNewFilename = fnFilename.BuildFilename(APE_NULL, APE_NULL, strTemp, APE_NULL);
 
         if (FileExists(strNewFilename) == FALSE)
             return strNewFilename;
@@ -256,7 +256,7 @@ BOOL CopyFileTime(const CString & strSourceFilename, const CString & strDestinat
     if (hFind != INVALID_HANDLE_VALUE)
     {
         FindClose(hFind);
-        HANDLE hOutput = CreateFile(strDestinationFilename, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+        HANDLE hOutput = CreateFile(strDestinationFilename, GENERIC_WRITE, 0, APE_NULL, OPEN_EXISTING, 0, APE_NULL);
         if (hOutput != INVALID_HANDLE_VALUE)
         {
             if (SetFileTime(hOutput, &wfdInput.ftCreationTime, &wfdInput.ftLastAccessTime, &wfdInput.ftLastWriteTime))
@@ -290,18 +290,18 @@ BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer)
     strBuffer.Empty();
 
     // open file
-    HANDLE hFile = CreateFile(strFilename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+    HANDLE hFile = CreateFile(strFilename, GENERIC_READ, FILE_SHARE_READ, APE_NULL, OPEN_EXISTING, 0, APE_NULL);
     if (hFile != INVALID_HANDLE_VALUE)
     {
         // build buffer for the data
-        unsigned int nBytes = GetFileSize(hFile, NULL);
+        unsigned int nBytes = GetFileSize(hFile, APE_NULL);
         CSmartPtr<char> spUTF8(new char [static_cast<size_t>(nBytes) + 1], TRUE);
 
-        if (spUTF8 != NULL)
+        if (spUTF8 != APE_NULL)
         {
             // read the file
             DWORD dwBytesRead = 0;
-            if (ReadFile(hFile, spUTF8, nBytes, &dwBytesRead, NULL) && (dwBytesRead == nBytes))
+            if (ReadFile(hFile, spUTF8, nBytes, &dwBytesRead, APE_NULL) && (dwBytesRead == nBytes))
             {
                 // null-terminate
                 spUTF8[dwBytesRead] = 0;
@@ -340,13 +340,13 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
     // create pipes if we want to capture the output
     HANDLE hPipeStdOut_Wd = INVALID_HANDLE_VALUE;
     HANDLE hPipeStdOut_Rd = INVALID_HANDLE_VALUE;
-    if (pstrReturnOutput != NULL)
+    if (pstrReturnOutput != APE_NULL)
     {
         SECURITY_ATTRIBUTES saAttr;
         APE_CLEAR(saAttr);
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
         saAttr.bInheritHandle = TRUE;
-        saAttr.lpSecurityDescriptor = NULL;
+        saAttr.lpSecurityDescriptor = APE_NULL;
 
         if (!CreatePipe(&hPipeStdOut_Rd, &hPipeStdOut_Wd, &saAttr, 0))
             return FALSE;
@@ -365,19 +365,19 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
     }
 
     // create the process
-    if (CreateProcess(NULL, strCommand.LockBuffer(), NULL, NULL,
-        (StartupInfo.dwFlags & STARTF_USESTDHANDLES) ? TRUE : FALSE, NORMAL_PRIORITY_CLASS, NULL, CFilename(strApplication).GetPath(), &StartupInfo, &ProcessInfo))
+    if (CreateProcess(APE_NULL, strCommand.LockBuffer(), APE_NULL, APE_NULL,
+        (StartupInfo.dwFlags & STARTF_USESTDHANDLES) ? TRUE : FALSE, NORMAL_PRIORITY_CLASS, APE_NULL, CFilename(strApplication).GetPath(), &StartupInfo, &ProcessInfo))
     {
         // wait for completion
         WaitForSingleObject(ProcessInfo.hProcess, INFINITE);
 
         // read the output
-        if (pstrReturnOutput != NULL)
+        if (pstrReturnOutput != APE_NULL)
         {
             pstrReturnOutput->Empty();
 
             int nBufferBytes = 65536;
-            CSmartPtr<UCHAR> spBuffer(new UCHAR[static_cast<size_t>(nBufferBytes)], true);
+            CSmartPtr<UCHAR> spBuffer(new UCHAR [static_cast<size_t>(nBufferBytes)], true);
             DWORD dwRead = 0;
 
             // close the write pipe so reads finish
@@ -386,7 +386,7 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
             CString strBuffer;
             while (true)
             {
-                bool bRead = ReadFile(hPipeStdOut_Rd, spBuffer, static_cast<DWORD>(nBufferBytes - 1), &dwRead, NULL);
+                bool bRead = ReadFile(hPipeStdOut_Rd, spBuffer, static_cast<DWORD>(nBufferBytes - 1), &dwRead, APE_NULL);
                 spBuffer[dwRead] = 0; // null terminate (after the amount of data read -- which will always be less than the buffer size)
                 if (!bRead || dwRead == 0)
                     break;
@@ -424,7 +424,7 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
 BOOL IsProcessElevated()
 {
     BOOL fIsElevated = FALSE;
-    HANDLE hToken = NULL;
+    HANDLE hToken = APE_NULL;
     DWORD dwSize = 0;
 
     if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken))
@@ -440,7 +440,7 @@ BOOL IsProcessElevated()
     if (hToken)
     {
         CloseHandle(hToken);
-        hToken = NULL;
+        hToken = APE_NULL;
     }
     return fIsElevated;
 }

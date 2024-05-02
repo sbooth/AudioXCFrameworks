@@ -144,70 +144,70 @@
     <OutDir>$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64EC'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-unused-macros,-clang-diagnostic-pragma-pack</ClangTidyChecks>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

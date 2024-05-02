@@ -6,7 +6,7 @@ class OPTIONS_PAGE;
 class COptionsOutputDlg : public CDialog
 {
 public:
-    COptionsOutputDlg(CMACDlg * pMACDlg, OPTIONS_PAGE * pPage, CWnd * pParent = NULL);
+    COptionsOutputDlg(CMACDlg * pMACDlg, OPTIONS_PAGE * pPage, CWnd * pParent = APE_NULL);
 
     enum { IDD = IDD_OPTIONS_OUTPUT };
     CStatic    m_ctrlOtherPicture;

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef APE_ALL_INCLUDE // use the ifdef because Clang warns about a pragma once in this file
+#define APE_ALL_INCLUDE
 
 /**************************************************************************************************
 Platform
@@ -403,3 +404,5 @@ Error Codes
 
 // unknown error
 #define ERROR_UNDEFINED                                -1
+
+#endif

@@ -3,7 +3,7 @@
 class CAboutDlg : public CDialog
 {
 public:
-    CAboutDlg(CWnd * pParent = NULL);
+    CAboutDlg(CWnd * pParent = APE_NULL);
 
     enum { IDD = IDD_ABOUT };
 
@@ -13,6 +13,7 @@ protected:
 
     afx_msg HBRUSH OnCtlColor(CDC * pDC, CWnd * pWnd, UINT nCtlColor);
     afx_msg void OnPaint();
+    afx_msg void OnMoving(UINT, LPRECT);
     DECLARE_MESSAGE_MAP()
 
     CString GetCPU();

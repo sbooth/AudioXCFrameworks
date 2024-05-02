@@ -105,6 +105,9 @@
     <ClCompile Include="..\..\..\MAC\OptionsProcessingDlg.cpp">
       <Filter>Source Files\Options</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\MAC\FLACTag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\..\MAC\MAC.rc">
@@ -206,6 +209,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Shared\MFCGlobals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\MAC\FLACTag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

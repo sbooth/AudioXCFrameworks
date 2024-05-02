@@ -32,9 +32,9 @@ public:
     };
     void DeleteImageLists();
     CImageList * GetImageList(EImageList Image);
-    CSize GetSize(int x, int y, double dAdditional = 1.0);
-    int GetSizeReverse(int nSize);
-    double GetScale() { return m_dScale; }
+    CSize GetSize(int x, int y, double dAdditional = 1.0) const;
+    int GetSizeReverse(int nSize) const;
+    double GetScale() const { return m_dScale; }
     bool SetScale(double dScale);
     Gdiplus::Bitmap * GetMonkeyImage();
 

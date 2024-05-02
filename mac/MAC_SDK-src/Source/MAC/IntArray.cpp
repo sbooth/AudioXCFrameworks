@@ -14,7 +14,7 @@ void CIntArray::SortAscending()
 {
     if (GetSize() > 1)
     {
-        qsort(GetData(), static_cast<size_t>(GetSize()), sizeof(int), SortAscendingCallback);
+        qsort(GetData(), static_cast<size_t>(GetSize()), sizeof(ElementAt(0)), SortAscendingCallback);
     }
 }
 
@@ -22,7 +22,7 @@ void CIntArray::SortDescending()
 {
     if (GetSize() > 1)
     {
-        qsort(GetData(), static_cast<size_t>(GetSize()), sizeof(int), SortDescendingCallback);
+        qsort(GetData(), static_cast<size_t>(GetSize()), sizeof(ElementAt(0)), SortDescendingCallback);
     }
 }
 

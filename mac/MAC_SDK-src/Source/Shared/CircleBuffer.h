@@ -25,7 +25,7 @@ public:
     {
         // return a pointer to the tail -- note that it will always be safe to write
         // at least m_nMaxDirectWriteBytes since we use an end cap region
-        return &m_pBuffer[m_nTail];
+        return &m_spBuffer[m_nTail];
     }
 
     __forceinline void UpdateAfterDirectWrite(uint32 nBytes)
@@ -59,7 +59,7 @@ private:
     uint32 m_nEndCap;
     uint32 m_nHead;
     uint32 m_nTail;
-    unsigned char * m_pBuffer;
+    CSmartPtr<unsigned char> m_spBuffer;
 };
 
 #pragma pack(pop)

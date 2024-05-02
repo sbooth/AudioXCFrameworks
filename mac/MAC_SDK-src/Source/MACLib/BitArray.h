@@ -10,10 +10,10 @@ namespace APE
 
 struct RANGE_CODER_STRUCT_COMPRESS
 {
-    unsigned int low;        // low end of interval
-    unsigned int range;      // length of interval
-    unsigned int help;       // bytes_to_follow resp. intermediate value
-    unsigned char buffer;    // buffer for input / output
+    unsigned int low;         // low end of interval
+    unsigned int range;       // length of interval
+    unsigned int help;        // bytes_to_follow resp. intermediate value
+    unsigned char buffer;     // buffer for input / output
     unsigned char padding[3]; // buffer alignment
 };
 
@@ -51,7 +51,7 @@ public:
 
 private:
     // data members
-    uint32 * m_pBitArray;
+    CSmartPtr<uint32> m_spBitArray;
     CIO * m_pIO;
     uint32 m_nCurrentBitIndex;
     RANGE_CODER_STRUCT_COMPRESS m_RangeCoderInfo;

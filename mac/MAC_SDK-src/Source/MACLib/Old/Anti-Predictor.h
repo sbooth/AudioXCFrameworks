@@ -149,7 +149,7 @@ public:
     void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order);
+    void AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g, int dm, int nMaxOrder);
 };
 
 /**************************************************************************************************
@@ -161,7 +161,7 @@ public:
     void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order);
+    void AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g, int dm, int nMaxOrder);
 };
 
 /**************************************************************************************************
@@ -173,7 +173,7 @@ public:
     void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g1, int64 g2, int Max_Order);
+    void AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g1, int64 g2, int nMaxOrder);
 };
 
 /**************************************************************************************************
@@ -185,7 +185,7 @@ public:
     void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, int Iterations, const int64 * pOffsetValueArrayA, const int64 * pOffsetValueArrayB);
 
 private:
-    void AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g1, int64 g2, int Max_Order);
+    void AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g1, int64 g2, int nMaxOrder);
 };
 
 /**************************************************************************************************

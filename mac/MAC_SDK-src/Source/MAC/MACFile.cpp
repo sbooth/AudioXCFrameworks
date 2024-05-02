@@ -13,7 +13,7 @@ MAC_FILE::MAC_FILE()
     dInputFileBytes = 0;
     dOutputFileBytes = 0;
     bProcessing = FALSE;
-    pMACProcessFiles = NULL;
+    pMACProcessFiles = APE_NULL;
     Mode = MODE_COMPRESS;
     nStageProgress = 0;
     bDone = FALSE;
@@ -26,7 +26,7 @@ MAC_FILE::MAC_FILE()
     nKillFlag = 0;
     nCurrentStage = 0;
     nTotalStages = 0;
-    pFormat = NULL;
+    pFormat = APE_NULL;
     bEmptyExtension = FALSE;
     bOverwriteInput = FALSE;
 }
@@ -71,7 +71,7 @@ void MAC_FILE::CalculateFilenames()
     if (theApp.GetSettings()->m_nOutputLocationMode == OUTPUT_LOCATION_MODE_SAME_DIRECTORY)
     {
         // output to same directory
-        strOutputFilename = fnOriginal.BuildFilename(NULL, NULL, NULL, strOutputExtension);
+        strOutputFilename = fnOriginal.BuildFilename(APE_NULL, APE_NULL, APE_NULL, strOutputExtension);
     }
     else if (theApp.GetSettings()->m_nOutputLocationMode == OUTPUT_LOCATION_MODE_SPECIFIED_DIRECTORY)
     {
@@ -112,7 +112,7 @@ void MAC_FILE::CalculateFilenames()
     // working filename (use g_nWorkingFilenameIndex so they'll never collide in multi-thread mode) (use parenthesis so it matches our GetUniqueFilename function)
     CFilename fnOutput(strOutputFilename);
     CString strName; strName.Format(_T("MAC Temp File (%d - %d)"), GetCurrentThreadId(), g_nWorkingFilenameIndex++);
-    strWorkingFilename = fnOutput.BuildFilename(NULL, NULL, strName, strOutputExtension);
+    strWorkingFilename = fnOutput.BuildFilename(APE_NULL, APE_NULL, strName, strOutputExtension);
     strWorkingFilename = GetUniqueFilename(strWorkingFilename);
 
     // check if the output filename is the same as the input

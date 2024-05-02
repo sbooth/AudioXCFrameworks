@@ -23,21 +23,26 @@ int CALLBACK CFolderDialog::BrowseDirectoryCallback(
 
 CFolderDialog::CFolderDialog(LPCTSTR lpszFolderName, DWORD dwFlags, CWnd* pParentWnd)
 {
+    // initialize
+    m_hDialogBox = APE_NULL;
+    APE_CLEAR(m_szDisplayName);
+    APE_CLEAR(m_szPath);
+
     // Use the supplied initial folder if non-null.
-    if (lpszFolderName == NULL)
+    if (lpszFolderName == APE_NULL)
         m_strInitialFolderName = _T("");
     else
         m_strInitialFolderName = lpszFolderName;
 
     APE_CLEAR(m_bi);
 
-    if (pParentWnd == NULL)
+    if (pParentWnd == APE_NULL)
         m_bi.hwndOwner = APE_NULL;
     else
         m_bi.hwndOwner = pParentWnd->GetSafeHwnd();
 
     // Fill in the rest of the structure
-    m_bi.pidlRoot = NULL;
+    m_bi.pidlRoot = APE_NULL;
     m_bi.pszDisplayName = m_szDisplayName;
     m_bi.lpszTitle = _T("Choose Folder");
     m_bi.ulFlags = dwFlags;

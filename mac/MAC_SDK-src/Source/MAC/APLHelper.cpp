@@ -25,14 +25,14 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
     strDirectory = strDirectory.Left(strDirectory.ReverseFind('\\') + 1);
 
     // get the CUE data
-    HANDLE hCUE = CreateFile(strImage, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
-    DWORD dwCUEBytes = GetFileSize(hCUE, NULL);
+    HANDLE hCUE = CreateFile(strImage, GENERIC_READ, 0, APE_NULL, OPEN_EXISTING, 0, APE_NULL);
+    DWORD dwCUEBytes = GetFileSize(hCUE, APE_NULL);
 
     CSmartPtr<char> spCUE(new char [static_cast<size_t>(dwCUEBytes) + 1], TRUE);
     memset(spCUE, 0, static_cast<size_t>(dwCUEBytes) + 1);
 
     unsigned long nBytesRead = 0;
-    BOOL bReadResult = ReadFile(hCUE, spCUE.GetPtr(), dwCUEBytes, &nBytesRead, NULL);
+    BOOL bReadResult = ReadFile(hCUE, spCUE.GetPtr(), dwCUEBytes, &nBytesRead, APE_NULL);
     CloseHandle(hCUE);
     if (bReadResult == FALSE)
     {
@@ -230,7 +230,7 @@ int64 CAPLHelper::GetAPESampleRate(const CString & strFilename)
         int nFunctionRetVal = ERROR_SUCCESS;
 
         spAPEDecompress.Assign(CreateIAPEDecompress(strFilename, &nFunctionRetVal, true, false, false));
-        if (spAPEDecompress == NULL || nFunctionRetVal != ERROR_SUCCESS) throw(nFunctionRetVal);
+        if (spAPEDecompress == APE_NULL || nFunctionRetVal != ERROR_SUCCESS) throw(nFunctionRetVal);
 
         nSampleRate = spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_SAMPLE_RATE);
     }

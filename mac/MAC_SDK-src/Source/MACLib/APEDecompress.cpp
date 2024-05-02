@@ -164,13 +164,13 @@ int CAPEDecompress::GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlo
 
     // process data
     const int64 nBlocksDecoded = nBlocksRetrieved;
-    if ((pProcessing == NULL) || (pProcessing->bApplyFloatProcessing == true))
+    if ((pProcessing == APE_NULL) || (pProcessing->bApplyFloatProcessing == true))
     {
         if (GetInfo(IAPEDecompress::APE_INFO_FORMAT_FLAGS) & APE_FORMAT_FLAG_FLOATING_POINT)
             CFloatTransform::Process(reinterpret_cast<uint32 *>(pBuffer), static_cast<int>(nBlocksDecoded * GetInfo(IAPEDecompress::APE_INFO_CHANNELS)));
     }
 
-    if ((pProcessing == NULL) || (pProcessing->bApplySigned8BitProcessing == true))
+    if ((pProcessing == APE_NULL) || (pProcessing->bApplySigned8BitProcessing == true))
     {
         if (GetInfo(IAPEDecompress::APE_INFO_FORMAT_FLAGS) & APE_FORMAT_FLAG_SIGNED_8_BIT)
         {
@@ -184,7 +184,7 @@ int CAPEDecompress::GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlo
         }
     }
 
-    if ((pProcessing == NULL) || (pProcessing->bApplyBigEndianProcessing == true))
+    if ((pProcessing == APE_NULL) || (pProcessing->bApplyBigEndianProcessing == true))
     {
         if (GetInfo(IAPEDecompress::APE_INFO_FORMAT_FLAGS) & APE_FORMAT_FLAG_BIG_ENDIAN)
         {
@@ -194,9 +194,9 @@ int CAPEDecompress::GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlo
             {
                 for (int nSample = 0; nSample < nBlocksDecoded * nChannels; nSample++)
                 {
-                    const unsigned char cTemp = pBuffer[(nChannels * nSample) + 0];
-                    pBuffer[(nChannels * nSample) + 0] = pBuffer[(nChannels * nSample) + 1];
-                    pBuffer[(nChannels * nSample) + 1] = cTemp;
+                    const unsigned char cTemp = pBuffer[(nSample * 2) + 0];
+                    pBuffer[(nSample * 2) + 0] = pBuffer[(nSample * 2) + 1];
+                    pBuffer[(nSample * 2) + 1] = cTemp;
                 }
             }
             else if (nBitdepth == 24)
@@ -254,7 +254,7 @@ int CAPEDecompress::Seek(int64 nBlockOffset)
     if (spTempBuffer == APE_NULL) return ERROR_INSUFFICIENT_MEMORY;
 
     int64 nBlocksRetrieved = 0;
-    GetData(spTempBuffer, nBlocksToSkip, &nBlocksRetrieved, NULL);
+    GetData(spTempBuffer, nBlocksToSkip, &nBlocksRetrieved, APE_NULL);
     if (nBlocksRetrieved != nBlocksToSkip)
         return ERROR_UNDEFINED;
 

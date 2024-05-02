@@ -54,7 +54,7 @@ BOOL MoveFile(const CString & strExistingFilename, const CString & strNewFilenam
 BOOL CopyFileTime(const CString & strSourceFilename, const CString & strDestinationFilename);
 BOOL RecycleFile(const CString & strFilename, BOOL bConfirm = FALSE);
 BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer);
-BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int * pnExitCode = NULL, BOOL bShowPopup = FALSE, CString * pstrReturnOutput = NULL);
+BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int * pnExitCode = APE_NULL, BOOL bShowPopup = FALSE, CString * pstrReturnOutput = APE_NULL);
 BOOL IsProcessElevated();
 BOOL DeleteFileEx(LPCTSTR pFilename);
 

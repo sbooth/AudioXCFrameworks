@@ -45,8 +45,8 @@ const MAC_ERROR_EXPLANATION g_MACErrorExplanations[] = {
 
 CMACListCtrl::CMACListCtrl()
 {
-    m_pParent = NULL;
-    m_paryFiles = NULL;
+    m_pParent = APE_NULL;
+    m_paryFiles = APE_NULL;
 }
 
 CMACListCtrl::~CMACListCtrl()
@@ -106,7 +106,7 @@ BOOL CMACListCtrl::Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles)
 
 BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFiles)
 {
-    if ((paryFiles != NULL) && (paryFiles->GetSize() > 0))
+    if ((paryFiles != APE_NULL) && (paryFiles->GetSize() > 0))
     {
         for (int z = 0; z < paryFiles->GetSize(); z++)
         {
@@ -129,15 +129,15 @@ BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFi
     }
     else
     {
-        HANDLE hInputFile = CreateFile(strPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
+        HANDLE hInputFile = CreateFile(strPath, GENERIC_READ, 0, APE_NULL, OPEN_EXISTING, 0, APE_NULL);
         if (hInputFile != INVALID_HANDLE_VALUE)
         {
-            DWORD dwTotalBytes = GetFileSize(hInputFile, NULL);
+            DWORD dwTotalBytes = GetFileSize(hInputFile, APE_NULL);
             unsigned long nBytesRead = 0;
 
             CSmartPtr<char> spBuffer(new char [static_cast<size_t>(dwTotalBytes) + 1], TRUE);
             spBuffer[dwTotalBytes] = 0;
-            if (ReadFile(hInputFile, spBuffer, dwTotalBytes, &nBytesRead, NULL) == false)
+            if (ReadFile(hInputFile, spBuffer, dwTotalBytes, &nBytesRead, APE_NULL) == false)
                 spBuffer[0] = 0;
 
             DWORD dwIndex = 0;
@@ -175,7 +175,7 @@ BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFi
 
 BOOL CMACListCtrl::SaveFileList(const CString & strPath)
 {
-    HANDLE hOutputFile = CreateFile(strPath, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
+    HANDLE hOutputFile = CreateFile(strPath, GENERIC_WRITE, 0, APE_NULL, CREATE_ALWAYS, 0, APE_NULL);
 
     if (hOutputFile != INVALID_HANDLE_VALUE)
     {
@@ -184,8 +184,8 @@ BOOL CMACListCtrl::SaveFileList(const CString & strPath)
         {
             CSmartPtr<char> spUTF8(reinterpret_cast<char *>(CAPECharacterHelper::GetUTF8FromUTF16(GetFilename(z))), TRUE);
 
-            WriteFile(hOutputFile, spUTF8.GetPtr(), static_cast<DWORD>(strlen(spUTF8)), &nBytesWritten, NULL);
-            WriteFile(hOutputFile, "\r\n", 2, &nBytesWritten, NULL);
+            WriteFile(hOutputFile, spUTF8.GetPtr(), static_cast<DWORD>(strlen(spUTF8)), &nBytesWritten, APE_NULL);
+            WriteFile(hOutputFile, "\r\n", 2, &nBytesWritten, APE_NULL);
         }
 
         CloseHandle(hOutputFile);
@@ -217,7 +217,7 @@ BOOL CMACListCtrl::FinishFileInsertion()
 BOOL CMACListCtrl::Update()
 {
     SetItemCount(static_cast<int>(m_paryFiles->GetSize()));
-    if (m_pParent->m_ctrlStatusBar.m_hWnd != NULL)
+    if (m_pParent->m_ctrlStatusBar.m_hWnd != APE_NULL)
         m_pParent->m_ctrlStatusBar.UpdateFiles(m_paryFiles);
 
     return TRUE;
@@ -246,8 +246,8 @@ void CMACListCtrl::LoadColumns()
         SetColumnWidth(z, nSize);
     }
 
-    CSmartPtr<int> spOrderArray(new int[COLUMN_COUNT], TRUE);
-    if (theApp.GetSettings()->LoadSetting(_T("List Column Order"), spOrderArray, (sizeof(int) * COLUMN_COUNT)))
+    CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], TRUE);
+    if (theApp.GetSettings()->LoadSetting(_T("List Column Order"), spOrderArray, (sizeof(spOrderArray[0]) * COLUMN_COUNT)))
         SetColumnOrderArray(COLUMN_COUNT, spOrderArray);
 }
 
@@ -375,7 +375,7 @@ void CMACListCtrl::OnDestroy()
 
     CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], TRUE);
     GetColumnOrderArray(spOrderArray, -1);
-    theApp.GetSettings()->SaveSetting(_T("List Column Order"), spOrderArray, (sizeof(int) * COLUMN_COUNT));
+    theApp.GetSettings()->SaveSetting(_T("List Column Order"), spOrderArray, (sizeof(spOrderArray[0]) * COLUMN_COUNT));
 
     // save the file list
     CString strFileListsFolder = GetUserDataPath() + _T("File Lists\\");
@@ -460,7 +460,7 @@ BOOL CMACListCtrl::GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection)
 
     POSITION Pos = GetFirstSelectedItemPosition();
 
-    if (bIgnoreSelection || (Pos == NULL))
+    if (bIgnoreSelection || (Pos == APE_NULL))
     {
         for (int z = 0; z < GetItemCount(); z++)
             aryFiles.Add(GetFilename(z));
@@ -547,7 +547,7 @@ void CMACListCtrl::OnDropFiles(HDROP hDropInfo)
 {
     StartFileInsertion(FALSE);
 
-    const int nFiles = DragQueryFile(hDropInfo, 0xFFFFFFFF, NULL, 0);
+    const int nFiles = DragQueryFile(hDropInfo, 0xFFFFFFFF, APE_NULL, 0);
     TCHAR * pFilename = new TCHAR [APE_MAX_PATH];
     for (int z = 0; z < nFiles; z++)
     {
@@ -567,9 +567,9 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
     // get the list of files
     CStringList slDraggedFiles; int nBufferSize = 0;
     POSITION Pos = GetFirstSelectedItemPosition();
-    if (Pos != NULL)
+    if (Pos != APE_NULL)
     {
-        while (Pos != NULL)
+        while (Pos != APE_NULL)
         {
             CString strFilename = GetFilename(GetNextSelectedItem(Pos));
             slDraggedFiles.AddTail(strFilename);
@@ -579,10 +579,10 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
 
         // create the drop object
         HGLOBAL hgDrop = GlobalAlloc(GHND | GMEM_SHARE, static_cast<size_t>(nBufferSize));
-        if (hgDrop != NULL)
+        if (hgDrop != APE_NULL)
         {
             DROPFILES * pDrop = static_cast<DROPFILES *>(GlobalLock(hgDrop));
-            if (pDrop != NULL)
+            if (pDrop != APE_NULL)
             {
                 // setup the drop object
                 pDrop->pFiles = sizeof(DROPFILES);
@@ -597,18 +597,18 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
                 // fill in the actual filenames
                 POSITION InternalPos = slDraggedFiles.GetHeadPosition();
                 TCHAR * pszBuff = reinterpret_cast<TCHAR *>((LPBYTE(pDrop) + sizeof(DROPFILES)));
-                while (InternalPos != NULL)
+                while (InternalPos != APE_NULL)
                 {
                     LPCTSTR pFilename = slDraggedFiles.GetNext(InternalPos).GetString();
-                    _tcscpy_s(pszBuff, static_cast<size_t>(nBufferSizeLeft) / sizeof(TCHAR), pFilename);
+                    _tcscpy_s(pszBuff, static_cast<size_t>(nBufferSizeLeft) / sizeof(pszBuff[0]), pFilename);
                     pszBuff += 1 + _tcslen(pFilename);
-                    nBufferSizeLeft -= static_cast<int>((sizeof(TCHAR) * (1 + _tcslen(pFilename))));
+                    nBufferSizeLeft -= static_cast<int>((sizeof(pszBuff[0]) * (1 + _tcslen(pFilename))));
                 }
                 GlobalUnlock(hgDrop);
 
                 // create the data source
                 COleDataSource * pDataSource = new COleDataSource;
-                FORMATETC FormatEtc = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+                FORMATETC FormatEtc = { CF_HDROP, APE_NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
                 pDataSource->CacheGlobalData(CF_HDROP, hgDrop, &FormatEtc);
 
                 // do the drag-n-drop
@@ -669,7 +669,7 @@ BOOL CMACListCtrl::SelectAll()
     return TRUE;
 }
 
-static CMACListCtrl * s_pThis = NULL;
+static CMACListCtrl * s_pThis = APE_NULL;
 static int s_nCompareColumn = -1;
 static int s_nCompareOrder = 0;
 
@@ -848,7 +848,7 @@ BOOL CMACListCtrl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 
 BOOL CMACListCtrl::OnEraseBkgnd(CDC * pDC)
 {
-    if ((m_pParent == NULL) || (m_pParent->GetInitialized() == FALSE))
+    if ((m_pParent == APE_NULL) || (m_pParent->GetInitialized() == FALSE))
         return TRUE;
 
     // get rectangle

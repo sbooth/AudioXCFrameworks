@@ -190,7 +190,7 @@ struct APE_DESCRIPTOR
     uint32 nAPEFrameDataBytesHigh;             // the high order number of APE frame data bytes
     uint32 nTerminatingDataBytes;              // the terminating data of the file (not including tag data)
 
-    uint8  cFileMD5[16];                       // the MD5 hash of the file (see notes for usage... it's a littly tricky)
+    uint8  cFileMD5[16];                       // the MD5 hash of the file (see notes for usage... it's a little tricky)
 };
 
 /**************************************************************************************************
@@ -310,7 +310,7 @@ public:
         bool bApplySigned8BitProcessing;
         bool bApplyBigEndianProcessing;
     };
-    virtual int GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING * pProcessing = NULL) = 0;
+    virtual int GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING * pProcessing = APE_NULL) = 0;
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // Seek(...) - seeks
@@ -383,11 +383,11 @@ public:
     //////////////////////////////////////////////////////////////////////////////////////////////
 
     virtual int Start(const str_utfn * pOutputFilename, const WAVEFORMATEX * pwfeInput,
-        int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL,
+        bool bFloat, int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL,
         const void * pHeaderData = APE_NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION, int nFlags = 0) = 0;
 
     virtual int StartEx(CIO * pioOutput, const WAVEFORMATEX * pwfeInput,
-        int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL,
+        bool bFloat, int64 nMaxAudioBytes = MAX_AUDIO_BYTES_UNKNOWN, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL,
         const void * pHeaderData = APE_NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION) = 0;
 
     /**************************************************************************************************

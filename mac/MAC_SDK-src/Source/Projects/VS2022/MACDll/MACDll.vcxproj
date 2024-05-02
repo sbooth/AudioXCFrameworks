@@ -304,6 +304,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <ImportLibrary>$(OutDir)MACDll.lib</ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -425,6 +426,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <ImportLibrary>$(OutDir)MACDll64.lib</ImportLibrary>
       <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">

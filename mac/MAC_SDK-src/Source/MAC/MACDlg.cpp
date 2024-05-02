@@ -26,7 +26,7 @@ CMACDlg::CMACDlg(CStringArrayEx * paryFiles, CWnd * pParent) :
 {
     m_bLastLoadMenuAndToolbarProcessing = FALSE;
     m_bInitialized = FALSE;
-    m_hAcceleratorTable = NULL;
+    m_hAcceleratorTable = APE_NULL;
 
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -97,7 +97,7 @@ BOOL CMACDlg::OnInitDialog()
     }
     else
     {
-        SetWindowPos(NULL, 0, 0, theApp.GetSize(780, 0).cx, theApp.GetSize(0, 420).cy, SWP_NOZORDER | SWP_HIDEWINDOW);
+        SetWindowPos(APE_NULL, 0, 0, theApp.GetSize(780, 0).cx, theApp.GetSize(0, 420).cy, SWP_NOZORDER | SWP_HIDEWINDOW);
         CenterWindow();
     }
 
@@ -136,7 +136,7 @@ BOOL CMACDlg::OnInitDialog()
     }
     else
     {
-        SetWindowPos(NULL, 0, 0, theApp.GetSize(780, 0).cx, theApp.GetSize(0, 420).cy, SWP_NOZORDER);
+        SetWindowPos(APE_NULL, 0, 0, theApp.GetSize(780, 0).cx, theApp.GetSize(0, 420).cy, SWP_NOZORDER);
         CenterWindow();
     }
 
@@ -236,7 +236,7 @@ void CMACDlg::OnToolbarDropDown(NMHDR * pnmtb, LRESULT *)
 {
     NMTOOLBAR * pNMToolbar = reinterpret_cast<NMTOOLBAR *>(pnmtb);
     CMenu menu;
-    CMenu * pMenu = NULL;
+    CMenu * pMenu = APE_NULL;
 
     // switch on button command id's.
     switch (pNMToolbar->iItem)
@@ -360,7 +360,7 @@ void CMACDlg::OnFileProcessFiles()
         UpdateWindow();
         m_spProcessFiles->Process(&m_aryFiles);
         m_ctrlStatusBar.StartProcessing();
-        SetTimer(IDT_UPDATE_PROGRESS, IDT_UPDATE_PROGRESS_MS, NULL);
+        SetTimer(IDT_UPDATE_PROGRESS, IDT_UPDATE_PROGRESS_MS, APE_NULL);
     }
 }
 
@@ -370,7 +370,7 @@ void CMACDlg::OnFileAddFiles()
         return;
 
     // show the file dialog
-    CFileDialog FileDialog(TRUE, NULL, NULL,
+    CFileDialog FileDialog(TRUE, APE_NULL, APE_NULL,
         OFN_ALLOWMULTISELECT | OFN_HIDEREADONLY, theApp.GetFormatArray()->GetOpenFilesFilter());
 
     // extra initialization (hacky, but safe)
@@ -384,7 +384,7 @@ void CMACDlg::OnFileAddFiles()
         m_ctrlList.StartFileInsertion(FALSE);
 
         POSITION Pos = FileDialog.GetStartPosition();
-        while (Pos != NULL)
+        while (Pos != APE_NULL)
         {
             CString strFilename = FileDialog.GetNextPathName(Pos);
             m_ctrlList.AddFileInternal(strFilename);
@@ -406,7 +406,7 @@ void CMACDlg::OnFileAddFolder()
     if (GetProcessing())
         return;
 
-    CSmartPtr<CFolderDialog> spFolderDialog(new CFolderDialog(NULL, BIF_RETURNONLYFSDIRS | BIF_EDITBOX));
+    CSmartPtr<CFolderDialog> spFolderDialog(new CFolderDialog(APE_NULL, BIF_RETURNONLYFSDIRS | BIF_EDITBOX));
     if (spFolderDialog->DoModal() == IDOK)
     {
         m_ctrlList.AddFolder(spFolderDialog->GetPathName());
@@ -474,12 +474,12 @@ void CMACDlg::LayoutWindow()
         const int nBorderWidth = theApp.GetSize(5, 0).cx;
 
         int nStatusBarHeight = theApp.GetSize(20, 0).cx;
-        m_ctrlStatusBar.SetWindowPos(NULL, nBorderWidth, cy - nStatusBarHeight, cx - nBorderWidth, nStatusBarHeight, SWP_NOZORDER);
+        m_ctrlStatusBar.SetWindowPos(APE_NULL, nBorderWidth, cy - nStatusBarHeight, cx - nBorderWidth, nStatusBarHeight, SWP_NOZORDER);
         CRect rectStatusBar; m_ctrlStatusBar.GetClientRect(&rectStatusBar);
 
         CRect rectToolbar; m_ctrlToolbar.GetWindowRect(&rectToolbar); ScreenToClient(&rectToolbar);
 
-        m_ctrlList.SetWindowPos(NULL, nBorderWidth, nBorderWidth + rectToolbar.bottom, cx - (2 * nBorderWidth), cy - nStatusBarHeight - (2 * nBorderWidth) - rectToolbar.Height(), SWP_NOZORDER);
+        m_ctrlList.SetWindowPos(APE_NULL, nBorderWidth, nBorderWidth + rectToolbar.bottom, cx - (2 * nBorderWidth), cy - nStatusBarHeight - (2 * nBorderWidth) - rectToolbar.Height(), SWP_NOZORDER);
 
         UpdateWindow();
     }
@@ -587,10 +587,11 @@ void CMACDlg::OnTimer(UINT_PTR nIDEvent)
         }
 
         // output our progress
+        BOOL bPaused = m_spProcessFiles->GetPaused();
         for (int z = 0; z < m_aryFiles.GetSize(); z++)
         {
             MAC_FILE * pInfo = &m_aryFiles[z];
-            if (pInfo && (pInfo->bNeedsUpdate || pInfo->GetRunning()))
+            if (pInfo && (pInfo->bNeedsUpdate || (pInfo->GetRunning() && (bPaused == FALSE))))
             {
                 CRect rectItem;
                 m_ctrlList.GetItemRect(z, &rectItem, LVIR_BOUNDS);
@@ -602,7 +603,7 @@ void CMACDlg::OnTimer(UINT_PTR nIDEvent)
         // handle completion (or restart the timer if we're not done)
         if (bAllDone == FALSE)
         {
-            SetTimer(IDT_UPDATE_PROGRESS, IDT_UPDATE_PROGRESS_MS, NULL);
+            SetTimer(IDT_UPDATE_PROGRESS, IDT_UPDATE_PROGRESS_MS, APE_NULL);
         }
         else
         {
@@ -773,7 +774,7 @@ void CMACDlg::OnSetCompressionMenu(UINT nID)
 void CMACDlg::OnDestroy()
 {
     // stop file processing
-    if (m_spProcessFiles != NULL)
+    if (m_spProcessFiles != APE_NULL)
         m_spProcessFiles->Stop(true);
     m_spProcessFiles.Delete();
 
@@ -820,7 +821,7 @@ void CMACDlg::OnStopImmediately()
 
 void CMACDlg::OnHelpHelp()
 {
-    ShellExecute(NULL, NULL, _T("https://www.monkeysaudio.com/help.html"), NULL, NULL, SW_MAXIMIZE);
+    ShellExecute(APE_NULL, APE_NULL, _T("https://www.monkeysaudio.com/help.html"), APE_NULL, APE_NULL, SW_MAXIMIZE);
 }
 
 void CMACDlg::OnHelpAbout()
@@ -831,27 +832,27 @@ void CMACDlg::OnHelpAbout()
 
 void CMACDlg::OnHelpWebsiteMonkeysAudio()
 {
-    ShellExecute(NULL, NULL, _T("https://www.monkeysaudio.com"), NULL, NULL, SW_MAXIMIZE);
+    ShellExecute(APE_NULL, APE_NULL, _T("https://www.monkeysaudio.com"), APE_NULL, APE_NULL, SW_MAXIMIZE);
 }
 
 void CMACDlg::OnHelpWebsiteJRiver()
 {
-    ShellExecute(NULL, NULL, _T("https://www.jriver.com"), NULL, NULL, SW_MAXIMIZE);
+    ShellExecute(APE_NULL, APE_NULL, _T("https://www.jriver.com"), APE_NULL, APE_NULL, SW_MAXIMIZE);
 }
 
 void CMACDlg::OnHelpWebsiteWinamp()
 {
-    ShellExecute(NULL, NULL, _T("https://www.winamp.com"), NULL, NULL, SW_MAXIMIZE);
+    ShellExecute(APE_NULL, APE_NULL, _T("https://www.winamp.com"), APE_NULL, APE_NULL, SW_MAXIMIZE);
 }
 
 void CMACDlg::OnHelpWebsiteEac()
 {
-    ShellExecute(NULL, NULL, _T("https://www.exactaudiocopy.de/eac.html"), NULL, NULL, SW_MAXIMIZE);
+    ShellExecute(APE_NULL, APE_NULL, _T("https://www.exactaudiocopy.de/eac.html"), APE_NULL, APE_NULL, SW_MAXIMIZE);
 }
 
 void CMACDlg::OnHelpLicense()
 {
-    ShellExecute(NULL, NULL, _T("https://www.monkeysaudio.com/license.html"), NULL, NULL, SW_MAXIMIZE);
+    ShellExecute(APE_NULL, APE_NULL, _T("https://www.monkeysaudio.com/license.html"), APE_NULL, APE_NULL, SW_MAXIMIZE);
 }
 
 void CMACDlg::OnToolsOptions()
@@ -972,7 +973,7 @@ void CMACDlg::WinHelp(DWORD_PTR, UINT nCmd)
 
 void CMACDlg::LayoutControlTop(CWnd * pwndLayout, CRect & rectLayout, bool bOnlyControlWidth, bool bCombobox, CWnd * pwndRight)
 {
-    if (pwndLayout == NULL)
+    if (pwndLayout == APE_NULL)
         return;
 
     CRect rectWindow;
@@ -983,19 +984,19 @@ void CMACDlg::LayoutControlTop(CWnd * pwndLayout, CRect & rectLayout, bool bOnly
 
     // layout
     CRect rectRight;
-    if (pwndRight != NULL)
+    if (pwndRight != APE_NULL)
     {
         pwndRight->GetWindowRect(&rectRight);
-        pwndRight->SetWindowPos(NULL, rectLayout.right - rectRight.Width(), rectLayout.top, rectRight.Width(), theApp.GetSize(22, 0).cx, SWP_NOZORDER);
+        pwndRight->SetWindowPos(APE_NULL, rectLayout.right - rectRight.Width(), rectLayout.top, rectRight.Width(), theApp.GetSize(22, 0).cx, SWP_NOZORDER);
         rectLayout.right -= rectRight.Width() + theApp.GetSize(8, 0).cx;
     }
-    pwndLayout->SetWindowPos(NULL, rectLayout.left, rectLayout.top, bOnlyControlWidth ? rectWindow.Width() : rectLayout.Width(), bCombobox ? theApp.GetSize(500, 0).cx : rectWindow.Height(), SWP_NOZORDER);
+    pwndLayout->SetWindowPos(APE_NULL, rectLayout.left, rectLayout.top, bOnlyControlWidth ? rectWindow.Width() : rectLayout.Width(), bCombobox ? theApp.GetSize(500, 0).cx : rectWindow.Height(), SWP_NOZORDER);
     rectLayout.top += rectWindow.Height(); // control height
     if (bOnlyControlWidth)
         rectLayout.left += rectWindow.Width() + theApp.GetSize(8, 0).cx; // window and border
     else
         rectLayout.top += theApp.GetSize(8, 0).cx; // border
-    if (pwndRight != NULL)
+    if (pwndRight != APE_NULL)
     {
         rectLayout.right += rectRight.Width() + theApp.GetSize(8, 0).cx;
     }
@@ -1010,7 +1011,7 @@ void CMACDlg::LayoutControlTop(CWnd * pwndLayout, CRect & rectLayout, bool bOnly
 
 void CMACDlg::LayoutControlTopWithDivider(CWnd * pwndLayout, CWnd * pwndDivider, CWnd * pwndImage, CRect & rectLayout)
 {
-    if (pwndLayout == NULL)
+    if (pwndLayout == APE_NULL)
         return;
 
     CRect rectWindow;
@@ -1033,9 +1034,9 @@ void CMACDlg::LayoutControlTopWithDivider(CWnd * pwndLayout, CWnd * pwndDivider,
     rectWindow.bottom = rectWindow.top + theApp.GetSize(22, 0).cx;
 
     // layout
-    pwndLayout->SetWindowPos(NULL, rectLayout.left, rectLayout.top, rectWindow.Width(), rectWindow.Height(), SWP_NOZORDER);
-    pwndDivider->SetWindowPos(NULL, rectLayout.left + rectWindow.Width(), rectLayout.top + (rectWindow.Height() / 2) - (rectDivider.Height() / 2), rectLayout.Width() - rectWindow.Width(), rectDivider.Height(), SWP_NOZORDER);
-    pwndImage->SetWindowPos(NULL, rectLayout.left, rectLayout.top + rectWindow.Height() + theApp.GetSize(6, 0).cx, rectImage.Width(), rectImage.Height(), SWP_NOZORDER);
+    pwndLayout->SetWindowPos(APE_NULL, rectLayout.left, rectLayout.top, rectWindow.Width(), rectWindow.Height(), SWP_NOZORDER);
+    pwndDivider->SetWindowPos(APE_NULL, rectLayout.left + rectWindow.Width(), rectLayout.top + (rectWindow.Height() / 2) - (rectDivider.Height() / 2), rectLayout.Width() - rectWindow.Width(), rectDivider.Height(), SWP_NOZORDER);
+    pwndImage->SetWindowPos(APE_NULL, rectLayout.left, rectLayout.top + rectWindow.Height() + theApp.GetSize(6, 0).cx, rectImage.Width(), rectImage.Height(), SWP_NOZORDER);
     rectLayout.top += rectWindow.Height(); // control height
     rectLayout.top += theApp.GetSize(8, 0).cx; // border
 
@@ -1045,10 +1046,10 @@ void CMACDlg::LayoutControlTopWithDivider(CWnd * pwndLayout, CWnd * pwndDivider,
 void CMACDlg::PlayDefaultSound()
 {
     HRSRC hSound = FindResource(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_COMPLETION_WAVE), _T("WAVE"));
-    if (hSound != NULL)
+    if (hSound != APE_NULL)
     {
         HGLOBAL hResource = LoadResource(AfxGetInstanceHandle(), hSound);
-        if (hResource != NULL)
+        if (hResource != APE_NULL)
         {
             LPCTSTR pSound = static_cast<LPCTSTR>(LockResource(hResource));
             sndPlaySound(pSound, SND_MEMORY | SND_ASYNC);
@@ -1064,12 +1065,12 @@ void CMACDlg::LoadScale()
     double dScale = 1.0;
 
     // check the scale
-    UINT(STDAPICALLTYPE * pGetDpiForWindow) (IN HWND hwnd) = NULL;
+    UINT(STDAPICALLTYPE * pGetDpiForWindow) (IN HWND hwnd) = APE_NULL;
     HMODULE hUser32 = LoadLibrary(_T("user32.dll"));
-    if (hUser32 != NULL)
+    if (hUser32 != APE_NULL)
     {
         *(reinterpret_cast<FARPROC *>(&pGetDpiForWindow)) = GetProcAddress(hUser32, "GetDpiForWindow");
-        if (pGetDpiForWindow != NULL)
+        if (pGetDpiForWindow != APE_NULL)
         {
             UINT nDPI = pGetDpiForWindow(m_hWnd);
             dScale = static_cast<double>(nDPI) / static_cast<double>(96.0);
@@ -1088,7 +1089,7 @@ void CMACDlg::LoadScale()
     theApp.DeleteImageLists();
 
     // toolbar
-    if (m_ctrlToolbar.GetSafeHwnd() == NULL)
+    if (m_ctrlToolbar.GetSafeHwnd() == APE_NULL)
     {
         m_ctrlToolbar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_BORDER_BOTTOM | TBSTYLE_FLAT);
         INITIALIZE_COMMON_CONTROL(m_ctrlToolbar.GetSafeHwnd())
@@ -1096,7 +1097,7 @@ void CMACDlg::LoadScale()
     }
 
     // status bar
-    if (m_ctrlStatusBar.GetSafeHwnd() == NULL)
+    if (m_ctrlStatusBar.GetSafeHwnd() == APE_NULL)
     {
         m_ctrlStatusBar.Create(this);
         INITIALIZE_COMMON_CONTROL(m_ctrlStatusBar.GetSafeHwnd())
@@ -1109,10 +1110,10 @@ void CMACDlg::LoadScale()
     // set the fonts
     {
         // store the start font (stored since we're going to scale after this)
-        if (m_fontStart.GetSafeHandle() == NULL)
+        if (m_fontStart.GetSafeHandle() == APE_NULL)
         {
             CFont * pCurrentFont = m_ctrlList.GetFont();
-            if (pCurrentFont != NULL)
+            if (pCurrentFont != APE_NULL)
             {
                 LOGFONT lf; // used to create the CFont
                 pCurrentFont->GetLogFont(&lf);
@@ -1121,7 +1122,7 @@ void CMACDlg::LoadScale()
         }
 
         // build a scaled font
-        if (m_fontStart.GetSafeHandle() != NULL)
+        if (m_fontStart.GetSafeHandle() != APE_NULL)
         {
             LOGFONT lf; // used to create the CFont
             m_fontStart.GetLogFont(&lf);

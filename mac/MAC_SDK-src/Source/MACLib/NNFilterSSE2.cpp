@@ -155,7 +155,7 @@ int32 CalculateDotProductSSE2(const short * pA, const short * pB, int nOrder)
     return _mm_cvtsi128_si32(sseSum);
 }
 
-static int64 CalculateDotProductSSE2(const int* pA, const int* pB, int nOrder)
+static int64 CalculateDotProductSSE2(const int * pA, const int * pB, int nOrder)
 {
     return CalculateDotProduct(pA, pB, nOrder);
 }

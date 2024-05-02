@@ -47,7 +47,7 @@ BOOL CFormatPluginInfoDlg::OnInitDialog()
     {
         m_ctrlURL.SetWindowText(m_strURL);
         m_ctrlURL.SetURL(m_strURL);
-        m_ctrlURL.SetLinkCursor(LoadCursor(NULL, IDC_HAND));
+        m_ctrlURL.SetLinkCursor(LoadCursor(APE_NULL, IDC_HAND));
     }
 
     return TRUE;  // return TRUE unless you set the focus to a control

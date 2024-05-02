@@ -1,6 +1,8 @@
 #pragma once
 #include "afxwin.h"
 #include "afxcmn.h"
+#include "APETag.h"
+
 class CMACDlg;
 
 class CAPEInfoFormatDlg : public CDialog
@@ -8,7 +10,7 @@ class CAPEInfoFormatDlg : public CDialog
     DECLARE_DYNAMIC(CAPEInfoFormatDlg)
 
 public:
-    CAPEInfoFormatDlg(CMACDlg * pMACDlg, CWnd * pParent = NULL);
+    CAPEInfoFormatDlg(CMACDlg * pMACDlg, CWnd * pParent = APE_NULL);
     virtual ~CAPEInfoFormatDlg();
 
     void Layout();
@@ -23,6 +25,7 @@ protected:
 
     CMACDlg * m_pMACDlg;
     CString GetSummary(const CString & strFilename);
+    void OutputAPETag(APE::IAPETag * pTag, CString & strSummary);
     CStringArray m_aryFiles;
 
 public:

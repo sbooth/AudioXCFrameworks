@@ -38,7 +38,7 @@ str_utfn * GetParameterFromList(const str_utfn * pList, const str_utfn * pDelimi
     {
         int nBufferSize = static_cast<int>(pTail - pHead);
         str_utfn * pBuffer = new str_utfn [static_cast<size_t>(nBufferSize) + 1];
-        memcpy(pBuffer, pHead, static_cast<size_t>(nBufferSize) * sizeof(str_utfn));
+        memcpy(pBuffer, pHead, static_cast<size_t>(nBufferSize) * sizeof(pBuffer[0]));
         pBuffer[nBufferSize] = 0;
 
         pHead = pTail + wcslen(pDelimiter);
@@ -55,7 +55,7 @@ str_utfn * GetParameterFromList(const str_utfn * pList, const str_utfn * pDelimi
     {
         int nBufferSize = static_cast<int>(wcslen(pHead));
         str_utfn * pBuffer = new str_utfn [static_cast<size_t>(nBufferSize) + 1];
-        memcpy(pBuffer, pHead, static_cast<size_t>(nBufferSize) * sizeof(str_utfn));
+        memcpy(pBuffer, pHead, static_cast<size_t>(nBufferSize) * sizeof(pBuffer[0]));
         pBuffer[nBufferSize] = 0;
         return pBuffer;
     }
@@ -87,6 +87,7 @@ static void DisplayProperUsage(FILE * pFile)
     fwprintf(pFile, L"Examples:\n");
     fwprintf(pFile, L"    Compress: mac.exe \"Metallica - One.wav\" \"Metallica - One.ape\" -c2000\n");
     fwprintf(pFile, L"    Compress: mac.exe \"Metallica - One.wav\" \"Metallica - One.ape\" -c2000 -t \"Artist=Metallica|Album=Black|Name=One\"\n");
+    fwprintf(pFile, L"    Compress: mac.exe \"Metallica - One.wav\" auto -c2000\n");
     fwprintf(pFile, L"    Transcode from pipe: ffmpeg.exe -i \"Metallica - One.flac\" -f wav - | mac.exe - \"Metallica - One.ape\" -c2000\n");
     fwprintf(pFile, L"    Decompress: mac.exe \"Metallica - One.ape\" \"Metallica - One.wav\" -d\n");
     fwprintf(pFile, L"    Decompress: mac.exe \"Metallica - One.ape\" auto -d\n");
@@ -94,7 +95,6 @@ static void DisplayProperUsage(FILE * pFile)
     fwprintf(pFile, L"    Full Verify: mac.exe \"Metallica - One.ape\" -V\n");
     fwprintf(pFile, L"    Tag: mac.exe \"Metallica - One.ape\" -t \"Artist=Metallica|Album=Black|Name=One|Comment=\\\"This is in quotes\\\"\"\n");
     fwprintf(pFile, L"    Remove tag: mac.exe \"Metallica - One.ape\" -r\n");
-    fwprintf(pFile, L"    (note: int filenames must be put inside of quotations)\n");
 }
 
 /**************************************************************************************************
@@ -109,7 +109,7 @@ static void CALLBACK ProgressCallback(int nPercentageDone)
     // calculate the progress
     double dProgress = nPercentageDone / 1.e5;                                          // [0...1]
     double dElapsed = static_cast<double>(nTickCount - g_nInitialTickCount) / TICK_COUNT_FREQ;    // seconds
-    double dRemaining = dElapsed * ((1.0 / dProgress) - 1.0);                           // seconds
+    double dRemaining = (nPercentageDone > 0) ? dElapsed * ((1.0 / dProgress) - 1.0) : 0;            // seconds
 
     // output the progress
     fwprintf(stderr, L"Progress: %.1f%% (%.1f seconds remaining, %.1f seconds total)          \r",
@@ -277,6 +277,43 @@ int ConvertTagsToLegacy(const str_utfn * pFilename)
 }
 
 /**************************************************************************************************
+Handle auto for an output filename
+**************************************************************************************************/
+void HandleAuto(CSmartPtr<wchar_t> & spInputFilename, CSmartPtr<wchar_t> & spOutputFilename, bool bAPEType)
+{
+    // build the output filename
+    const wchar_t * AUTO = L"auto";
+    if ((spOutputFilename == NULL) || (wcslen(spOutputFilename) == 0) || (_wcsicmp(spOutputFilename, AUTO) == 0))
+    {
+        // build the output filename
+        spOutputFilename.Assign(new wchar_t[APE_MAX_PATH], true);
+        wcscpy_s(spOutputFilename, APE_MAX_PATH, spInputFilename);
+
+        // remove the extension
+        wchar_t* pExtension = wcsrchr(spOutputFilename, '.');
+        if (pExtension != APE_NULL)
+            *pExtension = 0; // switch to NULL so we don't have an extension
+
+        // put together and fill spOutputFilename
+        if (bAPEType)
+        {
+            // add the .ape extension
+            wcscat_s(spOutputFilename, APE_MAX_PATH, L".ape");
+        }
+        else
+        {
+            // add the new extension
+            APE::str_ansi cFileType[8] = { 0 };
+            GetAPEFileType(spInputFilename, cFileType);
+            CSmartPtr<APE::str_utfn> spFileTypeUTF16(CAPECharacterHelper::GetUTF16FromANSI(cFileType), true);
+
+            // put together and fill spOutputFilename
+            wcscat_s(spOutputFilename, APE_MAX_PATH, spFileTypeUTF16);
+        }
+    }
+}
+
+/**************************************************************************************************
 Main (the main function)
 **************************************************************************************************/
 #ifndef PLATFORM_WINDOWS
@@ -291,7 +328,6 @@ int _tmain(int argc, TCHAR * argv[])
     int nMode = UNDEFINED_MODE;
     int nCompressionLevel = 0;
     int nPercentageDone;
-    const wchar_t * AUTO = L"auto";
 
     // initialize
     #ifdef PLATFORM_WINDOWS
@@ -425,8 +461,14 @@ int _tmain(int argc, TCHAR * argv[])
         GetAPECompressionLevelName(nCompressionLevel, cCompressionLevel, 16, false);
 
         fwprintf(stderr, L"Compressing (%ls)...\n", cCompressionLevel);
+
+        // build the output filename
+        HandleAuto(spInputFilename, spOutputFilename, true);
+
+        // compress
         nRetVal = CompressFileW(spInputFilename, spOutputFilename, nCompressionLevel, &nPercentageDone, ProgressCallback, &nKillFlag);
 
+        // tag
         #ifdef PLATFORM_WINDOWS
         if ((nRetVal == ERROR_SUCCESS) && (argc > 5) && (_tcsicmp(argv[4], _T("-t")) == 0))
         #else
@@ -449,34 +491,16 @@ int _tmain(int argc, TCHAR * argv[])
             #endif
         }
     }
-    else if (nMode == DECOMPRESS_MODE)
-#else
-    if (nMode == DECOMPRESS_MODE)
+    else
 #endif
+    if (nMode == DECOMPRESS_MODE)
     {
         fwprintf(stderr, L"Decompressing...\n");
-        if ((spOutputFilename == NULL) || (_wcsicmp(spOutputFilename, AUTO) == 0))
-        {
-            // this needs to be allocated with a new or else Virus Total was losing it on 4/24/2023
-            // strange things set it off!
-            wchar_t * pOutput = new wchar_t [APE_MAX_PATH];
-            wchar_t * pExtension = wcschr(spInputFilename, '.');
-            if (pExtension != APE_NULL)
-                *pExtension = 0;
-            wcscpy_s(pOutput, APE_MAX_PATH, spInputFilename);
-            if (pExtension != APE_NULL)
-                *pExtension = '.';
 
-            APE::str_ansi cFileType[8] = { 0 };
-            GetAPEFileType(spInputFilename, cFileType);
-            CSmartPtr<APE::str_utfn> spFileTypeUTF16(CAPECharacterHelper::GetUTF16FromANSI(cFileType), true);
+        // build the output filename
+        HandleAuto(spInputFilename, spOutputFilename, false);
 
-            wcscat_s(pOutput, APE_MAX_PATH, spFileTypeUTF16);
-            spOutputFilename.Assign(new wchar_t[wcslen(pOutput) + 1], true);
-            wcscpy_s(spOutputFilename, wcslen(pOutput) + 1, pOutput);
-
-            APE_SAFE_ARRAY_DELETE(pOutput)
-        }
+        // decompress
         nRetVal = DecompressFileW(spInputFilename, spOutputFilename, &nPercentageDone, ProgressCallback, &nKillFlag);
     }
     else if (nMode == VERIFY_MODE)

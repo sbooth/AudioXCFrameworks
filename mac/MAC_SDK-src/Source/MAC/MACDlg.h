@@ -8,14 +8,14 @@
 class CMACDlg : public CDialog
 {
 public:
-    CMACDlg(CStringArrayEx * paryFiles, CWnd * pParent = NULL);
+    CMACDlg(CStringArrayEx * paryFiles, CWnd * pParent = APE_NULL);
 
     enum { IDD = IDD_MAC_DIALOG };
     CMACListCtrl m_ctrlList;
     CMACStatusBar m_ctrlStatusBar;
     CToolBar m_ctrlToolbar;
 
-    BOOL GetProcessing() { return (m_spProcessFiles != NULL); }
+    BOOL GetProcessing() { return (m_spProcessFiles != APE_NULL); }
     BOOL GetInitialized() { return m_bInitialized; }
     CFont & GetFont() { return m_Font; }
     CSize MeasureText(const CString & strText);
@@ -23,7 +23,7 @@ public:
     virtual BOOL PreTranslateMessage(MSG * pMsg);
     virtual void WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
 
-    void LayoutControlTop(CWnd * pwndLayout, CRect & rectLayout, bool bOnlyControlWidth = false, bool bCombobox = false, CWnd * pwndRight = NULL);
+    void LayoutControlTop(CWnd * pwndLayout, CRect & rectLayout, bool bOnlyControlWidth = false, bool bCombobox = false, CWnd * pwndRight = APE_NULL);
     void LayoutControlTopWithDivider(CWnd * pwndLayout, CWnd * pwndDivider, CWnd * pwndImage, CRect & rectLayout);
     BOOL SetMode(APE::APE_MODES Mode);
 

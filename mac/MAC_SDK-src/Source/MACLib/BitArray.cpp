@@ -46,8 +46,11 @@ Constructor
 CBitArray::CBitArray(CIO * pIO)
 {
     // allocate memory for the bit array
-    m_pBitArray = new uint32 [BIT_ARRAY_ELEMENTS];
-    memset(m_pBitArray, 0, BIT_ARRAY_BYTES);
+    m_spBitArray.Assign(new uint32[BIT_ARRAY_ELEMENTS], true);
+    memset(m_spBitArray, 0, BIT_ARRAY_BYTES);
+
+    // empty the range code information
+    APE_CLEAR(m_RangeCoderInfo);
 
     // initialize other variables
     m_nCurrentBitIndex = 0;
@@ -60,7 +63,7 @@ Destructor
 CBitArray::~CBitArray()
 {
     // free the bit array
-    APE_SAFE_ARRAY_DELETE(m_pBitArray)
+    m_spBitArray.Delete();
 #ifdef BUILD_RANGE_TABLE
     OutputRangeTable();
 #endif
@@ -79,9 +82,9 @@ int CBitArray::OutputBitArray(bool bFinalize)
     {
         nBytesToWrite = ((m_nCurrentBitIndex >> 5) * 4) + 4;
 
-        m_MD5.AddData(m_pBitArray, nBytesToWrite);
+        m_MD5.AddData(m_spBitArray, nBytesToWrite);
 
-        RETURN_ON_ERROR(m_pIO->Write(m_pBitArray, nBytesToWrite, &nBytesWritten))
+        RETURN_ON_ERROR(m_pIO->Write(m_spBitArray, nBytesToWrite, &nBytesWritten))
 
         // reset the bit pointer
         m_nCurrentBitIndex = 0;
@@ -90,16 +93,16 @@ int CBitArray::OutputBitArray(bool bFinalize)
     {
         nBytesToWrite = (m_nCurrentBitIndex >> 5) * 4;
 
-        m_MD5.AddData(m_pBitArray, nBytesToWrite);
+        m_MD5.AddData(m_spBitArray, nBytesToWrite);
 
-        RETURN_ON_ERROR(m_pIO->Write(m_pBitArray, nBytesToWrite, &nBytesWritten))
+        RETURN_ON_ERROR(m_pIO->Write(m_spBitArray, nBytesToWrite, &nBytesWritten))
 
         // move the last value to the front of the bit array
-        m_pBitArray[0] = m_pBitArray[m_nCurrentBitIndex >> 5];
+        m_spBitArray[0] = m_spBitArray[m_nCurrentBitIndex >> 5];
         m_nCurrentBitIndex = (m_nCurrentBitIndex & 31);
 
         // zero the rest of the memory (may not need the +1 because of frame byte alignment)
-        memset(&m_pBitArray[1], 0, static_cast<size_t>(ape_min(static_cast<int>(nBytesToWrite + 1), BIT_ARRAY_BYTES - 1)));
+        memset(&m_spBitArray[1], 0, static_cast<size_t>(ape_min(static_cast<int>(nBytesToWrite + 1), BIT_ARRAY_BYTES - 1)));
     }
 
     // return a success
@@ -109,8 +112,8 @@ int CBitArray::OutputBitArray(bool bFinalize)
 /**************************************************************************************************
 Range coding macros -- ugly, but outperform inline's (every cycle counts here)
 **************************************************************************************************/
-#define PUTC(VALUE) m_pBitArray[m_nCurrentBitIndex >> 5] |= (static_cast<uint32>(VALUE) & 0xFF) << (24 - (m_nCurrentBitIndex & 31)); m_nCurrentBitIndex += 8;
-#define PUTC_NOCAP(VALUE) m_pBitArray[m_nCurrentBitIndex >> 5] |= static_cast<uint32>(VALUE) << (24 - (m_nCurrentBitIndex & 31)); m_nCurrentBitIndex += 8;
+#define PUTC(VALUE) m_spBitArray[m_nCurrentBitIndex >> 5] |= (static_cast<uint32>(VALUE) & 0xFF) << (24 - (m_nCurrentBitIndex & 31)); m_nCurrentBitIndex += 8;
+#define PUTC_NOCAP(VALUE) m_spBitArray[m_nCurrentBitIndex >> 5] |= static_cast<uint32>(VALUE) << (24 - (m_nCurrentBitIndex & 31)); m_nCurrentBitIndex += 8;
 
 #define NORMALIZE_RANGE_CODER                                                                    \
     while (m_RangeCoderInfo.range <= BOTTOM_VALUE)                                               \
@@ -181,12 +184,12 @@ int CBitArray::EncodeUnsignedLong(unsigned int n)
 
     if (nBitIndex == 0)
     {
-        m_pBitArray[nBitArrayIndex] = n;
+        m_spBitArray[nBitArrayIndex] = n;
     }
     else
     {
-        m_pBitArray[nBitArrayIndex] |= n >> nBitIndex;
-        m_pBitArray[nBitArrayIndex + 1] = n << (32 - nBitIndex);
+        m_spBitArray[nBitArrayIndex] |= n >> nBitIndex;
+        m_spBitArray[nBitArrayIndex + 1] = n << (32 - nBitIndex);
     }
 
     m_nCurrentBitIndex += 32;
@@ -237,7 +240,7 @@ int CBitArray::EncodeValue(int64 nEncode, BIT_ARRAY_STATE & BitArrayState)
 
     // update nKSum
     // this was switched to int64 on the nKsum in build 8.68, but that made 32-bit noise encodes that failed to verify since it wasn't done on the other side
-    BitArrayState.nKSum += static_cast<uint32>(((nEncode + 1) / 2) - ((BitArrayState.nKSum + 16) >> 5));
+    BitArrayState.nKSum += static_cast<uint32>((nEncode + 1) / 2) - ((BitArrayState.nKSum + 16) >> 5);
 
     // store the overflow
     if (nOverflow < (MODEL_ELEMENTS - 1))

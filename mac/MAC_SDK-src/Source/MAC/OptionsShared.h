@@ -9,13 +9,13 @@ public:
         m_strCaption(strCaption),
         m_nIcon(nIcon)
     {
-        m_pDialog = NULL;
+        m_pDialog = APE_NULL;
         m_nIdealHeight = -1;
     }
 
     ~OPTIONS_PAGE()
     {
-        if (m_pDialog != NULL)
+        if (m_pDialog != APE_NULL)
         {
             if (IsWindow(m_pDialog->GetSafeHwnd()))
                 m_pDialog->DestroyWindow();

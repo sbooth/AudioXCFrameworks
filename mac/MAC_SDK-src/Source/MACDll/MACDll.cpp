@@ -128,7 +128,7 @@ int __stdcall RemoveTagW(const str_utfn * pFilename)
     // error check creation
     if (nErrorCode != ERROR_SUCCESS)
         return nErrorCode;
-    if (spAPEDecompress == NULL) return ERROR_UNDEFINED;
+    if (spAPEDecompress == APE_NULL) return ERROR_UNDEFINED;
 
     // remove the tag
     IAPETag * pTag = GET_TAG(spAPEDecompress);
@@ -195,12 +195,12 @@ void __stdcall c_APECompress_Destroy(APE_COMPRESS_HANDLE hAPECompress)
 int __stdcall c_APECompress_Start(APE_COMPRESS_HANDLE hAPECompress, const char * pOutputFilename, const APE::WAVEFORMATEX * pwfeInput, APE::int64 nMaxAudioBytes, int nCompressionLevel, const void * pHeaderData, APE::int64 nHeaderBytes)
 {
     CSmartPtr<wchar_t> spOutputFilename(CAPECharacterHelper::GetUTF16FromANSI(pOutputFilename), TRUE);
-    return (static_cast<IAPECompress *>(hAPECompress))->Start(spOutputFilename, pwfeInput, nMaxAudioBytes, nCompressionLevel, pHeaderData, nHeaderBytes);
+    return (static_cast<IAPECompress *>(hAPECompress))->Start(spOutputFilename, pwfeInput, false, nMaxAudioBytes, nCompressionLevel, pHeaderData, nHeaderBytes);
 }
 
 int __stdcall c_APECompress_StartW(APE_COMPRESS_HANDLE hAPECompress, const str_utfn * pOutputFilename, const APE::WAVEFORMATEX * pwfeInput, APE::int64 nMaxAudioBytes, int nCompressionLevel, const void * pHeaderData, APE::int64 nHeaderBytes)
 {
-    return (static_cast<IAPECompress *>(hAPECompress))->Start(pOutputFilename, pwfeInput, nMaxAudioBytes, nCompressionLevel, pHeaderData, nHeaderBytes);
+    return (static_cast<IAPECompress *>(hAPECompress))->Start(pOutputFilename, pwfeInput, false, nMaxAudioBytes, nCompressionLevel, pHeaderData, nHeaderBytes);
 }
 
 int64 __stdcall c_APECompress_AddData(APE_COMPRESS_HANDLE hAPECompress, unsigned char * pData, int nBytes)

@@ -308,9 +308,11 @@
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\..\Certificate\signtool.exe sign /f ..\..\..\Certificate\MAC.pfx /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td sha256 /fd sha256 /a /as /p password "$(TargetPath)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -341,9 +343,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
     </Link>
-    <PostBuildEvent>
-      <Command>..\..\..\Certificate\signtool.exe sign /f ..\..\..\Certificate\MAC.pfx /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td sha256 /fd sha256 /a /as /p password "$(TargetPath)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -446,9 +445,11 @@
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
     <PostBuildEvent>
-      <Command>..\..\..\Certificate\signtool.exe sign /f ..\..\..\Certificate\MAC.pfx /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td sha256 /fd sha256 /a /as /p password "$(TargetPath)"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
@@ -479,9 +480,6 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
     </Link>
-    <PostBuildEvent>
-      <Command>..\..\..\Certificate\signtool.exe sign /f ..\..\..\Certificate\MAC.pfx /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td sha256 /fd sha256 /a /as /p password "$(TargetPath)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
@@ -511,14 +509,12 @@
       <SubSystem>Windows</SubSystem>
       <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>
     </Link>
-    <PostBuildEvent>
-      <Command>..\..\..\Certificate\signtool.exe sign /f ..\..\..\Certificate\MAC.pfx /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp /td sha256 /fd sha256 /a /as /p password "$(TargetPath)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\MAC\AboutDlg.cpp" />
     <ClCompile Include="..\..\..\MAC\APEInfoDlg.cpp" />
     <ClCompile Include="..\..\..\MAC\APEInfoFormatDlg.cpp" />
+    <ClCompile Include="..\..\..\MAC\FLACTag.cpp" />
     <ClCompile Include="..\..\..\MAC\MAC.cpp" />
     <ClCompile Include="..\..\..\MAC\MACDlg.cpp" />
     <ClCompile Include="..\..\..\MAC\MACFile.cpp" />
@@ -572,6 +568,7 @@
     <ClInclude Include="..\..\..\MAC\AboutDlg.h" />
     <ClInclude Include="..\..\..\MAC\APEInfoDlg.h" />
     <ClInclude Include="..\..\..\MAC\APEInfoFormatDlg.h" />
+    <ClInclude Include="..\..\..\MAC\FLACTag.h" />
     <ClInclude Include="..\..\..\MAC\MAC.h" />
     <ClInclude Include="..\..\..\MAC\MACDlg.h" />
     <ClInclude Include="..\..\..\MAC\MACFile.h" />

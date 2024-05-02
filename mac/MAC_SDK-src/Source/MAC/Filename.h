@@ -63,12 +63,12 @@ public:
     /**************************************************************************************************
     Advanced queries
     **************************************************************************************************/
-    CString BuildFilename(LPCTSTR lpszDrive = NULL, LPCTSTR lpszDirectory = NULL, LPCTSTR lpszName = NULL, LPCTSTR lpszExtension = NULL)
+    CString BuildFilename(LPCTSTR lpszDrive = APE_NULL, LPCTSTR lpszDirectory = APE_NULL, LPCTSTR lpszName = APE_NULL, LPCTSTR lpszExtension = APE_NULL)
     {
-        if (lpszDrive == NULL) lpszDrive = m_strDrive;
-        if (lpszDirectory == NULL) lpszDirectory = m_strDirectory;
-        if (lpszName == NULL) lpszName = m_strName;
-        if (lpszExtension == NULL) lpszExtension = m_strExtension;
+        if (lpszDrive == APE_NULL) lpszDrive = m_strDrive;
+        if (lpszDirectory == APE_NULL) lpszDirectory = m_strDirectory;
+        if (lpszName == APE_NULL) lpszName = m_strName;
+        if (lpszExtension == APE_NULL) lpszExtension = m_strExtension;
 
         return CString(lpszDrive) + lpszDirectory + lpszName + lpszExtension;
     }
