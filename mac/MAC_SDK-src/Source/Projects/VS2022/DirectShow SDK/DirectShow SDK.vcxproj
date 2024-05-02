@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\amextra.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\amfilter.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\amvideo.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\arithutil.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\combase.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\cprop.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\ctlutil.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\ddmm.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\dllentry.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\dllsetup.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\mtype.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\outputq.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\perflog.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\pstream.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\pullpin.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\refclock.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\renbase.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\schedule.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\seekpt.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\source.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\strmctl.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\sysclock.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\transfrm.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\transip.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\videoctl.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\vtrans.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\winctrl.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\winutil.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\wxdebug.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\wxlist.cpp" />
+    <ClCompile Include="..\..\..\DirectShow Filter\DirectShow SDK\wxutil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\amextra.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\amfilter.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\cache.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\checkbmi.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\combase.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\cprop.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\ctlutil.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\ddmm.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\dllsetup.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\dxmperf.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\fourcc.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\measure.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\msgthrd.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\mtype.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\outputq.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\perflog.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\perfstruct.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\pstream.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\pullpin.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\refclock.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\reftime.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\renbase.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\schedule.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\seekpt.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\source.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\streams.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\strmctl.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\sysclock.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\transfrm.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\transip.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\videoctl.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\vtrans.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\winctrl.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\winutil.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\wxdebug.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\wxlist.h" />
+    <ClInclude Include="..\..\..\DirectShow Filter\DirectShow SDK\wxutil.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{710831ff-4942-4a32-87bc-16ad7d3cdf37}</ProjectGuid>
+    <RootNamespace>DirectShowSDK</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS;UNICODE;_UNICODE;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\..\MACLib;..\..\..\Shared;..\..\..\DirectShow Filter\DirectShow SDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS;UNICODE;_UNICODE;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\..\MACLib;..\..\..\Shared;..\..\..\DirectShow Filter\DirectShow SDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS;UNICODE;_UNICODE;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\..\MACLib;..\..\..\Shared;..\..\..\DirectShow Filter\DirectShow SDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>PLATFORM_WINDOWS;UNICODE;_UNICODE;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>..\..\..\MACLib;..\..\..\Shared;..\..\..\DirectShow Filter\DirectShow SDK\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
