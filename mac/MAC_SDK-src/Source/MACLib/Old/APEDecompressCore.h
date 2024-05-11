@@ -12,9 +12,9 @@ public:
     ~CAPEDecompressCore();
 
     void GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes, intn nFrameIndex);
-    void GenerateDecodedArray(int * Input_Array, int Number_of_Elements, intn Frame_Index, CAntiPredictor * pAntiPredictor);
+    void GenerateDecodedArray(int * pInputArray, int nNumberElements, intn nFrameIndex, CAntiPredictor * pAntiPredictor);
 
-    int* GetDataX();
+    int * GetDataX();
     int * GetDataY();
 
 #ifdef APE_DECOMPRESS_CORE_GET_UNBITARRAY

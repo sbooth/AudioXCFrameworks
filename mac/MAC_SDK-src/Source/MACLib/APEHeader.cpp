@@ -2,8 +2,6 @@
 #include "APEHeader.h"
 #include "APEInfo.h"
 
-#define WAV_HEADER_SANITY (1024 * 1024) // no WAV header should be larger than 1MB, do not even try to read if larger
-
 namespace APE
 {
 
@@ -216,15 +214,23 @@ int CAPEHeader::AnalyzeCurrent(APE_FILE_INFO * pInfo)
     pInfo->nBlockAlign            = pInfo->nBytesPerSample * pInfo->nChannels;
     pInfo->nTotalBlocks           = (APEHeader.nTotalFrames == 0) ? 0 : (static_cast<int64>(APEHeader.nTotalFrames -  1) * static_cast<int64>(pInfo->nBlocksPerFrame)) + static_cast<int64>(APEHeader.nFinalFrameBlocks);
 
+    // WAV data
     pInfo->nWAVDataBytes = static_cast<int64>(pInfo->nTotalBlocks) * static_cast<int64>(pInfo->nBlockAlign);
-    pInfo->nWAVTotalBytes = pInfo->nWAVDataBytes + pInfo->nWAVHeaderBytes + pInfo->nWAVTerminatingBytes;
-    pInfo->nAPETotalBytes = m_pIO->GetSize();
 
+    // WAV header and footer
     int nWAVHeaderSize = sizeof(WAVE_HEADER);
     if (pInfo->nWAVDataBytes >= (APE_BYTES_IN_GIGABYTE * 4))
         nWAVHeaderSize = sizeof(RF64_HEADER);
-    pInfo->nWAVHeaderBytes        = (APEHeader.nFormatFlags & APE_FORMAT_FLAG_CREATE_WAV_HEADER) ? nWAVHeaderSize : pInfo->spAPEDescriptor->nHeaderDataBytes;
-    pInfo->nWAVTerminatingBytes   = pInfo->spAPEDescriptor->nTerminatingDataBytes;
+    pInfo->nWAVHeaderBytes = (APEHeader.nFormatFlags & APE_FORMAT_FLAG_CREATE_WAV_HEADER) ? nWAVHeaderSize : pInfo->spAPEDescriptor->nHeaderDataBytes;
+    pInfo->nWAVTerminatingBytes = pInfo->spAPEDescriptor->nTerminatingDataBytes;
+
+    // WAV total
+    pInfo->nWAVTotalBytes = pInfo->nWAVDataBytes + pInfo->nWAVHeaderBytes + pInfo->nWAVTerminatingBytes;
+
+    // APE size
+    pInfo->nAPETotalBytes = m_pIO->GetSize();
+
+    // more information
     pInfo->nLengthMS              = static_cast<int>((static_cast<double>(pInfo->nTotalBlocks) * static_cast<double>(1000)) / static_cast<double>(pInfo->nSampleRate));
     pInfo->nAverageBitrate        = (pInfo->nLengthMS <= 0) ? 0 : static_cast<int>((static_cast<double>(pInfo->nAPETotalBytes) * static_cast<double>(8)) / static_cast<double>(pInfo->nLengthMS));
     pInfo->nDecompressedBitrate   = (pInfo->nBlockAlign * pInfo->nSampleRate * 8) / 1000;
@@ -252,7 +258,7 @@ int CAPEHeader::AnalyzeCurrent(APE_FILE_INFO * pInfo)
     // get the wave header
     if (!(APEHeader.nFormatFlags & APE_FORMAT_FLAG_CREATE_WAV_HEADER))
     {
-        if (pInfo->nWAVHeaderBytes < 0 || pInfo->nWAVHeaderBytes > WAV_HEADER_SANITY)
+        if (pInfo->nWAVHeaderBytes < 0 || pInfo->nWAVHeaderBytes > APE_WAV_HEADER_OR_FOOTER_MAXIMUM_BYTES)
         {
             return ERROR_INVALID_INPUT_FILE;
         }
@@ -358,7 +364,7 @@ int CAPEHeader::AnalyzeOld(APE_FILE_INFO * pInfo)
     // get the wave header
     if (!(APEHeader.nFormatFlags & APE_FORMAT_FLAG_CREATE_WAV_HEADER) && (APEHeader.nHeaderBytes > 0))
     {
-        if (APEHeader.nHeaderBytes > WAV_HEADER_SANITY) return ERROR_INVALID_INPUT_FILE;
+        if (APEHeader.nHeaderBytes > APE_WAV_HEADER_OR_FOOTER_MAXIMUM_BYTES) return ERROR_INVALID_INPUT_FILE;
         if (m_pIO->GetPosition() + APEHeader.nHeaderBytes > m_pIO->GetSize()) { return ERROR_UNDEFINED; }
         pInfo->spWaveHeaderData.Assign(new unsigned char [APEHeader.nHeaderBytes], true);
         if (pInfo->spWaveHeaderData == APE_NULL) { return ERROR_UNDEFINED; }

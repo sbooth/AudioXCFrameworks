@@ -27,21 +27,21 @@ int CFormatAPE::Process(MAC_FILE * pInfo)
 
     if (pInfo->Mode == MODE_COMPRESS)
     {
-        nRetVal = CompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag);
+        nRetVal = CompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel, &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag);
     }
     else if (pInfo->Mode == MODE_DECOMPRESS)
     {
-        nRetVal = DecompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag);
+        nRetVal = DecompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag);
     }
     else if (pInfo->Mode == MODE_VERIFY)
     {
-        nRetVal = VerifyFileW(pInfo->strInputFilename, &pInfo->nStageProgress, NULL, &pInfo->nKillFlag,
+        nRetVal = VerifyFileW(pInfo->strInputFilename, &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag,
             (theApp.GetSettings()->m_nProcessingVerifyMode == PROCESSING_VERIFY_MODE_QUICK) ? TRUE : FALSE);
     }
     else if (pInfo->Mode == MODE_CONVERT)
     {
         nRetVal = ConvertFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel,
-            &pInfo->nStageProgress, NULL, &pInfo->nKillFlag);
+            &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag);
     }
 
     return nRetVal;

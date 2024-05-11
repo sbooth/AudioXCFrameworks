@@ -13,7 +13,7 @@ public:
     : m_nHistoryElements(nHistoryElements),
       m_nTotalElements(WINDOW_ELEMENTS + m_nHistoryElements)
     {
-        m_pData = new TYPE[static_cast<size_t>(m_nTotalElements)];
+        m_pData = new TYPE [static_cast<size_t>(m_nTotalElements)];
         Flush();
     }
 
@@ -67,7 +67,7 @@ template <class TYPE, int WINDOW_ELEMENTS, int HISTORY_ELEMENTS> class CRollBuff
 public:
     CRollBufferFast()
     {
-        m_pData = new TYPE[WINDOW_ELEMENTS + HISTORY_ELEMENTS];
+        m_pData = new TYPE [WINDOW_ELEMENTS + HISTORY_ELEMENTS];
         Flush();
     }
 

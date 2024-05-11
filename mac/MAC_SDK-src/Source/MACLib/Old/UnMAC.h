@@ -29,24 +29,24 @@ public:
     // functions
     int Initialize(IAPEDecompress * pAPEDecompress);
     int Uninitialize();
-    intn DecompressFrame(unsigned char * pOutputData, int32 FrameIndex);
+    intn DecompressFrame(unsigned char * pOutputData, int32 nFrameIndex, int * pErrorCode);
 
     int SeekToFrame(intn FrameIndex);
 
 private:
     // data members
-    IAPEDecompress * m_pAPEDecompress;
-    CPrepare * m_pPrepare;
-    CAPEDecompressCore * m_pAPEDecompressCore;
+    CSmartPtr<IAPEDecompress> m_spAPEDecompress;
+    CSmartPtr<CPrepare> m_spPrepare;
+    CSmartPtr<CAPEDecompressCore> m_spAPEDecompressCore;
     int m_LastDecodedFrameIndex;
 
     // functions
     void GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes, intn nFrameIndex);
-    void GenerateDecodedArray(int * Input_Array, uint32 Number_of_Elements, intn Frame_Index, CAntiPredictor * pAntiPredictor);
+    void GenerateDecodedArray(int * pInput_Array, uint32 Number_of_Elements, intn Frame_Index, CAntiPredictor * pAntiPredictor);
 
     int CreateAntiPredictors(int nCompressionLevel, int nVersion);
 
-    intn DecompressFrameOld(unsigned char * pOutputData, int32 FrameIndex);
+    intn DecompressFrameOld(unsigned char * pOutputData, int32 FrameIndex, int * pErrorCode);
     uint32 CalculateOldChecksum(const int * pDataX, const int * pDataY, intn nChannels, intn nBlocks);
 
 public:

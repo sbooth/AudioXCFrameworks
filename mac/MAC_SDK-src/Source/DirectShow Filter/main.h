@@ -1,6 +1,7 @@
 #pragma once
 
 const int WAVE_BUFFER_SIZE = 4096;
+EXTERN_C const GUID CLSID_APEDecoder;
 
 //-----------------------------------------------------------------------------
 //
@@ -83,3 +84,7 @@ public:
 
     HRESULT OnThreadStartPlay();
 };
+
+extern int g_cTemplates;
+extern CFactoryTemplate g_Templates[];
+extern BOOL WINAPI DllMain(HANDLE hDllHandle, DWORD dwReason, LPVOID lpReserved);

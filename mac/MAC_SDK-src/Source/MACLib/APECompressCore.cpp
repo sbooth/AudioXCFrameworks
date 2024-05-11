@@ -16,7 +16,7 @@ CAPECompressCore::CAPECompressCore(CIO * pIO, const WAVEFORMATEX * pwfeInput, in
     m_nMaxFrameBlocks = nMaxFrameBlocks;
     m_spBitArray.Assign(new CBitArray(pIO));
     const intn nChannels = ape_max(pwfeInput->nChannels, 2);
-    m_spData.Assign(new int[static_cast<size_t>(m_nMaxFrameBlocks * nChannels)], true);
+    m_spData.Assign(new int [static_cast<size_t>(m_nMaxFrameBlocks * nChannels)], true);
     m_spTempData.Assign(new int [static_cast<size_t>(nMaxFrameBlocks)], true);
     m_spPrepare.Assign(new CPrepare);
     APE_CLEAR(m_aryPredictors);

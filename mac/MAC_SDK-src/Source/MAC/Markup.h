@@ -82,7 +82,7 @@
 #define MCD_PSZCPY(sz,p) wcscpy_s(MCD_SSZ(sz),p)
 #define MCD_PSZNCPY(sz,p,n) wcsncpy_s(MCD_SSZ(sz),p,n)
 #define MCD_SPRINTF swprintf_s
-#define MCD_FOPEN(f,n,m) {if(_wfopen_s(&f,n,m)!=0)f=NULL;}
+#define MCD_FOPEN(f,n,m) {if(_wfopen_s(&f,n,m)!=0)f=APE_NULL;}
 #else // not VC++ safe strings
 #if defined(__GNUC__) && ! defined(MARKUP_WINDOWS) // non-Windows GNUC
 #define MCD_SSZ(sz) sz,(sizeof(sz)/sizeof(MCD_CHAR))
@@ -113,7 +113,7 @@
 #define MCD_PSZCPY(sz,p) strcpy_s(MCD_SSZ(sz),p)
 #define MCD_PSZNCPY(sz,p,n) strncpy_s(MCD_SSZ(sz),p,n)
 #define MCD_SPRINTF sprintf_s
-#define MCD_FOPEN(f,n,m) {if(fopen_s(&f,n,m)!=0)f=NULL;}
+#define MCD_FOPEN(f,n,m) {if(fopen_s(&f,n,m)!=0)f=APE_NULL;}
 #else // not VC++ safe strings
 #define MCD_SSZ(sz) sz
 #define MCD_PSZCPY strcpy
@@ -190,12 +190,12 @@
 #define MCD_BLDLEN(s) nL
 #define MCD_BLDTRUNC(s,n) nL=n
 #endif // not STL
-#define MCD_STRTOINT(s) MCD_PSZTOL(MCD_2PCSZ(s),NULL,10)
+#define MCD_STRTOINT(s) MCD_PSZTOL(MCD_2PCSZ(s),APE_NULL,10)
 
 // Allow function args to accept string objects as constant string pointers
 struct MCD_CSTR
 {
-    MCD_CSTR() { pcsz=NULL; };
+    MCD_CSTR() { pcsz=APE_NULL; };
     MCD_CSTR( MCD_PCSZ p ) { pcsz=p; };
     MCD_CSTR( const MCD_STR& s ) { pcsz = MCD_2PCSZ(s); };
     operator MCD_PCSZ() const { return pcsz; };
@@ -210,7 +210,7 @@ struct MCD_CSTR
 #define MCD_PCSZ_FILENAME const char*
 struct MCD_CSTR_FILENAME
 {
-    MCD_CSTR_FILENAME() { pcsz=NULL; };
+    MCD_CSTR_FILENAME() { pcsz=APE_NULL; };
     MCD_CSTR_FILENAME( MCD_PCSZ_FILENAME p ) { pcsz=p; };
     MCD_CSTR_FILENAME( const std::string& s ) { pcsz = s.c_str(); };
     operator MCD_PCSZ_FILENAME() const { return pcsz; };
@@ -265,9 +265,9 @@ struct ElemPosTree;
 class CMarkup
 {
 public:
-    CMarkup() { x_InitMarkup(); SetDoc( NULL ); };
+    CMarkup() { x_InitMarkup(); SetDoc( APE_NULL ); };
     CMarkup( MCD_CSTR szDoc ) { x_InitMarkup(); SetDoc( szDoc ); };
-    CMarkup( int nFlags ) { x_InitMarkup(); SetDoc( NULL ); m_nDocFlags = nFlags; };
+    CMarkup( int nFlags ) { x_InitMarkup(); SetDoc( APE_NULL ); m_nDocFlags = nFlags; };
     CMarkup( const CMarkup& markup ) { x_InitMarkup(); *this = markup; };
     void operator=( const CMarkup& markup );
     ~CMarkup();
@@ -277,8 +277,8 @@ public:
     bool SetDoc( MCD_PCSZ pDoc );
     bool SetDoc( const MCD_STR& strDoc );
     bool IsWellFormed();
-    bool FindElem( MCD_CSTR szName=NULL );
-    bool FindChildElem( MCD_CSTR szName=NULL );
+    bool FindElem( MCD_CSTR szName=APE_NULL );
+    bool FindChildElem( MCD_CSTR szName=APE_NULL );
     bool IntoElem();
     bool OutOfElem();
     void ResetChildPos() { x_SetPos(m_iPosParent,m_iPos,0); };
@@ -351,10 +351,10 @@ public:
     // Create
     bool Save( MCD_CSTR_FILENAME szFileName );
     const MCD_STR& GetDoc() const { return m_strDoc; };
-    bool AddElem( MCD_CSTR szName, MCD_CSTR szData=NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags); };
-    bool InsertElem( MCD_CSTR szName, MCD_CSTR szData=NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_INSERT); };
-    bool AddChildElem( MCD_CSTR szName, MCD_CSTR szData=NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_CHILD); };
-    bool InsertChildElem( MCD_CSTR szName, MCD_CSTR szData=NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_INSERT|MNF_CHILD); };
+    bool AddElem( MCD_CSTR szName, MCD_CSTR szData=APE_NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags); };
+    bool InsertElem( MCD_CSTR szName, MCD_CSTR szData=APE_NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_INSERT); };
+    bool AddChildElem( MCD_CSTR szName, MCD_CSTR szData=APE_NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_CHILD); };
+    bool InsertChildElem( MCD_CSTR szName, MCD_CSTR szData=APE_NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_INSERT|MNF_CHILD); };
     bool AddElem( MCD_CSTR szName, int nValue, int nFlags=0 ) { return x_AddElem(szName,nValue,nFlags); };
     bool InsertElem( MCD_CSTR szName, int nValue, int nFlags=0 ) { return x_AddElem(szName,nValue,nFlags|MNF_INSERT); };
     bool AddChildElem( MCD_CSTR szName, int nValue, int nFlags=0 ) { return x_AddElem(szName,nValue,nFlags|MNF_CHILD); };
@@ -388,19 +388,19 @@ public:
 
 
     // Utility
-    static bool ReadTextFile( MCD_CSTR_FILENAME szFileName, MCD_STR& strDoc, MCD_STR* pstrResult=NULL, int* pnDocFlags=NULL, MCD_STR* pstrEncoding=NULL );
-    static bool WriteTextFile( MCD_CSTR_FILENAME szFileName, const MCD_STR& strDoc, MCD_STR* pstrResult=NULL, int* pnDocFlags=NULL, MCD_STR* pstrEncoding=NULL );
+    static bool ReadTextFile( MCD_CSTR_FILENAME szFileName, MCD_STR& strDoc, MCD_STR* pstrResult=APE_NULL, int* pnDocFlags=APE_NULL, MCD_STR* pstrEncoding=APE_NULL );
+    static bool WriteTextFile( MCD_CSTR_FILENAME szFileName, const MCD_STR& strDoc, MCD_STR* pstrResult=APE_NULL, int* pnDocFlags=APE_NULL, MCD_STR* pstrEncoding=APE_NULL );
     static MCD_STR EscapeText( MCD_CSTR szText, int nFlags = 0 );
     static MCD_STR UnescapeText( MCD_CSTR szText, int nTextLength = -1, int nFlags = 0 );
     static int UTF16To8( char *pszUTF8, const unsigned short* pwszUTF16, int nUTF8Count );
     static int UTF8To16( unsigned short* pwszUTF16, const char* pszUTF8, int nUTF8Count );
-    static MCD_STR UTF8ToA( MCD_CSTR pszUTF8, int* pnFailed = NULL );
+    static MCD_STR UTF8ToA( MCD_CSTR pszUTF8, int* pnFailed = APE_NULL );
     static MCD_STR AToUTF8( MCD_CSTR pszANSI );
     static void EncodeCharUTF8( int nUChar, char* pszUTF8, int& nUTF8Len );
-    static int DecodeCharUTF8( const char*& pszUTF8, const char* pszUTF8End = NULL );
+    static int DecodeCharUTF8( const char*& pszUTF8, const char* pszUTF8End = APE_NULL );
     static void EncodeCharUTF16( int nUChar, unsigned short* pwszUTF16, int& nUTF16Len );
-    static int DecodeCharUTF16( const unsigned short*& pwszUTF16, const unsigned short* pszUTF16End = NULL );
-    static bool DetectUTF8( const char* pText, int nTextLen, int* pnNonASCII = NULL, bool* bErrorAtEnd = NULL );
+    static int DecodeCharUTF16( const unsigned short*& pwszUTF16, const unsigned short* pszUTF16End = APE_NULL );
+    static bool DetectUTF8( const char* pText, int nTextLen, int* pnNonASCII = APE_NULL, bool* bErrorAtEnd = APE_NULL );
     static MCD_STR GetDeclaredEncoding( MCD_CSTR szDoc );
     static int GetEncodingCodePage( MCD_CSTR pszEncoding );
 

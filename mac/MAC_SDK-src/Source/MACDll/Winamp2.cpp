@@ -74,7 +74,7 @@ In_Module g_APEWinampPluginModule =
     0, 0, 0, 0, 0, 0, 0, 0, 0,                                     // vis stuff
     0, 0,                                                          // dsp stuff
     0,                                                             // Set_EQ function
-    NULL,                                                          // setinfo
+    APE_NULL,                                                          // setinfo
     0                                                              // out_mod
 };
 
@@ -109,7 +109,7 @@ int CAPEWinampPlugin::Play(char * pFilename)
     // open the file
     int nErrorCode = 0;
     m_spAPEDecompress.Assign(CreateIAPEDecompress(m_cCurrentFilename, &nErrorCode, true, true, false));
-    if ((m_spAPEDecompress == NULL) || (nErrorCode != ERROR_SUCCESS))
+    if ((m_spAPEDecompress == APE_NULL) || (nErrorCode != ERROR_SUCCESS))
         return -1;
 
     // quit if it's a zero length file
@@ -125,7 +125,7 @@ int CAPEWinampPlugin::Play(char * pFilename)
         TCHAR cAPEFileVersion[32]; _stprintf_s(cAPEFileVersion, 32, _T("%.2f"), static_cast<double>(m_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)) / static_cast<double>(1000));
 
         TCHAR cMessage[1024];
-        _stprintf_s(cMessage, 1024, _T("You are attempting to play an APE file that was encoded with a version of Monkey's Audio which is newer than the installed APE plug-in.  There is a very high likelyhood that this will not work properly.  Please download and install the newest Monkey's Audio plug-in to remedy this problem.\r\n\r\nPlug-in version: %s\r\nAPE file version: %s"), 
+        _stprintf_s(cMessage, 1024, _T("You are attempting to play an APE file that was encoded with a version of Monkey's Audio which is newer than the installed APE plug-in.  There is a very high likelyhood that this will not work properly.  Please download and install the newest Monkey's Audio plug-in to remedy this problem.\r\n\r\nPlug-in version: %s\r\nAPE file version: %s"),
             APE_VERSION_STRING, cAPEFileVersion);
         ::MessageBox(g_APEWinampPluginModule.hMainWindow, cMessage, _T("Update APE Plugin"), MB_OK | MB_ICONERROR);
     }
@@ -171,8 +171,8 @@ int CAPEWinampPlugin::Play(char * pFilename)
     // create the new thread
     m_nKillDecodeThread = 0;
     unsigned long nThreadID;
-    m_hDecodeThread = static_cast<HANDLE>(CreateThread(NULL, 0, static_cast<LPTHREAD_START_ROUTINE>(DecodeThread), static_cast<void *>(&m_nKillDecodeThread), 0, &nThreadID));
-    if (m_hDecodeThread == NULL)
+    m_hDecodeThread = static_cast<HANDLE>(CreateThread(APE_NULL, 0, static_cast<LPTHREAD_START_ROUTINE>(DecodeThread), static_cast<void *>(&m_nKillDecodeThread), 0, &nThreadID));
+    if (m_hDecodeThread == APE_NULL)
     {
         m_spAPEDecompress.Delete();
         return -1;
@@ -512,7 +512,7 @@ void CAPEWinampPlugin::BuildDescriptionStringFromFilename(CString & strBuffer, c
 
 void CAPEWinampPlugin::BuildDescriptionString(CString & strBuffer, IAPETag * pAPETag, const str_utfn * pFilename)
 {
-    if (pAPETag == NULL)
+    if (pAPETag == APE_NULL)
     {
         BuildDescriptionStringFromFilename(strBuffer, pFilename);
         return;
@@ -565,11 +565,11 @@ void CAPEWinampPlugin::GetFileInformation(char * pFilename, char * pTitle, int *
     {
         // different file
         CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(pFilename), TRUE);
-        spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, NULL, true, true, false));
+        spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, APE_NULL, true, true, false));
         strFilename = spUTF16;
     }
 
-    if (spAPEDecompress != NULL)
+    if (spAPEDecompress != APE_NULL)
     {
         if (pLengthMS)
         {
@@ -683,7 +683,7 @@ extern "C"
     // use ugly statics since Winamp is built around global variables
     static CString s_strFilename;
     static CSmartPtr<IAPEDecompress> s_spAPEDecompress;
-    static HANDLE s_hTimer = NULL;
+    static HANDLE s_hTimer = APE_NULL;
     static CCriticalSection s_Lock;
 
     // forward declares to avoid Clang warnings
@@ -700,9 +700,9 @@ extern "C"
     static void KillMediaTimer()
     {
         CSingleLock Lock(&s_Lock);
-        if (s_hTimer != NULL)
+        if (s_hTimer != APE_NULL)
         {
-            BOOL bResult = DeleteTimerQueueTimer(NULL, s_hTimer, NULL);
+            BOOL bResult = DeleteTimerQueueTimer(APE_NULL, s_hTimer, APE_NULL);
             if (bResult == 0)
             {
                 DWORD dwError = GetLastError();
@@ -716,7 +716,7 @@ extern "C"
 
             // clear the timer
             if (bResult)
-                s_hTimer = NULL;
+                s_hTimer = APE_NULL;
         }
     }
 
@@ -724,7 +724,7 @@ extern "C"
     {
         // check if the timer has already been deleted and don't run in that case
         CSingleLock Lock(&s_Lock);
-        if (s_hTimer != NULL)
+        if (s_hTimer != APE_NULL)
         {
             s_spAPEDecompress.Delete();
             KillMediaTimer();
@@ -735,7 +735,7 @@ extern "C"
     {
         CSingleLock Lock(&s_Lock);
         KillMediaTimer();
-        CreateTimerQueueTimer(&s_hTimer, NULL, static_cast<WAITORTIMERCALLBACK>(TimerProc), NULL, 3000, 0, WT_EXECUTEINTIMERTHREAD);
+        CreateTimerQueueTimer(&s_hTimer, APE_NULL, static_cast<WAITORTIMERCALLBACK>(TimerProc), APE_NULL, 3000, 0, WT_EXECUTEINTIMERTHREAD);
     }
 
     // return 1 if you want winamp to show it's own file info dialogue, 0 if you want to show your own (via In_Module.InfoBox)
@@ -756,14 +756,14 @@ extern "C"
 
         // load the file
         CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), TRUE);
-        if ((s_spAPEDecompress == NULL) || (spUTF16 != s_strFilename))
+        if ((s_spAPEDecompress == APE_NULL) || (spUTF16 != s_strFilename))
         {
-            s_spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, NULL, false, true, false));
+            s_spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, APE_NULL, false, true, false));
             s_strFilename = spUTF16;
         }
 
         IAPETag * pTag = GET_TAG(s_spAPEDecompress);
-        if (pTag != NULL)
+        if (pTag != APE_NULL)
         {
             CSmartPtr<wchar_t> spValue(CAPECharacterHelper::GetUTF16FromANSI(val), TRUE);
 
@@ -801,10 +801,10 @@ extern "C"
         CSingleLock Lock(&s_Lock);
 
         int nResult = 0;
-        if (s_spAPEDecompress != NULL)
+        if (s_spAPEDecompress != APE_NULL)
         {
             IAPETag * pTag = GET_TAG(s_spAPEDecompress);
-            if (pTag != NULL)
+            if (pTag != APE_NULL)
             {
                 if (pTag->Save(false) == ERROR_SUCCESS)
                     nResult = 1;
@@ -822,7 +822,7 @@ extern "C"
         KillMediaTimer(); // stop the cleanup timer (or else it can run while we're working)
 
         // on startup, type is queried for
-        if (((Info.pFilename == NULL) || (Info.pFilename[0] == 0)) &&
+        if (((Info.pFilename == APE_NULL) || (Info.pFilename[0] == 0)) &&
             (strcmp(Info.pMetaData, "type") == 0))
         {
             strcpy_s(Info.pReturn, static_cast<size_t>(Info.nReturnBytes), "ape");
@@ -831,9 +831,9 @@ extern "C"
 
         // load the file
         CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(Info.pFilename), TRUE);
-        if ((s_spAPEDecompress == NULL) || (spUTF16 != s_strFilename))
+        if ((s_spAPEDecompress == APE_NULL) || (spUTF16 != s_strFilename))
         {
-            s_spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, NULL, false, true, false));
+            s_spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, APE_NULL, false, true, false));
             s_strFilename = spUTF16;
         }
 
@@ -974,22 +974,22 @@ extern "C" int APE_GetAlbumArt(const wchar_t * filename, const wchar_t * type, v
     CSmartPtr<IAPEDecompress> spAPEDecompress;
 
     // load the file
-    spAPEDecompress.Assign(CreateIAPEDecompress(filename, NULL, false, true, false));
+    spAPEDecompress.Assign(CreateIAPEDecompress(filename, APE_NULL, false, true, false));
 
     // get the tag
     IAPETag * pTag = GET_TAG(spAPEDecompress);
-    if (pTag != NULL)
+    if (pTag != APE_NULL)
     {
         CAPETagField * pTagImage = pTag->GetTagField(APE_TAG_FIELD_COVER_ART_FRONT);
-        if ((pTagImage != NULL) && (pTagImage->GetFieldSize() > 0))
+        if ((pTagImage != APE_NULL) && (pTagImage->GetFieldSize() > 0))
         {
             *len = static_cast<size_t>(pTagImage->GetFieldSize());
-            CSmartPtr<BYTE> spBuffer(new BYTE[*len], true);
+            CSmartPtr<BYTE> spBuffer(new BYTE [*len], true);
 
             int nBufferBytes = static_cast<int>(*len);
             if (pTag->GetFieldBinary(APE_TAG_FIELD_COVER_ART_FRONT, spBuffer, &nBufferBytes) == ERROR_SUCCESS)
             {
-                BYTE * pImage = NULL; int nImageBytes = -1;
+                BYTE * pImage = APE_NULL; int nImageBytes = -1;
                 for (int nSearch = 0; nSearch < nBufferBytes; nSearch++)
                 {
                     if (spBuffer[nSearch] == 0)
@@ -1000,7 +1000,7 @@ extern "C" int APE_GetAlbumArt(const wchar_t * filename, const wchar_t * type, v
                     }
                 }
 
-                if (pImage != NULL)
+                if (pImage != APE_NULL)
                 {
                     // load the filename
                     CString strFilename;
@@ -1041,7 +1041,7 @@ extern "C" int APE_SetAlbumArt(const wchar_t * filename, const wchar_t * type, v
     CSmartPtr<IAPEDecompress> spAPEDecompress;
 
     // load the file
-    spAPEDecompress.Assign(CreateIAPEDecompress(filename, NULL, false, true, false));
+    spAPEDecompress.Assign(CreateIAPEDecompress(filename, APE_NULL, false, true, false));
 
     // we don't currently support saving art, maybe someday...
     // if anyone can help me figure out how to make this run in the debugger, please share
@@ -1062,10 +1062,10 @@ extern "C" int APE_DeleteAlbumArt(const wchar_t * filename, const wchar_t * type
     CSmartPtr<IAPEDecompress> spAPEDecompress;
 
     // load the file
-    spAPEDecompress.Assign(CreateIAPEDecompress(filename, NULL, false, true, false));
+    spAPEDecompress.Assign(CreateIAPEDecompress(filename, APE_NULL, false, true, false));
 
     IAPETag * pTag = GET_TAG(spAPEDecompress);
-    if (pTag != NULL)
+    if (pTag != APE_NULL)
     {
         // remove cover art
         pTag->RemoveField(APE_TAG_FIELD_COVER_ART_FRONT);

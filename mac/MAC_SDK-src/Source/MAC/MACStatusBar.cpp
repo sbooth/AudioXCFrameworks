@@ -21,8 +21,8 @@ static UINT indicators[] =
 CMACStatusBar::CMACStatusBar(CMACDlg * pMACDlg)
 {
     m_pMACDlg = pMACDlg;
-    m_hwndParent = NULL;
-    m_pTaskBarlist = NULL;
+    m_hwndParent = APE_NULL;
+    m_pTaskBarlist = APE_NULL;
     m_bShowProgress = false;
     m_nProcessTotalMS = 0;
     m_strFreeSpaceDrive = _T("C");
@@ -178,7 +178,7 @@ BOOL CMACStatusBar::UpdateProgress(double dProgress, double dSecondsLeft)
         }
     }
 
-    if (m_pTaskBarlist != NULL)
+    if (m_pTaskBarlist != APE_NULL)
     {
         m_pTaskBarlist->SetProgressValue(m_hwndParent, static_cast<ULONGLONG>(m_ctrlProgress.GetPos()), 100);
     }
@@ -200,14 +200,14 @@ BOOL CMACStatusBar::SetLastProcessTotalMS(int nMilliseconds)
 void CMACStatusBar::StartProcessing()
 {
     HRESULT hr = S_OK;
-    if (m_pTaskBarlist == NULL)
+    if (m_pTaskBarlist == APE_NULL)
     {
         hr = CoCreateInstance(
-            CLSID_TaskbarList, NULL, CLSCTX_ALL,
+            CLSID_TaskbarList, APE_NULL, CLSCTX_ALL,
             IID_ITaskbarList3, reinterpret_cast<void **>(&m_pTaskBarlist));
     }
 
-    if (SUCCEEDED(hr) && (m_pTaskBarlist != NULL))
+    if (SUCCEEDED(hr) && (m_pTaskBarlist != APE_NULL))
     {
         m_pTaskBarlist->SetProgressState(m_hwndParent, TBPF_NORMAL);
     }
@@ -215,14 +215,14 @@ void CMACStatusBar::StartProcessing()
 
 void CMACStatusBar::EndProcessing()
 {
-    if (m_pTaskBarlist != NULL)
+    if (m_pTaskBarlist != APE_NULL)
     {
         // show no progress
         m_pTaskBarlist->SetProgressState(m_hwndParent, TBPF_NOPROGRESS);
 
         // release so the bar goes away
         m_pTaskBarlist->Release();
-        m_pTaskBarlist = NULL;
+        m_pTaskBarlist = APE_NULL;
     }
 }
 

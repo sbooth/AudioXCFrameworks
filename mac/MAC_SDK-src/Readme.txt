@@ -10,4 +10,4 @@ http://monkeysaudio.com/contact.html
 
 Thanks and good luck :)
 
-- All materials and programs copyrighted ©2000-2023 by Matthew T. Ashland -
+- All materials and programs copyrighted ©2000-2024 by Matthew T. Ashland -

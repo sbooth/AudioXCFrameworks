@@ -11,7 +11,7 @@ CAboutDlg::CAboutDlg(CWnd * pParent)
     m_bFontsCreated = false;
 }
 
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+void CAboutDlg::DoDataExchange(CDataExchange * pDX)
 {
     CDialog::DoDataExchange(pDX);
 }
@@ -19,13 +19,14 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
     ON_WM_CTLCOLOR()
     ON_WM_PAINT()
+    ON_WM_MOVING()
 END_MESSAGE_MAP()
 
 BOOL CAboutDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
 
-    if (sizeof(intn) == 8)
+    if (sizeof(intn) == sizeof(int64))
         SetWindowText(APE_NAME _T(" (64-bit)"));
     else
         SetWindowText(APE_NAME _T(" (32-bit)"));
@@ -136,9 +137,28 @@ void CAboutDlg::OnPaint()
     {
         CRect rectWindow; GetWindowRect(rectWindow);
         CRect rectClient; GetClientRect(rectClient);
-        SetWindowPos(NULL, 0, 0, nWindowWidth + (rectWindow.Width() - rectClient.Width()) + (2 * nWindowBorder), nTop + nWindowBorder + (rectWindow.Height() - rectClient.Height()) + (0 * nLineSpacing), SWP_NOMOVE);
+        SetWindowPos(APE_NULL, 0, 0, nWindowWidth + (rectWindow.Width() - rectClient.Width()) + (2 * nWindowBorder), nTop + nWindowBorder + (rectWindow.Height() - rectClient.Height()) + (0 * nLineSpacing), SWP_NOMOVE);
     }
     m_bFontsCreated = true;
+}
+
+void CAboutDlg::OnMoving(UINT, LPRECT pRect)
+{
+    HMONITOR hMonitor = MonitorFromWindow(GetSafeHwnd(), MONITOR_DEFAULTTONEAREST);
+
+    MONITORINFO info;
+    info.cbSize = sizeof(MONITORINFO);
+    if (GetMonitorInfo(hMonitor, &info))
+    {
+        if (pRect->left < info.rcMonitor.left)
+            OffsetRect(pRect, info.rcMonitor.left - pRect->left, 0);
+        if (pRect->top < info.rcMonitor.top)
+            OffsetRect(pRect, 0, info.rcMonitor.top - pRect->top);
+        if (pRect->right > info.rcMonitor.right)
+            OffsetRect(pRect, info.rcMonitor.right - pRect->right, 0);
+        if (pRect->bottom > info.rcMonitor.bottom)
+            OffsetRect(pRect, 0, info.rcMonitor.bottom - pRect->bottom);
+    }
 }
 
 CString CAboutDlg::GetCPU()

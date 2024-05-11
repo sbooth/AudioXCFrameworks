@@ -7,7 +7,7 @@ class CFormatPluginConfigureDlg : public CDialog
 public:
     CFormatPluginConfigureDlg(CMACDlg * pMACDlg, CString strConfigureDescription1,
         CString strConfigureValue1, CString strConfigureDescription2, CString strConfigureValue2,
-        CString strConfigureDescription3, CString strConfigureValue3, CWnd * pParent = NULL);
+        CString strConfigureDescription3, CString strConfigureValue3, CWnd * pParent = APE_NULL);
 
     enum { IDD = IDD_FORMAT_PLUGIN_CONFIGURE };
     CString m_strConfigureEdit1;

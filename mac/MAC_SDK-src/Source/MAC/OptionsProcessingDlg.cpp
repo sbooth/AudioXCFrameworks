@@ -91,7 +91,7 @@ BOOL COptionsProcessingDlg::OnInitDialog()
 
     // update our size
     //CRect rectWindow; GetWindowRect(&rectWindow);
-    //SetWindowPos(NULL, 0, 0, rectWindow.Width(), m_pPage->m_nIdealHeight + theApp.GetSize(128, 0).cx, SWP_NOMOVE);
+    //SetWindowPos(APE_NULL, 0, 0, rectWindow.Width(), m_pPage->m_nIdealHeight + theApp.GetSize(128, 0).cx, SWP_NOMOVE);
 
     // update
     UpdateData(FALSE);

@@ -24,7 +24,7 @@ typedef struct
     void (*Init)();                // called at program init
     void (*Quit)();                // called at program quit
 
-    void (*GetFileInfo)(char *file, char *title, int *length_in_ms); // if file == NULL, current playing is used
+    void (*GetFileInfo)(char *file, char *title, int *length_in_ms); // if file == APE_NULL, current playing is used
     int (*InfoBox)(char *file, HWND hwndParent);
 
     int (*IsOurFile)(char *fn);    // called before extension checks, to allow detection of mms://, etc

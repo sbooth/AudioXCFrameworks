@@ -56,7 +56,7 @@ void CStringArrayEx::InitFromList(const CString & strList, const CString strDeli
 
     LPCTSTR pHead = strList.GetString();
     LPCTSTR pTail = _tcsstr(pHead, strDelimiter);
-    while (pTail != NULL)
+    while (pTail != APE_NULL)
     {
         Add(CString(pHead, static_cast<int>(pTail - pHead)));
         pHead = pTail + strDelimiter.GetLength();

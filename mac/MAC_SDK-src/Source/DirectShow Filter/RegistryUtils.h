@@ -24,7 +24,7 @@ void RegisterSourceFilterExtension(const TCHAR* Extension,
 
 void UnRegisterSourceFilterExtension(const TCHAR* Extension);
 
-void RegisterSourceFilterPattern(const TCHAR* Pattern,
+void RegisterSourceFilterPattern(const char* Pattern,
     const GUID SourceFilterGUID,
     const GUID MajorType,
     const GUID Subtype);
@@ -38,5 +38,8 @@ void RegisterWMPExtension(const TCHAR* Extension,
     const TCHAR* PerceivedType);
 
 void UnRegisterWMPExtension(const TCHAR* Extension);
+
+int ContainsExt(const TCHAR* Src, const TCHAR* Extension);
+TCHAR * GetToken(TCHAR* src, const TCHAR* sep, int& position);
 
 #endif // _REGISTRY_UTILS_H_

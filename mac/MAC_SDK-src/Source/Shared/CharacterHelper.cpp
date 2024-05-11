@@ -17,8 +17,8 @@ str_ansi * CAPECharacterHelper::GetANSIFromUTF16(const str_utfn * pUTF16)
     const int nCharacters = pUTF16 ? static_cast<int>(wcslen(pUTF16)) : 0;
     #ifdef _WIN32
         const int nANSICharacters = (2 * nCharacters);
-        str_ansi * pANSI = new str_ansi [static_cast<size_t>(nANSICharacters) + 1];
-        const size_t nBufferBytes = (sizeof(str_ansi) * static_cast<size_t>(nCharacters)) + sizeof(str_ansi);
+        str_ansi * pANSI = new str_ansi [static_cast<size_t>(nANSICharacters + 1)];
+        const size_t nBufferBytes = (sizeof(pANSI[0]) * static_cast<size_t>(nCharacters + 1));
         memset(pANSI, 0, nBufferBytes);
         if (pUTF16)
             WideCharToMultiByte(CP_ACP, 0, pUTF16, -1, pANSI, nANSICharacters, APE_NULL, APE_NULL);
@@ -35,10 +35,10 @@ str_ansi * CAPECharacterHelper::GetANSIFromUTF16(const str_utfn * pUTF16)
 str_utfn * CAPECharacterHelper::GetUTF16FromANSI(const str_ansi * pANSI)
 {
     const int nCharacters = pANSI ? static_cast<int>(strlen(pANSI)) : 0;
-    str_utfn * pUTF16 = new str_utfn [static_cast<size_t>(nCharacters) + 1];
+    str_utfn * pUTF16 = new str_utfn [static_cast<size_t>(nCharacters + 1)];
 
     #ifdef _WIN32
-        const size_t nBufferBytes = (sizeof(str_utfn) * static_cast<size_t>(nCharacters)) + sizeof(str_utfn);
+        const size_t nBufferBytes = (sizeof(pUTF16[0]) * static_cast<size_t>(nCharacters + 1));
         memset(pUTF16, 0, nBufferBytes);
         if (pANSI)
             MultiByteToWideChar(CP_ACP, 0, pANSI, -1, pUTF16, nCharacters);

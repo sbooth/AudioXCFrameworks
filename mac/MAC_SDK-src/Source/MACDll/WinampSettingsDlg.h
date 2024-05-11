@@ -8,7 +8,7 @@ class CWinampSettingsDlg : public CDialog
     DECLARE_DYNAMIC(CWinampSettingsDlg)
 
 public:
-    CWinampSettingsDlg(CWnd * pParent = NULL);
+    CWinampSettingsDlg(CWnd * pParent = APE_NULL);
     virtual ~CWinampSettingsDlg();
 
     BOOL Show(HWND hwndParent);

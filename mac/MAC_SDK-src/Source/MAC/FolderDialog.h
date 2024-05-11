@@ -12,9 +12,9 @@ class CFolderDialog
 public:
     static int CALLBACK BrowseDirectoryCallback(HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData);
 
-    CFolderDialog(    LPCTSTR lpszFolderName = NULL,
-                    DWORD dwFlags = NULL/*BIF_RETURNONLYFSDIRS*/,
-                    CWnd* pParentWnd = NULL);
+    CFolderDialog(    LPCTSTR lpszFolderName = APE_NULL,
+                    DWORD dwFlags = 0/*BIF_RETURNONLYFSDIRS*/,
+                    CWnd* pParentWnd = APE_NULL);
     virtual ~CFolderDialog();
     virtual int DoModal();
     CString GetPathName() const;

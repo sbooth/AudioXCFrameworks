@@ -17,7 +17,7 @@ CWholeFileIO * CreateWholeFileIO(CIO * pSource, int64 nSize)
     // the the size as 32-bit
     const uint32 n32BitSize = static_cast<uint32>(nSize); // we established it will fit above
 
-    unsigned char * pWholeFile = NULL;
+    unsigned char * pWholeFile = APE_NULL;
     if (nSize == n32BitSize)
     {
         // create a buffer
@@ -31,8 +31,8 @@ CWholeFileIO * CreateWholeFileIO(CIO * pSource, int64 nSize)
         }
     }
 
-    CWholeFileIO * pIO = NULL;
-    if (pWholeFile != NULL)
+    CWholeFileIO * pIO = APE_NULL;
+    if (pWholeFile != APE_NULL)
     {
         // read
         unsigned int nBytesRead = 0;

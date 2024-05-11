@@ -28,7 +28,7 @@ __declspec(dllexport) void FAR PASCAL CloseFilterOutput(HANDLE hOutput);
 
 void SafeDeleteAPEEncoder(APE_ENCODER * pAPEEncoder)
 {
-    if (pAPEEncoder == NULL) return;
+    if (pAPEEncoder == APE_NULL) return;
 
     APE_SAFE_DELETE(pAPEEncoder->pAPECompress)
     APE_SAFE_DELETE(pAPEEncoder)
@@ -53,10 +53,10 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterOutput(LPSTR lpstrFilename,lon
     pAPEEncoder->bConvert32to24 = FALSE;
     pAPEEncoder->pAPECompress = CreateIAPECompress();
 
-    if (pAPEEncoder->pAPECompress == NULL)
+    if (pAPEEncoder->pAPECompress == APE_NULL)
     {
         SafeDeleteAPEEncoder(pAPEEncoder);
-        return NULL;
+        return APE_NULL;
     }
 
     WAVEFORMATEX wfeAudioFormat;
@@ -86,10 +86,10 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterOutput(LPSTR lpstrFilename,lon
     *lpChunkSize = 16384 * wfeAudioFormat.nBlockAlign;
 
     CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(lpstrFilename), TRUE);
-    if (pAPEEncoder->pAPECompress->Start(spUTF16, &wfeAudioFormat, static_cast<int64>(static_cast<double>(lSize) * rate), nCompressLevel, NULL, CREATE_WAV_HEADER_ON_DECOMPRESSION) != 0)
+    if (pAPEEncoder->pAPECompress->Start(spUTF16, &wfeAudioFormat, false, static_cast<int64>(static_cast<double>(lSize) * rate), nCompressLevel, APE_NULL, CREATE_WAV_HEADER_ON_DECOMPRESSION) != 0)
     {
         SafeDeleteAPEEncoder(pAPEEncoder);
-        return NULL;
+        return APE_NULL;
     }
 
     return static_cast<HANDLE>(pAPEEncoder);
@@ -101,7 +101,7 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterOutput(LPSTR lpstrFilename,lon
 __declspec(dllexport) DWORD FAR PASCAL WriteFilterOutput(HANDLE hOutput, unsigned char far *buf, long lBytes)
 {
     APE_ENCODER * pAPEEncoder = static_cast<APE_ENCODER *>(hOutput);
-    if (hOutput == NULL) return 0;
+    if (hOutput == APE_NULL) return 0;
 
     if (pAPEEncoder->bConvert32to24)
     {
@@ -117,7 +117,7 @@ __declspec(dllexport) DWORD FAR PASCAL WriteFilterOutput(HANDLE hOutput, unsigne
         ibuf=reinterpret_cast<float far *>(buf);
 
         unsigned char * pbuf = new unsigned char [static_cast<size_t>(lBytes)+4];
-        if (pbuf == NULL) return DWORD(-1);
+        if (pbuf == APE_NULL) return DWORD(-1);
 
         for (long v=0; v<lBytes; v+=4)
         {
@@ -161,9 +161,9 @@ __declspec(dllexport) DWORD FAR PASCAL WriteFilterOutput(HANDLE hOutput, unsigne
 __declspec(dllexport) void FAR PASCAL CloseFilterOutput(HANDLE hOutput)
 {
     APE_ENCODER * pAPEEncoder = static_cast<APE_ENCODER *>(hOutput);
-    if (hOutput != NULL)
+    if (hOutput != APE_NULL)
     {
-        pAPEEncoder->pAPECompress->Finish(NULL, 0, 0);
+        pAPEEncoder->pAPECompress->Finish(APE_NULL, 0, 0);
         SafeDeleteAPEEncoder(pAPEEncoder);
     }
 }

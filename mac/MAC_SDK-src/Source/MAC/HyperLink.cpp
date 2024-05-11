@@ -43,7 +43,7 @@ static char THIS_FILE[] = __FILE__;
 CHyperLink::CHyperLink(CFont * pFont)
 {
     m_pFont             = pFont;
-    m_hLinkCursor       = NULL;                 // No cursor as yet
+    m_hLinkCursor       = APE_NULL;                 // No cursor as yet
     m_crLinkColour      = RGB(  0,   0, 238);   // Blue
     m_crVisitedColour   = RGB( 85,  26, 139);   // Purple
     m_crHoverColour     = RGB(255,   0,   0);   // Red
@@ -92,7 +92,7 @@ void CHyperLink::PreSubclassWindow()
     GetWindowText(strWndText);
     if (strWndText.IsEmpty())
     {
-        ASSERT(!m_strURL.IsEmpty());    // Window and URL both NULL. DUH!
+        ASSERT(!m_strURL.IsEmpty());    // Window and URL both APE_NULL. DUH!
         SetWindowText(m_strURL);
     }
 
@@ -100,7 +100,7 @@ void CHyperLink::PreSubclassWindow()
     if (!pFont)
     {
         HFONT hFont = static_cast<HFONT>(GetStockObject(DEFAULT_GUI_FONT));
-        if (hFont == NULL)
+        if (hFont == APE_NULL)
             hFont = static_cast<HFONT>(GetStockObject(ANSI_VAR_FONT));
         if (hFont)
             pFont = CFont::FromHandle(hFont);
@@ -176,7 +176,7 @@ void CHyperLink::OnMouseMove(UINT nFlags, CPoint point)
             SetFont(&m_UnderlineFont);
         Invalidate();
 
-        SetTimer(m_nTimerID, 100, NULL);
+        SetTimer(m_nTimerID, 100, APE_NULL);
     }
     CStatic::OnMouseMove(nFlags, point);
 }
@@ -285,7 +285,7 @@ BOOL CHyperLink::GetVisited() const
 void CHyperLink::SetLinkCursor(HCURSOR hCursor)
 {
     m_hLinkCursor = hCursor;
-    if (m_hLinkCursor == NULL)
+    if (m_hLinkCursor == APE_NULL)
         SetDefaultCursor();
 }
 
@@ -389,7 +389,7 @@ void CHyperLink::PositionWindow()
         WndRect.right = WndRect.left + Extent.cx;
 
     // Move the window
-    SetWindowPos(NULL, WndRect.left, WndRect.top, WndRect.Width(), WndRect.Height(), SWP_NOZORDER);
+    SetWindowPos(APE_NULL, WndRect.left, WndRect.top, WndRect.Width(), WndRect.Height(), SWP_NOZORDER);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -399,7 +399,7 @@ void CHyperLink::PositionWindow()
 // It loads a "hand" cursor from the winhlp32.exe module
 void CHyperLink::SetDefaultCursor()
 {
-    if (m_hLinkCursor == NULL)                // No cursor handle - load our own
+    if (m_hLinkCursor == APE_NULL)                // No cursor handle - load our own
     {
         // Get the windows directory
         CString strWndDir;
@@ -426,7 +426,7 @@ LONG CHyperLink::GetRegKey(HKEY key, LPCTSTR subkey, LPTSTR retdata)
     if (retval == ERROR_SUCCESS) {
         long datasize = MAX_PATH;
         TCHAR data[MAX_PATH];
-        RegQueryValue(hkey, NULL, data, &datasize);
+        RegQueryValue(hkey, APE_NULL, data, &datasize);
         lstrcpy(retdata,data);
         RegCloseKey(hkey);
     }
@@ -463,7 +463,7 @@ bool CHyperLink::GotoURL(LPCTSTR url, int showcmd)
     TCHAR key[MAX_PATH + MAX_PATH];
 
     // First try ShellExecute()
-    HINSTANCE result = static_cast<HINSTANCE>(ShellExecute(NULL, _T("open"), url, NULL, NULL, showcmd));
+    HINSTANCE result = static_cast<HINSTANCE>(ShellExecute(APE_NULL, _T("open"), url, APE_NULL, APE_NULL, showcmd));
 
     // If it failed, get the .htm regkey and lookup the program
     if (POINTER_TO_INT64(result) <= HINSTANCE_ERROR) {
@@ -474,9 +474,9 @@ bool CHyperLink::GotoURL(LPCTSTR url, int showcmd)
             if (GetRegKey(HKEY_CLASSES_ROOT,key,key) == ERROR_SUCCESS) {
                 TCHAR *pos;
                 pos = _tcsstr(key, _T("\"%1\""));
-                if (pos == NULL) {                     // No quotes found
+                if (pos == APE_NULL) {                     // No quotes found
                     pos = _tcsstr(key, _T("%1"));      // Check for %1, without quotes
-                    if (pos == NULL)                   // No parameter at all...
+                    if (pos == APE_NULL)                   // No parameter at all...
                         pos = key+lstrlen(key)-1;
                     else
                         *pos = '\0';                   // Remove the parameter

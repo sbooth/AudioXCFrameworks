@@ -33,7 +33,7 @@ int CWinFileIO::Open(const wchar_t * pName, bool bOpenReadOnly)
         return ERROR_UNDEFINED;
 
     #ifdef _UNICODE
-        wchar_t * pCopy = new wchar_t[wcslen(pName) + 1];
+        wchar_t * pCopy = new wchar_t [wcslen(pName) + 1];
         memcpy(pCopy, pName, sizeof(wchar_t) * wcslen(pName));
         pCopy[wcslen(pName)] = 0;
         CSmartPtr<wchar_t> spName(pCopy, true);
@@ -202,7 +202,7 @@ int CWinFileIO::Create(const wchar_t * pName)
         return ERROR_UNDEFINED;
 
     #ifdef _UNICODE
-        wchar_t * pCopy = new wchar_t[wcslen(pName) + 1];
+        wchar_t * pCopy = new wchar_t [wcslen(pName) + 1];
         memcpy(pCopy, pName, sizeof(wchar_t) * wcslen(pName));
         pCopy[wcslen(pName)] = 0;
         CSmartPtr<wchar_t> spName(pCopy, true);

@@ -43,7 +43,7 @@ void CAPEInfoFormatDlg::Layout()
     CRect rectWindow;
     GetClientRect(&rectWindow);
     const int nBorder = 0;
-    m_ctrlFormat.SetWindowPos(NULL, theApp.GetSize(nBorder, 0).cx, theApp.GetSize(nBorder, 0).cx, rectWindow.Width() - theApp.GetSize(nBorder * 2, 0).cx, rectWindow.Height() - theApp.GetSize(nBorder * 2, 0).cx, SWP_NOZORDER);
+    m_ctrlFormat.SetWindowPos(APE_NULL, theApp.GetSize(nBorder, 0).cx, theApp.GetSize(nBorder, 0).cx, rectWindow.Width() - theApp.GetSize(nBorder * 2, 0).cx, rectWindow.Height() - theApp.GetSize(nBorder * 2, 0).cx, SWP_NOZORDER);
 }
 
 BOOL CAPEInfoFormatDlg::SetFiles(CStringArray & aryFiles)
@@ -116,37 +116,7 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
         strSummary += strLine + _T("\r\n");
 
         IAPETag * pTag = GET_TAG(spAPEDecompress);
-        if (pTag != APE_NULL)
-        {
-            CString strTag = _T("None");
-            if (pTag->GetHasAPETag())
-            {
-                strTag.Format(_T("APE Tag v%.2f"), static_cast<double>(pTag->GetAPETagVersion()) / static_cast<double>(1000));
-                if (pTag->GetHasID3Tag())
-                    strTag += _T(", ID3v1.1");
-            }
-            else if (pTag->GetHasID3Tag())
-            {
-                strTag = _T("ID3v1.1");
-            }
-            strLine.Format(_T("Tag: %s (%d bytes)"),
-                strTag.GetString(), pTag->GetTagBytes());
-            strSummary += strLine + _T("\r\n");
-
-            int nTagIndex = 0; CAPETagField * pTagField = APE_NULL;
-            while ((pTagField = pTag->GetTagField(nTagIndex++)) != APE_NULL)
-            {
-                WCHAR cValue[1024];
-                APE_CLEAR(cValue);
-                int nValueBytes = 1023;
-                pTag->GetFieldString(pTagField->GetFieldName(), &cValue[0], &nValueBytes);
-
-                strLine.Format(_T("    %s: %s"),
-                    pTagField->GetFieldName(),
-                    (nValueBytes >= 1024) ? _T("<too large to display>") : cValue);
-                strSummary += strLine + _T("\r\n");
-            }
-        }
+        OutputAPETag(pTag, strSummary);
     }
     else
     {
@@ -161,12 +131,21 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
                 strFormat += _T("\r\nBig endian");
             if (nFlags & APE_FORMAT_FLAG_SIGNED_8_BIT)
                 strFormat += _T("\r\nSigned 8-bit");
-            if (wfeInput.wFormatTag == WAVE_FORMAT_IEEE_FLOAT)
+            if (spInputSource->GetFloat())
                 strFormat += _T("\r\nFloating point");
         }
         else
         {
-            strFormat = _T("Format information not available for this file (unsupported by Monkey's Audio)");
+            // see if the file has an APE tag (WavPack files do)
+            CSmartPtr<CAPETag> spAPETag(new CAPETag(strFilename, true));
+            if (spAPETag->GetHasAPETag())
+            {
+                OutputAPETag(spAPETag, strSummary);
+            }
+            else
+            {
+                strFormat = _T("Format information not available for this file (unsupported by Monkey's Audio)");
+            }
         }
 
         strSummary += strFormat;
@@ -174,4 +153,40 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
 
     strSummary.TrimRight();
     return strSummary;
+}
+
+void CAPEInfoFormatDlg::OutputAPETag(APE::IAPETag * pTag, CString & strSummary)
+{
+    if (pTag != APE_NULL)
+    {
+        CString strTag = _T("None");
+        if (pTag->GetHasAPETag())
+        {
+            strTag.Format(_T("APE Tag v%.2f"), static_cast<double>(pTag->GetAPETagVersion()) / static_cast<double>(1000));
+            if (pTag->GetHasID3Tag())
+                strTag += _T(", ID3v1.1");
+        }
+        else if (pTag->GetHasID3Tag())
+        {
+            strTag = _T("ID3v1.1");
+        }
+        CString strLine;
+        strLine.Format(_T("Tag: %s (%d bytes)"),
+            strTag.GetString(), pTag->GetTagBytes());
+        strSummary += strLine + _T("\r\n");
+
+        int nTagIndex = 0; CAPETagField* pTagField = APE_NULL;
+        while ((pTagField = pTag->GetTagField(nTagIndex++)) != APE_NULL)
+        {
+            WCHAR cValue[1024];
+            APE_CLEAR(cValue);
+            int nValueBytes = 1023;
+            pTag->GetFieldString(pTagField->GetFieldName(), &cValue[0], &nValueBytes);
+
+            strLine.Format(_T("    %s: %s"),
+                pTagField->GetFieldName(),
+                (nValueBytes >= 1024) ? _T("<too large to display>") : cValue);
+            strSummary += strLine + _T("\r\n");
+        }
+    }
 }

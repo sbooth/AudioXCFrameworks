@@ -176,7 +176,7 @@ typedef struct tag_ObjectDesc {
     // (public entry points compile to nothing) so if you go trying to call
     // any of the private entry points in your source they won't compile
 
-    #define NAME(_x_) ((LPTSTR) NULL)
+    #define NAME(_x_) (static_cast<LPTSTR>(NULL))
 
     #define DbgInitialise(hInst)
     #define DbgTerminate()

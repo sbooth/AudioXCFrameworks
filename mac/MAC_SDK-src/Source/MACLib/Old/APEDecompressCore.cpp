@@ -81,9 +81,9 @@ void CAPEDecompressCore::GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes,
 }
 
 
-void CAPEDecompressCore::GenerateDecodedArray(int * Input_Array, int Number_of_Elements, intn Frame_Index, CAntiPredictor * pAntiPredictor)
+void CAPEDecompressCore::GenerateDecodedArray(int * pInputArray, int nNumberElements, intn nFrameIndex, CAntiPredictor * pAntiPredictor)
 {
-    const intn nFrameBytes = static_cast<intn>(m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FRAME_BYTES, Frame_Index));
+    const intn nFrameBytes = static_cast<intn>(m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FRAME_BYTES, nFrameIndex));
     if (nFrameBytes <= 0)
         throw(ERROR_INVALID_INPUT_FILE);
 
@@ -94,13 +94,13 @@ void CAPEDecompressCore::GenerateDecodedArray(int * Input_Array, int Number_of_E
         case APE_COMPRESSION_LEVEL_FAST:
             if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) < 3320)
             {
-                m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-                pAntiPredictor->AntiPredict(m_spTempData, Input_Array, Number_of_Elements);
+                m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+                pAntiPredictor->AntiPredict(m_spTempData, pInputArray, nNumberElements);
             }
             else
             {
-                m_spUnBitArray->GenerateArray(Input_Array, Number_of_Elements, nFrameBytes);
-                pAntiPredictor->AntiPredict(Input_Array, APE_NULL, Number_of_Elements);
+                m_spUnBitArray->GenerateArray(pInputArray, nNumberElements, nFrameBytes);
+                pAntiPredictor->AntiPredict(pInputArray, APE_NULL, nNumberElements);
             }
 
             break;
@@ -110,8 +110,8 @@ void CAPEDecompressCore::GenerateDecodedArray(int * Input_Array, int Number_of_E
         case APE_COMPRESSION_LEVEL_NORMAL:
         {
             // get the array from the bitstream
-            m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-            pAntiPredictor->AntiPredict(m_spTempData, Input_Array, Number_of_Elements);
+            m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+            pAntiPredictor->AntiPredict(m_spTempData, pInputArray, nNumberElements);
             break;
         }
 #endif // #ifdef ENABLE_COMPRESSION_MODE_NORMAL
@@ -119,8 +119,8 @@ void CAPEDecompressCore::GenerateDecodedArray(int * Input_Array, int Number_of_E
 #ifdef ENABLE_COMPRESSION_MODE_HIGH
         case APE_COMPRESSION_LEVEL_HIGH:
             // get the array from the bitstream
-            m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-            pAntiPredictor->AntiPredict(m_spTempData, Input_Array, Number_of_Elements);
+            m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+            pAntiPredictor->AntiPredict(m_spTempData, pInputArray, nNumberElements);
             break;
 #endif // #ifdef ENABLE_COMPRESSION_MODE_HIGH
 
@@ -141,31 +141,31 @@ void CAPEDecompressCore::GenerateDecodedArray(int * Input_Array, int Number_of_E
             if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) < 3320)
             {
                 GET_COEFFICIENTS(4, 6)
-                m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-                static_cast<CAntiPredictorExtraHigh0000To3320 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, Input_Array, Number_of_Elements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
+                m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+                static_cast<CAntiPredictorExtraHigh0000To3320 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, pInputArray, nNumberElements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
             }
             else if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) < 3600)
             {
                 GET_COEFFICIENTS(3, 5)
-                m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-                static_cast<CAntiPredictorExtraHigh3320To3600 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, Input_Array, Number_of_Elements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
+                m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+                static_cast<CAntiPredictorExtraHigh3320To3600 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, pInputArray, nNumberElements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
             }
             else if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) < 3700)
             {
                 GET_COEFFICIENTS(3, 6)
-                m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-                static_cast<CAntiPredictorExtraHigh3600To3700 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, Input_Array, Number_of_Elements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
+                m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+                static_cast<CAntiPredictorExtraHigh3600To3700 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, pInputArray, nNumberElements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
             }
             else if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) < 3800)
             {
                 GET_COEFFICIENTS(3, 6)
-                m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-                static_cast<CAntiPredictorExtraHigh3700To3800 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, Input_Array, Number_of_Elements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
+                m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+                static_cast<CAntiPredictorExtraHigh3700To3800 *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, pInputArray, nNumberElements, static_cast<int>(nNumberOfCoefficients), &aryCoefficientsA[0], &aryCoefficientsB[0]);
             }
             else
             {
-                m_spUnBitArray->GenerateArray(m_spTempData, Number_of_Elements, nFrameBytes);
-                static_cast<CAntiPredictorExtraHigh3800ToCurrent *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, Input_Array, Number_of_Elements, static_cast<intn>(m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)));
+                m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
+                static_cast<CAntiPredictorExtraHigh3800ToCurrent *>(pAntiPredictor)->AntiPredictCustom(m_spTempData, pInputArray, nNumberElements, static_cast<intn>(m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)));
             }
 
             break;

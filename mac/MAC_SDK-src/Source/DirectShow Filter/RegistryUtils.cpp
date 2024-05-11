@@ -40,20 +40,20 @@ void RegisterSourceFilterExtension(const TCHAR* Extension,
     {
         GUID2String(CLSIDString, SourceFilterGUID);
         RegSetValueEx(Key, _T("Source Filter"), 0, REG_SZ,
-            (CONST BYTE *) CLSIDString, (DWORD)_tcslen(CLSIDString));
+            reinterpret_cast<CONST BYTE *>(CLSIDString), static_cast<DWORD>(_tcslen(CLSIDString)));
 
         if (!IsEqualGUID(MediaType, CLSID_NULL))
         {
             GUID2String(CLSIDString, MediaType);
             RegSetValueEx(Key, _T("Media Type"), 0, REG_SZ,
-                (CONST BYTE *) CLSIDString, (DWORD)_tcslen(CLSIDString));
+                reinterpret_cast<CONST BYTE*>(CLSIDString), static_cast<DWORD>(_tcslen(CLSIDString)));
         }
 
         if (!IsEqualGUID(MediaType, CLSID_NULL))
         {
             GUID2String(CLSIDString, Subtype);
             RegSetValueEx(Key, _T("Subtype"), 0, REG_SZ,
-                (CONST BYTE *) CLSIDString, (DWORD)_tcslen(CLSIDString));
+                reinterpret_cast<CONST BYTE *>(CLSIDString), static_cast<DWORD>(_tcslen(CLSIDString)));
         }
         RegCloseKey(Key);
     }
@@ -92,10 +92,10 @@ void RegisterSourceFilterPattern(const char* Pattern,
     {
         GUID2String(CLSIDString, SourceFilterGUID);
         RegSetValueEx(Key, _T("Source Filter"), 0, REG_SZ,
-            (CONST BYTE *) CLSIDString, (DWORD)_tcslen(CLSIDString));
+            reinterpret_cast<CONST BYTE *>(CLSIDString), static_cast<DWORD>(_tcslen(CLSIDString)));
 
         // The pattern use the following format : offset,cb,mask,val
-        RegSetValueEx(Key, _T("0"), 0, REG_SZ, (CONST BYTE *) Pattern, (DWORD)strlen(Pattern));
+        RegSetValueEx(Key, _T("0"), 0, REG_SZ, reinterpret_cast<CONST BYTE *>(Pattern), static_cast<DWORD>(strlen(Pattern)));
         RegCloseKey(Key);
     }
 }
@@ -115,12 +115,11 @@ void UnRegisterSourceFilterPattern(const GUID MajorType,
 }
 
 // ----------------------------------------------------------------------------
-
 TCHAR* GetToken(TCHAR* src, const TCHAR* sep, int& position) {
     TCHAR* res = src + position;
     TCHAR* nextRes = wcsstr(res, sep);
     if (nextRes) {
-        position += (int)(nextRes - res + 1);
+        position += static_cast<int>(nextRes - res + 1);
         *nextRes = 0;
     }
     else {
@@ -138,6 +137,7 @@ int ContainsExt(const TCHAR* Src, const TCHAR* Extension) {
     while (position != -1) {
         TCHAR* token = GetToken(SrcDup, _T(";"), position);
         if (wcscmp(token, Extension) == 0) {
+            free(SrcDup);
             return 1;
         }
     }
@@ -166,7 +166,7 @@ void RegisterWMPExtension(const TCHAR* Extension, const TCHAR* Description,
 
         // Check if our extension is not already here, and get the new index if it's not
         while (ERROR_SUCCESS == RegEnumValue(Key, Index++, KeyName, &KeyNameMaxLen,
-            NULL, NULL, (BYTE*)KeyValue, &KeyValueMaxLen))
+            NULL, NULL, reinterpret_cast<BYTE*>(KeyValue), &KeyValueMaxLen))
         {
             _wcslwr_s(KeyValue, 255);
             if (ContainsExt(KeyValue, Extension))
@@ -188,14 +188,14 @@ void RegisterWMPExtension(const TCHAR* Extension, const TCHAR* Description,
         {
             wsprintf(KeyName, _T("%d"), MaxIndex + 1);
             // Add Extension
-            RegSetValueEx(Key, KeyName, 0, REG_SZ, (CONST BYTE*)Extension, (DWORD)_tcslen(Extension) * sizeof(TCHAR));
+            RegSetValueEx(Key, KeyName, 0, REG_SZ, reinterpret_cast<CONST BYTE*>(Extension), static_cast<DWORD>(_tcslen(Extension)) * sizeof(TCHAR));
             RegCloseKey(Key);
 
             // Add Description
             if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,
                 _T("SOFTWARE\\Microsoft\\MediaPlayer\\Player\\Extensions\\Descriptions"), 0, KEY_WRITE, &Key))
             {
-                RegSetValueEx(Key, KeyName, 0, REG_SZ, (CONST BYTE*)Description, (DWORD)_tcslen(Description) * sizeof(TCHAR));
+                RegSetValueEx(Key, KeyName, 0, REG_SZ, reinterpret_cast<CONST BYTE*>(Description), static_cast<DWORD>(_tcslen(Description)) * sizeof(TCHAR));
                 RegCloseKey(Key);
             }
 
@@ -203,7 +203,7 @@ void RegisterWMPExtension(const TCHAR* Extension, const TCHAR* Description,
             if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,
                 _T("SOFTWARE\\Microsoft\\MediaPlayer\\Player\\Extensions\\MUIDescriptions"), 0, KEY_WRITE, &Key))
             {
-                RegSetValueEx(Key, KeyName, 0, REG_SZ, (CONST BYTE*)MUIDescription, (DWORD)_tcslen(MUIDescription) * sizeof(TCHAR));
+                RegSetValueEx(Key, KeyName, 0, REG_SZ, reinterpret_cast<CONST BYTE*>(MUIDescription), static_cast<DWORD>(_tcslen(MUIDescription)) * sizeof(TCHAR));
                 RegCloseKey(Key);
             }
         }
@@ -225,14 +225,14 @@ void RegisterWMPExtension(const TCHAR* Extension, const TCHAR* Description,
     if (ERROR_SUCCESS == RegCreateKeyEx(HKEY_LOCAL_MACHINE, RegistryKeyName,
         0, _T("REG_SZ"), REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &Key, &Disp))
     {
-        RegSetValueEx(Key, _T("Runtime"), 0, REG_DWORD, (BYTE*)&dwRuntimeFlag,
+        RegSetValueEx(Key, _T("Runtime"), 0, REG_DWORD, reinterpret_cast<BYTE*>(&dwRuntimeFlag),
             sizeof(DWORD));
-        RegSetValueEx(Key, _T("Permissions"), 0, REG_DWORD, (BYTE*)&dwPermissionsFlag,
+        RegSetValueEx(Key, _T("Permissions"), 0, REG_DWORD, reinterpret_cast<BYTE*>(&dwPermissionsFlag),
             sizeof(DWORD));
         if (PerceivedType)
         {
-            RegSetValueEx(Key, _T("PerceivedType"), 0, REG_SZ, (BYTE*)PerceivedType,
-                (DWORD)_tcslen(PerceivedType) * sizeof(TCHAR));
+            RegSetValueEx(Key, _T("PerceivedType"), 0, REG_SZ, reinterpret_cast<const BYTE*>(PerceivedType),
+                static_cast<DWORD>(_tcslen(PerceivedType)) * sizeof(TCHAR));
         }
         RegCloseKey(Key);
     }
@@ -247,9 +247,11 @@ void UnRegisterWMPExtension(const TCHAR* Extension)
     const TCHAR* ExtensionWithoutStar = Extension + 1;
 
     // WMP 6.4
+    // NOLINTBEGIN
     if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,
         _T("SOFTWARE\\Microsoft\\MediaPlayer\\Player\\Extensions\\Types"), 0,
         KEY_WRITE | KEY_ENUMERATE_SUB_KEYS | KEY_QUERY_VALUE, &Key))
+    // NOLINTEND
     {
         DWORD Index = 0;
         TCHAR KeyName[256] = { 0 };
@@ -260,7 +262,7 @@ void UnRegisterWMPExtension(const TCHAR* Extension)
 
         // Check if our extension is already here
         while (ERROR_SUCCESS == RegEnumValue(Key, Index++, KeyName, &KeyNameMaxLen,
-            NULL, NULL, (BYTE*)KeyValue, &KeyValueMaxLen))
+            NULL, NULL, reinterpret_cast<BYTE*>(KeyValue), &KeyValueMaxLen))
         {
             _wcslwr_s(KeyValue, 255);
             if (ContainsExt(KeyValue, Extension))

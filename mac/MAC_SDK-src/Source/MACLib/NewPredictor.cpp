@@ -161,7 +161,7 @@ CPredictorDecompressNormal3930to3950::CPredictorDecompressNormal3930to3950(int n
 {
     // initialize (to avoid warnings)
     APE_CLEAR(m_aryM);
-    m_pInputBuffer = NULL;
+    m_pInputBuffer = APE_NULL;
     m_nLastValue = 0;
     m_nCurrentIndex = 0;
 
@@ -202,8 +202,8 @@ int CPredictorDecompressNormal3930to3950::Flush()
     if (m_spNNFilter) m_spNNFilter->Flush();
     if (m_spNNFilter1) m_spNNFilter1->Flush();
 
-    ZeroMemory(m_spBuffer, (HISTORY_ELEMENTS + 1) * sizeof(int));
-    ZeroMemory(&m_aryM[0], M_COUNT * sizeof(int));
+    ZeroMemory(m_spBuffer, (HISTORY_ELEMENTS + 1) * sizeof(m_spBuffer[0]));
+    ZeroMemory(&m_aryM[0], M_COUNT * sizeof(m_aryM[0]));
 
     m_aryM[0] = 360;
     m_aryM[1] = 317;
@@ -218,24 +218,24 @@ int CPredictorDecompressNormal3930to3950::Flush()
     return ERROR_SUCCESS;
 }
 
-int CPredictorDecompressNormal3930to3950::DecompressValue(int64 _nInput, int64)
+int CPredictorDecompressNormal3930to3950::DecompressValue(int64 nInput, int64)
 {
     if (m_nCurrentIndex == WINDOW_BLOCKS)
     {
         // copy forward and adjust pointers
-        memcpy(&m_spBuffer[0], &m_spBuffer[WINDOW_BLOCKS], HISTORY_ELEMENTS * sizeof(int64));
+        memmove(&m_spBuffer[0], &m_spBuffer[WINDOW_BLOCKS], HISTORY_ELEMENTS * sizeof(m_spBuffer[0]));
         m_pInputBuffer = &m_spBuffer[HISTORY_ELEMENTS];
 
         m_nCurrentIndex = 0;
     }
 
-    int nInput = static_cast<int>(_nInput);
+    int nInput32 = static_cast<int>(nInput);
 
     // stage 2: NNFilter
     if (m_spNNFilter1)
-        nInput = m_spNNFilter1->Decompress(nInput);
+        nInput32 = m_spNNFilter1->Decompress(nInput32);
     if (m_spNNFilter)
-        nInput = m_spNNFilter->Decompress(nInput);
+        nInput32 = m_spNNFilter->Decompress(nInput32);
 
     // stage 1: multiple predictors (order 2 and offset 1)
     const int p1 = m_pInputBuffer[-1];
@@ -243,16 +243,16 @@ int CPredictorDecompressNormal3930to3950::DecompressValue(int64 _nInput, int64)
     const int p3 = m_pInputBuffer[-2] - m_pInputBuffer[-3];
     const int p4 = m_pInputBuffer[-3] - m_pInputBuffer[-4];
 
-    m_pInputBuffer[0] = nInput + (((p1 * m_aryM[0]) + (p2 * m_aryM[1]) + (p3 * m_aryM[2]) + (p4 * m_aryM[3])) >> 9);
+    m_pInputBuffer[0] = nInput32 + (((p1 * m_aryM[0]) + (p2 * m_aryM[1]) + (p3 * m_aryM[2]) + (p4 * m_aryM[3])) >> 9);
 
-    if (nInput > 0)
+    if (nInput32 > 0)
     {
         m_aryM[0] -= ((p1 >> 30) & 2) - 1;
         m_aryM[1] -= ((p2 >> 30) & 2) - 1;
         m_aryM[2] -= ((p3 >> 30) & 2) - 1;
         m_aryM[3] -= ((p4 >> 30) & 2) - 1;
     }
-    else if (nInput < 0)
+    else if (nInput32 < 0)
     {
         m_aryM[0] += ((p1 >> 30) & 2) - 1;
         m_aryM[1] += ((p2 >> 30) & 2) - 1;

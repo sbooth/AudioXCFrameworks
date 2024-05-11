@@ -514,13 +514,13 @@
     <ClCompile Include="..\..\..\MAC\AboutDlg.cpp" />
     <ClCompile Include="..\..\..\MAC\APEInfoDlg.cpp" />
     <ClCompile Include="..\..\..\MAC\APEInfoFormatDlg.cpp" />
-    <ClCompile Include="..\..\..\MAC\FLACTag.cpp" />
     <ClCompile Include="..\..\..\MAC\MAC.cpp" />
     <ClCompile Include="..\..\..\MAC\MACDlg.cpp" />
     <ClCompile Include="..\..\..\MAC\MACFile.cpp" />
     <ClCompile Include="..\..\..\MAC\MACFileArray.cpp" />
     <ClCompile Include="..\..\..\MAC\MACProcessFiles.cpp" />
     <ClCompile Include="..\..\..\MAC\MACSettings.cpp" />
+    <ClCompile Include="..\..\..\MAC\ScaleHelper.cpp" />
     <ClCompile Include="..\..\..\MAC\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
@@ -568,7 +568,6 @@
     <ClInclude Include="..\..\..\MAC\AboutDlg.h" />
     <ClInclude Include="..\..\..\MAC\APEInfoDlg.h" />
     <ClInclude Include="..\..\..\MAC\APEInfoFormatDlg.h" />
-    <ClInclude Include="..\..\..\MAC\FLACTag.h" />
     <ClInclude Include="..\..\..\MAC\MAC.h" />
     <ClInclude Include="..\..\..\MAC\MACDlg.h" />
     <ClInclude Include="..\..\..\MAC\MACFile.h" />
@@ -576,6 +575,7 @@
     <ClInclude Include="..\..\..\MAC\MACProcessFiles.h" />
     <ClInclude Include="..\..\..\MAC\MACSettings.h" />
     <ClInclude Include="..\..\..\MAC\Resource.h" />
+    <ClInclude Include="..\..\..\MAC\ScaleHelper.h" />
     <ClInclude Include="..\..\..\MAC\stdafx.h" />
     <ClInclude Include="..\..\..\MAC\OptionsDlg.h" />
     <ClInclude Include="..\..\..\MAC\OptionsOutputDlg.h" />

@@ -16,7 +16,7 @@ CAPETagField::CAPETagField(const str_utfn * pFieldName, const void * pFieldValue
 {
     // field name
     m_spFieldNameUTF16.Assign(new str_utfn [wcslen(pFieldName) + 1], true);
-    memcpy(m_spFieldNameUTF16, pFieldName, (wcslen(pFieldName) + 1) * sizeof(str_utfn));
+    memcpy(m_spFieldNameUTF16, pFieldName, (wcslen(pFieldName) + 1) * sizeof(m_spFieldNameUTF16[0]));
 
     // data (we'll always allocate two extra bytes and memset to 0 so we're safely NULL terminated)
     m_nFieldValueBytes = ape_max(nFieldBytes, 0);
@@ -51,12 +51,12 @@ const char * CAPETagField::GetFieldValue()
     return m_spFieldValue;
 }
 
-int CAPETagField::GetFieldValueSize()
+int CAPETagField::GetFieldValueSize() const
 {
     return m_nFieldValueBytes;
 }
 
-int CAPETagField::GetFieldFlags()
+int CAPETagField::GetFieldFlags() const
 {
     return m_nFieldFlags;
 }
@@ -87,12 +87,12 @@ int CAPETagField::SaveField(char * pBuffer, int nBytes)
     return GetFieldSize();
 }
 
-bool CAPETagField::GetIsReadOnly()
+bool CAPETagField::GetIsReadOnly() const
 {
     return (m_nFieldFlags & TAG_FIELD_FLAG_READ_ONLY) ? true : false;
 }
 
-bool CAPETagField::GetIsUTF8Text()
+bool CAPETagField::GetIsUTF8Text() const
 {
     return ((m_nFieldFlags & TAG_FIELD_FLAG_DATA_TYPE_MASK) == TAG_FIELD_FLAG_DATA_TYPE_TEXT_UTF8) ? true : false;
 }
@@ -324,7 +324,8 @@ int CAPETag::Analyze()
     // we used to not load if we found an ID3 tag, but somebody sent me a file with both an ID3 tag and APE tag, so we'll try to parse that going forward
     {
         APE_TAG_FOOTER APETagFooter;
-        if (m_spIO->Seek(-static_cast<int>(APE_TAG_FOOTER_BYTES + (m_bHasID3Tag ? ID3_TAG_BYTES : 0)), SeekFileEnd) == ERROR_SUCCESS)
+        int nTagBytes = static_cast<int>(APE_TAG_FOOTER_BYTES + (m_bHasID3Tag ? ID3_TAG_BYTES : 0));
+        if (m_spIO->Seek(-nTagBytes, SeekFileEnd) == ERROR_SUCCESS)
         {
             unsigned int nBytesRead = 0;
             APETagFooter.Empty();
@@ -418,7 +419,7 @@ int CAPETag::GetFieldString(const str_utfn * pFieldName, str_ansi * pBuffer, int
         CSmartPtr<str_ansi> spANSI(bUTF8Encode ? reinterpret_cast<str_ansi *>(CAPECharacterHelper::GetUTF8FromUTF16(spUTF16)) : CAPECharacterHelper::GetANSIFromUTF16(spUTF16), true);
         if (static_cast<int>(strlen(spANSI)) > nOriginalCharacters)
         {
-            memset(pBuffer, 0, static_cast<size_t>(nOriginalCharacters) * sizeof(str_ansi));
+            memset(pBuffer, 0, static_cast<size_t>(nOriginalCharacters) * sizeof(pBuffer[0]));
             *pBufferCharacters = 0;
             nResult = ERROR_UNDEFINED;
         }
@@ -450,7 +451,7 @@ int CAPETag::GetFieldString(const str_utfn * pFieldName, str_utfn * pBuffer, int
         if (pAPETagField == APE_NULL)
         {
             // the field doesn't exist -- return an empty string
-            memset(pBuffer, 0, static_cast<size_t>(*pBufferCharacters) * sizeof(str_utfn));
+            memset(pBuffer, 0, static_cast<size_t>(*pBufferCharacters) * sizeof(pBuffer[0]));
             *pBufferCharacters = 0;
         }
         else if (pAPETagField->GetIsUTF8Text() || (m_nAPETagVersion < 2000))
@@ -523,12 +524,12 @@ int CAPETag::GetFieldString(const str_utfn * pFieldName, str_utfn * pBuffer, int
         else
         {
             // memset the whole buffer to NULL (so everything left over is NULL terminated)
-            memset(pBuffer, 0, static_cast<size_t>(*pBufferCharacters) * sizeof(str_utfn));
+            memset(pBuffer, 0, static_cast<size_t>(*pBufferCharacters) * sizeof(pBuffer[0]));
 
             // do a binary dump (need to convert from wchar's to bytes)
-            int nBufferBytes = (*pBufferCharacters - 1) * static_cast<int>(sizeof(str_utfn));
+            int nBufferBytes = (*pBufferCharacters - 1) * static_cast<int>(sizeof(pBuffer[0]));
             nResult = GetFieldBinary(pFieldName, pBuffer, &nBufferBytes);
-            *pBufferCharacters = (nBufferBytes / static_cast<int>(sizeof(str_utfn))) + 1;
+            *pBufferCharacters = (nBufferBytes / static_cast<int>(sizeof(pBuffer[0]))) + 1;
         }
     }
 
@@ -687,7 +688,7 @@ int CAPETag::LoadField(const char * pBuffer, int nMaximumBytes, int * pBytes)
     // name
     const int nNameCharacters = static_cast<int>(strlen(&pBuffer[nLocation]));
     CSmartPtr<str_utf8> spNameUTF8(new str_utf8 [static_cast<size_t>(nNameCharacters) + 1], true);
-    memcpy(spNameUTF8, &pBuffer[nLocation], (static_cast<size_t>(nNameCharacters) + 1) * sizeof(str_utf8));
+    memcpy(spNameUTF8, &pBuffer[nLocation], (static_cast<size_t>(nNameCharacters) + 1) * sizeof(spNameUTF8[0]));
     nLocation += nNameCharacters + 1;
     CSmartPtr<str_utfn> spNameUTF16(CAPECharacterHelper::GetUTF16FromUTF8(spNameUTF8.GetPtr()), true);
 
@@ -787,7 +788,7 @@ int CAPETag::SetFieldBinary(const str_utfn * pFieldName, const void * pFieldValu
         m_nAllocatedFields = ape_max(m_nAllocatedFields, 256);
         CAPETagField ** paryFields = new CAPETagField * [static_cast<size_t>(m_nAllocatedFields)];
         if (nOriginalAllocatedFields > 0)
-            memcpy(paryFields, m_aryFields, sizeof(CAPETagField *) * static_cast<size_t>(nOriginalAllocatedFields));
+            memcpy(paryFields, m_aryFields, sizeof(paryFields[0]) * static_cast<size_t>(nOriginalAllocatedFields));
         APE_SAFE_ARRAY_DELETE(m_aryFields)
         m_aryFields = paryFields;
     }
@@ -837,7 +838,7 @@ int CAPETag::RemoveField(int nIndex)
             delete m_aryFields[nIndex];
             m_aryFields[nIndex] = APE_NULL;
         }
-        memmove(&m_aryFields[nIndex], &m_aryFields[static_cast<size_t>(nIndex) + 1], (static_cast<size_t>(m_nAllocatedFields) - static_cast<size_t>(nIndex) - 1) * sizeof(CAPETagField *));
+        memmove(&m_aryFields[nIndex], &m_aryFields[static_cast<size_t>(nIndex) + 1], (static_cast<size_t>(m_nAllocatedFields) - static_cast<size_t>(nIndex) - 1) * sizeof(m_aryFields[0]));
         m_nFields--;
         return ERROR_SUCCESS;
     }
@@ -957,7 +958,8 @@ int CAPETag::GetFieldID3String(const str_utfn * pFieldName, char * pBuffer, int 
 int CAPETag::SortFields()
 {
     // sort the tag fields by size (so that the smallest fields are at the front of the tag)
-    qsort(m_aryFields, static_cast<size_t>(m_nFields), sizeof(CAPETagField *), CompareFields);
+    if (m_nFields > 1)
+        qsort(m_aryFields, static_cast<size_t>(m_nFields), sizeof(m_aryFields[0]), CompareFields);
 
     return ERROR_SUCCESS;
 }

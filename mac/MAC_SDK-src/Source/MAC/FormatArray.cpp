@@ -140,7 +140,7 @@ int CFormatArray::Process(MAC_FILE * pInfo)
     IFormat * pFormat = pInfo->pFormat;
 
     // if we found a format that can do the job, use it to do the work
-    if (pFormat != NULL)
+    if (pFormat != APE_NULL)
     {
         nRetVal = pFormat->Process(pInfo);
     }
@@ -156,7 +156,7 @@ IFormat * CFormatArray::GetFormat(const CString & strName)
             return m_aryFormats[z];
     }
 
-    return NULL;
+    return APE_NULL;
 }
 
 CString CFormatArray::GetOutputExtension(APE_MODES Mode, const CString & strInputFilename, int nLevel, IFormat * pFormat)
@@ -167,7 +167,7 @@ CString CFormatArray::GetOutputExtension(APE_MODES Mode, const CString & strInpu
     {
         strExtension = _T(".apl");
     }
-    else if (pFormat != NULL)
+    else if (pFormat != APE_NULL)
     {
         strExtension = pFormat->GetOutputExtension(Mode, strInputFilename, nLevel);
     }
@@ -265,7 +265,7 @@ CString CFormatArray::GetOpenFilesFilter(BOOL bAddAllFiles)
 
 IFormat * CFormatArray::GetFormat(MAC_FILE * pInfo)
 {
-    IFormat * pFormat = NULL;
+    IFormat * pFormat = APE_NULL;
 
     if ((pInfo->Mode == MODE_DECOMPRESS) || (pInfo->Mode == MODE_VERIFY))
     {
@@ -302,5 +302,5 @@ IFormat * CFormatArray::GetFormatFromInputType(const CString & strInputExtension
         }
     }
 
-    return NULL;
+    return APE_NULL;
 }

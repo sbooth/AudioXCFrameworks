@@ -23,30 +23,30 @@ void CAntiPredictorExtraHigh0000To3320::AntiPredictCustom(int * pInputArray, int
     AntiPredictor.AntiPredict(pInputArray, pOutputArray, NumberOfElements);
 }
 
-void CAntiPredictorExtraHigh0000To3320::AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order)
+void CAntiPredictorExtraHigh0000To3320::AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g, int dm, int nMaxOrder)
 {
     int q;
 
-    if ((g==0) || (Number_of_Elements <= Max_Order))
+    if ((g==0) || (nNumberOfElements <= nMaxOrder))
     {
-        memcpy(Output_Array, Input_Array, static_cast<size_t>(Number_of_Elements) * 4);
+        memcpy(pOutputArray, pInputArray, static_cast<size_t>(nNumberOfElements) * 4);
         return;
     }
 
-    memcpy(Output_Array, Input_Array, static_cast<size_t>(Max_Order) * 4);
+    memcpy(pOutputArray, pInputArray, static_cast<size_t>(nMaxOrder) * 4);
 
     if (dm > 0)
     {
-        for (q = Max_Order; q < Number_of_Elements; q++)
+        for (q = nMaxOrder; q < nNumberOfElements; q++)
         {
-            Output_Array[q] = Input_Array[q] + (Output_Array[q - g] >> 3);
+            pOutputArray[q] = pInputArray[q] + (pOutputArray[q - g] >> 3);
         }
     }
     else
     {
-        for (q = Max_Order; q < Number_of_Elements; q++)
+        for (q = nMaxOrder; q < nNumberOfElements; q++)
         {
-            Output_Array[q] = Input_Array[q] - (Output_Array[q - g] >> 3);
+            pOutputArray[q] = pInputArray[q] - (pOutputArray[q - g] >> 3);
         }
     }
 }
@@ -68,34 +68,34 @@ void CAntiPredictorExtraHigh3320To3600::AntiPredictCustom(int * pInputArray, int
 }
 
 
-void CAntiPredictorExtraHigh3320To3600::AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g, int dm, int Max_Order)
+void CAntiPredictorExtraHigh3320To3600::AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g, int dm, int nMaxOrder)
 {
     int q;
 
-    if ((g==0) || (Number_of_Elements <= Max_Order))
+    if ((g==0) || (nNumberOfElements <= nMaxOrder))
     {
-        memcpy(Output_Array, Input_Array, static_cast<size_t>(Number_of_Elements) * 4);
+        memcpy(pOutputArray, pInputArray, static_cast<size_t>(nNumberOfElements) * 4);
         return;
     }
 
-    memcpy(Output_Array, Input_Array, static_cast<size_t>(Max_Order) * 4);
+    memcpy(pOutputArray, pInputArray, static_cast<size_t>(nMaxOrder) * 4);
 
     int m = 512;
 
     if (dm > 0)
     {
-        for (q = Max_Order; q < Number_of_Elements; q++)
+        for (q = nMaxOrder; q < nNumberOfElements; q++)
         {
-            Output_Array[q] = Input_Array[q] + ((Output_Array[q - g] * m) >> 12);
-            (Input_Array[q] ^ Output_Array[q - g]) > 0 ? m += 8 : m -= 8;
+            pOutputArray[q] = pInputArray[q] + ((pOutputArray[q - g] * m) >> 12);
+            (pInputArray[q] ^ pOutputArray[q - g]) > 0 ? m += 8 : m -= 8;
         }
     }
     else
     {
-        for (q = Max_Order; q < Number_of_Elements; q++)
+        for (q = nMaxOrder; q < nNumberOfElements; q++)
         {
-            Output_Array[q] = Input_Array[q] - ((Output_Array[q - g] * m) >> 12);
-            (Input_Array[q] ^ Output_Array[q - g]) > 0 ? m -= 8 : m += 8;
+            pOutputArray[q] = pInputArray[q] - ((pOutputArray[q - g] * m) >> 12);
+            (pInputArray[q] ^ pOutputArray[q - g]) > 0 ? m -= 8 : m += 8;
         }
     }
 }
@@ -127,26 +127,26 @@ void CAntiPredictorExtraHigh3600To3700::AntiPredictCustom(int * pInputArray, int
     AntiPredictor.AntiPredict(pInputArray, pOutputArray, NumberOfElements);
 }
 
-void CAntiPredictorExtraHigh3600To3700::AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g1, int64 g2, int Max_Order)
+void CAntiPredictorExtraHigh3600To3700::AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g1, int64 g2, int nMaxOrder)
 {
     int q;
 
-    if ((g1==0) || (g2==0) || (Number_of_Elements <= Max_Order))
+    if ((g1==0) || (g2==0) || (nNumberOfElements <= nMaxOrder))
     {
-        memcpy(Output_Array, Input_Array, static_cast<size_t>(Number_of_Elements) * 4);
+        memcpy(pOutputArray, pInputArray, static_cast<size_t>(nNumberOfElements) * 4);
         return;
     }
 
-    memcpy(Output_Array, Input_Array, static_cast<size_t>(Max_Order) * 4);
+    memcpy(pOutputArray, pInputArray, static_cast<size_t>(nMaxOrder) * 4);
 
     int m = 64;
     int m2 = 64;
 
-    for (q = Max_Order; q < Number_of_Elements; q++)
+    for (q = nMaxOrder; q < nNumberOfElements; q++)
     {
-        Output_Array[q] = Input_Array[q] + ((Output_Array[q - g1] * m) >> 9) - ((Output_Array[q - g2] * m2) >> 9);
-        (Input_Array[q] ^ Output_Array[q - g1]) > 0 ? m++ : m--;
-        (Input_Array[q] ^ Output_Array[q - g2]) > 0 ? m2-- : m2++;
+        pOutputArray[q] = pInputArray[q] + ((pOutputArray[q - g1] * m) >> 9) - ((pOutputArray[q - g2] * m2) >> 9);
+        (pInputArray[q] ^ pOutputArray[q - g1]) > 0 ? m++ : m--;
+        (pInputArray[q] ^ pOutputArray[q - g2]) > 0 ? m2-- : m2++;
     }
 }
 
@@ -177,26 +177,26 @@ void CAntiPredictorExtraHigh3700To3800::AntiPredictCustom(int * pInputArray, int
 
 }
 
-void CAntiPredictorExtraHigh3700To3800::AntiPredictorOffset(const int * Input_Array, int * Output_Array, int Number_of_Elements, int64 g1, int64 g2, int Max_Order)
+void CAntiPredictorExtraHigh3700To3800::AntiPredictorOffset(const int * pInputArray, int * pOutputArray, int nNumberOfElements, int64 g1, int64 g2, int nMaxOrder)
 {
     int q;
 
-    if ((g1==0) || (g2==0) || (Number_of_Elements <= Max_Order))
+    if ((g1==0) || (g2==0) || (nNumberOfElements <= nMaxOrder))
     {
-        memcpy(Output_Array, Input_Array, static_cast<size_t>(Number_of_Elements) * 4);
+        memcpy(pOutputArray, pInputArray, static_cast<size_t>(nNumberOfElements) * 4);
         return;
     }
 
-    memcpy(Output_Array, Input_Array, static_cast<size_t>(Max_Order) * 4);
+    memcpy(pOutputArray, pInputArray, static_cast<size_t>(nMaxOrder) * 4);
 
     int m = 64;
     int m2 = 64;
 
-    for (q = Max_Order; q < Number_of_Elements; q++)
+    for (q = nMaxOrder; q < nNumberOfElements; q++)
     {
-        Output_Array[q] = Input_Array[q] + ((Output_Array[q - g1] * m) >> 9) - ((Output_Array[q - g2] * m2) >> 9);
-        (Input_Array[q] ^ Output_Array[q - g1]) > 0 ? m++ : m--;
-        (Input_Array[q] ^ Output_Array[q - g2]) > 0 ? m2-- : m2++;
+        pOutputArray[q] = pInputArray[q] + ((pOutputArray[q - g1] * m) >> 9) - ((pOutputArray[q - g2] * m2) >> 9);
+        (pInputArray[q] ^ pOutputArray[q - g1]) > 0 ? m++ : m--;
+        (pInputArray[q] ^ pOutputArray[q - g2]) > 0 ? m2-- : m2++;
     }
 }
 

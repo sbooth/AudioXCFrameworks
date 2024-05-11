@@ -69,6 +69,8 @@ The version of the APE tag
 #define APE_TAG_FIELD_REPLAY_GAIN_RADIO         L"Replay Gain (radio)"
 #define APE_TAG_FIELD_REPLAY_GAIN_ALBUM         L"Replay Gain (album)"
 #define APE_TAG_FIELD_COMPOSER                  L"Composer"
+#define APE_TAG_FIELD_CONDUCTOR                 L"Conductor"
+#define APE_TAG_FIELD_ORCHESTRA                 L"Orchestra"
 #define APE_TAG_FIELD_KEYWORDS                  L"Keywords"
 #define APE_TAG_FIELD_RATING                    L"Rating"
 #define APE_TAG_FIELD_PUBLISHER                 L"Publisher"
@@ -145,15 +147,15 @@ public:
         m_nVersion = CURRENT_APE_TAG_VERSION;
     }
 
-    __forceinline int GetTotalTagBytes() { return m_nSize + (GetHasHeader() ? APE_TAG_FOOTER_BYTES : 0); }
-    __forceinline int GetFieldBytes() { return m_nSize - APE_TAG_FOOTER_BYTES; }
-    __forceinline int GetFieldsOffset() { return GetHasHeader() ? APE_TAG_FOOTER_BYTES : 0; }
-    __forceinline int GetNumberFields() { return m_nFields; }
-    __forceinline bool GetHasHeader() { return (m_nFlags & APE_TAG_FLAG_CONTAINS_HEADER) ? true : false; }
-    __forceinline bool GetIsHeader() { return (m_nFlags & APE_TAG_FLAG_IS_HEADER) ? true : false; }
-    __forceinline int GetVersion() { return m_nVersion; }
+    __forceinline int GetTotalTagBytes() const { return m_nSize + (GetHasHeader() ? APE_TAG_FOOTER_BYTES : 0); }
+    __forceinline int GetFieldBytes() const { return m_nSize - APE_TAG_FOOTER_BYTES; }
+    __forceinline int GetFieldsOffset() const { return GetHasHeader() ? APE_TAG_FOOTER_BYTES : 0; }
+    __forceinline int GetNumberFields() const { return m_nFields; }
+    __forceinline bool GetHasHeader() const { return (m_nFlags & APE_TAG_FLAG_CONTAINS_HEADER) ? true : false; }
+    __forceinline bool GetIsHeader() const { return (m_nFlags & APE_TAG_FLAG_IS_HEADER) ? true : false; }
+    __forceinline int GetVersion() const { return m_nVersion; }
     __forceinline void Empty() { APE_CLEAR(m_cID); }
-    __forceinline bool GetIsValid(bool bAllowHeader)
+    __forceinline bool GetIsValid(bool bAllowHeader) const
     {
         bool bValid = (strncmp(m_cID, "APETAGEX", 8) == 0) &&
             (m_nVersion <= CURRENT_APE_TAG_VERSION) &&
@@ -191,17 +193,17 @@ public:
     const char * GetFieldValue();
 
     // get the size of the value (in bytes)
-    int GetFieldValueSize();
+    int GetFieldValueSize() const;
 
     // get any special flags
-    int GetFieldFlags();
+    int GetFieldFlags() const;
 
     // output the entire field to a buffer (GetFieldSize() bytes)
     int SaveField(char * pBuffer, int nBytes);
 
     // checks to see if the field is read-only
-    bool GetIsReadOnly();
-    bool GetIsUTF8Text();
+    bool GetIsReadOnly() const;
+    bool GetIsUTF8Text() const;
 
     // set helpers (use with EXTREME caution)
     void SetFieldFlags(int nFlags);

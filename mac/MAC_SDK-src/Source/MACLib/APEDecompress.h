@@ -21,7 +21,7 @@ public:
     CAPEDecompress(int * pErrorCode, CAPEInfo * pAPEInfo, int64 nStartBlock = -1, int64 nFinishBlock = -1);
     ~CAPEDecompress();
 
-    int GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING * pProcessing = NULL) APE_OVERRIDE;
+    int GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING * pProcessing = APE_NULL) APE_OVERRIDE;
     int Seek(int64 nBlockOffset) APE_OVERRIDE;
 
     int64 GetInfo(IAPEDecompress::APE_DECOMPRESS_FIELDS Field, int64 nParam1 = 0, int64 nParam2 = 0) APE_OVERRIDE;

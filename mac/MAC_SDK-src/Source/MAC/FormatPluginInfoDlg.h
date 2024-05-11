@@ -6,7 +6,7 @@ class CMACDlg;
 class CFormatPluginInfoDlg : public CDialog
 {
 public:
-    CFormatPluginInfoDlg(CMACDlg * pMACDlg, CString strName, CString strVersion, CString strAuthor, CString strDescription, CString strURL, CWnd * pParent = NULL);
+    CFormatPluginInfoDlg(CMACDlg * pMACDlg, CString strName, CString strVersion, CString strAuthor, CString strDescription, CString strURL, CWnd * pParent = APE_NULL);
 
     enum { IDD = IDD_FORMAT_PLUGIN_INFO };
     CHyperLink m_ctrlURL;
