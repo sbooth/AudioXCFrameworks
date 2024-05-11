@@ -21,7 +21,7 @@
 #ifndef _BSD_SOURCE
 #define _BSD_SOURCE
 #endif
-#include "compat.h"
+#include "compat/compat.h"
 
 #include "mpg123app.h"
 #include "out123.h"
@@ -60,7 +60,7 @@ static int mode = MODE_STOPPED;
 static int init = 0;
 static int sendstat_disabled = FALSE;
 
-#include "debug.h"
+#include "common/debug.h"
 
 void generic_sendmsg (const char *fmt, ...)
 {
@@ -175,7 +175,7 @@ void generic_sendstat (mpg123_handle *fr)
 	double current_seconds, seconds_left;
 
 	if(!position_info(fr, 0, ao, &current_frame, &frames_left, &current_seconds, &seconds_left, NULL, NULL))
-	generic_sendmsg("F %"OFF_P" %"OFF_P" %3.2f %3.2f", (off_p)current_frame, (off_p)frames_left, current_seconds, seconds_left);
+	generic_sendmsg("F %" PRIiMAX " %" PRIiMAX " %3.2f %3.2f", (intmax_t)current_frame, (intmax_t)frames_left, current_seconds, seconds_left);
 	else
 	{
 		sendstat_disabled = TRUE;
@@ -854,7 +854,7 @@ int control_generic (mpg123_handle *fr)
 						newpos = mpg123_tell(fr);
 						if(newpos <= oldpos) mpg123_meta_free(fr);
 
-						generic_sendmsg("K %"OFF_P, (off_p)newpos);
+						generic_sendmsg("K %" PRIiMAX, (intmax_t)newpos);
 						continue;
 					}
 					/* JUMP */

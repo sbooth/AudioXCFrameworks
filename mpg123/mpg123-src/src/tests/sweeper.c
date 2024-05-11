@@ -1,8 +1,9 @@
+#include "config.h"
 #define SYN123_PORTABLE_API
 #include <syn123.h>
 #include <out123.h>
 
-#include "compat.h"
+#include "../compat/compat.h"
 
 static long block_rate(long rate, double speed, double factor, off_t bi)
 {
@@ -84,7 +85,7 @@ int main(int argc, char **argv)
 	while(bi < out_limit)
 	{
 		long outrate = block_rate(rate, speed, factor, bi);
-		fprintf(stderr, "block %"OFF_P" rate %ld\n", (off_p)bi, outrate);
+		fprintf(stderr, "block %" PRIiMAX " rate %ld\n", (intmax_t)bi, outrate);
 		if(syn123_setup_resample(syn, rate, outrate, 1, 0, smooth))
 		{
 			ret = -11;
@@ -123,10 +124,10 @@ int main(int argc, char **argv)
 		}
 		intotal  += inblock;
 		outtotal += outblock;
-		//fprintf( stderr, "ratio: %f %"OFF_P":%"OFF_P" to %"OFF_P":%"OFF_P"\n"
-		//,	(double)intotal/outtotal, (off_p)intotal
-		//,	(off_p)syn123_resample_intotal(rate, outrate, outtotal)
-		//,	(off_p)outtotal, (off_p)syn123_resample_total(rate, outrate, intotal) );
+		//fprintf( stderr, "ratio: %f %" PRIiMAX ":%" PRIiMAX " to %" PRIiMAX ":%" PRIiMAX "\n"
+		//,	(double)intotal/outtotal, (intmax_t)intotal
+		//,	(intmax_t)syn123_resample_intotal(rate, outrate, outtotal)
+		//,	(intmax_t)outtotal, (intmax_t)syn123_resample_total(rate, outrate, intotal) );
 		syn123_amp(outbuf, MPG123_ENC_FLOAT_32, outsamples, syn123_db2lin(-12), 0, NULL, NULL);
 		if(out123_play(out, outbuf, sizeof(float)*outsamples) != sizeof(float)*outsamples)
 		{

@@ -6,7 +6,7 @@
 	initially written by Samuel Audet
 */
 
-#include "out123_int.h"
+#include "../out123_int.h"
 
 #undef VERSION /* The VERSION macro conflicts with the OS/2 multimedia headers */
 
@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "debug.h"
+#include "../../common/debug.h"
 
 // Only one instance at a time! This all needs to go into userptr!
 static BOOL opened = FALSE;

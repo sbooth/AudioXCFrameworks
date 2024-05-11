@@ -1,7 +1,7 @@
 /*
 	resample: low-latency usable and quick resampler
 
-	copyright 2018-2020 by the mpg123 project
+	copyright 2018-2023 by the mpg123 project
 	licensed under the terms of the LGPL 2.1
 	see COPYING and AUTHORS files in distribution or http://mpg123.org
 
@@ -82,7 +82,7 @@ TODO: initialize with first sample or zero? is there an actual benefit? impulse
 // SSIZE_MAX is not standard C:-/
 #define _POSIX_C_SOURCE 200809L
 #include "syn123_int.h"
-#include "debug.h"
+#include "../common/debug.h"
 
 // coefficient tables generated from coeff-ellip-6-0.01-36-16.txd
 // (coeff-{filter_type}-{order}-{passband_ripple}-{rejection_dB}-{points})
@@ -2038,8 +2038,10 @@ type attribute_align_arg name(long inrate, long outrate, type io) \
 }
 
 #if  SIZEOF_OFF_T == 8
+#ifndef FORCED_OFF_64
 resample_total_alias(off_t, syn123_resample_total, syn123_resample_total64)
 resample_total_alias(off_t, syn123_resample_intotal, syn123_resample_intotal64)
+#endif
 resample_total_alias(off_t, syn123_resample_total_64, syn123_resample_total64)
 resample_total_alias(off_t, syn123_resample_intotal_64, syn123_resample_intotal64)
 #elif SIZEOF_OFF_T == 4
@@ -2586,7 +2588,7 @@ syn123_resample( syn123_handle *sh,
 	// Input limit is zero if no resampler configured.
 	if(!samples || samples > sh->rd->input_limit)
 		return 0;
-	mdebug( "calling actual resample function from %p to %p with %"SIZE_P" samples"
-	,	(void*)src, (void*)dst, (size_p)samples );
+	mdebug( "calling actual resample function from %p to %p with %zu samples"
+	,	(void*)src, (void*)dst, samples );
 	return rd->resample_func(rd, src, samples, dst);
 }

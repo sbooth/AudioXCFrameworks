@@ -25,14 +25,14 @@
 
 // Only activate the explicit largefile stuff here. The rest of the code shall
 // work with abstract 64 bit offsets, or just plain default off_t (possibly
-// using _FILE_OFFSET_BYTES magic).
+// using _FILE_OFFSET_BITS magic).
 // Note that this macro does not influence normal off_t-using code.
 #ifdef LFS_LARGEFILE_64
 #define _LARGEFILE64_SOURCE
 #endif
 
 // For correct MPG123_EXPORT.
-#include "abi_align.h"
+#include "../common/abi_align.h"
 
 // Need the full header with non-portable API, for the bare mpg123_open*()
 // declarations. But no renaming shenanigans.
@@ -40,15 +40,28 @@
 #include "mpg123.h"
 
 #include "lfs_wrap.h"
-#include "abi_align.h"
-#include "compat.h"
+#include "../common/abi_align.h"
+#include "../compat/compat.h"
 #include <sys/stat.h>
 #include <fcntl.h>
+
+#ifndef OFF_MAX
+#undef OFF_MIN
+#if SIZEOF_OFF_T == 4
+#define OFF_MAX INT32_MAX
+#define OFF_MIN INT32_MIN
+#elif SIZEOF_OFF_T == 8
+#define OFF_MAX INT64_MAX
+#define OFF_MIN INT64_MIN
+#else
+#error "Unexpected width of off_t."
+#endif
+#endif
 
 // A paranoid check that someone did not define a wrong SIZEOF_OFF_T at configure time.
 typedef unsigned char MPG123_STATIC_ASSERT[(SIZEOF_OFF_T == sizeof(off_t)) ? 1 : -1];
 
-#include "debug.h"
+#include "../common/debug.h"
 
 // We do not want to expose this publicly, but it is cleaner to have it also defined
 // as portable API to offer the legacy function wrapper over. It's an undocumented
@@ -195,9 +208,12 @@ static struct wrap_data* wrap_get(mpg123_handle *mh, int force_alloc)
 /* After settling the data... start with some simple wrappers. */
 
 // The fist block of wrappers is always present, using the native off_t width.
+// (Exception: If explicitly disabled using FORCED_OFF_64.)
 // A second block mirrors that in case of sizeof(off_t)==4 with _32 suffix.
 // A third block follows if 64 bit off_t is available with _64 suffix, just aliasing
 // the int64_t functions.
+
+#ifndef FORCED_OFF_64
 
 #define OFF_CONV(value, variable, handle) \
   if((value) >= OFF_MIN && (value) <= OFF_MAX) \
@@ -386,6 +402,8 @@ int attribute_align_arg mpg123_position( mpg123_handle *mh, off_t INT123_frame_o
 	return MPG123_OK;
 }
 
+#endif // FORCED_OFF_64
+
 // _32 aliases only for native 32 bit off_t
 // Will compilers be smart enough to optimize away the extra function call?
 #if SIZEOF_OFF_T == 4
@@ -510,6 +528,10 @@ int attribute_align_arg mpg123_position_32( mpg123_handle *mh, off_t INT123_fram
 #define OFF64 off_t
 #endif
 
+#ifndef FORCED_OFF_64
+// When 64 bit offsets are enforced, libmpg123.c defines the _64 functions directly.
+// There is no actual wrapper work, anyway.
+
 int attribute_align_arg mpg123_open_64(mpg123_handle *mh, const char *path)
 {
 	return mpg123_open(mh, path);
@@ -530,6 +552,8 @@ int attribute_align_arg mpg123_open_handle_64(mpg123_handle *mh, void *iohandle)
 {
 	return mpg123_open_handle(mh, iohandle);
 }
+#endif
+
 
 int attribute_align_arg mpg123_framebyframe_decode_64(mpg123_handle *mh, OFF64 *num, unsigned char **audio, size_t *bytes)
 {
@@ -847,6 +871,13 @@ static mpg123_ssize_t fallback_read(int fd, void *buf, size_t count)
 	return read(fd, buf, count);
 }
 
+// In forced 64 bit offset mode, the only definitions of these are
+// the _64 ones.
+#ifdef FORCED_OFF_64
+#define mpg123_replace_reader mpg123_replace_reader_64
+#define mpg123_replace_reader_handle mpg123_replace_reader_handle_64
+#endif
+
 /* Reader replacement prepares the hidden handle storage for next mpg123_open_fd() or plain mpg123_open(). */
 int attribute_align_arg mpg123_replace_reader(mpg123_handle *mh, mpg123_ssize_t (*r_read) (int, void *, size_t), off_t (*r_lseek)(int, off_t, int) )
 {
@@ -965,6 +996,8 @@ int attribute_align_arg mpg123_replace_reader_handle_64(mpg123_handle *mh, mpg12
 
 #elif SIZEOF_OFF_T == 8
 
+// If 64 bit off_t is enforced, libmpg123.c already defines the _64 functions.
+#ifndef FORCED_OFF_64
 int attribute_align_arg mpg123_replace_reader_64(mpg123_handle *mh, mpg123_ssize_t (*r_read) (int, void *, size_t), off_t (*r_lseek)(int, off_t, int) )
 {
 	return mpg123_replace_reader(mh, r_read, r_lseek);
@@ -974,5 +1007,6 @@ int attribute_align_arg mpg123_replace_reader_handle_64(mpg123_handle *mh, mpg12
 {
 	return mpg123_replace_reader_handle(mh, r_read, r_lseek, cleanup);
 }
+#endif
 
 #endif

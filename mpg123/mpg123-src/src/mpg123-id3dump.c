@@ -11,7 +11,7 @@
 #define _BSD_SOURCE
 #include "config.h"
 #include "version.h"
-#include "compat.h"
+#include "compat/compat.h"
 #if defined(WIN32) && defined(DYNAMIC_BUILD)
 #define LINK_MPG123_DLL
 #endif
@@ -21,7 +21,7 @@
 #include <ctype.h>
 #include "win32_support.h"
 
-#include "debug.h"
+#include "common/debug.h"
 
 static int errors = 0;
 
@@ -228,8 +228,8 @@ void print_raw_v2(mpg123_id3v2 *v2)
 		mpg123_picture* pic;
 
 		pic = &v2->picture[i];
-		fprintf(stderr, "APIC type(%i, %s) mime(%s) size(%"SIZE_P")\n",
-			pic->type, pic_type(pic->type), pic->mime_type.p, (size_p)pic->size);
+		fprintf(stderr, "APIC type(%i, %s) mime(%s) size(%zu)\n",
+			pic->type, pic_type(pic->type), pic->mime_type.p, pic->size);
 		print_lines(" ", &pic->description);
 	}
 }

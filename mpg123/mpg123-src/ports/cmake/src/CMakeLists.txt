@@ -14,18 +14,12 @@ option(PORTABLE_API "Only build portable library API (no off_t, no internal I/O.
 check_include_file("arpa/inet.h" HAVE_ARPA_INET_H)
 check_include_file("dirent.h" HAVE_DIRENT_H)
 check_include_file("dlfcn.h" HAVE_DLFCN_H)
-check_include_file("inttypes.h" HAVE_INTTYPES_H)
 check_include_file("langinfo.h" HAVE_LANGINFO_H)
-check_include_file("limits.h" HAVE_LIMITS_H)
 check_include_file("locale.h" HAVE_LOCALE_H)
 check_include_file("netdb.h" HAVE_NETDB_H)
 check_include_file("netinet/in.h" HAVE_NETINET_IN_H)
 check_include_file("sched.h" HAVE_SCHED_H)
 check_include_file("signal.h" HAVE_SIGNAL_H)
-check_include_file("stdio.h" HAVE_STDIO_H)
-check_include_file("stdint.h" HAVE_STDINT_H)
-check_include_file("stdlib.h" HAVE_STDLIB_H)
-check_include_file("string.h" HAVE_STRING_H)
 check_include_file("strings.h" HAVE_STRINGS_H)
 check_include_file("sys/ioctl.h" HAVE_SYS_IOCTL_H)
 check_include_file("sys/ipc.h" HAVE_SYS_IPC_H)
@@ -70,7 +64,6 @@ check_function_exists(execvp HAVE_EXECVP)
 check_function_exists(ctermid HAVE_CTERMID)
 check_function_exists(clock_gettime HAVE_CLOCK_GETTIME)
 
-check_type_size(long SIZEOF_LONG)
 check_type_size(off_t SIZEOF_OFF_T)
 
 if(SIZEOF_OFF_T LESS 8)
@@ -135,8 +128,6 @@ if(NOT LFS_INSENSITIVE)
         int main() { return 0; }"
         LFS_SENSITIVE)
 endif()
-check_type_size(long SIZEOF_LONG)
-check_type_size(off_t SIZEOF_OFF_T)
 
 if(WIN32 AND HAVE_WINDOWS_H)
     check_function_exists(GetThreadErrorMode HAVE_GETTHREADERRORMODE)
@@ -350,10 +341,7 @@ option(USE_NEW_HUFFTABLE "use new huffman decoding scheme by Taihei (faster on m
 include_directories(
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/"
     "${CMAKE_CURRENT_BINARY_DIR}"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/compat"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/libsyn123"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/libout123"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/libmpg123")
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/include")
 
 add_compile_definitions(
     $<$<BOOL:${WIN32}>:_CRT_SECURE_NO_WARNINGS>

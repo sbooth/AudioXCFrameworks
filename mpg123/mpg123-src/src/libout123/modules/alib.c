@@ -30,7 +30,7 @@
 
 /**************************************************************************/
 
-#include "out123_int.h"
+#include "../out123_int.h"
 
 #include <fcntl.h>
 
@@ -44,7 +44,7 @@
 #include <Alib.h>   /* /opt/audio/include */
 #include <CUlib.h>  /* /opt/audio/include */
 
-#include "debug.h"
+#include "../../common/debug.h"
 
 /**************************************************************************/
 

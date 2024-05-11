@@ -14,14 +14,14 @@
 # define _WIN32_WINNT 0x0601
 #endif
 #define COBJMACROS 1
-#include "out123_int.h"
+#include "../out123_int.h"
 #include <inttypes.h>
 #include <initguid.h>
 #include <audioclient.h>
 #include <mmdeviceapi.h>
 #include <avrt.h>
 #include <functiondiscoverykeys_devpkey.h>
-#include "debug.h"
+#include "../../common/debug.h"
 
 #ifdef _MSC_VER
 

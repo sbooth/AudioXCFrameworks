@@ -4,7 +4,7 @@
 # and format conversion for the mpg123 project.
 
 if BUILD_LIBSYN123
-include_HEADERS += src/libsyn123/syn123.h
+include_HEADERS += src/include/syn123.h
 
 lib_LTLIBRARIES += src/libsyn123/libsyn123.la
 endif
@@ -21,7 +21,6 @@ src_libsyn123_libsyn123_la_LIBADD = \
   @LIBSYN123_LIBS@
 
 src_libsyn123_libsyn123_la_SOURCES = \
-  src/libsyn123/syn123.h \
   src/libsyn123/syn123_int.h \
   src/libsyn123/g711_impl.h \
   src/libsyn123/pinknoise.c \

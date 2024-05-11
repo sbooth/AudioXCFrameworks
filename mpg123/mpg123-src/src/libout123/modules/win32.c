@@ -9,9 +9,9 @@
     Closing buffer playback fixed by David Wohlferd <limegreensocks (*) yahoo dod com>
 */
 
-#include "out123_int.h"
+#include "../out123_int.h"
 #include <windows.h>
-#include "debug.h"
+#include "../../common/debug.h"
 
 /*
     Buffer size and number of buffers in the playback ring

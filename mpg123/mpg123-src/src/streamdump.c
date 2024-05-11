@@ -16,7 +16,7 @@
 #include "streamdump.h"
 #include <fcntl.h>
 #include <errno.h>
-#include "debug.h"
+#include "common/debug.h"
 
 #ifndef O_BINARY
 #define O_BINARY 0
@@ -688,7 +688,7 @@ int dump_setup(struct stream *sd, mpg123_handle *mh)
 	if(ret != MPG123_OK)
 	{
 		error1("Unable to replace reader/open track for stream dump: %s\n", mpg123_strerror(mh));
-		dump_close(sd);
+		dump_close();
 		return -1;
 	}
 	else return 0;
