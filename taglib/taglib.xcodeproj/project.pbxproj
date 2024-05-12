@@ -752,6 +752,8 @@
 		327C55F42B17AC4400F2C4BA /* modtag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modtag.h; sourceTree = "<group>"; };
 		327C55F52B17AC4400F2C4BA /* modproperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = modproperties.cpp; sourceTree = "<group>"; };
 		327C55F62B17AC4400F2C4BA /* modfilebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modfilebase.h; sourceTree = "<group>"; };
+		32B681682BF11A9400A4C241 /* cpp20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpp20.h; sourceTree = "<group>"; };
+		32B6816A2BF11B2C00A4C241 /* propertymapping.dox */ = {isa = PBXFileReference; lastKnownFileType = text; path = propertymapping.dox; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -827,11 +829,12 @@
 		327C54CB2B17ABF300F2C4BA /* utf8 */ = {
 			isa = PBXGroup;
 			children = (
-				327C54CC2B17ABF300F2C4BA /* cpp17.h */,
-				327C54CD2B17ABF300F2C4BA /* core.h */,
-				327C54CE2B17ABF300F2C4BA /* unchecked.h */,
-				327C54CF2B17ABF300F2C4BA /* cpp11.h */,
 				327C54D02B17ABF300F2C4BA /* checked.h */,
+				327C54CD2B17ABF300F2C4BA /* core.h */,
+				327C54CF2B17ABF300F2C4BA /* cpp11.h */,
+				327C54CC2B17ABF300F2C4BA /* cpp17.h */,
+				32B681682BF11A9400A4C241 /* cpp20.h */,
+				327C54CE2B17ABF300F2C4BA /* unchecked.h */,
 			);
 			path = utf8;
 			sourceTree = "<group>";
@@ -1233,6 +1236,7 @@
 		327C55C72B17AC4400F2C4BA /* toolkit */ = {
 			isa = PBXGroup;
 			children = (
+				32B6816A2BF11B2C00A4C241 /* propertymapping.dox */,
 				327C55E02B17AC4400F2C4BA /* taglib.h */,
 				327C55DC2B17AC4400F2C4BA /* tbytevector.cpp */,
 				327C55CC2B17AC4400F2C4BA /* tbytevector.h */,
