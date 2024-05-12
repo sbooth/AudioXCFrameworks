@@ -26,8 +26,8 @@
 #ifndef TAGLIB_OWNERSHIPFRAME_H
 #define TAGLIB_OWNERSHIPFRAME_H
 
-#include "taglib_export.h"
-#include "id3v2frame.h"
+#include <taglib/taglib_export.h>
+#include <taglib/id3v2frame.h>
 
 namespace TagLib {
 

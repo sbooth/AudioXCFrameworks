@@ -28,8 +28,8 @@
 
 #include <string>
 
-#include "tbytevector.h"
-#include "taglib_export.h"
+#include <taglib/tbytevector.h>
+#include <taglib/taglib_export.h>
 
 /*!
  * \relates TagLib::String

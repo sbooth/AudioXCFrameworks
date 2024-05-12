@@ -26,9 +26,9 @@
 #ifndef TAGLIB_ATTACHEDPICTUREFRAME_H
 #define TAGLIB_ATTACHEDPICTUREFRAME_H
 
-#include "taglib_export.h"
-#include "tpicturetype.h"
-#include "id3v2frame.h"
+#include <taglib/taglib_export.h>
+#include <taglib/tpicturetype.h>
+#include <taglib/id3v2frame.h>
 
 namespace TagLib {
 

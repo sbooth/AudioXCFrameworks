@@ -28,8 +28,8 @@
 
 #include <memory>
 
-#include "taglib_export.h"
-#include "mpegheader.h"
+#include <taglib/taglib_export.h>
+#include <taglib/mpegheader.h>
 
 namespace TagLib {
 

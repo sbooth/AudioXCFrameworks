@@ -28,7 +28,7 @@
 #ifndef TAGLIB_UNSYNCHRONIZEDLYRICSFRAME_H
 #define TAGLIB_UNSYNCHRONIZEDLYRICSFRAME_H
 
-#include "id3v2frame.h"
+#include <taglib/id3v2frame.h>
 
 namespace TagLib {
 

@@ -28,9 +28,9 @@
 
 #include <iosfwd>
 
-#include "tlist.h"
-#include "tmap.h"
-#include "taglib_export.h"
+#include <taglib/tlist.h>
+#include <taglib/tmap.h>
+#include <taglib/taglib_export.h>
 
 // Forward declaration needed for friend function
 namespace TagLib { class Variant; }

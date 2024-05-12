@@ -26,9 +26,9 @@
 #ifndef TAGLIB_ID3V2FRAME_H
 #define TAGLIB_ID3V2FRAME_H
 
-#include "tstring.h"
-#include "tbytevector.h"
-#include "taglib_export.h"
+#include <taglib/tstring.h>
+#include <taglib/tbytevector.h>
+#include <taglib/taglib_export.h>
 
 namespace TagLib {
 
