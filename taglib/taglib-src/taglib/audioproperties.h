@@ -28,8 +28,8 @@
 
 #include <memory>
 
-#include <taglib/taglib.h>
-#include <taglib/taglib_export.h>
+#include "taglib.h"
+#include "taglib_export.h"
 
 namespace TagLib {
 

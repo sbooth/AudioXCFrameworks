@@ -26,8 +26,8 @@
 #ifndef TAGLIB_FLACMETADATABLOCK_H
 #define TAGLIB_FLACMETADATABLOCK_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
+#include "tbytevector.h"
+#include "taglib_export.h"
 
 namespace TagLib {
   namespace FLAC {

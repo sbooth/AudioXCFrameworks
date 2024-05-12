@@ -26,9 +26,9 @@
 #ifndef TAGLIB_MP4ITEM_H
 #define TAGLIB_MP4ITEM_H
 
-#include <taglib/tstringlist.h>
-#include <taglib/taglib_export.h>
-#include <taglib/mp4coverart.h>
+#include "tstringlist.h"
+#include "taglib_export.h"
+#include "mp4coverart.h"
 
 namespace TagLib {
   namespace MP4 {
@@ -36,6 +36,22 @@ namespace TagLib {
     class TAGLIB_EXPORT Item
     {
     public:
+      /*!
+       * The data type stored in the item.
+       */
+      enum class Type : unsigned char {
+        Void,
+        Bool,
+        Int,
+        IntPair,
+        Byte,
+        UInt,
+        LongLong,
+        StringList,
+        ByteVectorList,
+        CoverArtList
+      };
+
       struct IntPair {
         int first, second;
       };
@@ -79,6 +95,19 @@ namespace TagLib {
       CoverArtList toCoverArtList() const;
 
       bool isValid() const;
+
+      Type type() const;
+
+      /*!
+       * Returns \c true if the Item and \a other are of the same type and
+       * contain the same value.
+       */
+      bool operator==(const Item &other) const;
+
+      /*!
+       * Returns \c true if the Item and \a other  differ in type or value.
+       */
+      bool operator!=(const Item &other) const;
 
     private:
       class ItemPrivate;

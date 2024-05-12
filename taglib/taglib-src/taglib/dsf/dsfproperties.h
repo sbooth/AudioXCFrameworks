@@ -28,9 +28,9 @@
 
 #include <memory>
 
-#include <taglib/taglib_export.h>
-#include <taglib/tbytevector.h>
-#include <taglib/audioproperties.h>
+#include "taglib_export.h"
+#include "tbytevector.h"
+#include "audioproperties.h"
 
 namespace TagLib {
   namespace DSF {

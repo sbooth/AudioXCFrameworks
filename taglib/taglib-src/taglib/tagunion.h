@@ -26,7 +26,7 @@
 #ifndef TAGLIB_TAGUNION_H
 #define TAGLIB_TAGUNION_H
 
-#include <taglib/tag.h>
+#include "tag.h"
 
 #ifndef DO_NOT_DOCUMENT
 

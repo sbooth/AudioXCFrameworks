@@ -28,12 +28,12 @@
 
 #include <memory>
 
-#include <taglib/taglib_export.h>
-#include <taglib/tfile.h>
+#include "taglib_export.h"
+#include "tfile.h"
 
-#include <taglib/dsfproperties.h>
+#include "dsfproperties.h"
 
-#include <taglib/id3v2tag.h>
+#include "id3v2tag.h"
 
 namespace TagLib {
 

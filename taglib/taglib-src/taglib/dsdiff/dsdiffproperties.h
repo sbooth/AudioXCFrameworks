@@ -26,7 +26,7 @@
 #ifndef TAGLIB_DSDIFFPROPERTIES_H
 #define TAGLIB_DSDIFFPROPERTIES_H
 
-#include <taglib/audioproperties.h>
+#include "audioproperties.h"
 
 namespace TagLib {
 

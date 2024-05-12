@@ -26,7 +26,7 @@
 #ifndef TAGLIB_MODPROPERTIES_H
 #define TAGLIB_MODPROPERTIES_H
 
-#include <taglib/audioproperties.h>
+#include "audioproperties.h"
 
 namespace TagLib {
   namespace Mod {

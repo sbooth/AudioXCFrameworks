@@ -30,7 +30,7 @@
 #include <vector>
 #include <iosfwd>
 
-#include <taglib/taglib_export.h>
+#include "taglib_export.h"
 
 namespace TagLib {
 

@@ -26,10 +26,10 @@
 #ifndef ASFPICTURE_H
 #define ASFPICTURE_H
 
-#include <taglib/tstring.h>
-#include <taglib/tbytevector.h>
-#include <taglib/tpicturetype.h>
-#include <taglib/taglib_export.h>
+#include "tstring.h"
+#include "tbytevector.h"
+#include "tpicturetype.h"
+#include "taglib_export.h"
 
 namespace TagLib
 {

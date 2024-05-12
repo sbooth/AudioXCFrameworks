@@ -26,11 +26,11 @@
 #ifndef TAGLIB_FILEREF_H
 #define TAGLIB_FILEREF_H
 
-#include <taglib/tfile.h>
-#include <taglib/tstringlist.h>
+#include "tfile.h"
+#include "tstringlist.h"
 
-#include <taglib/taglib_export.h>
-#include <taglib/audioproperties.h>
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
 
@@ -143,7 +143,7 @@ namespace TagLib {
       /*!
        * Destroys this StreamTypeResolver instance.
        */
-      ~StreamTypeResolver() override = 0;
+      virtual ~StreamTypeResolver() override = 0; // virtual is needed by SWIG
 
       StreamTypeResolver(const StreamTypeResolver &) = delete;
       StreamTypeResolver &operator=(const StreamTypeResolver &) = delete;

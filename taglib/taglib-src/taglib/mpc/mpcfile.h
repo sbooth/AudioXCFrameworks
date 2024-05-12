@@ -26,10 +26,10 @@
 #ifndef TAGLIB_MPCFILE_H
 #define TAGLIB_MPCFILE_H
 
-#include <taglib/tfile.h>
-#include <taglib/taglib_export.h>
-#include <taglib/tag.h>
-#include <taglib/mpcproperties.h>
+#include "tfile.h"
+#include "taglib_export.h"
+#include "tag.h"
+#include "mpcproperties.h"
 
 namespace TagLib {
 

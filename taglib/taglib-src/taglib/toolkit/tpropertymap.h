@@ -26,11 +26,12 @@
 #ifndef TAGLIB_PROPERTYMAP_H
 #define TAGLIB_PROPERTYMAP_H
 
-#include <taglib/tmap.h>
-#include <taglib/tstringlist.h>
+#include "tmap.h"
+#include "tstringlist.h"
 
 #ifdef _MSC_VER
 // Explained at end of tpropertymap.cpp
+TAGLIB_MSVC_SUPPRESS_WARNING_NEEDS_TO_HAVE_DLL_INTERFACE
 extern template class TagLib::Map<TagLib::String, TagLib::StringList>;
 #endif
 

@@ -26,9 +26,9 @@
 #ifndef TAGLIB_IOSTREAM_H
 #define TAGLIB_IOSTREAM_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
-#include <taglib/taglib.h>
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "taglib.h"
 
 #ifdef _WIN32
 #include <string>

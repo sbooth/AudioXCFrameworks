@@ -26,7 +26,7 @@
 #ifndef TAGLIB_S3MPROPERTIES_H
 #define TAGLIB_S3MPROPERTIES_H
 
-#include <taglib/audioproperties.h>
+#include "audioproperties.h"
 
 namespace TagLib {
   namespace S3M {

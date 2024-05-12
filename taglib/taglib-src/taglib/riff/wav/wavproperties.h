@@ -26,7 +26,7 @@
 #ifndef TAGLIB_WAVPROPERTIES_H
 #define TAGLIB_WAVPROPERTIES_H
 
-#include <taglib/audioproperties.h>
+#include "audioproperties.h"
 
 namespace TagLib {
 

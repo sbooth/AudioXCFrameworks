@@ -26,7 +26,7 @@
 #ifndef TAGLIB_DSDIFFDIINTAG_H
 #define TAGLIB_DSDIFFDIINTAG_H
 
-#include <taglib/tag.h>
+#include "tag.h"
 
 namespace TagLib {
 

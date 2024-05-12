@@ -26,10 +26,10 @@
 #ifndef TAGLIB_MODFILEBASE_H
 #define TAGLIB_MODFILEBASE_H
 
-#include <taglib/taglib.h>
-#include <taglib/tfile.h>
-#include <taglib/tlist.h>
-#include <taglib/taglib_export.h>
+#include "taglib.h"
+#include "tfile.h"
+#include "tlist.h"
+#include "taglib_export.h"
 
 namespace TagLib {
   namespace Mod {

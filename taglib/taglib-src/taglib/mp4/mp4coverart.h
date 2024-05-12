@@ -26,10 +26,10 @@
 #ifndef TAGLIB_MP4COVERART_H
 #define TAGLIB_MP4COVERART_H
 
-#include <taglib/tlist.h>
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
-#include <taglib/mp4atom.h>
+#include "tlist.h"
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "mp4atom.h"
 
 namespace TagLib {
   namespace MP4 {
@@ -68,6 +68,17 @@ namespace TagLib {
 
       //! The image data
       ByteVector data() const;
+
+      /*!
+       * Returns \c true if the CoverArt and \a other are of the same format and
+       * contain the same data.
+       */
+      bool operator==(const CoverArt &other) const;
+
+      /*!
+       * Returns \c true if the CoverArt and \a other  differ in format or data.
+       */
+      bool operator!=(const CoverArt &other) const;
 
     private:
       class CoverArtPrivate;

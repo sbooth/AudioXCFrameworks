@@ -26,9 +26,9 @@
 #ifndef TAGLIB_MPCPROPERTIES_H
 #define TAGLIB_MPCPROPERTIES_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/taglib_export.h>
-#include <taglib/audioproperties.h>
+#include "tbytevector.h"
+#include "taglib_export.h"
+#include "audioproperties.h"
 
 namespace TagLib {
 

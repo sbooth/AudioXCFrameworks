@@ -26,8 +26,8 @@
 #ifndef TAGLIB_XMPROPERTIES_H
 #define TAGLIB_XMPROPERTIES_H
 
-#include <taglib/tstring.h>
-#include <taglib/audioproperties.h>
+#include "tstring.h"
+#include "audioproperties.h"
 
 namespace TagLib {
   namespace XM {

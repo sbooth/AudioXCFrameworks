@@ -26,10 +26,10 @@
 #ifndef TAGLIB_VORBISFILE_H
 #define TAGLIB_VORBISFILE_H
 
-#include <taglib/taglib_export.h>
-#include <taglib/oggfile.h>
-#include <taglib/xiphcomment.h>
-#include <taglib/vorbisproperties.h>
+#include "taglib_export.h"
+#include "oggfile.h"
+#include "xiphcomment.h"
+#include "vorbisproperties.h"
 
 namespace TagLib {
 

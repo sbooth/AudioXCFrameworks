@@ -26,11 +26,11 @@
 #ifndef TAGLIB_FILE_H
 #define TAGLIB_FILE_H
 
-#include <taglib/tbytevector.h>
-#include <taglib/tiostream.h>
-#include <taglib/taglib_export.h>
-#include <taglib/taglib.h>
-#include <taglib/tag.h>
+#include "tbytevector.h"
+#include "tiostream.h"
+#include "taglib_export.h"
+#include "taglib.h"
+#include "tag.h"
 
 namespace TagLib {
 

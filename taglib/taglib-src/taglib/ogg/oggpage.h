@@ -26,9 +26,9 @@
 #ifndef TAGLIB_OGGPAGE_H
 #define TAGLIB_OGGPAGE_H
 
-#include <taglib/tbytevectorlist.h>
-#include <taglib/taglib.h>
-#include <taglib/taglib_export.h>
+#include "tbytevectorlist.h"
+#include "taglib.h"
+#include "taglib_export.h"
 
 namespace TagLib {
 
