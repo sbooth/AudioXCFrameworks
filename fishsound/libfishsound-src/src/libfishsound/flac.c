@@ -106,7 +106,7 @@ fs_flac_command (FishSound * fsound, int command, void * data, int datasize)
 #if FS_DECODE
 static FLAC__StreamDecoderReadStatus
 fs_flac_read_callback(const FLAC__StreamDecoder *decoder,
-                      FLAC__byte buffer[], unsigned int *bytes,
+                      FLAC__byte buffer[], size_t *bytes,
                       void *client_data)
 {
   FishSound* fsound = (FishSound*)client_data;
@@ -121,7 +121,7 @@ fs_flac_read_callback(const FLAC__StreamDecoder *decoder,
   }
 
   memcpy(buffer, fi->buffer, fi->bufferlength);
-  *bytes = (unsigned int)fi->bufferlength;
+  *bytes = (size_t)fi->bufferlength;
   fi->bufferlength = 0;
   return FLAC__STREAM_DECODER_READ_STATUS_CONTINUE;
 }
@@ -346,15 +346,15 @@ dec_err:
 #if FS_ENCODE
 static FLAC__StreamEncoderWriteStatus
 fs_flac_enc_write_callback(const FLAC__StreamEncoder *encoder,
-                           const FLAC__byte buffer[], unsigned bytes,
-                           unsigned samples, unsigned current_frame,
+                           const FLAC__byte buffer[], size_t bytes,
+                           uint32_t samples, uint32_t current_frame,
                            void *client_data)
 {
   FishSound* fsound = (FishSound*)client_data;
   FishSoundFlacInfo *fi = fsound->codec_data;
 
   debug_printf(1, "IN");
-  debug_printf(1, "bytes: %d, samples: %d", bytes, samples);
+  debug_printf(1, "bytes: %zu, samples: %u", bytes, samples);
 
   if (fsound->callback.encoded) {
     FishSoundEncoded encoded = (FishSoundEncoded) fsound->callback.encoded;
