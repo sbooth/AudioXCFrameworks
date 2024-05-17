@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "FLAC.framework"
+               BuildableName = "taglib.framework"
                BlueprintName = "macOS"
-               ReferencedContainer = "container:flac/flac.xcodeproj">
+               ReferencedContainer = "container:taglib/taglib.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,65 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "MAC.framework"
+               BuildableName = "lame.framework"
                BlueprintName = "macOS"
-               ReferencedContainer = "container:mac/mac.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "mpc.framework"
-               BlueprintName = "macOS"
-               ReferencedContainer = "container:mpc/mpc.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "mpg123.framework"
-               BlueprintName = "macOS"
-               ReferencedContainer = "container:mpg123/mpg123.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "ogg.framework"
-               BlueprintName = "macOS"
-               ReferencedContainer = "container:ogg/ogg.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "opus.framework"
-               BlueprintName = "macOS"
-               ReferencedContainer = "container:opus/opus.xcodeproj">
+               ReferencedContainer = "container:lame/lame.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -127,9 +71,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "speex.framework"
+               BuildableName = "mpg123.framework"
                BlueprintName = "macOS"
-               ReferencedContainer = "container:speex/speex.xcodeproj">
+               ReferencedContainer = "container:mpg123/mpg123.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -141,9 +85,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "taglib.framework"
+               BuildableName = "ebur128.framework"
                BlueprintName = "macOS"
-               ReferencedContainer = "container:taglib/taglib.xcodeproj">
+               ReferencedContainer = "container:ebur128/ebur128.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -155,9 +99,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
-               BuildableName = "tta++.framework"
+               BuildableName = "ogg.framework"
                BlueprintName = "macOS"
-               ReferencedContainer = "container:tta++/tta++.xcodeproj">
+               ReferencedContainer = "container:ogg/ogg.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -183,9 +127,121 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "opus.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:opus/opus.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "fishsound.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:fishsound/fishsound.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
                BuildableName = "wavpack.framework"
                BlueprintName = "macOS"
                ReferencedContainer = "container:wavpack/wavpack.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "mpc.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:mpc/mpc.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "MAC.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:mac/mac.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "FLAC.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:flac/flac.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "oggz.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:oggz/oggz.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "speex.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:speex/speex.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028D07254AE93F00A537DE"
+               BuildableName = "tta-cpp.framework"
+               BlueprintName = "macOS"
+               ReferencedContainer = "container:tta-cpp/tta-cpp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

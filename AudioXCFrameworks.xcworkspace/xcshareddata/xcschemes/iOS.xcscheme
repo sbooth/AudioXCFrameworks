@@ -15,9 +15,37 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "dumb.framework"
+               BuildableName = "oggz.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:dumb/dumb.xcodeproj">
+               ReferencedContainer = "container:oggz/oggz.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+               BuildableName = "ebur128.framework"
+               BlueprintName = "iOS"
+               ReferencedContainer = "container:ebur128/ebur128.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+               BuildableName = "sndfile.framework"
+               BlueprintName = "iOS"
+               ReferencedContainer = "container:sndfile/sndfile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -32,6 +60,34 @@
                BuildableName = "FLAC.framework"
                BlueprintName = "iOS"
                ReferencedContainer = "container:flac/flac.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+               BuildableName = "taglib.framework"
+               BlueprintName = "iOS"
+               ReferencedContainer = "container:taglib/taglib.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+               BuildableName = "ogg.framework"
+               BlueprintName = "iOS"
+               ReferencedContainer = "container:ogg/ogg.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -71,23 +127,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "mpg123.framework"
+               BuildableName = "fishsound.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:mpg123/mpg123.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "ogg.framework"
-               BlueprintName = "iOS"
-               ReferencedContainer = "container:ogg/ogg.xcodeproj">
+               ReferencedContainer = "container:fishsound/fishsound.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -113,20 +155,6 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "sndfile.framework"
-               BlueprintName = "iOS"
-               ReferencedContainer = "container:sndfile/sndfile.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
                BuildableName = "speex.framework"
                BlueprintName = "iOS"
                ReferencedContainer = "container:speex/speex.xcodeproj">
@@ -141,9 +169,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "taglib.framework"
+               BuildableName = "dumb.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:taglib/taglib.xcodeproj">
+               ReferencedContainer = "container:dumb/dumb.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -155,9 +183,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "tta++.framework"
+               BuildableName = "lame.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:tta++/tta++.xcodeproj">
+               ReferencedContainer = "container:lame/lame.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -169,9 +197,23 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-               BuildableName = "vorbis.framework"
+               BuildableName = "mpg123.framework"
                BlueprintName = "iOS"
-               ReferencedContainer = "container:vorbis/vorbis.xcodeproj">
+               ReferencedContainer = "container:mpg123/mpg123.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+               BuildableName = "tta-cpp.framework"
+               BlueprintName = "iOS"
+               ReferencedContainer = "container:tta-cpp/tta-cpp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -186,6 +228,20 @@
                BuildableName = "wavpack.framework"
                BlueprintName = "iOS"
                ReferencedContainer = "container:wavpack/wavpack.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "32028DCC254AFEA000A537DE"
+               BuildableName = "vorbis.framework"
+               BlueprintName = "iOS"
+               ReferencedContainer = "container:vorbis/vorbis.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -219,9 +275,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "32028DCC254AFEA000A537DE"
-            BuildableName = "dumb.framework"
+            BuildableName = "oggz.framework"
             BlueprintName = "iOS"
-            ReferencedContainer = "container:dumb/dumb.xcodeproj">
+            ReferencedContainer = "container:oggz/oggz.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
