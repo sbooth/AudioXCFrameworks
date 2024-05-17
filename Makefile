@@ -4,6 +4,7 @@ export PREFIX ?= $(CURDIR)
 all: $(SUBDIRS)
 install: $(SUBDIRS)
 xz: $(SUBDIRS)
+zip: $(SUBDIRS)
 clean: $(SUBDIRS)
 uninstall: $(SUBDIRS)
 .PHONY: all install xz zip clean uninstall
