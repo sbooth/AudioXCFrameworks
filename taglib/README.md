@@ -1,6 +1,6 @@
 ## Version
 
-[2.0](https://github.com/taglib/taglib/releases/tag/v2.0)
+[2.0.1](https://github.com/taglib/taglib/releases/tag/v2.0.1)
 
 ## License
 
