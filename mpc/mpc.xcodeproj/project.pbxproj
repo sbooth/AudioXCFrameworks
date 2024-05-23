@@ -27,17 +27,11 @@
 		32677C53254C7DD90041B063 /* mpc_bits_reader.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BF3254C7D570041B063 /* mpc_bits_reader.c */; };
 		32677C54254C7DD90041B063 /* mpc_demux.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BFC254C7D570041B063 /* mpc_demux.c */; };
 		32677C55254C7DD90041B063 /* synth_filter.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677BFF254C7D570041B063 /* synth_filter.c */; };
-		32677C58254C7DF60041B063 /* minimax.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDF254C7D570041B063 /* minimax.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C59254C7DF60041B063 /* mpc_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE0254C7D570041B063 /* mpc_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677C5A254C7DF60041B063 /* mpcmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDE254C7D570041B063 /* mpcmath.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677C5B254C7DF60041B063 /* datatypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE1254C7D570041B063 /* datatypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C5C254C7DF60041B063 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDD254C7D570041B063 /* reader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C5D254C7DF60041B063 /* streaminfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE3254C7D570041B063 /* streaminfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C5E254C7DF60041B063 /* mpcdec.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE2254C7D570041B063 /* mpcdec.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677C61254C7DF70041B063 /* minimax.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDF254C7D570041B063 /* minimax.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C62254C7DF70041B063 /* mpc_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE0254C7D570041B063 /* mpc_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677C63254C7DF70041B063 /* mpcmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDE254C7D570041B063 /* mpcmath.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677C64254C7DF70041B063 /* datatypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE1254C7D570041B063 /* datatypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C65254C7DF70041B063 /* reader.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDD254C7D570041B063 /* reader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C66254C7DF70041B063 /* streaminfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE3254C7D570041B063 /* streaminfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677C67254C7DF70041B063 /* mpcdec.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE2254C7D570041B063 /* mpcdec.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -58,7 +52,6 @@
 		32677E4D254DAFFC0041B063 /* ans.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0E254C7D570041B063 /* ans.c */; };
 		32677E4E254DAFFC0041B063 /* cvd.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C11254C7D570041B063 /* cvd.c */; };
 		32677E4F254DAFFC0041B063 /* profile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C12254C7D570041B063 /* profile.c */; };
-		32677E50254DAFFC0041B063 /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677E51254DAFFC0041B063 /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
 		32677E52254DAFFC0041B063 /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
 		32677E55254DAFFD0041B063 /* fft_routines.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0D254C7D570041B063 /* fft_routines.c */; };
@@ -66,9 +59,14 @@
 		32677E57254DAFFD0041B063 /* ans.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0E254C7D570041B063 /* ans.c */; };
 		32677E58254DAFFD0041B063 /* cvd.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C11254C7D570041B063 /* cvd.c */; };
 		32677E59254DAFFD0041B063 /* profile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C12254C7D570041B063 /* profile.c */; };
-		32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677C09254C7D570041B063 /* libmpcpsy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677E5B254DAFFD0041B063 /* psy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0F254C7D570041B063 /* psy.c */; };
 		32677E5C254DAFFD0041B063 /* psy_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677C0C254C7D570041B063 /* psy_tab.c */; };
+		32DE9C432BFEE07F00CB24A9 /* minimax.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDF254C7D570041B063 /* minimax.h */; };
+		32DE9C442BFEE08000CB24A9 /* minimax.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDF254C7D570041B063 /* minimax.h */; };
+		32DE9C452BFEE08900CB24A9 /* datatypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE1254C7D570041B063 /* datatypes.h */; };
+		32DE9C462BFEE08900CB24A9 /* datatypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BE1254C7D570041B063 /* datatypes.h */; };
+		32DE9C472BFEE08D00CB24A9 /* mpcmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDE254C7D570041B063 /* mpcmath.h */; };
+		32DE9C482BFEE08D00CB24A9 /* mpcmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677BDE254C7D570041B063 /* mpcmath.h */; };
 		32EB2DF4257AA3BC006330CC /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
 		32EB2DF5257AA3BC006330CC /* stream_encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32EB2DF2257AA3BC006330CC /* stream_encoder.c */; };
 		32EB2DF6257AA3BC006330CC /* stream_encoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 32EB2DF3257AA3BC006330CC /* stream_encoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -263,16 +261,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32677C5B254C7DF60041B063 /* datatypes.h in Headers */,
-				32677C58254C7DF60041B063 /* minimax.h in Headers */,
+				32DE9C462BFEE08900CB24A9 /* datatypes.h in Headers */,
 				32677C5E254C7DF60041B063 /* mpcdec.h in Headers */,
+				32DE9C482BFEE08D00CB24A9 /* mpcmath.h in Headers */,
 				32EB2DF6257AA3BC006330CC /* stream_encoder.h in Headers */,
 				32677C59254C7DF60041B063 /* mpc_types.h in Headers */,
-				32677E5A254DAFFD0041B063 /* libmpcpsy.h in Headers */,
 				32677C5C254C7DF60041B063 /* reader.h in Headers */,
 				32677C5D254C7DF60041B063 /* streaminfo.h in Headers */,
 				32677E3D254DAEEA0041B063 /* libmpcenc.h in Headers */,
-				32677C5A254C7DF60041B063 /* mpcmath.h in Headers */,
+				32DE9C432BFEE07F00CB24A9 /* minimax.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,16 +277,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32677C64254C7DF70041B063 /* datatypes.h in Headers */,
-				32677C61254C7DF70041B063 /* minimax.h in Headers */,
+				32DE9C452BFEE08900CB24A9 /* datatypes.h in Headers */,
 				32677C67254C7DF70041B063 /* mpcdec.h in Headers */,
+				32DE9C472BFEE08D00CB24A9 /* mpcmath.h in Headers */,
 				32EB2DF7257AA3BC006330CC /* stream_encoder.h in Headers */,
 				32677C62254C7DF70041B063 /* mpc_types.h in Headers */,
-				32677E50254DAFFC0041B063 /* libmpcpsy.h in Headers */,
 				32677C65254C7DF70041B063 /* reader.h in Headers */,
 				32677C66254C7DF70041B063 /* streaminfo.h in Headers */,
 				32677E45254DAEEB0041B063 /* libmpcenc.h in Headers */,
-				32677C63254C7DF70041B063 /* mpcmath.h in Headers */,
+				32DE9C442BFEE08000CB24A9 /* minimax.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
