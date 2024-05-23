@@ -2,7 +2,7 @@
  * Musepack audio compression
  * Copyright (c) 2005-2009, The Musepack Development Team
  * Copyright (C) 1999-2004 Buschmann/Klemm/Piecha/Wolf
- * Copyright (c) 2020 Stephen F. Booth <me@sbooth.org>
+ * Copyright (c) 2020-2024 Stephen F. Booth <me@sbooth.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,10 @@
 
 #import <mpc/mpc_types.h>
 #import <mpc/libmpcenc.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct mpc_stream_encoder_t;
 typedef struct mpc_stream_encoder_t mpc_stream_encoder;
@@ -45,3 +49,7 @@ mpc_status mpc_stream_encoder_init(mpc_stream_encoder *enc, float samplerate, in
 mpc_status mpc_stream_encoder_encode(mpc_stream_encoder *enc, const mpc_int16_t *data, unsigned int frames);
 
 mpc_status mpc_stream_encoder_finish(mpc_stream_encoder *enc);
+
+#ifdef __cplusplus
+}
+#endif

@@ -2,7 +2,7 @@
  * Musepack audio compression
  * Copyright (c) 2005-2009, The Musepack Development Team
  * Copyright (C) 1999-2004 Buschmann/Klemm/Piecha/Wolf
- * Copyright (c) 2020 Stephen F. Booth <me@sbooth.org>
+ * Copyright (c) 2020-2024 Stephen F. Booth <me@sbooth.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,7 @@
 
 #import "stream_encoder.h"
 
-#import <mpc/libmpcpsy.h>
+#import "libmpcpsy.h"
 #import <mpc/mpcmath.h>
 #import <mpc/datatypes.h>
 #import <mpc/minimax.h>
@@ -507,7 +507,7 @@ struct mpc_stream_encoder_t {
 	mpc_uint64_t		frames;						// Count of frames encoded
 };
 
-mpc_stream_encoder * mpc_stream_encoder_create()
+mpc_stream_encoder * mpc_stream_encoder_create(void)
 {
 	mpc_stream_encoder *enc = calloc(1, sizeof(mpc_stream_encoder));
 	if(!enc)
