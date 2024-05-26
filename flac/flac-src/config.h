@@ -5,10 +5,18 @@
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* Target processor is big endian. */
+#if defined __BIG_ENDIAN__
+#define CPU_IS_BIG_ENDIAN 1
+#else
 #define CPU_IS_BIG_ENDIAN 0
+#endif
 
 /* Target processor is little endian. */
+#if defined __LITTLE_ENDIAN__
 #define CPU_IS_LITTLE_ENDIAN 1
+#else
+#define CPU_IS_LITTLE_ENDIAN 0
+#endif
 
 /* Set FLAC__BYTES_PER_WORD to 8 (this is the default) */
 #define ENABLE_64_BIT_WORDS 1
@@ -40,10 +48,14 @@
 #endif
 
 /* Set to 1 if <arm_neon.h> has A64 instructions. */
-/* #undef FLAC__HAS_A64NEONINTRIN */
+#if __aarch64__
+#define FLAC__HAS_A64NEONINTRIN 1
+#endif
 
 /* Set to 1 if <arm_neon.h> is available. */
-#define FLAC__HAS_NEONINTRIN 0
+#if __aarch64__
+#define FLAC__HAS_NEONINTRIN 1
+#endif
 
 /* define if you have the ogg library */
 #define FLAC__HAS_OGG 1
@@ -78,7 +90,9 @@
 /* #undef GIT_COMMIT_TAG */
 
 /* Define to 1 if you have the <arm_neon.h> header file. */
-/* #undef HAVE_ARM_NEON_H */
+#if __aarch64__
+#define HAVE_ARM_NEON_H 1
+#endif
 
 /* Compiler has the __builtin_bswap16 intrinsic */
 #define HAVE_BSWAP16 1
