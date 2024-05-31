@@ -1,5 +1,5 @@
 ##
-## Copyright (c) 2021 - 2023 Stephen F. Booth <stephen@sbooth.name>
+## Copyright (c) 2021 - 2024 Stephen F. Booth <stephen@sbooth.name>
 ## MIT license
 ##
 
@@ -80,7 +80,7 @@ xcframework: $(XCFRAMEWORK)
 .PHONY: xcframework
 
 clean:
-	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(XZ_FILE)"
+	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(XZ_FILE)" "$(ZIP_FILE)"
 .PHONY: clean
 
 xz: $(XZ_FILE)
