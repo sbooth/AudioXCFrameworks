@@ -121,7 +121,7 @@
 /* #undef OPUS_ARM_INLINE_NEON */
 
 /* Compiler supports Aarch64 DOTPROD Intrinsics */
-#ifdef __aarch64__
+#if __aarch64__
 #define OPUS_ARM_MAY_HAVE_DOTPROD 1
 #endif
 
