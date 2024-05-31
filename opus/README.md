@@ -1,6 +1,6 @@
 ## Versions
 
-[libopus 1.4](https://www.opus-codec.org/release/stable/2023/04/20/libopus-1_4.html) 
+[libopus 1.5.2](https://www.opus-codec.org/release/stable/2024/04/12/libopus-1_5_2.html)
 
 [opusfile 9d718345](https://gitlab.xiph.org/xiph/opusfile/-/tree/9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166)
 
