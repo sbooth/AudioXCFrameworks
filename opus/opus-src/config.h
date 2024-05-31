@@ -12,6 +12,12 @@
 /* Custom modes */
 /* #undef CUSTOM_MODES */
 
+/* Disable DNN debug float */
+#define DISABLE_DEBUG_FLOAT 1
+
+/* Disable dot product instructions */
+/* #undef DISABLE_DOT_PROD */
+
 /* Do not build the float API */
 /* #undef DISABLE_FLOAT_API */
 
@@ -21,8 +27,23 @@
 /* Assertions */
 /* #undef ENABLE_ASSERTIONS */
 
+/* Deep PLC */
+/* #undef ENABLE_DEEP_PLC */
+
+/* DRED */
+/* #undef ENABLE_DRED */
+
 /* Hardening */
 #define ENABLE_HARDENING 1
+
+/* LOSSGEN */
+/* #undef ENABLE_LOSSGEN */
+
+/* Enable Opus Speech Coding Enhancement */
+/* #undef ENABLE_OSCE */
+
+/* Enable dumping of OSCE training data */
+/* #undef ENABLE_OSCE_TRAINING_DATA */
 
 /* Debug fixed-point implementation */
 /* #undef FIXED_DEBUG */
@@ -31,7 +52,7 @@
 /* #undef FIXED_POINT */
 
 /* Float approximations */
-/* #undef FLOAT_APPROX */
+#define FLOAT_APPROX 1
 
 /* Fuzzing */
 /* #undef FUZZING */
@@ -54,11 +75,11 @@
 /* Define to 1 if you have the `lrintf' function. */
 #define HAVE_LRINTF 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -99,6 +120,11 @@
 /* Use ARM NEON inline asm optimizations */
 /* #undef OPUS_ARM_INLINE_NEON */
 
+/* Compiler supports Aarch64 DOTPROD Intrinsics */
+#if __aarch64__
+#define OPUS_ARM_MAY_HAVE_DOTPROD 1
+#endif
+
 /* Define if assembler supports EDSP instructions */
 /* #undef OPUS_ARM_MAY_HAVE_EDSP */
 
@@ -109,13 +135,18 @@
 /* #undef OPUS_ARM_MAY_HAVE_NEON */
 
 /* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
-#if __arm64__
+#if __aarch64__
 #define OPUS_ARM_MAY_HAVE_NEON_INTR 1
 #endif
 
 /* Define if binary requires Aarch64 Neon Intrinsics */
-#if __arm64__
+#if __aarch64__
 #define OPUS_ARM_PRESUME_AARCH64_NEON_INTR 1
+#endif
+
+/* Define if binary requires Aarch64 dotprod Intrinsics */
+#if __aarch64__
+#define OPUS_ARM_PRESUME_DOTPROD 1
 #endif
 
 /* Define if binary requires EDSP instruction support */
@@ -128,7 +159,7 @@
 /* #undef OPUS_ARM_PRESUME_NEON */
 
 /* Define if binary requires NEON intrinsics support */
-#if __arm64__
+#if __aarch64__
 #define OPUS_ARM_PRESUME_NEON_INTR 1
 #endif
 
@@ -139,13 +170,11 @@
 /* #undef OPUS_CHECK_ASM */
 
 /* Use run-time CPU capabilities detection */
-#if __x86_64__
 #define OPUS_HAVE_RTCD 1
-#endif
 
-/* Compiler supports X86 AVX Intrinsics */
+/* Compiler supports X86 AVX2 Intrinsics */
 #if __x86_64__
-#define OPUS_X86_MAY_HAVE_AVX 1
+#define OPUS_X86_MAY_HAVE_AVX2 1
 #endif
 
 /* Compiler supports X86 SSE Intrinsics */
@@ -163,8 +192,8 @@
 #define OPUS_X86_MAY_HAVE_SSE4_1 1
 #endif
 
-/* Define if binary requires AVX intrinsics support */
-/* #undef OPUS_X86_PRESUME_AVX */
+/* Define if binary requires AVX2 intrinsics support */
+/* #undef OPUS_X86_PRESUME_AVX2 */
 
 /* Define if binary requires SSE intrinsics support */
 #if __x86_64__
@@ -188,7 +217,7 @@
 #define PACKAGE_NAME "opus"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "opus 1.4"
+#define PACKAGE_STRING "opus 1.5.2"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "opus"
@@ -197,9 +226,11 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.4"
+#define PACKAGE_VERSION "1.5.2"
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Make use of alloca */
