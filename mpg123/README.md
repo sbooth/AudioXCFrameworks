@@ -1,6 +1,6 @@
 ## Version
 
-[1.32.6](https://www.mpg123.de)
+[1.32.7](https://www.mpg123.de)
 
 ## License
 
