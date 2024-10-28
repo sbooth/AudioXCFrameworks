@@ -73,14 +73,16 @@ MACOS_XCARCHIVE := $(XCARCHIVE_DIR)/macOS.xcarchive
 MACOS_CATALYST_XCARCHIVE := $(XCARCHIVE_DIR)/macOS-Catalyst.xcarchive
 IOS_XCARCHIVE := $(XCARCHIVE_DIR)/iOS.xcarchive
 IOS_SIMULATOR_XCARCHIVE := $(XCARCHIVE_DIR)/iOS-Simulator.xcarchive
+TVOS_XCARCHIVE := $(XCARCHIVE_DIR)/tvOS.xcarchive
+TVOS_SIMULATOR_XCARCHIVE := $(XCARCHIVE_DIR)/tvOS-Simulator.xcarchive
 
-XCARCHIVES := $(MACOS_XCARCHIVE) $(MACOS_CATALYST_XCARCHIVE) $(IOS_XCARCHIVE) $(IOS_SIMULATOR_XCARCHIVE)
+XCARCHIVES := $(MACOS_XCARCHIVE) $(MACOS_CATALYST_XCARCHIVE) $(IOS_XCARCHIVE) $(IOS_SIMULATOR_XCARCHIVE) $(TVOS_XCARCHIVE) $(TVOS_SIMULATOR_XCARCHIVE)
 
 xcframework: $(XCFRAMEWORK)
 .PHONY: xcframework
 
 clean:
-	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(XZ_FILE)" "$(ZIP_FILE)"
+	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(TVOS_XCARCHIVE)" "$(TVOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(XZ_FILE)" "$(ZIP_FILE)"
 .PHONY: clean
 
 xz: $(XZ_FILE)
@@ -110,6 +112,12 @@ $(IOS_XCARCHIVE): $(XCODEPROJ)
 
 $(IOS_SIMULATOR_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "generic/platform=iOS Simulator" -archivePath "$(basename $@)"
+
+$(TVOS_XCARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination generic/platform=tvOS -archivePath "$(basename $@)"
+
+$(TVOS_SIMULATOR_XCARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "generic/platform=tvOS Simulator" -archivePath "$(basename $@)"
 
 $(XCFRAMEWORK): $(XCARCHIVES)
 	rm -Rf "$@"
