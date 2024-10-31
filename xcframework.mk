@@ -112,7 +112,7 @@ $(MACOS_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(MACOS_SCHEME)" -destination "generic/platform=macOS" -archivePath "$(basename $@)"
 
 $(MACOS_CATALYST_XCARCHIVE): $(XCODEPROJ)
-	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "platform=macOS,variant=Mac Catalyst" -archivePath "$(basename $@)"
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "generic/platform=macOS,variant=Mac Catalyst" -archivePath "$(basename $@)"
 
 $(IOS_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(IOS_SCHEME)" -destination "generic/platform=iOS" -archivePath "$(basename $@)"
