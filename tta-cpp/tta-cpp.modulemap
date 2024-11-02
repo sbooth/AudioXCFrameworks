@@ -1,0 +1,6 @@
+framework module ttacpp {
+	requires cplusplus17
+
+	header "libtta.h"
+	export *
+}
