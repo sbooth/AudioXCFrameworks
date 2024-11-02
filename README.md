@@ -2,7 +2,7 @@
 
 XCFramework build process for various open-source audio libraries used by [SFBAudioEngine](https://github.com/sbooth/SFBAudioEngine).
 
-The built XCFrameworks target macOS 11.0, iOS 14.0. and tvOS 14.0 or greater for all supported 64-bit architectures.
+The built XCFrameworks target macOS 11.0, iOS 14.0, and tvOS 14.0 or greater for all supported 64-bit architectures.
 
 ## Building
 
