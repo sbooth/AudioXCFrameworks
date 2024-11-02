@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include <sys/types.h>
 #include <mpc/mpc_types.h>
 
 // FIXME : define this somewhere else
