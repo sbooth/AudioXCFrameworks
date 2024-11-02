@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		327C54E62B17AC0F00F2C4BA /* unchecked.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54CE2B17ABF300F2C4BA /* unchecked.h */; };
-		327C54E72B17AC0F00F2C4BA /* checked.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54D02B17ABF300F2C4BA /* checked.h */; };
 		327C54E82B17AC1000F2C4BA /* unchecked.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54CE2B17ABF300F2C4BA /* unchecked.h */; };
 		327C54E92B17AC1000F2C4BA /* checked.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54D02B17ABF300F2C4BA /* checked.h */; };
-		327C54EA2B17AC1500F2C4BA /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54D12B17ABF300F2C4BA /* utf8.h */; };
 		327C54EB2B17AC1600F2C4BA /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54D12B17ABF300F2C4BA /* utf8.h */; };
 		327C55F72B17AC4400F2C4BA /* wavpackproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54EE2B17AC4300F2C4BA /* wavpackproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C55F82B17AC4400F2C4BA /* wavpackfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54EF2B17AC4300F2C4BA /* wavpackfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -233,16 +230,6 @@
 		327C56E42B17AC4400F2C4BA /* modtag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55F42B17AC4400F2C4BA /* modtag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56E52B17AC4400F2C4BA /* modproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F52B17AC4400F2C4BA /* modproperties.cpp */; };
 		327C56E62B17AC4400F2C4BA /* modfilebase.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55F62B17AC4400F2C4BA /* modfilebase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56E72B17AC8800F2C4BA /* apetag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55232B17AC4300F2C4BA /* apetag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56E82B17AC8800F2C4BA /* apeproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C551B2B17AC4300F2C4BA /* apeproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56E92B17AC8800F2C4BA /* apeitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55222B17AC4300F2C4BA /* apeitem.cpp */; };
-		327C56EA2B17AC8800F2C4BA /* apefooter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C551F2B17AC4300F2C4BA /* apefooter.cpp */; };
-		327C56EB2B17AC8800F2C4BA /* apefooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55212B17AC4300F2C4BA /* apefooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56EC2B17AC8800F2C4BA /* apeitem.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C551C2B17AC4300F2C4BA /* apeitem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56ED2B17AC8800F2C4BA /* apeproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55192B17AC4300F2C4BA /* apeproperties.cpp */; };
-		327C56EE2B17AC8800F2C4BA /* apetag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55202B17AC4300F2C4BA /* apetag.cpp */; };
-		327C56EF2B17AC8800F2C4BA /* apefile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C551D2B17AC4300F2C4BA /* apefile.cpp */; };
-		327C56F02B17AC8800F2C4BA /* apefile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C551A2B17AC4300F2C4BA /* apefile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56F12B17AC8900F2C4BA /* apetag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55232B17AC4300F2C4BA /* apetag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56F22B17AC8900F2C4BA /* apeproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C551B2B17AC4300F2C4BA /* apeproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56F32B17AC8900F2C4BA /* apeitem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55222B17AC4300F2C4BA /* apeitem.cpp */; };
@@ -253,244 +240,11 @@
 		327C56F82B17AC8900F2C4BA /* apetag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55202B17AC4300F2C4BA /* apetag.cpp */; };
 		327C56F92B17AC8900F2C4BA /* apefile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C551D2B17AC4300F2C4BA /* apefile.cpp */; };
 		327C56FA2B17AC8900F2C4BA /* apefile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C551A2B17AC4300F2C4BA /* apefile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56FB2B17AC8F00F2C4BA /* asftag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55B72B17AC4400F2C4BA /* asftag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56FC2B17AC8F00F2C4BA /* asfpicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55B52B17AC4400F2C4BA /* asfpicture.cpp */; };
-		327C56FD2B17AC8F00F2C4BA /* asffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55BC2B17AC4400F2C4BA /* asffile.cpp */; };
-		327C56FE2B17AC8F00F2C4BA /* asfattribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55B82B17AC4400F2C4BA /* asfattribute.cpp */; };
-		327C56FF2B17AC8F00F2C4BA /* asfpicture.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55B62B17AC4400F2C4BA /* asfpicture.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57002B17AC8F00F2C4BA /* asffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BD2B17AC4400F2C4BA /* asffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57012B17AC8F00F2C4BA /* asftag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55B92B17AC4400F2C4BA /* asftag.cpp */; };
-		327C57022B17AC8F00F2C4BA /* asfproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55BA2B17AC4400F2C4BA /* asfproperties.cpp */; };
-		327C57032B17AC8F00F2C4BA /* asfattribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BE2B17AC4400F2C4BA /* asfattribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57042B17AC8F00F2C4BA /* asfproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BB2B17AC4400F2C4BA /* asfproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57052B17AC8F00F2C4BA /* asfutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BF2B17AC4400F2C4BA /* asfutils.h */; };
-		327C57062B17AC9400F2C4BA /* audioproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C556D2B17AC4300F2C4BA /* audioproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57072B17AC9400F2C4BA /* audioproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55832B17AC4300F2C4BA /* audioproperties.cpp */; };
-		327C57082B17AC9F00F2C4BA /* tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55922B17AC4300F2C4BA /* tag.cpp */; };
-		327C57092B17AC9F00F2C4BA /* tagunion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C02B17AC4400F2C4BA /* tagunion.cpp */; };
-		327C570A2B17AC9F00F2C4BA /* fileref.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55892B17AC4300F2C4BA /* fileref.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C570B2B17AC9F00F2C4BA /* fileref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F72B17AC4300F2C4BA /* fileref.cpp */; };
-		327C570C2B17AC9F00F2C4BA /* taglib_export.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55912B17AC4300F2C4BA /* taglib_export.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C570D2B17AC9F00F2C4BA /* tag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C556C2B17AC4300F2C4BA /* tag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C570E2B17AC9F00F2C4BA /* tagutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C12B17AC4400F2C4BA /* tagutils.h */; };
-		327C570F2B17AC9F00F2C4BA /* tagunion.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55242B17AC4300F2C4BA /* tagunion.h */; };
-		327C57102B17AC9F00F2C4BA /* tagutils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55A32B17AC4300F2C4BA /* tagutils.cpp */; };
-		327C57112B17ACA900F2C4BA /* dsdiffproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C558D2B17AC4300F2C4BA /* dsdiffproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57122B17ACA900F2C4BA /* dsdiffproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C558C2B17AC4300F2C4BA /* dsdiffproperties.cpp */; };
-		327C57132B17ACA900F2C4BA /* dsdiffdiintag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C558B2B17AC4300F2C4BA /* dsdiffdiintag.cpp */; };
-		327C57142B17ACA900F2C4BA /* dsdifffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55902B17AC4300F2C4BA /* dsdifffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57152B17ACA900F2C4BA /* dsdifffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C558E2B17AC4300F2C4BA /* dsdifffile.cpp */; };
-		327C57162B17ACA900F2C4BA /* dsdiffdiintag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C558F2B17AC4300F2C4BA /* dsdiffdiintag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57172B17ACB300F2C4BA /* dsfproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55872B17AC4300F2C4BA /* dsfproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57182B17ACB300F2C4BA /* dsffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55862B17AC4300F2C4BA /* dsffile.cpp */; };
-		327C57192B17ACB300F2C4BA /* dsffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55852B17AC4300F2C4BA /* dsffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C571A2B17ACB300F2C4BA /* dsfproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55882B17AC4300F2C4BA /* dsfproperties.cpp */; };
-		327C571B2B17ACC000F2C4BA /* flacmetadatablock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55972B17AC4300F2C4BA /* flacmetadatablock.cpp */; };
-		327C571C2B17ACC000F2C4BA /* flacpicture.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55942B17AC4300F2C4BA /* flacpicture.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C571D2B17ACC000F2C4BA /* flacfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C559D2B17AC4300F2C4BA /* flacfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C571E2B17ACC000F2C4BA /* flacfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55982B17AC4300F2C4BA /* flacfile.cpp */; };
-		327C571F2B17ACC000F2C4BA /* flacmetadatablock.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55952B17AC4300F2C4BA /* flacmetadatablock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57202B17ACC000F2C4BA /* flacproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C559A2B17AC4300F2C4BA /* flacproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57212B17ACC000F2C4BA /* flacunknownmetadatablock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C559B2B17AC4300F2C4BA /* flacunknownmetadatablock.cpp */; };
-		327C57222B17ACC000F2C4BA /* flacproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C559C2B17AC4300F2C4BA /* flacproperties.cpp */; };
-		327C57232B17ACC000F2C4BA /* flacpicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55992B17AC4300F2C4BA /* flacpicture.cpp */; };
-		327C57242B17ACC000F2C4BA /* flacunknownmetadatablock.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55962B17AC4300F2C4BA /* flacunknownmetadatablock.h */; };
-		327C57252B17ACCA00F2C4BA /* itproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55802B17AC4300F2C4BA /* itproperties.cpp */; };
-		327C57262B17ACCA00F2C4BA /* itproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55822B17AC4300F2C4BA /* itproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57272B17ACCA00F2C4BA /* itfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C557F2B17AC4300F2C4BA /* itfile.cpp */; };
-		327C57282B17ACCA00F2C4BA /* itfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55812B17AC4300F2C4BA /* itfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57292B17ACD400F2C4BA /* modfileprivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55EF2B17AC4400F2C4BA /* modfileprivate.h */; };
-		327C572A2B17ACD400F2C4BA /* modfilebase.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55F62B17AC4400F2C4BA /* modfilebase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C572B2B17ACD400F2C4BA /* modproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F52B17AC4400F2C4BA /* modproperties.cpp */; };
-		327C572C2B17ACD400F2C4BA /* modproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55EE2B17AC4400F2C4BA /* modproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C572D2B17ACD400F2C4BA /* modfilebase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F12B17AC4400F2C4BA /* modfilebase.cpp */; };
-		327C572E2B17ACD400F2C4BA /* modfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F22B17AC4400F2C4BA /* modfile.cpp */; };
-		327C572F2B17ACD400F2C4BA /* modfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55F32B17AC4400F2C4BA /* modfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57302B17ACD400F2C4BA /* modtag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55F42B17AC4400F2C4BA /* modtag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57312B17ACD400F2C4BA /* modtag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F02B17AC4400F2C4BA /* modtag.cpp */; };
-		327C57322B17ACE100F2C4BA /* mp4file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55AA2B17AC4300F2C4BA /* mp4file.cpp */; };
-		327C57332B17ACE100F2C4BA /* mp4file.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55A62B17AC4300F2C4BA /* mp4file.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57342B17ACE100F2C4BA /* mp4itemfactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55A82B17AC4300F2C4BA /* mp4itemfactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57352B17ACE100F2C4BA /* mp4tag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55AD2B17AC4300F2C4BA /* mp4tag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57362B17ACE100F2C4BA /* mp4tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55A92B17AC4300F2C4BA /* mp4tag.cpp */; };
-		327C57372B17ACE100F2C4BA /* mp4item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55AF2B17AC4300F2C4BA /* mp4item.cpp */; };
-		327C57382B17ACE100F2C4BA /* mp4properties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55B22B17AC4400F2C4BA /* mp4properties.cpp */; };
-		327C57392B17ACE100F2C4BA /* mp4properties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55B02B17AC4400F2C4BA /* mp4properties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C573A2B17ACE100F2C4BA /* mp4coverart.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55AE2B17AC4300F2C4BA /* mp4coverart.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C573B2B17ACE100F2C4BA /* mp4itemfactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55B32B17AC4400F2C4BA /* mp4itemfactory.cpp */; };
-		327C573C2B17ACE100F2C4BA /* mp4atom.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55B12B17AC4400F2C4BA /* mp4atom.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C573D2B17ACE100F2C4BA /* mp4atom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55AC2B17AC4300F2C4BA /* mp4atom.cpp */; };
-		327C573E2B17ACE100F2C4BA /* mp4item.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55A72B17AC4300F2C4BA /* mp4item.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C573F2B17ACE100F2C4BA /* mp4coverart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55AB2B17AC4300F2C4BA /* mp4coverart.cpp */; };
-		327C57402B17ACEC00F2C4BA /* mpcfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55A02B17AC4300F2C4BA /* mpcfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57412B17ACEC00F2C4BA /* mpcproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55A22B17AC4300F2C4BA /* mpcproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57422B17ACEC00F2C4BA /* mpcproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C559F2B17AC4300F2C4BA /* mpcproperties.cpp */; };
-		327C57432B17ACEC00F2C4BA /* mpcfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55A12B17AC4300F2C4BA /* mpcfile.cpp */; };
-		327C57442B17ACF600F2C4BA /* mpegheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55602B17AC4300F2C4BA /* mpegheader.cpp */; };
-		327C57452B17ACF600F2C4BA /* mpegproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C556B2B17AC4300F2C4BA /* mpegproperties.cpp */; };
-		327C57462B17ACF600F2C4BA /* mpegfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55272B17AC4300F2C4BA /* mpegfile.cpp */; };
-		327C57472B17ACF600F2C4BA /* mpegfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55652B17AC4300F2C4BA /* mpegfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57482B17ACF600F2C4BA /* mpegutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55612B17AC4300F2C4BA /* mpegutils.h */; };
-		327C57492B17ACF600F2C4BA /* mpegproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55632B17AC4300F2C4BA /* mpegproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C574A2B17ACF600F2C4BA /* xingheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55282B17AC4300F2C4BA /* xingheader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C574B2B17ACF600F2C4BA /* xingheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55622B17AC4300F2C4BA /* xingheader.cpp */; };
-		327C574C2B17ACF600F2C4BA /* mpegheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55642B17AC4300F2C4BA /* mpegheader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C574D2B17ACFF00F2C4BA /* id3v1genres.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55682B17AC4300F2C4BA /* id3v1genres.cpp */; };
-		327C574E2B17ACFF00F2C4BA /* id3v1tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55692B17AC4300F2C4BA /* id3v1tag.cpp */; };
-		327C574F2B17ACFF00F2C4BA /* id3v1tag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55672B17AC4300F2C4BA /* id3v1tag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57502B17ACFF00F2C4BA /* id3v1genres.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C556A2B17AC4300F2C4BA /* id3v1genres.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57542B17AD0A00F2C4BA /* id3v2extendedheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C555C2B17AC4300F2C4BA /* id3v2extendedheader.cpp */; };
-		327C57552B17AD0A00F2C4BA /* id3v2frame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55332B17AC4300F2C4BA /* id3v2frame.cpp */; };
-		327C57562B17AD0A00F2C4BA /* id3v2header.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55322B17AC4300F2C4BA /* id3v2header.cpp */; };
-		327C57572B17AD0A00F2C4BA /* id3v2framefactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55592B17AC4300F2C4BA /* id3v2framefactory.cpp */; };
-		327C57582B17AD0A00F2C4BA /* id3v2header.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C552E2B17AC4300F2C4BA /* id3v2header.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57592B17AD0A00F2C4BA /* id3v2tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C555D2B17AC4300F2C4BA /* id3v2tag.cpp */; };
-		327C575A2B17AD0A00F2C4BA /* id3v2tag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C555F2B17AC4300F2C4BA /* id3v2tag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C575B2B17AD0A00F2C4BA /* id3v2extendedheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C552C2B17AC4300F2C4BA /* id3v2extendedheader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C575C2B17AD0A00F2C4BA /* id3v2footer.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C552B2B17AC4300F2C4BA /* id3v2footer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C575D2B17AD0A00F2C4BA /* id3v2framefactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55312B17AC4300F2C4BA /* id3v2framefactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C575E2B17AD0A00F2C4BA /* id3v2.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C555B2B17AC4300F2C4BA /* id3v2.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57602B17AD0A00F2C4BA /* id3v2synchdata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55572B17AC4300F2C4BA /* id3v2synchdata.cpp */; };
-		327C57612B17AD0A00F2C4BA /* id3v2footer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C552A2B17AC4300F2C4BA /* id3v2footer.cpp */; };
-		327C57622B17AD0A00F2C4BA /* id3v2frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55302B17AC4300F2C4BA /* id3v2frame.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57632B17AD0A00F2C4BA /* id3v2synchdata.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C555A2B17AC4300F2C4BA /* id3v2synchdata.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57642B17AD1D00F2C4BA /* eventtimingcodesframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C553D2B17AC4300F2C4BA /* eventtimingcodesframe.cpp */; };
-		327C57652B17AD1D00F2C4BA /* uniquefileidentifierframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55362B17AC4300F2C4BA /* uniquefileidentifierframe.cpp */; };
-		327C57662B17AD1D00F2C4BA /* generalencapsulatedobjectframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C553C2B17AC4300F2C4BA /* generalencapsulatedobjectframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57672B17AD1D00F2C4BA /* popularimeterframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55492B17AC4300F2C4BA /* popularimeterframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57682B17AD1D00F2C4BA /* commentsframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55472B17AC4300F2C4BA /* commentsframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57692B17AD1D00F2C4BA /* synchronizedlyricsframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55352B17AC4300F2C4BA /* synchronizedlyricsframe.cpp */; };
-		327C576A2B17AD1D00F2C4BA /* privateframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55372B17AC4300F2C4BA /* privateframe.cpp */; };
-		327C576B2B17AD1D00F2C4BA /* unsynchronizedlyricsframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C553E2B17AC4300F2C4BA /* unsynchronizedlyricsframe.cpp */; };
-		327C576C2B17AD1D00F2C4BA /* tableofcontentsframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55452B17AC4300F2C4BA /* tableofcontentsframe.cpp */; };
-		327C576D2B17AD1D00F2C4BA /* tableofcontentsframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C553F2B17AC4300F2C4BA /* tableofcontentsframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C576E2B17AD1D00F2C4BA /* podcastframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55402B17AC4300F2C4BA /* podcastframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C576F2B17AD1D00F2C4BA /* unknownframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C553A2B17AC4300F2C4BA /* unknownframe.cpp */; };
-		327C57702B17AD1D00F2C4BA /* privateframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C554D2B17AC4300F2C4BA /* privateframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57712B17AD1D00F2C4BA /* eventtimingcodesframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C554E2B17AC4300F2C4BA /* eventtimingcodesframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57722B17AD1D00F2C4BA /* synchronizedlyricsframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55422B17AC4300F2C4BA /* synchronizedlyricsframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57732B17AD1D00F2C4BA /* generalencapsulatedobjectframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55462B17AC4300F2C4BA /* generalencapsulatedobjectframe.cpp */; };
-		327C57742B17AD1D00F2C4BA /* attachedpictureframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55382B17AC4300F2C4BA /* attachedpictureframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57752B17AD1D00F2C4BA /* textidentificationframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55542B17AC4300F2C4BA /* textidentificationframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57762B17AD1D00F2C4BA /* unknownframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55392B17AC4300F2C4BA /* unknownframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57772B17AD1D00F2C4BA /* attachedpictureframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C554B2B17AC4300F2C4BA /* attachedpictureframe.cpp */; };
-		327C57782B17AD1D00F2C4BA /* commentsframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55432B17AC4300F2C4BA /* commentsframe.cpp */; };
-		327C57792B17AD1D00F2C4BA /* ownershipframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55502B17AC4300F2C4BA /* ownershipframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C577A2B17AD1D00F2C4BA /* podcastframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55412B17AC4300F2C4BA /* podcastframe.cpp */; };
-		327C577B2B17AD1D00F2C4BA /* popularimeterframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55552B17AC4300F2C4BA /* popularimeterframe.cpp */; };
-		327C577C2B17AD1D00F2C4BA /* ownershipframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C554A2B17AC4300F2C4BA /* ownershipframe.cpp */; };
-		327C577D2B17AD1D00F2C4BA /* relativevolumeframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55482B17AC4300F2C4BA /* relativevolumeframe.cpp */; };
-		327C577E2B17AD1D00F2C4BA /* textidentificationframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55512B17AC4300F2C4BA /* textidentificationframe.cpp */; };
-		327C577F2B17AD1D00F2C4BA /* relativevolumeframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C554C2B17AC4300F2C4BA /* relativevolumeframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57802B17AD1D00F2C4BA /* unsynchronizedlyricsframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C553B2B17AC4300F2C4BA /* unsynchronizedlyricsframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57812B17AD1D00F2C4BA /* urllinkframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55562B17AC4300F2C4BA /* urllinkframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57822B17AD1D00F2C4BA /* uniquefileidentifierframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55532B17AC4300F2C4BA /* uniquefileidentifierframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57832B17AD1D00F2C4BA /* chapterframe.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C554F2B17AC4300F2C4BA /* chapterframe.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57842B17AD1D00F2C4BA /* urllinkframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55522B17AC4300F2C4BA /* urllinkframe.cpp */; };
-		327C57852B17AD1D00F2C4BA /* chapterframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55442B17AC4300F2C4BA /* chapterframe.cpp */; };
-		327C57862B17AD2F00F2C4BA /* oggpageheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55052B17AC4300F2C4BA /* oggpageheader.cpp */; };
-		327C57872B17AD2F00F2C4BA /* oggpage.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C550C2B17AC4300F2C4BA /* oggpage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57882B17AD2F00F2C4BA /* xiphcomment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C550D2B17AC4300F2C4BA /* xiphcomment.cpp */; };
-		327C57892B17AD2F00F2C4BA /* oggfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F92B17AC4300F2C4BA /* oggfile.cpp */; };
-		327C578A2B17AD2F00F2C4BA /* oggfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54FF2B17AC4300F2C4BA /* oggfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C578B2B17AD2F00F2C4BA /* oggpage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C550E2B17AC4300F2C4BA /* oggpage.cpp */; };
-		327C578C2B17AD2F00F2C4BA /* oggpageheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55122B17AC4300F2C4BA /* oggpageheader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C578D2B17AD2F00F2C4BA /* xiphcomment.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C550B2B17AC4300F2C4BA /* xiphcomment.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C578E2B17AD3600F2C4BA /* oggflacfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55112B17AC4300F2C4BA /* oggflacfile.cpp */; };
-		327C578F2B17AD3600F2C4BA /* oggflacfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55102B17AC4300F2C4BA /* oggflacfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57902B17AD3F00F2C4BA /* opusfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55042B17AC4300F2C4BA /* opusfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57912B17AD3F00F2C4BA /* opusfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55022B17AC4300F2C4BA /* opusfile.cpp */; };
-		327C57922B17AD3F00F2C4BA /* opusproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55012B17AC4300F2C4BA /* opusproperties.cpp */; };
-		327C57932B17AD3F00F2C4BA /* opusproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55032B17AC4300F2C4BA /* opusproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57942B17AD4900F2C4BA /* speexfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55092B17AC4300F2C4BA /* speexfile.cpp */; };
-		327C57952B17AD4900F2C4BA /* speexfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C550A2B17AC4300F2C4BA /* speexfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57962B17AD4900F2C4BA /* speexproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55072B17AC4300F2C4BA /* speexproperties.cpp */; };
-		327C57972B17AD4900F2C4BA /* speexproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55082B17AC4300F2C4BA /* speexproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57982B17AD5100F2C4BA /* vorbisproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54FE2B17AC4300F2C4BA /* vorbisproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57992B17AD5100F2C4BA /* vorbisproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54FD2B17AC4300F2C4BA /* vorbisproperties.cpp */; };
-		327C579A2B17AD5100F2C4BA /* vorbisfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54FC2B17AC4300F2C4BA /* vorbisfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C579B2B17AD5100F2C4BA /* vorbisfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54FB2B17AC4300F2C4BA /* vorbisfile.cpp */; };
-		327C579C2B17AD6400F2C4BA /* aiffproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55782B17AC4300F2C4BA /* aiffproperties.cpp */; };
-		327C579D2B17AD6400F2C4BA /* aifffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C557A2B17AC4300F2C4BA /* aifffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C579E2B17AD6400F2C4BA /* aiffproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55772B17AC4300F2C4BA /* aiffproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C579F2B17AD6400F2C4BA /* aifffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55792B17AC4300F2C4BA /* aifffile.cpp */; };
-		327C57A02B17AD6B00F2C4BA /* rifffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C557D2B17AC4300F2C4BA /* rifffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57A12B17AD6B00F2C4BA /* riffutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C557C2B17AC4300F2C4BA /* riffutils.h */; };
-		327C57A22B17AD6B00F2C4BA /* rifffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C557B2B17AC4300F2C4BA /* rifffile.cpp */; };
-		327C57A32B17AD7000F2C4BA /* infotag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55702B17AC4300F2C4BA /* infotag.cpp */; };
-		327C57A42B17AD7000F2C4BA /* infotag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55712B17AC4300F2C4BA /* infotag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57A52B17AD7000F2C4BA /* wavproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55742B17AC4300F2C4BA /* wavproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57A62B17AD7000F2C4BA /* wavfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55722B17AC4300F2C4BA /* wavfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57A72B17AD7000F2C4BA /* wavfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55732B17AC4300F2C4BA /* wavfile.cpp */; };
-		327C57A82B17AD7000F2C4BA /* wavproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55752B17AC4300F2C4BA /* wavproperties.cpp */; };
-		327C57A92B17AD8100F2C4BA /* s3mproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F52B17AC4300F2C4BA /* s3mproperties.cpp */; };
-		327C57AA2B17AD8100F2C4BA /* s3mfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F62B17AC4300F2C4BA /* s3mfile.cpp */; };
-		327C57AB2B17AD8100F2C4BA /* s3mfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54F32B17AC4300F2C4BA /* s3mfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57AC2B17AD8100F2C4BA /* s3mproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54F42B17AC4300F2C4BA /* s3mproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57AD2B17AD9500F2C4BA /* tpicturetype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55D02B17AC4400F2C4BA /* tpicturetype.cpp */; };
-		327C57AE2B17AD9500F2C4BA /* tbytevectorstream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C92B17AC4400F2C4BA /* tbytevectorstream.cpp */; };
-		327C57AF2B17AD9500F2C4BA /* tbytevectorstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D12B17AC4400F2C4BA /* tbytevectorstream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57B02B17AD9500F2C4BA /* tdebuglistener.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E42B17AC4400F2C4BA /* tdebuglistener.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57B12B17AD9500F2C4BA /* tstring.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55DD2B17AC4400F2C4BA /* tstring.cpp */; };
-		327C57B22B17AD9500F2C4BA /* tstringlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55CD2B17AC4400F2C4BA /* tstringlist.cpp */; };
-		327C57B32B17AD9500F2C4BA /* tversionnumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D42B17AC4400F2C4BA /* tversionnumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57B42B17AD9500F2C4BA /* tpicturetype.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E92B17AC4400F2C4BA /* tpicturetype.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57B52B17AD9500F2C4BA /* tvariant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C82B17AC4400F2C4BA /* tvariant.cpp */; };
-		327C57B62B17AD9500F2C4BA /* tiostream.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E52B17AC4400F2C4BA /* tiostream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57B82B17AD9500F2C4BA /* tbytevector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55DC2B17AC4400F2C4BA /* tbytevector.cpp */; };
-		327C57B92B17AD9500F2C4BA /* tlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E22B17AC4400F2C4BA /* tlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57BA2B17AD9500F2C4BA /* tdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D22B17AC4400F2C4BA /* tdebug.h */; };
-		327C57BB2B17AD9500F2C4BA /* tmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55DF2B17AC4400F2C4BA /* tmap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57BC2B17AD9500F2C4BA /* tpropertymap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55E32B17AC4400F2C4BA /* tpropertymap.cpp */; };
-		327C57BD2B17AD9500F2C4BA /* tbytevectorlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CF2B17AC4400F2C4BA /* tbytevectorlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57BE2B17AD9500F2C4BA /* tversionnumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55DE2B17AC4400F2C4BA /* tversionnumber.cpp */; };
-		327C57BF2B17AD9500F2C4BA /* tbytevector.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CC2B17AC4400F2C4BA /* tbytevector.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C02B17AD9500F2C4BA /* tdebuglistener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55D72B17AC4400F2C4BA /* tdebuglistener.cpp */; };
-		327C57C22B17AD9500F2C4BA /* tfilestream.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55DB2B17AC4400F2C4BA /* tfilestream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C42B17AD9500F2C4BA /* tstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CE2B17AC4400F2C4BA /* tstring.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C52B17AD9500F2C4BA /* tstringlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D82B17AC4400F2C4BA /* tstringlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C62B17AD9500F2C4BA /* tfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CB2B17AC4400F2C4BA /* tfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C72B17AD9500F2C4BA /* tpropertymap.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55DA2B17AC4400F2C4BA /* tpropertymap.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57C82B17AD9500F2C4BA /* tfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55D92B17AC4400F2C4BA /* tfile.cpp */; };
-		327C57C92B17AD9500F2C4BA /* tzlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55EC2B17AC4400F2C4BA /* tzlib.cpp */; };
-		327C57CA2B17AD9500F2C4BA /* tzlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55EB2B17AC4400F2C4BA /* tzlib.h */; };
-		327C57CB2B17AD9500F2C4BA /* tbytevectorlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55EA2B17AC4400F2C4BA /* tbytevectorlist.cpp */; };
-		327C57CC2B17AD9500F2C4BA /* tfilestream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55E72B17AC4400F2C4BA /* tfilestream.cpp */; };
-		327C57CD2B17AD9500F2C4BA /* tdebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55CA2B17AC4400F2C4BA /* tdebug.cpp */; };
-		327C57CE2B17AD9500F2C4BA /* tutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D32B17AC4400F2C4BA /* tutils.h */; };
-		327C57CF2B17AD9500F2C4BA /* taglib.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E02B17AC4400F2C4BA /* taglib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57D02B17AD9500F2C4BA /* tvariant.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D52B17AC4400F2C4BA /* tvariant.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57D12B17AD9500F2C4BA /* tiostream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55E62B17AC4400F2C4BA /* tiostream.cpp */; };
-		327C57D22B17ADA900F2C4BA /* trueaudiofile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55162B17AC4300F2C4BA /* trueaudiofile.cpp */; };
-		327C57D32B17ADA900F2C4BA /* trueaudioproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55152B17AC4300F2C4BA /* trueaudioproperties.cpp */; };
-		327C57D42B17ADA900F2C4BA /* trueaudiofile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55142B17AC4300F2C4BA /* trueaudiofile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57D52B17ADA900F2C4BA /* trueaudioproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55172B17AC4300F2C4BA /* trueaudioproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57D62B17ADB400F2C4BA /* wavpackproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54EE2B17AC4300F2C4BA /* wavpackproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57D72B17ADB400F2C4BA /* wavpackfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F02B17AC4300F2C4BA /* wavpackfile.cpp */; };
-		327C57D82B17ADB400F2C4BA /* wavpackfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54EF2B17AC4300F2C4BA /* wavpackfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57D92B17ADB400F2C4BA /* wavpackproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F12B17AC4300F2C4BA /* wavpackproperties.cpp */; };
-		327C57DA2B17ADBB00F2C4BA /* xmfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C32B17AC4400F2C4BA /* xmfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57DB2B17ADBB00F2C4BA /* xmfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C42B17AC4400F2C4BA /* xmfile.cpp */; };
-		327C57DC2B17ADBB00F2C4BA /* xmproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C52B17AC4400F2C4BA /* xmproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57DD2B17ADBB00F2C4BA /* xmproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C62B17AC4400F2C4BA /* xmproperties.cpp */; };
 		327C57E32B17B39A00F2C4BA /* tmap.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55E82B17AC4400F2C4BA /* tmap.tcc */; };
 		327C57E42B17B3AB00F2C4BA /* tlist.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55D62B17AC4400F2C4BA /* tlist.tcc */; };
-		327C57E52B17B3B700F2C4BA /* tlist.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55D62B17AC4400F2C4BA /* tlist.tcc */; };
-		327C57E62B17B3B700F2C4BA /* tmap.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55E82B17AC4400F2C4BA /* tmap.tcc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		326782DD254E652A0041B063 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Headers;
-			dstSubfolderSpec = 1;
-			files = (
-				327C57E52B17B3B700F2C4BA /* tlist.tcc in CopyFiles */,
-				327C57E62B17B3B700F2C4BA /* tmap.tcc in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		326782E6254E65BE0041B063 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -506,8 +260,6 @@
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* taglib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = taglib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028DD9254AFEA000A537DE /* taglib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = taglib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		327C54CC2B17ABF300F2C4BA /* cpp17.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpp17.h; sourceTree = "<group>"; };
 		327C54CD2B17ABF300F2C4BA /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		327C54CE2B17ABF300F2C4BA /* unchecked.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = unchecked.h; sourceTree = "<group>"; };
@@ -754,17 +506,11 @@
 		327C55F62B17AC4400F2C4BA /* modfilebase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modfilebase.h; sourceTree = "<group>"; };
 		32B681682BF11A9400A4C241 /* cpp20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpp20.h; sourceTree = "<group>"; };
 		32B6816A2BF11B2C00A4C241 /* propertymapping.dox */ = {isa = PBXFileReference; lastKnownFileType = text; path = propertymapping.dox; sourceTree = "<group>"; };
+		32D5051A2CD6A7C100AC3DB8 /* taglib.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = taglib.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		32028D05254AE93F00A537DE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32028DD4254AFEA000A537DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -777,7 +523,7 @@
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
-				3267710F254B5D670041B063 /* Info.plist */,
+				32D5051A2CD6A7C100AC3DB8 /* taglib.modulemap */,
 				32677E65254DB4C90041B063 /* taglib-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
@@ -787,7 +533,6 @@
 			isa = PBXGroup;
 			children = (
 				32028D08254AE93F00A537DE /* taglib.framework */,
-				32028DD9254AFEA000A537DE /* taglib.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1426,142 +1171,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DCD254AFEA000A537DE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				327C57832B17AD1D00F2C4BA /* chapterframe.h in Headers */,
-				327C57412B17ACEC00F2C4BA /* mpcproperties.h in Headers */,
-				327C57502B17ACFF00F2C4BA /* id3v1genres.h in Headers */,
-				327C57042B17AC8F00F2C4BA /* asfproperties.h in Headers */,
-				327C57BD2B17AD9500F2C4BA /* tbytevectorlist.h in Headers */,
-				327C579D2B17AD6400F2C4BA /* aifffile.h in Headers */,
-				327C56E72B17AC8800F2C4BA /* apetag.h in Headers */,
-				327C57192B17ACB300F2C4BA /* dsffile.h in Headers */,
-				327C57162B17ACA900F2C4BA /* dsdiffdiintag.h in Headers */,
-				327C56E82B17AC8800F2C4BA /* apeproperties.h in Headers */,
-				327C57CA2B17AD9500F2C4BA /* tzlib.h in Headers */,
-				327C57032B17AC8F00F2C4BA /* asfattribute.h in Headers */,
-				327C57A52B17AD7000F2C4BA /* wavproperties.h in Headers */,
-				327C575E2B17AD0A00F2C4BA /* id3v2.h in Headers */,
-				327C57722B17AD1D00F2C4BA /* synchronizedlyricsframe.h in Headers */,
-				327C57752B17AD1D00F2C4BA /* textidentificationframe.h in Headers */,
-				327C578A2B17AD2F00F2C4BA /* oggfile.h in Headers */,
-				327C57792B17AD1D00F2C4BA /* ownershipframe.h in Headers */,
-				327C57242B17ACC000F2C4BA /* flacunknownmetadatablock.h in Headers */,
-				327C57C72B17AD9500F2C4BA /* tpropertymap.h in Headers */,
-				327C57902B17AD3F00F2C4BA /* opusfile.h in Headers */,
-				327C56FF2B17AC8F00F2C4BA /* asfpicture.h in Headers */,
-				327C57AF2B17AD9500F2C4BA /* tbytevectorstream.h in Headers */,
-				327C571F2B17ACC000F2C4BA /* flacmetadatablock.h in Headers */,
-				327C576D2B17AD1D00F2C4BA /* tableofcontentsframe.h in Headers */,
-				327C57762B17AD1D00F2C4BA /* unknownframe.h in Headers */,
-				327C579E2B17AD6400F2C4BA /* aiffproperties.h in Headers */,
-				327C57C52B17AD9500F2C4BA /* tstringlist.h in Headers */,
-				327C574C2B17ACF600F2C4BA /* mpegheader.h in Headers */,
-				327C571C2B17ACC000F2C4BA /* flacpicture.h in Headers */,
-				327C57B42B17AD9500F2C4BA /* tpicturetype.h in Headers */,
-				327C57AB2B17AD8100F2C4BA /* s3mfile.h in Headers */,
-				327C574A2B17ACF600F2C4BA /* xingheader.h in Headers */,
-				327C57052B17AC8F00F2C4BA /* asfutils.h in Headers */,
-				327C57352B17ACE100F2C4BA /* mp4tag.h in Headers */,
-				327C572F2B17ACD400F2C4BA /* modfile.h in Headers */,
-				327C57DA2B17ADBB00F2C4BA /* xmfile.h in Headers */,
-				327C54E62B17AC0F00F2C4BA /* unchecked.h in Headers */,
-				327C56EC2B17AC8800F2C4BA /* apeitem.h in Headers */,
-				327C576E2B17AD1D00F2C4BA /* podcastframe.h in Headers */,
-				327C57D82B17ADB400F2C4BA /* wavpackfile.h in Headers */,
-				327C579A2B17AD5100F2C4BA /* vorbisfile.h in Headers */,
-				327C573C2B17ACE100F2C4BA /* mp4atom.h in Headers */,
-				327C57062B17AC9400F2C4BA /* audioproperties.h in Headers */,
-				327C57D42B17ADA900F2C4BA /* trueaudiofile.h in Headers */,
-				327C57682B17AD1D00F2C4BA /* commentsframe.h in Headers */,
-				327C57C42B17AD9500F2C4BA /* tstring.h in Headers */,
-				327C570F2B17AC9F00F2C4BA /* tagunion.h in Headers */,
-				327C57302B17ACD400F2C4BA /* modtag.h in Headers */,
-				327C57982B17AD5100F2C4BA /* vorbisproperties.h in Headers */,
-				327C578F2B17AD3600F2C4BA /* oggflacfile.h in Headers */,
-				327C57142B17ACA900F2C4BA /* dsdifffile.h in Headers */,
-				327C570D2B17AC9F00F2C4BA /* tag.h in Headers */,
-				327C578D2B17AD2F00F2C4BA /* xiphcomment.h in Headers */,
-				327C57932B17AD3F00F2C4BA /* opusproperties.h in Headers */,
-				327C570C2B17AC9F00F2C4BA /* taglib_export.h in Headers */,
-				327C54E72B17AC0F00F2C4BA /* checked.h in Headers */,
-				327C57DC2B17ADBB00F2C4BA /* xmproperties.h in Headers */,
-				327C57172B17ACB300F2C4BA /* dsfproperties.h in Headers */,
-				327C575D2B17AD0A00F2C4BA /* id3v2framefactory.h in Headers */,
-				327C57492B17ACF600F2C4BA /* mpegproperties.h in Headers */,
-				327C57332B17ACE100F2C4BA /* mp4file.h in Headers */,
-				327C56F02B17AC8800F2C4BA /* apefile.h in Headers */,
-				327C57712B17AD1D00F2C4BA /* eventtimingcodesframe.h in Headers */,
-				327C57482B17ACF600F2C4BA /* mpegutils.h in Headers */,
-				327C574F2B17ACFF00F2C4BA /* id3v1tag.h in Headers */,
-				327C57BF2B17AD9500F2C4BA /* tbytevector.h in Headers */,
-				327C57C62B17AD9500F2C4BA /* tfile.h in Headers */,
-				327C57002B17AC8F00F2C4BA /* asffile.h in Headers */,
-				327C577F2B17AD1D00F2C4BA /* relativevolumeframe.h in Headers */,
-				327C57582B17AD0A00F2C4BA /* id3v2header.h in Headers */,
-				327C57872B17AD2F00F2C4BA /* oggpage.h in Headers */,
-				327C57A12B17AD6B00F2C4BA /* riffutils.h in Headers */,
-				327C57B32B17AD9500F2C4BA /* tversionnumber.h in Headers */,
-				327C57292B17ACD400F2C4BA /* modfileprivate.h in Headers */,
-				327C57B62B17AD9500F2C4BA /* tiostream.h in Headers */,
-				327C570A2B17AC9F00F2C4BA /* fileref.h in Headers */,
-				327C575B2B17AD0A00F2C4BA /* id3v2extendedheader.h in Headers */,
-				327C57742B17AD1D00F2C4BA /* attachedpictureframe.h in Headers */,
-				327C572A2B17ACD400F2C4BA /* modfilebase.h in Headers */,
-				327C57262B17ACCA00F2C4BA /* itproperties.h in Headers */,
-				327C57C22B17AD9500F2C4BA /* tfilestream.h in Headers */,
-				327C56FB2B17AC8F00F2C4BA /* asftag.h in Headers */,
-				327C57AC2B17AD8100F2C4BA /* s3mproperties.h in Headers */,
-				327C57202B17ACC000F2C4BA /* flacproperties.h in Headers */,
-				327C572C2B17ACD400F2C4BA /* modproperties.h in Headers */,
-				327C575A2B17AD0A00F2C4BA /* id3v2tag.h in Headers */,
-				327C57812B17AD1D00F2C4BA /* urllinkframe.h in Headers */,
-				327C57632B17AD0A00F2C4BA /* id3v2synchdata.h in Headers */,
-				327C575C2B17AD0A00F2C4BA /* id3v2footer.h in Headers */,
-				327C57B02B17AD9500F2C4BA /* tdebuglistener.h in Headers */,
-				327C57952B17AD4900F2C4BA /* speexfile.h in Headers */,
-				327C57BB2B17AD9500F2C4BA /* tmap.h in Headers */,
-				327C57392B17ACE100F2C4BA /* mp4properties.h in Headers */,
-				327C573E2B17ACE100F2C4BA /* mp4item.h in Headers */,
-				327C56EB2B17AC8800F2C4BA /* apefooter.h in Headers */,
-				327C578C2B17AD2F00F2C4BA /* oggpageheader.h in Headers */,
-				327C57A62B17AD7000F2C4BA /* wavfile.h in Headers */,
-				327C57B92B17AD9500F2C4BA /* tlist.h in Headers */,
-				327C57802B17AD1D00F2C4BA /* unsynchronizedlyricsframe.h in Headers */,
-				327C57CF2B17AD9500F2C4BA /* taglib.h in Headers */,
-				327C57A42B17AD7000F2C4BA /* infotag.h in Headers */,
-				327C57972B17AD4900F2C4BA /* speexproperties.h in Headers */,
-				327C57822B17AD1D00F2C4BA /* uniquefileidentifierframe.h in Headers */,
-				327C57472B17ACF600F2C4BA /* mpegfile.h in Headers */,
-				327C57662B17AD1D00F2C4BA /* generalencapsulatedobjectframe.h in Headers */,
-				327C57282B17ACCA00F2C4BA /* itfile.h in Headers */,
-				327C57D62B17ADB400F2C4BA /* wavpackproperties.h in Headers */,
-				327C57402B17ACEC00F2C4BA /* mpcfile.h in Headers */,
-				327C57112B17ACA900F2C4BA /* dsdiffproperties.h in Headers */,
-				327C57342B17ACE100F2C4BA /* mp4itemfactory.h in Headers */,
-				327C54EA2B17AC1500F2C4BA /* utf8.h in Headers */,
-				327C571D2B17ACC000F2C4BA /* flacfile.h in Headers */,
-				327C57672B17AD1D00F2C4BA /* popularimeterframe.h in Headers */,
-				327C57A02B17AD6B00F2C4BA /* rifffile.h in Headers */,
-				327C57702B17AD1D00F2C4BA /* privateframe.h in Headers */,
-				327C57CE2B17AD9500F2C4BA /* tutils.h in Headers */,
-				327C57D52B17ADA900F2C4BA /* trueaudioproperties.h in Headers */,
-				327C57BA2B17AD9500F2C4BA /* tdebug.h in Headers */,
-				327C57622B17AD0A00F2C4BA /* id3v2frame.h in Headers */,
-				327C573A2B17ACE100F2C4BA /* mp4coverart.h in Headers */,
-				327C570E2B17AC9F00F2C4BA /* tagutils.h in Headers */,
-				327C57D02B17AD9500F2C4BA /* tvariant.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		32028D07254AE93F00A537DE /* macOS */ = {
+		32028D07254AE93F00A537DE /* taglib */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
+			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "taglib" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
 				326782E6254E65BE0041B063 /* CopyFiles */,
@@ -1573,28 +1188,9 @@
 			);
 			dependencies = (
 			);
-			name = macOS;
+			name = taglib;
 			productName = taglib;
 			productReference = 32028D08254AE93F00A537DE /* taglib.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		32028DCC254AFEA000A537DE /* iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
-			buildPhases = (
-				32028DCD254AFEA000A537DE /* Headers */,
-				326782DD254E652A0041B063 /* CopyFiles */,
-				32028DD1254AFEA000A537DE /* Sources */,
-				32028DD4254AFEA000A537DE /* Frameworks */,
-				32028DD5254AFEA000A537DE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = iOS;
-			productName = taglib;
-			productReference = 32028DD9254AFEA000A537DE /* taglib.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1604,7 +1200,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -1624,21 +1220,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				32028D07254AE93F00A537DE /* macOS */,
-				32028DCC254AFEA000A537DE /* iOS */,
+				32028D07254AE93F00A537DE /* taglib */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32028DD5254AFEA000A537DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1765,123 +1353,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DD1254AFEA000A537DE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				327C571A2B17ACB300F2C4BA /* dsfproperties.cpp in Sources */,
-				327C57362B17ACE100F2C4BA /* mp4tag.cpp in Sources */,
-				327C57782B17AD1D00F2C4BA /* commentsframe.cpp in Sources */,
-				327C57D32B17ADA900F2C4BA /* trueaudioproperties.cpp in Sources */,
-				327C57562B17AD0A00F2C4BA /* id3v2header.cpp in Sources */,
-				327C57962B17AD4900F2C4BA /* speexproperties.cpp in Sources */,
-				327C57572B17AD0A00F2C4BA /* id3v2framefactory.cpp in Sources */,
-				327C57082B17AC9F00F2C4BA /* tag.cpp in Sources */,
-				327C57382B17ACE100F2C4BA /* mp4properties.cpp in Sources */,
-				327C57272B17ACCA00F2C4BA /* itfile.cpp in Sources */,
-				327C570B2B17AC9F00F2C4BA /* fileref.cpp in Sources */,
-				327C57A72B17AD7000F2C4BA /* wavfile.cpp in Sources */,
-				327C57732B17AD1D00F2C4BA /* generalencapsulatedobjectframe.cpp in Sources */,
-				327C57612B17AD0A00F2C4BA /* id3v2footer.cpp in Sources */,
-				327C57422B17ACEC00F2C4BA /* mpcproperties.cpp in Sources */,
-				327C57462B17ACF600F2C4BA /* mpegfile.cpp in Sources */,
-				327C572E2B17ACD400F2C4BA /* modfile.cpp in Sources */,
-				327C57CC2B17AD9500F2C4BA /* tfilestream.cpp in Sources */,
-				327C57122B17ACA900F2C4BA /* dsdiffproperties.cpp in Sources */,
-				327C57A22B17AD6B00F2C4BA /* rifffile.cpp in Sources */,
-				327C57942B17AD4900F2C4BA /* speexfile.cpp in Sources */,
-				327C574D2B17ACFF00F2C4BA /* id3v1genres.cpp in Sources */,
-				327C579B2B17AD5100F2C4BA /* vorbisfile.cpp in Sources */,
-				327C57072B17AC9400F2C4BA /* audioproperties.cpp in Sources */,
-				327C577C2B17AD1D00F2C4BA /* ownershipframe.cpp in Sources */,
-				327C576C2B17AD1D00F2C4BA /* tableofcontentsframe.cpp in Sources */,
-				327C57B52B17AD9500F2C4BA /* tvariant.cpp in Sources */,
-				327C576F2B17AD1D00F2C4BA /* unknownframe.cpp in Sources */,
-				327C57A82B17AD7000F2C4BA /* wavproperties.cpp in Sources */,
-				327C57882B17AD2F00F2C4BA /* xiphcomment.cpp in Sources */,
-				327C57012B17AC8F00F2C4BA /* asftag.cpp in Sources */,
-				327C57452B17ACF600F2C4BA /* mpegproperties.cpp in Sources */,
-				327C572B2B17ACD400F2C4BA /* modproperties.cpp in Sources */,
-				327C57102B17AC9F00F2C4BA /* tagutils.cpp in Sources */,
-				327C57AA2B17AD8100F2C4BA /* s3mfile.cpp in Sources */,
-				327C57602B17AD0A00F2C4BA /* id3v2synchdata.cpp in Sources */,
-				327C57542B17AD0A00F2C4BA /* id3v2extendedheader.cpp in Sources */,
-				327C57692B17AD1D00F2C4BA /* synchronizedlyricsframe.cpp in Sources */,
-				327C576B2B17AD1D00F2C4BA /* unsynchronizedlyricsframe.cpp in Sources */,
-				327C57642B17AD1D00F2C4BA /* eventtimingcodesframe.cpp in Sources */,
-				327C57092B17AC9F00F2C4BA /* tagunion.cpp in Sources */,
-				327C57D12B17AD9500F2C4BA /* tiostream.cpp in Sources */,
-				327C577E2B17AD1D00F2C4BA /* textidentificationframe.cpp in Sources */,
-				327C57552B17AD0A00F2C4BA /* id3v2frame.cpp in Sources */,
-				327C57232B17ACC000F2C4BA /* flacpicture.cpp in Sources */,
-				327C574E2B17ACFF00F2C4BA /* id3v1tag.cpp in Sources */,
-				327C577B2B17AD1D00F2C4BA /* popularimeterframe.cpp in Sources */,
-				327C56EF2B17AC8800F2C4BA /* apefile.cpp in Sources */,
-				327C573F2B17ACE100F2C4BA /* mp4coverart.cpp in Sources */,
-				327C57BC2B17AD9500F2C4BA /* tpropertymap.cpp in Sources */,
-				327C57852B17AD1D00F2C4BA /* chapterframe.cpp in Sources */,
-				327C57D72B17ADB400F2C4BA /* wavpackfile.cpp in Sources */,
-				327C57372B17ACE100F2C4BA /* mp4item.cpp in Sources */,
-				327C57AE2B17AD9500F2C4BA /* tbytevectorstream.cpp in Sources */,
-				327C578E2B17AD3600F2C4BA /* oggflacfile.cpp in Sources */,
-				327C57322B17ACE100F2C4BA /* mp4file.cpp in Sources */,
-				327C57C92B17AD9500F2C4BA /* tzlib.cpp in Sources */,
-				327C56ED2B17AC8800F2C4BA /* apeproperties.cpp in Sources */,
-				327C579F2B17AD6400F2C4BA /* aifffile.cpp in Sources */,
-				327C57772B17AD1D00F2C4BA /* attachedpictureframe.cpp in Sources */,
-				327C57652B17AD1D00F2C4BA /* uniquefileidentifierframe.cpp in Sources */,
-				327C574B2B17ACF600F2C4BA /* xingheader.cpp in Sources */,
-				327C57432B17ACEC00F2C4BA /* mpcfile.cpp in Sources */,
-				327C56EE2B17AC8800F2C4BA /* apetag.cpp in Sources */,
-				327C57D22B17ADA900F2C4BA /* trueaudiofile.cpp in Sources */,
-				327C577D2B17AD1D00F2C4BA /* relativevolumeframe.cpp in Sources */,
-				327C573B2B17ACE100F2C4BA /* mp4itemfactory.cpp in Sources */,
-				327C571E2B17ACC000F2C4BA /* flacfile.cpp in Sources */,
-				327C57AD2B17AD9500F2C4BA /* tpicturetype.cpp in Sources */,
-				327C57A92B17AD8100F2C4BA /* s3mproperties.cpp in Sources */,
-				327C57182B17ACB300F2C4BA /* dsffile.cpp in Sources */,
-				327C56FC2B17AC8F00F2C4BA /* asfpicture.cpp in Sources */,
-				327C579C2B17AD6400F2C4BA /* aiffproperties.cpp in Sources */,
-				327C57992B17AD5100F2C4BA /* vorbisproperties.cpp in Sources */,
-				327C57222B17ACC000F2C4BA /* flacproperties.cpp in Sources */,
-				327C57C82B17AD9500F2C4BA /* tfile.cpp in Sources */,
-				327C57152B17ACA900F2C4BA /* dsdifffile.cpp in Sources */,
-				327C57BE2B17AD9500F2C4BA /* tversionnumber.cpp in Sources */,
-				327C578B2B17AD2F00F2C4BA /* oggpage.cpp in Sources */,
-				327C57912B17AD3F00F2C4BA /* opusfile.cpp in Sources */,
-				327C57862B17AD2F00F2C4BA /* oggpageheader.cpp in Sources */,
-				327C57892B17AD2F00F2C4BA /* oggfile.cpp in Sources */,
-				327C57B22B17AD9500F2C4BA /* tstringlist.cpp in Sources */,
-				327C576A2B17AD1D00F2C4BA /* privateframe.cpp in Sources */,
-				327C56E92B17AC8800F2C4BA /* apeitem.cpp in Sources */,
-				327C56FD2B17AC8F00F2C4BA /* asffile.cpp in Sources */,
-				327C57B12B17AD9500F2C4BA /* tstring.cpp in Sources */,
-				327C57D92B17ADB400F2C4BA /* wavpackproperties.cpp in Sources */,
-				327C56EA2B17AC8800F2C4BA /* apefooter.cpp in Sources */,
-				327C56FE2B17AC8F00F2C4BA /* asfattribute.cpp in Sources */,
-				327C57DB2B17ADBB00F2C4BA /* xmfile.cpp in Sources */,
-				327C57252B17ACCA00F2C4BA /* itproperties.cpp in Sources */,
-				327C57592B17AD0A00F2C4BA /* id3v2tag.cpp in Sources */,
-				327C57442B17ACF600F2C4BA /* mpegheader.cpp in Sources */,
-				327C57CD2B17AD9500F2C4BA /* tdebug.cpp in Sources */,
-				327C57C02B17AD9500F2C4BA /* tdebuglistener.cpp in Sources */,
-				327C57922B17AD3F00F2C4BA /* opusproperties.cpp in Sources */,
-				327C57DD2B17ADBB00F2C4BA /* xmproperties.cpp in Sources */,
-				327C57CB2B17AD9500F2C4BA /* tbytevectorlist.cpp in Sources */,
-				327C573D2B17ACE100F2C4BA /* mp4atom.cpp in Sources */,
-				327C57132B17ACA900F2C4BA /* dsdiffdiintag.cpp in Sources */,
-				327C577A2B17AD1D00F2C4BA /* podcastframe.cpp in Sources */,
-				327C57842B17AD1D00F2C4BA /* urllinkframe.cpp in Sources */,
-				327C57A32B17AD7000F2C4BA /* infotag.cpp in Sources */,
-				327C57022B17AC8F00F2C4BA /* asfproperties.cpp in Sources */,
-				327C57B82B17AD9500F2C4BA /* tbytevector.cpp in Sources */,
-				327C571B2B17ACC000F2C4BA /* flacmetadatablock.cpp in Sources */,
-				327C57212B17ACC000F2C4BA /* flacunknownmetadatablock.cpp in Sources */,
-				327C57312B17ACD400F2C4BA /* modtag.cpp in Sources */,
-				327C572D2B17ACD400F2C4BA /* modfilebase.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -1889,11 +1360,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -1926,7 +1395,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1940,16 +1409,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/taglib-src/taglib/toolkit/",
-					"$(SRCROOT)/taglib-src/3rdparty/",
-				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1959,11 +1422,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -1996,7 +1457,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2004,15 +1465,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/taglib-src/taglib/toolkit/",
-					"$(SRCROOT)/taglib-src/3rdparty/",
-				);
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2021,96 +1476,80 @@
 		32028D11254AE93F00A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				ENABLE_MODULE_VERIFIER = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = taglib.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = org.taglib;
 				PRODUCT_NAME = taglib;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
 		32028D12254AE93F00A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				ENABLE_MODULE_VERIFIER = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = taglib.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = org.taglib;
 				PRODUCT_NAME = taglib;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-			};
-			name = Release;
-		};
-		32028DD7254AFEA000A537DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.taglib;
-				PRODUCT_NAME = taglib;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		32028DD8254AFEA000A537DE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.taglib;
-				PRODUCT_NAME = taglib;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Release;
 		};
@@ -2126,20 +1565,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */ = {
+		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "taglib" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D11254AE93F00A537DE /* Debug */,
 				32028D12254AE93F00A537DE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				32028DD7254AFEA000A537DE /* Debug */,
-				32028DD8254AFEA000A537DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
