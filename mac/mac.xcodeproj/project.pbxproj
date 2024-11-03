@@ -56,7 +56,6 @@
 		32677927254C41570041B063 /* MACLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 3267729A254B73160041B063 /* MACLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677928254C41570041B063 /* NoWindows.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E1254B73160041B063 /* NoWindows.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677929254C41570041B063 /* CharacterHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772EB254B73160041B063 /* CharacterHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3267792A254C41570041B063 /* MACDll.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DE254B73160041B063 /* MACDll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267792B254C41570041B063 /* Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DB254B73160041B063 /* Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267792D254C41570041B063 /* IO.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E8254B73160041B063 /* IO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267792E254C41570041B063 /* SmartPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E2254B73160041B063 /* SmartPtr.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -382,7 +381,6 @@
 				3267792B254C41570041B063 /* Version.h in Headers */,
 				32677929254C41570041B063 /* CharacterHelper.h in Headers */,
 				32677928254C41570041B063 /* NoWindows.h in Headers */,
-				3267792A254C41570041B063 /* MACDll.h in Headers */,
 				3267792D254C41570041B063 /* IO.h in Headers */,
 				3267792E254C41570041B063 /* SmartPtr.h in Headers */,
 				325A5E2B2ADAF0AF00A091AA /* WindowsEnvironment.h in Headers */,
@@ -653,7 +651,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = mac.modulemap;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.monkeysaudio;
 				PRODUCT_NAME = MAC;
@@ -694,7 +692,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = mac.modulemap;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.monkeysaudio;
 				PRODUCT_NAME = MAC;
