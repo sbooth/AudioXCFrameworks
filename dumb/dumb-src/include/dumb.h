@@ -30,6 +30,9 @@
 #endif
 #endif
 
+// Include moved outside of extern "C" block
+#include <sys/types.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -153,7 +156,8 @@ struct dumb_off_t_needs_to_be_at_least_8_bytes {
 #include <BaseTsd.h>
 typedef SSIZE_T dumb_ssize_t;
 #else
-#include <sys/types.h>
+// Include moved outside of extern "C" block
+//#include <sys/types.h>
 typedef ssize_t dumb_ssize_t;
 #endif
 
