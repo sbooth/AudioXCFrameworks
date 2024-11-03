@@ -38,8 +38,6 @@
 #endif
 
 #include <stdlib.h>
-// Include moved outside of extern "C"
-#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,8 +54,7 @@ typedef __int64          mpc_int64_t;
 typedef unsigned __int64 mpc_uint64_t;
 #define mpc_inline __inline
 #else
-// Include moved outside of extern "C"
-//#include <stdint.h>
+#include <stdint.h>
 typedef int8_t   mpc_int8_t;
 typedef uint8_t  mpc_uint8_t;
 typedef int16_t  mpc_int16_t;
