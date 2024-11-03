@@ -1,4 +1,6 @@
 framework module mpc {
+	requires c99
+
 	module dec {
 		header "mpc_types.h"
 		header "mpcdec.h"
