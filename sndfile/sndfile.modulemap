@@ -1,5 +1,6 @@
 framework module sndfile {
 	module sndfile {
+		requires c99
 		header "sndfile.h"
 		export *
 	}
