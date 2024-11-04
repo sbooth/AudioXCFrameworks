@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		32677461254BA3200041B063 /* libtta.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267745F254BA2C70041B063 /* libtta.cpp */; };
 		32677470254BA3B80041B063 /* libtta.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677442254BA2C70041B063 /* libtta.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32D505182CD6792B00AC3DB8 /* filter_arm.S in Sources */ = {isa = PBXBuildFile; fileRef = 32D505172CD6792B00AC3DB8 /* filter_arm.S */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,7 +18,6 @@
 		32677452254BA2C70041B063 /* filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filter.h; sourceTree = "<group>"; };
 		3267745F254BA2C70041B063 /* libtta.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = libtta.cpp; sourceTree = "<group>"; };
 		32D505162CD6784800AC3DB8 /* tta-cpp.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = "tta-cpp.modulemap"; sourceTree = "<group>"; };
-		32D505172CD6792B00AC3DB8 /* filter_arm.S */ = {isa = PBXFileReference; explicitFileType = sourcecode.asm.llvm; path = filter_arm.S; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +53,6 @@
 			children = (
 				32677443254BA2C70041B063 /* config.h */,
 				32677452254BA2C70041B063 /* filter.h */,
-				32D505172CD6792B00AC3DB8 /* filter_arm.S */,
 				32677442254BA2C70041B063 /* libtta.h */,
 				3267745F254BA2C70041B063 /* libtta.cpp */,
 			);
@@ -141,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32D505182CD6792B00AC3DB8 /* filter_arm.S in Sources */,
 				32677461254BA3200041B063 /* libtta.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,10 +274,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				EXCLUDED_SOURCE_FILE_NAMES = filter_arm.S;
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				"INCLUDED_SOURCE_FILE_NAMES[arch=arm64]" = filter_arm.S;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -295,7 +289,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = "tta-cpp.modulemap";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				"OTHER_CPLUSPLUSFLAGS[arch=x86_64]" = (
 					"$(OTHER_CFLAGS)",
@@ -324,10 +318,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				EXCLUDED_SOURCE_FILE_NAMES = filter_arm.S;
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				"INCLUDED_SOURCE_FILE_NAMES[arch=arm64]" = filter_arm.S;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -341,7 +333,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = "tta-cpp.modulemap";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				"OTHER_CPLUSPLUSFLAGS[arch=x86_64]" = (
 					"$(OTHER_CFLAGS)",
