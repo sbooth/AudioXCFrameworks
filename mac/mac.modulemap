@@ -1,0 +1,17 @@
+framework module MAC {
+	requires cplusplus
+
+	header "All.h"
+	header "APETag.h"
+	header "CharacterHelper.h"
+	header "IO.h"
+//	header "MACDll.h"
+	header "MACLib.h"
+	header "NoWindows.h"
+	header "SmartPtr.h"
+	header "Version.h"
+	header "Warnings.h"
+	header "WindowsEnvironment.h"
+
+	export *
+}

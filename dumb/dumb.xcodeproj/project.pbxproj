@@ -3,24 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		32677D46254D0F4F0041B063 /* dumb.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677CBF254D0EDC0041B063 /* dumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677D49254D0F500041B063 /* dumb.h in Headers */ = {isa = PBXBuildFile; fileRef = 32677CBF254D0EDC0041B063 /* dumb.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677D50254D0F5E0041B063 /* makeduh.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CDF254D0EDC0041B063 /* makeduh.c */; };
-		32677D51254D0F5E0041B063 /* duhtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE9254D0EDC0041B063 /* duhtag.c */; };
-		32677D52254D0F5E0041B063 /* duhlen.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE3254D0EDC0041B063 /* duhlen.c */; };
-		32677D53254D0F5E0041B063 /* unload.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE0254D0EDC0041B063 /* unload.c */; };
-		32677D54254D0F5E0041B063 /* readduh.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE7254D0EDC0041B063 /* readduh.c */; };
-		32677D55254D0F5E0041B063 /* dumbfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE4254D0EDC0041B063 /* dumbfile.c */; };
-		32677D56254D0F5E0041B063 /* rawsig.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE6254D0EDC0041B063 /* rawsig.c */; };
-		32677D57254D0F5E0041B063 /* rendsig.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE5254D0EDC0041B063 /* rendsig.c */; };
-		32677D58254D0F5E0041B063 /* rendduh.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE2254D0EDC0041B063 /* rendduh.c */; };
-		32677D59254D0F5E0041B063 /* atexit.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE8254D0EDC0041B063 /* atexit.c */; };
-		32677D5A254D0F5E0041B063 /* loadduh.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CEA254D0EDC0041B063 /* loadduh.c */; };
-		32677D5B254D0F5E0041B063 /* register.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE1254D0EDC0041B063 /* register.c */; };
 		32677D5E254D0F5E0041B063 /* makeduh.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CDF254D0EDC0041B063 /* makeduh.c */; };
 		32677D5F254D0F5E0041B063 /* duhtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE9254D0EDC0041B063 /* duhtag.c */; };
 		32677D60254D0F5E0041B063 /* duhlen.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE3254D0EDC0041B063 /* duhlen.c */; };
@@ -33,68 +20,6 @@
 		32677D67254D0F5E0041B063 /* atexit.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE8254D0EDC0041B063 /* atexit.c */; };
 		32677D68254D0F5E0041B063 /* loadduh.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CEA254D0EDC0041B063 /* loadduh.c */; };
 		32677D69254D0F5E0041B063 /* register.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CE1254D0EDC0041B063 /* register.c */; };
-		32677D6C254D0F690041B063 /* read669.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D06254D0EDC0041B063 /* read669.c */; };
-		32677D6D254D0F690041B063 /* itmisc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF3254D0EDC0041B063 /* itmisc.c */; };
-		32677D6E254D0F690041B063 /* loadasy2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CEC254D0EDC0041B063 /* loadasy2.c */; };
-		32677D6F254D0F690041B063 /* loadany2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D1D254D0EDC0041B063 /* loadany2.c */; };
-		32677D70254D0F690041B063 /* readmtm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D28254D0EDC0041B063 /* readmtm.c */; };
-		32677D71254D0F690041B063 /* itread.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D05254D0EDC0041B063 /* itread.c */; };
-		32677D72254D0F690041B063 /* readstm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF5254D0EDC0041B063 /* readstm.c */; };
-		32677D73254D0F690041B063 /* readmod2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0C254D0EDC0041B063 /* readmod2.c */; };
-		32677D74254D0F690041B063 /* itload2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D18254D0EDC0041B063 /* itload2.c */; };
-		32677D75254D0F690041B063 /* readamf2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CFA254D0EDC0041B063 /* readamf2.c */; };
-		32677D76254D0F690041B063 /* readokt.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D26254D0EDC0041B063 /* readokt.c */; };
-		32677D77254D0F690041B063 /* readoldpsm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D1B254D0EDC0041B063 /* readoldpsm.c */; };
-		32677D78254D0F690041B063 /* loadokt.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D1A254D0EDC0041B063 /* loadokt.c */; };
-		32677D79254D0F690041B063 /* loadany.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CFD254D0EDC0041B063 /* loadany.c */; };
-		32677D7A254D0F690041B063 /* load6692.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CFC254D0EDC0041B063 /* load6692.c */; };
-		32677D7B254D0F690041B063 /* loadoldpsm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D13254D0EDC0041B063 /* loadoldpsm.c */; };
-		32677D7C254D0F690041B063 /* loadriff2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D20254D0EDC0041B063 /* loadriff2.c */; };
-		32677D7D254D0F690041B063 /* readam.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D24254D0EDC0041B063 /* readam.c */; };
-		32677D7E254D0F690041B063 /* readany2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0F254D0EDC0041B063 /* readany2.c */; };
-		32677D7F254D0F690041B063 /* loads3m2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D23254D0EDC0041B063 /* loads3m2.c */; };
-		32677D80254D0F690041B063 /* loadstm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D16254D0EDC0041B063 /* loadstm2.c */; };
-		32677D81254D0F690041B063 /* itrender.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0E254D0EDC0041B063 /* itrender.c */; };
-		32677D82254D0F690041B063 /* loadriff.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D02254D0EDC0041B063 /* loadriff.c */; };
-		32677D83254D0F690041B063 /* itunload.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D1F254D0EDC0041B063 /* itunload.c */; };
-		32677D84254D0F690041B063 /* readxm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D1E254D0EDC0041B063 /* readxm.c */; };
-		32677D85254D0F690041B063 /* itload.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF2254D0EDC0041B063 /* itload.c */; };
-		32677D86254D0F690041B063 /* loadasy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D04254D0EDC0041B063 /* loadasy.c */; };
-		32677D87254D0F690041B063 /* readamf.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D21254D0EDC0041B063 /* readamf.c */; };
-		32677D88254D0F690041B063 /* loadamf.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D19254D0EDC0041B063 /* loadamf.c */; };
-		32677D89254D0F690041B063 /* loadxm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CEE254D0EDC0041B063 /* loadxm2.c */; };
-		32677D8A254D0F690041B063 /* readxm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF4254D0EDC0041B063 /* readxm2.c */; };
-		32677D8B254D0F690041B063 /* readmod.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CFB254D0EDC0041B063 /* readmod.c */; };
-		32677D8C254D0F690041B063 /* xmeffect.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D08254D0EDC0041B063 /* xmeffect.c */; };
-		32677D8D254D0F690041B063 /* itorder.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D09254D0EDC0041B063 /* itorder.c */; };
-		32677D8E254D0F690041B063 /* loads3m.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0B254D0EDC0041B063 /* loads3m.c */; };
-		32677D8F254D0F690041B063 /* loadpsm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D25254D0EDC0041B063 /* loadpsm.c */; };
-		32677D90254D0F690041B063 /* loadamf2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF9254D0EDC0041B063 /* loadamf2.c */; };
-		32677D91254D0F690041B063 /* itread2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D27254D0EDC0041B063 /* itread2.c */; };
-		32677D92254D0F690041B063 /* loadpsm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF1254D0EDC0041B063 /* loadpsm2.c */; };
-		32677D93254D0F690041B063 /* loadptm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF0254D0EDC0041B063 /* loadptm.c */; };
-		32677D94254D0F690041B063 /* loadmod.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D00254D0EDC0041B063 /* loadmod.c */; };
-		32677D95254D0F690041B063 /* loadstm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CEF254D0EDC0041B063 /* loadstm.c */; };
-		32677D96254D0F690041B063 /* reads3m2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0D254D0EDC0041B063 /* reads3m2.c */; };
-		32677D97254D0F690041B063 /* readpsm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D1C254D0EDC0041B063 /* readpsm.c */; };
-		32677D98254D0F690041B063 /* loadmod2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D22254D0EDC0041B063 /* loadmod2.c */; };
-		32677D99254D0F690041B063 /* ptmeffect.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D10254D0EDC0041B063 /* ptmeffect.c */; };
-		32677D9A254D0F690041B063 /* load669.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D11254D0EDC0041B063 /* load669.c */; };
-		32677D9B254D0F690041B063 /* loadmtm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D12254D0EDC0041B063 /* loadmtm2.c */; };
-		32677D9C254D0F690041B063 /* loadokt2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D07254D0EDC0041B063 /* loadokt2.c */; };
-		32677D9D254D0F690041B063 /* loadmtm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D17254D0EDC0041B063 /* loadmtm.c */; };
-		32677D9E254D0F690041B063 /* readptm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF8254D0EDC0041B063 /* readptm.c */; };
-		32677D9F254D0F690041B063 /* readdsmf.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D01254D0EDC0041B063 /* readdsmf.c */; };
-		32677DA0254D0F690041B063 /* loadptm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF6254D0EDC0041B063 /* loadptm2.c */; };
-		32677DA1254D0F690041B063 /* loadxm.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CFE254D0EDC0041B063 /* loadxm.c */; };
-		32677DA2254D0F690041B063 /* read6692.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF7254D0EDC0041B063 /* read6692.c */; };
-		32677DA3254D0F690041B063 /* readasy.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CFF254D0EDC0041B063 /* readasy.c */; };
-		32677DA4254D0F690041B063 /* reads3m.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D14254D0EDC0041B063 /* reads3m.c */; };
-		32677DA5254D0F690041B063 /* readriff.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CED254D0EDC0041B063 /* readriff.c */; };
-		32677DA6254D0F690041B063 /* readstm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D15254D0EDC0041B063 /* readstm2.c */; };
-		32677DA7254D0F690041B063 /* readany.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D03254D0EDC0041B063 /* readany.c */; };
-		32677DA8254D0F690041B063 /* readokt2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D29254D0EDC0041B063 /* readokt2.c */; };
-		32677DA9254D0F690041B063 /* loadoldpsm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0A254D0EDC0041B063 /* loadoldpsm2.c */; };
 		32677DAC254D0F6A0041B063 /* read669.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D06254D0EDC0041B063 /* read669.c */; };
 		32677DAD254D0F6A0041B063 /* itmisc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CF3254D0EDC0041B063 /* itmisc.c */; };
 		32677DAE254D0F6A0041B063 /* loadasy2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677CEC254D0EDC0041B063 /* loadasy2.c */; };
@@ -157,17 +82,6 @@
 		32677DE7254D0F6A0041B063 /* readany.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D03254D0EDC0041B063 /* readany.c */; };
 		32677DE8254D0F6A0041B063 /* readokt2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D29254D0EDC0041B063 /* readokt2.c */; };
 		32677DE9254D0F6A0041B063 /* loadoldpsm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D0A254D0EDC0041B063 /* loadoldpsm2.c */; };
-		32677DEC254D0F790041B063 /* clickrem.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2E254D0EDC0041B063 /* clickrem.c */; };
-		32677DED254D0F790041B063 /* tarray.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D30254D0EDC0041B063 /* tarray.c */; };
-		32677DEE254D0F790041B063 /* barray.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2F254D0EDC0041B063 /* barray.c */; };
-		32677DEF254D0F790041B063 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D32254D0EDC0041B063 /* resample.c */; };
-		32677DF0254D0F790041B063 /* riff.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D37254D0EDC0041B063 /* riff.c */; };
-		32677DF1254D0F790041B063 /* sampbuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D31254D0EDC0041B063 /* sampbuf.c */; };
-		32677DF2254D0F790041B063 /* silence.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D35254D0EDC0041B063 /* silence.c */; };
-		32677DF3254D0F790041B063 /* resampler.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2C254D0EDC0041B063 /* resampler.c */; };
-		32677DF4254D0F790041B063 /* memfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2B254D0EDC0041B063 /* memfile.c */; };
-		32677DF5254D0F790041B063 /* stdfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2D254D0EDC0041B063 /* stdfile.c */; };
-		32677DF6254D0F790041B063 /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D36254D0EDC0041B063 /* lpc.c */; };
 		32677DF9254D0F7A0041B063 /* clickrem.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2E254D0EDC0041B063 /* clickrem.c */; };
 		32677DFA254D0F7A0041B063 /* tarray.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D30254D0EDC0041B063 /* tarray.c */; };
 		32677DFB254D0F7A0041B063 /* barray.c in Sources */ = {isa = PBXBuildFile; fileRef = 32677D2F254D0EDC0041B063 /* barray.c */; };
@@ -183,8 +97,6 @@
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* dumb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dumb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028DD9254AFEA000A537DE /* dumb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dumb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32677CBF254D0EDC0041B063 /* dumb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dumb.h; sourceTree = "<group>"; };
 		32677CC1254D0EDC0041B063 /* stack_alloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stack_alloc.h; sourceTree = "<group>"; };
 		32677CC2254D0EDC0041B063 /* dumb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dumb.h; sourceTree = "<group>"; };
@@ -308,20 +220,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DD4254AFEA000A537DE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
-				3267710F254B5D670041B063 /* Info.plist */,
 				3295D91F2884642D006AA170 /* dumb.modulemap */,
 				32677CB5254D0EDC0041B063 /* dumb-src */,
 				32028D09254AE93F00A537DE /* Products */,
@@ -332,7 +236,6 @@
 			isa = PBXGroup;
 			children = (
 				32028D08254AE93F00A537DE /* dumb.framework */,
-				32028DD9254AFEA000A537DE /* dumb.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -523,20 +426,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DCD254AFEA000A537DE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				32677D49254D0F500041B063 /* dumb.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		32028D07254AE93F00A537DE /* macOS */ = {
+		32028D07254AE93F00A537DE /* dumb */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
+			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "dumb" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
 				32028D04254AE93F00A537DE /* Sources */,
@@ -547,27 +442,9 @@
 			);
 			dependencies = (
 			);
-			name = macOS;
+			name = dumb;
 			productName = dumb;
 			productReference = 32028D08254AE93F00A537DE /* dumb.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		32028DCC254AFEA000A537DE /* iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
-			buildPhases = (
-				32028DCD254AFEA000A537DE /* Headers */,
-				32028DD1254AFEA000A537DE /* Sources */,
-				32028DD4254AFEA000A537DE /* Frameworks */,
-				32028DD5254AFEA000A537DE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = iOS;
-			productName = dumb;
-			productReference = 32028DD9254AFEA000A537DE /* dumb.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -576,7 +453,8 @@
 		32028CFF254AE93F00A537DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1220;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -596,21 +474,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				32028D07254AE93F00A537DE /* macOS */,
-				32028DCC254AFEA000A537DE /* iOS */,
+				32028D07254AE93F00A537DE /* dumb */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32028DD5254AFEA000A537DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -712,98 +582,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DD1254AFEA000A537DE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				32677D99254D0F690041B063 /* ptmeffect.c in Sources */,
-				32677DF5254D0F790041B063 /* stdfile.c in Sources */,
-				32677D80254D0F690041B063 /* loadstm2.c in Sources */,
-				32677D89254D0F690041B063 /* loadxm2.c in Sources */,
-				32677D9B254D0F690041B063 /* loadmtm2.c in Sources */,
-				32677DA8254D0F690041B063 /* readokt2.c in Sources */,
-				32677D86254D0F690041B063 /* loadasy.c in Sources */,
-				32677D91254D0F690041B063 /* itread2.c in Sources */,
-				32677D7F254D0F690041B063 /* loads3m2.c in Sources */,
-				32677D5A254D0F5E0041B063 /* loadduh.c in Sources */,
-				32677D54254D0F5E0041B063 /* readduh.c in Sources */,
-				32677D93254D0F690041B063 /* loadptm.c in Sources */,
-				32677D85254D0F690041B063 /* itload.c in Sources */,
-				32677D76254D0F690041B063 /* readokt.c in Sources */,
-				32677D84254D0F690041B063 /* readxm.c in Sources */,
-				32677D71254D0F690041B063 /* itread.c in Sources */,
-				32677D8F254D0F690041B063 /* loadpsm.c in Sources */,
-				32677D94254D0F690041B063 /* loadmod.c in Sources */,
-				32677D97254D0F690041B063 /* readpsm.c in Sources */,
-				32677D75254D0F690041B063 /* readamf2.c in Sources */,
-				32677DF2254D0F790041B063 /* silence.c in Sources */,
-				32677D96254D0F690041B063 /* reads3m2.c in Sources */,
-				32677D9E254D0F690041B063 /* readptm.c in Sources */,
-				32677D87254D0F690041B063 /* readamf.c in Sources */,
-				32677D8C254D0F690041B063 /* xmeffect.c in Sources */,
-				32677D83254D0F690041B063 /* itunload.c in Sources */,
-				32677D70254D0F690041B063 /* readmtm.c in Sources */,
-				32677D82254D0F690041B063 /* loadriff.c in Sources */,
-				32677D7A254D0F690041B063 /* load6692.c in Sources */,
-				32677D58254D0F5E0041B063 /* rendduh.c in Sources */,
-				32677DED254D0F790041B063 /* tarray.c in Sources */,
-				32677D73254D0F690041B063 /* readmod2.c in Sources */,
-				32677D9C254D0F690041B063 /* loadokt2.c in Sources */,
-				32677D77254D0F690041B063 /* readoldpsm.c in Sources */,
-				32677D9A254D0F690041B063 /* load669.c in Sources */,
-				32677D9D254D0F690041B063 /* loadmtm.c in Sources */,
-				32677D92254D0F690041B063 /* loadpsm2.c in Sources */,
-				32677DA0254D0F690041B063 /* loadptm2.c in Sources */,
-				32677DA1254D0F690041B063 /* loadxm.c in Sources */,
-				32677D9F254D0F690041B063 /* readdsmf.c in Sources */,
-				32677D6C254D0F690041B063 /* read669.c in Sources */,
-				32677D8D254D0F690041B063 /* itorder.c in Sources */,
-				32677D78254D0F690041B063 /* loadokt.c in Sources */,
-				32677DA3254D0F690041B063 /* readasy.c in Sources */,
-				32677D7B254D0F690041B063 /* loadoldpsm.c in Sources */,
-				32677D6D254D0F690041B063 /* itmisc.c in Sources */,
-				32677DEE254D0F790041B063 /* barray.c in Sources */,
-				32677D72254D0F690041B063 /* readstm.c in Sources */,
-				32677DA4254D0F690041B063 /* reads3m.c in Sources */,
-				32677D88254D0F690041B063 /* loadamf.c in Sources */,
-				32677DA2254D0F690041B063 /* read6692.c in Sources */,
-				32677DA7254D0F690041B063 /* readany.c in Sources */,
-				32677D6F254D0F690041B063 /* loadany2.c in Sources */,
-				32677DF4254D0F790041B063 /* memfile.c in Sources */,
-				32677D53254D0F5E0041B063 /* unload.c in Sources */,
-				32677D51254D0F5E0041B063 /* duhtag.c in Sources */,
-				32677D55254D0F5E0041B063 /* dumbfile.c in Sources */,
-				32677D50254D0F5E0041B063 /* makeduh.c in Sources */,
-				32677D79254D0F690041B063 /* loadany.c in Sources */,
-				32677D7C254D0F690041B063 /* loadriff2.c in Sources */,
-				32677D52254D0F5E0041B063 /* duhlen.c in Sources */,
-				32677DF3254D0F790041B063 /* resampler.c in Sources */,
-				32677D95254D0F690041B063 /* loadstm.c in Sources */,
-				32677D5B254D0F5E0041B063 /* register.c in Sources */,
-				32677D98254D0F690041B063 /* loadmod2.c in Sources */,
-				32677DEC254D0F790041B063 /* clickrem.c in Sources */,
-				32677D8B254D0F690041B063 /* readmod.c in Sources */,
-				32677D57254D0F5E0041B063 /* rendsig.c in Sources */,
-				32677D74254D0F690041B063 /* itload2.c in Sources */,
-				32677DA5254D0F690041B063 /* readriff.c in Sources */,
-				32677D81254D0F690041B063 /* itrender.c in Sources */,
-				32677D59254D0F5E0041B063 /* atexit.c in Sources */,
-				32677DEF254D0F790041B063 /* resample.c in Sources */,
-				32677DF6254D0F790041B063 /* lpc.c in Sources */,
-				32677DA9254D0F690041B063 /* loadoldpsm2.c in Sources */,
-				32677D6E254D0F690041B063 /* loadasy2.c in Sources */,
-				32677DF0254D0F790041B063 /* riff.c in Sources */,
-				32677DF1254D0F790041B063 /* sampbuf.c in Sources */,
-				32677D7E254D0F690041B063 /* readany2.c in Sources */,
-				32677D56254D0F5E0041B063 /* rawsig.c in Sources */,
-				32677D8A254D0F690041B063 /* readxm2.c in Sources */,
-				32677D90254D0F690041B063 /* loadamf2.c in Sources */,
-				32677D8E254D0F690041B063 /* loads3m.c in Sources */,
-				32677DA6254D0F690041B063 /* readstm2.c in Sources */,
-				32677D7D254D0F690041B063 /* readam.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -811,11 +589,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -843,10 +619,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -860,13 +638,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/dumb-src/include";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -876,11 +651,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -908,10 +681,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -919,12 +694,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/dumb-src/include";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -933,100 +705,82 @@
 		32028D11254AE93F00A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = dumb.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sf.dumb;
 				PRODUCT_NAME = dumb;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/dumb-src/include";
 			};
 			name = Debug;
 		};
 		32028D12254AE93F00A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = dumb.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = net.sf.dumb;
 				PRODUCT_NAME = dumb;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-			};
-			name = Release;
-		};
-		32028DD7254AFEA000A537DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = dumb.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sf.dumb;
-				PRODUCT_NAME = dumb;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		32028DD8254AFEA000A537DE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = dumb.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = net.sf.dumb;
-				PRODUCT_NAME = dumb;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/dumb-src/include";
 			};
 			name = Release;
 		};
@@ -1042,20 +796,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */ = {
+		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "dumb" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D11254AE93F00A537DE /* Debug */,
 				32028D12254AE93F00A537DE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				32028DD7254AFEA000A537DE /* Debug */,
-				32028DD8254AFEA000A537DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

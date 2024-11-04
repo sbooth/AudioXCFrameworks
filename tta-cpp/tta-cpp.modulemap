@@ -1,0 +1,5 @@
+framework module "tta-cpp" {
+	requires cplusplus11
+	header "libtta.h"
+	export *
+}

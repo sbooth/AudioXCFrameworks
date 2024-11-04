@@ -8,39 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		325A5E172ADAED6A00A091AA /* NNFilterGeneric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E092ADAED0600A091AA /* NNFilterGeneric.cpp */; };
-		325A5E182ADAED6B00A091AA /* NNFilterGeneric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E092ADAED0600A091AA /* NNFilterGeneric.cpp */; };
 		325A5E192ADAEE4F00A091AA /* CPUFeatures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0E2ADAED3900A091AA /* CPUFeatures.cpp */; };
-		325A5E1A2ADAEE5000A091AA /* CPUFeatures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0E2ADAED3900A091AA /* CPUFeatures.cpp */; };
 		325A5E1D2ADAEEAE00A091AA /* WholeFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0F2ADAED3900A091AA /* WholeFileIO.cpp */; };
-		325A5E1E2ADAEEAF00A091AA /* WholeFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0F2ADAED3900A091AA /* WholeFileIO.cpp */; };
 		325A5E1F2ADAEEE200A091AA /* BufferIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E102ADAED3900A091AA /* BufferIO.cpp */; };
-		325A5E202ADAEEE300A091AA /* BufferIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E102ADAED3900A091AA /* BufferIO.cpp */; };
-		325A5E272ADAEFC900A091AA /* Warnings.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A5E122ADAED3900A091AA /* Warnings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325A5E282ADAEFCA00A091AA /* Warnings.h in Headers */ = {isa = PBXBuildFile; fileRef = 325A5E122ADAED3900A091AA /* Warnings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325A5E2B2ADAF0AF00A091AA /* WindowsEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DC254B73160041B063 /* WindowsEnvironment.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		325A5E2C2ADAF0B000A091AA /* WindowsEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DC254B73160041B063 /* WindowsEnvironment.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		325A5E2D2ADAF10A00A091AA /* FloatTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0A2ADAED0600A091AA /* FloatTransform.cpp */; };
 		325A5E2E2ADAF10A00A091AA /* FloatTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0A2ADAED0600A091AA /* FloatTransform.cpp */; };
-		325A5E2F2ADAF13200A091AA /* NNFilterAVX2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E052ADAED0600A091AA /* NNFilterAVX2.cpp */; };
 		325A5E302ADAF13200A091AA /* NNFilterAVX2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E052ADAED0600A091AA /* NNFilterAVX2.cpp */; };
-		325A5E312ADAF13500A091AA /* NNFilterAVX512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E082ADAED0600A091AA /* NNFilterAVX512.cpp */; };
 		325A5E322ADAF13500A091AA /* NNFilterAVX512.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E082ADAED0600A091AA /* NNFilterAVX512.cpp */; };
-		325A5E332ADAF14000A091AA /* NNFilterSSE2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0D2ADAED0700A091AA /* NNFilterSSE2.cpp */; };
 		325A5E342ADAF14000A091AA /* NNFilterSSE2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0D2ADAED0700A091AA /* NNFilterSSE2.cpp */; };
-		325A5E352ADAF14300A091AA /* NNFilterSSE4.1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E072ADAED0600A091AA /* NNFilterSSE4.1.cpp */; };
 		325A5E362ADAF14400A091AA /* NNFilterSSE4.1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E072ADAED0600A091AA /* NNFilterSSE4.1.cpp */; };
 		325A5E372ADAF14700A091AA /* NNFilterNeon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0C2ADAED0600A091AA /* NNFilterNeon.cpp */; };
-		325A5E382ADAF14700A091AA /* NNFilterNeon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 325A5E0C2ADAED0600A091AA /* NNFilterNeon.cpp */; };
 		32677358254B7F6C0041B063 /* CircleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772EA254B73160041B063 /* CircleBuffer.cpp */; };
 		32677359254B7F6C0041B063 /* StdLibFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772D7254B73160041B063 /* StdLibFileIO.cpp */; };
 		3267735A254B7F6C0041B063 /* CRC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772D6254B73160041B063 /* CRC.cpp */; };
 		3267735B254B7F6C0041B063 /* GlobalFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772EE254B73160041B063 /* GlobalFunctions.cpp */; };
 		3267735C254B7F6C0041B063 /* CharacterHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772DA254B73160041B063 /* CharacterHelper.cpp */; };
-		3267735D254B7F6C0041B063 /* CircleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772EA254B73160041B063 /* CircleBuffer.cpp */; };
-		3267735E254B7F6C0041B063 /* StdLibFileIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772D7254B73160041B063 /* StdLibFileIO.cpp */; };
-		3267735F254B7F6C0041B063 /* CRC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772D6254B73160041B063 /* CRC.cpp */; };
-		32677360254B7F6C0041B063 /* GlobalFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772EE254B73160041B063 /* GlobalFunctions.cpp */; };
-		32677361254B7F6C0041B063 /* CharacterHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772DA254B73160041B063 /* CharacterHelper.cpp */; };
 		32677364254B7FBF0041B063 /* NNFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677275254B73150041B063 /* NNFilter.cpp */; };
 		32677365254B7FBF0041B063 /* APEDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677299254B73160041B063 /* APEDecompress.cpp */; };
 		32677366254B7FBF0041B063 /* MACProgressHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267727D254B73160041B063 /* MACProgressHelper.cpp */; };
@@ -55,37 +38,10 @@
 		32677370254B7FBF0041B063 /* APECompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267726D254B73150041B063 /* APECompress.cpp */; };
 		32677371254B7FBF0041B063 /* APEHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267727C254B73160041B063 /* APEHeader.cpp */; };
 		32677372254B7FBF0041B063 /* APEInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267728E254B73160041B063 /* APEInfo.cpp */; };
-		32677373254B7FC00041B063 /* NNFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677275254B73150041B063 /* NNFilter.cpp */; };
-		32677374254B7FC00041B063 /* APEDecompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677299254B73160041B063 /* APEDecompress.cpp */; };
-		32677375254B7FC00041B063 /* MACProgressHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267727D254B73160041B063 /* MACProgressHelper.cpp */; };
-		32677377254B7FC00041B063 /* APECompressCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677271254B73150041B063 /* APECompressCore.cpp */; };
-		32677378254B7FC00041B063 /* APELink.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677276254B73150041B063 /* APELink.cpp */; };
-		32677379254B7FC00041B063 /* NewPredictor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267729E254B73160041B063 /* NewPredictor.cpp */; };
-		3267737A254B7FC00041B063 /* BitArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677295254B73160041B063 /* BitArray.cpp */; };
-		3267737B254B7FC00041B063 /* APETag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677291254B73160041B063 /* APETag.cpp */; };
-		3267737C254B7FC00041B063 /* MACLib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677294254B73160041B063 /* MACLib.cpp */; };
-		3267737D254B7FC00041B063 /* MD5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677273254B73150041B063 /* MD5.cpp */; };
-		3267737E254B7FC00041B063 /* APECompressCreate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677296254B73160041B063 /* APECompressCreate.cpp */; };
-		3267737F254B7FC00041B063 /* APECompress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267726D254B73150041B063 /* APECompress.cpp */; };
-		32677380254B7FC00041B063 /* APEHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267727C254B73160041B063 /* APEHeader.cpp */; };
-		32677381254B7FC00041B063 /* APEInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267728E254B73160041B063 /* APEInfo.cpp */; };
 		32677384254B7FE20041B063 /* UnBitArrayBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772A0254B73160041B063 /* UnBitArrayBase.cpp */; };
 		32677385254B7FE20041B063 /* WAVInputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677270254B73150041B063 /* WAVInputSource.cpp */; };
 		32677386254B7FE20041B063 /* UnBitArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267726E254B73150041B063 /* UnBitArray.cpp */; };
 		32677387254B7FE20041B063 /* Prepare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677297254B73160041B063 /* Prepare.cpp */; };
-		32677388254B7FE20041B063 /* UnBitArrayBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 326772A0254B73160041B063 /* UnBitArrayBase.cpp */; };
-		32677389254B7FE20041B063 /* WAVInputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677270254B73150041B063 /* WAVInputSource.cpp */; };
-		3267738A254B7FE20041B063 /* UnBitArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267726E254B73150041B063 /* UnBitArray.cpp */; };
-		3267738B254B7FE20041B063 /* Prepare.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677297254B73160041B063 /* Prepare.cpp */; };
-		3267738E254B800E0041B063 /* APEDecompressOld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677284254B73160041B063 /* APEDecompressOld.cpp */; };
-		3267738F254B800E0041B063 /* UnMAC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677282254B73160041B063 /* UnMAC.cpp */; };
-		32677390254B800E0041B063 /* APEDecompressCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677289254B73160041B063 /* APEDecompressCore.cpp */; };
-		32677391254B800E0041B063 /* UnBitArrayOld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3267728A254B73160041B063 /* UnBitArrayOld.cpp */; };
-		32677392254B800E0041B063 /* AntiPredictorFast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677281254B73160041B063 /* AntiPredictorFast.cpp */; };
-		32677393254B800E0041B063 /* AntiPredictorHigh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677280254B73160041B063 /* AntiPredictorHigh.cpp */; };
-		32677394254B800E0041B063 /* Anti-Predictor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677283254B73160041B063 /* Anti-Predictor.cpp */; };
-		32677395254B800E0041B063 /* AntiPredictorExtraHigh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677285254B73160041B063 /* AntiPredictorExtraHigh.cpp */; };
-		32677396254B800E0041B063 /* AntiPredictorNormal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677286254B73160041B063 /* AntiPredictorNormal.cpp */; };
 		32677397254B800F0041B063 /* APEDecompressOld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677284254B73160041B063 /* APEDecompressOld.cpp */; };
 		32677398254B800F0041B063 /* UnMAC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677282254B73160041B063 /* UnMAC.cpp */; };
 		32677399254B800F0041B063 /* APEDecompressCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677289254B73160041B063 /* APEDecompressCore.cpp */; };
@@ -95,21 +51,11 @@
 		3267739D254B800F0041B063 /* Anti-Predictor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677283254B73160041B063 /* Anti-Predictor.cpp */; };
 		3267739E254B800F0041B063 /* AntiPredictorExtraHigh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677285254B73160041B063 /* AntiPredictorExtraHigh.cpp */; };
 		3267739F254B800F0041B063 /* AntiPredictorNormal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 32677286254B73160041B063 /* AntiPredictorNormal.cpp */; };
-		3267790B254C411E0041B063 /* All.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DF254B73160041B063 /* All.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267790E254C411F0041B063 /* All.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DF254B73160041B063 /* All.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677915254C412B0041B063 /* APETag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3267729D254B73160041B063 /* APETag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677918254C412C0041B063 /* APETag.h in Headers */ = {isa = PBXBuildFile; fileRef = 3267729D254B73160041B063 /* APETag.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3267791D254C41560041B063 /* MACLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 3267729A254B73160041B063 /* MACLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3267791E254C41560041B063 /* NoWindows.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E1254B73160041B063 /* NoWindows.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3267791F254C41560041B063 /* CharacterHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772EB254B73160041B063 /* CharacterHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677920254C41560041B063 /* MACDll.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DE254B73160041B063 /* MACDll.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677921254C41560041B063 /* Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DB254B73160041B063 /* Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677923254C41560041B063 /* IO.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E8254B73160041B063 /* IO.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32677924254C41560041B063 /* SmartPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E2254B73160041B063 /* SmartPtr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677927254C41570041B063 /* MACLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 3267729A254B73160041B063 /* MACLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677928254C41570041B063 /* NoWindows.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E1254B73160041B063 /* NoWindows.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32677929254C41570041B063 /* CharacterHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772EB254B73160041B063 /* CharacterHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3267792A254C41570041B063 /* MACDll.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DE254B73160041B063 /* MACDll.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267792B254C41570041B063 /* Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772DB254B73160041B063 /* Version.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267792D254C41570041B063 /* IO.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E8254B73160041B063 /* IO.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3267792E254C41570041B063 /* SmartPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 326772E2254B73160041B063 /* SmartPtr.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -117,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* MAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028DD9254AFEA000A537DE /* MAC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MAC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		325A5E052ADAED0600A091AA /* NNFilterAVX2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NNFilterAVX2.cpp; sourceTree = "<group>"; };
 		325A5E062ADAED0600A091AA /* FloatTransform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloatTransform.h; sourceTree = "<group>"; };
 		325A5E072ADAED0600A091AA /* NNFilterSSE4.1.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NNFilterSSE4.1.cpp; sourceTree = "<group>"; };
@@ -136,7 +81,6 @@
 		325A5E142ADAED3900A091AA /* BufferIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferIO.h; sourceTree = "<group>"; };
 		325A5E152ADAED3900A091AA /* MFCWarnings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFCWarnings.h; sourceTree = "<group>"; };
 		325A5E162ADAED3900A091AA /* WholeFileIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WholeFileIO.h; sourceTree = "<group>"; };
-		3267711F254B5E560041B063 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3267726D254B73150041B063 /* APECompress.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = APECompress.cpp; sourceTree = "<group>"; };
 		3267726E254B73150041B063 /* UnBitArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnBitArray.cpp; sourceTree = "<group>"; };
 		3267726F254B73150041B063 /* Prepare.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prepare.h; sourceTree = "<group>"; };
@@ -228,17 +172,11 @@
 		326772EE254B73160041B063 /* GlobalFunctions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlobalFunctions.cpp; sourceTree = "<group>"; };
 		326772EF254B73160041B063 /* GlobalFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalFunctions.h; sourceTree = "<group>"; };
 		326772F0254B73160041B063 /* WinFileIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WinFileIO.h; sourceTree = "<group>"; };
+		32D5051C2CD6ABDA00AC3DB8 /* mac.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = mac.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		32028D05254AE93F00A537DE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32028DD4254AFEA000A537DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -251,7 +189,7 @@
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
-				3267711F254B5E560041B063 /* Info.plist */,
+				32D5051C2CD6ABDA00AC3DB8 /* mac.modulemap */,
 				32677253254B73150041B063 /* MAC_SDK-src */,
 				32028D09254AE93F00A537DE /* Products */,
 			);
@@ -261,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				32028D08254AE93F00A537DE /* MAC.framework */,
-				32028DD9254AFEA000A537DE /* MAC.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -444,37 +381,18 @@
 				3267792B254C41570041B063 /* Version.h in Headers */,
 				32677929254C41570041B063 /* CharacterHelper.h in Headers */,
 				32677928254C41570041B063 /* NoWindows.h in Headers */,
-				3267792A254C41570041B063 /* MACDll.h in Headers */,
 				3267792D254C41570041B063 /* IO.h in Headers */,
 				3267792E254C41570041B063 /* SmartPtr.h in Headers */,
 				325A5E2B2ADAF0AF00A091AA /* WindowsEnvironment.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DCD254AFEA000A537DE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3267790B254C411E0041B063 /* All.h in Headers */,
-				3267791D254C41560041B063 /* MACLib.h in Headers */,
-				325A5E272ADAEFC900A091AA /* Warnings.h in Headers */,
-				32677915254C412B0041B063 /* APETag.h in Headers */,
-				32677921254C41560041B063 /* Version.h in Headers */,
-				3267791F254C41560041B063 /* CharacterHelper.h in Headers */,
-				3267791E254C41560041B063 /* NoWindows.h in Headers */,
-				32677920254C41560041B063 /* MACDll.h in Headers */,
-				32677923254C41560041B063 /* IO.h in Headers */,
-				32677924254C41560041B063 /* SmartPtr.h in Headers */,
-				325A5E2C2ADAF0B000A091AA /* WindowsEnvironment.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		32028D07254AE93F00A537DE /* macOS */ = {
+		32028D07254AE93F00A537DE /* MAC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
+			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "MAC" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
 				32028D04254AE93F00A537DE /* Sources */,
@@ -485,27 +403,9 @@
 			);
 			dependencies = (
 			);
-			name = macOS;
+			name = MAC;
 			productName = MAC;
 			productReference = 32028D08254AE93F00A537DE /* MAC.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		32028DCC254AFEA000A537DE /* iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
-			buildPhases = (
-				32028DCD254AFEA000A537DE /* Headers */,
-				32028DD1254AFEA000A537DE /* Sources */,
-				32028DD4254AFEA000A537DE /* Frameworks */,
-				32028DD5254AFEA000A537DE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = iOS;
-			productName = MAC;
-			productReference = 32028DD9254AFEA000A537DE /* MAC.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -515,7 +415,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -535,21 +435,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				32028D07254AE93F00A537DE /* macOS */,
-				32028DCC254AFEA000A537DE /* iOS */,
+				32028D07254AE93F00A537DE /* MAC */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32028DD5254AFEA000A537DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -608,55 +500,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DD1254AFEA000A537DE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				325A5E332ADAF14000A091AA /* NNFilterSSE2.cpp in Sources */,
-				3267735F254B7F6C0041B063 /* CRC.cpp in Sources */,
-				32677373254B7FC00041B063 /* NNFilter.cpp in Sources */,
-				325A5E182ADAED6B00A091AA /* NNFilterGeneric.cpp in Sources */,
-				32677389254B7FE20041B063 /* WAVInputSource.cpp in Sources */,
-				325A5E1E2ADAEEAF00A091AA /* WholeFileIO.cpp in Sources */,
-				3267738B254B7FE20041B063 /* Prepare.cpp in Sources */,
-				32677378254B7FC00041B063 /* APELink.cpp in Sources */,
-				3267735D254B7F6C0041B063 /* CircleBuffer.cpp in Sources */,
-				325A5E382ADAF14700A091AA /* NNFilterNeon.cpp in Sources */,
-				325A5E352ADAF14300A091AA /* NNFilterSSE4.1.cpp in Sources */,
-				32677395254B800E0041B063 /* AntiPredictorExtraHigh.cpp in Sources */,
-				32677360254B7F6C0041B063 /* GlobalFunctions.cpp in Sources */,
-				32677394254B800E0041B063 /* Anti-Predictor.cpp in Sources */,
-				3267737C254B7FC00041B063 /* MACLib.cpp in Sources */,
-				3267737A254B7FC00041B063 /* BitArray.cpp in Sources */,
-				325A5E2D2ADAF10A00A091AA /* FloatTransform.cpp in Sources */,
-				3267737B254B7FC00041B063 /* APETag.cpp in Sources */,
-				32677392254B800E0041B063 /* AntiPredictorFast.cpp in Sources */,
-				32677375254B7FC00041B063 /* MACProgressHelper.cpp in Sources */,
-				325A5E1A2ADAEE5000A091AA /* CPUFeatures.cpp in Sources */,
-				32677379254B7FC00041B063 /* NewPredictor.cpp in Sources */,
-				3267738E254B800E0041B063 /* APEDecompressOld.cpp in Sources */,
-				32677361254B7F6C0041B063 /* CharacterHelper.cpp in Sources */,
-				3267737E254B7FC00041B063 /* APECompressCreate.cpp in Sources */,
-				3267738F254B800E0041B063 /* UnMAC.cpp in Sources */,
-				32677393254B800E0041B063 /* AntiPredictorHigh.cpp in Sources */,
-				32677380254B7FC00041B063 /* APEHeader.cpp in Sources */,
-				32677391254B800E0041B063 /* UnBitArrayOld.cpp in Sources */,
-				32677377254B7FC00041B063 /* APECompressCore.cpp in Sources */,
-				32677374254B7FC00041B063 /* APEDecompress.cpp in Sources */,
-				325A5E2F2ADAF13200A091AA /* NNFilterAVX2.cpp in Sources */,
-				325A5E202ADAEEE300A091AA /* BufferIO.cpp in Sources */,
-				325A5E312ADAF13500A091AA /* NNFilterAVX512.cpp in Sources */,
-				3267738A254B7FE20041B063 /* UnBitArray.cpp in Sources */,
-				3267737D254B7FC00041B063 /* MD5.cpp in Sources */,
-				3267737F254B7FC00041B063 /* APECompress.cpp in Sources */,
-				32677396254B800E0041B063 /* AntiPredictorNormal.cpp in Sources */,
-				32677388254B7FE20041B063 /* UnBitArrayBase.cpp in Sources */,
-				32677381254B7FC00041B063 /* APEInfo.cpp in Sources */,
-				3267735E254B7F6C0041B063 /* StdLibFileIO.cpp in Sources */,
-				32677390254B800E0041B063 /* APEDecompressCore.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -664,11 +507,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -701,12 +542,11 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					PLATFORM_APPLE,
 					"DEBUG=1",
 					"$(inherited)",
 				);
@@ -716,12 +556,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -731,11 +569,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -768,20 +604,17 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_APPLE;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -790,96 +623,85 @@
 		32028D11254AE93F00A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
+				ENABLE_MODULE_VERIFIER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					PLATFORM_APPLE,
 					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = mac.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.monkeysaudio;
 				PRODUCT_NAME = MAC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
 		32028D12254AE93F00A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				ENABLE_MODULE_VERIFIER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = PLATFORM_APPLE;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MODULEMAP_FILE = mac.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.monkeysaudio;
 				PRODUCT_NAME = MAC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-			};
-			name = Release;
-		};
-		32028DD7254AFEA000A537DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.monkeysaudio;
-				PRODUCT_NAME = MAC;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		32028DD8254AFEA000A537DE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.monkeysaudio;
-				PRODUCT_NAME = MAC;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Release;
 		};
@@ -895,20 +717,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */ = {
+		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "MAC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D11254AE93F00A537DE /* Debug */,
 				32028D12254AE93F00A537DE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				32028DD7254AFEA000A537DE /* Debug */,
-				32028DD8254AFEA000A537DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

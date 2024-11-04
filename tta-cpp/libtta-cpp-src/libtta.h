@@ -13,12 +13,11 @@
 #define _LIBTTA_H
 
 #ifdef __GNUC__
-#include <stdint.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h> 
-#include <stdexcept>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <exception>
 
 #ifdef CARIBBEAN
 #define ALLOW_OS_CODE 1

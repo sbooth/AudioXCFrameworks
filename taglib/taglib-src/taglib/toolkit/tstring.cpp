@@ -28,7 +28,7 @@
 #include <cerrno>
 #include <climits>
 #include <iostream>
-#include <utf8.h>
+#include "utf8.h"
 
 #include "tdebug.h"
 #include "tstringlist.h"

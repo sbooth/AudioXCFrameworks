@@ -1,7 +1,5 @@
 FRAMEWORK_NAME := opus
 XCODEPROJ := opus.xcodeproj
-
-MACOS_SCHEME := opus-macOS
-IOS_SCHEME := opus-iOS
+SCHEME := opus
 
 include ../xcframework.mk

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,45 +13,8 @@
 		327145D3254F21D200029BD7 /* speex_callbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A9254F21A100029BD7 /* speex_callbacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D4254F21D200029BD7 /* speex_stereo.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A3254F21A100029BD7 /* speex_stereo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145D5254F21D200029BD7 /* speex.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A4254F21A100029BD7 /* speex.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145D8254F21D300029BD7 /* speex_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A5254F21A100029BD7 /* speex_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145D9254F21D300029BD7 /* speex_header.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A2254F21A100029BD7 /* speex_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145DA254F21D300029BD7 /* speex_bits.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A8254F21A100029BD7 /* speex_bits.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145DB254F21D300029BD7 /* speex_callbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A9254F21A100029BD7 /* speex_callbacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145DC254F21D300029BD7 /* speex_stereo.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A3254F21A100029BD7 /* speex_stereo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145DD254F21D300029BD7 /* speex.h in Headers */ = {isa = PBXBuildFile; fileRef = 327144A4254F21A100029BD7 /* speex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145E5254F229F00029BD7 /* speex_config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327145E4254F229F00029BD7 /* speex_config_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327145E6254F229F00029BD7 /* speex_config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 327145E4254F229F00029BD7 /* speex_config_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327145F8254F231100029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327145EF254F230C00029BD7 /* config.h */; };
-		327145FB254F231200029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 327145EF254F230C00029BD7 /* config.h */; };
-		327145FE254F240900029BD7 /* lsp_tables_nb.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144C1254F21A100029BD7 /* lsp_tables_nb.c */; };
-		327145FF254F240900029BD7 /* sb_celp.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144C6254F21A100029BD7 /* sb_celp.c */; };
-		32714600254F240900029BD7 /* vq.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D7254F21A100029BD7 /* vq.c */; };
-		32714601254F240900029BD7 /* nb_celp.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144BB254F21A100029BD7 /* nb_celp.c */; };
-		32714602254F240900029BD7 /* gain_table_lbr.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144F4254F21A100029BD7 /* gain_table_lbr.c */; };
-		32714603254F240900029BD7 /* cb_search.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144CF254F21A100029BD7 /* cb_search.c */; };
-		32714604254F240900029BD7 /* exc_10_32_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144FD254F21A100029BD7 /* exc_10_32_table.c */; };
-		32714605254F240900029BD7 /* exc_20_32_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144E2254F21A100029BD7 /* exc_20_32_table.c */; };
-		32714606254F240900029BD7 /* modes_wb.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144B3254F21A100029BD7 /* modes_wb.c */; };
-		32714607254F240900029BD7 /* ltp.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144BD254F21A100029BD7 /* ltp.c */; };
-		32714608254F240900029BD7 /* speex_callbacks.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D5254F21A100029BD7 /* speex_callbacks.c */; };
-		32714609254F240900029BD7 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714502254F21A100029BD7 /* window.c */; };
-		3271460A254F240900029BD7 /* vbr.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144C5254F21A100029BD7 /* vbr.c */; };
-		3271460B254F240900029BD7 /* exc_8_128_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144B2254F21A100029BD7 /* exc_8_128_table.c */; };
-		3271460C254F240900029BD7 /* gain_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714503254F21A100029BD7 /* gain_table.c */; };
-		3271460D254F240900029BD7 /* exc_5_64_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144CD254F21A100029BD7 /* exc_5_64_table.c */; };
-		3271460E254F240900029BD7 /* lsp.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144FE254F21A100029BD7 /* lsp.c */; };
-		3271460F254F240900029BD7 /* hexc_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144BF254F21A100029BD7 /* hexc_table.c */; };
-		32714610254F240900029BD7 /* filters.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D1254F21A100029BD7 /* filters.c */; };
-		32714611254F240900029BD7 /* exc_5_256_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144E9254F21A100029BD7 /* exc_5_256_table.c */; };
-		32714612254F240900029BD7 /* lpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144FA254F21A100029BD7 /* lpc.c */; };
-		32714613254F240900029BD7 /* speex.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144EA254F21A100029BD7 /* speex.c */; };
-		32714614254F240900029BD7 /* stereo.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144E5254F21A100029BD7 /* stereo.c */; };
-		32714615254F240900029BD7 /* bits.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D3254F21A100029BD7 /* bits.c */; };
-		32714616254F240900029BD7 /* quant_lsp.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144F5254F21A100029BD7 /* quant_lsp.c */; };
-		32714617254F240900029BD7 /* speex_header.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144E0254F21A100029BD7 /* speex_header.c */; };
-		32714618254F240900029BD7 /* high_lsp_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D2254F21A100029BD7 /* high_lsp_tables.c */; };
-		32714619254F240900029BD7 /* modes.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144CC254F21A100029BD7 /* modes.c */; };
-		3271461A254F240900029BD7 /* exc_10_16_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144DF254F21A100029BD7 /* exc_10_16_table.c */; };
 		3271461D254F240A00029BD7 /* lsp_tables_nb.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144C1254F21A100029BD7 /* lsp_tables_nb.c */; };
 		3271461E254F240A00029BD7 /* sb_celp.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144C6254F21A100029BD7 /* sb_celp.c */; };
 		3271461F254F240A00029BD7 /* vq.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D7254F21A100029BD7 /* vq.c */; };
@@ -81,22 +44,14 @@
 		32714637254F240A00029BD7 /* high_lsp_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144D2254F21A100029BD7 /* high_lsp_tables.c */; };
 		32714638254F240A00029BD7 /* modes.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144CC254F21A100029BD7 /* modes.c */; };
 		32714639254F240A00029BD7 /* exc_10_16_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144DF254F21A100029BD7 /* exc_10_16_table.c */; };
-		32714646254F24AA00029BD7 /* hexc_10_32_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144ED254F21A100029BD7 /* hexc_10_32_table.c */; };
 		32714649254F24AA00029BD7 /* hexc_10_32_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144ED254F21A100029BD7 /* hexc_10_32_table.c */; };
 		32714724254F2A0500029BD7 /* speex_jitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714669254F29CF00029BD7 /* speex_jitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714725254F2A0500029BD7 /* speexdsp_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714664254F29CF00029BD7 /* speexdsp_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714726254F2A0500029BD7 /* speex_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714665254F29CF00029BD7 /* speex_resampler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714727254F2A0500029BD7 /* speex_preprocess.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714666254F29CF00029BD7 /* speex_preprocess.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714728254F2A0500029BD7 /* speex_echo.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714663254F29CF00029BD7 /* speex_echo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3271472B254F2A0500029BD7 /* speex_jitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714669254F29CF00029BD7 /* speex_jitter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3271472C254F2A0500029BD7 /* speexdsp_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714664254F29CF00029BD7 /* speexdsp_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3271472D254F2A0500029BD7 /* speex_resampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714665254F29CF00029BD7 /* speex_resampler.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3271472E254F2A0500029BD7 /* speex_preprocess.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714666254F29CF00029BD7 /* speex_preprocess.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3271472F254F2A0500029BD7 /* speex_echo.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714663254F29CF00029BD7 /* speex_echo.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		32714734254F2A0B00029BD7 /* speex_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714668254F29CF00029BD7 /* speex_buffer.h */; };
 		32714737254F2A0C00029BD7 /* speex_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 32714668254F29CF00029BD7 /* speex_buffer.h */; };
 		3271473B254F2A8F00029BD7 /* speexdsp_config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 3271473A254F2A8F00029BD7 /* speexdsp_config_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3271473C254F2A8F00029BD7 /* speexdsp_config_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 3271473A254F2A8F00029BD7 /* speexdsp_config_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32714749254F2B0E00029BD7 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714685254F29CF00029BD7 /* buffer.c */; };
 		3271474A254F2B0E00029BD7 /* scal.c in Sources */ = {isa = PBXBuildFile; fileRef = 327146A3254F29CF00029BD7 /* scal.c */; };
 		3271474B254F2B0E00029BD7 /* preprocess.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714695254F29CF00029BD7 /* preprocess.c */; };
@@ -105,25 +60,13 @@
 		3271474E254F2B0E00029BD7 /* filterbank.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714690254F29CF00029BD7 /* filterbank.c */; };
 		3271474F254F2B0E00029BD7 /* jitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3271468C254F29CF00029BD7 /* jitter.c */; };
 		32714750254F2B0E00029BD7 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714693254F29CF00029BD7 /* resample.c */; };
-		32714753254F2B0F00029BD7 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714685254F29CF00029BD7 /* buffer.c */; };
-		32714754254F2B0F00029BD7 /* scal.c in Sources */ = {isa = PBXBuildFile; fileRef = 327146A3254F29CF00029BD7 /* scal.c */; };
-		32714755254F2B0F00029BD7 /* preprocess.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714695254F29CF00029BD7 /* preprocess.c */; };
-		32714756254F2B0F00029BD7 /* mdf.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714698254F29CF00029BD7 /* mdf.c */; };
-		32714757254F2B0F00029BD7 /* fftwrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714688254F29CF00029BD7 /* fftwrap.c */; };
-		32714758254F2B0F00029BD7 /* filterbank.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714690254F29CF00029BD7 /* filterbank.c */; };
-		32714759254F2B0F00029BD7 /* jitter.c in Sources */ = {isa = PBXBuildFile; fileRef = 3271468C254F29CF00029BD7 /* jitter.c */; };
-		3271475A254F2B0F00029BD7 /* resample.c in Sources */ = {isa = PBXBuildFile; fileRef = 32714693254F29CF00029BD7 /* resample.c */; };
 		3271475E254F2B7000029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 3271475D254F2B7000029BD7 /* config.h */; };
-		3271475F254F2B7000029BD7 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 3271475D254F2B7000029BD7 /* config.h */; };
-		32714768254F2BEA00029BD7 /* smallft.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144E1254F21A100029BD7 /* smallft.c */; };
 		3271476B254F2BEB00029BD7 /* smallft.c in Sources */ = {isa = PBXBuildFile; fileRef = 327144E1254F21A100029BD7 /* smallft.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		32028DD9254AFEA000A537DE /* speex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = speex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		322C402A2883C2A3009E2B59 /* speex.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = speex.modulemap; sourceTree = "<group>"; };
-		3267710F254B5D670041B063 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		327144A2254F21A100029BD7 /* speex_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
 		327144A3254F21A100029BD7 /* speex_stereo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex_stereo.h; sourceTree = "<group>"; };
 		327144A4254F21A100029BD7 /* speex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speex.h; sourceTree = "<group>"; };
@@ -271,20 +214,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DD4254AFEA000A537DE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		32028CFE254AE93F00A537DE = {
 			isa = PBXGroup;
 			children = (
-				3267710F254B5D670041B063 /* Info.plist */,
 				322C402A2883C2A3009E2B59 /* speex.modulemap */,
 				32714491254F21A100029BD7 /* speex-src */,
 				32714659254F29CF00029BD7 /* speexdsp-src */,
@@ -296,7 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				32028D08254AE93F00A537DE /* speex.framework */,
-				32028DD9254AFEA000A537DE /* speex.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -526,35 +460,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DCD254AFEA000A537DE /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				327145DC254F21D300029BD7 /* speex_stereo.h in Headers */,
-				3271472D254F2A0500029BD7 /* speex_resampler.h in Headers */,
-				3271472B254F2A0500029BD7 /* speex_jitter.h in Headers */,
-				327145DD254F21D300029BD7 /* speex.h in Headers */,
-				3271475F254F2B7000029BD7 /* config.h in Headers */,
-				3271472F254F2A0500029BD7 /* speex_echo.h in Headers */,
-				327145D9254F21D300029BD7 /* speex_header.h in Headers */,
-				3271472C254F2A0500029BD7 /* speexdsp_types.h in Headers */,
-				3271472E254F2A0500029BD7 /* speex_preprocess.h in Headers */,
-				327145FB254F231200029BD7 /* config.h in Headers */,
-				327145D8254F21D300029BD7 /* speex_types.h in Headers */,
-				32714734254F2A0B00029BD7 /* speex_buffer.h in Headers */,
-				327145DA254F21D300029BD7 /* speex_bits.h in Headers */,
-				3271473C254F2A8F00029BD7 /* speexdsp_config_types.h in Headers */,
-				327145E6254F229F00029BD7 /* speex_config_types.h in Headers */,
-				327145DB254F21D300029BD7 /* speex_callbacks.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		32028D07254AE93F00A537DE /* macOS */ = {
+		32028D07254AE93F00A537DE /* speex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */;
+			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "speex" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
 				32028D04254AE93F00A537DE /* Sources */,
@@ -565,27 +476,9 @@
 			);
 			dependencies = (
 			);
-			name = macOS;
+			name = speex;
 			productName = speex;
 			productReference = 32028D08254AE93F00A537DE /* speex.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		32028DCC254AFEA000A537DE /* iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */;
-			buildPhases = (
-				32028DCD254AFEA000A537DE /* Headers */,
-				32028DD1254AFEA000A537DE /* Sources */,
-				32028DD4254AFEA000A537DE /* Frameworks */,
-				32028DD5254AFEA000A537DE /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = iOS;
-			productName = speex;
-			productReference = 32028DD9254AFEA000A537DE /* speex.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -594,7 +487,8 @@
 		32028CFF254AE93F00A537DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1220;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -614,21 +508,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				32028D07254AE93F00A537DE /* macOS */,
-				32028DCC254AFEA000A537DE /* iOS */,
+				32028D07254AE93F00A537DE /* speex */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		32028D06254AE93F00A537DE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32028DD5254AFEA000A537DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -684,64 +570,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		32028DD1254AFEA000A537DE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				32714610254F240900029BD7 /* filters.c in Sources */,
-				32714759254F2B0F00029BD7 /* jitter.c in Sources */,
-				327145FE254F240900029BD7 /* lsp_tables_nb.c in Sources */,
-				3271475A254F2B0F00029BD7 /* resample.c in Sources */,
-				3271461A254F240900029BD7 /* exc_10_16_table.c in Sources */,
-				32714605254F240900029BD7 /* exc_20_32_table.c in Sources */,
-				32714758254F2B0F00029BD7 /* filterbank.c in Sources */,
-				32714617254F240900029BD7 /* speex_header.c in Sources */,
-				32714616254F240900029BD7 /* quant_lsp.c in Sources */,
-				32714609254F240900029BD7 /* window.c in Sources */,
-				327145FF254F240900029BD7 /* sb_celp.c in Sources */,
-				32714602254F240900029BD7 /* gain_table_lbr.c in Sources */,
-				32714755254F2B0F00029BD7 /* preprocess.c in Sources */,
-				32714611254F240900029BD7 /* exc_5_256_table.c in Sources */,
-				32714601254F240900029BD7 /* nb_celp.c in Sources */,
-				32714607254F240900029BD7 /* ltp.c in Sources */,
-				32714618254F240900029BD7 /* high_lsp_tables.c in Sources */,
-				32714603254F240900029BD7 /* cb_search.c in Sources */,
-				3271460B254F240900029BD7 /* exc_8_128_table.c in Sources */,
-				32714615254F240900029BD7 /* bits.c in Sources */,
-				32714608254F240900029BD7 /* speex_callbacks.c in Sources */,
-				32714619254F240900029BD7 /* modes.c in Sources */,
-				32714756254F2B0F00029BD7 /* mdf.c in Sources */,
-				32714614254F240900029BD7 /* stereo.c in Sources */,
-				3271460C254F240900029BD7 /* gain_table.c in Sources */,
-				32714646254F24AA00029BD7 /* hexc_10_32_table.c in Sources */,
-				32714606254F240900029BD7 /* modes_wb.c in Sources */,
-				3271460A254F240900029BD7 /* vbr.c in Sources */,
-				32714768254F2BEA00029BD7 /* smallft.c in Sources */,
-				3271460D254F240900029BD7 /* exc_5_64_table.c in Sources */,
-				3271460F254F240900029BD7 /* hexc_table.c in Sources */,
-				3271460E254F240900029BD7 /* lsp.c in Sources */,
-				32714757254F2B0F00029BD7 /* fftwrap.c in Sources */,
-				32714754254F2B0F00029BD7 /* scal.c in Sources */,
-				32714612254F240900029BD7 /* lpc.c in Sources */,
-				32714613254F240900029BD7 /* speex.c in Sources */,
-				32714600254F240900029BD7 /* vq.c in Sources */,
-				32714753254F2B0F00029BD7 /* buffer.c in Sources */,
-				32714604254F240900029BD7 /* exc_10_32_table.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		32028D0E254AE93F00A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -769,16 +607,17 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					HAVE_CONFIG_H,
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -787,12 +626,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -801,12 +638,10 @@
 		32028D0F254AE93F00A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -834,23 +669,22 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -859,100 +693,85 @@
 		32028D11254AE93F00A537DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					HAVE_CONFIG_H,
 					"$(inherited)",
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = speex.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
 				PRODUCT_NAME = speex;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
 		32028D12254AE93F00A537DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
+				ENABLE_MODULE_VERIFIER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = HAVE_CONFIG_H;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = (
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MODULEMAP_FILE = speex.modulemap;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
 				PRODUCT_NAME = speex;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-			};
-			name = Release;
-		};
-		32028DD7254AFEA000A537DE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = speex.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
-				PRODUCT_NAME = speex;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		32028DD8254AFEA000A537DE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = "";
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = speex.modulemap;
-				PRODUCT_BUNDLE_IDENTIFIER = org.xiph.speex;
-				PRODUCT_NAME = speex;
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Release;
 		};
@@ -968,20 +787,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "macOS" */ = {
+		32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "speex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32028D11254AE93F00A537DE /* Debug */,
 				32028D12254AE93F00A537DE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		32028DD6254AFEA000A537DE /* Build configuration list for PBXNativeTarget "iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				32028DD7254AFEA000A537DE /* Debug */,
-				32028DD8254AFEA000A537DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

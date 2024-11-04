@@ -321,7 +321,13 @@
 #define VERSION "1.4.3"
 
 /* Target processor is big endian. */
+#if defined __BIG_ENDIAN__
+#define WORDS_BIGENDIAN 1
+#endif
+
+#if defined __LITTLE_ENDIAN__
 #define WORDS_BIGENDIAN 0
+#endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */
