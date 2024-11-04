@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		327C54E82B17AC1000F2C4BA /* unchecked.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54CE2B17ABF300F2C4BA /* unchecked.h */; };
-		327C54E92B17AC1000F2C4BA /* checked.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54D02B17ABF300F2C4BA /* checked.h */; };
-		327C54EB2B17AC1600F2C4BA /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54D12B17ABF300F2C4BA /* utf8.h */; };
+		32019A2E2CD92849007AB7F7 /* tlist.tcc in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D62B17AC4400F2C4BA /* tlist.tcc */; settings = {ATTRIBUTES = (Public, ); }; };
+		32019A2F2CD92856007AB7F7 /* tmap.tcc in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E82B17AC4400F2C4BA /* tmap.tcc */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C55F72B17AC4400F2C4BA /* wavpackproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54EE2B17AC4300F2C4BA /* wavpackproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C55F82B17AC4400F2C4BA /* wavpackfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C54EF2B17AC4300F2C4BA /* wavpackfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C55F92B17AC4400F2C4BA /* wavpackfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C54F02B17AC4300F2C4BA /* wavpackfile.cpp */; };
@@ -45,7 +44,6 @@
 		327C56172B17AC4400F2C4BA /* trueaudioproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55152B17AC4300F2C4BA /* trueaudioproperties.cpp */; };
 		327C56182B17AC4400F2C4BA /* trueaudiofile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55162B17AC4300F2C4BA /* trueaudiofile.cpp */; };
 		327C56192B17AC4400F2C4BA /* trueaudioproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55172B17AC4300F2C4BA /* trueaudioproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56252B17AC4400F2C4BA /* tagunion.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55242B17AC4300F2C4BA /* tagunion.h */; };
 		327C56272B17AC4400F2C4BA /* mpegfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55272B17AC4300F2C4BA /* mpegfile.cpp */; };
 		327C56282B17AC4400F2C4BA /* xingheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55282B17AC4300F2C4BA /* xingheader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56292B17AC4400F2C4BA /* id3v2footer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C552A2B17AC4300F2C4BA /* id3v2footer.cpp */; };
@@ -98,7 +96,6 @@
 		327C565B2B17AC4400F2C4BA /* id3v2tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C555D2B17AC4300F2C4BA /* id3v2tag.cpp */; };
 		327C565D2B17AC4400F2C4BA /* id3v2tag.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C555F2B17AC4300F2C4BA /* id3v2tag.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C565E2B17AC4400F2C4BA /* mpegheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55602B17AC4300F2C4BA /* mpegheader.cpp */; };
-		327C565F2B17AC4400F2C4BA /* mpegutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55612B17AC4300F2C4BA /* mpegutils.h */; };
 		327C56602B17AC4400F2C4BA /* xingheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55622B17AC4300F2C4BA /* xingheader.cpp */; };
 		327C56612B17AC4400F2C4BA /* mpegproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55632B17AC4300F2C4BA /* mpegproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56622B17AC4400F2C4BA /* mpegheader.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55642B17AC4300F2C4BA /* mpegheader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -121,7 +118,6 @@
 		327C56732B17AC4400F2C4BA /* aifffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55792B17AC4300F2C4BA /* aifffile.cpp */; };
 		327C56742B17AC4400F2C4BA /* aifffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C557A2B17AC4300F2C4BA /* aifffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56752B17AC4400F2C4BA /* rifffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C557B2B17AC4300F2C4BA /* rifffile.cpp */; };
-		327C56762B17AC4400F2C4BA /* riffutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C557C2B17AC4300F2C4BA /* riffutils.h */; };
 		327C56772B17AC4400F2C4BA /* rifffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C557D2B17AC4300F2C4BA /* rifffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56782B17AC4400F2C4BA /* itfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C557F2B17AC4300F2C4BA /* itfile.cpp */; };
 		327C56792B17AC4400F2C4BA /* itproperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55802B17AC4300F2C4BA /* itproperties.cpp */; };
@@ -143,7 +139,6 @@
 		327C56892B17AC4400F2C4BA /* tag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55922B17AC4300F2C4BA /* tag.cpp */; };
 		327C568A2B17AC4400F2C4BA /* flacpicture.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55942B17AC4300F2C4BA /* flacpicture.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C568B2B17AC4400F2C4BA /* flacmetadatablock.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55952B17AC4300F2C4BA /* flacmetadatablock.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C568C2B17AC4400F2C4BA /* flacunknownmetadatablock.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55962B17AC4300F2C4BA /* flacunknownmetadatablock.h */; };
 		327C568D2B17AC4400F2C4BA /* flacmetadatablock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55972B17AC4300F2C4BA /* flacmetadatablock.cpp */; };
 		327C568E2B17AC4400F2C4BA /* flacfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55982B17AC4300F2C4BA /* flacfile.cpp */; };
 		327C568F2B17AC4400F2C4BA /* flacpicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55992B17AC4300F2C4BA /* flacpicture.cpp */; };
@@ -180,9 +175,7 @@
 		327C56AF2B17AC4400F2C4BA /* asffile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55BC2B17AC4400F2C4BA /* asffile.cpp */; };
 		327C56B02B17AC4400F2C4BA /* asffile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BD2B17AC4400F2C4BA /* asffile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56B12B17AC4400F2C4BA /* asfattribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BE2B17AC4400F2C4BA /* asfattribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56B22B17AC4400F2C4BA /* asfutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55BF2B17AC4400F2C4BA /* asfutils.h */; };
 		327C56B32B17AC4400F2C4BA /* tagunion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C02B17AC4400F2C4BA /* tagunion.cpp */; };
-		327C56B42B17AC4400F2C4BA /* tagutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C12B17AC4400F2C4BA /* tagutils.h */; };
 		327C56B52B17AC4400F2C4BA /* xmfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C32B17AC4400F2C4BA /* xmfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56B62B17AC4400F2C4BA /* xmfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55C42B17AC4400F2C4BA /* xmfile.cpp */; };
 		327C56B72B17AC4400F2C4BA /* xmproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55C52B17AC4400F2C4BA /* xmproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -197,8 +190,6 @@
 		327C56C02B17AC4400F2C4BA /* tbytevectorlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55CF2B17AC4400F2C4BA /* tbytevectorlist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56C12B17AC4400F2C4BA /* tpicturetype.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55D02B17AC4400F2C4BA /* tpicturetype.cpp */; };
 		327C56C22B17AC4400F2C4BA /* tbytevectorstream.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D12B17AC4400F2C4BA /* tbytevectorstream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56C32B17AC4400F2C4BA /* tdebug.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D22B17AC4400F2C4BA /* tdebug.h */; };
-		327C56C42B17AC4400F2C4BA /* tutils.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D32B17AC4400F2C4BA /* tutils.h */; };
 		327C56C52B17AC4400F2C4BA /* tversionnumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D42B17AC4400F2C4BA /* tversionnumber.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56C62B17AC4400F2C4BA /* tvariant.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55D52B17AC4400F2C4BA /* tvariant.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56C82B17AC4400F2C4BA /* tdebuglistener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55D72B17AC4400F2C4BA /* tdebuglistener.cpp */; };
@@ -219,10 +210,8 @@
 		327C56D82B17AC4400F2C4BA /* tfilestream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55E72B17AC4400F2C4BA /* tfilestream.cpp */; };
 		327C56DA2B17AC4400F2C4BA /* tpicturetype.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55E92B17AC4400F2C4BA /* tpicturetype.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		327C56DB2B17AC4400F2C4BA /* tbytevectorlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55EA2B17AC4400F2C4BA /* tbytevectorlist.cpp */; };
-		327C56DC2B17AC4400F2C4BA /* tzlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55EB2B17AC4400F2C4BA /* tzlib.h */; };
 		327C56DD2B17AC4400F2C4BA /* tzlib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55EC2B17AC4400F2C4BA /* tzlib.cpp */; };
 		327C56DE2B17AC4400F2C4BA /* modproperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55EE2B17AC4400F2C4BA /* modproperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C56DF2B17AC4400F2C4BA /* modfileprivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C55EF2B17AC4400F2C4BA /* modfileprivate.h */; };
 		327C56E02B17AC4400F2C4BA /* modtag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F02B17AC4400F2C4BA /* modtag.cpp */; };
 		327C56E12B17AC4400F2C4BA /* modfilebase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F12B17AC4400F2C4BA /* modfilebase.cpp */; };
 		327C56E22B17AC4400F2C4BA /* modfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55F22B17AC4400F2C4BA /* modfile.cpp */; };
@@ -240,23 +229,7 @@
 		327C56F82B17AC8900F2C4BA /* apetag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C55202B17AC4300F2C4BA /* apetag.cpp */; };
 		327C56F92B17AC8900F2C4BA /* apefile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 327C551D2B17AC4300F2C4BA /* apefile.cpp */; };
 		327C56FA2B17AC8900F2C4BA /* apefile.h in Headers */ = {isa = PBXBuildFile; fileRef = 327C551A2B17AC4300F2C4BA /* apefile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		327C57E32B17B39A00F2C4BA /* tmap.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55E82B17AC4400F2C4BA /* tmap.tcc */; };
-		327C57E42B17B3AB00F2C4BA /* tlist.tcc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 327C55D62B17AC4400F2C4BA /* tlist.tcc */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		326782E6254E65BE0041B063 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Headers;
-			dstSubfolderSpec = 1;
-			files = (
-				327C57E42B17B3AB00F2C4BA /* tlist.tcc in CopyFiles */,
-				327C57E32B17B39A00F2C4BA /* tmap.tcc in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* taglib.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = taglib.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1048,7 +1021,6 @@
 				327C56F22B17AC8900F2C4BA /* apeproperties.h in Headers */,
 				327C564D2B17AC4400F2C4BA /* chapterframe.h in Headers */,
 				327C56632B17AC4400F2C4BA /* mpegfile.h in Headers */,
-				327C56DC2B17AC4400F2C4BA /* tzlib.h in Headers */,
 				327C567F2B17AC4400F2C4BA /* dsfproperties.h in Headers */,
 				327C566D2B17AC4400F2C4BA /* wavfile.h in Headers */,
 				327C56042B17AC4400F2C4BA /* vorbisproperties.h in Headers */,
@@ -1057,13 +1029,10 @@
 				327C56C02B17AC4400F2C4BA /* tbytevectorlist.h in Headers */,
 				327C56BF2B17AC4400F2C4BA /* tstring.h in Headers */,
 				327C56152B17AC4400F2C4BA /* oggpageheader.h in Headers */,
-				327C56C42B17AC4400F2C4BA /* tutils.h in Headers */,
 				327C56162B17AC4400F2C4BA /* trueaudiofile.h in Headers */,
 				327C563D2B17AC4400F2C4BA /* tableofcontentsframe.h in Headers */,
 				327C56D12B17AC4400F2C4BA /* taglib.h in Headers */,
-				327C56B22B17AC4400F2C4BA /* asfutils.h in Headers */,
 				327C56712B17AC4400F2C4BA /* aiffproperties.h in Headers */,
-				327C56B42B17AC4400F2C4BA /* tagutils.h in Headers */,
 				327C56282B17AC4400F2C4BA /* xingheader.h in Headers */,
 				327C56812B17AC4400F2C4BA /* fileref.h in Headers */,
 				327C56872B17AC4400F2C4BA /* dsdifffile.h in Headers */,
@@ -1077,7 +1046,6 @@
 				327C569A2B17AC4400F2C4BA /* mp4file.h in Headers */,
 				327C56642B17AC4400F2C4BA /* id3v1tag.h in Headers */,
 				327C564A2B17AC4400F2C4BA /* relativevolumeframe.h in Headers */,
-				327C56DF2B17AC4400F2C4BA /* modfileprivate.h in Headers */,
 				327C566C2B17AC4400F2C4BA /* infotag.h in Headers */,
 				327C56F52B17AC8900F2C4BA /* apefooter.h in Headers */,
 				327C56672B17AC4400F2C4BA /* id3v1genres.h in Headers */,
@@ -1101,12 +1069,9 @@
 				327C56B02B17AC4400F2C4BA /* asffile.h in Headers */,
 				327C56452B17AC4400F2C4BA /* commentsframe.h in Headers */,
 				327C56362B17AC4400F2C4BA /* attachedpictureframe.h in Headers */,
-				327C56252B17AC4400F2C4BA /* tagunion.h in Headers */,
 				327C56612B17AC4400F2C4BA /* mpegproperties.h in Headers */,
 				327C56A42B17AC4400F2C4BA /* mp4properties.h in Headers */,
-				327C568C2B17AC4400F2C4BA /* flacunknownmetadatablock.h in Headers */,
 				327C564B2B17AC4400F2C4BA /* privateframe.h in Headers */,
-				327C54E82B17AC1000F2C4BA /* unchecked.h in Headers */,
 				327C560E2B17AC4400F2C4BA /* speexfile.h in Headers */,
 				327C56D32B17AC4400F2C4BA /* tlist.h in Headers */,
 				327C56902B17AC4400F2C4BA /* flacproperties.h in Headers */,
@@ -1118,8 +1083,6 @@
 				327C567B2B17AC4400F2C4BA /* itproperties.h in Headers */,
 				327C56102B17AC4400F2C4BA /* oggpage.h in Headers */,
 				327C56402B17AC4400F2C4BA /* synchronizedlyricsframe.h in Headers */,
-				327C54E92B17AC1000F2C4BA /* checked.h in Headers */,
-				327C56762B17AC4400F2C4BA /* riffutils.h in Headers */,
 				327C56192B17AC4400F2C4BA /* trueaudioproperties.h in Headers */,
 				327C563A2B17AC4400F2C4BA /* generalencapsulatedobjectframe.h in Headers */,
 				327C56932B17AC4400F2C4BA /* flacfile.h in Headers */,
@@ -1128,7 +1091,6 @@
 				327C56E42B17AC4400F2C4BA /* modtag.h in Headers */,
 				327C566F2B17AC4400F2C4BA /* wavproperties.h in Headers */,
 				327C56302B17AC4400F2C4BA /* id3v2framefactory.h in Headers */,
-				327C54EB2B17AC1600F2C4BA /* utf8.h in Headers */,
 				327C569C2B17AC4400F2C4BA /* mp4itemfactory.h in Headers */,
 				327C55FC2B17AC4400F2C4BA /* s3mproperties.h in Headers */,
 				327C562B2B17AC4400F2C4BA /* id3v2extendedheader.h in Headers */,
@@ -1161,13 +1123,13 @@
 				327C56372B17AC4400F2C4BA /* unknownframe.h in Headers */,
 				327C562D2B17AC4400F2C4BA /* id3v2header.h in Headers */,
 				327C564E2B17AC4400F2C4BA /* ownershipframe.h in Headers */,
-				327C56C32B17AC4400F2C4BA /* tdebug.h in Headers */,
-				327C565F2B17AC4400F2C4BA /* mpegutils.h in Headers */,
 				327C56CC2B17AC4400F2C4BA /* tfilestream.h in Headers */,
 				327C56C92B17AC4400F2C4BA /* tstringlist.h in Headers */,
 				327C56022B17AC4400F2C4BA /* vorbisfile.h in Headers */,
 				327C56D02B17AC4400F2C4BA /* tmap.h in Headers */,
 				327C56A92B17AC4400F2C4BA /* asfpicture.h in Headers */,
+				32019A2E2CD92849007AB7F7 /* tlist.tcc in Headers */,
+				32019A2F2CD92856007AB7F7 /* tmap.tcc in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1179,7 +1141,6 @@
 			buildConfigurationList = 32028D10254AE93F00A537DE /* Build configuration list for PBXNativeTarget "taglib" */;
 			buildPhases = (
 				32028D03254AE93F00A537DE /* Headers */,
-				326782E6254E65BE0041B063 /* CopyFiles */,
 				32028D04254AE93F00A537DE /* Sources */,
 				32028D05254AE93F00A537DE /* Frameworks */,
 				32028D06254AE93F00A537DE /* Resources */,
