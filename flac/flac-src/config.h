@@ -5,18 +5,10 @@
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
 /* Target processor is big endian. */
-#if defined __BIG_ENDIAN__
-#define CPU_IS_BIG_ENDIAN 1
-#else
 #define CPU_IS_BIG_ENDIAN 0
-#endif
 
 /* Target processor is little endian. */
-#if defined __LITTLE_ENDIAN__
 #define CPU_IS_LITTLE_ENDIAN 1
-#else
-#define CPU_IS_LITTLE_ENDIAN 0
-#endif
 
 /* Set FLAC__BYTES_PER_WORD to 8 (this is the default) */
 #define ENABLE_64_BIT_WORDS 1
@@ -48,14 +40,10 @@
 #endif
 
 /* Set to 1 if <arm_neon.h> has A64 instructions. */
-#if __aarch64__
-#define FLAC__HAS_A64NEONINTRIN 1
-#endif
+/* #undef FLAC__HAS_A64NEONINTRIN */
 
 /* Set to 1 if <arm_neon.h> is available. */
-#if __aarch64__
-#define FLAC__HAS_NEONINTRIN 1
-#endif
+#define FLAC__HAS_NEONINTRIN 0
 
 /* define if you have the ogg library */
 #define FLAC__HAS_OGG 1
@@ -90,9 +78,7 @@
 /* #undef GIT_COMMIT_TAG */
 
 /* Define to 1 if you have the <arm_neon.h> header file. */
-#if __aarch64__
-#define HAVE_ARM_NEON_H 1
-#endif
+/* #undef HAVE_ARM_NEON_H */
 
 /* Compiler has the __builtin_bswap16 intrinsic */
 #define HAVE_BSWAP16 1
@@ -137,6 +123,12 @@
 
 /* Define to 1 if you have the <minix/config.h> header file. */
 /* #undef HAVE_MINIX_CONFIG_H */
+
+/* Define if pthread is enabled */
+#define HAVE_PTHREAD 1
+
+/* Have PTHREAD_PRIO_INHERIT. */
+#define HAVE_PTHREAD_PRIO_INHERIT 1
 
 /* Define to 1 if you have the <stdbool.h> header file. */
 #define HAVE_STDBOOL_H 1
@@ -207,7 +199,7 @@
 #define PACKAGE_NAME "flac"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "flac 1.4.3"
+#define PACKAGE_STRING "flac 1.5.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "flac"
@@ -216,7 +208,7 @@
 #define PACKAGE_URL "https://www.xiph.org/flac/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.4.3"
+#define PACKAGE_VERSION "1.5.0"
 
 /* The size of `off_t', as computed by sizeof. */
 #define SIZEOF_OFF_T 8
@@ -318,16 +310,10 @@
 
 
 /* Version number of package */
-#define VERSION "1.4.3"
+#define VERSION "1.5.0"
 
 /* Target processor is big endian. */
-#if defined __BIG_ENDIAN__
-#define WORDS_BIGENDIAN 1
-#endif
-
-#if defined __LITTLE_ENDIAN__
 #define WORDS_BIGENDIAN 0
-#endif
 
 /* Number of bits in a file offset, on hosts where this is settable. */
 /* #undef _FILE_OFFSET_BITS */
