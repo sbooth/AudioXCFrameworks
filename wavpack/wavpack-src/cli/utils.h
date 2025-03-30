@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////
 //                           **** WAVPACK ****                            //
 //                  Hybrid Lossless Wavefile Compressor                   //
-//                Copyright (c) 1998 - 2024 David Bryant.                 //
+//                Copyright (c) 1998 - 2025 David Bryant.                 //
 //                          All Rights Reserved.                          //
 //      Distributed under the BSD Software License (see license.txt)      //
 ////////////////////////////////////////////////////////////////////////////
@@ -22,13 +22,21 @@
 #endif
 
 #if defined(_WIN32)
-#undef VERSION_OS
-#ifdef _WIN64
-#define VERSION_OS "Win64"
-#else
-#define VERSION_OS "Win32"
-#endif
-#define PACKAGE_VERSION "5.7.0"
+    #undef VERSION_OS
+    #ifdef _WIN64
+        #ifdef ENABLE_THREADS
+            #define VERSION_OS "Win64"
+        #else
+            #define VERSION_OS "WinXP-64"
+        #endif
+    #else
+        #ifdef ENABLE_THREADS
+            #define VERSION_OS "Win32"
+        #else
+            #define VERSION_OS "WinXP-32"
+        #endif
+    #endif
+    #define PACKAGE_VERSION "5.8.1"
 #endif
 
 #define FALSE 0
@@ -39,8 +47,9 @@
 #define WAVPACK_SOFT_ERROR  2
 #define WAVPACK_HARD_ERROR  3
 
-#define CLEAR(destin) memset (&destin, 0, sizeof (destin));
+#define CLEAR(destin) memset (&destin, 0, sizeof (destin))
 
+double strtod_hexfree (const char *nptr, char **endptr);
 int copy_timestamp (const char *src_filename, const char *dst_filename);
 char *filespec_ext (char *filespec), *filespec_path (char *filespec);
 char *filespec_name (char *filespec), *filespec_wild (char *filespec);
@@ -61,6 +70,10 @@ int DoCloseHandle (FILE *hFile);
 int DoTruncateFile (FILE *hFile);
 int DoDeleteFile (char *filename);
 void DoSetConsoleTitle (char *text);
+
+#ifdef ENABLE_THREADS
+int get_default_worker_threads (void);
+#endif
 
 #define FN_FIT(fn) ((strlen (fn) > 30) ? filespec_name (fn) : fn)
 

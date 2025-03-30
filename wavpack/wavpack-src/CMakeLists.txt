@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.2...3.5)
+cmake_minimum_required(VERSION 3.2...3.10)
 
-project(WavPack VERSION 5.7.0)
+project(WavPack VERSION 5.8.1)
 
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/configure.ac" CONFIGURE_AC)
 string(REGEX MATCH "LT_CURRENT=([0-9]+)" LT_CURRENT "${CONFIGURE_AC}")
@@ -39,7 +39,11 @@ if(CMAKE_ASM_COMPILER)
 endif()
 
 if(MSVC)
-  enable_language(ASM_MASM)
+  if(WavPack_CPU_X86 OR WavPack_CPU_X64)
+    enable_language(ASM_MASM)
+  elseif(WavPack_CPU_ARM32 OR WavPack_CPU_ARM64)
+    enable_language(ASM_MARMASM)
+  endif()
 else()
   check_language(ASM-ATT)
   if(CMAKE_ASM-ATT_COMPILER)
@@ -120,27 +124,16 @@ if(NOT MSVC AND (CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall)
 endif()
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "amd64.*|x86_64.*|AMD64.*")
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CPU_ASM_X64 1)
-    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-        set(CPU_ASM_X86 1)
-    endif()
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "i386.*|i486.*|i586.*|i686.*|i786.*")
-    set(CPU_ASM_X86 1)
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm*")
-    if(CMAKE_SIZEOF_VOID_P EQUAL 4)
-        set(CPU_ASM_ARM32 1)
-    endif()
-endif()
+include(cmake/wavpackcpu.cmake)
+WavPack_DetectTargetCPUArchitectures(WAVPACK_CPUS)
 
-if(WIN32 AND (NOT MINGW))
-    if(CMAKE_ASM_MASM_COMPILER AND (CPU_ASM_X86 OR CPU_ASM_X64))
+if(WIN32 AND NOT MINGW)
+    if(CMAKE_ASM_MASM_COMPILER)
         set(HAVE_MASM 1)
     endif()
 else()
     if(CMAKE_ASM-ATT_COMPILER)
-        if(CPU_ASM_X86 OR CPU_ASM_X64 OR CPU_ASM_ARM32)
+        if(WavPack_CPU_X86 OR WavPack_CPU_X64 OR WavPack_CPU_ARM32)
             set(HAVE_ASM 1)
         endif()
     endif()
@@ -186,21 +179,22 @@ add_library(wavpack
     $<$<BOOL:${WAVPACK_ENABLE_LEGACY}>:src/unpack3_seek.c>
     $<$<BOOL:${WAVPACK_ENABLE_DSD}>:src/pack_dsd.c>
     $<$<BOOL:${WAVPACK_ENABLE_DSD}>:src/unpack_dsd.c>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${CPU_ASM_X86}>>:src/pack_x86.asm>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${CPU_ASM_X86}>>:src/unpack_x86.asm>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${CPU_ASM_X64}>>:src/pack_x64.asm>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${CPU_ASM_X64}>>:src/unpack_x64.asm>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${CPU_ASM_X86}>>:src/pack_x86.S>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${CPU_ASM_X86}>>:src/unpack_x86.S>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${CPU_ASM_X64}>>:src/pack_x64.S>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${CPU_ASM_X64}>>:src/unpack_x64.S>
-    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${CPU_ASM_ARM32}>>:src/unpack_armv7.S>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${WavPack_CPU_X86}>>:src/pack_x86.asm>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${WavPack_CPU_X86}>>:src/unpack_x86.asm>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${WavPack_CPU_X64}>>:src/pack_x64.asm>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_MASM}>,$<BOOL:${WavPack_CPU_X64}>>:src/unpack_x64.asm>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${WavPack_CPU_X86}>>:src/pack_x86.S>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${WavPack_CPU_X86}>>:src/unpack_x86.S>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${WavPack_CPU_X64}>>:src/pack_x64.S>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${WavPack_CPU_X64}>>:src/unpack_x64.S>
+    $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${HAVE_ASM}>,$<BOOL:${WavPack_CPU_ARM32}>>:src/unpack_armv7.S>
     $<$<AND:$<BOOL:${WIN32}>,$<BOOL:${BUILD_SHARED_LIBS}>>:wavpackdll/wavpackdll.rc>
 )
 target_include_directories(wavpack
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/wavpack>
 )
 target_link_libraries(wavpack
     PRIVATE
@@ -217,12 +211,12 @@ target_compile_definitions(wavpack
         $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>
         $<$<BOOL:${HAVE___BUILTIN_CLZ}>:HAVE___BUILTIN_CLZ>
         $<$<BOOL:${HAVE_FSEEKO}>:HAVE_FSEEKO>
-        $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${CPU_ASM_X86}>>:OPT_ASM_X86>
-        $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${CPU_ASM_X64}>>:OPT_ASM_X64>
-        $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${CPU_ASM_ARM32}>>:OPT_ASM_ARM32>
+        $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${WavPack_CPU_X86}>>:OPT_ASM_X86>
+        $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${WavPack_CPU_X64}>>:OPT_ASM_X64>
+        $<$<AND:$<BOOL:${WAVPACK_ENABLE_ASM}>,$<BOOL:${WavPack_CPU_ARM32}>>:OPT_ASM_ARM32>
 )
 
-if(WAVPACK_ENABLE_ASM AND HAVE_MASM AND CPU_ASM_X86)
+if(WAVPACK_ENABLE_ASM AND HAVE_MASM AND WavPack_CPU_X86)
 	set_source_files_properties(src/pack_x86.asm src/unpack_x86.asm PROPERTIES COMPILE_FLAGS "/safeseh")
 endif()
 
@@ -328,6 +322,9 @@ if(BUILD_SHARED_LIBS)
 
     file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/libwavpack.def ${FILE_CONTENTS})
     target_sources(wavpack PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/libwavpack.def)
+    if(MINGW AND NOT CMAKE_C_COMPILER_ID MATCHES "Clang")
+        target_link_libraries(wavpack PRIVATE -static-libgcc)
+    endif()
   elseif(CMAKE_SYSTEM_NAME MATCHES "Darwin")
     set(FILE_CONTENTS "")
     foreach(EXPORT_SYMBOL ${WAVPACK_EXPORT_SYMBOLS})
@@ -335,7 +332,7 @@ if(BUILD_SHARED_LIBS)
     endforeach()
     file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/libwavpack.sym ${FILE_CONTENTS})
     if(CMAKE_VERSION VERSION_LESS 3.13)
-        set_target_properties(wavpack PROPERTIES LINK_FLAGS "-Wl,-exported_symbols_list,'${CMAKE_CURRENT_BINARY_DIR}/libwavpack.sym'") 
+        set_target_properties(wavpack PROPERTIES LINK_FLAGS "-Wl,-exported_symbols_list,'${CMAKE_CURRENT_BINARY_DIR}/libwavpack.sym'")
     else()
         target_link_directories(wavpack PRIVATE "-Wl,-exported_symbols_list,${CMAKE_CURRENT_BINARY_DIR}/libwavpack.sym")
     endif()
@@ -622,10 +619,21 @@ if(WAVPACK_INSTALL_CMAKE_MODULE)
 		write_basic_package_version_file(wavpack-config-version.cmake COMPATIBILITY SameMajorVersion)
 	else()
 		write_basic_package_version_file(wavpack-config-version.cmake COMPATIBILITY SameMinorVersion)
-	endif()
+    endif()
+
+    configure_package_config_file(
+        ${CMAKE_CURRENT_LIST_DIR}/wavpack-config.cmake.in
+        "${CMAKE_CURRENT_BINARY_DIR}/wavpack-config.cmake"
+        INSTALL_DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
+    )
+
+    install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/wavpack-config.cmake"
+        DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
+    )
 
 	install(EXPORT wavpack-targets
-		FILE wavpack-config.cmake
+		FILE wavpack-targets.cmake
 		NAMESPACE WavPack::
 		DESTINATION ${CMAKE_INSTALL_PACKAGEDIR}
 	)

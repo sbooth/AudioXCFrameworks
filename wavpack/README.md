@@ -1,10 +1,10 @@
 ## Version
 
-[5.7.0](https://github.com/dbry/WavPack/releases/tag/5.7.0)
+[5.8.1](https://github.com/dbry/WavPack/releases/tag/5.8.1)
 
 ## License
 
-                  Copyright (c) 1998 - 2020 David Bryant
+                  Copyright (c) 1998 - 2025 David Bryant
                           All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
