@@ -1,3 +1,27 @@
+                     --------------------------------
+                     Release 5.8.0 - January 27, 2025
+                     --------------------------------
+
+ WavPack Library Source Code - 5.8.0
+ wavpack.exe (command-line encoder) - 5.8.0
+ wvunpack.exe (command-line decoder) - 5.8.0
+ wvgain.exe (command-line ReplayGain scanner) - 5.8.0
+ wvtag.exe (command-line tagging utility) - 5.8.0
+ cool_wv4.flt (Cool Edit / Audition filter) - 4.4
+ ----------------------------------------------------
+  added: if present, use multiple cores by default (cli programs only)
+  added: option --no-threads to force single-threading (cli programs)
+  fixed: noise issue in hybrid mode (low bitrate / high sample rate)
+  improved: all new DNS algorithm for better hybrid mode quality
+  improved: "extra" option with multithreading and hybrid modes
+  added: TSOC (Composer Sort) added to handled ID3v2 tags
+  added: --no-overwrite command-line option to wvunpack
+  fixed: handling of 24+ channels (CoolEdit / Audition)
+  fixed: encoding raw audio from pipes (Windows only)
+  fixed: handling of unpacked samples in WAV files
+  fixed: rare command-line option parsing issue
+
+
                      ---------------------------------
                      Release 5.7.0 - February 29, 2024
                      ---------------------------------
@@ -9,23 +33,23 @@
  wvtag.exe (command-line tagging utility) - 5.7.0
  cool_wv4.flt (Cool Edit / Audition filter) - 4.2
  ----------------------------------------------------
- added: multithreaded encoding and decoding to libwavpack (optional)
- added: option to specify multithreading in CLI programs (--threads)
- added: multithreading support to Cool Edit filter (always enabled)
- added: support for ID3v2.4 when importing tags (--import-id3)
- added: optional bitrate specification to wavpack -c option
- added: Windows native threads in wvtest, builds with MSVC
- added: recognize WAV files with new fourcc of 'BW64'
- fixed: seeking issue on very large files (Windows only)
- fixed: decode non-compliant FFmpeg files over 8 channels
- fixed: accept some common but non-compliant AIFF files
- fixed: automatically delete newly obsolete correction files
- fixed: don't delete source files if data loss warnings occur
- improved: ID3v2 tag support (more items, multiple values, pics, etc)
- improved: use MinGW to build official Windows executables (faster)
- improved: compression of 32-bit integer files (--optimize-int32)
- improved: convert the man pages to mdoc(7)
- improved: cmake & autoconf support
+  added: multithreaded encoding and decoding to libwavpack (optional)
+  added: option to specify multithreading in CLI programs (--threads)
+  added: multithreading support to Cool Edit filter (always enabled)
+  added: support for ID3v2.4 when importing tags (--import-id3)
+  added: optional bitrate specification to wavpack -c option
+  added: Windows native threads in wvtest, builds with MSVC
+  added: recognize WAV files with new fourcc of 'BW64'
+  fixed: seeking issue on very large files (Windows only)
+  fixed: decode non-compliant FFmpeg files over 8 channels
+  fixed: accept some common but non-compliant AIFF files
+  fixed: automatically delete newly obsolete correction files
+  fixed: don't delete source files if data loss warnings occur
+  improved: ID3v2 tag support (more items, multiple values, pics, etc)
+  improved: use MinGW to build official Windows executables (faster)
+  improved: compression of 32-bit integer files (--optimize-int32)
+  improved: convert the man pages to mdoc(7)
+  improved: cmake & autoconf support
 
 
                      ---------------------------------
