@@ -18,7 +18,7 @@ CFormatArray::~CFormatArray()
     Unload();
 }
 
-BOOL CFormatArray::Load()
+bool CFormatArray::Load()
 {
     // remove all
     Unload();
@@ -39,10 +39,10 @@ BOOL CFormatArray::Load()
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CFormatArray::Unload()
+bool CFormatArray::Unload()
 {
     for (int z = 0; z < m_aryFormats.GetSize(); z++)
     {
@@ -52,7 +52,7 @@ BOOL CFormatArray::Unload()
 
     ClearMenuCache();
 
-    return TRUE;
+    return true;
 }
 
 void CFormatArray::ClearMenuCache()
@@ -65,11 +65,11 @@ void CFormatArray::ClearMenuCache()
     }
 }
 
-BOOL CFormatArray::FillCompressionMenu(CMenu * pMenu)
+bool CFormatArray::FillCompressionMenu(CMenu * pMenu)
 {
     // this should only be called if we loaded and have formats
     if (m_aryFormats.IsEmpty())
-        return FALSE;
+        return false;
 
     // clear the menu cache
     ClearMenuCache();
@@ -108,10 +108,10 @@ BOOL CFormatArray::FillCompressionMenu(CMenu * pMenu)
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CFormatArray::ProcessCompressionMenu(int nID)
+bool CFormatArray::ProcessCompressionMenu(int nID)
 {
     nID -= ID_SET_COMPRESSION_FIRST;
 
@@ -129,7 +129,7 @@ BOOL CFormatArray::ProcessCompressionMenu(int nID)
         m_aryFormats[nIndex]->ProcessMenuCommand(nCommand);
     }
 
-    return TRUE;
+    return true;
 }
 
 int CFormatArray::Process(MAC_FILE * pInfo)
@@ -137,7 +137,7 @@ int CFormatArray::Process(MAC_FILE * pInfo)
     int nRetVal = ERROR_INVALID_INPUT_FILE;
 
     // use the format
-    IFormat * pFormat = pInfo->pFormat;
+    IFormat * pFormat = pInfo->m_pFormat;
 
     // if we found a format that can do the job, use it to do the work
     if (pFormat != APE_NULL)
@@ -175,13 +175,13 @@ CString CFormatArray::GetOutputExtension(APE_MODES Mode, const CString & strInpu
     return strExtension;
 }
 
-BOOL CFormatArray::GetInputExtensions(CStringArrayEx & aryExtensions)
+bool CFormatArray::GetInputExtensions(CStringArrayEx & aryExtensions)
 {
     // clear the list
     aryExtensions.RemoveAll();
 
     // build a map of extensions (so we remove duplicates)
-    CMap<CString, LPCTSTR, BOOL, BOOL> mapExtensions;
+    CMap<CString, LPCTSTR, bool, bool> mapExtensions;
     for (int z = 0; z < m_aryFormats.GetSize(); z++)
     {
         CString strExtensions = m_aryFormats[z]->GetInputExtensions(theApp.GetSettings()->GetMode());
@@ -194,7 +194,7 @@ BOOL CFormatArray::GetInputExtensions(CStringArrayEx & aryExtensions)
             strExtension.MakeLower();
 
             // add it to the map
-            mapExtensions.SetAt(strExtension, TRUE);
+            mapExtensions.SetAt(strExtension, true);
         }
     }
 
@@ -202,7 +202,7 @@ BOOL CFormatArray::GetInputExtensions(CStringArrayEx & aryExtensions)
     POSITION Pos = mapExtensions.GetStartPosition();
     while (Pos)
     {
-        CString strExtension; BOOL bTemp = FALSE;
+        CString strExtension; bool bTemp = false;
         mapExtensions.GetNextAssoc(Pos, strExtension, bTemp);
         aryExtensions.Add(strExtension);
     }
@@ -210,10 +210,10 @@ BOOL CFormatArray::GetInputExtensions(CStringArrayEx & aryExtensions)
     // sort
     aryExtensions.SortAscending();
 
-    return TRUE;
+    return true;
 }
 
-CString CFormatArray::GetOpenFilesFilter(BOOL bAddAllFiles)
+CString CFormatArray::GetOpenFilesFilter(bool bAddAllFiles)
 {
     // filter
     CString strFilter;
@@ -232,6 +232,10 @@ CString CFormatArray::GetOpenFilesFilter(BOOL bAddAllFiles)
     // build the list on a per-format basis
     for (int z = 0; z < m_aryFormats.GetSize(); z++)
     {
+        // skip invalid formats
+        if (m_aryFormats[z]->GetValid() == false)
+            continue;
+
         // get the format's extensions
         aryExtensions.InitFromList(m_aryFormats[z]->GetInputExtensions(theApp.GetSettings()->GetMode()), _T(";"));
 
@@ -267,14 +271,14 @@ IFormat * CFormatArray::GetFormat(MAC_FILE * pInfo)
 {
     IFormat * pFormat = APE_NULL;
 
-    if ((pInfo->Mode == MODE_DECOMPRESS) || (pInfo->Mode == MODE_VERIFY))
+    if ((pInfo->m_Mode == MODE_DECOMPRESS) || (pInfo->m_Mode == MODE_VERIFY))
     {
         // find the first plugin that supports this file type
-        CString strExtension = CFilename(pInfo->strInputFilename).GetExtension();
+        CString strExtension = CFilename(pInfo->m_strInputFilename).GetExtension();
         for (int z = 0; z < m_aryFormats.GetSize(); z++)
         {
             CStringArrayEx aryExtensions;
-            aryExtensions.InitFromList(m_aryFormats[z]->GetInputExtensions(pInfo->Mode), _T(";"));
+            aryExtensions.InitFromList(m_aryFormats[z]->GetInputExtensions(pInfo->m_Mode), _T(";"));
             if (aryExtensions.Find(strExtension) != -1)
             {
                 pFormat = m_aryFormats[z];

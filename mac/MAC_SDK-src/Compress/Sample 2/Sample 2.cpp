@@ -1,16 +1,16 @@
 /***************************************************************************************
 Compress - Sample 2
-Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2025 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates dynamic linkage to MACDll.dll to create an APE file using
 on-the-fly encoding.
 
-The IAPECompress interface fully supports on-the-fly encoding.  To use on-
+The IAPECompress interface fully supports on-the-fly encoding. To use on-
 the-fly encoding, be sure to tell the encoder to create the proper WAV header on
-decompression.  Also, you need to specify the absolute maximum audio bytes that will
+decompression. Also, you need to specify the absolute maximum audio bytes that will
 get encoded. (trying to encode more than the limit set on Start() will cause failure)
-This maximum is used to allocates space in the seek table at the front of the file.  Currently,
+This maximum is used to allocates space in the seek table at the front of the file. Currently,
 it takes around 8k per hour of CD music, so it isn't a big deal to allocate more than
 needed. You can also specify MAX_AUDIO_BYTES_UNKNOWN to allocate as much space as possible. (2 GB)
 
@@ -22,7 +22,7 @@ Notes for use in a new project:
 WARNING:
     -This class driven system for using Monkey's Audio is still in development, so
     I can't make any guarantees that the classes and libraries won't change before
-    everything gets finalized.  Use them at your own risk
+    everything gets finalized. Use them at your own risk
 ***************************************************************************************/
 
 // includes

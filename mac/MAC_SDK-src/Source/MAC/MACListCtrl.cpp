@@ -8,39 +8,6 @@
 
 using namespace APE;
 
-struct MAC_ERROR_EXPLANATION
-{
-    int nErrorCode;
-    LPCTSTR pDescription;
-};
-const MAC_ERROR_EXPLANATION g_MACErrorExplanations[] = {
-    { ERROR_IO_READ                               , _T("I/O read error") },                         \
-    { ERROR_IO_WRITE                              , _T("I/O write error") },                        \
-    { ERROR_INVALID_INPUT_FILE                    , _T("invalid input file") },                     \
-    { ERROR_INVALID_OUTPUT_FILE                   , _T("invalid output file") },                    \
-    { ERROR_INPUT_FILE_TOO_LARGE                  , _T("input file file too large") },              \
-    { ERROR_INPUT_FILE_UNSUPPORTED_BIT_DEPTH      , _T("input file unsupported bit depth") },       \
-    { ERROR_INPUT_FILE_UNSUPPORTED_SAMPLE_RATE    , _T("input file unsupported sample rate") },     \
-    { ERROR_INPUT_FILE_UNSUPPORTED_CHANNEL_COUNT  , _T("input file unsupported channel count") },   \
-    { ERROR_INPUT_FILE_TOO_SMALL                  , _T("input file too small") },                   \
-    { ERROR_INVALID_CHECKSUM                      , _T("invalid checksum") },                       \
-    { ERROR_DECOMPRESSING_FRAME                   , _T("decompressing frame") },                    \
-    { ERROR_INITIALIZING_UNMAC                    , _T("initializing unmac") },                     \
-    { ERROR_INVALID_FUNCTION_PARAMETER            , _T("invalid function parameter") },             \
-    { ERROR_UNSUPPORTED_FILE_TYPE                 , _T("unsupported file type") },                  \
-    { ERROR_INSUFFICIENT_MEMORY                   , _T("insufficient memory") },                    \
-    { ERROR_LOADING_APE_DLL                       , _T("loading MAC.dll") },                        \
-    { ERROR_LOADING_APE_INFO_DLL                  , _T("loading MACinfo.dll") },                    \
-    { ERROR_LOADING_UNMAC_DLL                     , _T("loading UnMAC.dll") },                      \
-    { ERROR_USER_STOPPED_PROCESSING               , _T("user stopped") },                           \
-    { ERROR_SKIPPED                               , _T("skipped") },                                \
-    { ERROR_BAD_PARAMETER                         , _T("bad parameter") },                          \
-    { ERROR_APE_COMPRESS_TOO_MUCH_DATA            , _T("APE compress too much data") },             \
-    { ERROR_UNSUPPORTED_FILE_VERSION              , _T("unsupported file version") },               \
-    { ERROR_OPENING_FILE_IN_USE                   , _T("file in use") },                            \
-    { ERROR_UNDEFINED                             , _T("undefined") }
-};
-
 #define IDC_AUTO_SIZE_ALL 1000
 
 CMACListCtrl::CMACListCtrl()
@@ -63,17 +30,17 @@ BEGIN_MESSAGE_MAP(CMACListCtrl, CListCtrl)
     ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-BOOL CMACListCtrl::Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles)
+bool CMACListCtrl::Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles)
 {
     // store pointers
     m_pParent = pParent;
     m_paryFiles = paryFiles;
 
     // set the style
-    SetExtendedStyle(GetExtendedStyle() | LVS_EX_HEADERDRAGDROP | LVS_EX_FULLROWSELECT);
+    SetExtendedStyle(GetExtendedStyle() | LVS_EX_HEADERDRAGDROP | LVS_EX_FULLROWSELECT | LVS_EX_INFOTIP);
 
     // accept drag-n-drop
-    DragAcceptFiles(TRUE);
+    DragAcceptFiles(true);
 
     // build the columns
     InsertColumn(COLUMN_FILENAME, _T("File Name"));
@@ -95,16 +62,16 @@ BOOL CMACListCtrl::Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles)
     SystemParametersInfo(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0);
 
     // create font
-    m_Font.CreateFont(ncm.lfMessageFont.lfHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0,
+    m_Font.CreateFont(ncm.lfMessageFont.lfHeight, 0, 0, 0, FW_NORMAL, false, false, 0,
         DEFAULT_CHARSET,
         OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
         DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, ncm.lfMessageFont.lfFaceName);
     SetFont(&m_Font);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFiles)
+bool CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFiles)
 {
     if ((paryFiles != APE_NULL) && (paryFiles->GetSize() > 0))
     {
@@ -135,7 +102,7 @@ BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFi
             DWORD dwTotalBytes = GetFileSize(hInputFile, APE_NULL);
             unsigned long nBytesRead = 0;
 
-            CSmartPtr<char> spBuffer(new char [static_cast<size_t>(dwTotalBytes) + 1], TRUE);
+            CSmartPtr<char> spBuffer(new char [static_cast<size_t>(dwTotalBytes) + 1], true);
             spBuffer[dwTotalBytes] = 0;
             if (ReadFile(hInputFile, spBuffer, dwTotalBytes, &nBytesRead, APE_NULL) == false)
                 spBuffer[0] = 0;
@@ -158,7 +125,7 @@ BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFi
                 }
                 else
                 {
-                    CSmartPtr<TCHAR> spUTF16(CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<unsigned char *>(&spBuffer[dwIndex])), TRUE);
+                    CSmartPtr<TCHAR> spUTF16(CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<unsigned char *>(&spBuffer[dwIndex])), true);
                     AddFileInternal(spUTF16.GetPtr());
                     dwIndex += static_cast<DWORD>(strlen(&spBuffer[dwIndex]) + 1);
                 }
@@ -170,10 +137,10 @@ BOOL CMACListCtrl::LoadFileList(const CString & strPath, CStringArrayEx * paryFi
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::SaveFileList(const CString & strPath)
+bool CMACListCtrl::SaveFileList(const CString & strPath)
 {
     HANDLE hOutputFile = CreateFile(strPath, GENERIC_WRITE, 0, APE_NULL, CREATE_ALWAYS, 0, APE_NULL);
 
@@ -182,7 +149,7 @@ BOOL CMACListCtrl::SaveFileList(const CString & strPath)
         unsigned long nBytesWritten = 0;
         for (int z = 0; z < GetItemCount(); z++)
         {
-            CSmartPtr<char> spUTF8(reinterpret_cast<char *>(CAPECharacterHelper::GetUTF8FromUTF16(GetFilename(z))), TRUE);
+            CSmartPtr<char> spUTF8(reinterpret_cast<char *>(CAPECharacterHelper::GetUTF8FromUTF16(GetFilename(z))), true);
 
             WriteFile(hOutputFile, spUTF8.GetPtr(), static_cast<DWORD>(strlen(spUTF8)), &nBytesWritten, APE_NULL);
             WriteFile(hOutputFile, "\r\n", 2, &nBytesWritten, APE_NULL);
@@ -191,10 +158,10 @@ BOOL CMACListCtrl::SaveFileList(const CString & strPath)
         CloseHandle(hOutputFile);
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::StartFileInsertion(BOOL bClearList)
+bool CMACListCtrl::StartFileInsertion(bool bClearList)
 {
     if (bClearList)
     {
@@ -204,23 +171,23 @@ BOOL CMACListCtrl::StartFileInsertion(BOOL bClearList)
     m_arySupportedExtensions.RemoveAll();
     theApp.GetFormatArray()->GetInputExtensions(m_arySupportedExtensions);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::FinishFileInsertion()
+bool CMACListCtrl::FinishFileInsertion()
 {
     Update();
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::Update()
+bool CMACListCtrl::Update()
 {
     SetItemCount(static_cast<int>(m_paryFiles->GetSize()));
     if (m_pParent->m_ctrlStatusBar.m_hWnd != APE_NULL)
         m_pParent->m_ctrlStatusBar.UpdateFiles(m_paryFiles);
 
-    return TRUE;
+    return true;
 }
 
 void CMACListCtrl::SaveColumns()
@@ -246,23 +213,23 @@ void CMACListCtrl::LoadColumns()
         SetColumnWidth(z, nSize);
     }
 
-    CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], TRUE);
+    CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], true);
     if (theApp.GetSettings()->LoadSetting(_T("List Column Order"), spOrderArray, (sizeof(spOrderArray[0]) * COLUMN_COUNT)))
         SetColumnOrderArray(COLUMN_COUNT, spOrderArray);
 }
 
-BOOL CMACListCtrl::AddFile(const CString & strFilename)
+bool CMACListCtrl::AddFile(const CString & strFilename)
 {
     StartFileInsertion();
     AddFileInternal(strFilename);
     FinishFileInsertion();
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::AddFolder(CString strPath)
+bool CMACListCtrl::AddFolder(CString strPath)
 {
-    theApp.GetSettings()->m_aryAddFolderMRU.Remove(strPath, FALSE);
+    theApp.GetSettings()->m_aryAddFolderMRU.Remove(strPath, false);
     while (theApp.GetSettings()->m_aryAddFolderMRU.GetSize() > 4)
         theApp.GetSettings()->m_aryAddFolderMRU.RemoveAt(4);
     theApp.GetSettings()->m_aryAddFolderMRU.InsertAt(0, strPath);
@@ -271,17 +238,17 @@ BOOL CMACListCtrl::AddFolder(CString strPath)
     AddFolderInternal(strPath);
     FinishFileInsertion();
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::AddFileInternal(CString strInputFilename)
+bool CMACListCtrl::AddFileInternal(CString strInputFilename)
 {
     // make sure the file exists
     WIN32_FIND_DATA WFD;
     HANDLE hFind = FindFirstFile(strInputFilename, &WFD);
-    if (hFind == INVALID_HANDLE_VALUE) { return ERROR_UNDEFINED; }
+    if (hFind == INVALID_HANDLE_VALUE) { return false; }
 
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
     if (WFD.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
     {
         // if it's a directory, use AddFolder(...)
@@ -309,14 +276,14 @@ BOOL CMACListCtrl::AddFileInternal(CString strInputFilename)
         {
             // build file
             MAC_FILE File;
-            File.strInputFilename = strInputFilename;
-            File.dInputFileBytes = static_cast<double>(WFD.nFileSizeLow) + (static_cast<double>(WFD.nFileSizeHigh) * static_cast<double>(4294967296.0));
+            File.m_strInputFilename = strInputFilename;
+            File.m_dInputFileBytes = static_cast<double>(WFD.nFileSizeLow) + (static_cast<double>(WFD.nFileSizeHigh) * static_cast<double>(4294967296.0));
 
             // add
             m_paryFiles->Add(File);
 
             // success
-            bRetVal = TRUE;
+            bRetVal = true;
         }
     }
 
@@ -326,18 +293,18 @@ BOOL CMACListCtrl::AddFileInternal(CString strInputFilename)
     return bRetVal;
 }
 
-BOOL CMACListCtrl::AddFolderInternal(CString strPath)
+bool CMACListCtrl::AddFolderInternal(CString strPath)
 {
-    CStringArray aryFiles; ListFiles(&aryFiles, strPath, TRUE);
+    CStringArray aryFiles; ListFiles(&aryFiles, strPath, true);
     for (int z = 0; z < aryFiles.GetSize(); z++)
         AddFileInternal(aryFiles.GetAt(z));
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::RemoveSelectedFiles()
+bool CMACListCtrl::RemoveSelectedFiles()
 {
-    SetRedraw(FALSE);
+    SetRedraw(false);
 
     // build a list of indexes
     POSITION Pos = GetFirstSelectedItemPosition();
@@ -354,18 +321,18 @@ BOOL CMACListCtrl::RemoveSelectedFiles()
     SelectNone();
     m_pParent->m_ctrlStatusBar.UpdateFiles(m_paryFiles);
 
-    SetRedraw(TRUE);
+    SetRedraw(true);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::RemoveAllFiles()
+bool CMACListCtrl::RemoveAllFiles()
 {
     DeleteAllItems();
     m_paryFiles->RemoveAll();
     m_pParent->m_ctrlStatusBar.UpdateFiles(m_paryFiles);
 
-    return TRUE;
+    return true;
 }
 
 void CMACListCtrl::OnDestroy()
@@ -373,7 +340,7 @@ void CMACListCtrl::OnDestroy()
     // save the settings
     SaveColumns();
 
-    CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], TRUE);
+    CSmartPtr<int> spOrderArray(new int [COLUMN_COUNT], true);
     GetColumnOrderArray(spOrderArray, -1);
     theApp.GetSettings()->SaveSetting(_T("List Column Order"), spOrderArray, (sizeof(spOrderArray[0]) * COLUMN_COUNT));
 
@@ -390,7 +357,7 @@ CString CMACListCtrl::GetFilename(int nIndex)
 {
     CString strRetVal;
     if (m_paryFiles && (nIndex >= 0) && (nIndex < m_paryFiles->GetSize()))
-        strRetVal = m_paryFiles->ElementAt(nIndex).strInputFilename;
+        strRetVal = m_paryFiles->ElementAt(nIndex).m_strInputFilename;
 
     return strRetVal;
 }
@@ -398,35 +365,72 @@ CString CMACListCtrl::GetFilename(int nIndex)
 CString CMACListCtrl::GetStatus(const MAC_FILE & File)
 {
     CString strValue;
-    if (File.bDone)
+    if (File.m_bDone)
     {
         // lookup the error text
-        if (File.nRetVal == ERROR_SUCCESS)
+        if (File.m_nRetVal == ERROR_SUCCESS)
         {
             strValue = _T("OK");
         }
-        else if (File.nRetVal == ERROR_SKIPPED)
+        else if (File.m_nRetVal == ERROR_SKIPPED)
         {
             strValue = _T("Skipped");
         }
         else
         {
-            CString strError = _T("unknown");
-            for (int z = 0; z < static_cast<int>(_countof(g_MACErrorExplanations)); z++)
+            struct MAC_ERROR_EXPLANATION
             {
-                if (File.nRetVal == g_MACErrorExplanations[z].nErrorCode)
+                int nErrorCode;
+                LPCTSTR pDescription;
+            };
+            const MAC_ERROR_EXPLANATION MACErrorExplanations[] = {
+                { ERROR_IO_READ                               , _T("I/O read error") },                         \
+                { ERROR_IO_WRITE                              , _T("I/O write error") },                        \
+                { ERROR_INVALID_INPUT_FILE                    , _T("invalid input file") },                     \
+                { ERROR_INVALID_OUTPUT_FILE                   , _T("invalid output file") },                    \
+                { ERROR_INPUT_FILE_TOO_LARGE                  , _T("input file file too large") },              \
+                { ERROR_INPUT_FILE_UNSUPPORTED_BIT_DEPTH      , _T("input file unsupported bit depth") },       \
+                { ERROR_INPUT_FILE_UNSUPPORTED_SAMPLE_RATE    , _T("input file unsupported sample rate") },     \
+                { ERROR_INPUT_FILE_UNSUPPORTED_CHANNEL_COUNT  , _T("input file unsupported channel count") },   \
+                { ERROR_INPUT_FILE_TOO_SMALL                  , _T("input file too small") },                   \
+                { ERROR_INVALID_CHECKSUM                      , _T("invalid checksum") },                       \
+                { ERROR_DECOMPRESSING_FRAME                   , _T("decompressing frame") },                    \
+                { ERROR_INITIALIZING_UNMAC                    , _T("initializing unmac") },                     \
+                { ERROR_INVALID_FUNCTION_PARAMETER            , _T("invalid function parameter") },             \
+                { ERROR_UNSUPPORTED_FILE_TYPE                 , _T("unsupported file type") },                  \
+                { ERROR_INSUFFICIENT_MEMORY                   , _T("insufficient memory") },                    \
+                { ERROR_LOADING_APE_DLL                       , _T("loading MAC.dll") },                        \
+                { ERROR_LOADING_APE_INFO_DLL                  , _T("loading MACinfo.dll") },                    \
+                { ERROR_LOADING_UNMAC_DLL                     , _T("loading UnMAC.dll") },                      \
+                { ERROR_USER_STOPPED_PROCESSING               , _T("user stopped") },                           \
+                { ERROR_SKIPPED                               , _T("skipped") },                                \
+                { ERROR_BAD_PARAMETER                         , _T("bad parameter") },                          \
+                { ERROR_APE_COMPRESS_TOO_MUCH_DATA            , _T("APE compress too much data") },             \
+                { ERROR_UNSUPPORTED_FILE_VERSION              , _T("unsupported file version") },               \
+                { ERROR_OPENING_FILE_IN_USE                   , _T("file in use") },                            \
+                { ERROR_UNDEFINED                             , _T("undefined") }
+            };
+
+            CString strError = _T("unknown");
+            for (int z = 0; z < static_cast<int>(_countof(MACErrorExplanations)); z++)
+            {
+                if (File.m_nRetVal == MACErrorExplanations[z].nErrorCode)
                 {
-                    strError = g_MACErrorExplanations[z].pDescription;
+                    strError = MACErrorExplanations[z].pDescription;
                     break;
                 }
             }
             strValue.Format(_T("Error (%s)"), strError.GetString());
         }
     }
-    else if (File.bProcessing)
+    else if (File.m_bProcessing)
     {
         double dProgress = File.GetProgress();
-        strValue.Format(_T("%.1f%% (%s)"), dProgress * 100, g_aryModeActionNames[File.Mode]);
+
+        str_utfn cModeName[256]; APE_CLEAR(cModeName);
+        GetAPEModeName(File.m_Mode, cModeName, 256, true);
+
+        strValue.Format(_T("%.1f%% (%s)"), dProgress * 100, cModeName);
     }
     else
     {
@@ -436,7 +440,7 @@ CString CMACListCtrl::GetStatus(const MAC_FILE & File)
     return strValue;
 }
 
-BOOL CMACListCtrl::SetMode(APE_MODES Mode)
+bool CMACListCtrl::SetMode(APE_MODES Mode)
 {
     LVCOLUMN lvCol;
     APE_CLEAR(lvCol);
@@ -451,10 +455,10 @@ BOOL CMACListCtrl::SetMode(APE_MODES Mode)
         lvCol.pszText = _T("Compressed (MB)");
     SetColumn(3, &lvCol);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection)
+bool CMACListCtrl::GetFileList(CStringArray & aryFiles, bool bIgnoreSelection)
 {
     aryFiles.RemoveAll();
 
@@ -474,7 +478,7 @@ BOOL CMACListCtrl::GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection)
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
@@ -493,37 +497,37 @@ void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
             {
                 case COLUMN_FILENAME:
                 {
-                    strValue = File.strInputFilename;
+                    strValue = File.m_strInputFilename;
                     break;
                 }
                 case COLUMN_EXTENSION:
                 {
-                    strValue = GetExtension(File.strInputFilename);
+                    strValue = GetExtension(File.m_strInputFilename);
                     break;
                 }
                 case COLUMN_ORIGINAL_SIZE:
                 {
-                    strValue.Format(_T("%.2f"), static_cast<double>(File.dInputFileBytes) / (static_cast<double>(1024) * static_cast<double>(1024)));
+                    strValue.Format(_T("%.2f"), static_cast<double>(File.m_dInputFileBytes) / (static_cast<double>(1024) * static_cast<double>(1024)));
                     break;
                 }
                 case COLUMN_COMPRESSED_SIZE:
                 {
-                    if (File.dOutputFileBytes > 0)
-                        strValue.Format(_T("%.2f"), static_cast<double>(File.dOutputFileBytes) / (static_cast<double>(1024) * static_cast<double>(1024)));
+                    if (File.m_dOutputFileBytes > 0)
+                        strValue.Format(_T("%.2f"), static_cast<double>(File.m_dOutputFileBytes) / (static_cast<double>(1024) * static_cast<double>(1024)));
 
                     break;
                 }
                 case COLUMN_COMPRESSION_PERCENTAGE:
                 {
-                    if (File.dOutputFileBytes > 0)
-                        strValue.Format(_T("%.2f%%"), (static_cast<double>(100.0) * static_cast<double>(File.dOutputFileBytes)) / static_cast<double>(File.dInputFileBytes));
+                    if (File.m_dOutputFileBytes > 0)
+                        strValue.Format(_T("%.2f%%"), (static_cast<double>(100.0) * static_cast<double>(File.m_dOutputFileBytes)) / static_cast<double>(File.m_dInputFileBytes));
                     break;
                 }
                 case COLUMN_TIME_ELAPSED:
                 {
-                    if (File.bStarted && File.bDone)
+                    if (File.m_bStarted && File.m_bDone)
                     {
-                        int64 nElapsedMS = static_cast<int64>(File.dwEndTickCount - File.dwStartTickCount);
+                        int64 nElapsedMS = static_cast<int64>(File.m_dwEndTickCount - File.m_dwStartTickCount);
                         strValue.Format(_T("%.2f"), static_cast<double>(nElapsedMS) / static_cast<double>(1000));
                     }
                     break;
@@ -545,7 +549,7 @@ void CMACListCtrl::OnGetdispinfo(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CMACListCtrl::OnDropFiles(HDROP hDropInfo)
 {
-    StartFileInsertion(FALSE);
+    StartFileInsertion(false);
 
     const int nFiles = DragQueryFile(hDropInfo, 0xFFFFFFFF, APE_NULL, 0);
     TCHAR * pFilename = new TCHAR [APE_MAX_PATH];
@@ -590,7 +594,7 @@ void CMACListCtrl::OnBegindrag(NMHDR *, LRESULT *)
                 pDrop->pt.y = 0;
                 pDrop->fNC = 0;
                 #ifdef _UNICODE
-                    pDrop->fWide = TRUE;
+                    pDrop->fWide = true;
                 #endif
                 int nBufferSizeLeft = nBufferSize - int(sizeof(DROPFILES));
 
@@ -653,20 +657,20 @@ void CMACListCtrl::OnRclick(NMHDR *, LRESULT * pResult)
 }
 
 
-BOOL CMACListCtrl::SelectNone()
+bool CMACListCtrl::SelectNone()
 {
     for (int z = 0; z < GetItemCount(); z++)
         SetItemState(z, 0, LVIS_SELECTED | LVIS_FOCUSED);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACListCtrl::SelectAll()
+bool CMACListCtrl::SelectAll()
 {
     for (int z = 0; z < GetItemCount(); z++)
         SetItemState(z, LVIS_SELECTED, LVIS_SELECTED | LVIS_FOCUSED);
 
-    return TRUE;
+    return true;
 }
 
 static CMACListCtrl * s_pThis = APE_NULL;
@@ -681,27 +685,27 @@ int Compare(const void * pOne, const void * pTwo)
     const MAC_FILE * pFileTwo = static_cast<const MAC_FILE *>(pTwo);
     if (s_nCompareColumn == COLUMN_FILENAME)
     {
-        nReturn = pFileOne->strInputFilename.Compare(pFileTwo->strInputFilename);
+        nReturn = pFileOne->m_strInputFilename.Compare(pFileTwo->m_strInputFilename);
     }
     else if (s_nCompareColumn == COLUMN_EXTENSION)
     {
-        CString strExtensionOne = GetExtension(pFileOne->strInputFilename);
-        CString strExtensionTwo = GetExtension(pFileTwo->strInputFilename);
+        CString strExtensionOne = GetExtension(pFileOne->m_strInputFilename);
+        CString strExtensionTwo = GetExtension(pFileTwo->m_strInputFilename);
 
         nReturn = strExtensionOne.Compare(strExtensionTwo);
     }
     else if (s_nCompareColumn == COLUMN_ORIGINAL_SIZE)
     {
-        nReturn = static_cast<int>(pFileOne->dInputFileBytes - pFileTwo->dInputFileBytes);
+        nReturn = static_cast<int>(pFileOne->m_dInputFileBytes - pFileTwo->m_dInputFileBytes);
     }
     else if (s_nCompareColumn == COLUMN_COMPRESSED_SIZE)
     {
-        nReturn = static_cast<int>(pFileOne->dOutputFileBytes - pFileTwo->dOutputFileBytes);
+        nReturn = static_cast<int>(pFileOne->m_dOutputFileBytes - pFileTwo->m_dOutputFileBytes);
     }
     else if (s_nCompareColumn == COLUMN_COMPRESSION_PERCENTAGE)
     {
-        double dOne = static_cast<double>(pFileOne->dOutputFileBytes) / static_cast<double>(pFileOne->dInputFileBytes);
-        double dTwo = static_cast<double>(pFileTwo->dOutputFileBytes) / static_cast<double>(pFileTwo->dInputFileBytes);
+        double dOne = static_cast<double>(pFileOne->m_dOutputFileBytes) / static_cast<double>(pFileOne->m_dInputFileBytes);
+        double dTwo = static_cast<double>(pFileTwo->m_dOutputFileBytes) / static_cast<double>(pFileTwo->m_dInputFileBytes);
         if (dOne > dTwo)
             nReturn = 1;
         else if (dOne < dTwo)
@@ -709,7 +713,7 @@ int Compare(const void * pOne, const void * pTwo)
     }
     else if (s_nCompareColumn == COLUMN_TIME_ELAPSED)
     {
-        nReturn = static_cast<int>((pFileOne->dwEndTickCount - pFileOne->dwStartTickCount) - (pFileTwo->dwEndTickCount - pFileTwo->dwStartTickCount));
+        nReturn = static_cast<int>((pFileOne->m_dwEndTickCount - pFileOne->m_dwStartTickCount) - (pFileTwo->m_dwEndTickCount - pFileTwo->m_dwStartTickCount));
     }
     else if (s_nCompareColumn == COLUMN_STATUS)
     {
@@ -848,8 +852,8 @@ BOOL CMACListCtrl::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 
 BOOL CMACListCtrl::OnEraseBkgnd(CDC * pDC)
 {
-    if ((m_pParent == APE_NULL) || (m_pParent->GetInitialized() == FALSE))
-        return TRUE;
+    if ((m_pParent == APE_NULL) || (m_pParent->GetInitialized() == false))
+        return true;
 
     // get rectangle
     CRect rectClient;
@@ -884,5 +888,5 @@ BOOL CMACListCtrl::OnEraseBkgnd(CDC * pDC)
 
     // painting from the memory buffer to the screen happens when the memory DC unwinds
 
-    return TRUE;
+    return true;
 }

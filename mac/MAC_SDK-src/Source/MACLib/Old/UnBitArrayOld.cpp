@@ -301,7 +301,7 @@ void CUnBitArrayOld::GenerateArrayRice(int * pOutputArray, uint32 nNumberOfEleme
     }
 }
 
-__inline int CUnBitArrayOld::DecodeValueNew(bool bCapOverflow)
+__forceinline int CUnBitArrayOld::DecodeValueNew(bool bCapOverflow)
 {
     // make sure there is room for the data
     // this is a little slower than ensuring a huge block to start with, but it's safer

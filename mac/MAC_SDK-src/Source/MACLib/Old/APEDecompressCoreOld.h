@@ -5,11 +5,11 @@ namespace APE
 
 #pragma pack(push, 1)
 
-class CAPEDecompressCore
+class CAPEDecompressCoreOld
 {
 public:
-    CAPEDecompressCore(IAPEDecompress * pAPEDecompress);
-    ~CAPEDecompressCore();
+    CAPEDecompressCoreOld(IAPEDecompress * pAPEDecompress);
+    ~CAPEDecompressCoreOld();
 
     void GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes, intn nFrameIndex);
     void GenerateDecodedArray(int * pInputArray, int nNumberElements, intn nFrameIndex, CAntiPredictor * pAntiPredictor);

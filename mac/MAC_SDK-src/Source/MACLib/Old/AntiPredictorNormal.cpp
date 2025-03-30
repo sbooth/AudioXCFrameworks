@@ -6,8 +6,6 @@
 namespace APE
 {
 
-#ifdef ENABLE_COMPRESSION_MODE_NORMAL
-
 void CAntiPredictorNormal0000To3320::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements)
 {
     // variable declares
@@ -265,8 +263,6 @@ void CAntiPredictorNormal3800ToCurrent::AntiPredict(int * pInputArray, int * pOu
         *op = o + ((op[-1] * 31) >> 5);
     }
 }
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_NORMAL
 
 }
 

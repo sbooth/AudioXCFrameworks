@@ -50,7 +50,10 @@ struct RIFF_CHUNK_HEADER
     uint32_t nChunkBytes;       // the bytes of the chunk
 };
 
-CInputSource * CreateInputSource(const wchar_t * pSourceName, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int32 * pFlags, int * pErrorCode)
+/**************************************************************************************************
+Input source creation
+**************************************************************************************************/
+CInputSource * CInputSource::CreateInputSource(const wchar_t * pSourceName, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int32 * pFlags, int * pErrorCode)
 {
     // error check the parameters
     if ((pSourceName == APE_NULL) || (wcslen(pSourceName) == 0))
@@ -135,16 +138,16 @@ CInputSource * CreateInputSource(const wchar_t * pSourceName, WAVEFORMATEX * pwf
     else if (CCAFInputSource::GetHeaderMatches(aryHeader))
     {
         if (pErrorCode) *pErrorCode = ERROR_SUCCESS;
-        CCAFInputSource * pInputSource = new CCAFInputSource(spIO, pwfeSource, pTotalBlocks, pHeaderBytes, pTerminatingBytes, pErrorCode);
+        CCAFInputSource * pCAF = new CCAFInputSource(spIO, pwfeSource, pTotalBlocks, pHeaderBytes, pTerminatingBytes, pErrorCode);
         spIO.SetDelete(false);
         *pFlags |= APE_FORMAT_FLAG_CAF;
-        if (pInputSource->GetIsBigEndian())
+        if (pCAF->GetIsBigEndian())
             *pFlags |= APE_FORMAT_FLAG_BIG_ENDIAN;
         if (pwfeSource->wBitsPerSample == 8)
             *pFlags |= APE_FORMAT_FLAG_SIGNED_8_BIT;
         if (pwfeSource->wFormatTag == WAVE_FORMAT_IEEE_FLOAT)
             *pFlags |= APE_FORMAT_FLAG_FLOATING_POINT;
-        return pInputSource;
+        return pCAF;
     }
     else
     {
@@ -278,7 +281,7 @@ CWAVInputSource::CWAVInputSource(CIO * pIO, WAVEFORMATEX * pwfeSource, int64 * p
     m_bFloat = false; // we need a boolean instead of just checking WAVE_FORMAT_IEEE_FLOAT since it can be extensible with the format float
     APE_CLEAR(m_wfeSource);
 
-    m_bUnknownLengthPipe = false;
+    m_bUnknownLengthFile = false;
 
     if (pIO == APE_NULL || pwfeSource == APE_NULL)
     {
@@ -316,17 +319,6 @@ CWAVInputSource::~CWAVInputSource()
 
 int CWAVInputSource::AnalyzeSource()
 {
-    // see if we're a pipe
-    bool bPipe = false;
-    {
-        wchar_t * pName = new wchar_t [APE_MAX_PATH];
-        pName[0] = 0; // empty the first byte, we don't care if the rest is noise then
-        m_spIO->GetName(pName);
-        if (_wcsicmp(pName, L"-") == 0)
-            bPipe = true;
-        APE_SAFE_ARRAY_DELETE(pName)
-    }
-
     // get the file size
     m_nFileBytes = m_spIO->GetSize();
 
@@ -343,7 +335,9 @@ int CWAVInputSource::AnalyzeSource()
     }
 
     // sanity check (a file gotten from David Bryant was tripping this for example)
-    if (RIFFHeader.nBytes > m_nFileBytes)
+    if (m_nFileBytes == APE_FILE_SIZE_UNDEFINED)
+        RIFFHeader.nBytes = static_cast<uint32_t>(-1);
+    else if (RIFFHeader.nBytes > m_nFileBytes)
         RIFFHeader.nBytes = static_cast<uint32_t>(-1);
 
     // get the file size from RIFF header in case we're a pipe and use the maximum
@@ -353,14 +347,11 @@ int CWAVInputSource::AnalyzeSource()
         const int64 nHeaderBytes = static_cast<int64>(RIFFHeader.nBytes) + static_cast<int64>(sizeof(RIFF_HEADER));
         m_nFileBytes = ape_max(m_nFileBytes, nHeaderBytes);
     }
-    else
+    else if (m_nFileBytes == APE_FILE_SIZE_UNDEFINED)
     {
-        if (bPipe)
-        {
-            // mark that we need to read the pipe with unknown length
-            m_bUnknownLengthPipe = true;
-            m_nFileBytes = -1;
-        }
+        // mark that we need to read the pipe with unknown length
+        m_bUnknownLengthFile = true;
+        m_nFileBytes = -1;
     }
 
     // read the data type header
@@ -378,8 +369,13 @@ int CWAVInputSource::AnalyzeSource()
     while (!(RIFFChunkHeader.cChunkLabel[0] == 'f' && RIFFChunkHeader.cChunkLabel[1] == 'm' && RIFFChunkHeader.cChunkLabel[2] == 't' && RIFFChunkHeader.cChunkLabel[3] == ' '))
     {
         // check if the header stretches past the end of the file (then we're not valid)
-        if (RIFFChunkHeader.nChunkBytes > (m_spIO->GetSize() - m_spIO->GetPosition()))
-            return ERROR_INVALID_INPUT_FILE;
+        if (m_nFileBytes != APE_FILE_SIZE_UNDEFINED)
+        {
+            if (RIFFChunkHeader.nChunkBytes > (m_spIO->GetSize() - m_spIO->GetPosition()))
+            {
+                return ERROR_INVALID_INPUT_FILE;
+            }
+        }
 
         // move the file pointer to the end of this chunk
         CSmartPtr<unsigned char> spExtraChunk(new unsigned char [RIFFChunkHeader.nChunkBytes], true);
@@ -473,8 +469,11 @@ int CWAVInputSource::AnalyzeSource()
     while (!(RIFFChunkHeader.cChunkLabel[0] == 'd' && RIFFChunkHeader.cChunkLabel[1] == 'a' && RIFFChunkHeader.cChunkLabel[2] == 't' && RIFFChunkHeader.cChunkLabel[3] == 'a'))
     {
         // check for headers that go past the end of the file
-        if (RIFFChunkHeader.nChunkBytes > (m_spIO->GetSize() - m_spIO->GetPosition()))
-            return ERROR_INVALID_INPUT_FILE;
+        if (m_nFileBytes != APE_FILE_SIZE_UNDEFINED)
+        {
+            if (RIFFChunkHeader.nChunkBytes > (m_spIO->GetSize() - m_spIO->GetPosition()))
+                return ERROR_INVALID_INPUT_FILE;
+        }
 
         // move the file pointer to the end of this chunk
         CSmartPtr<unsigned char> spRIFFChunk(new unsigned char [RIFFChunkHeader.nChunkBytes], true);
@@ -512,8 +511,8 @@ int CWAVInputSource::AnalyzeSource()
     // calculate the terminating bytes
     m_nTerminatingBytes = static_cast<uint32_t>(m_nFileBytes - m_nDataBytes - m_nHeaderBytes);
 
-    // no terminating data if we're a pipe (since seeking to read it would fail)
-    if (bPipe)
+    // no terminating data if we're unknown length (like a pipe) since seeking to read it would fail
+    if (m_bUnknownLengthFile)
         m_nTerminatingBytes = 0;
 
     // we made it this far, everything must be cool

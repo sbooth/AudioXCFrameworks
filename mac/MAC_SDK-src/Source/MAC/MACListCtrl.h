@@ -19,31 +19,31 @@ public:
     CMACListCtrl();
     virtual ~CMACListCtrl();
 
-    BOOL Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles);
+    bool Initialize(CMACDlg * pParent, MAC_FILE_ARRAY * paryFiles);
 
-    BOOL GetFileList(CStringArray & aryFiles, BOOL bIgnoreSelection = FALSE);
+    bool GetFileList(CStringArray & aryFiles, bool bIgnoreSelection = false);
 
-    BOOL StartFileInsertion(BOOL bClearList = TRUE);
-    BOOL FinishFileInsertion();
-    BOOL AddFileInternal(CString strFilename);
-    BOOL AddFolderInternal(CString strPath);
+    bool StartFileInsertion(bool bClearList = true);
+    bool FinishFileInsertion();
+    bool AddFileInternal(CString strFilename);
+    bool AddFolderInternal(CString strPath);
 
-    BOOL AddFile(const CString & strFilename);
-    BOOL AddFolder(CString strPath);
+    bool AddFile(const CString & strFilename);
+    bool AddFolder(CString strPath);
 
-    BOOL RemoveAllFiles();
-    BOOL RemoveSelectedFiles();
+    bool RemoveAllFiles();
+    bool RemoveSelectedFiles();
 
-    BOOL Update();
+    bool Update();
     void SaveColumns();
     void LoadColumns();
 
-    BOOL SelectNone();
-    BOOL SelectAll();
+    bool SelectNone();
+    bool SelectAll();
 
     CString GetStatus(const MAC_FILE & File);
-    BOOL SetMode(APE::APE_MODES Mode);
-    BOOL LoadFileList(const CString & strPath, CStringArrayEx * paryFiles);
+    bool SetMode(APE::APE_MODES Mode);
+    bool LoadFileList(const CString & strPath, CStringArrayEx * paryFiles);
 
 protected:
     afx_msg void OnDestroy();
@@ -57,7 +57,7 @@ protected:
     DECLARE_MESSAGE_MAP()
 
     // helper functions
-    BOOL SaveFileList(const CString & strPath);
+    bool SaveFileList(const CString & strPath);
     CString GetFilename(int nIndex);
 
     // the actual files

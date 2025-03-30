@@ -13,6 +13,9 @@ CInputSource - base input format class (allows multiple format support)
 class CInputSource
 {
 public:
+    // input source creation
+    static CInputSource * CreateInputSource(const wchar_t * pSourceName, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int32 * pFlags, int * pErrorCode = APE_NULL);
+
     // construction / destruction
     virtual ~CInputSource() { }
 
@@ -24,7 +27,7 @@ public:
     virtual int GetTerminatingData(unsigned char * pBuffer) = 0;
 
     // get other properties
-    virtual bool GetUnknownLengthPipe() { return false; }
+    virtual bool GetUnknownLengthFile() { return false; }
     virtual bool GetFloat() { return false; }
 
 protected:
@@ -46,7 +49,7 @@ public:
 
     // construction / destruction
     CWAVInputSource(CIO * pIO, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int * pErrorCode = APE_NULL);
-    ~CWAVInputSource();
+    ~CWAVInputSource() APE_OVERRIDE;
 
     // get data
     int GetData(unsigned char * pBuffer, int nBlocks, int * pBlocksRetrieved) APE_OVERRIDE;
@@ -56,7 +59,7 @@ public:
     int GetTerminatingData(unsigned char * pBuffer) APE_OVERRIDE;
 
     // get other properties
-    bool GetUnknownLengthPipe() APE_OVERRIDE { return m_bUnknownLengthPipe; }
+    bool GetUnknownLengthFile() APE_OVERRIDE { return m_bUnknownLengthFile; }
     bool GetFloat() APE_OVERRIDE { return m_bFloat; }
 
 private:
@@ -67,10 +70,9 @@ private:
     uint32 m_nTerminatingBytes;
     int64 m_nDataBytes;
     int64 m_nFileBytes;
-    CSmartPtr<char> m_spFullHeader;
     WAVEFORMATEX m_wfeSource;
     bool m_bIsValid;
-    bool m_bUnknownLengthPipe;
+    bool m_bUnknownLengthFile;
     bool m_bFloat;
 };
 
@@ -85,7 +87,7 @@ public:
 
     // construction / destruction
     CAIFFInputSource(CIO * pIO, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int * pErrorCode = APE_NULL);
-    ~CAIFFInputSource();
+    ~CAIFFInputSource() APE_OVERRIDE;
 
     // get data
     int GetData(unsigned char * pBuffer, int nBlocks, int * pBlocksRetrieved) APE_OVERRIDE;
@@ -143,7 +145,7 @@ public:
 
     // construction / destruction
     CW64InputSource(CIO * pIO, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int * pErrorCode = APE_NULL);
-    ~CW64InputSource();
+    ~CW64InputSource() APE_OVERRIDE;
 
     // get data
     int GetData(unsigned char * pBuffer, int nBlocks, int * pBlocksRetrieved) APE_OVERRIDE;
@@ -180,7 +182,7 @@ public:
 
     // construction / destruction
     CSNDInputSource(CIO * pIO, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int * pErrorCode = APE_NULL, int32 * pFlags = APE_NULL);
-    ~CSNDInputSource();
+    ~CSNDInputSource() APE_OVERRIDE;
 
     // get data
     int GetData(unsigned char * pBuffer, int nBlocks, int * pBlocksRetrieved) APE_OVERRIDE;
@@ -217,7 +219,7 @@ public:
 
     // construction / destruction
     CCAFInputSource(CIO * pIO, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int * pErrorCode = APE_NULL);
-    ~CCAFInputSource();
+    ~CCAFInputSource() APE_OVERRIDE;
 
     // get data
     int GetData(unsigned char * pBuffer, int nBlocks, int * pBlocksRetrieved) APE_OVERRIDE;
@@ -244,11 +246,6 @@ private:
     bool m_bLittleEndian;
     bool m_bIsValid;
 };
-
-/**************************************************************************************************
-Input souce creation
-**************************************************************************************************/
-CInputSource * CreateInputSource(const wchar_t * pSourceName, WAVEFORMATEX * pwfeSource, int64 * pTotalBlocks, int64 * pHeaderBytes, int64 * pTerminatingBytes, int32 * pFlags, int * pErrorCode = APE_NULL);
 
 #pragma pack(pop)
 

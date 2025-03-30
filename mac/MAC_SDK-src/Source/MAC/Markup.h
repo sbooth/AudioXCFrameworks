@@ -1,3 +1,5 @@
+// NOLINTBEGIN
+
 // Markup.h: interface for the CMarkup class.
 //
 // Markup Release 11.5
@@ -302,7 +304,7 @@ public:
     bool GetNthAttrib( int n, MCD_STR& strAttrib, MCD_STR& strValue ) const;
     MCD_STR GetAttribName( int n ) const;
     int FindNode( int nType=0 );
-    int GetNodeType() { return m_nNodeType; };
+    int GetNodeType() const { return m_nNodeType; };
     bool SavePos( MCD_CSTR szPosName=MCD_T(""), int nMap = 0 );
     bool RestorePos( MCD_CSTR szPosName=MCD_T(""), int nMap = 0 );
     bool SetMapSize( int nSize, int nMap = 0 );
@@ -481,3 +483,5 @@ protected:
 };
 
 #endif // !defined(_MARKUP_H_INCLUDED_)
+
+// NOLINTEND

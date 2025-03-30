@@ -42,6 +42,7 @@ public:
 private:
     wchar_t m_cFileName[MAX_PATH];
     bool m_bReadOnly;
+    bool m_bPipe;
     FILE * m_pFile;
 };
 

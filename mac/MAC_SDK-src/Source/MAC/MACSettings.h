@@ -21,9 +21,6 @@
 #define PROCESSING_VERIFY_MODE_FULL                          0
 #define PROCESSING_VERIFY_MODE_QUICK                         1
 
-const LPCTSTR g_aryModeNames[APE::MODE_COUNT] = { _T("Compress"), _T("Decompress"), _T("Verify"), _T("Convert"), _T("Make APL's") };
-const LPCTSTR g_aryModeActionNames[APE::MODE_COUNT] = { _T("Compressing"), _T("Decompressing"), _T("Verifying"), _T("Converting"), _T("Making APL's") };
-
 class CMACSettings
 {
 public:
@@ -32,13 +29,14 @@ public:
     virtual ~CMACSettings();
 
     // load / save
-    BOOL Save();
-    BOOL Load();
+    bool Save();
+    bool Load();
 
     // load / save individual
     int LoadSetting(const CString & strName, int nDefault);
+    bool LoadSettingBoolean(const CString & strName, bool bDefault);
     CString LoadSetting(const CString & strName, const CString & strDefault, int nMaxLength = 8192);
-    BOOL LoadSetting(const CString & strName, void * pData, int nBytes);
+    bool LoadSetting(const CString & strName, void * pData, int nBytes);
 
     void SaveSetting(const CString & strName, int nValue);
     void SaveSetting(const CString & strName, const CString & strValue);
@@ -52,20 +50,20 @@ public:
     // output settings
     int m_nOutputLocationMode;
     CString m_strOutputLocationDirectory;
-    BOOL m_bOutputLocationRecreateDirectoryStructure;
+    bool m_bOutputLocationRecreateDirectoryStructure;
     int m_nOutputLocationRecreateDirectoryStructureLevels;
     int m_nOutputExistsMode;
     int m_nOutputDeleteAfterSuccessMode;
-    BOOL m_bOutputMirrorTimeStamp;
+    bool m_bOutputMirrorTimeStamp;
 
     // processing settings
     int m_nProcessingSimultaneousFiles;
     int m_nProcessingPriorityMode;
-    BOOL m_bProcessingStopOnErrors;
-    BOOL m_bProcessingPlayCompletionSound;
-    BOOL m_bProcessingShowExternalWindows;
+    bool m_bProcessingStopOnErrors;
+    bool m_bProcessingPlayCompletionSound;
+    bool m_bProcessingShowExternalWindows;
     int m_nProcessingVerifyMode;
-    BOOL m_bProcessingAutoVerifyOnCreation;
+    bool m_bProcessingAutoVerifyOnCreation;
 
     // helpers
     inline APE::APE_MODES GetMode() const { return m_Mode; }
@@ -82,5 +80,5 @@ protected:
     int m_nLevel;
 
     CRegKey m_RegKey;
-    BOOL m_bValid;
+    bool m_bValid;
 };

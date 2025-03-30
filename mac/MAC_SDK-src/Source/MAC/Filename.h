@@ -39,8 +39,10 @@ public:
     {
         m_strFilename = lpszFilename;
 
-        TCHAR cDrive[_MAX_DRIVE], cDir[_MAX_DIR], cName[_MAX_FNAME], cExt[_MAX_EXT];
-        cDrive[0] = 0; cDir[0] = 0; cName[0] = 0; cExt[0] = 0;
+        TCHAR cDrive[_MAX_DRIVE] = { 0 };
+        TCHAR cDir[_MAX_DIR] = { 0 };
+        TCHAR cName[_MAX_FNAME] = { 0 };
+        TCHAR cExt[_MAX_EXT] = { 0 };
         _tsplitpath_s(m_strFilename, cDrive, _MAX_DRIVE, cDir, _MAX_DIR, cName, _MAX_FNAME, cExt, _MAX_EXT);
 
         m_strDrive = cDrive;
@@ -57,8 +59,8 @@ public:
     inline const CString & GetDirectory() { return m_strDirectory; }
     inline const CString & GetName() { return m_strName; }
     inline const CString & GetExtension() { return m_strExtension; }
-    inline CString GetPath() { return m_strDrive + m_strDirectory; }
-    inline CString GetNameAndExtension() { return m_strName + m_strExtension; }
+    inline CString GetPath() const { return m_strDrive + m_strDirectory; }
+    inline CString GetNameAndExtension() const { return m_strName + m_strExtension; }
 
     /**************************************************************************************************
     Advanced queries

@@ -40,7 +40,7 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterInput(LPSTR lpstrFilename, int
     ///////////////////////////////////////////////////////////////////////////////
     // open the APE file
     ///////////////////////////////////////////////////////////////////////////////
-    CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(lpstrFilename), TRUE);
+    CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(lpstrFilename), true);
     IAPEDecompress * pAPEDecompress = CreateIAPEDecompress(spUTF16, APE_NULL, true, true, false);
     if (pAPEDecompress == APE_NULL)
         return APE_NULL;
@@ -212,12 +212,10 @@ __declspec(dllexport) DWORD FAR PASCAL FilterOptionsString(HANDLE hInput, LPSTR 
 
         str_utfn cCompressionLevel[16]; APE_CLEAR(cCompressionLevel);
         GetAPECompressionLevelName(static_cast<int>(pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL)), cCompressionLevel, 16, true);
-        str_ansi * pCompressionLevelANSI = CAPECharacterHelper::GetANSIFromUTF16(cCompressionLevel);
-        strcat_s(Title, 256, pCompressionLevelANSI);
+        CSmartPtr<str_ansi> spCompressionLevelANSI(CAPECharacterHelper::GetANSIFromUTF16(cCompressionLevel), true);
+        strcat_s(Title, 256, spCompressionLevelANSI);
 
         strncpy_s(szString, 120, Title, _TRUNCATE);
-
-        delete [] pCompressionLevelANSI;
     }
 
     // return compression level

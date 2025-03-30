@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-inline CString FormatDuration(double dSeconds, BOOL bAddDecimal = FALSE)
+inline CString FormatDuration(double dSeconds, bool bAddDecimal = false)
 {
     if (std::isinf(dSeconds))
     {

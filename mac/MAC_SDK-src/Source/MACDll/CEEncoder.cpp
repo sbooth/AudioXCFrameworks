@@ -14,7 +14,7 @@ using namespace APE;
 struct APE_ENCODER
 {
     IAPECompress * pAPECompress;
-    BOOL bConvert32to24;
+    bool bConvert32to24;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterOutput(LPSTR lpstrFilename,lon
                                             WORD wBitsPerSample,WORD wChannels,long lSize, long far *lpChunkSize, DWORD dwOptions)
 {
     APE_ENCODER * pAPEEncoder = new APE_ENCODER;
-    pAPEEncoder->bConvert32to24 = FALSE;
+    pAPEEncoder->bConvert32to24 = false;
     pAPEEncoder->pAPECompress = CreateIAPECompress();
 
     if (pAPEEncoder->pAPECompress == APE_NULL)
@@ -67,7 +67,7 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterOutput(LPSTR lpstrFilename,lon
     {
         wBitsPerSample = 24;
         rate = 3.0 / 4.0;
-        pAPEEncoder->bConvert32to24 = TRUE;
+        pAPEEncoder->bConvert32to24 = true;
     }
 
     FillWaveFormatEx(&wfeAudioFormat, WAVE_FORMAT_PCM, lSamprate, wBitsPerSample, wChannels);
@@ -85,7 +85,7 @@ __declspec(dllexport) HANDLE FAR PASCAL OpenFilterOutput(LPSTR lpstrFilename,lon
     // we should try to optimize this for speed, because MACLib.lib doesn't care
     *lpChunkSize = 16384 * wfeAudioFormat.nBlockAlign;
 
-    CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(lpstrFilename), TRUE);
+    CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(lpstrFilename), true);
     if (pAPEEncoder->pAPECompress->Start(spUTF16, &wfeAudioFormat, false, static_cast<int64>(static_cast<double>(lSize) * rate), nCompressLevel, APE_NULL, CREATE_WAV_HEADER_ON_DECOMPRESSION) != 0)
     {
         SafeDeleteAPEEncoder(pAPEEncoder);

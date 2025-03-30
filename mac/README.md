@@ -1,12 +1,12 @@
 ## Version
 
-[10.71](https://monkeysaudio.com/developers.html)
+[11.00](https://monkeysaudio.com/developers.html)
 
 ## License
 
 Monkey's Audio License Agreement (3 clause BSD)
 
-Copyright © 2000-2024 by Matthew T. Ashland.  All rights reserved.
+Copyright © 2000-2025 by Matthew T. Ashland.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

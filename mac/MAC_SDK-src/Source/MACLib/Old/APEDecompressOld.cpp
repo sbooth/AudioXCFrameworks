@@ -49,6 +49,11 @@ CAPEDecompressOld::~CAPEDecompressOld()
 {
 }
 
+int CAPEDecompressOld::SetNumberOfThreads(int)
+{
+    return 1;
+}
+
 int CAPEDecompressOld::InitializeDecompressor()
 {
     // check if we have anything to do

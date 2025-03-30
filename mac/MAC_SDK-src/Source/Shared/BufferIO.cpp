@@ -138,7 +138,11 @@ bool CHeaderIO::ReadHeader(BYTE * paryHeader)
     memset(paryHeader, 0, 64);
 
     // read but cap at the file size
-    m_nHeaderBytes = ape_min(64, GetSize());
+    int64 nFileSize = GetSize();
+    if (nFileSize == APE_FILE_SIZE_UNDEFINED)
+        nFileSize = 1000; // just pick some value bigger than our cap
+    nFileSize = ape_min(64, nFileSize);
+    m_nHeaderBytes = nFileSize;
     if (ReadSafe(m_spSource, m_aryHeader, static_cast<int>(m_nHeaderBytes)) != ERROR_SUCCESS)
         return false;
 

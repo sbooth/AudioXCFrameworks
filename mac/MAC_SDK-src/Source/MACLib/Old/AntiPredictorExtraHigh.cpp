@@ -6,8 +6,6 @@
 namespace APE
 {
 
-#ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
-
 /**************************************************************************************************
 Extra high 0000 to 3320 implementation
 **************************************************************************************************/
@@ -336,8 +334,6 @@ void CAntiPredictorExtraHigh3800ToCurrent::AntiPredictCustom(int * pInputArray, 
     free(IPAdaptFactor);
     free(IPShort);
 }
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
 }
 

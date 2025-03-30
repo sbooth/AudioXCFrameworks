@@ -80,7 +80,7 @@ void CMACStatusBar::OnSize(UINT nType, int cx, int cy)
     m_ctrlProgress.ShowWindow(m_bShowProgress ? SW_SHOW : SW_HIDE);
 }
 
-BOOL CMACStatusBar::UpdateFiles(MAC_FILE_ARRAY * paryFiles)
+bool CMACStatusBar::UpdateFiles(MAC_FILE_ARRAY * paryFiles)
 {
     // analyze
     int nFiles = static_cast<int>(paryFiles->GetSize());
@@ -120,10 +120,10 @@ BOOL CMACStatusBar::UpdateFiles(MAC_FILE_ARRAY * paryFiles)
     // size
     SizeStatusbar();
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACStatusBar::UpdateProgress(double dProgress, double dSecondsLeft)
+bool CMACStatusBar::UpdateProgress(double dProgress, double dSecondsLeft)
 {
     bool bProcessing = false;
     if ((fabs(dProgress) <= APE_DOUBLE_ZERO) && (fabs(dSecondsLeft) <= APE_DOUBLE_ZERO))
@@ -131,7 +131,7 @@ BOOL CMACStatusBar::UpdateProgress(double dProgress, double dSecondsLeft)
         SetPaneText(ID_INDICATOR_STATUS, _T("\tReady"));
 
         CString strProgress;
-        strProgress.Format(_T("\tTotal Time: %s"), FormatDuration(static_cast<double>(m_nProcessTotalMS) / 1000, TRUE).GetString());
+        strProgress.Format(_T("\tTotal Time: %s"), FormatDuration(static_cast<double>(m_nProcessTotalMS) / 1000, true).GetString());
         SetPaneText(ID_INDICATOR_PROGRESS, strProgress);
         m_bShowProgress = false;
 
@@ -187,14 +187,14 @@ BOOL CMACStatusBar::UpdateProgress(double dProgress, double dSecondsLeft)
         SizeStatusbar();
     m_bProcessing = bProcessing;
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACStatusBar::SetLastProcessTotalMS(int nMilliseconds)
+bool CMACStatusBar::SetLastProcessTotalMS(int nMilliseconds)
 {
     m_nProcessTotalMS = nMilliseconds;
     UpdateProgress(0, 0);
-    return TRUE;
+    return true;
 }
 
 void CMACStatusBar::StartProcessing()
@@ -260,7 +260,7 @@ void CMACStatusBar::ShowFreeSpaceDrivePopup()
         aryDrive[0] = static_cast<TCHAR>(nDrive); CString strDrive(aryDrive);
         if (GetDriveType(strDrive) == DRIVE_FIXED)
         {
-            BOOL bChecked = (strDrive.Left(1).CompareNoCase(m_strFreeSpaceDrive) == 0);
+            bool bChecked = (strDrive.Left(1).CompareNoCase(m_strFreeSpaceDrive) == 0);
             menuPopup.AppendMenu(MF_STRING | (bChecked ? MF_CHECKED : MF_UNCHECKED),
                 UINT_PTR(nDrive) + 1000, strDrive);
         }

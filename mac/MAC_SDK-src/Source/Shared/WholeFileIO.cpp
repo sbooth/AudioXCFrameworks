@@ -17,14 +17,14 @@ CWholeFileIO * CreateWholeFileIO(CIO * pSource, int64 nSize)
     // the the size as 32-bit
     const uint32 n32BitSize = static_cast<uint32>(nSize); // we established it will fit above
 
-    unsigned char * pWholeFile = APE_NULL;
+    CSmartPtr<unsigned char> spWholeFile;
     if (nSize == n32BitSize)
     {
         // create a buffer
         try
         {
-            pWholeFile = new unsigned char [n32BitSize];
-            //pWholeFile = new unsigned char[0x7FFFFFFF]; // test for allocating a huge size
+            spWholeFile.Assign(new unsigned char [n32BitSize], true);
+            //spWholeFile.Assign(new unsigned char[0x7FFFFFFF], true); // test for allocating a huge size
         }
         catch (...)
         {
@@ -32,18 +32,19 @@ CWholeFileIO * CreateWholeFileIO(CIO * pSource, int64 nSize)
     }
 
     CWholeFileIO * pIO = APE_NULL;
-    if (pWholeFile != APE_NULL)
+    if (spWholeFile != APE_NULL)
     {
         // read
         unsigned int nBytesRead = 0;
-        nResult = pSource->Read(pWholeFile, n32BitSize, &nBytesRead);
+        nResult = pSource->Read(spWholeFile, n32BitSize, &nBytesRead);
         if (nBytesRead < n32BitSize)
             nResult = ERROR_IO_READ;
 
         if (nResult == ERROR_SUCCESS)
         {
             // create IO object
-            pIO = new CWholeFileIO(pSource, pWholeFile, nBytesRead);
+            pIO = new CWholeFileIO(pSource, spWholeFile, nBytesRead);
+            spWholeFile.SetDelete(false); // it's now owned by CWholeFileIO
         }
     }
 

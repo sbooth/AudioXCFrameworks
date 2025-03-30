@@ -45,7 +45,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CC3FC224-9557-45F3-9B8F-C29AE1DBCE82}</ProjectGuid>
     <RootNamespace>Console</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -145,70 +145,70 @@
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64EC'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-reserved-macro-identifier,-clang-diagnostic-unused-macros,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-switch-default</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

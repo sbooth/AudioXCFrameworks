@@ -45,6 +45,7 @@ private:
     HANDLE      m_hFile;
     wchar_t     m_cFileName[APE_MAX_PATH];
     bool        m_bReadOnly;
+    bool        m_bPipe;
 };
 
 #pragma pack(pop)

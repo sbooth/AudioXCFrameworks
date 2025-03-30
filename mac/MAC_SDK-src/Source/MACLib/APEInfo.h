@@ -1,9 +1,9 @@
 /**************************************************************************************************
 APEInfo.h
 
-Simple method for working with APE files.  It encapsulates reading, writing and getting
-file information.  Just create a CAPEInfo class, call OpenFile(), and use the class methods
-to do whatever you need.  The destructor will take care of any cleanup.
+Simple method for working with APE files. It encapsulates reading, writing and getting
+file information. Just create a CAPEInfo class, call OpenFile(), and use the class methods
+to do whatever you need. The destructor will take care of any cleanup.
 **************************************************************************************************/
 
 #pragma once
@@ -52,9 +52,11 @@ public:
     int nMD5Invalid;                                // whether the MD5 is valid
 
     CSmartPtr<int64> spSeekByteTable64;             // the seek table (byte)
-    CSmartPtr<unsigned char> spSeekBitTable;        // the seek table (bits -- legacy)
     CSmartPtr<unsigned char> spWaveHeaderData;      // the pre-audio header data
     CSmartPtr<APE_DESCRIPTOR> spAPEDescriptor;      // the descriptor (only with newer files)
+#ifdef APE_BACKWARDS_COMPATIBILITY
+    CSmartPtr<unsigned char> spSeekBitTable;        // the seek table (bits -- legacy)
+#endif
 };
 
 /**************************************************************************************************

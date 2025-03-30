@@ -10,12 +10,12 @@ COptionsProcessingDlg::COptionsProcessingDlg(CMACDlg * pMACDlg, OPTIONS_PAGE * p
 {
     m_pMACDlg = pMACDlg;
     m_pPage = pPage;
-    m_bCompletionSound = FALSE;
+    m_bCompletionSound = false;
     m_nPriorityMode = -1;
     m_nSimultaneousFiles = -1;
-    m_bStopOnError = FALSE;
-    m_bShowExternalWindows = FALSE;
-    m_bAutoVerify = FALSE;
+    m_bStopOnError = false;
+    m_bShowExternalWindows = false;
+    m_bAutoVerify = false;
     m_nVerifyMode = -1;
 }
 
@@ -49,7 +49,7 @@ BOOL COptionsProcessingDlg::OnInitDialog()
 
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(false, 0), true);
 
     // images
     HICON hIcon = theApp.GetImageList(CMACApp::Image_OptionsPages)->ExtractIcon(TBB_OPTIONS_PROCESSING_GENERAL);
@@ -80,23 +80,14 @@ BOOL COptionsProcessingDlg::OnInitDialog()
     // layout (to get the ideal height)
     Layout();
 
-    // settings
-    m_nSimultaneousFiles = theApp.GetSettings()->m_nProcessingSimultaneousFiles - 1;
-    m_nPriorityMode = theApp.GetSettings()->m_nProcessingPriorityMode;
-    m_bStopOnError = theApp.GetSettings()->m_bProcessingStopOnErrors;
-    m_bCompletionSound = theApp.GetSettings()->m_bProcessingPlayCompletionSound;
-    m_bShowExternalWindows = theApp.GetSettings()->m_bProcessingShowExternalWindows;
-    m_bAutoVerify = theApp.GetSettings()->m_bProcessingAutoVerifyOnCreation;
-    m_nVerifyMode = theApp.GetSettings()->m_nProcessingVerifyMode;
-
     // update our size
     //CRect rectWindow; GetWindowRect(&rectWindow);
     //SetWindowPos(APE_NULL, 0, 0, rectWindow.Width(), m_pPage->m_nIdealHeight + theApp.GetSize(128, 0).cx, SWP_NOMOVE);
 
     // update
-    UpdateData(FALSE);
+    UpdateData(false);
 
-    return TRUE;  // return TRUE unless you set the focus to a control
+    return true;  // return TRUE unless you set the focus to a control
                   // EXCEPTION: OCX Property Pages should return FALSE
 }
 
@@ -111,7 +102,7 @@ void COptionsProcessingDlg::OnDestroy()
 
 LRESULT COptionsProcessingDlg::OnSaveOptions(WPARAM, LPARAM)
 {
-    UpdateData(TRUE);
+    UpdateData(true);
 
     // settings
     theApp.GetSettings()->m_nProcessingSimultaneousFiles = m_nSimultaneousFiles + 1;
@@ -122,7 +113,7 @@ LRESULT COptionsProcessingDlg::OnSaveOptions(WPARAM, LPARAM)
     theApp.GetSettings()->m_bProcessingAutoVerifyOnCreation = m_bAutoVerify;
     theApp.GetSettings()->m_nProcessingVerifyMode = m_nVerifyMode;
 
-    return TRUE;
+    return true;
 }
 
 void COptionsProcessingDlg::OnSize(UINT nType, int cx, int cy)

@@ -117,6 +117,7 @@ CStdLibFileIO::CStdLibFileIO()
 {
     APE_CLEAR(m_cFileName);
     m_bReadOnly = false;
+    m_bPipe = false;
     m_pFile = APE_NULL;
 }
 
@@ -143,6 +144,7 @@ int CStdLibFileIO::Open(const wchar_t * pName, bool)
     {
         m_pFile = SETBINARY_IN(stdin);
         m_bReadOnly = true;                                                     // ReadOnly
+        m_bPipe = true;
     }
     else if (0 == wcscmp(pName, L"/dev/stdout"))
     {
@@ -235,6 +237,8 @@ int64 CStdLibFileIO::GetPosition()
 
 int64 CStdLibFileIO::GetSize()
 {
+    if (m_bPipe)
+        return APE_FILE_SIZE_UNDEFINED;
     int64 nCurrentPosition = GetPosition();
     Seek(0, SeekFileEnd);
     int64 nLength = GetPosition();

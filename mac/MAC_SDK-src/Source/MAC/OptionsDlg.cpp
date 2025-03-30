@@ -34,19 +34,12 @@ BOOL COptionsDlg::OnInitDialog()
 
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(false, 0), true);
 
     m_ctrlPageList.SetImageList(theApp.GetImageList(CMACApp::Image_OptionsList), LVSIL_SMALL);
 
-    OPTIONS_PAGE * pPage = new OPTIONS_PAGE("Processing", TBB_OPTIONS_PAGE_PROCESSING);
-    pPage->m_pDialog = new COptionsProcessingDlg(m_pMACDlg, pPage);
-    pPage->m_pDialog->Create(IDD_OPTIONS_PROCESSING, this);
-    m_aryPages.Add(pPage);
-
-    pPage = new OPTIONS_PAGE("Output", TBB_OPTIONS_PAGE_OUTPUT);
-    pPage->m_pDialog = new COptionsOutputDlg(m_pMACDlg, pPage);
-    pPage->m_pDialog->Create(IDD_OPTIONS_OUTPUT, this);
-    m_aryPages.Add(pPage);
+    m_aryPages.Add(new OPTIONS_PAGE_PROCESSING(m_pMACDlg, this));
+    m_aryPages.Add(new OPTIONS_PAGE_OUTPUT(m_pMACDlg, this));
 
     for (int z = 0; z < m_aryPages.GetSize(); z++)
         m_ctrlPageList.InsertItem(z, m_aryPages[z]->m_strCaption, m_aryPages[z]->m_nIcon);
@@ -55,7 +48,7 @@ BOOL COptionsDlg::OnInitDialog()
 
     UpdatePage();
 
-    return TRUE;  // return TRUE unless you set the focus to a control
+    return true;  // return TRUE unless you set the focus to a control
                   // EXCEPTION: OCX Property Pages should return FALSE
 }
 
@@ -75,11 +68,11 @@ void COptionsDlg::OnItemchangedPageList(NMHDR *, LRESULT * pResult)
     *pResult = 0;
 }
 
-BOOL COptionsDlg::UpdatePage()
+bool COptionsDlg::UpdatePage()
 {
     // hide all the pages
     for (int z = 0; z < m_aryPages.GetSize(); z++)
-        m_aryPages[z]->m_pDialog->ShowWindow(SW_HIDE);
+        m_aryPages[z]->m_spDialog->ShowWindow(SW_HIDE);
     m_ctrlPageFrame.SetWindowText(_T(""));
 
     // get the new page
@@ -96,7 +89,7 @@ BOOL COptionsDlg::UpdatePage()
         const int nTopBorder = theApp.GetSize(16, 0).cx;
         CRect rectFrame; m_ctrlPageFrame.GetWindowRect(&rectFrame); ScreenToClient(&rectFrame);
 
-        m_aryPages[nPage]->m_pDialog->SetWindowPos(APE_NULL, rectFrame.left + nBorderWidth, rectFrame.top + nBorderWidth + nTopBorder,
+        m_aryPages[nPage]->m_spDialog->SetWindowPos(APE_NULL, rectFrame.left + nBorderWidth, rectFrame.top + nBorderWidth + nTopBorder,
             rectFrame.Width() - (2 * nBorderWidth), rectFrame.Height() - (2 * nBorderWidth) - nTopBorder, SWP_NOZORDER | SWP_SHOWWINDOW);
     }
 
@@ -109,10 +102,10 @@ BOOL COptionsDlg::UpdatePage()
     int nWidth = theApp.GetSize(700, 0).cx;
     SetWindowPos(APE_NULL, 0, 0, nWidth, nHeight, SWP_NOMOVE);
 
-    return TRUE;
+    return true;
 }
 
-int COptionsDlg::GetSelectedPage()
+int COptionsDlg::GetSelectedPage() const
 {
     int nPage = -1;
     POSITION Pos = m_ctrlPageList.GetFirstSelectedItemPosition();
@@ -159,27 +152,13 @@ void COptionsDlg::OnSize(UINT nType, int cx, int cy)
 
 void COptionsDlg::OnMoving(UINT, LPRECT pRect)
 {
-    HMONITOR hMonitor = MonitorFromWindow(GetSafeHwnd(), MONITOR_DEFAULTTONEAREST);
-
-    MONITORINFO info;
-    info.cbSize = sizeof(MONITORINFO);
-    if (GetMonitorInfo(hMonitor, &info))
-    {
-        if (pRect->left < info.rcMonitor.left)
-            OffsetRect(pRect, info.rcMonitor.left - pRect->left, 0);
-        if (pRect->top < info.rcMonitor.top)
-            OffsetRect(pRect, 0, info.rcMonitor.top - pRect->top);
-        if (pRect->right > info.rcMonitor.right)
-            OffsetRect(pRect, info.rcMonitor.right - pRect->right, 0);
-        if (pRect->bottom > info.rcMonitor.bottom)
-            OffsetRect(pRect, 0, info.rcMonitor.bottom - pRect->bottom);
-    }
+    CapMoveToMonitor(GetSafeHwnd(), pRect);
 }
 
 void COptionsDlg::OnOK()
 {
     for (int z = 0; z < m_aryPages.GetSize(); z++)
-        m_aryPages[z]->m_pDialog->SendMessage(UM_SAVE_PAGE_OPTIONS);
+        m_aryPages[z]->m_spDialog->SendMessage(UM_SAVE_PAGE_OPTIONS);
 
     theApp.GetSettings()->Save();
 

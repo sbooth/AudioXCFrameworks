@@ -15,37 +15,38 @@ const uint32 POWERS_OF_TWO_MINUS_ONE[33] = {0,1,3,7,15,31,63,127,255,511,1023,20
 /**************************************************************************************************
 CreateUnBitArray
 **************************************************************************************************/
-CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, intn nVersion)
+CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, CIO * pIO, intn nVersion)
 {
     // determine the furthest position we should read in the I/O object
-    int64 nFurthestReadByte = GET_IO(pAPEDecompress)->GetSize();
-    if (nFurthestReadByte > 0)
-    {
-       // terminating data
-       nFurthestReadByte -= pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_WAV_TERMINATING_BYTES);
-
-       // tag (not worth analyzing the tag since we could be a remote file, etc.)
-       // also don't not read the tag if we're working on an APL file
-       if (pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_APL) == 0)
-       {
-           IAPETag * pAPETag = GET_TAG(pAPEDecompress);
-           if ((pAPETag != APE_NULL) && pAPETag->GetAnalyzed())
-               nFurthestReadByte -= pAPETag->GetTagBytes();
-       }
-    }
+    int64 nFurthestReadByte = pIO->GetSize();
 
 #ifdef APE_BACKWARDS_COMPATIBILITY
     if (nVersion < 3900)
     {
+        if (nFurthestReadByte > 0)
+        {
+            // terminating data
+            nFurthestReadByte -= pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_WAV_TERMINATING_BYTES);
+
+            // tag (not worth analyzing the tag since we could be a remote file, etc.)
+            // also don't not read the tag if we're working on an APL file
+            if (pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_APL) == 0)
+            {
+                IAPETag * pAPETag = GET_TAG(pAPEDecompress);
+                if ((pAPETag != APE_NULL) && pAPETag->GetAnalyzed())
+                    nFurthestReadByte -= pAPETag->GetTagBytes();
+            }
+        }
+
         return dynamic_cast<CUnBitArrayBase *>(new CUnBitArrayOld(pAPEDecompress, nVersion, nFurthestReadByte));
     }
     else if (nVersion < 3990)
     {
-        return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray3891To3989(GET_IO(pAPEDecompress), nVersion, nFurthestReadByte));
+        return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray3891To3989(pIO, nVersion, nFurthestReadByte));
     }
     else
     {
-        return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray(GET_IO(pAPEDecompress), nVersion, nFurthestReadByte));
+        return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray(pIO, nVersion, nFurthestReadByte));
     }
 #else
     // create the appropriate object
@@ -57,7 +58,7 @@ CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, intn nVersio
         return APE_NULL;
     }
 
-    return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray(GET_IO(pAPEDecompress), nVersion, nFurthestReadByte));
+    return dynamic_cast<CUnBitArrayBase *>(new CUnBitArray(pIO, nVersion, nFurthestReadByte));
 #endif
 }
 
@@ -228,7 +229,7 @@ int CUnBitArrayBase::CreateHelper(CIO * pIO, intn nBytes, intn nVersion)
     if ((pIO == APE_NULL) || (nBytes <= 0)) { return ERROR_BAD_PARAMETER; }
 
     // save the size
-    m_nElements = static_cast<uint32>(nBytes) / 4;
+    m_nElements = static_cast<uint32>(nBytes / 4);
     m_nBytes = m_nElements * 4;
     m_nBits = m_nBytes * 8;
     m_nGoodBytes = 0;

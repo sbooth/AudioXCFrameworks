@@ -22,7 +22,7 @@ using namespace APE;
 #define BLOCKS_PER_DECODE               9216
 
 IAPEDecompress * CreateIAPEDecompressCore(CAPEInfo * pAPEInfo, int nStartBlock, int nFinishBlock, int * pErrorCode);
-int DecompressCore(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nOutputMode, int nCompressionLevel, IAPEProgressCallback * pProgressCallback, IAPEDecompress * pDecompress);
+int DecompressCore(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nOutputMode, int nCompressionLevel, IAPEProgressCallback * pProgressCallback, IAPEDecompress * pDecompress, int nThreads);
 
 /**************************************************************************************************
 Functions to create the interfaces
@@ -294,6 +294,7 @@ int __stdcall GetAPEFileType(const APE::str_utfn * pInputFilename, APE::str_ansi
 
 void __stdcall GetAPECompressionLevelName(int nCompressionLevel, APE::str_utfn * pCompressionLevel, size_t nBufferCharacters, bool bTitleCase)
 {
+    if (nBufferCharacters < 16) return; // just do a quick check since wcscpy_s crashes when you over copy
     if (bTitleCase)
     {
         switch (nCompressionLevel)
@@ -320,18 +321,34 @@ void __stdcall GetAPECompressionLevelName(int nCompressionLevel, APE::str_utfn *
     }
 }
 
+void __stdcall GetAPEModeName(APE::APE_MODES Mode, APE::str_utfn * pModeName, size_t nBufferCharacters, bool bActive)
+{
+    if (nBufferCharacters < 16) return; // just do a quick check since wcscpy_s crashes when you over copy
+    switch (Mode)
+    {
+        case MODE_COMPRESS: bActive ? wcscpy_s(pModeName, nBufferCharacters, L"Compressing") : wcscpy_s(pModeName, nBufferCharacters, L"Compress"); break;
+        case MODE_DECOMPRESS: bActive ? wcscpy_s(pModeName, nBufferCharacters, L"Decompressing") : wcscpy_s(pModeName, nBufferCharacters, L"Decompress"); break;
+        case MODE_VERIFY: bActive ? wcscpy_s(pModeName, nBufferCharacters, L"Verifying") : wcscpy_s(pModeName, nBufferCharacters, L"Verify"); break;
+        case MODE_CONVERT: bActive ? wcscpy_s(pModeName, nBufferCharacters, L"Converting") : wcscpy_s(pModeName, nBufferCharacters, L"Convert"); break;
+        case MODE_MAKE_APL: bActive ? wcscpy_s(pModeName, nBufferCharacters, L"Making APL's") : wcscpy_s(pModeName, nBufferCharacters, L"Make APL's"); break;
+        // all other conditions to prevent compiler warnings (4061, 4062, and Clang)
+        case MODE_CHECK: break; // not used
+        case MODE_COUNT: break; // not used
+    }
+
+}
+
 /**************************************************************************************************
-Simple progress callback (for legacy support)
+Simple progress callback
 **************************************************************************************************/
-class CAPEProgressCallbackLegacy : public IAPEProgressCallback
+class CAPEProgressCallbackSimple : public IAPEProgressCallback
 {
 public:
-    CAPEProgressCallbackLegacy(int * pProgress, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+    CAPEProgressCallbackSimple(int * pProgress, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
     {
         m_pProgress = pProgress;
         m_ProgressCallback = ProgressCallback;
         m_pKillFlag = pKillFlag;
-        m_cType[0] = 0;
     }
 
     virtual void Progress(int nPercentageDone) APE_OVERRIDE
@@ -352,84 +369,83 @@ private:
     int * m_pProgress;
     APE_PROGRESS_CALLBACK m_ProgressCallback;
     int * m_pKillFlag;
-    str_ansi m_cType[8];
 };
 
 /**************************************************************************************************
 ANSI wrappers
 **************************************************************************************************/
 #ifdef APE_SUPPORT_COMPRESS
-int __stdcall CompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+int __stdcall CompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, int nThreads)
 {
     CSmartPtr<str_utfn> spInputFile(CAPECharacterHelper::GetUTF16FromANSI(pInputFilename), true);
     CSmartPtr<str_utfn> spOutputFile(CAPECharacterHelper::GetUTF16FromANSI(pOutputFilename), true);
-    return CompressFileW(spInputFile, spOutputFile, nCompressionLevel, pPercentageDone, ProgressCallback, pKillFlag);
+    return CompressFileW(spInputFile, spOutputFile, nCompressionLevel, pPercentageDone, ProgressCallback, pKillFlag, nThreads);
 }
 #endif
 
-int __stdcall DecompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+int __stdcall DecompressFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, int nThreads)
 {
     if (pOutputFilename == APE_NULL)
     {
         CSmartPtr<str_utfn> spInputFile(CAPECharacterHelper::GetUTF16FromANSI(pInputFilename), true);
-        return DecompressFileW(spInputFile, APE_NULL, pPercentageDone, ProgressCallback, pKillFlag);
+        return DecompressFileW(spInputFile, APE_NULL, pPercentageDone, ProgressCallback, pKillFlag, nThreads);
     }
     else
     {
         CSmartPtr<str_utfn> spInputFile(CAPECharacterHelper::GetUTF16FromANSI(pInputFilename), true);
         CSmartPtr<str_utfn> spOutputFile(CAPECharacterHelper::GetUTF16FromANSI(pOutputFilename), true);
-        return DecompressFileW(spInputFile, spOutputFile, pPercentageDone, ProgressCallback, pKillFlag);
+        return DecompressFileW(spInputFile, spOutputFile, pPercentageDone, ProgressCallback, pKillFlag, nThreads);
     }
 }
 
-int __stdcall ConvertFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+int __stdcall ConvertFile(const APE::str_ansi * pInputFilename, const APE::str_ansi * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, int nThreads)
 {
     CSmartPtr<str_utfn> spInputFile(CAPECharacterHelper::GetUTF16FromANSI(pInputFilename), true);
     CSmartPtr<str_utfn> spOutputFile(CAPECharacterHelper::GetUTF16FromANSI(pOutputFilename), true);
-    return ConvertFileW(spInputFile, spOutputFile, nCompressionLevel, pPercentageDone, ProgressCallback, pKillFlag);
+    return ConvertFileW(spInputFile, spOutputFile, nCompressionLevel, pPercentageDone, ProgressCallback, pKillFlag, nThreads);
 }
 
-int __stdcall VerifyFile(const APE::str_ansi * pInputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible)
+int __stdcall VerifyFile(const APE::str_ansi * pInputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible, int nThreads)
 {
     CSmartPtr<str_utfn> spInputFile(CAPECharacterHelper::GetUTF16FromANSI(pInputFilename), true);
-    return VerifyFileW(spInputFile, pPercentageDone, ProgressCallback, pKillFlag, bQuickVerifyIfPossible);
+    return VerifyFileW(spInputFile, pPercentageDone, ProgressCallback, pKillFlag, bQuickVerifyIfPossible, nThreads);
 }
 
 /**************************************************************************************************
 Legacy callback wrappers
 **************************************************************************************************/
 #ifdef APE_SUPPORT_COMPRESS
-int __stdcall CompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+int __stdcall CompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, int nThreads)
 {
-    CAPEProgressCallbackLegacy ProgressCallbackLegacy(pPercentageDone, ProgressCallback, pKillFlag);
-    return CompressFileW2(pInputFilename, pOutputFilename, nCompressionLevel, &ProgressCallbackLegacy);
+    CAPEProgressCallbackSimple ProgressCallbackSimple(pPercentageDone, ProgressCallback, pKillFlag);
+    return CompressFileW2(pInputFilename, pOutputFilename, nCompressionLevel, &ProgressCallbackSimple, nThreads);
 }
 #endif
 
-int __stdcall VerifyFileW(const APE::str_utfn * pInputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible)
+int __stdcall VerifyFileW(const APE::str_utfn * pInputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, bool bQuickVerifyIfPossible, int nThreads)
 {
-    CAPEProgressCallbackLegacy ProgressCallbackLegacy(pPercentageDone, ProgressCallback, pKillFlag);
-    return VerifyFileW2(pInputFilename, &ProgressCallbackLegacy, bQuickVerifyIfPossible);
+    CAPEProgressCallbackSimple ProgressCallbackSimple(pPercentageDone, ProgressCallback, pKillFlag);
+    return VerifyFileW2(pInputFilename, &ProgressCallbackSimple, bQuickVerifyIfPossible, nThreads);
 }
 
-int __stdcall DecompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+int __stdcall DecompressFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, int nThreads)
 {
-    CAPEProgressCallbackLegacy ProgressCallbackLegacy(pPercentageDone, ProgressCallback, pKillFlag);
-    const int nResult = DecompressFileW2(pInputFilename, pOutputFilename, &ProgressCallbackLegacy);
+    CAPEProgressCallbackSimple ProgressCallbackSimple(pPercentageDone, ProgressCallback, pKillFlag);
+    const int nResult = DecompressFileW2(pInputFilename, pOutputFilename, &ProgressCallbackSimple, nThreads);
     return nResult;
 }
 
-int __stdcall ConvertFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag)
+int __stdcall ConvertFileW(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, int * pPercentageDone, APE_PROGRESS_CALLBACK ProgressCallback, int * pKillFlag, int nThreads)
 {
-    CAPEProgressCallbackLegacy ProgressCallbackLegacy(pPercentageDone, ProgressCallback, pKillFlag);
-    return ConvertFileW2(pInputFilename, pOutputFilename, nCompressionLevel, &ProgressCallbackLegacy);
+    CAPEProgressCallbackSimple ProgressCallbackSimple(pPercentageDone, ProgressCallback, pKillFlag);
+    return ConvertFileW2(pInputFilename, pOutputFilename, nCompressionLevel, &ProgressCallbackSimple, nThreads);
 }
 
 /**************************************************************************************************
 Compress file
 **************************************************************************************************/
 #ifdef APE_SUPPORT_COMPRESS
-int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, IAPEProgressCallback * pProgressCallback)
+int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, IAPEProgressCallback * pProgressCallback, int nThreads)
 {
     // declare the variables
     int nFunctionRetVal = ERROR_SUCCESS;
@@ -443,7 +459,7 @@ int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::st
         // create the input source
         int nResult = ERROR_UNDEFINED;
         int64 nAudioBlocks = 0; int64 nHeaderBytes = 0; int64 nTerminatingBytes = 0; int32 nFlags = 0;
-        CSmartPtr<CInputSource> spInputSource(CreateInputSource(pInputFilename, &WaveFormatEx, &nAudioBlocks,
+        CSmartPtr<CInputSource> spInputSource(CInputSource::CreateInputSource(pInputFilename, &WaveFormatEx, &nAudioBlocks,
             &nHeaderBytes, &nTerminatingBytes, &nFlags, &nResult));
 
         // check header and footer sizes right away (we also check the footer at the end, but that would require compressing the whole file then rejecting)
@@ -460,9 +476,12 @@ int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::st
         spAPECompress.Assign(CreateIAPECompress());
         if (spAPECompress == APE_NULL) throw static_cast<intn>(ERROR_UNDEFINED);
 
+        // set the threads
+        spAPECompress->SetNumberOfThreads(nThreads);
+
         // figure the audio bytes
         int64 nAudioBytes = static_cast<int64>(nAudioBlocks) * static_cast<int64>(WaveFormatEx.nBlockAlign);
-        if (spInputSource->GetUnknownLengthPipe())
+        if (spInputSource->GetUnknownLengthFile())
             nAudioBytes = MAX_AUDIO_BYTES_UNKNOWN;
         if ((nAudioBytes <= 0) && (nAudioBytes != MAX_AUDIO_BYTES_UNKNOWN))
             throw static_cast<intn>(ERROR_INPUT_FILE_TOO_SMALL);
@@ -478,13 +497,13 @@ int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::st
 
         // master loop
         int64 nBytesLeft = nAudioBytes;
-        const bool bUnknownLengthPipe = spInputSource->GetUnknownLengthPipe();
-        while ((nBytesLeft > 0) || bUnknownLengthPipe)
+        const bool bUnknownLengthFile = spInputSource->GetUnknownLengthFile();
+        while ((nBytesLeft > 0) || bUnknownLengthFile)
         {
             // add data
             int64 nBytesAdded = 0;
             const int64 nRetVal = spAPECompress->AddDataFromInputSource(spInputSource.GetPtr(), nBytesLeft, &nBytesAdded);
-            if (bUnknownLengthPipe && (nRetVal == ERROR_IO_READ))
+            if (bUnknownLengthFile && (nRetVal == ERROR_IO_READ))
                 break; // this means we reached the end of the file
             else if (nRetVal != ERROR_SUCCESS)
                 throw(static_cast<intn>(nRetVal));
@@ -519,10 +538,6 @@ int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::st
         nFunctionRetVal = ERROR_UNDEFINED;
     }
 
-    // kill the compressor if we failed
-    if ((nFunctionRetVal != 0) && (spAPECompress != APE_NULL))
-        spAPECompress->Kill();
-
     // return
     return nFunctionRetVal;
 }
@@ -531,7 +546,7 @@ int __stdcall CompressFileW2(const APE::str_utfn * pInputFilename, const APE::st
 /**************************************************************************************************
 Verify file
 **************************************************************************************************/
-int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, IAPEProgressCallback * pProgressCallback, bool bQuickVerifyIfPossible)
+int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, IAPEProgressCallback * pProgressCallback, bool bQuickVerifyIfPossible, int nThreads)
 {
     // error check the function parameters
     if (pInputFilename == APE_NULL)
@@ -568,6 +583,9 @@ int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, IAPEProgressCal
             // make sure the MD5 is valid
             if (pInfo->nMD5Invalid)
                 throw(static_cast<intn>(ERROR_UNSUPPORTED_FILE_VERSION));
+
+            // set the threads
+            spAPEDecompress->SetNumberOfThreads(nThreads);
         }
         catch (...)
         {
@@ -670,7 +688,7 @@ int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, IAPEProgressCal
     }
     else
     {
-        nResult = DecompressCore(pInputFilename, APE_NULL, UNMAC_DECODER_OUTPUT_NONE, -1, pProgressCallback, spAPEDecompress);
+        nResult = DecompressCore(pInputFilename, APE_NULL, UNMAC_DECODER_OUTPUT_NONE, -1, pProgressCallback, spAPEDecompress, nThreads);
     }
 
     return nResult;
@@ -679,26 +697,26 @@ int __stdcall VerifyFileW2(const APE::str_utfn * pInputFilename, IAPEProgressCal
 /**************************************************************************************************
 Decompress file
 **************************************************************************************************/
-int __stdcall DecompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, IAPEProgressCallback * pProgressCallback)
+int __stdcall DecompressFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, IAPEProgressCallback * pProgressCallback, int nThreads)
 {
     if (pOutputFilename == APE_NULL)
         return VerifyFileW2(pInputFilename, pProgressCallback);
     else
-        return DecompressCore(pInputFilename, pOutputFilename, UNMAC_DECODER_OUTPUT_WAV, -1, pProgressCallback, APE_NULL);
+        return DecompressCore(pInputFilename, pOutputFilename, UNMAC_DECODER_OUTPUT_WAV, -1, pProgressCallback, APE_NULL, nThreads);
 }
 
 /**************************************************************************************************
 Convert file
 **************************************************************************************************/
-int __stdcall ConvertFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, IAPEProgressCallback * pProgressCallback)
+int __stdcall ConvertFileW2(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nCompressionLevel, IAPEProgressCallback * pProgressCallback, int nThreads)
 {
-    return DecompressCore(pInputFilename, pOutputFilename, UNMAC_DECODER_OUTPUT_APE, nCompressionLevel, pProgressCallback, APE_NULL);
+    return DecompressCore(pInputFilename, pOutputFilename, UNMAC_DECODER_OUTPUT_APE, nCompressionLevel, pProgressCallback, APE_NULL, nThreads);
 }
 
 /**************************************************************************************************
 Decompress a file using the specified output method
 **************************************************************************************************/
-int DecompressCore(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nOutputMode, int nCompressionLevel, IAPEProgressCallback * pProgressCallback, IAPEDecompress * pDecompress)
+int DecompressCore(const APE::str_utfn * pInputFilename, const APE::str_utfn * pOutputFilename, int nOutputMode, int nCompressionLevel, IAPEProgressCallback * pProgressCallback, IAPEDecompress * pDecompress, int nThreads)
 {
     // error check the function parameters
     if (pInputFilename == APE_NULL)
@@ -727,6 +745,9 @@ int DecompressCore(const APE::str_utfn * pInputFilename, const APE::str_utfn * p
             spAPEDecompress.Assign(CreateIAPEDecompress(pInputFilename, &nFunctionRetVal, true, true, false));
         }
         if (spAPEDecompress == APE_NULL || nFunctionRetVal != ERROR_SUCCESS) throw(static_cast<intn>(nFunctionRetVal));
+
+        // set the threads
+        spAPEDecompress->SetNumberOfThreads(nThreads);
 
         // get the input format
         THROW_ON_ERROR(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_WAVEFORMATEX, POINTER_TO_INT64(&wfeInput)))

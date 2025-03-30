@@ -13,7 +13,6 @@ CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion)
 
     switch (nCompressionLevel)
     {
-#ifdef ENABLE_COMPRESSION_MODE_FAST
         case APE_COMPRESSION_LEVEL_FAST:
             if (nVersion < 3320)
             {
@@ -24,9 +23,6 @@ CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion)
                 pAntiPredictor = new CAntiPredictorFast3320ToCurrent;
             }
             break;
-#endif //ENABLE_COMPRESSION_MODE_FAST
-
-#ifdef ENABLE_COMPRESSION_MODE_NORMAL
 
         case APE_COMPRESSION_LEVEL_NORMAL:
             if (nVersion < 3320)
@@ -43,9 +39,6 @@ CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion)
             }
             break;
 
-#endif //ENABLE_COMPRESSION_MODE_NORMAL
-
-#ifdef ENABLE_COMPRESSION_MODE_HIGH
         case APE_COMPRESSION_LEVEL_HIGH:
             if (nVersion < 3320)
             {
@@ -68,9 +61,7 @@ CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion)
                 pAntiPredictor = new CAntiPredictorHigh3800ToCurrent;
             }
             break;
-#endif //ENABLE_COMPRESSION_MODE_HIGH
 
-#ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
         case APE_COMPRESSION_LEVEL_EXTRA_HIGH:
             if (nVersion < 3320)
             {
@@ -93,7 +84,6 @@ CAntiPredictor * CreateAntiPredictor(intn nCompressionLevel, intn nVersion)
                 pAntiPredictor = new CAntiPredictorExtraHigh3800ToCurrent;
             }
             break;
-#endif //ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
         default:
             pAntiPredictor = APE_NULL; // this shouldn't hit, but just to handle all cases we'll put it here
@@ -127,8 +117,6 @@ void CAntiPredictorOffset::AntiPredictOffset(int * pInputArray, int * pOutputArr
     }
 }
 
-#ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
-
 int CAntiPredictorExtraHighHelper::ConventionalDotProduct(short *bip, short *bbm, short *pIPAdaptFactor, int op, int nNumberOfIterations)
 {
     // dot product
@@ -160,8 +148,6 @@ int CAntiPredictorExtraHighHelper::ConventionalDotProduct(short *bip, short *bbm
     // use the dot product
     return nDotProduct;
 }
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
 }
 

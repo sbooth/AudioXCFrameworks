@@ -8,7 +8,7 @@ Includes
 #include "APEInfo.h"
 #include "UnMAC.h"
 #include "Prepare.h"
-#include "APEDecompressCore.h"
+#include "APEDecompressCoreOld.h"
 
 namespace APE
 {
@@ -58,7 +58,7 @@ int CUnMAC::Initialize(IAPEDecompress * pAPEDecompress)
     // set the last decode frame to -1 so it forces a seek on start
     m_LastDecodedFrameIndex = -1;
 
-    m_spAPEDecompressCore.Assign(new CAPEDecompressCore(pAPEDecompress));
+    m_spAPEDecompressCore.Assign(new CAPEDecompressCoreOld(pAPEDecompress));
     m_spPrepare.Assign(new CPrepare);
 
     // set the initialized flag to true
@@ -149,11 +149,11 @@ intn CUnMAC::DecompressFrameOld(unsigned char * pOutputData, int32 FrameIndex, i
     }
 
     // take care of seeking and frame alignment
-    if (SeekToFrame(FrameIndex) != 0) 
-    { 
+    if (SeekToFrame(FrameIndex) != 0)
+    {
         if (pErrorCode)
             *pErrorCode = ERROR_UNDEFINED;
-        return -1; 
+        return -1;
     }
 
     // get the checksum

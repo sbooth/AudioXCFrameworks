@@ -35,13 +35,13 @@ BOOL CFormatPluginInfoDlg::OnInitDialog()
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
     m_ctrlURL.SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(false, 0), true);
 
     if (m_strURL.IsEmpty())
     {
         m_ctrlURL.SetWindowText(_T("no webpage available"));
         m_ctrlURL.SetURL(_T(""));
-        m_ctrlURL.EnableWindow(FALSE);
+        m_ctrlURL.EnableWindow(false);
     }
     else
     {
@@ -50,6 +50,6 @@ BOOL CFormatPluginInfoDlg::OnInitDialog()
         m_ctrlURL.SetLinkCursor(LoadCursor(APE_NULL, IDC_HAND));
     }
 
-    return TRUE;  // return TRUE unless you set the focus to a control
+    return true;  // return TRUE unless you set the focus to a control
                   // EXCEPTION: OCX Property Pages should return FALSE
 }

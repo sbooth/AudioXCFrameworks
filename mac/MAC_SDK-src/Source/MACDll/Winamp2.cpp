@@ -8,7 +8,6 @@ Includes
 #include "Winamp2.h"
 #include "WinampSettingsDlg.h"
 #include "In2.h"
-#include "APELink.h"
 #include "CharacterHelper.h"
 #include <afxmt.h>
 #include "wasabi/Wasabi.h"
@@ -99,7 +98,7 @@ Plays a file (called once on the start of a file)
 int CAPEWinampPlugin::Play(char * pFilename)
 {
     // reset or initialize any public variables
-    CSmartPtr<str_utfn> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), TRUE);
+    CSmartPtr<str_utfn> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), true);
     _tcscpy_s(m_cCurrentFilename, APE_MAX_PATH, spFilename);
 
     m_nPaused = 0;
@@ -125,16 +124,16 @@ int CAPEWinampPlugin::Play(char * pFilename)
         TCHAR cAPEFileVersion[32]; _stprintf_s(cAPEFileVersion, 32, _T("%.2f"), static_cast<double>(m_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)) / static_cast<double>(1000));
 
         TCHAR cMessage[1024];
-        _stprintf_s(cMessage, 1024, _T("You are attempting to play an APE file that was encoded with a version of Monkey's Audio which is newer than the installed APE plug-in.  There is a very high likelyhood that this will not work properly.  Please download and install the newest Monkey's Audio plug-in to remedy this problem.\r\n\r\nPlug-in version: %s\r\nAPE file version: %s"),
+        _stprintf_s(cMessage, 1024, _T("You are attempting to play an APE file that was encoded with a version of Monkey's Audio which is newer than the installed APE plug-in. There is a very high likelyhood that this will not work properly. Please download and install the newest Monkey's Audio plug-in to remedy this problem.\r\n\r\nPlug-in version: %s\r\nAPE file version: %s"),
             APE_VERSION_STRING, cAPEFileVersion);
         ::MessageBox(g_APEWinampPluginModule.hMainWindow, cMessage, _T("Update APE Plugin"), MB_OK | MB_ICONERROR);
     }
 
     // see if it's a stream
-    g_APEWinampPluginModule.is_seekable = TRUE;
+    g_APEWinampPluginModule.is_seekable = true;
 
     // set the "scaled" bps
-    if (GetSettings()->m_bScaleOutput == TRUE)
+    if (GetSettings()->m_bScaleOutput)
     {
         m_nScaledBitsPerSample = SCALED_BITS;
         m_nScaledBytesPerSample = (SCALED_BITS / 8);
@@ -245,9 +244,9 @@ BOOL CAPEWinampPlugin::CheckBufferForSilence(void * pBuffer, const uint32 nSampl
     nSum /= ape_max(nSamples, 1);
 
     if (nSum > 64)
-        return FALSE;
+        return false;
     else
-        return TRUE;
+        return true;
 }
 
 /**************************************************************************************************
@@ -302,11 +301,11 @@ The decode thread
 DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
 {
     // variable declares
-    BOOL bDone = FALSE;
+    bool bDone = false;
     long nSilenceMS = 0;
 
     // the sample buffer...must be able to hold twice the original 1152 samples for DSP
-    CSmartPtr<unsigned char> spSampleBuffer(new unsigned char [static_cast<unsigned int>(1152 * 2 * m_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_CHANNELS) * m_nScaledBytesPerSample)], TRUE);
+    CSmartPtr<unsigned char> spSampleBuffer(new unsigned char [static_cast<unsigned int>(1152 * 2 * m_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_CHANNELS) * m_nScaledBytesPerSample)], true);
 
     // start the decoding loop
     while (!*(reinterpret_cast<int *>(pbKillSwitch)))
@@ -350,7 +349,7 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
         {
             // decompress the data
             int64 nBlocksDecoded = 0;
-            BOOL bSynched = TRUE;
+            bool bSynched = true;
             try
             {
                 // get the data
@@ -359,9 +358,9 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
             }
             catch(...)
             {
-                bSynched = FALSE;
+                bSynched = false;
 
-                if (GetSettings()->m_bIgnoreBitstreamErrors == FALSE)
+                if (GetSettings()->m_bIgnoreBitstreamErrors == false)
                 {
                     TCHAR cErrorTime[64];
                     int nSeconds = static_cast<int>(m_spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_CURRENT_MS) / 1000); int nMinutes = nSeconds / 60; nSeconds = nSeconds % 60; int nHours = nMinutes / 60; nMinutes = nMinutes % 60;
@@ -374,7 +373,7 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
                         cErrorMessage,
                         1024,
                         _T("Monkey's Audio encountered an error at %s while decompressing the file '%s'.\r\n\r\n")
-                        _T("Please ensure that you are using the latest version of Monkey's Audio.  ")
+                        _T("Please ensure that you are using the latest version of Monkey's Audio. ")
                         _T("If this error persists using the latest version of Monkey's Audio, it is likely that the file has become corrupted.\r\n\r\n")
                         _T("Use the option 'Ignore Bitstream Errors' in the plug-in settings to not recieve this warning when Monkey's Audio encounters an error while decompressing."),
                         cErrorTime, m_cCurrentFilename
@@ -382,7 +381,7 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
 
                     MessageBox(g_APEWinampPluginModule.hMainWindow, cErrorMessage, _T("Monkey's Audio Decompression Error"), MB_OK | MB_ICONERROR);
 
-                    bDone = TRUE;
+                    bDone = true;
                     continue;
                 }
             }
@@ -390,12 +389,12 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
             // set the done flag if there was nothing decompressed
             if (nBlocksDecoded == 0)
             {
-                bDone = TRUE;
+                bDone = true;
                 continue;
             }
 
             // do any MAC processing
-            if (GetSettings()->m_bScaleOutput == TRUE)
+            if (GetSettings()->m_bScaleOutput)
             {
                 ScaleBuffer(m_spAPEDecompress, spSampleBuffer, long(nBlocksDecoded));
             }
@@ -414,9 +413,9 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
                 nBytesDecoded = static_cast<long>(nBlocksDecoded) * m_nScaledBytesPerSample * static_cast<long>(m_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_CHANNELS));
             }
 
-            if (GetSettings()->m_bSuppressSilence == TRUE)
+            if (GetSettings()->m_bSuppressSilence)
             {
-                if (CheckBufferForSilence(spSampleBuffer, static_cast<uint32>(nBytesDecoded / m_nScaledBytesPerSample)) == FALSE)
+                if (CheckBufferForSilence(spSampleBuffer, static_cast<uint32>(nBytesDecoded / m_nScaledBytesPerSample)) == false)
                     nSilenceMS = 0;
                 else
                     nSilenceMS += static_cast<long>(nBlocksDecoded * 1000) / static_cast<long>(m_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_SAMPLE_RATE));
@@ -437,7 +436,7 @@ DWORD WINAPI __stdcall CAPEWinampPlugin::DecodeThread(void * pbKillSwitch)
             }
             else
             {
-                bSynched = FALSE;
+                bSynched = false;
             }
 
             // update the VBR display
@@ -518,7 +517,7 @@ void CAPEWinampPlugin::BuildDescriptionString(CString & strBuffer, IAPETag * pAP
         return;
     }
 
-    if (pAPETag->GetHasID3Tag() == FALSE && pAPETag->GetHasAPETag() == FALSE)
+    if (pAPETag->GetHasID3Tag() == false && pAPETag->GetHasAPETag() == false)
     {
         BuildDescriptionStringFromFilename(strBuffer, pFilename);
         return;
@@ -558,13 +557,13 @@ void CAPEWinampPlugin::GetFileInformation(char * pFilename, char * pTitle, int *
     if (!pFilename || !*pFilename)
     {
         // currently playing file
-        spAPEDecompress.Assign(m_spAPEDecompress, FALSE, FALSE);
+        spAPEDecompress.Assign(m_spAPEDecompress, false, false);
         strFilename = m_cCurrentFilename;
     }
     else
     {
         // different file
-        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(pFilename), TRUE);
+        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(pFilename), true);
         spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, APE_NULL, true, true, false));
         strFilename = spUTF16;
     }
@@ -581,7 +580,7 @@ void CAPEWinampPlugin::GetFileInformation(char * pFilename, char * pTitle, int *
             CString strDisplay = GetSettings()->m_strFileDisplayMethod;
             BuildDescriptionString(strDisplay, GET_TAG(spAPEDecompress), strFilename);
 
-            CSmartPtr<char> spDisplayANSI(CAPECharacterHelper::GetANSIFromUTF16(strDisplay), TRUE);
+            CSmartPtr<char> spDisplayANSI(CAPECharacterHelper::GetANSIFromUTF16(strDisplay), true);
             strncpy_s(pTitle, GETFILEINFO_TITLE_LENGTH, spDisplayANSI, _TRUNCATE);
         }
     }
@@ -755,7 +754,7 @@ extern "C"
         CSingleLock Lock(&s_Lock);
 
         // load the file
-        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), TRUE);
+        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), true);
         if ((s_spAPEDecompress == APE_NULL) || (spUTF16 != s_strFilename))
         {
             s_spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, APE_NULL, false, true, false));
@@ -765,7 +764,7 @@ extern "C"
         IAPETag * pTag = GET_TAG(s_spAPEDecompress);
         if (pTag != APE_NULL)
         {
-            CSmartPtr<wchar_t> spValue(CAPECharacterHelper::GetUTF16FromANSI(val), TRUE);
+            CSmartPtr<wchar_t> spValue(CAPECharacterHelper::GetUTF16FromANSI(val), true);
 
             if (strcmp(metadata, "artist") == 0)
                 pTag->SetFieldString(APE_TAG_FIELD_ARTIST, spValue);
@@ -830,7 +829,7 @@ extern "C"
         }
 
         // load the file
-        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(Info.pFilename), TRUE);
+        CSmartPtr<wchar_t> spUTF16(CAPECharacterHelper::GetUTF16FromANSI(Info.pFilename), true);
         if ((s_spAPEDecompress == APE_NULL) || (spUTF16 != s_strFilename))
         {
             s_spAPEDecompress.Assign(CreateIAPEDecompress(spUTF16, APE_NULL, false, true, false));
@@ -843,15 +842,15 @@ extern "C"
         {
             if (strcmp(Info.pMetaData, "artist") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_ARTIST, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_ARTIST, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "album") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_ALBUM, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_ALBUM, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "title") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_TITLE, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_TITLE, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "type") == 0)
             {
@@ -859,15 +858,15 @@ extern "C"
             }
             else if (strcmp(Info.pMetaData, "comment") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_COMMENT, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_COMMENT, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "year") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_YEAR, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_YEAR, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "genre") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_GENRE, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_GENRE, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "length") == 0)
             {
@@ -876,27 +875,27 @@ extern "C"
             }
             else if (strcmp(Info.pMetaData, "track") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_TRACK, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_TRACK, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "disc") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_DISC, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_DISC, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "albumartist") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_ALBUM_ARTIST, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_ALBUM_ARTIST, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "composer") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_COMPOSER, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_COMPOSER, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "publisher") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_PUBLISHER, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_PUBLISHER, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (strcmp(Info.pMetaData, "bpm") == 0)
             {
-                pTag->GetFieldString(APE_TAG_FIELD_BPM, Info.pReturn, &Info.nReturnBytes, FALSE);
+                pTag->GetFieldString(APE_TAG_FIELD_BPM, Info.pReturn, &Info.nReturnBytes, false);
             }
             else if (_stricmp(Info.pMetaData, "formatinformation") == 0)
             {
@@ -904,8 +903,8 @@ extern "C"
                 CString strLine;
 
                 // get the compression level
-                str_utfn cCompressionLevel[256]; APE_CLEAR(cCompressionLevel);
-                GetAPECompressionLevelName(static_cast<int>(s_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL)), cCompressionLevel, 256, false);
+                str_utfn cCompressionLevel[16]; APE_CLEAR(cCompressionLevel);
+                GetAPECompressionLevelName(static_cast<int>(s_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL)), cCompressionLevel, 16, false);
 
                 // overall
                 strLine.Format(_T("Monkey's Audio %.2f (%s)"),
@@ -923,7 +922,7 @@ extern "C"
 
                 // length
                 strLine.Format(_T("Length: %s (%I64d blocks)"),
-                    static_cast<LPCTSTR>(FormatDuration(static_cast<double>(s_spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_LENGTH_MS)) / 1000.0, FALSE)),
+                    static_cast<LPCTSTR>(FormatDuration(static_cast<double>(s_spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_LENGTH_MS)) / 1000.0, false)),
                     s_spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS));
                 strFormat += strLine + _T("\r\n");
 
@@ -938,9 +937,8 @@ extern "C"
                 strLine.Format(_T("Compression: %.2f%%"), static_cast<double>(s_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_AVERAGE_BITRATE) * 100) / static_cast<double>(s_spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_DECOMPRESSED_BITRATE)));
                 strFormat += strLine + _T("\r\n");
 
-                str_ansi * pFormatANSI = CAPECharacterHelper::GetANSIFromUTF16(strFormat);
-                strncpy_s(Info.pReturn, static_cast<size_t>(Info.nReturnBytes), pFormatANSI, static_cast<size_t>(Info.nReturnBytes));
-                delete [] pFormatANSI;
+                CSmartPtr<str_ansi> spFormatANSI(CAPECharacterHelper::GetANSIFromUTF16(strFormat), true);
+                strncpy_s(Info.pReturn, static_cast<size_t>(Info.nReturnBytes), spFormatANSI, static_cast<size_t>(Info.nReturnBytes));
             }
             else
             {
@@ -1002,12 +1000,10 @@ extern "C" int APE_GetAlbumArt(const wchar_t * filename, const wchar_t * type, v
 
                 if (pImage != APE_NULL)
                 {
-                    // load the filename
-                    CString strFilename;
-                    strFilename = CAPECharacterHelper::GetUTF16FromUTF8(static_cast<APE::str_utf8 *>(spBuffer));
-
                     // get the extension
-                    CString strExtension = strFilename.Right(strFilename.GetLength() - strFilename.ReverseFind('.') - 1);
+                    CString strExtension = CAPECharacterHelper::GetUTF16FromUTF8(static_cast<APE::str_utf8*>(spBuffer));
+                    if (strExtension.Find('.') >= 0)
+                        strExtension = strExtension.Right(strExtension.GetLength() - strExtension.ReverseFind('.') - 1);
 
                     // get the mime type
                     *mime_type = static_cast<wchar_t *>(Wasabi_Malloc((static_cast<size_t>(strExtension.GetLength()) + 1) * 2));

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.6)
 project("Monkey's Audio")
 
 set(CMAKE_CXX_STANDARD 98)
@@ -90,12 +90,15 @@ set(MAC_SHARED_HEADERS
         Source/Shared/ID3Genres.h
         Source/Shared/IO.h
         Source/Shared/MACDll.h
+        Source/Shared/MemoryIO.h
         Source/Shared/MFCGlobals.h
         Source/Shared/MFCWarnings.h
         Source/Shared/NoWindows.h
         Source/Shared/RollBuffer.h
+        Source/Shared/Semaphore.h
         Source/Shared/SmartPtr.h
         Source/Shared/StdLibFileIO.h
+        Source/Shared/Thread.h
         Source/Shared/Version.h
         Source/Shared/Warnings.h
         Source/Shared/WholeFileIO.h
@@ -107,6 +110,7 @@ set(MAC_LIBRARY_HEADERS
         Source/MACLib/APECompressCore.h
         Source/MACLib/APECompressCreate.h
         Source/MACLib/APEDecompress.h
+        Source/MACLib/APEDecompressCore.h
         Source/MACLib/APEHeader.h
         Source/MACLib/APEInfo.h
         Source/MACLib/APELink.h
@@ -126,7 +130,7 @@ set(MAC_LIBRARY_HEADERS
         Source/MACLib/UnBitArrayBase.h
         Source/MACLib/WAVInputSource.h
         Source/MACLib/Old/Anti-Predictor.h
-        Source/MACLib/Old/APEDecompressCore.h
+        Source/MACLib/Old/APEDecompressCoreOld.h
         Source/MACLib/Old/APEDecompressOld.h
         Source/MACLib/Old/UnBitArrayOld.h
         Source/MACLib/Old/UnMAC.h)
@@ -146,6 +150,9 @@ set(MAC_SHARED_SOURCE_FILES
         Source/Shared/CPUFeatures.cpp
         Source/Shared/CRC.cpp
         Source/Shared/GlobalFunctions.cpp
+        Source/Shared/MemoryIO.cpp
+        Source/Shared/Semaphore.cpp
+        Source/Shared/Thread.cpp
         Source/Shared/WholeFileIO.cpp
         ${MAC_OS_SRC})
 
@@ -155,6 +162,7 @@ set(MAC_LIBRARY_SOURCE_FILES
         Source/MACLib/APECompressCore.cpp
         Source/MACLib/APECompressCreate.cpp
         Source/MACLib/APEDecompress.cpp
+        Source/MACLib/APEDecompressCore.cpp
         Source/MACLib/APEHeader.cpp
         Source/MACLib/APEInfo.cpp
         Source/MACLib/APELink.cpp
@@ -176,7 +184,7 @@ set(MAC_LIBRARY_SOURCE_FILES
         Source/MACLib/Old/AntiPredictorFast.cpp
         Source/MACLib/Old/AntiPredictorHigh.cpp
         Source/MACLib/Old/AntiPredictorNormal.cpp
-        Source/MACLib/Old/APEDecompressCore.cpp
+        Source/MACLib/Old/APEDecompressCoreOld.cpp
         Source/MACLib/Old/APEDecompressOld.cpp
         Source/MACLib/Old/UnBitArrayOld.cpp
         Source/MACLib/Old/UnMAC.cpp)

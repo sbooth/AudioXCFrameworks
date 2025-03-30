@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IO.h"
-#include "MD5.h"
 
 namespace APE
 {
@@ -44,7 +43,6 @@ public:
     void AdvanceToByteBoundary();
 #ifdef APE_ENABLE_BIT_ARRAY_INLINES
     __forceinline uint32 GetCurrentBitIndex() { return m_nCurrentBitIndex; }
-    __forceinline CMD5Helper& GetMD5Helper() { return m_MD5; }
 #endif
     void FlushState(BIT_ARRAY_STATE & BitArrayState);
     void FlushBitArray();
@@ -55,7 +53,6 @@ private:
     CIO * m_pIO;
     uint32 m_nCurrentBitIndex;
     RANGE_CODER_STRUCT_COMPRESS m_RangeCoderInfo;
-    CMD5Helper m_MD5;
 
 #ifdef BUILD_RANGE_TABLE
     void OutputRangeTable();

@@ -214,6 +214,9 @@
     <ClInclude Include="..\..\..\MAC\FLACTag.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Shared\GDIBitmapPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\MAC\res\MAC.ico">

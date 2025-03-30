@@ -31,13 +31,13 @@ void CCircleBuffer::CreateBuffer(uint32 nBytes, uint32 nMaxDirectWriteBytes)
     m_nEndCap = m_nTotal;
 }
 
-uint32 CCircleBuffer::MaxAdd()
+uint32 CCircleBuffer::MaxAdd() const
 {
     const uint32 nMaxAdd = (m_nTail >= m_nHead) ? (m_nTotal - 1 - m_nMaxDirectWriteBytes) - (m_nTail - m_nHead) : m_nHead - m_nTail - 1;
     return nMaxAdd;
 }
 
-uint32 CCircleBuffer::MaxGet()
+uint32 CCircleBuffer::MaxGet() const
 {
     return (m_nTail >= m_nHead) ? m_nTail - m_nHead : (m_nEndCap - m_nHead) + m_nTail;
 }

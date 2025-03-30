@@ -247,11 +247,9 @@ void UnRegisterWMPExtension(const TCHAR* Extension)
     const TCHAR* ExtensionWithoutStar = Extension + 1;
 
     // WMP 6.4
-    // NOLINTBEGIN
     if (ERROR_SUCCESS == RegOpenKeyEx(HKEY_LOCAL_MACHINE,
         _T("SOFTWARE\\Microsoft\\MediaPlayer\\Player\\Extensions\\Types"), 0,
         KEY_WRITE | KEY_ENUMERATE_SUB_KEYS | KEY_QUERY_VALUE, &Key))
-    // NOLINTEND
     {
         DWORD Index = 0;
         TCHAR KeyName[256] = { 0 };

@@ -16,8 +16,8 @@ public:
     void CreateBuffer(uint32 nBytes, uint32 nMaxDirectWriteBytes);
 
     // query
-    uint32 MaxAdd();
-    uint32 MaxGet();
+    uint32 MaxAdd() const;
+    uint32 MaxGet() const;
 
     // direct writing
 #ifdef APE_ENABLE_CIRCLE_BUFFER_WRITE

@@ -6,8 +6,6 @@
 namespace APE
 {
 
-#ifdef ENABLE_COMPRESSION_MODE_HIGH
-
 void CAntiPredictorHigh0000To3320::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements)
 {
     // variable declares
@@ -479,8 +477,6 @@ void CAntiPredictorHigh3800ToCurrent::AntiPredict(int * pInputArray, int * pOutp
 
     #undef FIRST_ELEMENT
 }
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_HIGH
 
 }
 

@@ -29,7 +29,7 @@ BOOL CAPEInfoFormatDlg::OnInitDialog()
 {
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(false, 0), true);
 
     // parent
     return CDialog::OnInitDialog();
@@ -46,7 +46,7 @@ void CAPEInfoFormatDlg::Layout()
     m_ctrlFormat.SetWindowPos(APE_NULL, theApp.GetSize(nBorder, 0).cx, theApp.GetSize(nBorder, 0).cx, rectWindow.Width() - theApp.GetSize(nBorder * 2, 0).cx, rectWindow.Height() - theApp.GetSize(nBorder * 2, 0).cx, SWP_NOZORDER);
 }
 
-BOOL CAPEInfoFormatDlg::SetFiles(CStringArray & aryFiles)
+bool CAPEInfoFormatDlg::SetFiles(CStringArray & aryFiles)
 {
     m_aryFiles.Copy(aryFiles);
 
@@ -62,13 +62,13 @@ BOOL CAPEInfoFormatDlg::SetFiles(CStringArray & aryFiles)
     }
     else
     {
-        strSummary = _T("Too many files selected.  Please select less tracks.");
+        strSummary = _T("Too many files selected. Please select less tracks.");
     }
     strSummary.TrimRight();
 
     m_ctrlFormat.SetWindowText(strSummary);
 
-    return TRUE;
+    return true;
 }
 
 CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
@@ -81,8 +81,8 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
     {
         CString strLine;
 
-        str_utfn cCompressionName[256]; APE_CLEAR(cCompressionName);
-        GetAPECompressionLevelName(static_cast<int>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL)), cCompressionName, 256, false);
+        str_utfn cCompressionName[16]; APE_CLEAR(cCompressionName);
+        GetAPECompressionLevelName(static_cast<int>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL)), cCompressionName, 16, false);
 
         strLine.Format(_T("Monkey's Audio %.2f (%s)"),
             static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION)) / static_cast<double>(1000),
@@ -100,7 +100,7 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
 
         // length
         strLine.Format(_T("Length: %s (%I64d blocks)"),
-            FormatDuration(static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_LENGTH_MS)) / 1000.0, FALSE).GetString(),
+            FormatDuration(static_cast<double>(spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_LENGTH_MS)) / 1000.0, false).GetString(),
             static_cast<int64>(spAPEDecompress->GetInfo(IAPEDecompress::APE_DECOMPRESS_TOTAL_BLOCKS)));
         strSummary += strLine + _T("\r\n");
 
@@ -121,7 +121,7 @@ CString CAPEInfoFormatDlg::GetSummary(const CString & strFilename)
     else
     {
         APE::WAVEFORMATEX wfeInput; APE_CLEAR(wfeInput); int64 nTotalBlocks = 0; int64 nHeaderBytes = 0; int64 nTerminatingBytes = 0; int32 nFlags = 0; int nErrorCode = 0;
-        CSmartPtr<CInputSource> spInputSource(CreateInputSource(strFilename, &wfeInput, &nTotalBlocks, &nHeaderBytes, &nTerminatingBytes, &nFlags, &nErrorCode));
+        CSmartPtr<CInputSource> spInputSource(CInputSource::CreateInputSource(strFilename, &wfeInput, &nTotalBlocks, &nHeaderBytes, &nTerminatingBytes, &nFlags, &nErrorCode));
 
         CString strFormat;
         if (nErrorCode == ERROR_SUCCESS)
@@ -178,15 +178,32 @@ void CAPEInfoFormatDlg::OutputAPETag(APE::IAPETag * pTag, CString & strSummary)
         int nTagIndex = 0; CAPETagField* pTagField = APE_NULL;
         while ((pTagField = pTag->GetTagField(nTagIndex++)) != APE_NULL)
         {
-            WCHAR cValue[1024];
-            APE_CLEAR(cValue);
-            int nValueBytes = 1023;
-            pTag->GetFieldString(pTagField->GetFieldName(), &cValue[0], &nValueBytes);
+            if (pTagField->GetFieldFlags() & TAG_FIELD_FLAG_DATA_TYPE_BINARY)
+            {
+                strLine.Format(_T("    %s: binary value (%d bytes)"),
+                    pTagField->GetFieldName(),
+                    pTagField->GetFieldValueSize());
+                strSummary += strLine + _T("\r\n");
+            }
+            else
+            {
+                const int nMaximumSize = 1024;
+                WCHAR cValue[nMaximumSize];
+                APE_CLEAR(cValue);
+                int nValueBytes = nMaximumSize - 1;
+                pTag->GetFieldString(pTagField->GetFieldName(), &cValue[0], &nValueBytes);
 
-            strLine.Format(_T("    %s: %s"),
-                pTagField->GetFieldName(),
-                (nValueBytes >= 1024) ? _T("<too large to display>") : cValue);
-            strSummary += strLine + _T("\r\n");
+                CString strValue;
+                if (nValueBytes >= nMaximumSize)
+                    strValue.Format(_T("<too large to display> (%d bytes)"), nValueBytes);
+                else
+                    strValue = cValue;
+
+                strLine.Format(_T("    %s: %s"),
+                    pTagField->GetFieldName(),
+                    strValue.GetString());
+                strSummary += strLine + _T("\r\n");
+            }
         }
     }
 }

@@ -1,23 +1,31 @@
 #include "All.h"
+#define APE_ENABLE_BIT_ARRAY_INLINES
 #include "APECompressCore.h"
 #include "BitArray.h"
 #include "Prepare.h"
 #include "NewPredictor.h"
+#include "MemoryIO.h"
 
 #ifdef APE_SUPPORT_COMPRESS
 
 namespace APE
 {
 
-CAPECompressCore::CAPECompressCore(CIO * pIO, const WAVEFORMATEX * pwfeInput, int nMaxFrameBlocks, int nCompressionLevel)
+CAPECompressCore::CAPECompressCore(const WAVEFORMATEX * pwfeInput, int nMaxFrameBlocks, int nCompressionLevel)
+: m_semProcess(1), m_semReady(1)
 {
+    m_semProcess.Wait();
+
     APE_CLEAR(m_wfeInput);
     APE_CLEAR(m_aryBitArrayStates);
     m_nMaxFrameBlocks = nMaxFrameBlocks;
-    m_spBitArray.Assign(new CBitArray(pIO));
+    int nDataSize = m_nMaxFrameBlocks * pwfeInput->nChannels * (pwfeInput->wBitsPerSample / 8);
+    m_spInputData.Assign(new unsigned char [static_cast<size_t>(nDataSize)], true);
+    m_spOutputData.Assign(new unsigned char [static_cast<size_t>(nDataSize) + 4096], true);
+    m_spIO.Assign(new CMemoryIO(m_spOutputData, nDataSize + 4096));
+    m_spBitArray.Assign(new CBitArray(m_spIO));
     const intn nChannels = ape_max(pwfeInput->nChannels, 2);
     m_spData.Assign(new int [static_cast<size_t>(m_nMaxFrameBlocks * nChannels)], true);
-    m_spTempData.Assign(new int [static_cast<size_t>(nMaxFrameBlocks)], true);
     m_spPrepare.Assign(new CPrepare);
     APE_CLEAR(m_aryPredictors);
     for (int nChannel = 0; nChannel < nChannels; nChannel++)
@@ -28,11 +36,18 @@ CAPECompressCore::CAPECompressCore(CIO * pIO, const WAVEFORMATEX * pwfeInput, in
             m_aryPredictors[nChannel] = new CPredictorCompressNormal<int64, int>(nCompressionLevel, pwfeInput->wBitsPerSample);
     }
     memcpy(&m_wfeInput, pwfeInput, sizeof(WAVEFORMATEX));
-    m_nPeakLevel = 0;
+    m_nInputBytes = 0;
+    m_nFrameBytes = 0;
+    m_bExit = false;
 }
 
 CAPECompressCore::~CAPECompressCore()
 {
+    // stop any threading
+    Exit();
+    Wait();
+
+    // delete the predictors
     for (int z = 0; z < APE_MAXIMUM_CHANNELS; z++)
     {
         if (m_aryPredictors[z] != APE_NULL)
@@ -40,8 +55,38 @@ CAPECompressCore::~CAPECompressCore()
     }
 }
 
+int CAPECompressCore::Run()
+{
+    while (!m_bExit)
+    {
+        m_semProcess.Wait();
+
+        if (m_bExit) break;
+
+        Encode(m_spInputData, m_nInputBytes);
+
+        m_semReady.Post();
+    }
+
+    return 0;
+}
+
 int CAPECompressCore::EncodeFrame(const void * pInputData, int nInputBytes)
 {
+    memcpy(m_spInputData, pInputData, static_cast<size_t>(nInputBytes));
+
+    m_nInputBytes = nInputBytes;
+
+    m_semProcess.Post();
+
+    // return success
+    return ERROR_SUCCESS;
+}
+
+int CAPECompressCore::Encode(const void * pInputData, int nInputBytes)
+{
+    m_spIO->Seek(0, SeekFileBegin);
+
     // variables
     const int nInputBlocks = nInputBytes / m_wfeInput.nBlockAlign;
     int nSpecialCodes = 0;
@@ -127,19 +172,24 @@ int CAPECompressCore::EncodeFrame(const void * pInputData, int nInputBytes)
     }
 
     m_spBitArray->Finalize();
+    m_spBitArray->AdvanceToByteBoundary();
+
+    m_nFrameBytes = static_cast<uint32>(m_spIO->GetPosition() + m_spBitArray->GetCurrentBitIndex() / 8);
+
+    m_spBitArray->OutputBitArray(true);
 
     // return success
     return ERROR_SUCCESS;
 }
 
-CBitArray * CAPECompressCore::GetBitArray()
+unsigned char * CAPECompressCore::GetFrameBuffer()
 {
-    return m_spBitArray.GetPtr();
+    return m_spOutputData;
 }
 
-intn CAPECompressCore::GetPeakLevel()
+uint32 CAPECompressCore::GetFrameBytes() const
 {
-    return m_nPeakLevel;
+    return m_nFrameBytes;
 }
 
 int CAPECompressCore::Prepare(const void * pInputData, int nInputBytes, int * pSpecialCodes)
@@ -150,7 +200,7 @@ int CAPECompressCore::Prepare(const void * pInputData, int nInputBytes, int * pS
 
     // do the preparation
     RETURN_ON_ERROR(m_spPrepare->Prepare(static_cast<const unsigned char *>(pInputData), nInputBytes, &m_wfeInput, m_spData, m_nMaxFrameBlocks,
-        &nCRC, pSpecialCodes, &m_nPeakLevel))
+        &nCRC, pSpecialCodes))
 
     // store the CRC
     RETURN_ON_ERROR(m_spBitArray->EncodeUnsignedLong(nCRC))
@@ -162,6 +212,18 @@ int CAPECompressCore::Prepare(const void * pInputData, int nInputBytes, int * pS
     }
 
     return ERROR_SUCCESS;
+}
+
+void CAPECompressCore::WaitUntilReady()
+{
+    m_semReady.Wait();
+}
+
+void CAPECompressCore::Exit()
+{
+    m_bExit = true;
+
+    m_semProcess.Post();
 }
 
 }

@@ -17,7 +17,10 @@ class CAPECompress : public IAPECompress
 {
 public:
     CAPECompress();
-    ~CAPECompress();
+    virtual ~CAPECompress();
+
+    // configuration
+    int SetNumberOfThreads(int nThreads);
 
     // start encoding
     int Start(const wchar_t * pOutputFilename, const WAVEFORMATEX * pwfeInput, bool bFloat, int64 nMaxAudioBytes, int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL, const void * pHeaderData = APE_NULL, int64 nHeaderBytes = CREATE_WAV_HEADER_ON_DECOMPRESSION, int nFlags = 0) APE_OVERRIDE;
@@ -36,15 +39,15 @@ public:
     // use a CIO (input source) to add data
     int64 AddDataFromInputSource(CInputSource * pInputSource, int64 nMaxBytes = 0, int64 * pBytesAdded = APE_NULL) APE_OVERRIDE;
 
-    // finish / kill
+    // finish
     int Finish(unsigned char * pTerminatingData, int64 nTerminatingBytes, int64 nWAVTerminatingBytes) APE_OVERRIDE;
-    int Kill() APE_OVERRIDE;
 
 private:
     int ProcessBuffer(bool bFinalize = false);
     void HandleFloat(bool bFloat, const WAVEFORMATEX * pwfeInput);
 
     CSmartPtr<CAPECompressCreate> m_spAPECompressCreate;
+    int m_nThreads;
     int64 m_nBufferHead;
     int64 m_nBufferTail;
     int64 m_nBufferSize;

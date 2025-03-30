@@ -25,13 +25,13 @@ CString GetInstallPath()
     return strInstallDirectory;
 }
 
-CString GetProgramPath(BOOL bAppendProgramName)
+CString GetProgramPath(bool bAppendProgramName)
 {
     CString strProgramPath;
     GetModuleFileName(APE_NULL, strProgramPath.GetBuffer(_MAX_PATH), _MAX_PATH);
     strProgramPath.ReleaseBuffer();
 
-    if (bAppendProgramName == FALSE)
+    if (bAppendProgramName == false)
     {
         CFilename fnProgram(strProgramPath);
         strProgramPath = fnProgram.GetPath();
@@ -46,7 +46,7 @@ CString GetUserDataPath()
     _tgetenv_s(&nRequired, APE_NULL, 0, _T("APPDATA"));
 
     CSmartPtr<wchar_t> spAppData(new wchar_t [nRequired + 1], true);
-    memset(spAppData, 0, nRequired + 1);
+    memset(spAppData, 0, (nRequired + 1) * sizeof(spAppData[0]));
     _tgetenv_s(&nRequired, spAppData, nRequired, _T("APPDATA"));
 
     CString strPath;
@@ -79,14 +79,14 @@ void CreateDirectoryEx(CString strDirectory)
     CreateDirectory(strDirectory,APE_NULL);
 }
 
-void ListFiles(CStringArray * pStringArray, CString strPath, BOOL bRecurse)
+void ListFiles(CStringArray * pStringArray, CString strPath, bool bRecurse)
 {
     FixDirectory(strPath);
 
     WIN32_FIND_DATA WFD;
     HANDLE hFind = FindFirstFile(strPath + _T("*.*"), &WFD);
 
-    BOOL bFindSuccess = TRUE;
+    BOOL bFindSuccess = true;
 
     while (bFindSuccess)
     {
@@ -96,7 +96,7 @@ void ListFiles(CStringArray * pStringArray, CString strPath, BOOL bRecurse)
             if (WFD.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
             {
                 if (bRecurse)
-                    ListFiles(pStringArray, strPath + strFilename + _T("\\"), TRUE);
+                    ListFiles(pStringArray, strPath + strFilename + _T("\\"), true);
             }
             else
             {
@@ -111,13 +111,13 @@ void ListFiles(CStringArray * pStringArray, CString strPath, BOOL bRecurse)
     FindClose(hFind);
 }
 
-BOOL FileExists(const CString & strFilename)
+bool FileExists(const CString & strFilename)
 {
-    WIN32_FIND_DATA WFD; BOOL bExists = FALSE;
+    WIN32_FIND_DATA WFD; bool bExists = false;
     HANDLE hFind = FindFirstFile(strFilename, &WFD);
     if (hFind != INVALID_HANDLE_VALUE)
     {
-        bExists = TRUE;
+        bExists = true;
         FindClose(hFind);
     }
 
@@ -127,7 +127,7 @@ BOOL FileExists(const CString & strFilename)
 CString GetUniqueFilename(CString strFilename)
 {
     // if the file doesn't exist, just return
-    if (FileExists(strFilename) == FALSE)
+    if (FileExists(strFilename) == false)
         return strFilename;
 
     // trim the number off the end
@@ -141,11 +141,11 @@ CString GetUniqueFilename(CString strFilename)
         int nLeft = strName.ReverseFind('(');
         CString strNumber = strName.Mid(nLeft + 1, strName.GetLength() - nLeft - 2);
 
-        BOOL bNumber = TRUE;
+        bool bNumber = true;
         for (int z = 0; z < strNumber.GetLength(); z++)
         {
-            if (isdigit(strNumber[z]) == FALSE)
-                bNumber = FALSE;
+            if (isdigit(strNumber[z]) == false)
+                bNumber = false;
         }
 
         if (bNumber)
@@ -157,14 +157,14 @@ CString GetUniqueFilename(CString strFilename)
     }
 
     // keep adding numbers until it's a unique filename
-    while (TRUE)
+    while (true)
     {
         nNumber++;
 
         CString strTemp; strTemp.Format(_T("%s (%d)"), strName.GetString(), nNumber);
         CString strNewFilename = fnFilename.BuildFilename(APE_NULL, APE_NULL, strTemp, APE_NULL);
 
-        if (FileExists(strNewFilename) == FALSE)
+        if (FileExists(strNewFilename) == false)
             return strNewFilename;
     }
 
@@ -219,9 +219,9 @@ double GetDriveFreeMB(CString strDrive)
     return dFreeMB;
 }
 
-BOOL MoveFile(const CString & strExistingFilename, const CString & strNewFilename, BOOL bOverwrite)
+bool MoveFile(const CString & strExistingFilename, const CString & strNewFilename, bool bOverwrite)
 {
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
 
     if (FileExists(strNewFilename) && bOverwrite)
     {
@@ -230,7 +230,7 @@ BOOL MoveFile(const CString & strExistingFilename, const CString & strNewFilenam
         {
             if (MoveFile(strExistingFilename, strNewFilename))
             {
-                bRetVal = TRUE;
+                bRetVal = true;
                 DeleteFileEx(strTempFilename);
             }
             else
@@ -247,9 +247,9 @@ BOOL MoveFile(const CString & strExistingFilename, const CString & strNewFilenam
     return bRetVal;
 }
 
-BOOL CopyFileTime(const CString & strSourceFilename, const CString & strDestinationFilename)
+bool CopyFileTime(const CString & strSourceFilename, const CString & strDestinationFilename)
 {
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
 
     WIN32_FIND_DATA wfdInput;
     HANDLE hFind = FindFirstFile(strSourceFilename, &wfdInput);
@@ -260,7 +260,7 @@ BOOL CopyFileTime(const CString & strSourceFilename, const CString & strDestinat
         if (hOutput != INVALID_HANDLE_VALUE)
         {
             if (SetFileTime(hOutput, &wfdInput.ftCreationTime, &wfdInput.ftLastAccessTime, &wfdInput.ftLastWriteTime))
-                bRetVal = TRUE;
+                bRetVal = true;
 
             CloseHandle(hOutput);
         }
@@ -269,7 +269,7 @@ BOOL CopyFileTime(const CString & strSourceFilename, const CString & strDestinat
     return bRetVal;
 }
 
-BOOL RecycleFile(const CString & strFilename, BOOL bConfirm)
+bool RecycleFile(const CString & strFilename, bool bConfirm)
 {
     // setup the SHFILEOPSTRUCT
     SHFILEOPSTRUCT ShellFileOp; APE_CLEAR(ShellFileOp);
@@ -281,12 +281,12 @@ BOOL RecycleFile(const CString & strFilename, BOOL bConfirm)
     ShellFileOp.pFrom = cFrom;
 
     // run
-    return (SHFileOperation(&ShellFileOp) == 0) ? TRUE : FALSE;
+    return (SHFileOperation(&ShellFileOp) == 0) ? true : false;
 }
 
-BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer)
+bool ReadWholeFile(const CString & strFilename, CString & strBuffer)
 {
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
     strBuffer.Empty();
 
     // open file
@@ -295,7 +295,7 @@ BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer)
     {
         // build buffer for the data
         unsigned int nBytes = GetFileSize(hFile, APE_NULL);
-        CSmartPtr<char> spUTF8(new char [static_cast<size_t>(nBytes) + 1], TRUE);
+        CSmartPtr<char> spUTF8(new char [static_cast<size_t>(nBytes) + 1], true);
 
         if (spUTF8 != APE_NULL)
         {
@@ -307,11 +307,11 @@ BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer)
                 spUTF8[dwBytesRead] = 0;
 
                 // convert to UTF-16
-                CSmartPtr<TCHAR> spUTF16(CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<unsigned char *>(spUTF8.GetPtr())), TRUE);
+                CSmartPtr<TCHAR> spUTF16(CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<unsigned char *>(spUTF8.GetPtr())), true);
                 if (spUTF16)
                 {
                     strBuffer = spUTF16;
-                    bRetVal = TRUE;
+                    bRetVal = true;
                 }
             }
         }
@@ -323,9 +323,9 @@ BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer)
     return bRetVal;
 }
 
-BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int * pnExitCode, BOOL bShowPopup, CString * pstrReturnOutput)
+bool ExecuteProgramBlocking(CString strApplication, CString strParameters, int * pnExitCode, bool bShowPopup, CString * pstrReturnOutput)
 {
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
     if (pnExitCode) *pnExitCode = -1;
 
     STARTUPINFO StartupInfo; APE_CLEAR(StartupInfo);
@@ -345,17 +345,17 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
         SECURITY_ATTRIBUTES saAttr;
         APE_CLEAR(saAttr);
         saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
-        saAttr.bInheritHandle = TRUE;
+        saAttr.bInheritHandle = true;
         saAttr.lpSecurityDescriptor = APE_NULL;
 
         if (!CreatePipe(&hPipeStdOut_Rd, &hPipeStdOut_Wd, &saAttr, 0))
-            return FALSE;
+            return false;
 
         if (!SetHandleInformation(hPipeStdOut_Rd, HANDLE_FLAG_INHERIT, 0))
         {
             APE_SAFE_FILE_CLOSE(hPipeStdOut_Rd)
             APE_SAFE_FILE_CLOSE(hPipeStdOut_Wd)
-            return FALSE;
+            return false;
         }
 
         StartupInfo.hStdOutput = hPipeStdOut_Wd;
@@ -366,7 +366,7 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
 
     // create the process
     if (CreateProcess(APE_NULL, strCommand.LockBuffer(), APE_NULL, APE_NULL,
-        (StartupInfo.dwFlags & STARTF_USESTDHANDLES) ? TRUE : FALSE, NORMAL_PRIORITY_CLASS, APE_NULL, CFilename(strApplication).GetPath(), &StartupInfo, &ProcessInfo))
+        (StartupInfo.dwFlags & STARTF_USESTDHANDLES) ? true : false, NORMAL_PRIORITY_CLASS, APE_NULL, CFilename(strApplication).GetPath(), &StartupInfo, &ProcessInfo))
     {
         // wait for completion
         WaitForSingleObject(ProcessInfo.hProcess, INFINITE);
@@ -409,7 +409,7 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
         CloseHandle(ProcessInfo.hProcess);
         CloseHandle(ProcessInfo.hThread);
 
-        bRetVal = TRUE;
+        bRetVal = true;
     }
 
     // close handles
@@ -421,9 +421,9 @@ BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int *
     return bRetVal;
 }
 
-BOOL IsProcessElevated()
+bool IsProcessElevated()
 {
-    BOOL fIsElevated = FALSE;
+    bool bIsElevated = false;
     HANDLE hToken = APE_NULL;
     DWORD dwSize = 0;
 
@@ -433,7 +433,7 @@ BOOL IsProcessElevated()
         APE_CLEAR(elevation);
         if (GetTokenInformation(hToken, TokenElevation, &elevation, sizeof(elevation), &dwSize))
         {
-            fIsElevated = static_cast<BOOL>(elevation.TokenIsElevated);
+            bIsElevated = static_cast<bool>(elevation.TokenIsElevated);
         }
     }
 
@@ -442,12 +442,32 @@ BOOL IsProcessElevated()
         CloseHandle(hToken);
         hToken = APE_NULL;
     }
-    return fIsElevated;
+    return bIsElevated;
 }
 
-BOOL DeleteFileEx(LPCTSTR pFilename)
+void DeleteFileEx(LPCTSTR pFilename)
 {
     // we can't delete a file if the attributes are hidden, so we'll reset those before doing the delete
     SetFileAttributes(pFilename, FILE_ATTRIBUTE_NORMAL);
-    return DeleteFile(pFilename);
+    DeleteFile(pFilename);
+}
+
+void CapMoveToMonitor(HWND hWnd, LPRECT pRect)
+{
+    HMONITOR hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
+
+    MONITORINFO info;
+    APE_CLEAR(info);
+    info.cbSize = sizeof(MONITORINFO);
+    if (GetMonitorInfo(hMonitor, &info))
+    {
+        if (pRect->left < info.rcWork.left)
+            OffsetRect(pRect, info.rcWork.left - pRect->left, 0);
+        if (pRect->top < info.rcWork.top)
+            OffsetRect(pRect, 0, info.rcWork.top - pRect->top);
+        if (pRect->right > info.rcWork.right)
+            OffsetRect(pRect, info.rcWork.right - pRect->right, 0);
+        if (pRect->bottom > info.rcWork.bottom)
+            OffsetRect(pRect, 0, info.rcWork.bottom - pRect->bottom);
+    }
 }

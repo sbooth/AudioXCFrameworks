@@ -112,7 +112,7 @@ CString CFolderDialog::GetPathName() const
     return m_strFinalFolderName;
 }
 
-void CFolderDialog::EnableOK(BOOL bEnable)
+void CFolderDialog::EnableOK(bool bEnable)
 {
     // Documentation is incorrect! It is the lParam, not the wParam, that
     //    controls the enable!
@@ -122,12 +122,12 @@ void CFolderDialog::EnableOK(BOOL bEnable)
 
 void CFolderDialog::SetSelection(LPCTSTR pszSelection)
 {
-    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, TRUE, reinterpret_cast<LPARAM>(pszSelection));
+    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, true, reinterpret_cast<LPARAM>(pszSelection));
 }
 
-void CFolderDialog::SetSelection(ITEMIDLIST* pIdl)
+void CFolderDialog::SetSelection(ITEMIDLIST * pIdl)
 {
-    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, FALSE, reinterpret_cast<LPARAM>(pIdl));
+    ::SendMessage(m_hDialogBox, BFFM_SETSELECTION, false, reinterpret_cast<LPARAM>(pIdl));
 }
 
 void CFolderDialog::SetStatusText(LPCTSTR pszStatusText)
@@ -135,7 +135,7 @@ void CFolderDialog::SetStatusText(LPCTSTR pszStatusText)
     ::SendMessage(m_hDialogBox, BFFM_SETSTATUSTEXT, 0, reinterpret_cast<LPARAM>(pszStatusText));
 }
 
-CString CFolderDialog::ShortName(const CString& strName)
+CString CFolderDialog::ShortName(const CString & strName)
 {
     CString strShort;
     if (strName.GetLength() <= 35)
@@ -154,7 +154,7 @@ void CFolderDialog::OnInitDialog()
     SetStatusText(ShortName(m_strInitialFolderName));
 }
 
-void CFolderDialog::OnSelChanged(ITEMIDLIST* pIdl)
+void CFolderDialog::OnSelChanged(ITEMIDLIST * pIdl)
 {
     ::SHGetPathFromIDList(pIdl, m_szPath);
     m_strFinalFolderName = m_szPath;

@@ -11,19 +11,19 @@ public:
     CFormatArray(CMACDlg * pMACDlg);
     virtual ~CFormatArray();
 
-    BOOL Load();
-    BOOL Unload();
+    bool Load();
+    bool Unload();
 
-    BOOL FillCompressionMenu(CMenu * pMenu);
-    BOOL ProcessCompressionMenu(int nID);
+    bool FillCompressionMenu(CMenu * pMenu);
+    bool ProcessCompressionMenu(int nID);
 
     IFormat * GetFormat(const CString & strName);
 
     int Process(MAC_FILE * pInfo);
 
     CString GetOutputExtension(APE::APE_MODES Mode, const CString & strInputFilename, int nLevel, IFormat * pFormat);
-    BOOL GetInputExtensions(CStringArrayEx & aryExtensions);
-    CString GetOpenFilesFilter(BOOL bAddAllFiles = TRUE);
+    bool GetInputExtensions(CStringArrayEx & aryExtensions);
+    CString GetOpenFilesFilter(bool bAddAllFiles = true);
     IFormat * GetFormat(MAC_FILE * pInfo);
     IFormat * GetFormatFromInputType(const CString & strInputExtension);
 

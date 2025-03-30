@@ -98,7 +98,7 @@ CAPEInfo::CAPEInfo(int * pErrorCode, const wchar_t * pFilename, CAPETag * pTag, 
     if (pTag == APE_NULL)
     {
         // we don't want to analyze right away for non-local files
-        // since a single I/O object is shared, we can't tag and read at the same time(i.e.in multiple threads)
+        // since a single I/O object is shared, we can't tag and read at the same time (i.e. in multiple threads)
         if (StringIsEqual(pFilename, L"http://", false, 7) ||
             StringIsEqual(pFilename, L"m01p://", false, 7) ||
             StringIsEqual(pFilename, L"https://", false, 8) ||
@@ -158,10 +158,11 @@ int CAPEInfo::CloseFile()
 {
     m_spIO.Delete();
     m_APEFileInfo.spWaveHeaderData.Delete();
-    m_APEFileInfo.spSeekBitTable.Delete();
     m_APEFileInfo.spSeekByteTable64.Delete();
     m_APEFileInfo.spAPEDescriptor.Delete();
-
+#ifdef APE_BACKWARDS_COMPATIBILITY
+    m_APEFileInfo.spSeekBitTable.Delete();
+#endif
     m_spAPETag.Delete();
 
     // re-initialize variables
@@ -177,7 +178,7 @@ Performs sanity checks on all of the header data.
 int CAPEInfo::CheckHeaderInformation()
 {
     // Fixes a bug with MAC 3.99 where conversion from APE to APE could include the file tag
-    // as part of the WAV terminating data.  This sanity check fixes the problem.
+    // as part of the WAV terminating data. This sanity check fixes the problem.
     if ((m_APEFileInfo.spAPEDescriptor != APE_NULL) &&
         (m_APEFileInfo.spAPEDescriptor->nTerminatingDataBytes > 0))
     {
@@ -335,7 +336,11 @@ int64 CAPEInfo::GetInfo(IAPEDecompress::APE_DECOMPRESS_FIELDS Field, int64 nPara
             if ((nFrame < 0) || (static_cast<uint32>(nFrame) >= m_APEFileInfo.nTotalFrames))
                 nResult = 0;
             else
+#ifdef APE_BACKWARDS_COMPATIBILITY
                 nResult = m_APEFileInfo.spSeekBitTable[nFrame];
+#else
+                nResult = 0;
+#endif
         }
         break;
     }
@@ -508,7 +513,7 @@ int64 CAPEInfo::GetInfo(IAPEDecompress::APE_DECOMPRESS_FIELDS Field, int64 nPara
     case IAPEDecompress::APE_DECOMPRESS_CURRENT_BITRATE:
     case IAPEDecompress::APE_DECOMPRESS_AVERAGE_BITRATE:
     case IAPEDecompress::APE_DECOMPRESS_CURRENT_FRAME:
-        // all other conditions to prevent compiler warnings (4061 and Clang)
+        // all other conditions to prevent compiler warnings (4061, 4062, and Clang)
         break;
     }
 

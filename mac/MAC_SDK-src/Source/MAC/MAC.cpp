@@ -20,14 +20,14 @@ CMACApp::CMACApp()
 {
     // initialize
     m_dScale = -1.0; // default to an impossible value so the first SetScale(...) call returns that it changed
-    m_hSingleInstance = CreateMutex(APE_NULL, FALSE, _T("Mokey's Audio"));
+    m_hSingleInstance = CreateMutex(APE_NULL, false, _T("Mokey's Audio"));
     DWORD dwLastError = GetLastError();
     m_bAnotherInstanceRunning = (dwLastError == ERROR_ALREADY_EXISTS);
     m_pMACDlg = APE_NULL;
 
     // start GDI plus
-    Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-    ULONG_PTR gdiplusToken;
+    Gdiplus::GdiplusStartupInput gdiplusStartupInput; // filled in by the constructor
+    ULONG_PTR gdiplusToken = 0;
     Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, APE_NULL);
 }
 
@@ -49,7 +49,7 @@ BOOL CMACApp::InitInstance()
             ShowWindow(hwndMonkeysAudio, SW_RESTORE);
             SetForegroundWindow(hwndMonkeysAudio);
         }
-        return FALSE;
+        return false;
     }
 
     // initialize
@@ -80,7 +80,7 @@ BOOL CMACApp::InitInstance()
 
         APE_SAFE_ARRAY_DELETE(pUninstall)
 
-        return FALSE;
+        return false;
     }
     else
     {
@@ -103,15 +103,14 @@ BOOL CMACApp::InitInstance()
 
     // Since the dialog has been closed, return FALSE so that we exit the
     //  application, rather than start the application's message pump.
-    return FALSE;
+    return false;
 }
 
 int CMACApp::ExitInstance()
 {
-    // we have to NOLINT on this delete or Clang gets unhappy; we could also just leave it for the destructor, but it seems better to cleanup here
-    // leaving it for the destructor causes Clang warnings about using memory after it is freed
-    m_spButtons.Delete(); // NOLINT
-    m_spMonkey.Delete();
+    // delete images
+    m_spbmpButtons.Delete();
+    m_spbmpMonkey.Delete();
 
     // close single instance handle
     if (m_hSingleInstance != APE_NULL)
@@ -154,14 +153,14 @@ CImageList * CMACApp::GetImageList(EImageList Image)
     if ((pImageList != APE_NULL) && (pImageList->GetSafeHandle() == APE_NULL))
     {
         // load the image
-        if (m_spButtons == APE_NULL)
+        if (m_spbmpButtons == APE_NULL)
         {
             CString strImage = GetProgramPath() + _T("APE_Buttons.png");
             if (FileExists(strImage) == false)
                 strImage = GetInstallPath() + _T("APE_Buttons.png");
-            m_spButtons.Assign(Gdiplus::Bitmap::FromFile(strImage));
+            m_spbmpButtons.Assign(Gdiplus::Bitmap::FromFile(strImage));
         }
-        if ((m_spButtons == APE_NULL) || (m_spButtons->GetLastStatus() != Gdiplus::Ok))
+        if ((m_spbmpButtons == APE_NULL) || (m_spbmpButtons->GetLastStatus() != Gdiplus::Ok))
             return APE_NULL;
 
         // build the image list
@@ -169,7 +168,7 @@ CImageList * CMACApp::GetImageList(EImageList Image)
         pImageList->Create(sizeImageList.cx, sizeImageList.cy, ILC_COLOR32, TBB_COUNT + 1, 10);
 
         // setup drawing
-        CSize sizeBitmap = theApp.GetSize(32 * static_cast<int>(m_spButtons->GetWidth() / m_spButtons->GetHeight()), 32);
+        CSize sizeBitmap = theApp.GetSize(32 * static_cast<int>(m_spbmpButtons->GetWidth() / m_spbmpButtons->GetHeight()), 32);
         Gdiplus::Bitmap newBmp(sizeBitmap.cx, sizeBitmap.cy, PixelFormat32bppPARGB);
         Gdiplus::Graphics graphics(&newBmp);
         graphics.SetInterpolationMode(Gdiplus::InterpolationMode::InterpolationModeHighQualityBicubic);
@@ -188,22 +187,21 @@ CImageList * CMACApp::GetImageList(EImageList Image)
         }
 
         // draw the image over the top
-        int nSizeBitmap = static_cast<int>(m_spButtons->GetHeight());
-
+        int nSizeBitmap = static_cast<int>(m_spbmpButtons->GetHeight());
+        Gdiplus::Bitmap bmpSingle(nSizeBitmap, nSizeBitmap, PixelFormat32bppPARGB);
+        Gdiplus::Graphics graphicsSingle(&bmpSingle);
         for (int z = 0; z < TBB_COUNT; z++)
         {
-            // copy the individual image to the temporary buffer
+            // copy the individual image to the single buffer
             // we do this because there were artifacts drawing from an image that had all the images next to each other
             // the artifacts were found 12/3/2021 and was a line next to the Make APL icon
-            CSmartPtr<Gdiplus::Bitmap> spTemporary(m_spButtons->Clone(nSizeBitmap * z, 0, nSizeBitmap, nSizeBitmap, PixelFormat32bppPARGB));
+            graphicsSingle.Clear(Gdiplus::Color(0));
+            graphicsSingle.DrawImage(m_spbmpButtons, Gdiplus::Rect(0, 0, nSizeBitmap, nSizeBitmap), (nSizeBitmap * z), 0, nSizeBitmap, nSizeBitmap, Gdiplus::UnitPixel);
 
             // draw onto the graphics object
             Gdiplus::Rect rectSource(0, 0, nSizeBitmap, nSizeBitmap);
             Gdiplus::Rect rectDestination(z * sizeImageList.cy, 0, sizeImageList.cx, sizeImageList.cy);
-            graphics.DrawImage(spTemporary, rectDestination, rectSource.X, rectSource.Y, rectSource.Width, rectSource.Height, Gdiplus::UnitPixel);
-
-            // delete
-            spTemporary.Delete();
+            graphics.DrawImage(&bmpSingle, rectDestination, rectSource.X, rectSource.Y, rectSource.Width, rectSource.Height, Gdiplus::UnitPixel);
         }
 
         // get the bitmap
@@ -244,18 +242,18 @@ bool CMACApp::SetScale(double dScale)
 
 Gdiplus::Bitmap * CMACApp::GetMonkeyImage()
 {
-    if (m_spMonkey == APE_NULL)
+    if (m_spbmpMonkey == APE_NULL)
     {
         // load image
         CString strImage = GetProgramPath() + _T("Monkey.png");
         if (FileExists(strImage) == false)
             strImage = GetInstallPath() + _T("Monkey.png");
-        m_spMonkey.Assign(Gdiplus::Bitmap::FromFile(strImage));
+        m_spbmpMonkey.Assign(Gdiplus::Bitmap::FromFile(strImage));
 
         // lock bits and scale alpha
         Gdiplus::BitmapData bitmapData;
-        Gdiplus::Rect rectLock(0, 0, static_cast<INT>(m_spMonkey->GetWidth()), static_cast<INT>(m_spMonkey->GetHeight()));
-        m_spMonkey->LockBits(&rectLock, Gdiplus::ImageLockModeWrite, PixelFormat32bppARGB, &bitmapData);
+        Gdiplus::Rect rectLock(0, 0, static_cast<INT>(m_spbmpMonkey->GetWidth()), static_cast<INT>(m_spbmpMonkey->GetHeight()));
+        m_spbmpMonkey->LockBits(&rectLock, Gdiplus::ImageLockModeWrite, PixelFormat32bppARGB, &bitmapData);
         uint32 * pPixel = static_cast<uint32 *>(bitmapData.Scan0);
         for (int nPixel = 0; nPixel < int(bitmapData.Width * bitmapData.Height); nPixel++)
         {
@@ -263,7 +261,7 @@ Gdiplus::Bitmap * CMACApp::GetMonkeyImage()
             nAlpha /= 8; // scale alpha down so the image is faded
             pPixel[nPixel] = (nAlpha << 24) | (pPixel[nPixel] & 0x00FFFFFF);
         }
-        m_spMonkey->UnlockBits(&bitmapData);
+        m_spbmpMonkey->UnlockBits(&bitmapData);
     }
-    return m_spMonkey;
+    return m_spbmpMonkey;
 }

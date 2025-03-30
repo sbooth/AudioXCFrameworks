@@ -8,7 +8,7 @@ class CIO;
 /**************************************************************************************************
 APETag version history / supported formats
 
-1.0 (1000) - Original APE tag spec.  Fully supported by this code.
+1.0 (1000) - Original APE tag spec. Fully supported by this code.
 2.0 (2000) - Refined APE tag spec (better streaming support, UTF encoding). Fully supported by this code.
 
 Notes:
@@ -31,7 +31,7 @@ APETag layout
 /**************************************************************************************************
 Notes
 
-When saving images, store the filename (no directory -- i.e. Cover.jpg) in UTF-8 followed
+When saving images, store the extension in UTF-8, followed
 by a null terminator, followed by the image data.
 
 What saving text lists, delimit the values with a NULL terminator.
@@ -54,7 +54,7 @@ The version of the APE tag
 #define APE_TAG_FIELD_TRACK                     L"Track"
 #define APE_TAG_FIELD_DISC                      L"Disc"
 #define APE_TAG_FIELD_GENRE                     L"Genre"
-#define APE_TAG_FIELD_COVER_ART_FRONT           L"Cover Art (front)"
+#define APE_TAG_FIELD_COVER_ART_FRONT           L"Cover Art (front)" // stored as binary [extension][NULL character][image data] - previously was [filename] instead of [extension] so check for a dot when reading
 #define APE_TAG_FIELD_NOTES                     L"Notes"
 #define APE_TAG_FIELD_LYRICS                    L"Lyrics"
 #define APE_TAG_FIELD_COPYRIGHT                 L"Copyright"

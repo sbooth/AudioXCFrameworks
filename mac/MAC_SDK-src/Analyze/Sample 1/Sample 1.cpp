@@ -1,6 +1,6 @@
 /***************************************************************************************
 Analyze - Sample 1
-Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2025 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example opens an APE file and displays some basic information about it. To use it,
@@ -16,7 +16,7 @@ Notes for use in a new project:
 WARNING:
     -This class driven system for using Monkey's Audio is still in development, so
     I can't make any guarantees that the classes and libraries won't change before
-    everything gets finalized.  Use them at your own risk.
+    everything gets finalized. Use them at your own risk.
 ***************************************************************************************/
 
 // includes

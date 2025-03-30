@@ -1,5 +1,4 @@
-#ifndef APE_ALL_INCLUDE // use the ifdef because Clang warns about a pragma once in this file
-#define APE_ALL_INCLUDE
+#pragma once
 
 /**************************************************************************************************
 Platform
@@ -10,7 +9,7 @@ PLATFORM_APPLE
 PLATFORM_LINUX
 PLATFORM_ANDROID
 **************************************************************************************************/
-#if !defined(PLATFORM_WINDOWS) && !defined(PLATFORM_APPLE) && !defined(PLATFORM_LINUX)
+#if !defined(PLATFORM_WINDOWS) && !defined(PLATFORM_APPLE) && !defined(PLATFORM_LINUX) && !defined(PLATFORM_ANDROID)
     #pragma message("No platform set for MACLib, defaulting to Windows")
     #define PLATFORM_WINDOWS
 #endif
@@ -77,18 +76,10 @@ Global includes
     #include <wchar.h>
     #include <MAC/NoWindows.h>
 #endif
-#define ape_max(a,b)    (((a) > (b)) ? (a) : (b))
-#define ape_min(a,b)    (((a) < (b)) ? (a) : (b))
+#define ape_max(a, b) (((a) > (b)) ? (a) : (b))
+#define ape_min(a, b) (((a) < (b)) ? (a) : (b))
+#define ape_cap(value, low, high) (((value) < (low)) ? (low) : ((value) > (high)) ? (high) : (value))
 #define APE_CLEAR(destination) memset(&destination, 0, sizeof(destination))
-
-/**************************************************************************************************
-Packing
-
-We need to pack to the next byte or else we get warning 4820.  We could also get around the
-warning by adding padding to all our structures that is unused, but this isn't as elegant.  The
-actual packing code is in each header and CPP file because doing it globally leads to compiler
-warnings on Linux.
-**************************************************************************************************/
 
 /**************************************************************************************************
 Smart pointer
@@ -101,7 +92,7 @@ Version
 #include <MAC/Version.h>
 
 // year in the copyright strings
-#define APE_YEAR 2024
+#define APE_YEAR 2025
 
 // build the version string
 #define STRINGIZE2(s) #s
@@ -125,26 +116,18 @@ Version
 /**************************************************************************************************
 Global compiler settings (useful for porting)
 **************************************************************************************************/
-// APE_BACKWARDS_COMPATIBILITY is only needed for decoding APE 3.92 or earlier files.  It
+// APE_BACKWARDS_COMPATIBILITY is only needed for decoding APE 3.92 or earlier files. It
 // has not been possible to make these files for over 10 years, so it's unlikely
-// that disabling APE_BACKWARDS_COMPATIBILITY would have any effect on a normal user.  For
+// that disabling APE_BACKWARDS_COMPATIBILITY would have any effect on a normal user. For
 // porting or third party usage, it's probably best to not bother with APE_BACKWARDS_COMPATIBILITY.
 // A future release of Monkey's Audio itself may remove support for these obsolete files.
-#if !defined(PLATFORM_ANDROID)
-    #define APE_BACKWARDS_COMPATIBILITY
-#endif
+#define APE_BACKWARDS_COMPATIBILITY
 
 // disable this to turn off compression code
 #define APE_SUPPORT_COMPRESS
 
 // flip this to enable float compression
 #define APE_SUPPORT_FLOAT_COMPRESSION
-
-// compression modes
-#define ENABLE_COMPRESSION_MODE_FAST
-#define ENABLE_COMPRESSION_MODE_NORMAL
-#define ENABLE_COMPRESSION_MODE_HIGH
-#define ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
 /**************************************************************************************************
 Global types
@@ -185,6 +168,9 @@ Global macros
 
 // we use more than the Windows system MAX_PATH since filenames can actually be longer
 #define APE_MAX_PATH 8192
+
+// undefined file size (pipe, etc.)
+#define APE_FILE_SIZE_UNDEFINED -1
 
 #define POINTER_TO_INT64(POINTER) static_cast<APE::int64>(reinterpret_cast<uintptr_t>(POINTER))
 
@@ -404,5 +390,3 @@ Error Codes
 
 // unknown error
 #define ERROR_UNDEFINED                                -1
-
-#endif

@@ -14,7 +14,7 @@ public:
     virtual ~CAPEInfoFormatDlg();
 
     void Layout();
-    BOOL SetFiles(CStringArray & aryFiles);
+    bool SetFiles(CStringArray & aryFiles);
 
     enum { IDD = IDD_APE_INFO_FORMAT };
 
