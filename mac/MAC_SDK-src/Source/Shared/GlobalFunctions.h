@@ -31,4 +31,10 @@ String helpers
 **************************************************************************************************/
 bool StringIsEqual(const str_utfn * pString1, const str_utfn * pString2, bool bCaseSensitive, int nCharacters = -1);
 
+/**************************************************************************************************
+Byte order conversion
+**************************************************************************************************/
+uint32 SwitchByteOrder(uint32 nValue);
+void SwitchBufferByteOrder(uint32 * pBuffer, uint32 nWords);
+
 }

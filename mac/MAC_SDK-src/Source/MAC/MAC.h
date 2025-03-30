@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource.h"
+
 class CFormatArray;
 class CMACSettings;
 class CMACDlg;
@@ -9,6 +10,8 @@ class CMACDlg;
 // Clang warns on this in Win32 / Release about using memory after it is freed without the NOLINT marker
 #include <gdiplus.h> // NOLINT
 #pragma warning(pop)
+
+#include "GDIBitmapPtr.h"
 
 class CMACApp : public CWinApp
 {
@@ -48,8 +51,8 @@ private:
     CImageList m_ImageListToolbar;
     CImageList m_ImageListOptionsList;
     CImageList m_ImageListOptionsPages;
-    APE::CSmartPtr<Gdiplus::Bitmap> m_spButtons;
-    APE::CSmartPtr<Gdiplus::Bitmap> m_spMonkey;
+    CGDIBitmapPtr m_spbmpButtons;
+    CGDIBitmapPtr m_spbmpMonkey;
     double m_dScale;
     HANDLE m_hSingleInstance;
     bool m_bAnotherInstanceRunning;

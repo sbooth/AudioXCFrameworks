@@ -18,5 +18,5 @@ CMACDllApp::~CMACDllApp()
 BOOL CMACDllApp::InitInstance()
 {
     CWinApp::InitInstance();
-    return TRUE;
+    return true;
 }

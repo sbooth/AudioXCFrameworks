@@ -110,9 +110,6 @@
     <ClCompile Include="..\..\..\MACLib\Old\AntiPredictorNormal.cpp">
       <Filter>Source Files\Old</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\MACLib\Old\APEDecompressCore.cpp">
-      <Filter>Source Files\Old</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\MACLib\Old\APEDecompressOld.cpp">
       <Filter>Source Files\Old</Filter>
     </ClCompile>
@@ -169,6 +166,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\MACLib\FloatTransform.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Semaphore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\Thread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Shared\MemoryIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\MACLib\APEDecompressCore.cpp">
+      <Filter>Source Files\Decompress</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\MACLib\Old\APEDecompressCoreOld.cpp">
+      <Filter>Source Files\Old</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +245,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\MACLib\Old\Anti-Predictor.h">
-      <Filter>Header Files\Old %28h%29</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\MACLib\Old\APEDecompressCore.h">
       <Filter>Header Files\Old %28h%29</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\MACLib\Old\APEDecompressOld.h">
@@ -303,6 +312,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\MACLib\BitArray.h">
       <Filter>Header Files\Compress %28h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\MemoryIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Semaphore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Shared\Thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\MACLib\APEDecompressCore.h">
+      <Filter>Header Files\Decompress %28h%29</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\MACLib\Old\APEDecompressCoreOld.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

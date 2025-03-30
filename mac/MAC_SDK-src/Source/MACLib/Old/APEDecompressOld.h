@@ -14,6 +14,8 @@ public:
     CAPEDecompressOld(int * pErrorCode, CAPEInfo * pAPEInfo, int nStartBlock = -1, int nFinishBlock = -1);
     ~CAPEDecompressOld();
 
+    int SetNumberOfThreads(int nThreads) APE_OVERRIDE;
+
     int GetData(unsigned char * pBuffer, int64 nBlocks, int64 * pBlocksRetrieved, APE_GET_DATA_PROCESSING * pProcessing = APE_NULL) APE_OVERRIDE;
     int Seek(int64 nBlockOffset) APE_OVERRIDE;
 

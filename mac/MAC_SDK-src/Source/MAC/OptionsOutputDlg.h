@@ -9,16 +9,16 @@ public:
     COptionsOutputDlg(CMACDlg * pMACDlg, OPTIONS_PAGE * pPage, CWnd * pParent = APE_NULL);
 
     enum { IDD = IDD_OPTIONS_OUTPUT };
-    CStatic    m_ctrlOtherPicture;
-    CComboBox    m_ctrlDeleteAfterSuccessCombo;
-    CStatic    m_ctrlBehaviorPicture;
-    CComboBox    m_ctrlOutputExistsCombo;
-    CComboBox    m_ctrlOutputLocationDirectoryCombo;
-    CButton    m_ctrlOutputLocationDirectoryBrowse;
-    CComboBox  m_ctrlOutputLocationDirectoryRecreate;
-    CString    m_strAPLFilenameTemplate;
-    CStatic    m_ctrlOutputLocationPicture;
-    BOOL    m_bMirrorTimeStamp;
+    CStatic m_ctrlOtherPicture;
+    CComboBox m_ctrlDeleteAfterSuccessCombo;
+    CStatic m_ctrlBehaviorPicture;
+    CComboBox m_ctrlOutputExistsCombo;
+    CComboBox m_ctrlOutputLocationDirectoryCombo;
+    CButton m_ctrlOutputLocationDirectoryBrowse;
+    CComboBox m_ctrlOutputLocationDirectoryRecreate;
+    CString m_strAPLFilenameTemplate;
+    CStatic m_ctrlOutputLocationPicture;
+    BOOL m_bMirrorTimeStamp;
 
 protected:
     virtual void DoDataExchange(CDataExchange * pDX);

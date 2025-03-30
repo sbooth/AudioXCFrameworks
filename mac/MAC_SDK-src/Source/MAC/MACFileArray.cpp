@@ -12,16 +12,16 @@ MAC_FILE_ARRAY::~MAC_FILE_ARRAY()
     RemoveAll();
 }
 
-BOOL MAC_FILE_ARRAY::PrepareForProcessing(CMACProcessFiles * pProcessFiles)
+bool MAC_FILE_ARRAY::PrepareForProcessing(CMACProcessFiles * pProcessFiles)
 {
+    // prepare the files
     for (int z = 0; z < GetSize(); z++)
-    {
         ElementAt(z).PrepareForProcessing(pProcessFiles);
-    }
 
+    // store the start time
     m_dwStartProcessingTickCount = GetTickCount64();
 
-    return TRUE;
+    return true;
 }
 
 double MAC_FILE_ARRAY::GetTotalInputBytes()
@@ -30,7 +30,7 @@ double MAC_FILE_ARRAY::GetTotalInputBytes()
 
     for (int z = 0; z < GetSize(); z++)
     {
-        dTotalBytes += ElementAt(z).dInputFileBytes;
+        dTotalBytes += ElementAt(z).m_dInputFileBytes;
     }
 
     return dTotalBytes;
@@ -42,37 +42,37 @@ double MAC_FILE_ARRAY::GetTotalOutputBytes()
 
     for (int z = 0; z < GetSize(); z++)
     {
-        dTotalBytes += ElementAt(z).dOutputFileBytes;
+        dTotalBytes += ElementAt(z).m_dOutputFileBytes;
     }
 
     return dTotalBytes;
 }
 
-BOOL MAC_FILE_ARRAY::GetProcessingInfo(BOOL bStopped, int & rnRunning, BOOL & rbAllDone)
+bool MAC_FILE_ARRAY::GetProcessingInfo(bool bStopped, int & rnRunning, bool & rbAllDone)
 {
     rnRunning = 0;
-    rbAllDone = TRUE;
+    rbAllDone = true;
 
     for (int z = 0; z < GetSize(); z++)
     {
         MAC_FILE * pInfo = &ElementAt(z);
 
         // running
-        if (pInfo->bStarted && (pInfo->bDone == FALSE))
+        if (pInfo->m_bStarted && (pInfo->m_bDone == false))
             rnRunning++;
 
         // all done (if never started and we've stopped, don't reset rbAllDone to false)
-        if (pInfo->bStarted || (bStopped == FALSE))
+        if (pInfo->m_bStarted || (bStopped == false))
         {
-            if (pInfo->bDone == FALSE)
-                rbAllDone = FALSE;
+            if (pInfo->m_bDone == false)
+                rbAllDone = false;
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL MAC_FILE_ARRAY::GetProcessingProgress(double & rdProgress, double & rdSecondsLeft, int nPausedTotalMS)
+bool MAC_FILE_ARRAY::GetProcessingProgress(double & rdProgress, double & rdSecondsLeft, int nPausedTotalMS)
 {
     double dTotal = 0;
     double dDone = 0;
@@ -80,19 +80,19 @@ BOOL MAC_FILE_ARRAY::GetProcessingProgress(double & rdProgress, double & rdSecon
     for (int z = 0; z < GetSize(); z++)
     {
         MAC_FILE * pInfo = &ElementAt(z);
-        dTotal += pInfo->dInputFileBytes;
+        dTotal += pInfo->m_dInputFileBytes;
 
-        if (pInfo->bDone == FALSE)
+        if (pInfo->m_bDone == false)
         {
-            if (pInfo->bStarted)
+            if (pInfo->m_bStarted)
             {
                 double dProgress = pInfo->GetProgress();
-                dDone += pInfo->dInputFileBytes * dProgress;
+                dDone += pInfo->m_dInputFileBytes * dProgress;
             }
         }
         else
         {
-            dDone += pInfo->dInputFileBytes;
+            dDone += pInfo->m_dInputFileBytes;
         }
     }
 
@@ -101,17 +101,17 @@ BOOL MAC_FILE_ARRAY::GetProcessingProgress(double & rdProgress, double & rdSecon
     rdProgress = dDone / dTotal;
     rdSecondsLeft = ((dElapsed / rdProgress) - dElapsed) / 1000;
 
-    return TRUE;
+    return true;
 }
 
-BOOL MAC_FILE_ARRAY::GetContainsFile(const CString & strFilename)
+bool MAC_FILE_ARRAY::GetContainsFile(const CString & strFilename)
 {
     for (int z = 0; z < GetSize(); z++)
     {
         MAC_FILE * pInfo = &ElementAt(z);
-        if (pInfo->strInputFilename.CompareNoCase(strFilename) == 0)
-            return TRUE;
+        if (pInfo->m_strInputFilename.CompareNoCase(strFilename) == 0)
+            return true;
     }
 
-    return FALSE;
+    return false;
 }

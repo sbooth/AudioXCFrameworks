@@ -30,7 +30,7 @@ extern "C"
 {
     DLLEXPORT int __stdcall GetVersionNumber();
 #ifdef PLATFORM_WINDOWS
-    DLLEXPORT int __stdcall GetInterfaceCompatibility(int nVersion, BOOL bDisplayWarningsOnFailure = TRUE, HWND hwndParent = APE_NULL);
+    DLLEXPORT int __stdcall GetInterfaceCompatibility(int nVersion, bool bDisplayWarningsOnFailure = true, HWND hwndParent = APE_NULL);
 #endif
 
     DLLEXPORT const char * __stdcall GetLibraryVersionString();
@@ -38,7 +38,7 @@ extern "C"
 
     DLLEXPORT unsigned int __stdcall GetLibraryInterfaceVersion();
 
-    DLLEXPORT int __stdcall TagFileSimple(const APE::str_ansi * pFilename, const char * pArtist, const char * pAlbum, const char * pTitle, const char * pComment, const char * pGenre, const char * pYear, const char * pTrack, BOOL bClearFirst, BOOL bUseOldID3);
+    DLLEXPORT int __stdcall TagFileSimple(const APE::str_ansi * pFilename, const char * pArtist, const char * pAlbum, const char * pTitle, const char * pComment, const char * pGenre, const char * pYear, const char * pTrack, bool bClearFirst, bool bUseOldID3);
     DLLEXPORT int __stdcall GetID3Tag(const APE::str_ansi * pFilename, APE::ID3_TAG * pID3Tag);
     DLLEXPORT int __stdcall GetID3TagW(const APE::str_utfn * pFilename, APE::ID3_TAG * pID3Tag);
     DLLEXPORT int __stdcall RemoveTag(const APE::str_ansi * pFilename);
@@ -47,7 +47,7 @@ extern "C"
 
 typedef int (__stdcall * proc_GetVersionNumber)();
 #ifdef PLATFORM_WINDOWS
-typedef int (__stdcall * proc_GetInterfaceCompatibility)(int, BOOL, HWND);
+typedef int (__stdcall * proc_GetInterfaceCompatibility)(int, bool, HWND);
 #endif
 
 /**************************************************************************************************
@@ -62,9 +62,9 @@ typedef int (__stdcall * proc_APECompress_StartW)(APE_COMPRESS_HANDLE, const APE
 typedef APE::int64 (__stdcall * proc_APECompress_AddData)(APE_COMPRESS_HANDLE, unsigned char *, int);
 typedef int (__stdcall * proc_APECompress_GetBufferBytesAvailable)(APE_COMPRESS_HANDLE);
 typedef unsigned char * (__stdcall * proc_APECompress_LockBuffer)(APE_COMPRESS_HANDLE, APE::int64 *);
-typedef int (__stdcall * proc_APECompress_UnlockBuffer)(APE_COMPRESS_HANDLE, int, BOOL);
+typedef int (__stdcall * proc_APECompress_UnlockBuffer)(APE_COMPRESS_HANDLE, int, bool);
 typedef int (__stdcall * proc_APECompress_Finish)(APE_COMPRESS_HANDLE, unsigned char *, APE::int64, APE::int64);
-typedef int (__stdcall * proc_APECompress_Kill)(APE_COMPRESS_HANDLE);
+typedef int (__stdcall * proc_APECompress_SetNumberOfThreads)(APE_COMPRESS_HANDLE, int);
 
 extern "C"
 {
@@ -75,9 +75,9 @@ extern "C"
     DLLEXPORT APE::int64 __stdcall c_APECompress_AddData(APE_COMPRESS_HANDLE hAPECompress, unsigned char * pData, int nBytes);
     DLLEXPORT int __stdcall c_APECompress_GetBufferBytesAvailable(APE_COMPRESS_HANDLE hAPECompress);
     DLLEXPORT unsigned char * __stdcall c_APECompress_LockBuffer(APE_COMPRESS_HANDLE hAPECompress, APE::int64 * pBytesAvailable);
-    DLLEXPORT int __stdcall c_APECompress_UnlockBuffer(APE_COMPRESS_HANDLE hAPECompress, int nBytesAdded, BOOL bProcess = true);
+    DLLEXPORT int __stdcall c_APECompress_UnlockBuffer(APE_COMPRESS_HANDLE hAPECompress, int nBytesAdded, bool bProcess = true);
     DLLEXPORT int __stdcall c_APECompress_Finish(APE_COMPRESS_HANDLE hAPECompress, unsigned char * pTerminatingData, APE::int64 nTerminatingBytes, APE::int64 nWAVTerminatingBytes);
-    DLLEXPORT int __stdcall c_APECompress_Kill(APE_COMPRESS_HANDLE hAPECompress);
+    DLLEXPORT int __stdcall c_APECompress_SetNumberOfThreads(APE_COMPRESS_HANDLE hAPECompress, int nThreads);
 }
 
 /**************************************************************************************************
@@ -100,4 +100,5 @@ extern "C"
     DLLEXPORT int __stdcall c_APEDecompress_GetData(APE_DECOMPRESS_HANDLE hAPEDecompress, unsigned char * pBuffer, APE::int64 nBlocks, APE::int64 * pBlocksRetrieved);
     DLLEXPORT int __stdcall c_APEDecompress_Seek(APE_DECOMPRESS_HANDLE hAPEDecompress, APE::int64 nBlockOffset);
     DLLEXPORT APE::int64 __stdcall c_APEDecompress_GetInfo(APE_DECOMPRESS_HANDLE hAPEDecompress, APE::IAPEDecompress::APE_DECOMPRESS_FIELDS Field, APE::int64 nParam1 = 0, APE::int64 nParam2 = 0);
+    DLLEXPORT int __stdcall c_APEDecompress_SetNumberOfThreads(APE_DECOMPRESS_HANDLE hAPEDecompress, int nThreads);
 }

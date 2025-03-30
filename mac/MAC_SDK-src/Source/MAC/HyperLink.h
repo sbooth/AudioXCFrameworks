@@ -1,3 +1,4 @@
+// NOLINTBEGIN
 // HyperLink.h : header file
 //
 //
@@ -77,3 +78,4 @@ protected:
     afx_msg void OnClicked();
     DECLARE_MESSAGE_MAP()
 };
+// NOLINTEND

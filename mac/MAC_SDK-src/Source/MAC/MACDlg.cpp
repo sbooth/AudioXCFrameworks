@@ -13,9 +13,10 @@
 using namespace APE;
 
 #define IDT_UPDATE_PROGRESS        1
-#define IDT_UPDATE_PROGRESS_MS    100
+#define IDT_UPDATE_PROGRESS_MS     100
+#define IDT_LAYOUT_WINDOW          2
 
-#define WM_DPICHANGED                   0x02E0
+#define WM_DPICHANGED              0x02E0
 
 #define TBI(ID) (m_ctrlToolbar.GetToolBarCtrl().CommandToIndex(ID))
 
@@ -24,8 +25,8 @@ CMACDlg::CMACDlg(CStringArrayEx * paryFiles, CWnd * pParent) :
     m_ctrlStatusBar(this),
     m_paryFiles(paryFiles)
 {
-    m_bLastLoadMenuAndToolbarProcessing = FALSE;
-    m_bInitialized = FALSE;
+    m_bLastLoadMenuAndToolbarProcessing = false;
+    m_bInitialized = false;
     m_hAcceleratorTable = APE_NULL;
 
     m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -81,7 +82,7 @@ BEGIN_MESSAGE_MAP(CMACDlg, CDialog)
     ON_WM_GETMINMAXINFO()
     ON_WM_ENDSESSION()
     ON_WM_QUERYENDSESSION()
-    ON_MESSAGE(WM_DPICHANGED, &CMACDlg::OnDPIChange)
+    ON_MESSAGE(WM_DPICHANGED, &CMACDlg::OnDPIChanged)
 END_MESSAGE_MAP()
 
 BOOL CMACDlg::OnInitDialog()
@@ -105,8 +106,8 @@ BOOL CMACDlg::OnInitDialog()
     m_hAcceleratorTable = LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME));
 
     // icons
-    SetIcon(m_hIcon, TRUE);
-    SetIcon(m_hIcon, FALSE);
+    SetIcon(m_hIcon, true);
+    SetIcon(m_hIcon, false);
 
     // file list
     m_ctrlList.Initialize(this, &m_aryFiles);
@@ -140,16 +141,19 @@ BOOL CMACDlg::OnInitDialog()
         CenterWindow();
     }
 
-    m_bInitialized = TRUE;
+    m_bInitialized = true;
+
+    // layout window now (instead of on a timer since we just loaded)
+    KillTimer(IDT_LAYOUT_WINDOW);
     LayoutWindow();
 
-    return TRUE;  // return TRUE  unless you set the focus to a control
+    return true;  // return TRUE  unless you set the focus to a control
 }
 
-BOOL CMACDlg::LoadMenuAndToolbar(BOOL bProcessing)
+bool CMACDlg::LoadMenuAndToolbar(bool bProcessing)
 {
     if (m_bInitialized && (bProcessing == m_bLastLoadMenuAndToolbarProcessing))
-        return TRUE;
+        return true;
     m_bLastLoadMenuAndToolbarProcessing = bProcessing;
     // BTNS_WHOLEDROPDOWN -- requires IE 5.0 //
 
@@ -178,10 +182,10 @@ BOOL CMACDlg::LoadMenuAndToolbar(BOOL bProcessing)
         AddToolbarButton(ID_TOOLS_OPTIONS, TBB_OPTIONS, _T("Options"), TBSTYLE_BUTTON);
     }
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACDlg::AddToolbarButton(int nID, int nBitmap, const CString & strText, int nStyle)
+bool CMACDlg::AddToolbarButton(int nID, int nBitmap, const CString & strText, int nStyle)
 {
     TBBUTTON Button;
     APE_CLEAR(Button);
@@ -196,10 +200,10 @@ BOOL CMACDlg::AddToolbarButton(int nID, int nBitmap, const CString & strText, in
 
     m_ctrlToolbar.GetToolBarCtrl().InsertButton(nIndex, &Button);
 
-    if (strText.IsEmpty() == FALSE)
+    if (strText.IsEmpty() == false)
         m_ctrlToolbar.SetButtonText(nIndex, strText);
 
-    return TRUE;
+    return true;
 }
 
 void CMACDlg::OnPaint()
@@ -346,7 +350,7 @@ void CMACDlg::OnFileProcessFiles()
 
     // clear all the files
     for (int z = 0; z < m_aryFiles.GetSize(); z++)
-        m_aryFiles[z].bProcessing = FALSE;
+        m_aryFiles[z].m_bProcessing = false;
     m_ctrlList.Invalidate();
 
     // process
@@ -370,18 +374,18 @@ void CMACDlg::OnFileAddFiles()
         return;
 
     // show the file dialog
-    CFileDialog FileDialog(TRUE, APE_NULL, APE_NULL,
+    CFileDialog FileDialog(true, APE_NULL, APE_NULL,
         OFN_ALLOWMULTISELECT | OFN_HIDEREADONLY, theApp.GetFormatArray()->GetOpenFilesFilter());
 
     // extra initialization (hacky, but safe)
-    CSmartPtr<TCHAR> spFilename(new TCHAR [(APE_MAX_PATH + 1) * 512], TRUE); spFilename[0] = 0;
+    CSmartPtr<TCHAR> spFilename(new TCHAR [(APE_MAX_PATH + 1) * 512], true); spFilename[0] = 0;
     FileDialog.m_ofn.lpstrInitialDir = m_strAddFilesBasePath;
     FileDialog.m_ofn.nMaxFile = APE_MAX_PATH * 512;
     FileDialog.m_ofn.lpstrFile = spFilename.GetPtr();
 
     if (FileDialog.DoModal() == IDOK)
     {
-        m_ctrlList.StartFileInsertion(FALSE);
+        m_ctrlList.StartFileInsertion(false);
 
         POSITION Pos = FileDialog.GetStartPosition();
         while (Pos != APE_NULL)
@@ -394,7 +398,7 @@ void CMACDlg::OnFileAddFiles()
 
         m_ctrlList.FinishFileInsertion();
 
-        theApp.GetSettings()->m_aryAddFilesMRU.Remove(m_strAddFilesBasePath, FALSE);
+        theApp.GetSettings()->m_aryAddFilesMRU.Remove(m_strAddFilesBasePath, false);
         while (theApp.GetSettings()->m_aryAddFilesMRU.GetSize() >= 4)
             theApp.GetSettings()->m_aryAddFilesMRU.RemoveAt(3);
         theApp.GetSettings()->m_aryAddFilesMRU.InsertAt(0, m_strAddFilesBasePath);
@@ -459,28 +463,37 @@ void CMACDlg::OnSize(UINT nType, int cx, int cy)
 {
     CDialog::OnSize(nType, cx, cy);
 
-    LayoutWindow();
+    // layout window (on a timer so the window size and position have updated)
+    // otherwise dragging from one DPI to another updates in a corrupted way
+    // this also makes two OnSize(...) messages fire back to back only update the layout once
+    SetTimer(IDT_LAYOUT_WINDOW, 1, APE_NULL);
 }
 
 void CMACDlg::LayoutWindow()
 {
     if (m_bInitialized)
     {
+        // position bars
         RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0, reposDefault);
 
+        // get rectangle
         CRect rectClient; GetClientRect(&rectClient);
         int cx = rectClient.Width(); int cy = rectClient.Height();
 
         const int nBorderWidth = theApp.GetSize(5, 0).cx;
 
+        // status bar
         int nStatusBarHeight = theApp.GetSize(20, 0).cx;
         m_ctrlStatusBar.SetWindowPos(APE_NULL, nBorderWidth, cy - nStatusBarHeight, cx - nBorderWidth, nStatusBarHeight, SWP_NOZORDER);
         CRect rectStatusBar; m_ctrlStatusBar.GetClientRect(&rectStatusBar);
 
+        // toolbar
         CRect rectToolbar; m_ctrlToolbar.GetWindowRect(&rectToolbar); ScreenToClient(&rectToolbar);
 
+        // list
         m_ctrlList.SetWindowPos(APE_NULL, nBorderWidth, nBorderWidth + rectToolbar.bottom, cx - (2 * nBorderWidth), cy - nStatusBarHeight - (2 * nBorderWidth) - rectToolbar.Height(), SWP_NOZORDER);
 
+        // update
         UpdateWindow();
     }
 }
@@ -489,12 +502,12 @@ void CMACDlg::UpdateWindow()
 {
     if (GetProcessing())
     {
-        LoadMenuAndToolbar(TRUE);
+        LoadMenuAndToolbar(true);
         m_ctrlToolbar.GetToolBarCtrl().CheckButton(ID_PAUSE, m_spProcessFiles->GetPaused());
     }
     else
     {
-        LoadMenuAndToolbar(FALSE);
+        LoadMenuAndToolbar(false);
         m_ctrlStatusBar.UpdateProgress(0, 0);
         m_ctrlToolbar.SetButtonText(static_cast<int>(TBI(ID_FILE_PROCESS_FILES)), theApp.GetSettings()->GetModeName());
 
@@ -503,12 +516,12 @@ void CMACDlg::UpdateWindow()
         if (strCompressionName.IsEmpty())
         {
             m_ctrlToolbar.SetButtonText(static_cast<int>(TBI(ID_COMPRESSION)), _T("n/a"));
-            m_ctrlToolbar.GetToolBarCtrl().EnableButton(ID_COMPRESSION, FALSE);
+            m_ctrlToolbar.GetToolBarCtrl().EnableButton(ID_COMPRESSION, false);
         }
         else
         {
             m_ctrlToolbar.SetButtonText(static_cast<int>(TBI(ID_COMPRESSION)), strCompressionName);
-            m_ctrlToolbar.GetToolBarCtrl().EnableButton(ID_COMPRESSION, TRUE);
+            m_ctrlToolbar.GetToolBarCtrl().EnableButton(ID_COMPRESSION, true);
         }
 
         // toolbar icons
@@ -541,9 +554,12 @@ void CMACDlg::UpdateWindow()
 
     // redraw the list
     m_ctrlList.Invalidate();
+
+    // redraw the toolbar (otherwise stale buttons appear when dragging from one monitor to the other)
+    m_ctrlToolbar.Invalidate();
 }
 
-void CMACDlg::SetToolbarButtonBitmap(int nID, int nBitmap)
+void CMACDlg::SetToolbarButtonBitmap(int nID, int nBitmap) const
 {
     TBBUTTONINFO ButtonInfo;
     APE_CLEAR(ButtonInfo);
@@ -568,11 +584,11 @@ void CMACDlg::OnTimer(UINT_PTR nIDEvent)
         }
 
         // analyze
-        int nRunning = 0; BOOL bAllDone = TRUE;
+        int nRunning = 0; bool bAllDone = true;
         m_aryFiles.GetProcessingInfo(m_spProcessFiles->GetStopped(), nRunning, bAllDone);
 
         // start new ones if necessary
-        if ((m_spProcessFiles->GetStopped() == FALSE) && (m_spProcessFiles->GetPaused() == FALSE))
+        if ((m_spProcessFiles->GetStopped() == false) && (m_spProcessFiles->GetPaused() == false))
         {
             for (int z = 0; (z < m_aryFiles.GetSize()) && (nRunning < theApp.GetSettings()->m_nProcessingSimultaneousFiles); z++)
             {
@@ -580,28 +596,28 @@ void CMACDlg::OnTimer(UINT_PTR nIDEvent)
                 if (pInfo->GetNeverStarted())
                 {
                     m_spProcessFiles->ProcessFile(z);
-                    m_ctrlList.EnsureVisible(z, FALSE);
+                    m_ctrlList.EnsureVisible(z, false);
                     nRunning++;
                 }
             }
         }
 
         // output our progress
-        BOOL bPaused = m_spProcessFiles->GetPaused();
+        bool bPaused = m_spProcessFiles->GetPaused();
         for (int z = 0; z < m_aryFiles.GetSize(); z++)
         {
             MAC_FILE * pInfo = &m_aryFiles[z];
-            if (pInfo && (pInfo->bNeedsUpdate || (pInfo->GetRunning() && (bPaused == FALSE))))
+            if (pInfo && (pInfo->m_bNeedsUpdate || (pInfo->GetRunning() && (bPaused == false))))
             {
                 CRect rectItem;
                 m_ctrlList.GetItemRect(z, &rectItem, LVIR_BOUNDS);
                 m_ctrlList.InvalidateRect(&rectItem);
-                pInfo->bNeedsUpdate = FALSE;
+                pInfo->m_bNeedsUpdate = false;
             }
         }
 
         // handle completion (or restart the timer if we're not done)
-        if (bAllDone == FALSE)
+        if (bAllDone == false)
         {
             SetTimer(IDT_UPDATE_PROGRESS, IDT_UPDATE_PROGRESS_MS, APE_NULL);
         }
@@ -610,10 +626,10 @@ void CMACDlg::OnTimer(UINT_PTR nIDEvent)
             // mark files as done
             for (int z = 0; z < m_aryFiles.GetSize(); z++)
             {
-                if (m_aryFiles[z].bDone == FALSE)
+                if (m_aryFiles[z].m_bDone == false)
                 {
-                    m_aryFiles[z].bDone = TRUE;
-                    m_aryFiles[z].nRetVal = ERROR_USER_STOPPED_PROCESSING;
+                    m_aryFiles[z].m_bDone = true;
+                    m_aryFiles[z].m_nRetVal = ERROR_USER_STOPPED_PROCESSING;
                 }
             }
 
@@ -629,13 +645,21 @@ void CMACDlg::OnTimer(UINT_PTR nIDEvent)
                 PlayDefaultSound();
         }
     }
+    else if (nIDEvent == IDT_LAYOUT_WINDOW)
+    {
+        // stop the timer
+        KillTimer(nIDEvent);
+
+        // layout window
+        LayoutWindow();
+    }
 
     CDialog::OnTimer(nIDEvent);
 }
 
-BOOL CMACDlg::SetMode(APE_MODES Mode)
+bool CMACDlg::SetMode(APE_MODES Mode)
 {
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
 
     if (Mode != theApp.GetSettings()->GetMode())
     {
@@ -651,14 +675,14 @@ BOOL CMACDlg::SetMode(APE_MODES Mode)
         CIntArray aryUnsupportedFiles;
         for (int z = 0; z < m_aryFiles.GetSize(); z++)
         {
-            if (aryExtensions.Find(GetExtension(m_aryFiles[z].strInputFilename)) == -1)
+            if (aryExtensions.Find(GetExtension(m_aryFiles[z].m_strInputFilename)) == -1)
                 aryUnsupportedFiles.Add(z);
         }
         aryUnsupportedFiles.SortDescending();
 
         if (aryUnsupportedFiles.GetSize() > 0)
         {
-            if (MessageBox(_T("The new mode does not support all of the files in the list.  Do you want to remove these unsupported files and continue?"), _T("Confirm Change Modes"), MB_YESNO) == IDYES)
+            if (MessageBox(_T("The new mode does not support all of the files in the list. Do you want to remove these unsupported files and continue?"), _T("Confirm Change Modes"), MB_YESNO) == IDYES)
             {
                 for (int z = 0; z < aryUnsupportedFiles.GetSize(); z++)
                 {
@@ -680,20 +704,19 @@ BOOL CMACDlg::SetMode(APE_MODES Mode)
         if (theApp.GetSettings()->GetMode() != OriginalMode)
         {
             UpdateWindow();
-            bRetVal = TRUE;
+            bRetVal = true;
         }
     }
 
     return bRetVal;
 }
 
-BOOL CMACDlg::SetAPECompressionLevel(int nAPECompressionLevel)
+bool CMACDlg::SetAPECompressionLevel(int nAPECompressionLevel)
 {
     theApp.GetSettings()->SetCompression(COMPRESSION_APE, nAPECompressionLevel);
     UpdateWindow();
-    return TRUE;
+    return true;
 }
-
 
 void CMACDlg::OnCompression()
 {
@@ -796,7 +819,7 @@ void CMACDlg::OnPause()
 {
     if (GetProcessing())
     {
-        m_spProcessFiles->Pause(m_spProcessFiles->GetPaused() ? FALSE : TRUE);
+        m_spProcessFiles->Pause(m_spProcessFiles->GetPaused() ? false : true);
         UpdateWindow();
     }
 }
@@ -877,17 +900,17 @@ CSize CMACDlg::MeasureText(const CString & strText)
 BOOL CMACDlg::PreTranslateMessage(MSG * pMsg)
 {
     if (TranslateAccelerator(m_hWnd, m_hAcceleratorTable, pMsg) != 0)
-        return TRUE;
+        return true;
 
     return CDialog::PreTranslateMessage(pMsg);
 }
 
-void CMACDlg::OnInitMenu(CMenu * pMenu)
+void CMACDlg::OnInitMenu(CMenu* pMenu)
 {
     CDialog::OnInitMenu(pMenu);
 }
 
-void CMACDlg::OnInitMenuPopup(CMenu * pPopupMenu, UINT nIndex, BOOL bSysMenu)
+void CMACDlg::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
     CDialog::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
 
@@ -902,12 +925,12 @@ void CMACDlg::OnInitMenuPopup(CMenu * pPopupMenu, UINT nIndex, BOOL bSysMenu)
     int nModeID = -1;
     switch (theApp.GetSettings()->GetMode())
     {
-        case MODE_COMPRESS: nModeID = ID_MODE_COMPRESS; break;
-        case MODE_DECOMPRESS: nModeID = ID_MODE_DECOMPRESS; break;
-        case MODE_VERIFY: nModeID = ID_MODE_VERIFY; break;
-        case MODE_CONVERT: nModeID = ID_MODE_CONVERT; break;
-        case MODE_MAKE_APL: nModeID = ID_MODE_MAKE_APL; break;
-        case MODE_CHECK: case MODE_COUNT: nModeID = -1; break;
+    case MODE_COMPRESS: nModeID = ID_MODE_COMPRESS; break;
+    case MODE_DECOMPRESS: nModeID = ID_MODE_DECOMPRESS; break;
+    case MODE_VERIFY: nModeID = ID_MODE_VERIFY; break;
+    case MODE_CONVERT: nModeID = ID_MODE_CONVERT; break;
+    case MODE_MAKE_APL: nModeID = ID_MODE_MAKE_APL; break;
+    case MODE_CHECK: case MODE_COUNT: nModeID = -1; break;
     }
     if (nModeID >= 0)
         pPopupMenu->CheckMenuItem(static_cast<UINT>(nModeID), MF_CHECKED | MF_BYCOMMAND);
@@ -918,11 +941,11 @@ void CMACDlg::OnInitMenuPopup(CMenu * pPopupMenu, UINT nIndex, BOOL bSysMenu)
     {
         switch (theApp.GetSettings()->GetLevel())
         {
-            case APE_COMPRESSION_LEVEL_FAST: nCompressionID = ID_COMPRESSION_APE_FAST; break;
-            case APE_COMPRESSION_LEVEL_NORMAL: nCompressionID = ID_COMPRESSION_APE_NORMAL; break;
-            case APE_COMPRESSION_LEVEL_HIGH: nCompressionID = ID_COMPRESSION_APE_HIGH; break;
-            case APE_COMPRESSION_LEVEL_EXTRA_HIGH: nCompressionID = ID_COMPRESSION_APE_EXTRA_HIGH; break;
-            case APE_COMPRESSION_LEVEL_INSANE: nCompressionID = ID_COMPRESSION_APE_INSANE; break;
+        case APE_COMPRESSION_LEVEL_FAST: nCompressionID = ID_COMPRESSION_APE_FAST; break;
+        case APE_COMPRESSION_LEVEL_NORMAL: nCompressionID = ID_COMPRESSION_APE_NORMAL; break;
+        case APE_COMPRESSION_LEVEL_HIGH: nCompressionID = ID_COMPRESSION_APE_HIGH; break;
+        case APE_COMPRESSION_LEVEL_EXTRA_HIGH: nCompressionID = ID_COMPRESSION_APE_EXTRA_HIGH; break;
+        case APE_COMPRESSION_LEVEL_INSANE: nCompressionID = ID_COMPRESSION_APE_INSANE; break;
         }
     }
     if (nCompressionID >= 0)
@@ -936,7 +959,7 @@ void CMACDlg::OnInitMenuPopup(CMenu * pPopupMenu, UINT nIndex, BOOL bSysMenu)
     pPopupMenu->EnableMenuItem(ID_COMPRESSION_APE_INSANE, ((theApp.GetSettings()->GetMode() == MODE_COMPRESS) ? MF_ENABLED : MF_GRAYED) | MF_BYCOMMAND);
 }
 
-void CMACDlg::OnGetMinMaxInfo(MINMAXINFO FAR * lpMMI)
+void CMACDlg::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
     lpMMI->ptMinTrackSize.x = 320;
     lpMMI->ptMinTrackSize.y = 240;
@@ -946,7 +969,7 @@ void CMACDlg::OnGetMinMaxInfo(MINMAXINFO FAR * lpMMI)
 
 BOOL CMACDlg::OnQueryEndSession()
 {
-    return TRUE;
+    return true;
 }
 
 void CMACDlg::OnEndSession(BOOL)
@@ -955,14 +978,23 @@ void CMACDlg::OnEndSession(BOOL)
     exit(EXIT_SUCCESS);
 }
 
-LRESULT CMACDlg::OnDPIChange(WPARAM, LPARAM)
+LRESULT CMACDlg::OnDPIChanged(WPARAM, LPARAM lParam)
 {
+    // call the default window procedure as well (needed so size handling works nicely when we go from one DPI to another)
+    Default();
+
     if (m_bInitialized)
     {
+        // load scale
         LoadScale();
-        LayoutWindow();
+
+        // position (this should perform a layout)
+        CRect rect(reinterpret_cast<RECT *>(lParam));
+        SetWindowPos(NULL, rect.left, rect.top, rect.Width(), rect.Height(), SWP_NOZORDER | SWP_NOACTIVATE);
     }
-    return TRUE;
+
+    // this means we handled the message
+    return 0;
 }
 
 void CMACDlg::WinHelp(DWORD_PTR, UINT nCmd)
@@ -1078,6 +1110,10 @@ void CMACDlg::LoadScale()
         FreeLibrary(hUser32);
     }
 
+    // save the columns before we switch the scale
+    if (m_bInitialized)
+        m_ctrlList.SaveColumns();
+
     // set the scale
     //dScale = 2.0; // test for high scales
     //dScale = 3.0;
@@ -1142,8 +1178,6 @@ void CMACDlg::LoadScale()
     LoadMenuAndToolbar(GetProcessing());
 
     // load columns
-    if (m_bInitialized)
-        m_ctrlList.SaveColumns();
     m_ctrlList.LoadColumns();
 
     // size the toolbar (using the size that it lays out at plus the icon size)

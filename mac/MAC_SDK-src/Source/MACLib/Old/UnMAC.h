@@ -8,7 +8,7 @@ namespace APE
 
 class CAntiPredictor;
 class CPrepare;
-class CAPEDecompressCore;
+class CAPEDecompressCoreOld;
 class CPredictorBase;
 class IPredictorDecompress;
 class IAPEDecompress;
@@ -37,7 +37,7 @@ private:
     // data members
     CSmartPtr<IAPEDecompress> m_spAPEDecompress;
     CSmartPtr<CPrepare> m_spPrepare;
-    CSmartPtr<CAPEDecompressCore> m_spAPEDecompressCore;
+    CSmartPtr<CAPEDecompressCoreOld> m_spAPEDecompressCore;
     int m_LastDecodedFrameIndex;
 
     // functions

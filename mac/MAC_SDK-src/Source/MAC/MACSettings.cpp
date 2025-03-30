@@ -3,19 +3,20 @@
 #include "MACSettings.h"
 #include "FormatArray.h"
 #include "APEInfo.h"
+#include <thread>
 
 using namespace APE;
 
 CMACSettings::CMACSettings()
 {
-    m_bValid = FALSE;
+    m_bValid = false;
 
 #if defined(_M_X64)
     if (m_RegKey.Create(HKEY_CURRENT_USER, _T("Software\\Monkey's Audio x64\\Settings")) == ERROR_SUCCESS)
-        m_bValid = TRUE;
+        m_bValid = true;
 #else
     if (m_RegKey.Create(HKEY_CURRENT_USER, _T("Software\\Monkey's Audio\\Settings")) == ERROR_SUCCESS)
-        m_bValid = TRUE;
+        m_bValid = true;
 #endif
 
     Load();
@@ -27,7 +28,7 @@ CMACSettings::~CMACSettings()
 }
 
 
-BOOL CMACSettings::Save()
+bool CMACSettings::Save()
 {
     // general
     SaveSetting(_T("Mode"), static_cast<int>(m_Mode));
@@ -55,10 +56,10 @@ BOOL CMACSettings::Save()
     SaveSetting(_T("Processing Verify Mode"), m_nProcessingVerifyMode);
     SaveSetting(_T("Processing Automatic Verify On Creation"), m_bProcessingAutoVerifyOnCreation);
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACSettings::Load()
+bool CMACSettings::Load()
 {
     // general
     SetMode(static_cast<APE_MODES>(LoadSetting(_T("Mode"), static_cast<int>(MODE_COMPRESS))));
@@ -72,36 +73,48 @@ BOOL CMACSettings::Load()
     // output
     m_nOutputLocationMode = LoadSetting(_T("Output Location Mode"), OUTPUT_LOCATION_MODE_SAME_DIRECTORY);
     m_strOutputLocationDirectory = LoadSetting(_T("Output Location Directory"), _T("C:\\"));
-    m_bOutputLocationRecreateDirectoryStructure = LoadSetting(_T("Output Location Recreate Directory Structure"), FALSE);
+    m_bOutputLocationRecreateDirectoryStructure = LoadSettingBoolean(_T("Output Location Recreate Directory Structure"), false);
     m_nOutputLocationRecreateDirectoryStructureLevels = LoadSetting(_T("Output Location Recreate Directory Structure Levels"), 2);
     m_nOutputExistsMode = LoadSetting(_T("Output Exists Mode"), OUTPUT_EXISTS_MODE_RENAME);
     m_nOutputDeleteAfterSuccessMode = LoadSetting(_T("Output Delete After Success Mode"), OUTPUT_DELETE_AFTER_SUCCESS_MODE_NONE);
-    m_bOutputMirrorTimeStamp = LoadSetting(_T("Output Mirror Time Stamp"), FALSE);
+    m_bOutputMirrorTimeStamp = LoadSettingBoolean(_T("Output Mirror Time Stamp"), false);
 
     // processing
-    m_nProcessingSimultaneousFiles = LoadSetting(_T("Processing Simultaneous Files"), 2);
+    // std::thread::hardware_concurrency() returns 32 on my i9-13900KF
+    int nDefaultSimultaneousFiles = ape_max(4, std::thread::hardware_concurrency() / 4);
+    m_nProcessingSimultaneousFiles = LoadSetting(_T("Processing Simultaneous Files"), nDefaultSimultaneousFiles);
     m_nProcessingPriorityMode = LoadSetting(_T("Processing Priority Mode"), PROCESSING_PRIORITY_MODE_NORMAL);
-    m_bProcessingStopOnErrors = LoadSetting(_T("Processing Stop On Errors"), TRUE);
-    m_bProcessingPlayCompletionSound = LoadSetting(_T("Processing Play Completion Sound"), FALSE);
-    m_bProcessingShowExternalWindows = LoadSetting(_T("Processing Show External Windows"), TRUE);
+    m_bProcessingStopOnErrors = LoadSettingBoolean(_T("Processing Stop On Errors"), true);
+    m_bProcessingPlayCompletionSound = LoadSettingBoolean(_T("Processing Play Completion Sound"), false);
+    m_bProcessingShowExternalWindows = LoadSettingBoolean(_T("Processing Show External Windows"), true);
     m_nProcessingVerifyMode = LoadSetting(_T("Processing Verify Mode"), PROCESSING_VERIFY_MODE_QUICK);
-    m_bProcessingAutoVerifyOnCreation = LoadSetting(_T("Processing Automatic Verify On Creation"), FALSE);
+    m_bProcessingAutoVerifyOnCreation = LoadSettingBoolean(_T("Processing Automatic Verify On Creation"), false);
 
-    return FALSE;
+    return false;
 }
 
 int CMACSettings::LoadSetting(const CString & strName, int nDefault)
 {
-    if (m_bValid == FALSE) return nDefault;
+    if (m_bValid == false) return nDefault;
 
     int nValue = nDefault;
     m_RegKey.QueryDWORDValue(strName, reinterpret_cast<DWORD &>(nValue));
     return nValue;
 }
 
+bool CMACSettings::LoadSettingBoolean(const CString & strName, bool bDefault)
+{
+    if (m_bValid == false) return bDefault;
+
+    int nValue = bDefault;
+    m_RegKey.QueryDWORDValue(strName, reinterpret_cast<DWORD &>(nValue));
+
+    return static_cast<bool>(nValue);
+}
+
 CString CMACSettings::LoadSetting(const CString & strName, const CString & strDefault, int nMaxLength)
 {
-    if (m_bValid == FALSE) return strDefault;
+    if (m_bValid == false) return strDefault;
 
     CString strValue;
 
@@ -115,38 +128,38 @@ CString CMACSettings::LoadSetting(const CString & strName, const CString & strDe
     return strValue;
 }
 
-BOOL CMACSettings::LoadSetting(const CString & strName, void * pData, int nBytes)
+bool CMACSettings::LoadSetting(const CString & strName, void * pData, int nBytes)
 {
-    if (m_bValid == FALSE) return FALSE;
+    if (m_bValid == false) return false;
 
     DWORD dwDataType = REG_BINARY; DWORD dwBytes = static_cast<DWORD>(nBytes);
     if (RegQueryValueEx(m_RegKey.m_hKey, strName, APE_NULL, &dwDataType, static_cast<LPBYTE>(pData), &dwBytes) == ERROR_SUCCESS)
     {
         if (static_cast<int>(dwBytes) == nBytes)
-            return TRUE;
+            return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 
 void CMACSettings::SaveSetting(const CString & strName, int nValue)
 {
-    if (m_bValid == FALSE) return;
+    if (m_bValid == false) return;
 
     m_RegKey.SetDWORDValue(strName, static_cast<DWORD>(nValue));
 }
 
 void CMACSettings::SaveSetting(const CString & strName, const CString & strValue)
 {
-    if (m_bValid == FALSE) return;
+    if (m_bValid == false) return;
 
     m_RegKey.SetStringValue(strName, strValue);
 }
 
 void CMACSettings::SaveSetting(const CString & strName, void * pData, int nBytes)
 {
-    if (m_bValid == FALSE) return;
+    if (m_bValid == false) return;
 
     RegSetValueEx(m_RegKey.m_hKey, strName, 0, REG_BINARY, static_cast<LPBYTE>(pData), nBytes);
 }
@@ -167,9 +180,9 @@ CString CMACSettings::GetModeName()
 {
     CString strRetVal;
 
-    int nMode = static_cast<int>(m_Mode);
-    if ((nMode >= 0) && (nMode < MODE_COUNT))
-        strRetVal = g_aryModeNames[nMode];
+    str_utfn cModeName[256]; APE_CLEAR(cModeName);
+    GetAPEModeName(m_Mode, cModeName, 256, false);
+    strRetVal = cModeName;
 
     return strRetVal;
 }
@@ -182,8 +195,8 @@ CString CMACSettings::GetCompressionName()
     {
         if (GetFormat() == COMPRESSION_APE)
         {
-            str_utfn cCompressionLevel[256]; APE_CLEAR(cCompressionLevel);
-            GetAPECompressionLevelName(GetLevel(), cCompressionLevel, 256, true);
+            str_utfn cCompressionLevel[16]; APE_CLEAR(cCompressionLevel);
+            GetAPECompressionLevelName(GetLevel(), cCompressionLevel, 16, true);
             strRetVal = cCompressionLevel;
         }
         else

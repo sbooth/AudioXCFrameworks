@@ -8,16 +8,16 @@ public:
 
     const CStringArrayEx & operator=(const CStringArrayEx & arySource);
 
-    int Find(const CString & strFind, BOOL bMatchCase = FALSE, int nStartElement = 0);
-    void Remove(const CString & strRemove, BOOL bMatchCase = FALSE, int nStartElement = 0);
+    int Find(const CString & strFind, bool bMatchCase = false, int nStartElement = 0);
+    void Remove(const CString & strRemove, bool bMatchCase = false, int nStartElement = 0);
 
-    void InitFromList(const CString & strList, const CString strDelimiter = _T(","));
-    CString GetList(const CString strDelimiter = _T(","));
+    void InitFromList(const CString & strList, const CString & strDelimiter = _T(","));
+    CString GetList(const CString & strDelimiter = _T(","));
 
-    int GetTotalCharacterLength(BOOL bAccountForNullTerminators);
+    int GetTotalCharacterLength(bool bAccountForNullTerminators);
 
-    void RemoveDuplicates(BOOL bMatchCase = FALSE);
-    void Append(CStringArrayEx & aryAppend, BOOL bRemoveDuplicates = FALSE, BOOL bMatchCase = FALSE);
+    void RemoveDuplicates(bool bMatchCase = false);
+    void Append(CStringArrayEx & aryAppend, bool bRemoveDuplicates = false, bool bMatchCase = false);
 
     void SortAscending();
     void SortDescending();

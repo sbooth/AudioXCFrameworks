@@ -2,7 +2,7 @@
 #ifdef APE_BACKWARDS_COMPATIBILITY
 
 #include "UnMAC.h"
-#include "APEDecompressCore.h"
+#include "APEDecompressCoreOld.h"
 #include "APEInfo.h"
 #include "GlobalFunctions.h"
 #include "Anti-Predictor.h"
@@ -11,12 +11,12 @@
 namespace APE
 {
 
-CAPEDecompressCore::CAPEDecompressCore(IAPEDecompress * pAPEDecompress)
+CAPEDecompressCoreOld::CAPEDecompressCoreOld(IAPEDecompress * pAPEDecompress)
 {
     m_pAPEDecompress = pAPEDecompress;
 
     // initialize the bit array
-    m_spUnBitArray.Assign(CreateUnBitArray(pAPEDecompress, static_cast<intn>(pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION))));
+    m_spUnBitArray.Assign(CreateUnBitArray(pAPEDecompress, GET_IO(pAPEDecompress), static_cast<intn>(pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION))));
 
     if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) >= 3930)
         throw(0);
@@ -33,21 +33,21 @@ CAPEDecompressCore::CAPEDecompressCore(IAPEDecompress * pAPEDecompress)
     m_BitArrayStateY.nKSum = 0;
 }
 
-CAPEDecompressCore::~CAPEDecompressCore()
+CAPEDecompressCoreOld::~CAPEDecompressCoreOld()
 {
 }
 
-int * CAPEDecompressCore::GetDataX()
+int * CAPEDecompressCoreOld::GetDataX()
 {
     return m_spDataX;
 }
 
-int * CAPEDecompressCore::GetDataY()
+int * CAPEDecompressCoreOld::GetDataY()
 {
     return m_spDataY;
 }
 
-void CAPEDecompressCore::GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes, intn nFrameIndex)
+void CAPEDecompressCoreOld::GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes, intn nFrameIndex)
 {
     if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_CHANNELS) == 2)
     {
@@ -81,7 +81,7 @@ void CAPEDecompressCore::GenerateDecodedArrays(intn nBlocks, intn nSpecialCodes,
 }
 
 
-void CAPEDecompressCore::GenerateDecodedArray(int * pInputArray, int nNumberElements, intn nFrameIndex, CAntiPredictor * pAntiPredictor)
+void CAPEDecompressCoreOld::GenerateDecodedArray(int * pInputArray, int nNumberElements, intn nFrameIndex, CAntiPredictor * pAntiPredictor)
 {
     const intn nFrameBytes = static_cast<intn>(m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FRAME_BYTES, nFrameIndex));
     if (nFrameBytes <= 0)
@@ -90,7 +90,6 @@ void CAPEDecompressCore::GenerateDecodedArray(int * pInputArray, int nNumberElem
     // run the prediction sequence
     switch (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_COMPRESSION_LEVEL))
     {
-#ifdef ENABLE_COMPRESSION_MODE_FAST
         case APE_COMPRESSION_LEVEL_FAST:
             if (m_pAPEDecompress->GetInfo(IAPEDecompress::APE_INFO_FILE_VERSION) < 3320)
             {
@@ -104,9 +103,7 @@ void CAPEDecompressCore::GenerateDecodedArray(int * pInputArray, int nNumberElem
             }
 
             break;
-#endif // #ifdef ENABLE_COMPRESSION_MODE_FAST
 
-#ifdef ENABLE_COMPRESSION_MODE_NORMAL
         case APE_COMPRESSION_LEVEL_NORMAL:
         {
             // get the array from the bitstream
@@ -114,17 +111,13 @@ void CAPEDecompressCore::GenerateDecodedArray(int * pInputArray, int nNumberElem
             pAntiPredictor->AntiPredict(m_spTempData, pInputArray, nNumberElements);
             break;
         }
-#endif // #ifdef ENABLE_COMPRESSION_MODE_NORMAL
 
-#ifdef ENABLE_COMPRESSION_MODE_HIGH
         case APE_COMPRESSION_LEVEL_HIGH:
             // get the array from the bitstream
             m_spUnBitArray->GenerateArray(m_spTempData, nNumberElements, nFrameBytes);
             pAntiPredictor->AntiPredict(m_spTempData, pInputArray, nNumberElements);
             break;
-#endif // #ifdef ENABLE_COMPRESSION_MODE_HIGH
 
-#ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
         case APE_COMPRESSION_LEVEL_EXTRA_HIGH:
 
             int64 aryCoefficientsA[64], aryCoefficientsB[64];
@@ -169,7 +162,6 @@ void CAPEDecompressCore::GenerateDecodedArray(int * pInputArray, int nNumberElem
             }
 
             break;
-#endif // #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
         default:
             // this shouldn't hit, but just to handle all cases we'll put it here
             throw(ERROR_INVALID_INPUT_FILE);

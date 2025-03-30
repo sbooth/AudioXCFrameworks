@@ -25,7 +25,7 @@ CFLACTag::CFLACTag(const TCHAR * pFilename)
     if (m_spIO->Open(pFilename) == ERROR_SUCCESS)
     {
         // read FLAC header
-        unsigned int nBytesRead = 4;
+        unsigned int nBytesRead = 0;
         char cFLAC[5] = { 0 };
         m_spIO->Read(cFLAC, 4, &nBytesRead);
         if (strcmp(cFLAC, "fLaC") == 0)
@@ -33,7 +33,8 @@ CFLACTag::CFLACTag(const TCHAR * pFilename)
             // loop chunks
             bool bReadImage = false;
             bool bReadTag = false;
-            while (!bReadImage || !bReadTag)
+            bool bLast = false;
+            while (!bLast && (!bReadImage || !bReadTag))
             {
                 // read the buffer
                 unsigned char cBuffer[4] = { 0 };
@@ -48,8 +49,11 @@ CFLACTag::CFLACTag(const TCHAR * pFilename)
                         nBufferBytes = (nBufferBytes << 8) | static_cast<uint32>(cBuffer[1 + z]);
 
                     // get type and last
-                    //int nLast = static_cast<int>(cBuffer[0] & 0x80);
+                    int nLast = static_cast<int>(cBuffer[0] & 0x80);
                     int nType = static_cast<int>(cBuffer[0] & (0x80 - 1));
+
+                    // set the last (don't keep reading)
+                    bLast = (nLast != 0);
 
                     // keep start position of the reader
                     int64 nOriginalPosition = m_spIO->GetPosition();
@@ -83,7 +87,7 @@ CFLACTag::CFLACTag(const TCHAR * pFilename)
                         {
                             uint32 nBytes = ReadInteger(spTag, nStartByte, false);
 
-                            CSmartPtr<APE::str_utf8> spChar(new APE::str_utf8[nBytes + 1], true);
+                            CSmartPtr<APE::str_utf8> spChar(new APE::str_utf8 [nBytes + 1], true);
                             memcpy(spChar, &spTag[nStartByte + 4], nBytes);
                             spChar[nBytes] = 0;
 
@@ -117,12 +121,20 @@ CFLACTag::CFLACTag(const TCHAR * pFilename)
                         memcpy(spMimeType, &spPicture[8], nMIMELength);
                         spMimeType[nMIMELength] = 0;
 
+                        // image extension
+                        m_strImageExtension.Empty();
                         if (_stricmp(spMimeType, "image/jpeg") == 0)
+                            m_strImageExtension = _T("jpg");
+                        else if (_stricmp(spMimeType, "image/png") == 0)
+                            m_strImageExtension = _T("png");
+
+                        // load the data if we understand the image extension
+                        if (m_strImageExtension.IsEmpty() == false)
                         {
                             // description
                             uint32 nDescriptionLength = ReadInteger(spPicture, 8 + nMIMELength);
                             // we don't read the description because it's not used
-                            
+
                             // width
                             //uint32 nWidth = ReadInteger(spPicture, 12 + nMIMELength + nDescriptionLength);
 

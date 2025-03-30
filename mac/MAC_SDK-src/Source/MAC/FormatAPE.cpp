@@ -25,31 +25,31 @@ int CFormatAPE::Process(MAC_FILE * pInfo)
 {
     int nRetVal = ERROR_UNDEFINED;
 
-    if (pInfo->Mode == MODE_COMPRESS)
+    if (pInfo->m_Mode == MODE_COMPRESS)
     {
-        nRetVal = CompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel, &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag);
+        nRetVal = CompressFileW(pInfo->m_strInputFilename, pInfo->m_strWorkingFilename, pInfo->m_nLevel, &pInfo->m_nStageProgress, APE_NULL, &pInfo->m_nKillFlag, pInfo->m_nThreads);
     }
-    else if (pInfo->Mode == MODE_DECOMPRESS)
+    else if (pInfo->m_Mode == MODE_DECOMPRESS)
     {
-        nRetVal = DecompressFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag);
+        nRetVal = DecompressFileW(pInfo->m_strInputFilename, pInfo->m_strWorkingFilename, &pInfo->m_nStageProgress, APE_NULL, &pInfo->m_nKillFlag, pInfo->m_nThreads);
     }
-    else if (pInfo->Mode == MODE_VERIFY)
+    else if (pInfo->m_Mode == MODE_VERIFY)
     {
-        nRetVal = VerifyFileW(pInfo->strInputFilename, &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag,
-            (theApp.GetSettings()->m_nProcessingVerifyMode == PROCESSING_VERIFY_MODE_QUICK) ? TRUE : FALSE);
+        nRetVal = VerifyFileW(pInfo->m_strInputFilename, &pInfo->m_nStageProgress, APE_NULL, &pInfo->m_nKillFlag,
+            (theApp.GetSettings()->m_nProcessingVerifyMode == PROCESSING_VERIFY_MODE_QUICK) ? true : false, pInfo->m_nThreads);
     }
-    else if (pInfo->Mode == MODE_CONVERT)
+    else if (pInfo->m_Mode == MODE_CONVERT)
     {
-        nRetVal = ConvertFileW(pInfo->strInputFilename, pInfo->strWorkingFilename, pInfo->nLevel,
-            &pInfo->nStageProgress, APE_NULL, &pInfo->nKillFlag);
+        nRetVal = ConvertFileW(pInfo->m_strInputFilename, pInfo->m_strWorkingFilename, pInfo->m_nLevel,
+            &pInfo->m_nStageProgress, APE_NULL, &pInfo->m_nKillFlag, pInfo->m_nThreads);
     }
 
     return nRetVal;
 }
 
-BOOL CFormatAPE::BuildMenu(CMenu * pMenu, int nBaseID)
+bool CFormatAPE::BuildMenu(CMenu * pMenu, int nBaseID)
 {
-    BOOL bCheck = (theApp.GetSettings()->GetFormat() == COMPRESSION_APE);
+    bool bCheck = (theApp.GetSettings()->GetFormat() == COMPRESSION_APE);
 
     pMenu->AppendMenu(MF_STRING |
         ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_FAST)) ? MF_CHECKED : MF_UNCHECKED),
@@ -67,10 +67,10 @@ BOOL CFormatAPE::BuildMenu(CMenu * pMenu, int nBaseID)
         ((bCheck && (theApp.GetSettings()->GetLevel() == APE_COMPRESSION_LEVEL_INSANE)) ? MF_CHECKED : MF_UNCHECKED),
         UINT_PTR(nBaseID) + 4, _T("&Insane"));
 
-    return TRUE;
+    return true;
 }
 
-BOOL CFormatAPE::ProcessMenuCommand(int nCommand)
+bool CFormatAPE::ProcessMenuCommand(int nCommand)
 {
     int nCompressionLevel = APE_COMPRESSION_LEVEL_NORMAL;
     switch (nCommand)
@@ -83,7 +83,7 @@ BOOL CFormatAPE::ProcessMenuCommand(int nCommand)
     }
     theApp.GetSettings()->SetCompression(GetName(), nCompressionLevel);
 
-    return TRUE;
+    return true;
 }
 
 CString CFormatAPE::GetInputExtensions(APE_MODES Mode)
@@ -92,7 +92,7 @@ CString CFormatAPE::GetInputExtensions(APE_MODES Mode)
 
     if (Mode == MODE_COMPRESS)
     {
-        strRetVal = _T(".wav;.aiff;.aif;.w64;.snd;.au;.caf");
+        strRetVal = _T(".wav;.aiff;.aif;.w64;.snd;.au;.caf;.rf64;.bw64");
     }
     else if ((Mode == MODE_DECOMPRESS) || (Mode == MODE_VERIFY))
     {

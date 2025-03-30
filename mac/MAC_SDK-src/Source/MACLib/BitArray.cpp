@@ -2,7 +2,6 @@
 Includes
 **************************************************************************************************/
 #include "All.h"
-#define APE_ENABLE_MD5_ADD_DATA
 #include "BitArray.h"
 
 namespace APE
@@ -82,18 +81,15 @@ int CBitArray::OutputBitArray(bool bFinalize)
     {
         nBytesToWrite = ((m_nCurrentBitIndex >> 5) * 4) + 4;
 
-        m_MD5.AddData(m_spBitArray, nBytesToWrite);
-
         RETURN_ON_ERROR(m_pIO->Write(m_spBitArray, nBytesToWrite, &nBytesWritten))
 
-        // reset the bit pointer
+        // reset the bit pointer and zero the array
         m_nCurrentBitIndex = 0;
+        memset(m_spBitArray, 0, BIT_ARRAY_BYTES);
     }
     else
     {
         nBytesToWrite = (m_nCurrentBitIndex >> 5) * 4;
-
-        m_MD5.AddData(m_spBitArray, nBytesToWrite);
 
         RETURN_ON_ERROR(m_pIO->Write(m_spBitArray, nBytesToWrite, &nBytesWritten))
 
@@ -102,7 +98,7 @@ int CBitArray::OutputBitArray(bool bFinalize)
         m_nCurrentBitIndex = (m_nCurrentBitIndex & 31);
 
         // zero the rest of the memory (may not need the +1 because of frame byte alignment)
-        memset(&m_spBitArray[1], 0, static_cast<size_t>(ape_min(static_cast<int>(nBytesToWrite + 1), BIT_ARRAY_BYTES - 1)));
+        memset(&m_spBitArray[1], 0, static_cast<size_t>(ape_min(static_cast<int>(nBytesToWrite + 1), BIT_ARRAY_BYTES - 4)));
     }
 
     // return a success

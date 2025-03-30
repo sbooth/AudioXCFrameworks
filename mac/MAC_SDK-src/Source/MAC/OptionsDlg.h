@@ -25,8 +25,8 @@ protected:
 
     CArray<OPTIONS_PAGE *, OPTIONS_PAGE *> m_aryPages;
 
-    BOOL UpdatePage();
-    int GetSelectedPage();
+    bool UpdatePage();
+    int GetSelectedPage() const;
 
     CMACDlg * m_pMACDlg;
 };

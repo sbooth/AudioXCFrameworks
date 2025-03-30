@@ -4,6 +4,7 @@
 
 #include "APECompress.h"
 #include "APECompressCreate.h"
+#include "APECompressCore.h"
 #include "WAVInputSource.h"
 #include "FloatTransform.h"
 
@@ -12,6 +13,7 @@ namespace APE
 
 CAPECompress::CAPECompress()
 {
+    m_nThreads = 1;
     m_nBufferHead = 0;
     m_nBufferTail = 0;
     m_nBufferSize = 0;
@@ -24,8 +26,13 @@ CAPECompress::CAPECompress()
 
 CAPECompress::~CAPECompress()
 {
-    m_spBuffer.Delete();
-    m_spioOutput.Delete();
+    // without this the compiler warns that it can't inline the destuctor
+}
+
+int CAPECompress::SetNumberOfThreads(int nThreads)
+{
+    m_nThreads = ape_cap(nThreads, 1, 32);
+    return m_nThreads;
 }
 
 int CAPECompress::Start(const wchar_t * pOutputFilename, const WAVEFORMATEX * pwfeInput, bool bFloat, int64 nMaxAudioBytes, int nCompressionLevel, const void * pHeaderData, int64 nHeaderBytes, int nFlags)
@@ -44,7 +51,7 @@ int CAPECompress::Start(const wchar_t * pOutputFilename, const WAVEFORMATEX * pw
     }
 
     // start
-    const int nStartResult = m_spAPECompressCreate->Start(m_spioOutput, pwfeInput, nMaxAudioBytes, nCompressionLevel,
+    const int nStartResult = m_spAPECompressCreate->Start(m_spioOutput, m_nThreads, pwfeInput, nMaxAudioBytes, nCompressionLevel,
         pHeaderData, nHeaderBytes, nFlags);
 
     // create buffer
@@ -67,7 +74,7 @@ int CAPECompress::StartEx(CIO * pioOutput, const WAVEFORMATEX * pwfeInput, bool 
     HandleFloat(bFloat, pwfeInput);
 
     // start
-    m_spAPECompressCreate->Start(m_spioOutput, pwfeInput, nMaxAudioBytes, nCompressionLevel,
+    m_spAPECompressCreate->Start(m_spioOutput, m_nThreads, pwfeInput, nMaxAudioBytes, nCompressionLevel,
         pHeaderData, nHeaderBytes);
 
     // create buffer
@@ -158,11 +165,6 @@ int CAPECompress::Finish(unsigned char * pTerminatingData, int64 nTerminatingByt
 {
     RETURN_ON_ERROR(ProcessBuffer(true))
     return m_spAPECompressCreate->Finish(pTerminatingData, nTerminatingBytes, nWAVTerminatingBytes);
-}
-
-int CAPECompress::Kill()
-{
-    return ERROR_SUCCESS;
 }
 
 int CAPECompress::ProcessBuffer(bool bFinalize)

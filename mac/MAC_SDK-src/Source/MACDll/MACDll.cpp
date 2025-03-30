@@ -19,7 +19,7 @@ int __stdcall GetVersionNumber()
 }
 
 #ifdef PLATFORM_WINDOWS
-int __stdcall GetInterfaceCompatibility(int nVersion, BOOL bDisplayWarningsOnFailure, HWND hwndParent)
+int __stdcall GetInterfaceCompatibility(int nVersion, bool bDisplayWarningsOnFailure, HWND hwndParent)
 {
     int nRetVal = ERROR_SUCCESS;
     if (nVersion > APE_FILE_VERSION_NUMBER)
@@ -67,9 +67,9 @@ unsigned int __stdcall GetLibraryInterfaceVersion()
     return APE_INTERFACE_VERSION;
 }
 
-int __stdcall TagFileSimple(const str_ansi * pFilename, const char * pArtist, const char * pAlbum, const char * pTitle, const char * pComment, const char * pGenre, const char * pYear, const char * pTrack, BOOL bClearFirst, BOOL bUseOldID3)
+int __stdcall TagFileSimple(const str_ansi * pFilename, const char * pArtist, const char * pAlbum, const char * pTitle, const char * pComment, const char * pGenre, const char * pYear, const char * pTrack, bool bClearFirst, bool bUseOldID3)
 {
-    CSmartPtr<wchar_t> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), TRUE);
+    CSmartPtr<wchar_t> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), true);
 
     CSmartPtr<CIO> spFileIO(CreateCIO());
     if (spFileIO->Open(spFilename) != 0)
@@ -80,13 +80,13 @@ int __stdcall TagFileSimple(const str_ansi * pFilename, const char * pArtist, co
     if (bClearFirst)
         APETag.ClearFields();
 
-    APETag.SetFieldString(APE_TAG_FIELD_ARTIST, pArtist, TRUE);
-    APETag.SetFieldString(APE_TAG_FIELD_ALBUM, pAlbum, TRUE);
-    APETag.SetFieldString(APE_TAG_FIELD_TITLE, pTitle, TRUE);
-    APETag.SetFieldString(APE_TAG_FIELD_GENRE, pGenre, TRUE);
-    APETag.SetFieldString(APE_TAG_FIELD_YEAR, pYear, TRUE);
-    APETag.SetFieldString(APE_TAG_FIELD_COMMENT, pComment, TRUE);
-    APETag.SetFieldString(APE_TAG_FIELD_TRACK, pTrack, TRUE);
+    APETag.SetFieldString(APE_TAG_FIELD_ARTIST, pArtist, true);
+    APETag.SetFieldString(APE_TAG_FIELD_ALBUM, pAlbum, true);
+    APETag.SetFieldString(APE_TAG_FIELD_TITLE, pTitle, true);
+    APETag.SetFieldString(APE_TAG_FIELD_GENRE, pGenre, true);
+    APETag.SetFieldString(APE_TAG_FIELD_YEAR, pYear, true);
+    APETag.SetFieldString(APE_TAG_FIELD_COMMENT, pComment, true);
+    APETag.SetFieldString(APE_TAG_FIELD_TRACK, pTrack, true);
 
     if (APETag.Save(bUseOldID3) != 0)
     {
@@ -98,7 +98,7 @@ int __stdcall TagFileSimple(const str_ansi * pFilename, const char * pArtist, co
 
 int __stdcall GetID3Tag(const str_ansi * pFilename, ID3_TAG * pID3Tag)
 {
-    CSmartPtr<wchar_t> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), TRUE);
+    CSmartPtr<wchar_t> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), true);
     return GetID3TagW(spFilename, pID3Tag);
 }
 
@@ -108,12 +108,12 @@ int __stdcall GetID3TagW(const str_utfn * pFilename, ID3_TAG* pID3Tag)
     if (spFileIO->Open(pFilename) != 0)
         return ERROR_UNDEFINED;
 
-    CAPETag APETag(spFileIO, TRUE);
+    CAPETag APETag(spFileIO, true);
 
     return APETag.CreateID3Tag(pID3Tag);
 }
 
-int __stdcall RemoveTag(const char * pFilename)
+int __stdcall RemoveTag(const str_ansi * pFilename)
 {
     CSmartPtr<wchar_t> spFilename(CAPECharacterHelper::GetUTF16FromANSI(pFilename), true);
     return RemoveTagW(spFilename);
@@ -177,6 +177,11 @@ int64 __stdcall c_APEDecompress_GetInfo(APE_DECOMPRESS_HANDLE hAPEDecompress, IA
     return (static_cast<IAPEDecompress *>(hAPEDecompress))->GetInfo(Field, nParam1, nParam2);
 }
 
+int __stdcall c_APEDecompress_SetNumberOfThreads(APE_DECOMPRESS_HANDLE hAPEDecompress, int nThreads)
+{
+    return static_cast<int>((static_cast<IAPEDecompress*>(hAPEDecompress))->SetNumberOfThreads(nThreads));
+}
+
 /**************************************************************************************************
 CAPECompress wrapper(s)
 **************************************************************************************************/
@@ -194,7 +199,7 @@ void __stdcall c_APECompress_Destroy(APE_COMPRESS_HANDLE hAPECompress)
 
 int __stdcall c_APECompress_Start(APE_COMPRESS_HANDLE hAPECompress, const char * pOutputFilename, const APE::WAVEFORMATEX * pwfeInput, APE::int64 nMaxAudioBytes, int nCompressionLevel, const void * pHeaderData, APE::int64 nHeaderBytes)
 {
-    CSmartPtr<wchar_t> spOutputFilename(CAPECharacterHelper::GetUTF16FromANSI(pOutputFilename), TRUE);
+    CSmartPtr<wchar_t> spOutputFilename(CAPECharacterHelper::GetUTF16FromANSI(pOutputFilename), true);
     return (static_cast<IAPECompress *>(hAPECompress))->Start(spOutputFilename, pwfeInput, false, nMaxAudioBytes, nCompressionLevel, pHeaderData, nHeaderBytes);
 }
 
@@ -218,7 +223,7 @@ unsigned char * __stdcall c_APECompress_LockBuffer(APE_COMPRESS_HANDLE hAPECompr
     return (static_cast<IAPECompress *>(hAPECompress))->LockBuffer(pBytesAvailable);
 }
 
-int __stdcall c_APECompress_UnlockBuffer(APE_COMPRESS_HANDLE hAPECompress, int nBytesAdded, BOOL bProcess)
+int __stdcall c_APECompress_UnlockBuffer(APE_COMPRESS_HANDLE hAPECompress, int nBytesAdded, bool bProcess)
 {
     return static_cast<int>((static_cast<IAPECompress *>(hAPECompress))->UnlockBuffer(nBytesAdded, bProcess));
 }
@@ -228,7 +233,7 @@ int __stdcall c_APECompress_Finish(APE_COMPRESS_HANDLE hAPECompress, unsigned ch
     return (static_cast<IAPECompress *>(hAPECompress))->Finish(pTerminatingData, nTerminatingBytes, nWAVTerminatingBytes);
 }
 
-int __stdcall c_APECompress_Kill(APE_COMPRESS_HANDLE hAPECompress)
+int __stdcall c_APECompress_SetNumberOfThreads(APE_COMPRESS_HANDLE hAPECompress, int nThreads)
 {
-    return (static_cast<IAPECompress *>(hAPECompress))->Kill();
+    return static_cast<int>((static_cast<IAPECompress *>(hAPECompress))->SetNumberOfThreads(nThreads));
 }

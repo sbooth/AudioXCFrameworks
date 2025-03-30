@@ -18,7 +18,7 @@ const CStringArrayEx & CStringArrayEx::operator=(const CStringArrayEx & arySourc
     return *this;
 }
 
-int CStringArrayEx::Find(const CString & strFind, BOOL bMatchCase, int nStartElement)
+int CStringArrayEx::Find(const CString & strFind, bool bMatchCase, int nStartElement)
 {
     if (bMatchCase)
     {
@@ -40,7 +40,7 @@ int CStringArrayEx::Find(const CString & strFind, BOOL bMatchCase, int nStartEle
     return -1;
 }
 
-void CStringArrayEx::Remove(const CString & strRemove, BOOL bMatchCase, int nStartElement)
+void CStringArrayEx::Remove(const CString & strRemove, bool bMatchCase, int nStartElement)
 {
     int nIndex = Find(strRemove, bMatchCase, nStartElement);
     while (nIndex != -1)
@@ -50,7 +50,7 @@ void CStringArrayEx::Remove(const CString & strRemove, BOOL bMatchCase, int nSta
     }
 }
 
-void CStringArrayEx::InitFromList(const CString & strList, const CString strDelimiter)
+void CStringArrayEx::InitFromList(const CString & strList, const CString & strDelimiter)
 {
     RemoveAll();
 
@@ -67,10 +67,10 @@ void CStringArrayEx::InitFromList(const CString & strList, const CString strDeli
         Add(pHead);
 }
 
-CString CStringArrayEx::GetList(const CString strDelimiter)
+CString CStringArrayEx::GetList(const CString & strDelimiter)
 {
     // allocate a memory block for the total length
-    const int nTotalCharacters = GetTotalCharacterLength(FALSE);
+    const int nTotalCharacters = GetTotalCharacterLength(false);
     CString strRetVal;
     LPTSTR pBuffer = strRetVal.GetBuffer(nTotalCharacters + 1 + static_cast<int>(strDelimiter.GetLength() * GetSize()));
 
@@ -96,7 +96,7 @@ CString CStringArrayEx::GetList(const CString strDelimiter)
     return strRetVal;
 }
 
-int CStringArrayEx::GetTotalCharacterLength(BOOL bAccountForNullTerminators)
+int CStringArrayEx::GetTotalCharacterLength(bool bAccountForNullTerminators)
 {
     int nCharacters = 0;
     for (int z = 0; z < GetSize(); z++)
@@ -108,13 +108,13 @@ int CStringArrayEx::GetTotalCharacterLength(BOOL bAccountForNullTerminators)
     return nCharacters;
 }
 
-void CStringArrayEx::RemoveDuplicates(BOOL bMatchCase)
+void CStringArrayEx::RemoveDuplicates(bool bMatchCase)
 {
     for (int z = 0; z < GetSize() - 1; z++)
         Remove(ElementAt(z), bMatchCase, z + 1);
 }
 
-void CStringArrayEx::Append(CStringArrayEx & aryAppend, BOOL bRemoveDuplicates, BOOL bMatchCase)
+void CStringArrayEx::Append(CStringArrayEx & aryAppend, bool bRemoveDuplicates, bool bMatchCase)
 {
     // add the new items
     for (int z = 0; z < aryAppend.GetSize(); z++)

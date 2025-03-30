@@ -11,7 +11,7 @@ public:
     CWinampSettingsDlg(CWnd * pParent = APE_NULL);
     virtual ~CWinampSettingsDlg();
 
-    BOOL Show(HWND hwndParent);
+    bool Show(HWND hwndParent);
 
     virtual BOOL OnInitDialog();
     enum { IDD = IDD_WINAMP_SETTINGS };
@@ -31,8 +31,8 @@ protected:
     HWND m_hwndParent;
 
     CString m_strSettingsFilename;
-    BOOL LoadSettings();
-    BOOL SaveSettings();
+    bool LoadSettings();
+    bool SaveSettings();
     int GetSliderFromThreadPriority();
     int GetThreadPriorityFromSlider();
 };

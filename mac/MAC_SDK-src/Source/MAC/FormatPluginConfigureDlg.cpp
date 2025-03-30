@@ -40,24 +40,24 @@ BOOL CFormatPluginConfigureDlg::OnInitDialog()
 
     // set the font to all the controls
     SetFont(&m_pMACDlg->GetFont());
-    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(FALSE, 0), TRUE);
+    SendMessageToDescendants(WM_SETFONT, reinterpret_cast<WPARAM>(m_pMACDlg->GetFont().GetSafeHandle()), MAKELPARAM(false, 0), true);
 
     if (m_strConfigureStatic1.IsEmpty())
     {
-        GetDlgItem(IDC_CONFIGURE_EDIT_1)->EnableWindow(FALSE);
+        GetDlgItem(IDC_CONFIGURE_EDIT_1)->EnableWindow(false);
         m_strConfigureEdit1.Empty();
     }
     if (m_strConfigureStatic2.IsEmpty())
     {
-        GetDlgItem(IDC_CONFIGURE_EDIT_2)->EnableWindow(FALSE);
+        GetDlgItem(IDC_CONFIGURE_EDIT_2)->EnableWindow(false);
         m_strConfigureEdit2.Empty();
     }
     if (m_strConfigureStatic3.IsEmpty())
     {
-        GetDlgItem(IDC_CONFIGURE_EDIT_3)->EnableWindow(FALSE);
+        GetDlgItem(IDC_CONFIGURE_EDIT_3)->EnableWindow(false);
         m_strConfigureEdit3.Empty();
     }
 
-    return TRUE;  // return TRUE unless you set the focus to a control
+    return true;  // return TRUE unless you set the focus to a control
                   // EXCEPTION: OCX Property Pages should return FALSE
 }

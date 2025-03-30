@@ -14,8 +14,8 @@ CFormatPlugin::CFormatPlugin(CMACDlg * pMACDlg, int nIndex)
     // initialize
     m_pMACDlg = pMACDlg;
     m_nIndex = nIndex;
-    m_bIsValid = FALSE;
-    m_bHasConfiguration = FALSE;
+    m_bIsValid = false;
+    m_bHasConfiguration = false;
 }
 
 CFormatPlugin::~CFormatPlugin()
@@ -23,9 +23,9 @@ CFormatPlugin::~CFormatPlugin()
 
 }
 
-BOOL CFormatPlugin::Load(const CString & strAPXFilename)
+bool CFormatPlugin::Load(const CString & strAPXFilename)
 {
-    BOOL bRetVal = FALSE;
+    bool bRetVal = false;
 
     m_strAPXFilename = strAPXFilename;
 
@@ -55,10 +55,10 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
             ParseModeInfo(XML, MODE_CHECK, _T("Check"));
 
             // configure
-            m_bHasConfiguration = FALSE;
+            m_bHasConfiguration = false;
             if (XML.FindChildElem(_T("Configure")))
             {
-                m_bHasConfiguration = TRUE;
+                m_bHasConfiguration = true;
 
                 XML.IntoElem();
 
@@ -82,7 +82,7 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
                 XML.OutOfElem();
             }
 
-            bRetVal = TRUE;
+            bRetVal = true;
         }
     }
 
@@ -94,7 +94,7 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
             if (Level.m_strApplication.GetLength() > 0)
             {
                 MAC_FILE File;
-                File.Mode = MODE_CHECK;
+                File.m_Mode = MODE_CHECK;
                 if (Process(&File) != ERROR_SUCCESS)
                 {
                     bRetVal = false;
@@ -104,7 +104,7 @@ BOOL CFormatPlugin::Load(const CString & strAPXFilename)
     }
 
     if (bRetVal)
-        m_bIsValid = TRUE;
+        m_bIsValid = true;
 
     return bRetVal;
 }
@@ -129,31 +129,31 @@ void CFormatPlugin::ParseModeInfo(CMarkup & XML, APE_MODES Mode, const CString &
     }
 }
 
-BOOL CFormatPlugin::BuildMenu(CMenu * pMenu, int nBaseID)
+bool CFormatPlugin::BuildMenu(CMenu * pMenu, int nBaseID)
 {
-    if (m_bIsValid)
+    if (!GetValid())
+        return false;
+
+    for (int z = 0; z < m_aryModeInfo[MODE_COMPRESS].GetSize(); z++)
     {
-        for (int z = 0; z < m_aryModeInfo[MODE_COMPRESS].GetSize(); z++)
-        {
-            BOOL bChecked = (theApp.GetSettings()->GetFormat() == m_strName) &&
-                (theApp.GetSettings()->GetLevel() == z);
+        bool bChecked = (theApp.GetSettings()->GetFormat() == m_strName) &&
+            (theApp.GetSettings()->GetLevel() == z);
 
-            UINT_PTR nNewID = static_cast<UINT_PTR>(nBaseID) + static_cast<UINT_PTR>(z)  + static_cast<UINT_PTR>(10);
-            pMenu->AppendMenu(MF_STRING | (bChecked ? MF_CHECKED : MF_UNCHECKED), nNewID, m_aryModeInfo[MODE_COMPRESS][z].m_strName);
-        }
-
-        pMenu->AppendMenu(MF_SEPARATOR);
-
-        if (m_bHasConfiguration)
-            pMenu->AppendMenu(MF_STRING, nBaseID + 0, _T("Configure..."));
-
-        pMenu->AppendMenu(MF_STRING, UINT_PTR(nBaseID) + 1, _T("Info..."));
+        UINT_PTR nNewID = static_cast<UINT_PTR>(nBaseID) + static_cast<UINT_PTR>(z)  + static_cast<UINT_PTR>(10);
+        pMenu->AppendMenu(MF_STRING | (bChecked ? MF_CHECKED : MF_UNCHECKED), nNewID, m_aryModeInfo[MODE_COMPRESS][z].m_strName);
     }
 
-    return ((pMenu->GetSafeHmenu() != APE_NULL) && m_bIsValid) ? TRUE : FALSE;
+    pMenu->AppendMenu(MF_SEPARATOR);
+
+    if (m_bHasConfiguration)
+        pMenu->AppendMenu(MF_STRING, nBaseID + 0, _T("Configure..."));
+
+    pMenu->AppendMenu(MF_STRING, UINT_PTR(nBaseID) + 1, _T("Info..."));
+
+    return (pMenu->GetSafeHmenu() != APE_NULL) ? true : false;
 }
 
-BOOL CFormatPlugin::ProcessMenuCommand(int nCommand)
+bool CFormatPlugin::ProcessMenuCommand(int nCommand)
 {
     if (nCommand == 0)
     {
@@ -188,7 +188,7 @@ BOOL CFormatPlugin::ProcessMenuCommand(int nCommand)
         theApp.GetSettings()->SetCompression(GetName(), nMode);
     }
 
-    return TRUE;
+    return true;
 }
 
 CString CFormatPlugin::GetOutputExtension(APE_MODES Mode, const CString & strInputFilename, int nLevel)
@@ -210,7 +210,7 @@ CString CFormatPlugin::GetOutputExtension(APE_MODES Mode, const CString & strInp
         CString strExtensionCheck = _T("-ssq \"") + strInputFilename + _T("\"");
         int nExitCode = 0;
         CString strOutput;
-        BOOL bSuccess = ExecuteProgramBlocking(strApplication, strExtensionCheck, &nExitCode, false, &strOutput);
+        bool bSuccess = ExecuteProgramBlocking(strApplication, strExtensionCheck, &nExitCode, false, &strOutput);
 
         if (bSuccess)
         {
@@ -232,28 +232,28 @@ int CFormatPlugin::Process(MAC_FILE * pInfo)
 {
     int nRetVal = ERROR_UNDEFINED;
 
-    CFormatPluginLevelInfo * pLevelInfo = GetLevelInfo(pInfo->Mode, pInfo->strInputFilename, pInfo->nLevel);
+    CFormatPluginLevelInfo * pLevelInfo = GetLevelInfo(pInfo->m_Mode, pInfo->m_strInputFilename, pInfo->m_nLevel);
     if (pLevelInfo != APE_NULL)
     {
         CString strCommandLine = pLevelInfo->m_strCommandLine;
-        strCommandLine.Replace(_T("[INPUT]"), _T("\"") + pInfo->strInputFilename + _T("\""));
-        strCommandLine.Replace(_T("[OUTPUT]"), _T("\"") + pInfo->strWorkingFilename + _T("\""));
+        strCommandLine.Replace(_T("[INPUT]"), _T("\"") + pInfo->m_strInputFilename + _T("\""));
+        strCommandLine.Replace(_T("[OUTPUT]"), _T("\"") + pInfo->m_strWorkingFilename + _T("\""));
         strCommandLine.Replace(_T("[CONFIGURE 1]"), m_strConfigureValue[0]);
         strCommandLine.Replace(_T("[CONFIGURE 2]"), m_strConfigureValue[1]);
         strCommandLine.Replace(_T("[CONFIGURE 3]"), m_strConfigureValue[2]);
 
-        pInfo->nStageProgress = 0;
+        pInfo->m_nStageProgress = 0;
 
         CString strPath = GetProgramPath() + _T("External\\");
         CString strApplication = strPath + pLevelInfo->m_strApplication;
 
         int nExitCode = -1;
         bool bShow = theApp.GetSettings()->m_bProcessingShowExternalWindows;
-        if (pInfo->Mode == MODE_CHECK)
+        if (pInfo->m_Mode == MODE_CHECK)
             bShow = false;
-        BOOL bSuccess = ExecuteProgramBlocking(strApplication, strCommandLine, &nExitCode, bShow);
+        bool bSuccess = ExecuteProgramBlocking(strApplication, strCommandLine, &nExitCode, bShow);
 
-        if (pLevelInfo->m_strSuccessReturn.IsEmpty() == FALSE)
+        if (pLevelInfo->m_strSuccessReturn.IsEmpty() == false)
         {
             if (bSuccess && (nExitCode == _ttoi(pLevelInfo->m_strSuccessReturn)))
                 nRetVal = ERROR_SUCCESS;
@@ -263,7 +263,7 @@ int CFormatPlugin::Process(MAC_FILE * pInfo)
         else
         {
             if (pLevelInfo->m_strCommandLine.Find(_T("[OUTPUT]")) != -1)
-                nRetVal = (bSuccess && FileExists(pInfo->strWorkingFilename)) ? ERROR_SUCCESS : ERROR_UNDEFINED;
+                nRetVal = (bSuccess && FileExists(pInfo->m_strWorkingFilename)) ? ERROR_SUCCESS : ERROR_UNDEFINED;
             else
                 nRetVal = ERROR_SUCCESS;
         }
@@ -284,7 +284,7 @@ CString CFormatPlugin::GetInputExtensions(APE_MODES Mode)
             aryExtensions.Append(m_aryModeInfo[MODE_DECOMPRESS][z].m_aryInputExtensions);
     }
 
-    aryExtensions.RemoveDuplicates(FALSE);
+    aryExtensions.RemoveDuplicates(false);
     return aryExtensions.GetList(_T(";"));
 }
 

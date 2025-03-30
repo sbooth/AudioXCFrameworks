@@ -28,8 +28,6 @@ public:
     void AntiPredictOffset(int * pInputArray, int * pOutputArray, int NumberOfElements, int Offset, int DeltaM);
 };
 
-#ifdef ENABLE_COMPRESSION_MODE_FAST
-
 /**************************************************************************************************
 Fast anti-predictor (from original 'fast' mode...updated for version 3.32)
 **************************************************************************************************/
@@ -48,9 +46,6 @@ public:
     void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
 
-#endif // #ifdef ENABLE_COMPRESSION_MODE_FAST
-
-#ifdef ENABLE_COMPRESSION_MODE_NORMAL
 /**************************************************************************************************
 Normal anti-predictor
 **************************************************************************************************/
@@ -77,10 +72,6 @@ class CAntiPredictorNormal3800ToCurrent : public CAntiPredictor
 public:
     void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_NORMAL
-
-#ifdef ENABLE_COMPRESSION_MODE_HIGH
 
 /**************************************************************************************************
 High anti-predictor
@@ -126,10 +117,6 @@ class CAntiPredictorHigh3800ToCurrent : public CAntiPredictor
 public:
     void AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) APE_OVERRIDE;
 };
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_HIGH
-
-#ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
 /**************************************************************************************************
 Extra high helper
@@ -196,7 +183,5 @@ class CAntiPredictorExtraHigh3800ToCurrent : public CAntiPredictor
 public:
     void AntiPredictCustom(int * pInputArray, int * pOutputArray, int NumberOfElements, intn nVersion);
 };
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_EXTRA_HIGH
 
 }

@@ -22,7 +22,7 @@ CMACProcessFiles::~CMACProcessFiles()
 {
     // stop
     for (int z = 0; z < m_paryFiles->GetSize(); z++)
-        m_paryFiles->ElementAt(z).nKillFlag = KILL_FLAG_STOP;
+        m_paryFiles->ElementAt(z).m_nKillFlag = KILL_FLAG_STOP;
 
     // wait until we're done processing
     bool bProcessing = true;
@@ -31,7 +31,7 @@ CMACProcessFiles::~CMACProcessFiles()
         bProcessing = false;
         for (int z = 0; z < m_paryFiles->GetSize(); z++)
         {
-            if (m_paryFiles->ElementAt(z).bProcessing)
+            if (m_paryFiles->ElementAt(z).m_bProcessing)
                 bProcessing = true;
         }
 
@@ -42,20 +42,20 @@ CMACProcessFiles::~CMACProcessFiles()
 
 void CMACProcessFiles::Destroy()
 {
-    m_bStopped = FALSE;
-    m_bPaused = FALSE;
+    m_bStopped = false;
+    m_bPaused = false;
     m_paryFiles = APE_NULL;
 }
 
-BOOL CMACProcessFiles::Process(MAC_FILE_ARRAY * paryFiles)
+bool CMACProcessFiles::Process(MAC_FILE_ARRAY * paryFiles)
 {
     Destroy();
     m_paryFiles = paryFiles;
     paryFiles->PrepareForProcessing(this);
-    return TRUE;
+    return true;
 }
 
-BOOL CMACProcessFiles::Pause(BOOL bPause)
+bool CMACProcessFiles::Pause(bool bPause)
 {
     // store
     m_bPaused = bPause;
@@ -63,7 +63,7 @@ BOOL CMACProcessFiles::Pause(BOOL bPause)
     // update file status
     for (int z = 0; z < m_paryFiles->GetSize(); z++)
     {
-        m_paryFiles->ElementAt(z).nKillFlag = bPause ? KILL_FLAG_PAUSE : KILL_FLAG_CONTINUE;
+        m_paryFiles->ElementAt(z).m_nKillFlag = bPause ? KILL_FLAG_PAUSE : KILL_FLAG_CONTINUE;
     }
 
     // update the pause timer
@@ -77,10 +77,10 @@ BOOL CMACProcessFiles::Pause(BOOL bPause)
         m_nPausedStartTickCount = 0;
     }
 
-    return TRUE;
+    return true;
 }
 
-int CMACProcessFiles::GetPausedTotalMS()
+int CMACProcessFiles::GetPausedTotalMS() const
 {
     int nPausedMS = static_cast<int>(m_nPausedTotalMS);
     if (m_bPaused)
@@ -88,27 +88,26 @@ int CMACProcessFiles::GetPausedTotalMS()
     return nPausedMS;
 }
 
-BOOL CMACProcessFiles::Stop(BOOL bImmediately)
+bool CMACProcessFiles::Stop(bool bImmediately)
 {
     // immediately stop if specified
     if (bImmediately)
     {
         for (int z = 0; z < m_paryFiles->GetSize(); z++)
-            m_paryFiles->ElementAt(z).nKillFlag = KILL_FLAG_STOP;
+            m_paryFiles->ElementAt(z).m_nKillFlag = KILL_FLAG_STOP;
     }
 
     // flag the stop (it will happen eventually if we didn't do an immediate stop)
-    m_bStopped = TRUE;
+    m_bStopped = true;
 
-    return TRUE;
+    return true;
 }
 
-
-BOOL CMACProcessFiles::ProcessFile(int nIndex)
+bool CMACProcessFiles::ProcessFile(int nIndex)
 {
     // setup
-    m_paryFiles->ElementAt(nIndex).bStarted = TRUE;
-    TICK_COUNT_READ(m_paryFiles->ElementAt(nIndex).dwStartTickCount);
+    m_paryFiles->ElementAt(nIndex).m_bStarted = true;
+    TICK_COUNT_READ(m_paryFiles->ElementAt(nIndex).m_dwStartTickCount);
 
     // create the thread
     std::thread Thread(ProcessFileThread, &m_paryFiles->ElementAt(nIndex));
@@ -116,19 +115,19 @@ BOOL CMACProcessFiles::ProcessFile(int nIndex)
     // spin off the thread
     Thread.detach();
 
-    return TRUE;
+    return true;
 }
 
-BOOL CMACProcessFiles::UpdateProgress(double dPercentageDone)
+bool CMACProcessFiles::UpdateProgress(double dPercentageDone)
 {
     TRACE(_T("%f done\n"), static_cast<double>(dPercentageDone));
-    return TRUE;
+    return true;
 }
 
 void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
 {
     // we're processing
-    pInfo->bProcessing = TRUE;
+    pInfo->m_bProcessing = true;
 
     // thread priority
     if (theApp.GetSettings()->m_nProcessingPriorityMode == PROCESSING_PRIORITY_MODE_IDLE)
@@ -150,68 +149,68 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
     }
 
     // process
-    pInfo->pFormat = theApp.GetFormatArray()->GetFormat(pInfo);
+    pInfo->m_pFormat = theApp.GetFormatArray()->GetFormat(pInfo);
     pInfo->CalculateFilenames();
 
     int nRetVal = ERROR_UNDEFINED;
-    BOOL bMakesOutput = (pInfo->Mode == MODE_COMPRESS) || (pInfo->Mode == MODE_DECOMPRESS) || (pInfo->Mode == MODE_CONVERT);
-    BOOL bSkip = FALSE;
+    bool bMakesOutput = (pInfo->m_Mode == MODE_COMPRESS) || (pInfo->m_Mode == MODE_DECOMPRESS) || (pInfo->m_Mode == MODE_CONVERT);
+    bool bSkip = false;
     if (bMakesOutput)
     {
-        if ((theApp.GetSettings()->m_nOutputExistsMode == OUTPUT_EXISTS_MODE_SKIP) && (FileExists(pInfo->strOutputFilename)))
-            bSkip = TRUE;
+        if ((theApp.GetSettings()->m_nOutputExistsMode == OUTPUT_EXISTS_MODE_SKIP) && (FileExists(pInfo->m_strOutputFilename)))
+            bSkip = true;
     }
 
-    if (bSkip == FALSE)
+    if (bSkip == false)
     {
-        BOOL bVerifyWhenDone = theApp.GetSettings()->m_bProcessingAutoVerifyOnCreation && (CFilename(pInfo->strOutputFilename).GetExtension() == _T(".ape"));
+        bool bVerifyWhenDone = theApp.GetSettings()->m_bProcessingAutoVerifyOnCreation && (CFilename(pInfo->m_strOutputFilename).GetExtension() == _T(".ape"));
         if (bVerifyWhenDone)
-            pInfo->nTotalStages++;
+            pInfo->m_nTotalStages++;
 
         if (bMakesOutput)
-            CreateDirectoryEx(CFilename(pInfo->strWorkingFilename).GetPath());
+            CreateDirectoryEx(CFilename(pInfo->m_strWorkingFilename).GetPath());
 
-        if ((pInfo->Mode == MODE_COMPRESS) || (pInfo->Mode == MODE_DECOMPRESS) ||
-            (pInfo->Mode == MODE_VERIFY))
+        if ((pInfo->m_Mode == MODE_COMPRESS) || (pInfo->m_Mode == MODE_DECOMPRESS) ||
+            (pInfo->m_Mode == MODE_VERIFY))
         {
             nRetVal = theApp.GetFormatArray()->Process(pInfo);
         }
-        else if (pInfo->Mode == MODE_CONVERT)
+        else if (pInfo->m_Mode == MODE_CONVERT)
         {
             // first, see if we can do a "direct" conversion
-            BOOL bDirectConversion = FALSE;
+            bool bDirectConversion = false;
 
-            IFormat * pFormat = theApp.GetFormatArray()->GetFormat(pInfo->strFormat);
+            IFormat * pFormat = theApp.GetFormatArray()->GetFormat(pInfo->m_strFormat);
             if (pFormat)
             {
                 CStringArrayEx aryExtensions;
-                aryExtensions.InitFromList(pFormat->GetInputExtensions(pInfo->Mode), _T(";"));
+                aryExtensions.InitFromList(pFormat->GetInputExtensions(pInfo->m_Mode), _T(";"));
 
-                if (aryExtensions.Find(CFilename(pInfo->strInputFilename).GetExtension()) != -1)
+                if (aryExtensions.Find(CFilename(pInfo->m_strInputFilename).GetExtension()) != -1)
                 {
-                    bDirectConversion = TRUE;
+                    bDirectConversion = true;
 
                     nRetVal = theApp.GetFormatArray()->Process(pInfo);
                 }
             }
 
-            if (bDirectConversion == FALSE)
+            if (bDirectConversion == false)
             {
-                IFormat * pStartFormat = pInfo->pFormat;
-                CString strOutputFilenameOriginal = pInfo->strOutputFilename;
-                BOOL bEmptyExtension = pInfo->bEmptyExtension;
+                IFormat * pStartFormat = pInfo->m_pFormat;
+                CString strOutputFilenameOriginal = pInfo->m_strOutputFilename;
+                bool bEmptyExtension = pInfo->m_bEmptyExtension;
 
                 // two steps -- decompress, then compress
-                CString strInputFilename = pInfo->strInputFilename;
-                CString strOutputFilename = pInfo->strOutputFilename + _T(".wav");
-                CString strWorkingFilenameStart = pInfo->strWorkingFilename;
-                pInfo->nTotalStages++;
+                CString strInputFilename = pInfo->m_strInputFilename;
+                CString strOutputFilename = pInfo->m_strOutputFilename + _T(".wav");
+                CString strWorkingFilenameStart = pInfo->m_strWorkingFilename;
+                pInfo->m_nTotalStages++;
 
-                CString strInputType = pInfo->strInputFilename.Right(pInfo->strInputFilename.GetLength() - pInfo->strInputFilename.ReverseFind('.'));
-                pInfo->pFormat = theApp.GetFormatArray()->GetFormatFromInputType(strInputType);
-                pInfo->Mode = MODE_DECOMPRESS;
+                CString strInputType = pInfo->m_strInputFilename.Right(pInfo->m_strInputFilename.GetLength() - pInfo->m_strInputFilename.ReverseFind('.'));
+                pInfo->m_pFormat = theApp.GetFormatArray()->GetFormatFromInputType(strInputType);
+                pInfo->m_Mode = MODE_DECOMPRESS;
                 pInfo->CalculateFilenames();
-                strOutputFilename = pInfo->strOutputFilename; // update
+                strOutputFilename = pInfo->m_strOutputFilename; // update
 
                 // decompress
                 nRetVal = theApp.GetFormatArray()->Process(pInfo);
@@ -219,26 +218,26 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
                 // compress if we succeed
                 if (nRetVal == ERROR_SUCCESS)
                 {
-                    pInfo->pFormat = pStartFormat;
-                    pInfo->strInputFilename = pInfo->strWorkingFilename; // use the working output from the last stage as the input
+                    pInfo->m_pFormat = pStartFormat;
+                    pInfo->m_strInputFilename = pInfo->m_strWorkingFilename; // use the working output from the last stage as the input
 
                     // update the working filename
-                    CString strWorkingFilename = pInfo->strWorkingFilename;
-                    CString strWorkingFilenameOriginal = pInfo->strWorkingFilename;
+                    CString strWorkingFilename = pInfo->m_strWorkingFilename;
+                    CString strWorkingFilenameOriginal = pInfo->m_strWorkingFilename;
                     strWorkingFilename = strWorkingFilename.Left(strWorkingFilename.ReverseFind('.') + 1) + _T("dat");
-                    pInfo->strWorkingFilename = strWorkingFilename;
+                    pInfo->m_strWorkingFilename = strWorkingFilename;
 
                     // enter compress mode
-                    pInfo->Mode = MODE_COMPRESS;
-                    pInfo->strOutputFilename = strOutputFilenameOriginal;
-                    pInfo->nCurrentStage++;
-                    pInfo->nStageProgress = 0;
+                    pInfo->m_Mode = MODE_COMPRESS;
+                    pInfo->m_strOutputFilename = strOutputFilenameOriginal;
+                    pInfo->m_nCurrentStage++;
+                    pInfo->m_nStageProgress = 0;
 
                     // add the output extension if we didn't add it earlier
                     if (bEmptyExtension)
                     {
-                        CString strOutputExtension = pInfo->pFormat->GetOutputExtension(MODE_COMPRESS, pInfo->strInputFilename, 0);
-                        pInfo->strOutputFilename += strOutputExtension;
+                        CString strOutputExtension = pInfo->m_pFormat->GetOutputExtension(MODE_COMPRESS, pInfo->m_strInputFilename, 0);
+                        pInfo->m_strOutputFilename += strOutputExtension;
                     }
 
                     // compress
@@ -246,34 +245,34 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
 
                     // delete working file
                     DeleteFileEx(strWorkingFilenameOriginal);
-                    pInfo->strInputFilename = strInputFilename;
+                    pInfo->m_strInputFilename = strInputFilename;
                 }
             }
         }
-        else if (pInfo->Mode == MODE_MAKE_APL)
+        else if (pInfo->m_Mode == MODE_MAKE_APL)
         {
             CAPLHelper APLHelper;
-            BOOL bRetVal = APLHelper.GenerateLinkFiles(pInfo->strInputFilename, theApp.GetSettings()->m_strAPLFilenameTemplate);
+            bool bRetVal = APLHelper.GenerateLinkFiles(pInfo->m_strInputFilename, theApp.GetSettings()->m_strAPLFilenameTemplate);
             nRetVal = bRetVal ? ERROR_SUCCESS : ERROR_UNDEFINED;
         }
 
         if (bMakesOutput && (nRetVal == ERROR_SUCCESS))
         {
             // analyze if the input and output are the same
-            BOOL bInputOutputSame = (pInfo->strInputFilename.CompareNoCase(pInfo->strOutputFilename) == 0);
+            bool bInputOutputSame = (pInfo->m_strInputFilename.CompareNoCase(pInfo->m_strOutputFilename) == 0);
 
             // we loop a few times and try to name the output file over and over since in race conditions encoding the same file
             // we can get a filename, then it can be gone by the time we go to use it
             // to reproduce, encode two files with similar names with a shared output directory (example: C:\Temporary\AIFF From Porcus\demo-snd.aiff / C:\Temporary\AIFF From Porcus\demo-snd (1).aiff)
-            bool bMakeUnique = (bInputOutputSame == FALSE) && (theApp.GetSettings()->m_nOutputExistsMode == OUTPUT_EXISTS_MODE_RENAME);
+            bool bMakeUnique = (bInputOutputSame == false) && (theApp.GetSettings()->m_nOutputExistsMode == OUTPUT_EXISTS_MODE_RENAME);
             for (int nRetry = 0; nRetry < (bMakeUnique ? 3 : 1); nRetry++)
             {
                 // rename output if necessary
                 if (bMakeUnique)
-                    pInfo->strOutputFilename = GetUniqueFilename(pInfo->strOutputFilename);
+                    pInfo->m_strOutputFilename = GetUniqueFilename(pInfo->m_strOutputFilename);
 
                 // move the working file to the final location
-                if (MoveFile(pInfo->strWorkingFilename, pInfo->strOutputFilename, TRUE) != FALSE)
+                if (MoveFile(pInfo->m_strWorkingFilename, pInfo->m_strOutputFilename, true) != false)
                 {
                     nRetVal = ERROR_SUCCESS;
                     break;
@@ -286,15 +285,15 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
 
             // mirror time stamp if specified
             if ((nRetVal == ERROR_SUCCESS) && theApp.GetSettings()->m_bOutputMirrorTimeStamp)
-                CopyFileTime(pInfo->strInputFilename, pInfo->strOutputFilename);
+                CopyFileTime(pInfo->m_strInputFilename, pInfo->m_strOutputFilename);
 
-            if ((nRetVal == ERROR_SUCCESS) && (pInfo->GetOutputExtension() == _T(".ape")) && (pInfo->strInputFilename.Right(3).CompareNoCase(_T(".wv")) == 0))
+            if ((nRetVal == ERROR_SUCCESS) && (pInfo->GetOutputExtension() == _T(".ape")) && (pInfo->m_strInputFilename.Right(3).CompareNoCase(_T(".wv")) == 0))
             {
                 // copy tags from WavPack to APE files
-                CSmartPtr<APE::IAPETag> spAPETag(new CAPETag(pInfo->strInputFilename, true));
+                CSmartPtr<APE::IAPETag> spAPETag(new CAPETag(pInfo->m_strInputFilename, true));
                 if (spAPETag->GetHasAPETag())
                 {
-                    CSmartPtr<APE::IAPETag> spAPETagNew(new CAPETag(pInfo->strOutputFilename, true));
+                    CSmartPtr<APE::IAPETag> spAPETagNew(new CAPETag(pInfo->m_strOutputFilename, true));
                     for (int z = 0; true; z++)
                     {
                         CAPETagField * pField = spAPETag->GetTagField(z);
@@ -305,13 +304,13 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
                     spAPETagNew->Save(false);
                 }
             }
-            else if ((nRetVal == ERROR_SUCCESS) && (pInfo->GetOutputExtension() == _T(".ape")) && (pInfo->strInputFilename.Right(5).CompareNoCase(_T(".flac")) == 0))
+            else if ((nRetVal == ERROR_SUCCESS) && (pInfo->GetOutputExtension() == _T(".ape")) && (pInfo->m_strInputFilename.Right(5).CompareNoCase(_T(".flac")) == 0))
             {
                 // copy tags from FLAC to APE files
-                CSmartPtr<CFLACTag> spFLACTag(new CFLACTag(pInfo->strInputFilename));
+                CSmartPtr<CFLACTag> spFLACTag(new CFLACTag(pInfo->m_strInputFilename));
                 if (spFLACTag->m_mapFields.GetCount() > 0)
                 {
-                    CSmartPtr<APE::IAPETag> spAPETagNew(new CAPETag(pInfo->strOutputFilename, true));
+                    CSmartPtr<APE::IAPETag> spAPETagNew(new CAPETag(pInfo->m_strOutputFilename, true));
 
                     POSITION Pos = spFLACTag->m_mapFields.GetStartPosition();
                     while (Pos)
@@ -343,6 +342,8 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
                             spAPETagNew->SetFieldString(APE_TAG_FIELD_ORCHESTRA, strValue);
                         else if (strKey.CompareNoCase(_T("RATING")) == 0)
                             spAPETagNew->SetFieldString(APE_TAG_FIELD_RATING, strValue);
+                        else if (strKey.CompareNoCase(_T("LYRICS")) == 0)
+                            spAPETagNew->SetFieldString(APE_TAG_FIELD_LYRICS, strValue);
                         else if (strKey.CompareNoCase(_T("DATE")) == 0)
                         {
                             // year only
@@ -372,10 +373,13 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
 
                     if (spFLACTag->m_spPicture != NULL)
                     {
-                        CSmartPtr<char> spBuffer(new char [spFLACTag->m_nPictureBytes + 10], true);
-                        memcpy(spBuffer, "Cover.jpg\0", 10);
-                        memcpy(&spBuffer[10], spFLACTag->m_spPicture, spFLACTag->m_nPictureBytes);
-                        spAPETagNew->SetFieldBinary(APE_TAG_FIELD_COVER_ART_FRONT, spBuffer, spFLACTag->m_nPictureBytes + 10, TAG_FIELD_FLAG_DATA_TYPE_BINARY);
+                        int nBufferBytes = static_cast<int>(spFLACTag->m_nPictureBytes) + spFLACTag->m_strImageExtension.GetLength() + 1;
+                        CSmartPtr<char> spBuffer(new char [static_cast<size_t>(nBufferBytes)], true);
+                        CSmartPtr<char> spExtensionANSI(CAPECharacterHelper::GetANSIFromUTF16(spFLACTag->m_strImageExtension), true);
+                        memcpy(spBuffer, spExtensionANSI, static_cast<size_t>(spFLACTag->m_strImageExtension.GetLength())); // extension
+                        spBuffer[spFLACTag->m_strImageExtension.GetLength()] = 0; // NULL after the extension
+                        memcpy(&spBuffer[spFLACTag->m_strImageExtension.GetLength() + 1], spFLACTag->m_spPicture, spFLACTag->m_nPictureBytes); // image data
+                        spAPETagNew->SetFieldBinary(APE_TAG_FIELD_COVER_ART_FRONT, spBuffer, static_cast<intn>(spFLACTag->m_nPictureBytes) + 4, TAG_FIELD_FLAG_DATA_TYPE_BINARY);
                     }
 
                     spAPETagNew->Save(false);
@@ -385,42 +389,42 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
             // verify (if necessary)
             if (bVerifyWhenDone && (nRetVal == ERROR_SUCCESS))
             {
-                CString strInputFilename = pInfo->strInputFilename;
-                CString strOutputFilename = pInfo->strOutputFilename;
+                CString strInputFilename = pInfo->m_strInputFilename;
+                CString strOutputFilename = pInfo->m_strOutputFilename;
 
-                pInfo->Mode = MODE_VERIFY;
-                pInfo->strInputFilename = pInfo->strOutputFilename;
-                pInfo->nCurrentStage++;
-                pInfo->nStageProgress = 0;
+                pInfo->m_Mode = MODE_VERIFY;
+                pInfo->m_strInputFilename = pInfo->m_strOutputFilename;
+                pInfo->m_nCurrentStage++;
+                pInfo->m_nStageProgress = 0;
                 pInfo->CalculateFilenames();
 
                 nRetVal = theApp.GetFormatArray()->Process(pInfo);
 
-                pInfo->strInputFilename = strInputFilename;
-                pInfo->strOutputFilename = strOutputFilename;
+                pInfo->m_strInputFilename = strInputFilename;
+                pInfo->m_strOutputFilename = strOutputFilename;
             }
 
             // delete / recycle input file if specified
-            if ((nRetVal == ERROR_SUCCESS) && (bInputOutputSame == FALSE))
+            if ((nRetVal == ERROR_SUCCESS) && (bInputOutputSame == false))
             {
                 if (theApp.GetSettings()->m_nOutputDeleteAfterSuccessMode == OUTPUT_DELETE_AFTER_SUCCESS_MODE_RECYCLE_SOURCE)
                 {
-                    RecycleFile(pInfo->strInputFilename);
+                    RecycleFile(pInfo->m_strInputFilename);
                 }
                 else if (theApp.GetSettings()->m_nOutputDeleteAfterSuccessMode == OUTPUT_DELETE_AFTER_SUCCESS_MODE_DELETE_SOURCE)
                 {
-                    DeleteFileEx(pInfo->strInputFilename);
+                    DeleteFileEx(pInfo->m_strInputFilename);
                 }
             }
 
             // update the output bytes
-            pInfo->dOutputFileBytes = GetFileBytes(pInfo->strOutputFilename);
+            pInfo->m_dOutputFileBytes = GetFileBytes(pInfo->m_strOutputFilename);
         }
 
         if (nRetVal != ERROR_SUCCESS)
         {
             // cleanup the working file on failure
-            DeleteFileEx(pInfo->strWorkingFilename);
+            DeleteFileEx(pInfo->m_strWorkingFilename);
         }
     }
     else
@@ -428,18 +432,18 @@ void CMACProcessFiles::ProcessFileThread(MAC_FILE * pInfo)
         nRetVal = ERROR_SKIPPED;
     }
 
-    TICK_COUNT_READ(pInfo->dwEndTickCount);
-    pInfo->nRetVal = nRetVal;
-    pInfo->bDone = TRUE;
-    pInfo->bNeedsUpdate = TRUE;
+    TICK_COUNT_READ(pInfo->m_dwEndTickCount);
+    pInfo->m_nRetVal = nRetVal;
+    pInfo->m_bDone = true;
+    pInfo->m_bNeedsUpdate = true;
 
     // update the status to be user cancelled if we stopped
-    if ((pInfo->nRetVal == ERROR_UNDEFINED) && (pInfo->nKillFlag == KILL_FLAG_STOP))
-        pInfo->nRetVal = ERROR_USER_STOPPED_PROCESSING;
+    if ((pInfo->m_nRetVal == ERROR_UNDEFINED) && (pInfo->m_nKillFlag == KILL_FLAG_STOP))
+        pInfo->m_nRetVal = ERROR_USER_STOPPED_PROCESSING;
 
     // reset thread state
     SetThreadExecutionState(ES_CONTINUOUS);
 
     // we're done processing
-    pInfo->bProcessing = FALSE;
+    pInfo->m_bProcessing = false;
 }

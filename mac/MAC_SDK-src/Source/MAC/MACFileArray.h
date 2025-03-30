@@ -10,14 +10,14 @@ public:
     virtual ~MAC_FILE_ARRAY();
 
     // operations
-    BOOL PrepareForProcessing(CMACProcessFiles * pProcessFiles);
+    bool PrepareForProcessing(CMACProcessFiles * pProcessFiles);
 
     double GetTotalInputBytes();
     double GetTotalOutputBytes();
-    BOOL GetProcessingProgress(double & rdProgress, double & rdSecondsLeft, int nPausedTotalMS);
-    BOOL GetProcessingInfo(BOOL bStopped, int & rnRunning, BOOL & rbAllDone);
+    bool GetProcessingProgress(double & rdProgress, double & rdSecondsLeft, int nPausedTotalMS);
+    bool GetProcessingInfo(bool bStopped, int & rnRunning, bool & rbAllDone);
 
-    BOOL GetContainsFile(const CString & strFilename);
+    bool GetContainsFile(const CString & strFilename);
 
     // data
     ULONGLONG m_dwStartProcessingTickCount;

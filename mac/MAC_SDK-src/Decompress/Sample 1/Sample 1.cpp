@@ -1,6 +1,6 @@
 /***************************************************************************************
 Decompress - Sample 1
-Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2025 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates using MACDLib.lib and the simple IAPESimple class to verify
@@ -9,7 +9,7 @@ have an output file)  Also, shows how to use a callback to display the progress.
 
 General Notes:
     -the terminology "Sample" refers to a single sample value, and "Block" refers
-    to a collection    of "Channel" samples.  For simplicity, MAC typically uses blocks
+    to a collection    of "Channel" samples. For simplicity, MAC typically uses blocks
     everywhere so that channel mis-alignment cannot happen.
 
 Notes for use in a new project:
@@ -21,7 +21,7 @@ Notes for use in a new project:
 WARNING:
     -This class driven system for using Monkey's Audio is still in development, so
     I can't make any guarantees that the classes and libraries won't change before
-    everything gets finalized.  Use them at your own risk.
+    everything gets finalized. Use them at your own risk.
 ***************************************************************************************/
 
 // includes

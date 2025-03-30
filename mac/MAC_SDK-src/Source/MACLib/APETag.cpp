@@ -4,7 +4,6 @@
 #include "CharacterHelper.h"
 #include "IO.h"
 #include "GlobalFunctions.h"
-#include "IO.h"
 
 namespace APE
 {
@@ -15,8 +14,9 @@ CAPETagField
 CAPETagField::CAPETagField(const str_utfn * pFieldName, const void * pFieldValue, int nFieldBytes, int nFlags)
 {
     // field name
-    m_spFieldNameUTF16.Assign(new str_utfn [wcslen(pFieldName) + 1], true);
-    memcpy(m_spFieldNameUTF16, pFieldName, (wcslen(pFieldName) + 1) * sizeof(m_spFieldNameUTF16[0]));
+    size_t nFieldNameLength = wcslen(pFieldName);
+    m_spFieldNameUTF16.Assign(new str_utfn [nFieldNameLength + 1], true);
+    memcpy(m_spFieldNameUTF16, pFieldName, (nFieldNameLength + 1) * sizeof(m_spFieldNameUTF16[0]));
 
     // data (we'll always allocate two extra bytes and memset to 0 so we're safely NULL terminated)
     m_nFieldValueBytes = ape_max(nFieldBytes, 0);

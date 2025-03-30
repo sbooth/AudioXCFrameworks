@@ -18,7 +18,7 @@ CAPLHelper::~CAPLHelper()
 {
 }
 
-BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & strNamingTemplate)
+bool CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & strNamingTemplate)
 {
     // get the directory
     CString strDirectory = strImage;
@@ -28,18 +28,22 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
     HANDLE hCUE = CreateFile(strImage, GENERIC_READ, 0, APE_NULL, OPEN_EXISTING, 0, APE_NULL);
     DWORD dwCUEBytes = GetFileSize(hCUE, APE_NULL);
 
-    CSmartPtr<char> spCUE(new char [static_cast<size_t>(dwCUEBytes) + 1], TRUE);
+    CSmartPtr<char> spCUE(new char [static_cast<size_t>(dwCUEBytes) + 1], true);
     memset(spCUE, 0, static_cast<size_t>(dwCUEBytes) + 1);
 
     unsigned long nBytesRead = 0;
     BOOL bReadResult = ReadFile(hCUE, spCUE.GetPtr(), dwCUEBytes, &nBytesRead, APE_NULL);
     CloseHandle(hCUE);
-    if (bReadResult == FALSE)
-    {
-        return FALSE;
-    }
+    if (bReadResult == false)
+        return false;
 
-    CString strCUE = spCUE.GetPtr();
+    // read as UTF-8 first
+    CString strCUE = CAPECharacterHelper::GetUTF16FromUTF8(reinterpret_cast<str_utf8 *>(spCUE.GetPtr()));
+    if (strCUE.Find(_T("FILE \""), 0) < 0)
+    {
+        // read as UTF-16 since UTF-8 didn't find the file
+        strCUE = reinterpret_cast<str_utfn *>(spCUE.GetPtr());
+    }
 
     // parse the CUE header
     int nStart = strCUE.Find(_T("PERFORMER \""), 0);
@@ -74,7 +78,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
     int64 nSampleRate = GetAPESampleRate(strImageFile);
     if (nSampleRate <= 0)
     {
-        return FALSE;
+        return false;
     }
 
     // convert to a relative path
@@ -194,7 +198,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
                 _T("Finish Block=%s\r\n"),
                 strImageFile.GetString(), strStartBlock.GetString(), strFinishBlock.GetString());
 
-            CSmartPtr<char> spHeader(CAPECharacterHelper::GetANSIFromUTF16(strHeader), TRUE);
+            CSmartPtr<char> spHeader(CAPECharacterHelper::GetANSIFromUTF16(strHeader), true);
             unsigned int nBytesWritten = 0;
             spFileIO->Write(spHeader.GetPtr(), static_cast<unsigned int>(strlen(spHeader)), &nBytesWritten);
 
@@ -202,7 +206,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
             nBytesWritten = 0;
             spFileIO->Write(pcTagHeader, static_cast<unsigned int>(strlen(pcTagHeader)), &nBytesWritten);
 
-            CAPETag APETag(spFileIO, TRUE);
+            CAPETag APETag(spFileIO, true);
             APETag.SetFieldString(APE_TAG_FIELD_ARTIST, strArtist);
             APETag.SetFieldString(APE_TAG_FIELD_ALBUM, strAlbum);
             APETag.SetFieldString(APE_TAG_FIELD_TITLE, strTitle);
@@ -217,7 +221,7 @@ BOOL CAPLHelper::GenerateLinkFiles(const CString & strImage, const CString & str
         nStart = strCUE.Find(cSearch, 0);
     }
 
-    return TRUE;
+    return true;
 }
 
 int64 CAPLHelper::GetAPESampleRate(const CString & strFilename)

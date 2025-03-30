@@ -1,21 +1,21 @@
 /***************************************************************************************
 Decompress - Sample 2
-Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2025 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates using MACLib.lib to do decoding and seeking of an APE file.
 The library manages all seeking and buffering, so you simply seek
-to a location and ask for the amount of data required.  (Seek() and GetData())
+to a location and ask for the amount of data required. (Seek() and GetData())
 
 GetData will return the amount requested unless you're at the end of the file. (in
 which case it returns everything up to the end)  It's typically a good idea to check
-the return value of each decode.  A value other than ERROR_SUCCESS (0) means errors
-were encountered.  In these cases, the decoder will do the best job it can to keep
+the return value of each decode. A value other than ERROR_SUCCESS (0) means errors
+were encountered. In these cases, the decoder will do the best job it can to keep
 returning valid data. (corrupt data will be converted to silence)
 
 General Notes:
     -the terminology "Sample" refers to a single sample value, and "Block" refers
-    to a collection    of "Channel" samples.  For simplicity, MAC typically uses blocks
+    to a collection    of "Channel" samples. For simplicity, MAC typically uses blocks
     everywhere so that channel mis-alignment cannot happen.
 
 Notes for use in a new project:
@@ -27,7 +27,7 @@ Notes for use in a new project:
 WARNING:
     -This class driven system for using Monkey's Audio is still in development, so
     I can't make any guarantees that the classes and libraries won't change before
-    everything gets finalized.  Use them at your own risk
+    everything gets finalized. Use them at your own risk
 ***************************************************************************************/
 
 // includes

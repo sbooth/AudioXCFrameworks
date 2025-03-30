@@ -45,7 +45,7 @@
   <PropertyGroup Label="Globals">
     <ProjectName>DirectShow Filter</ProjectName>
     <ProjectGuid>{504A34A3-25F7-4535-B1F6-18B9E530FC0D}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -147,7 +147,7 @@
     <TargetName>APE</TargetName>
     <TargetExt>.ax</TargetExt>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -155,6 +155,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE</TargetName>
     <TargetExt>.ax</TargetExt>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(Configuration)\</OutDir>
@@ -163,7 +164,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE</TargetName>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -171,6 +172,7 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE</TargetName>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -179,7 +181,7 @@
     <TargetName>APE64</TargetName>
     <TargetExt>.ax</TargetExt>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64EC'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -187,6 +189,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE64</TargetName>
     <TargetExt>.ax</TargetExt>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -194,6 +197,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE64</TargetName>
     <TargetExt>.ax</TargetExt>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -201,7 +205,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE64</TargetName>
     <EnableClangTidyCodeAnalysis>true</EnableClangTidyCodeAnalysis>
-    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage</ClangTidyChecks>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64EC'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -209,6 +213,7 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE64</TargetName>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
@@ -216,6 +221,7 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
     <TargetName>APE64</TargetName>
+    <ClangTidyChecks>-clang-diagnostic-c++98-compat,-clang-diagnostic-c++98-compat-pedantic,-clang-diagnostic-language-extension-token,-clang-diagnostic-exit-time-destructors,-clang-diagnostic-global-constructors,-clang-diagnostic-unsafe-buffer-usage,-clang-diagnostic-pragma-pack</ClangTidyChecks>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -307,6 +313,7 @@
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <AdditionalOptions>/ignore:4286 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>MSVCRTD.lib</IgnoreSpecificDefaultLibraries>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -448,6 +455,7 @@
       <AdditionalOptions>/ignore:4286 %(AdditionalOptions)</AdditionalOptions>
       <IgnoreSpecificDefaultLibraries>MSVCRTD.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>../DirectShow SDK/x64/Debug</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64EC'">

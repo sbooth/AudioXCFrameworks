@@ -18,6 +18,7 @@ CWinFileIO::CWinFileIO()
     m_hFile = INVALID_HANDLE_VALUE;
     APE_CLEAR(m_cFileName);
     m_bReadOnly = false;
+    m_bPipe = false;
 }
 
 CWinFileIO::~CWinFileIO()
@@ -29,13 +30,15 @@ int CWinFileIO::Open(const wchar_t * pName, bool bOpenReadOnly)
 {
     Close();
 
-    if (wcslen(pName) >= APE_MAX_PATH)
+    size_t nNameLength = wcslen(pName);
+
+    if (nNameLength >= APE_MAX_PATH)
         return ERROR_UNDEFINED;
 
     #ifdef _UNICODE
-        wchar_t * pCopy = new wchar_t [wcslen(pName) + 1];
-        memcpy(pCopy, pName, sizeof(wchar_t) * wcslen(pName));
-        pCopy[wcslen(pName)] = 0;
+        wchar_t * pCopy = new wchar_t [nNameLength + 1];
+        memcpy(pCopy, pName, sizeof(wchar_t) * nNameLength);
+        pCopy[nNameLength] = 0;
         CSmartPtr<wchar_t> spName(pCopy, true);
     #else
         CSmartPtr<char> spName(CAPECharacterHelper::GetANSIFromUTF16(pName), true);
@@ -44,13 +47,14 @@ int CWinFileIO::Open(const wchar_t * pName, bool bOpenReadOnly)
     // handle pipes vs files
     if (0 == wcscmp(pName, L"-"))
     {
+        // flag that we're a pipe
+        m_bPipe = true;
+
         // pipes are read-only
         m_hFile = GetStdHandle(STD_INPUT_HANDLE);
         m_bReadOnly = true;
         if (m_hFile == INVALID_HANDLE_VALUE)
-        {
             return ERROR_INVALID_INPUT_FILE;
-        }
     }
     else
     {
@@ -183,6 +187,9 @@ int64 CWinFileIO::GetPosition()
 
 int64 CWinFileIO::GetSize()
 {
+    if (m_bPipe)
+        return APE_FILE_SIZE_UNDEFINED;
+
     DWORD dwFileSizeHigh = 0;
     const DWORD dwFileSizeLow = GetFileSize(m_hFile, &dwFileSizeHigh);
     return static_cast<int64>(dwFileSizeLow) + (static_cast<int64>(dwFileSizeHigh) << 32);
@@ -198,13 +205,15 @@ int CWinFileIO::Create(const wchar_t * pName)
 {
     Close();
 
-    if (wcslen(pName) >= APE_MAX_PATH)
+    size_t nNameLength = wcslen(pName);
+
+    if (nNameLength >= APE_MAX_PATH)
         return ERROR_UNDEFINED;
 
     #ifdef _UNICODE
-        wchar_t * pCopy = new wchar_t [wcslen(pName) + 1];
-        memcpy(pCopy, pName, sizeof(wchar_t) * wcslen(pName));
-        pCopy[wcslen(pName)] = 0;
+        wchar_t * pCopy = new wchar_t [nNameLength + 1];
+        memcpy(pCopy, pName, sizeof(wchar_t) * nNameLength);
+        pCopy[nNameLength] = 0;
         CSmartPtr<wchar_t> spName(pCopy, true);
     #else
         CSmartPtr<char> spName(CAPECharacterHelper::GetANSIFromUTF16(pName), true);

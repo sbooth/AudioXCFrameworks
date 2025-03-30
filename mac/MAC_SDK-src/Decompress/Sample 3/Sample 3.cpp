@@ -1,6 +1,6 @@
 /***************************************************************************************
 Decompress - Sample 3
-Copyright (C) 2000-2023 by Matthew T. Ashland   All Rights Reserved.
+Copyright (C) 2000-2025 by Matthew T. Ashland   All Rights Reserved.
 Feel free to use this code in any way that you like.
 
 This example illustrates dynamic linkage to MACDll.dll to decompress a whole file
@@ -8,7 +8,7 @@ and display a simple checksum. (see Sample 1 and Sample 2 for more info)
 
 General Notes:
     -the terminology "Sample" refers to a single sample value, and "Block" refers
-    to a collection    of "Channel" samples.  For simplicity, MAC typically uses blocks
+    to a collection    of "Channel" samples. For simplicity, MAC typically uses blocks
     everywhere so that channel mis-alignment cannot happen.
 
 Notes for use in a new project:
@@ -19,7 +19,7 @@ Notes for use in a new project:
 WARNING:
     -This class driven system for using Monkey's Audio is still in development, so
     I can't make any guarantees that the classes and libraries won't change before
-    everything gets finalized.  Use them at your own risk
+    everything gets finalized. Use them at your own risk
 ***************************************************************************************/
 
 // includes

@@ -23,7 +23,7 @@ Includes
 #include <atlbase.h>
 #include <process.h>
 #include <afxtempl.h>
-#include <MMSystem.h>
+#include <mmsystem.h>
 
 #include "All.h"
 #include "StringArrayEx.h"
@@ -40,23 +40,24 @@ Global functions
 **************************************************************************************************/
 void FixDirectory(CString & strDirectory);
 CString GetInstallPath();
-CString GetProgramPath(BOOL bAppendProgramName = FALSE);
+CString GetProgramPath(bool bAppendProgramName = false);
 CString GetUserDataPath();
 void CreateDirectoryEx(CString strDirectory);
-void ListFiles(CStringArray * pStringArray, CString strPath, BOOL bRecurse = FALSE);
-BOOL FileExists(const CString & strFilename);
+void ListFiles(CStringArray * pStringArray, CString strPath, bool bRecurse = false);
+bool FileExists(const CString & strFilename);
 CString GetUniqueFilename(CString strFilename);
 double GetFileBytes(const CString & strFilename);
 CString GetExtension(LPCTSTR pFilename);
 CString GetDirectory(LPCTSTR pFilename);
 double GetDriveFreeMB(CString strDrive);
-BOOL MoveFile(const CString & strExistingFilename, const CString & strNewFilename, BOOL bOverwrite);
-BOOL CopyFileTime(const CString & strSourceFilename, const CString & strDestinationFilename);
-BOOL RecycleFile(const CString & strFilename, BOOL bConfirm = FALSE);
-BOOL ReadWholeFile(const CString & strFilename, CString & strBuffer);
-BOOL ExecuteProgramBlocking(CString strApplication, CString strParameters, int * pnExitCode = APE_NULL, BOOL bShowPopup = FALSE, CString * pstrReturnOutput = APE_NULL);
-BOOL IsProcessElevated();
-BOOL DeleteFileEx(LPCTSTR pFilename);
+bool MoveFile(const CString & strExistingFilename, const CString & strNewFilename, bool bOverwrite);
+bool CopyFileTime(const CString & strSourceFilename, const CString & strDestinationFilename);
+bool RecycleFile(const CString & strFilename, bool bConfirm = false);
+bool ReadWholeFile(const CString & strFilename, CString & strBuffer);
+bool ExecuteProgramBlocking(CString strApplication, CString strParameters, int * pnExitCode = APE_NULL, bool bShowPopup = false, CString * pstrReturnOutput = APE_NULL);
+bool IsProcessElevated();
+void DeleteFileEx(LPCTSTR pFilename);
+void CapMoveToMonitor(HWND hWnd, LPRECT pRect);
 
 /**************************************************************************************************
 Global defines
@@ -67,7 +68,7 @@ Global defines
 Unicode helpers
 **************************************************************************************************/
 #ifdef _UNICODE
-    #define INITIALIZE_COMMON_CONTROL(HWND) ::SendMessage(HWND, CCM_SETUNICODEFORMAT, TRUE, 0);
+    #define INITIALIZE_COMMON_CONTROL(HWND) ::SendMessage(HWND, CCM_SETUNICODEFORMAT, true, 0);
 #else
-    #define INITIALIZE_COMMON_CONTROL(HWND) ::SendMessage(HWND, CCM_SETUNICODEFORMAT, FALSE, 0);
+    #define INITIALIZE_COMMON_CONTROL(HWND) ::SendMessage(HWND, CCM_SETUNICODEFORMAT, false, 0);
 #endif

@@ -48,20 +48,20 @@ __declspec(dllexport) short FAR PASCAL QueryCoolFilter(COOLQUERY far * cq)
 ///////////////////////////////////////////////////////////
 __declspec(dllexport) BOOL FAR PASCAL FilterUnderstandsFormat(LPSTR filename)
 {
-    BOOL bValid = FALSE;
+    bool bValid = false;
 
     APE_CATCH_ERRORS
     (
-        CSmartPtr<wchar_t> spFilenameUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), TRUE);
+        CSmartPtr<wchar_t> spFilenameUTF16(CAPECharacterHelper::GetUTF16FromANSI(filename), true);
         int nErrorCode = ERROR_SUCCESS;
-        IAPEDecompress * pAPEDecompress = CreateIAPEDecompress(spFilenameUTF16, &nErrorCode, true, true, false);
-        if (pAPEDecompress != APE_NULL)
+        CSmartPtr<IAPEDecompress> spAPEDecompress(CreateIAPEDecompress(spFilenameUTF16, &nErrorCode, true, true, false));
+        if (spAPEDecompress != APE_NULL)
         {
             if (nErrorCode == ERROR_SUCCESS)
             {
-                bValid = TRUE;
+                bValid = true;
             }
-            delete pAPEDecompress;
+            spAPEDecompress.Delete();
         }
     )
 
@@ -84,11 +84,11 @@ __declspec(dllexport) INT_PTR FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Messag
         long nDialogReturn = 0;
 
         nDialogReturn = static_cast<long>(lParam);
-        if (nDialogReturn == 1) CheckDlgButton(hWndDlg, IDC_R1, TRUE);
-        else if (nDialogReturn == 2) CheckDlgButton(hWndDlg, IDC_R2, TRUE);
-        else if (nDialogReturn == 3) CheckDlgButton(hWndDlg, IDC_R3, TRUE);
-        else if (nDialogReturn == 4) CheckDlgButton(hWndDlg, IDC_R4, TRUE);
-        else if (nDialogReturn == 5) CheckDlgButton(hWndDlg, IDC_R5, TRUE);
+        if (nDialogReturn == 1) CheckDlgButton(hWndDlg, IDC_R1, true);
+        else if (nDialogReturn == 2) CheckDlgButton(hWndDlg, IDC_R2, true);
+        else if (nDialogReturn == 3) CheckDlgButton(hWndDlg, IDC_R3, true);
+        else if (nDialogReturn == 4) CheckDlgButton(hWndDlg, IDC_R4, true);
+        else if (nDialogReturn == 5) CheckDlgButton(hWndDlg, IDC_R5, true);
     }
     break;
 
@@ -118,17 +118,17 @@ __declspec(dllexport) INT_PTR FAR PASCAL DIALOGMsgProc(HWND hWndDlg, UINT Messag
         break;
 
         case IDCANCEL:
-            EndDialog(hWndDlg, FALSE);
+            EndDialog(hWndDlg, false);
             break;
         }
         break;
     }
 
     default:
-        return FALSE;
+        return false;
     }
 
-    return TRUE;
+    return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

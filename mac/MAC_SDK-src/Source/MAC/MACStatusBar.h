@@ -9,9 +9,9 @@ public:
     CMACStatusBar(CMACDlg * pMACDlg);
     virtual ~CMACStatusBar();
 
-    BOOL UpdateProgress(double dProgress, double dSecondsLeft);
-    BOOL UpdateFiles(MAC_FILE_ARRAY * paryFiles);
-    BOOL SetLastProcessTotalMS(int nMilliseconds);
+    bool UpdateProgress(double dProgress, double dSecondsLeft);
+    bool UpdateFiles(MAC_FILE_ARRAY * paryFiles);
+    bool SetLastProcessTotalMS(int nMilliseconds);
     void StartProcessing();
     void EndProcessing();
 

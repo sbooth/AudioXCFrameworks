@@ -188,7 +188,7 @@ int CAPEHeader::AnalyzeCurrent(APE_FILE_INFO * pInfo)
 
     if ((pInfo->spAPEDescriptor->nDescriptorBytes - nBytesRead) > 0)
     {
-        m_pIO->Seek(pInfo->spAPEDescriptor->nDescriptorBytes - nBytesRead, SeekFileCurrent);
+        m_pIO->Seek(static_cast<int64>(pInfo->spAPEDescriptor->nDescriptorBytes) - static_cast<int64>(nBytesRead), SeekFileCurrent);
     }
 
     // read the header
@@ -197,7 +197,7 @@ int CAPEHeader::AnalyzeCurrent(APE_FILE_INFO * pInfo)
 
     if ((pInfo->spAPEDescriptor->nHeaderBytes - nBytesRead) > 0)
     {
-        m_pIO->Seek(pInfo->spAPEDescriptor->nHeaderBytes - nBytesRead, SeekFileCurrent);
+        m_pIO->Seek(static_cast<int64>(pInfo->spAPEDescriptor->nHeaderBytes) - static_cast<int64>(nBytesRead), SeekFileCurrent);
     }
 
     // fill the APE info structure
@@ -384,6 +384,7 @@ int CAPEHeader::AnalyzeOld(APE_FILE_INFO * pInfo)
     Convert32BitSeekTable(pInfo, spSeekByteTable32, pInfo->nSeekTableElements);
 
     // seek bit table (for older files)
+#ifdef APE_BACKWARDS_COMPATIBILITY
     if (APEHeader.nVersion <= 3800)
     {
         pInfo->spSeekBitTable.Assign(new unsigned char [static_cast<size_t>(pInfo->nSeekTableElements)], true);
@@ -392,6 +393,7 @@ int CAPEHeader::AnalyzeOld(APE_FILE_INFO * pInfo)
         if (m_pIO->Read(pInfo->spSeekBitTable.GetPtr(), static_cast<unsigned int>(pInfo->nSeekTableElements), &nBytesRead) || nBytesRead != static_cast<unsigned int>(pInfo->nSeekTableElements))
             return ERROR_IO_READ;
     }
+#endif
 
     return ERROR_SUCCESS;
 }

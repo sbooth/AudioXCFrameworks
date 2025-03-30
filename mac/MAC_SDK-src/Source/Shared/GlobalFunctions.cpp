@@ -59,7 +59,8 @@ bool FileExists(const wchar_t * pFilename)
 #ifdef UNICODE
     HANDLE hFind = FindFirstFile(pFilename, &WFD);
 #else
-    HANDLE hFind = FindFirstFile(CAPECharacterHelper::GetANSIFromUTF16(pFilename), &WFD);
+    CSmartPtr<char> spFilename(CAPECharacterHelper::GetANSIFromUTF16(pFilename), true);
+    HANDLE hFind = FindFirstFile(spFilename, &WFD);
 #endif
     if (hFind != INVALID_HANDLE_VALUE)
     {
@@ -146,6 +147,17 @@ bool StringIsEqual(const str_utfn * pString1, const str_utfn * pString2, bool bC
     }
 
     return bResult;
+}
+
+uint32 SwitchByteOrder(uint32 nValue)
+{
+    return (nValue << 24) | ((nValue & 0xFF00) << 8) | ((nValue & 0xFF0000) >> 8) | (nValue >> 24);
+}
+
+void SwitchBufferByteOrder(uint32 * pBuffer, uint32 nWords)
+{
+    for (unsigned int i = 0; i < nWords; i++)
+        pBuffer[i] = SwitchByteOrder(pBuffer[i]);
 }
 
 }

@@ -134,7 +134,7 @@ struct RANGE_CODER_STRUCT_DECOMPRESS
 /**************************************************************************************************
 CreateUnBitArray
 **************************************************************************************************/
-CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, intn nVersion);
+CUnBitArrayBase * CreateUnBitArray(IAPEDecompress * pAPEDecompress, CIO * pIO, intn nVersion);
 
 #pragma pack(pop)
 

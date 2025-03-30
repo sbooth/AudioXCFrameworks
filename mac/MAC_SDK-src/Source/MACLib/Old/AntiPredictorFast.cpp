@@ -6,8 +6,6 @@
 namespace APE
 {
 
-#ifdef ENABLE_COMPRESSION_MODE_FAST
-
 void CAntiPredictorFast0000To3320::AntiPredict(int * pInputArray, int * pOutputArray, int NumberOfElements) {
 
     //short frame handling
@@ -88,8 +86,6 @@ void CAntiPredictorFast3320ToCurrent::AntiPredict(int * pInputArray, int * pOutp
         OP1 = *ip;
     }
 }
-
-#endif // #ifdef ENABLE_COMPRESSION_MODE_FAST
 
 }
 
