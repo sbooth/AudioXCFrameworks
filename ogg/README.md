@@ -1,6 +1,6 @@
 ## Version
 
-[1.3.5](https://gitlab.xiph.org/xiph/ogg/-/releases/v1.3.5)
+[1.3.6](https://gitlab.xiph.org/xiph/ogg/-/releases/v1.3.6)
 
 ## License
 
