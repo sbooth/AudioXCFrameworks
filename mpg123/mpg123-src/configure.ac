@@ -80,6 +80,13 @@ dnl Testing with 1.14.
 AM_INIT_AUTOMAKE([subdir-objects])
 AC_CONFIG_HEADERS([src/config.h])
 
+dnl You tell me how quoting this normally would work to avoid expansion!
+if test 2 -lt "$(grep "PKG_"CHECK_MODULES "$0"|wc -l)"; then
+  AC_MSG_ERROR([Pkg-config was absent when generating this configure script.
+  Re-run autoreconf with pkg-config installed top get a working one.])
+fi
+dnl For some reason, this has to be after the check above.
+PKG_PROG_PKG_CONFIG([])
 
 # You get strange symptoms like jack module build failing because the AC_C_CONST failed to detect the working const support.
 # In that case, the test failed because -Werror, not because no const there...
@@ -1209,7 +1216,7 @@ dnl ############## Assembler, compiler properties
 # extended to use balign if present
 AC_MSG_CHECKING([if .balign is present])
 echo '.balign 4' > conftest.s
-if $CCAS -c -o conftest.o conftest.s 1>/dev/null 2>&1; then
+if $CCAS $CCASFLAGS -c -o conftest.o conftest.s 1>/dev/null 2>&1; then
 
   AC_MSG_RESULT([yes])
   AC_DEFINE(ASMALIGN_BALIGN, 1, [ Define if .balign is present. ])
@@ -1224,7 +1231,7 @@ if test x"$asmalign_exp" = xunknown; then
 	AC_MSG_CHECKING([if .align takes 2-exponent])
 	asmalign_exp="no"
 	echo '.align 3' > conftest.s
-	if $CCAS -c -o conftest.o conftest.s 1>/dev/null 2>&1; then
+	if $CCAS $CCASFLAGS -c -o conftest.o conftest.s 1>/dev/null 2>&1; then
 		asmalign_exp="yes"
 		AC_MSG_RESULT([yes])
 	else
@@ -1263,7 +1270,7 @@ if test x"$avx_support" = xunknown; then
 	avx_support="no"
 	echo '.text' > conftest.s
 	echo 'vaddps %ymm0,%ymm0,%ymm0' >> conftest.s
-	if $CCAS -c -o conftest.o conftest.s 1>/dev/null 2>&1; then
+	if $CCAS $CCASFLAGS -c -o conftest.o conftest.s 1>/dev/null 2>&1; then
 		avx_support="yes"
 		AC_MSG_RESULT([yes])
 	else
@@ -1331,7 +1338,7 @@ dnl ############## LFS stuff
 
 portable_api=no
 AC_ARG_ENABLE(portable,
-              [AS_HELP_STRING( [--enable-portable], [only build portable API (no off_t, no internal I/O)])],
+              [AS_HELP_STRING( [--enable-portable], [only build portable API (no off_t, no internal I/O -- and no end-user programs)])],
               [
                 if test "x$enableval" = xyes; then
                   portable_api="yes"
@@ -1471,7 +1478,7 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
 void *v = &ReadConsoleInput;
 ])],[ac_cv_header_wincon_h=yes],[ac_cv_header_wincon_h=no])
 AC_MSG_RESULT([$ac_cv_header_wincon_h])
-AS_IF([test "x$ac_cv_header_wincon_h" = "xyes"],[],[AC_DEFINE([HAVE_WINCON_H],[1],[Define to 1 if you have the <wincon.h> header file.])])
+AS_IF([test "x$ac_cv_header_wincon_h" = "xyes"],[AC_DEFINE([HAVE_WINCON_H],[1],[Define to 1 if you have the <wincon.h> header file.])],[])
 
 term_type=none
 if test "x$ac_cv_sys_posix_termios" = "xyes"; then
@@ -1491,7 +1498,8 @@ AC_CHECK_FUNCS( sched_setscheduler setuid getuid)
 # Check for setpriority
 AC_CHECK_FUNCS( setpriority )
 
-AC_CHECK_FUNCS( strerror strerror_l uselocale )
+# strtok_s for MSVCRT, not the C11 variant
+AC_CHECK_FUNCS( strerror strerror_l uselocale strtok_r strtok_s)
 
 AC_CHECK_FUNCS( setlocale nl_langinfo mbstowcs wcstombs wcswidth iswprint )
 
@@ -1924,8 +1932,6 @@ fi
 if test "x$build_libout123" = xyes && ! echo "$check_modules" | grep -qw dummy; then
 	check_modules="$check_modules dummy"
 fi
-
-PKG_PROG_PKG_CONFIG([])
 
 # Now go through the modules to check and do the chores.
 for m in $check_modules
@@ -2953,11 +2959,18 @@ dnl ############## Display Message
 
 default_offset_bits=`expr "$ac_cv_sizeof_off_t" "*" "8"`
 
+if test "x$build_programs" = xyes && ! test "x$portable_api" = xyes; then
+  build_mpg123_programs=yes
+else
+  build_mpg123_programs=no
+fi
+
 echo "
   $PACKAGE_NAME $PACKAGE_VERSION
 
   Install path ............ $prefix
   Components .............. $components
+  Main mpg123 program(s)... $build_mpg123_programs
   CPU Optimization ........ $cpu_type
   Compiler Optimization ... $with_optimization"
 if test x"$use_yasm_for_avx" = xyes; then

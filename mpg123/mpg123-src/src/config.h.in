@@ -244,6 +244,12 @@
 /* Define to 1 if you have the <string.h> header file. */
 #undef HAVE_STRING_H
 
+/* Define to 1 if you have the `strtok_r' function. */
+#undef HAVE_STRTOK_R
+
+/* Define to 1 if you have the `strtok_s' function. */
+#undef HAVE_STRTOK_S
+
 /* Define to 1 if you have the <sun/audioio.h> header file. */
 #undef HAVE_SUN_AUDIOIO_H
 

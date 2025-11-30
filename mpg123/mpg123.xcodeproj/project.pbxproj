@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3234599C2EDBE9B700CE3724 /* aarch64_defs.h in Headers */ = {isa = PBXBuildFile; fileRef = 3234599B2EDBE9B700CE3724 /* aarch64_defs.h */; };
 		325981CC2BE3CA7400852ED7 /* mpg123.h in Headers */ = {isa = PBXBuildFile; fileRef = 325981C12BE3CA6500852ED7 /* mpg123.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325981CE2BE3CA7B00852ED7 /* fmt123.h in Headers */ = {isa = PBXBuildFile; fileRef = 325981C02BE3CA6500852ED7 /* fmt123.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		325A609B2ADAF74900A091AA /* lfs_wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 326775F7254BBEED0041B063 /* lfs_wrap.c */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		32028D08254AE93F00A537DE /* mpg123.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = mpg123.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3234599B2EDBE9B700CE3724 /* aarch64_defs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aarch64_defs.h; sourceTree = "<group>"; };
 		325981C02BE3CA6500852ED7 /* fmt123.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fmt123.h; sourceTree = "<group>"; };
 		325981C12BE3CA6500852ED7 /* mpg123.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mpg123.h; sourceTree = "<group>"; };
 		325981C22BE3CA6500852ED7 /* out123.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = out123.h; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 		32677598254BBEED0041B063 /* libmpg123 */ = {
 			isa = PBXGroup;
 			children = (
+				3234599B2EDBE9B700CE3724 /* aarch64_defs.h */,
 				325A60772ADAF5FF00A091AA /* calctables.c */,
 				32677619254BBEED0041B063 /* check_neon.S */,
 				3287D1BE2816DCC4009EA035 /* costabs.h */,
@@ -671,6 +674,7 @@
 			files = (
 				325981CC2BE3CA7400852ED7 /* mpg123.h in Headers */,
 				325981CE2BE3CA7B00852ED7 /* fmt123.h in Headers */,
+				3234599C2EDBE9B700CE3724 /* aarch64_defs.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,7 +706,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					32028D07254AE93F00A537DE = {
 						CreatedOnToolsVersion = 12.2;
@@ -862,6 +866,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -917,6 +922,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

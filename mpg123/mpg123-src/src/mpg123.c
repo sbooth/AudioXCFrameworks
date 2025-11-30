@@ -1431,9 +1431,17 @@ int main(int sys_argc, char ** sys_argv)
 			print_outstr(stderr, filename, 0, stderr_is_term);
 			fprintf(stderr, " ...\n");
 			if(filept->htd.icy_name.fill)
-				fprintf(stderr, "ICY-NAME: %s\n", filept->htd.icy_name.p);
+			{
+				fprintf(stderr, "ICY-NAME: ");
+				print_outstr(stderr, filept->htd.icy_name.p, 1, stderr_is_term);
+				fprintf(stderr, "\n");
+			}
 			if(filept->htd.icy_url.fill)
-				fprintf(stderr, "ICY-URL: %s\n",  filept->htd.icy_url.p);
+			{
+				fprintf(stderr, "ICY-URL: ");
+				print_outstr(stderr, filept->htd.icy_url.p, 1, stderr_is_term);
+				fprintf(stderr, "\n");
+			}
 		}
 #if !defined(GENERIC)
 {
@@ -1515,7 +1523,9 @@ int main(int sys_argc, char ** sys_argv)
 		fprintf(stderr, "This was a Frankenstein track.\n");
 
 		position_info(mh, 0, ao, NULL, NULL, &secs, NULL, NULL, NULL);
-		fprintf(stderr,"[%d:%02d] Decoding of %s finished.\n", (int)(secs / 60), ((int)secs) % 60, filename);
+		fprintf(stderr,"[%d:%02d] Decoding of ", (int)(secs / 60), ((int)secs) % 60);
+		print_outstr(stderr, filename, 0, stderr_is_term);
+		fprintf(stderr," finished.\n");
 	}
 	else if(param.verbose) fprintf(stderr, "\n");
 
