@@ -67,6 +67,8 @@ check_function_exists(shmdt HAVE_SHMDT)
 check_function_exists(shmctl HAVE_SHMCTL)
 check_function_exists(strerror HAVE_STRERROR)
 check_function_exists(strerror_l HAVE_STRERROR_L)
+check_function_exists(strtok_r HAVE_STRTOK_R)
+check_function_exists(strtok_s HAVE_STRTOK_S)
 check_function_exists(fork HAVE_FORK)
 check_function_exists(execvp HAVE_EXECVP)
 check_function_exists(ctermid HAVE_CTERMID)
@@ -454,7 +456,14 @@ if(UNIX AND NOT PORTABLE_API)
             ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}/"
             LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}/"
             RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}/")
-    endif()
+
+        install(
+           FILES
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../../man1/mpg123.1"
+            "${CMAKE_CURRENT_SOURCE_DIR}/../../../man1/out123.1"
+           DESTINATION "${CMAKE_INSTALL_MANDIR}")
+
+   endif()
 endif()
 
 configure_file(config.cmake.h.in config.h)
