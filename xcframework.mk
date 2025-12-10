@@ -1,5 +1,5 @@
 ##
-## Copyright © 2021-2024 Stephen F. Booth <stephen@sbooth.name>
+## Copyright © 2021-2025 Stephen F. Booth <stephen@sbooth.name>
 ## MIT license
 ##
 
@@ -30,6 +30,8 @@
 ##   IOS_SCHEME        The scheme building the iOS framework target.
 ##                     If not set the default is `$(SCHEME)`.
 ##   TVOS_SCHEME       The scheme building the tvOS framework target.
+##                     If not set the default is `$(SCHEME)`.
+##   WATCHOS_SCHEME    The scheme building the watchOS framework target.
 ##                     If not set the default is `$(SCHEME)`.
 ##   BUILD_DIR         The directory where the build products should
 ##                     be written. If not set the default is "build".
@@ -63,6 +65,8 @@ MACOS_SCHEME ?= $(SCHEME)
 IOS_SCHEME ?= $(SCHEME)
 # The default name of the scheme that builds the framework for tvOS
 TVOS_SCHEME ?= $(SCHEME)
+# The default name of the scheme that builds the framework for watchOS
+WATCHOS_SCHEME ?= $(SCHEME)
 
 # Build products directory
 BUILD_DIR ?= build
@@ -82,14 +86,16 @@ IOS_XCARCHIVE := $(XCARCHIVE_DIR)/iOS.xcarchive
 IOS_SIMULATOR_XCARCHIVE := $(XCARCHIVE_DIR)/iOS-Simulator.xcarchive
 TVOS_XCARCHIVE := $(XCARCHIVE_DIR)/tvOS.xcarchive
 TVOS_SIMULATOR_XCARCHIVE := $(XCARCHIVE_DIR)/tvOS-Simulator.xcarchive
+WATCHOS_XCARCHIVE := $(XCARCHIVE_DIR)/watchOS.xcarchive
+WATCHOS_SIMULATOR_XCARCHIVE := $(XCARCHIVE_DIR)/watchOS-Simulator.xcarchive
 
-XCARCHIVES := $(MACOS_XCARCHIVE) $(MACOS_CATALYST_XCARCHIVE) $(IOS_XCARCHIVE) $(IOS_SIMULATOR_XCARCHIVE) $(TVOS_XCARCHIVE) $(TVOS_SIMULATOR_XCARCHIVE)
+XCARCHIVES := $(MACOS_XCARCHIVE) $(MACOS_CATALYST_XCARCHIVE) $(IOS_XCARCHIVE) $(IOS_SIMULATOR_XCARCHIVE) $(TVOS_XCARCHIVE) $(TVOS_SIMULATOR_XCARCHIVE) $(WATCHOS_XCARCHIVE) $(WATCHOS_SIMULATOR_XCARCHIVE)
 
 xcframework: $(XCFRAMEWORK)
 .PHONY: xcframework
 
 clean:
-	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(TVOS_XCARCHIVE)" "$(TVOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(XZ_FILE)" "$(ZIP_FILE)"
+	rm -Rf "$(MACOS_XCARCHIVE)" "$(MACOS_CATALYST_XCARCHIVE)" "$(IOS_XCARCHIVE)" "$(IOS_SIMULATOR_XCARCHIVE)" "$(TVOS_XCARCHIVE)" "$(TVOS_SIMULATOR_XCARCHIVE)" "$(WATCHOS_XCARCHIVE)" "$(WATCHOS_SIMULATOR_XCARCHIVE)" "$(XCFRAMEWORK)" "$(XZ_FILE)" "$(ZIP_FILE)"
 .PHONY: clean
 
 xz: $(XZ_FILE)
@@ -125,6 +131,12 @@ $(TVOS_XCARCHIVE): $(XCODEPROJ)
 
 $(TVOS_SIMULATOR_XCARCHIVE): $(XCODEPROJ)
 	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(TVOS_SCHEME)" -destination "generic/platform=tvOS Simulator" -archivePath "$(basename $@)"
+
+$(WATCHOS_XCARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(WATCHOS_SCHEME)" -destination "generic/platform=watchOS" -archivePath "$(basename $@)"
+
+$(WATCHOS_SIMULATOR_XCARCHIVE): $(XCODEPROJ)
+	xcodebuild archive -project "$(XCODEPROJ)" -scheme "$(WATCHOS_SCHEME)" -destination "generic/platform=watchOS Simulator" -archivePath "$(basename $@)"
 
 $(XCFRAMEWORK): $(XCARCHIVES)
 	rm -Rf "$@"
