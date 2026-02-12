@@ -2,7 +2,9 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Get CPU Info by asm method */
+#if __x86_64__
 #define CPU_INFO_BY_ASM 1
+#endif
 
 /* Get CPU Info by c method */
 /* #undef CPU_INFO_BY_C */
@@ -134,7 +136,9 @@
 /* #undef OPUS_ARM_INLINE_NEON */
 
 /* Compiler supports Aarch64 DOTPROD Intrinsics */
-/* #undef OPUS_ARM_MAY_HAVE_DOTPROD */
+#if __aarch64__
+#define OPUS_ARM_MAY_HAVE_DOTPROD 1
+#endif
 
 /* Define if assembler supports EDSP instructions */
 /* #undef OPUS_ARM_MAY_HAVE_EDSP */
@@ -146,13 +150,19 @@
 /* #undef OPUS_ARM_MAY_HAVE_NEON */
 
 /* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
-/* #undef OPUS_ARM_MAY_HAVE_NEON_INTR */
+#if __aarch64__
+#define OPUS_ARM_MAY_HAVE_NEON_INTR 1
+#endif
 
 /* Define if binary requires Aarch64 Neon Intrinsics */
-/* #undef OPUS_ARM_PRESUME_AARCH64_NEON_INTR */
+#if __aarch64__
+#define OPUS_ARM_PRESUME_AARCH64_NEON_INTR 1
+#endif
 
 /* Define if binary requires Aarch64 dotprod Intrinsics */
-/* #undef OPUS_ARM_PRESUME_DOTPROD */
+#if __aarch64__
+#define OPUS_ARM_PRESUME_DOTPROD 1
+#endif
 
 /* Define if binary requires EDSP instruction support */
 /* #undef OPUS_ARM_PRESUME_EDSP */
@@ -164,7 +174,9 @@
 /* #undef OPUS_ARM_PRESUME_NEON */
 
 /* Define if binary requires NEON intrinsics support */
-/* #undef OPUS_ARM_PRESUME_NEON_INTR */
+#if __aarch64__
+#define OPUS_ARM_PRESUME_NEON_INTR 1
+#endif
 
 /* This is a build of OPUS */
 #define OPUS_BUILD /**/
@@ -176,28 +188,42 @@
 #define OPUS_HAVE_RTCD 1
 
 /* Compiler supports X86 AVX2 Intrinsics */
+#if __x86_64__
 #define OPUS_X86_MAY_HAVE_AVX2 1
+#endif
 
 /* Compiler supports X86 SSE Intrinsics */
+#if __x86_64__
 #define OPUS_X86_MAY_HAVE_SSE 1
+#endif
 
 /* Compiler supports X86 SSE2 Intrinsics */
+#if __x86_64__
 #define OPUS_X86_MAY_HAVE_SSE2 1
+#endif
 
 /* Compiler supports X86 SSE4.1 Intrinsics */
+#if __x86_64__
 #define OPUS_X86_MAY_HAVE_SSE4_1 1
+#endif
 
 /* Define if binary requires AVX2 intrinsics support */
 /* #undef OPUS_X86_PRESUME_AVX2 */
 
 /* Define if binary requires SSE intrinsics support */
+#if __x86_64__
 #define OPUS_X86_PRESUME_SSE 1
+#endif
 
 /* Define if binary requires SSE2 intrinsics support */
+#if __x86_64__
 #define OPUS_X86_PRESUME_SSE2 1
+#endif
 
 /* Define if binary requires SSE4.1 intrinsics support */
+#if __x86_64__
 #define OPUS_X86_PRESUME_SSE4_1 1
+#endif
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "opus@xiph.org"
