@@ -2,9 +2,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Get CPU Info by asm method */
-#if __x86_64__
 #define CPU_INFO_BY_ASM 1
-#endif
 
 /* Get CPU Info by c method */
 /* #undef CPU_INFO_BY_C */
@@ -39,11 +37,23 @@
 /* LOSSGEN */
 /* #undef ENABLE_LOSSGEN */
 
+/* Opus custom API */
+/* #undef ENABLE_OPUS_CUSTOM_API */
+
 /* Enable Opus Speech Coding Enhancement */
 /* #undef ENABLE_OSCE */
 
+/* Enable Opus Speech Coding Enhancement Blind BWE */
+/* #undef ENABLE_OSCE_BWE */
+
 /* Enable dumping of OSCE training data */
 /* #undef ENABLE_OSCE_TRAINING_DATA */
+
+/* Scalable quality extension */
+/* #undef ENABLE_QEXT */
+
+/* 24-bit internal resolution for fixed-point */
+#define ENABLE_RES24 1
 
 /* Debug fixed-point implementation */
 /* #undef FIXED_DEBUG */
@@ -65,6 +75,9 @@
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
+
+/* Define to 1 if you have the `elf_aux_info' function. */
+/* #undef HAVE_ELF_AUX_INFO */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -121,9 +134,7 @@
 /* #undef OPUS_ARM_INLINE_NEON */
 
 /* Compiler supports Aarch64 DOTPROD Intrinsics */
-#if __aarch64__
-#define OPUS_ARM_MAY_HAVE_DOTPROD 1
-#endif
+/* #undef OPUS_ARM_MAY_HAVE_DOTPROD */
 
 /* Define if assembler supports EDSP instructions */
 /* #undef OPUS_ARM_MAY_HAVE_EDSP */
@@ -135,19 +146,13 @@
 /* #undef OPUS_ARM_MAY_HAVE_NEON */
 
 /* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
-#if __aarch64__
-#define OPUS_ARM_MAY_HAVE_NEON_INTR 1
-#endif
+/* #undef OPUS_ARM_MAY_HAVE_NEON_INTR */
 
 /* Define if binary requires Aarch64 Neon Intrinsics */
-#if __aarch64__
-#define OPUS_ARM_PRESUME_AARCH64_NEON_INTR 1
-#endif
+/* #undef OPUS_ARM_PRESUME_AARCH64_NEON_INTR */
 
 /* Define if binary requires Aarch64 dotprod Intrinsics */
-#if __aarch64__
-#define OPUS_ARM_PRESUME_DOTPROD 1
-#endif
+/* #undef OPUS_ARM_PRESUME_DOTPROD */
 
 /* Define if binary requires EDSP instruction support */
 /* #undef OPUS_ARM_PRESUME_EDSP */
@@ -159,56 +164,40 @@
 /* #undef OPUS_ARM_PRESUME_NEON */
 
 /* Define if binary requires NEON intrinsics support */
-#if __aarch64__
-#define OPUS_ARM_PRESUME_NEON_INTR 1
-#endif
+/* #undef OPUS_ARM_PRESUME_NEON_INTR */
 
 /* This is a build of OPUS */
 #define OPUS_BUILD /**/
 
-/* Run bit-exactness checks between optimized and c implementations */
+/* Run bit-exactness checks between optimized and C implementations */
 /* #undef OPUS_CHECK_ASM */
 
 /* Use run-time CPU capabilities detection */
 #define OPUS_HAVE_RTCD 1
 
 /* Compiler supports X86 AVX2 Intrinsics */
-#if __x86_64__
 #define OPUS_X86_MAY_HAVE_AVX2 1
-#endif
 
 /* Compiler supports X86 SSE Intrinsics */
-#if __x86_64__
 #define OPUS_X86_MAY_HAVE_SSE 1
-#endif
 
 /* Compiler supports X86 SSE2 Intrinsics */
-#if __x86_64__
 #define OPUS_X86_MAY_HAVE_SSE2 1
-#endif
 
 /* Compiler supports X86 SSE4.1 Intrinsics */
-#if __x86_64__
 #define OPUS_X86_MAY_HAVE_SSE4_1 1
-#endif
 
 /* Define if binary requires AVX2 intrinsics support */
 /* #undef OPUS_X86_PRESUME_AVX2 */
 
 /* Define if binary requires SSE intrinsics support */
-#if __x86_64__
 #define OPUS_X86_PRESUME_SSE 1
-#endif
 
 /* Define if binary requires SSE2 intrinsics support */
-#if __x86_64__
 #define OPUS_X86_PRESUME_SSE2 1
-#endif
 
 /* Define if binary requires SSE4.1 intrinsics support */
-#if __x86_64__
 #define OPUS_X86_PRESUME_SSE4_1 1
-#endif
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT "opus@xiph.org"
@@ -217,7 +206,7 @@
 #define PACKAGE_NAME "opus"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "opus 1.5.2"
+#define PACKAGE_STRING "opus 1.6.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "opus"
@@ -226,7 +215,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.5.2"
+#define PACKAGE_VERSION "1.6.1"
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

@@ -39,11 +39,23 @@
 /* LOSSGEN */
 /* #undef ENABLE_LOSSGEN */
 
+/* Opus custom API */
+/* #undef ENABLE_OPUS_CUSTOM_API */
+
 /* Enable Opus Speech Coding Enhancement */
 /* #undef ENABLE_OSCE */
 
+/* Enable Opus Speech Coding Enhancement Blind BWE */
+/* #undef ENABLE_OSCE_BWE */
+
 /* Enable dumping of OSCE training data */
 /* #undef ENABLE_OSCE_TRAINING_DATA */
+
+/* Scalable quality extension */
+/* #undef ENABLE_QEXT */
+
+/* 24-bit internal resolution for fixed-point */
+#define ENABLE_RES24 1
 
 /* Debug fixed-point implementation */
 /* #undef FIXED_DEBUG */
@@ -65,6 +77,9 @@
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
+
+/* Define to 1 if you have the `elf_aux_info' function. */
+/* #undef HAVE_ELF_AUX_INFO */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -166,7 +181,7 @@
 /* This is a build of OPUS */
 #define OPUS_BUILD /**/
 
-/* Run bit-exactness checks between optimized and c implementations */
+/* Run bit-exactness checks between optimized and C implementations */
 /* #undef OPUS_CHECK_ASM */
 
 /* Use run-time CPU capabilities detection */
@@ -217,7 +232,7 @@
 #define PACKAGE_NAME "opus"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "opus 1.5.2"
+#define PACKAGE_STRING "opus 1.6.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "opus"
@@ -226,7 +241,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.5.2"
+#define PACKAGE_VERSION "1.6.1"
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for

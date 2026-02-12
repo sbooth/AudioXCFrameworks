@@ -48,6 +48,7 @@ endif()
 
 check_symbol_exists(lrintf "math.h" HAVE_LRINTF)
 check_symbol_exists(lrint "math.h" HAVE_LRINT)
+check_symbol_exists(elf_aux_info "sys/auxv.h" HAVE_ELF_AUX_INFO)
 cmake_pop_check_state()
 
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "(i[0-9]86|x86|X86|amd64|AMD64|x86_64)")
@@ -56,7 +57,7 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "(i[0-9]86|x86|X86|amd64|AMD64|x86_64)")
   else()
     set(OPUS_CPU_X86 1)
   endif()
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(arm|aarch64)")
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(arm|aarch64|ARM)")
   set(OPUS_CPU_ARM 1)
 endif()
 

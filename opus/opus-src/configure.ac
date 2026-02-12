@@ -22,9 +22,9 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 # For libtool.
 dnl Please update these for releases.
-OPUS_LT_CURRENT=10
+OPUS_LT_CURRENT=11
 OPUS_LT_REVISION=1
-OPUS_LT_AGE=10
+OPUS_LT_AGE=11
 
 AC_SUBST(OPUS_LT_CURRENT)
 AC_SUBST(OPUS_LT_REVISION)
@@ -34,11 +34,9 @@ AM_INIT_AUTOMAKE([no-define])
 AM_MAINTAINER_MODE([enable])
 
 AC_CANONICAL_HOST
-AC_MINGW32
-AM_PROG_LIBTOOL
+LT_INIT
+AC_PROG_CC
 AM_PROG_CC_C_O
-
-AC_PROG_CC_C99
 AC_C_CONST
 AC_C_INLINE
 
@@ -48,8 +46,6 @@ AC_DEFINE([OPUS_BUILD], [], [This is a build of OPUS])
 
 #Use a hacked up version of autoconf's AC_C_RESTRICT because it's not
 #strong enough a test to detect old buggy versions of GCC (e.g. 2.95.3)
-#Note: Both this and the test for variable-size arrays below are also
-#      done by AC_PROG_CC_C99, but not thoroughly enough apparently.
 AC_CACHE_CHECK([for C/C++ restrict keyword], ac_cv_c_restrict,
   [ac_cv_c_restrict=no
    # The order here caters to the fact that C++ does not require restrict.
@@ -151,6 +147,23 @@ AS_IF([test "$enable_float_api" = "no"],[
   AC_DEFINE([DISABLE_FLOAT_API], [1], [Do not build the float API])
 ])
 
+AC_ARG_ENABLE([fixed-res24],
+	      [AS_HELP_STRING([--disable-fixed-res24], [use 16-bit (instead of 24-bit) internal resolution for fixed-point implementation])],,
+    [enable_fixed_res24=yes])
+
+AS_IF([test "$enable_fixed_res24" = "yes"],[
+  AC_DEFINE([ENABLE_RES24], [1], [24-bit internal resolution for fixed-point])
+])
+
+AC_ARG_ENABLE([qext],
+	      [AS_HELP_STRING([--enable-qext], [enable scalable quality extension])],,
+    [enable_qext=no])
+
+AS_IF([test "$enable_qext" = "yes"],[
+  AC_DEFINE([ENABLE_QEXT], [1], [Scalable quality extension])
+])
+AM_CONDITIONAL([ENABLE_QEXT], [test "$enable_qext" = "yes"])
+
 AC_ARG_ENABLE([custom-modes],
     [AS_HELP_STRING([--enable-custom-modes], [enable non-Opus modes, e.g. 44.1 kHz & 2^n frames])],,
     [enable_custom_modes=no])
@@ -160,10 +173,19 @@ AS_IF([test "$enable_custom_modes" = "yes"],[
   PC_BUILD="$PC_BUILD, custom modes"
 ])
 
-AM_CONDITIONAL([CUSTOM_MODES], [test "$enable_custom_modes" = "yes"])
+AC_ARG_ENABLE([opus-custom-api],
+    [AS_HELP_STRING([--enable-opus-custom-api], [enable Opus custom API])],,
+    [enable_opus_custom_api=no])
+
+AS_IF([test "$enable_opus_custom_api" = "yes"],[
+  AC_DEFINE([ENABLE_OPUS_CUSTOM_API], [1], [Opus custom API])
+  PC_BUILD="$PC_BUILD, Opus custom API"
+])
+
+AM_CONDITIONAL([CUSTOM_MODES], [test "$enable_custom_modes" = "yes" || test "$enable_opus_custom_api" = "yes"])
 
 AC_ARG_ENABLE([dred],
-    [AS_HELP_STRING([--enable-dred], [Use Deep REDundancy (DRED)])],,
+    [AS_HELP_STRING([--enable-dred], [use Deep REDundancy (DRED)])],,
     [enable_dred=no])
 
 AS_IF([test "$enable_dred" = "yes"],[
@@ -172,7 +194,7 @@ AS_IF([test "$enable_dred" = "yes"],[
 AM_CONDITIONAL([ENABLE_DRED], [test "$enable_dred" = "yes"])
 
 AC_ARG_ENABLE([deep-plc],
-    [AS_HELP_STRING([--enable-deep-plc], [Use deep PLC for SILK])],,
+    [AS_HELP_STRING([--enable-deep-plc], [use deep PLC for SILK])],,
     [enable_deep_plc=no])
 
 AS_IF([test "$enable_deep_plc" = "yes" || test "$enable_dred" = "yes" || test "$enable_osce" = "yes" || test "$enable_osce_training_data" = "yes"],[
@@ -181,7 +203,7 @@ AS_IF([test "$enable_deep_plc" = "yes" || test "$enable_dred" = "yes" || test "$
 AM_CONDITIONAL([ENABLE_DEEP_PLC], [test "$enable_deep_plc" = "yes" || test "$enable_dred" = "yes" || test "$enable_osce" = "yes" || test "$enable_osce_training_data" = "yes"])
 
 AC_ARG_ENABLE([lossgen],
-    [AS_HELP_STRING([--enable-lossgen], [Build opus_demo with packet loss simulator])],,
+    [AS_HELP_STRING([--enable-lossgen], [build opus_demo with packet loss simulator])],,
     [enable_lossgen=no])
 
 AS_IF([test "$enable_lossgen" = "yes"],[
@@ -199,7 +221,7 @@ esac
 AC_ARG_ENABLE([float-approx],
     [AS_HELP_STRING([--enable-float-approx], [enable fast approximations for floating point])],
     [if test "$enable_float_approx" = "yes"; then
-       AC_WARN([Floating point approximations are not supported on all platforms.])
+       AC_MSG_WARN([Floating point approximations are not supported on all platforms.])
      fi
     ],
     [enable_float_approx=$has_float_approx])
@@ -209,15 +231,15 @@ AS_IF([test "$enable_float_approx" = "yes"],[
 ])
 
 AC_ARG_ENABLE([asm],
-    [AS_HELP_STRING([--disable-asm], [Disable assembly optimizations])],,
+    [AS_HELP_STRING([--disable-asm], [disable assembly optimizations])],,
     [enable_asm=yes])
 
 AC_ARG_ENABLE([rtcd],
-    [AS_HELP_STRING([--disable-rtcd], [Disable run-time CPU capabilities detection])],,
+    [AS_HELP_STRING([--disable-rtcd], [disable run-time CPU capabilities detection])],,
     [enable_rtcd=yes])
 
 AC_ARG_ENABLE([intrinsics],
-    [AS_HELP_STRING([--disable-intrinsics], [Disable intrinsics optimizations])],,
+    [AS_HELP_STRING([--disable-intrinsics], [disable intrinsics optimizations])],,
     [enable_intrinsics=yes])
 
 rtcd_support=no
@@ -428,15 +450,15 @@ AS_VAR_SET_IF([ARM_DOTPROD_INTR_CFLAGS], [], [AS_VAR_SET([ARM_DOTPROD_INTR_CFLAG
 AC_DEFUN([OPUS_PATH_NE10],
    [
       AC_ARG_WITH(NE10,
-                  AC_HELP_STRING([--with-NE10=PFX],[Prefix where libNE10 is installed (optional)]),
+                  AS_HELP_STRING([--with-NE10=PFX],[prefix where libNE10 is installed (optional)]),
                   NE10_prefix="$withval", NE10_prefix="")
       AC_ARG_WITH(NE10-libraries,
-                  AC_HELP_STRING([--with-NE10-libraries=DIR],
-                        [Directory where libNE10 library is installed (optional)]),
+                  AS_HELP_STRING([--with-NE10-libraries=DIR],
+                                 [directory where libNE10 library is installed (optional)]),
                   NE10_libraries="$withval", NE10_libraries="")
       AC_ARG_WITH(NE10-includes,
-                  AC_HELP_STRING([--with-NE10-includes=DIR],
-                                 [Directory where libNE10 header files are installed (optional)]),
+                  AS_HELP_STRING([--with-NE10-includes=DIR],
+                                 [directory where libNE10 header files are installed (optional)]),
                   NE10_includes="$withval", NE10_includes="")
 
       if test "x$NE10_libraries" != "x" ; then
@@ -699,7 +721,7 @@ AS_IF([test x"$enable_intrinsics" = x"yes"],[
              mtest = _mm256_fmadd_ps(mtest, mtest, mtest);
              mtest1 = _mm256_set_m128i(_mm_loadu_si64(utest), _mm_loadu_si64(utest));
              mtest2 =
-              _mm256_cvtepi16_epi32(_mm_loadu_si128(utest));
+              _mm256_cvtepi16_epi32(_mm_loadu_si128((void*)utest));
              return _mm256_extract_epi16(_mm256_xor_si256(
               _mm256_xor_si256(mtest1, mtest2), _mm256_cvttps_epi32(mtest)), 0);
          ]]
@@ -848,7 +870,7 @@ AM_CONDITIONAL([HAVE_AVX2],
     [test x"$OPUS_X86_MAY_HAVE_AVX2" = x"1"])
 
 AM_CONDITIONAL([HAVE_RTCD],
- [test x"$enable_rtcd" = x"yes" -a x"$rtcd_support" != x"no"])
+ [test x"$enable_rtcd" = x"yes" && test x"$rtcd_support" != x"no"])
 AS_IF([test x"$enable_rtcd" = x"yes"],[
     AS_IF([test x"$rtcd_support" != x"no"],[
         AC_DEFINE([OPUS_HAVE_RTCD], [1],
@@ -877,7 +899,7 @@ AS_IF([test "$enable_hardening" = "yes"], [
 ])
 
 AC_ARG_ENABLE([fuzzing],
-	      [AS_HELP_STRING([--enable-fuzzing],[causes the encoder to make random decisions (do not use in production)])],,
+	      [AS_HELP_STRING([--enable-fuzzing],[cause the encoder to make random decisions (do not use in production)])],,
     [enable_fuzzing=no])
 
 AS_IF([test "$enable_fuzzing" = "yes"], [
@@ -886,15 +908,15 @@ AS_IF([test "$enable_fuzzing" = "yes"], [
 
 AC_ARG_ENABLE([check-asm],
     [AS_HELP_STRING([--enable-check-asm],
-                    [enable bit-exactness checks between optimized and c implementations])],,
+                    [enable bit-exactness checks between optimized and C implementations])],,
     [enable_check_asm=no])
 
 AS_IF([test "$enable_check_asm" = "yes"], [
-  AC_DEFINE([OPUS_CHECK_ASM], [1], [Run bit-exactness checks between optimized and c implementations])
+  AC_DEFINE([OPUS_CHECK_ASM], [1], [Run bit-exactness checks between optimized and C implementations])
 ])
 
 AC_ARG_ENABLE([doc],
-    [AS_HELP_STRING([--disable-doc], [Do not build API documentation])],,
+    [AS_HELP_STRING([--disable-doc], [do not build API documentation])],,
     [enable_doc=yes])
 
 AS_IF([test "$enable_doc" = "yes"], [
@@ -905,7 +927,7 @@ AS_IF([test "$enable_doc" = "yes"], [
 ])
 
 AC_ARG_ENABLE([dot-product],
-	      AS_HELP_STRING([--disable-dot-product], [Disable dot product implementation]),,
+	      AS_HELP_STRING([--disable-dot-product], [disable dot product implementation]),,
   enable_dot_product=yes)
 
 AS_IF([test "$enable_dot_product" = "no"], [
@@ -913,7 +935,7 @@ AS_IF([test "$enable_dot_product" = "no"], [
 ])
 
 AC_ARG_ENABLE([dnn-debug-float],
-	      AS_HELP_STRING([--enable-dnn-debug-float], [Use floating-point DNN computation everywhere]),,
+	      AS_HELP_STRING([--enable-dnn-debug-float], [use floating-point DNN computation everywhere]),,
   enable_dnn_debug_float=no)
 
 AS_IF([test "$enable_dnn_debug_float" = "no"], [
@@ -921,7 +943,7 @@ AS_IF([test "$enable_dnn_debug_float" = "no"], [
 ])
 
 AC_ARG_ENABLE([osce-training-data],
-  AS_HELP_STRING([--enable-osce-training-data], [enables feature output for SILK enhancement]),,
+  AS_HELP_STRING([--enable-osce-training-data], [enable feature output for SILK enhancement]),,
   [enable_osc_training_data=no]
 )
 
@@ -935,27 +957,34 @@ AS_IF([test "$enable_osce_training_data" = "yes"], [
 ], [AC_MSG_RESULT([no])])
 
 AC_ARG_ENABLE([osce],
-  AS_HELP_STRING([--enable-osce], [enables speech coding enhancement]),,
+  AS_HELP_STRING([--enable-osce], [enable speech coding enhancement]),,
   [enable_osce=no]
 )
 
 AS_IF([test "$enable_osce" = "yes" || test "$enable_osce_training_data" = "yes"], [
        AC_DEFINE([ENABLE_OSCE], [1], [Enable Opus Speech Coding Enhancement])
+       AC_DEFINE([ENABLE_OSCE_BWE], [1], [Enable Opus Speech Coding Enhancement Blind BWE])
 ])
 
 AM_CONDITIONAL([ENABLE_OSCE], [test "$enable_osce" = "yes" || test "$enable_osce_training_data" = "yes"])
 
+AS_IF([test "$enable_fixed_point" = "yes"], [
+  AS_IF([test "$enable_dred" = "yes" || test "$enable_deep_plc" = "yes" || test "$enable_osce" = "yes"], [
+    AC_MSG_ERROR([--enable-fixed-point cannot be used with --enable-deep-plc, --enable-dred, and --enable-osce.])
+  ])
+])
+
 AM_CONDITIONAL([HAVE_DOXYGEN], [test "$HAVE_DOXYGEN" = "yes"])
 
 AC_ARG_ENABLE([extra-programs],
-    [AS_HELP_STRING([--disable-extra-programs], [Do not build extra programs (demo and tests)])],,
+    [AS_HELP_STRING([--disable-extra-programs], [do not build extra programs (demo and tests)])],,
     [enable_extra_programs=yes])
 
 AM_CONDITIONAL([EXTRA_PROGRAMS], [test "$enable_extra_programs" = "yes"])
 
 
 AC_ARG_ENABLE([rfc8251],
-	      AS_HELP_STRING([--disable-rfc8251], [Disable bitstream fixes from RFC 8251]),,
+	      AS_HELP_STRING([--disable-rfc8251], [disable bitstream fixes from RFC 8251]),,
   [enable_rfc8251=yes])
 
 AS_IF([test "$enable_rfc8251" = "no"], [
@@ -990,7 +1019,7 @@ dnl Enable stack-protector-all only on x86 where it's well supported.
 dnl on some platforms it causes crashes. Hopefully the OS's default's
 dnl include this on platforms that work but have been missed here.
 AC_ARG_ENABLE([stack-protector],
-    [AS_HELP_STRING([--disable-stack-protector],[Disable compiler stack hardening])],,
+    [AS_HELP_STRING([--disable-stack-protector],[disable compiler stack hardening])],,
     [
       AS_IF([test "$ac_cv_c_compiler_gnu" = "yes" && test "$on_x86" = "yes" && test "$on_windows" = "no"],
             [enable_stack_protector=yes],[enable_stack_protector=no])
@@ -1032,7 +1061,7 @@ AC_CHECK_FUNCS([lrintf])
 AC_CHECK_FUNCS([lrint])
 LIBS="$saved_LIBS"
 
-AC_CHECK_FUNCS([__malloc_hook])
+AC_CHECK_FUNCS([__malloc_hook elf_aux_info])
 
 AC_SUBST([PC_BUILD])
 
@@ -1080,4 +1109,3 @@ AC_MSG_NOTICE([
  Type "make; make install" to compile and install
  Type "make check" to run the test suite
 ])
-

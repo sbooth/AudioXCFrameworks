@@ -53190,76 +53190,76 @@ static const float plc_gru2_recurrent_bias[576] = {
 #ifndef USE_WEIGHTS_FILE
 const WeightArray plcmodel_arrays[] = {
 #ifdef WEIGHTS_plc_dense_in_weights_float_DEFINED
-{"plc_dense_in_weights_float",WEIGHTS_plc_dense_in_weights_float_TYPE,sizeof(plc_dense_in_weights_float),plc_dense_in_weights_float},
+{"plc_dense_in_weights_float", WEIGHTS_plc_dense_in_weights_float_TYPE,sizeof(plc_dense_in_weights_float),plc_dense_in_weights_float},
 #endif
 #ifdef WEIGHTS_plc_dense_in_bias_DEFINED
-{"plc_dense_in_bias",WEIGHTS_plc_dense_in_bias_TYPE,sizeof(plc_dense_in_bias),plc_dense_in_bias},
+{"plc_dense_in_bias", WEIGHTS_plc_dense_in_bias_TYPE,sizeof(plc_dense_in_bias),plc_dense_in_bias},
 #endif
 #ifdef WEIGHTS_plc_dense_out_weights_float_DEFINED
-{"plc_dense_out_weights_float",WEIGHTS_plc_dense_out_weights_float_TYPE,sizeof(plc_dense_out_weights_float),plc_dense_out_weights_float},
+{"plc_dense_out_weights_float", WEIGHTS_plc_dense_out_weights_float_TYPE,sizeof(plc_dense_out_weights_float),plc_dense_out_weights_float},
 #endif
 #ifdef WEIGHTS_plc_dense_out_bias_DEFINED
-{"plc_dense_out_bias",WEIGHTS_plc_dense_out_bias_TYPE,sizeof(plc_dense_out_bias),plc_dense_out_bias},
+{"plc_dense_out_bias", WEIGHTS_plc_dense_out_bias_TYPE,sizeof(plc_dense_out_bias),plc_dense_out_bias},
 #endif
 #ifdef WEIGHTS_plc_gru1_input_weights_int8_DEFINED
-{"plc_gru1_input_weights_int8",WEIGHTS_plc_gru1_input_weights_int8_TYPE,sizeof(plc_gru1_input_weights_int8),plc_gru1_input_weights_int8},
+{"plc_gru1_input_weights_int8", WEIGHTS_plc_gru1_input_weights_int8_TYPE,sizeof(plc_gru1_input_weights_int8),plc_gru1_input_weights_int8},
 #endif
 #ifdef WEIGHTS_plc_gru1_input_weights_float_DEFINED
-{"plc_gru1_input_weights_float",WEIGHTS_plc_gru1_input_weights_float_TYPE,sizeof(plc_gru1_input_weights_float),plc_gru1_input_weights_float},
+{"plc_gru1_input_weights_float", WEIGHTS_plc_gru1_input_weights_float_TYPE,sizeof(plc_gru1_input_weights_float),plc_gru1_input_weights_float},
 #endif
 #ifdef WEIGHTS_plc_gru1_input_subias_DEFINED
-{"plc_gru1_input_subias",WEIGHTS_plc_gru1_input_subias_TYPE,sizeof(plc_gru1_input_subias),plc_gru1_input_subias},
+{"plc_gru1_input_subias", WEIGHTS_plc_gru1_input_subias_TYPE,sizeof(plc_gru1_input_subias),plc_gru1_input_subias},
 #endif
 #ifdef WEIGHTS_plc_gru1_input_scale_DEFINED
-{"plc_gru1_input_scale",WEIGHTS_plc_gru1_input_scale_TYPE,sizeof(plc_gru1_input_scale),plc_gru1_input_scale},
+{"plc_gru1_input_scale", WEIGHTS_plc_gru1_input_scale_TYPE,sizeof(plc_gru1_input_scale),plc_gru1_input_scale},
 #endif
 #ifdef WEIGHTS_plc_gru1_input_bias_DEFINED
-{"plc_gru1_input_bias",WEIGHTS_plc_gru1_input_bias_TYPE,sizeof(plc_gru1_input_bias),plc_gru1_input_bias},
+{"plc_gru1_input_bias", WEIGHTS_plc_gru1_input_bias_TYPE,sizeof(plc_gru1_input_bias),plc_gru1_input_bias},
 #endif
 #ifdef WEIGHTS_plc_gru1_recurrent_weights_int8_DEFINED
-{"plc_gru1_recurrent_weights_int8",WEIGHTS_plc_gru1_recurrent_weights_int8_TYPE,sizeof(plc_gru1_recurrent_weights_int8),plc_gru1_recurrent_weights_int8},
+{"plc_gru1_recurrent_weights_int8", WEIGHTS_plc_gru1_recurrent_weights_int8_TYPE,sizeof(plc_gru1_recurrent_weights_int8),plc_gru1_recurrent_weights_int8},
 #endif
 #ifdef WEIGHTS_plc_gru1_recurrent_weights_float_DEFINED
-{"plc_gru1_recurrent_weights_float",WEIGHTS_plc_gru1_recurrent_weights_float_TYPE,sizeof(plc_gru1_recurrent_weights_float),plc_gru1_recurrent_weights_float},
+{"plc_gru1_recurrent_weights_float", WEIGHTS_plc_gru1_recurrent_weights_float_TYPE,sizeof(plc_gru1_recurrent_weights_float),plc_gru1_recurrent_weights_float},
 #endif
 #ifdef WEIGHTS_plc_gru1_recurrent_subias_DEFINED
-{"plc_gru1_recurrent_subias",WEIGHTS_plc_gru1_recurrent_subias_TYPE,sizeof(plc_gru1_recurrent_subias),plc_gru1_recurrent_subias},
+{"plc_gru1_recurrent_subias", WEIGHTS_plc_gru1_recurrent_subias_TYPE,sizeof(plc_gru1_recurrent_subias),plc_gru1_recurrent_subias},
 #endif
 #ifdef WEIGHTS_plc_gru1_recurrent_scale_DEFINED
-{"plc_gru1_recurrent_scale",WEIGHTS_plc_gru1_recurrent_scale_TYPE,sizeof(plc_gru1_recurrent_scale),plc_gru1_recurrent_scale},
+{"plc_gru1_recurrent_scale", WEIGHTS_plc_gru1_recurrent_scale_TYPE,sizeof(plc_gru1_recurrent_scale),plc_gru1_recurrent_scale},
 #endif
 #ifdef WEIGHTS_plc_gru1_recurrent_bias_DEFINED
-{"plc_gru1_recurrent_bias",WEIGHTS_plc_gru1_recurrent_bias_TYPE,sizeof(plc_gru1_recurrent_bias),plc_gru1_recurrent_bias},
+{"plc_gru1_recurrent_bias", WEIGHTS_plc_gru1_recurrent_bias_TYPE,sizeof(plc_gru1_recurrent_bias),plc_gru1_recurrent_bias},
 #endif
 #ifdef WEIGHTS_plc_gru2_input_weights_int8_DEFINED
-{"plc_gru2_input_weights_int8",WEIGHTS_plc_gru2_input_weights_int8_TYPE,sizeof(plc_gru2_input_weights_int8),plc_gru2_input_weights_int8},
+{"plc_gru2_input_weights_int8", WEIGHTS_plc_gru2_input_weights_int8_TYPE,sizeof(plc_gru2_input_weights_int8),plc_gru2_input_weights_int8},
 #endif
 #ifdef WEIGHTS_plc_gru2_input_weights_float_DEFINED
-{"plc_gru2_input_weights_float",WEIGHTS_plc_gru2_input_weights_float_TYPE,sizeof(plc_gru2_input_weights_float),plc_gru2_input_weights_float},
+{"plc_gru2_input_weights_float", WEIGHTS_plc_gru2_input_weights_float_TYPE,sizeof(plc_gru2_input_weights_float),plc_gru2_input_weights_float},
 #endif
 #ifdef WEIGHTS_plc_gru2_input_subias_DEFINED
-{"plc_gru2_input_subias",WEIGHTS_plc_gru2_input_subias_TYPE,sizeof(plc_gru2_input_subias),plc_gru2_input_subias},
+{"plc_gru2_input_subias", WEIGHTS_plc_gru2_input_subias_TYPE,sizeof(plc_gru2_input_subias),plc_gru2_input_subias},
 #endif
 #ifdef WEIGHTS_plc_gru2_input_scale_DEFINED
-{"plc_gru2_input_scale",WEIGHTS_plc_gru2_input_scale_TYPE,sizeof(plc_gru2_input_scale),plc_gru2_input_scale},
+{"plc_gru2_input_scale", WEIGHTS_plc_gru2_input_scale_TYPE,sizeof(plc_gru2_input_scale),plc_gru2_input_scale},
 #endif
 #ifdef WEIGHTS_plc_gru2_input_bias_DEFINED
-{"plc_gru2_input_bias",WEIGHTS_plc_gru2_input_bias_TYPE,sizeof(plc_gru2_input_bias),plc_gru2_input_bias},
+{"plc_gru2_input_bias", WEIGHTS_plc_gru2_input_bias_TYPE,sizeof(plc_gru2_input_bias),plc_gru2_input_bias},
 #endif
 #ifdef WEIGHTS_plc_gru2_recurrent_weights_int8_DEFINED
-{"plc_gru2_recurrent_weights_int8",WEIGHTS_plc_gru2_recurrent_weights_int8_TYPE,sizeof(plc_gru2_recurrent_weights_int8),plc_gru2_recurrent_weights_int8},
+{"plc_gru2_recurrent_weights_int8", WEIGHTS_plc_gru2_recurrent_weights_int8_TYPE,sizeof(plc_gru2_recurrent_weights_int8),plc_gru2_recurrent_weights_int8},
 #endif
 #ifdef WEIGHTS_plc_gru2_recurrent_weights_float_DEFINED
-{"plc_gru2_recurrent_weights_float",WEIGHTS_plc_gru2_recurrent_weights_float_TYPE,sizeof(plc_gru2_recurrent_weights_float),plc_gru2_recurrent_weights_float},
+{"plc_gru2_recurrent_weights_float", WEIGHTS_plc_gru2_recurrent_weights_float_TYPE,sizeof(plc_gru2_recurrent_weights_float),plc_gru2_recurrent_weights_float},
 #endif
 #ifdef WEIGHTS_plc_gru2_recurrent_subias_DEFINED
-{"plc_gru2_recurrent_subias",WEIGHTS_plc_gru2_recurrent_subias_TYPE,sizeof(plc_gru2_recurrent_subias),plc_gru2_recurrent_subias},
+{"plc_gru2_recurrent_subias", WEIGHTS_plc_gru2_recurrent_subias_TYPE,sizeof(plc_gru2_recurrent_subias),plc_gru2_recurrent_subias},
 #endif
 #ifdef WEIGHTS_plc_gru2_recurrent_scale_DEFINED
-{"plc_gru2_recurrent_scale",WEIGHTS_plc_gru2_recurrent_scale_TYPE,sizeof(plc_gru2_recurrent_scale),plc_gru2_recurrent_scale},
+{"plc_gru2_recurrent_scale", WEIGHTS_plc_gru2_recurrent_scale_TYPE,sizeof(plc_gru2_recurrent_scale),plc_gru2_recurrent_scale},
 #endif
 #ifdef WEIGHTS_plc_gru2_recurrent_bias_DEFINED
-{"plc_gru2_recurrent_bias",WEIGHTS_plc_gru2_recurrent_bias_TYPE,sizeof(plc_gru2_recurrent_bias),plc_gru2_recurrent_bias},
+{"plc_gru2_recurrent_bias", WEIGHTS_plc_gru2_recurrent_bias_TYPE,sizeof(plc_gru2_recurrent_bias),plc_gru2_recurrent_bias},
 #endif
 {NULL,0,0,NULL}
 };

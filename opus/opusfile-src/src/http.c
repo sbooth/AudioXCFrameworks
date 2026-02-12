@@ -623,7 +623,7 @@ static int op_parse_url(OpusParsedURL *_dst,const char *_src){
   op_parsed_url_init(&url);
   ret=op_parse_url_impl(&url,_src);
   if(OP_UNLIKELY(ret<0))op_parsed_url_clear(&url);
-  else *_dst=*&url;
+  else *_dst=url;
   return ret;
 }
 
@@ -1068,7 +1068,7 @@ static void op_http_conn_read_rate_update(OpusHTTPConn *_conn){
   read_rate=_conn->read_rate;
   read_delta_ms=OP_MAX(read_delta_ms,1);
   read_rate+=read_delta_bytes*1000/read_delta_ms-read_rate+4>>3;
-  *&_conn->read_time=*&read_time;
+  _conn->read_time=read_time;
   _conn->read_bytes=0;
   _conn->read_rate=read_rate;
 }
@@ -1759,7 +1759,8 @@ static int op_http_verify_hostname(OpusHTTPStream *_stream,SSL *_ssl_conn){
   char            *host;
   size_t           host_len;
   unsigned char   *ip;
-  int              ip_len;
+  /* On AIX 7.3, ip_len is #defined to ip_ff.ip_flen and compilation fails */
+  int              iplen;
   int              check_cn;
   int              ret;
   host=_stream->url.host;
@@ -1775,7 +1776,7 @@ static int op_http_verify_hostname(OpusHTTPStream *_stream,SSL *_ssl_conn){
   /*Check to see if the host was specified as a simple IP address.*/
   addr=op_inet_pton(host);
   ip=NULL;
-  ip_len=0;
+  iplen=0;
   if(addr!=NULL){
     switch(addr->ai_family){
       case AF_INET:{
@@ -1783,7 +1784,7 @@ static int op_http_verify_hostname(OpusHTTPStream *_stream,SSL *_ssl_conn){
         s=(struct sockaddr_in *)addr->ai_addr;
         OP_ASSERT(addr->ai_addrlen>=sizeof(*s));
         ip=(unsigned char *)&s->sin_addr;
-        ip_len=sizeof(s->sin_addr);
+        iplen=sizeof(s->sin_addr);
         /*RFC 6125 says, "In this case, the iPAddress subjectAltName must [sic]
            be present in the certificate and must [sic] exactly match the IP in
            the URI."
@@ -1795,7 +1796,7 @@ static int op_http_verify_hostname(OpusHTTPStream *_stream,SSL *_ssl_conn){
         s=(struct sockaddr_in6 *)addr->ai_addr;
         OP_ASSERT(addr->ai_addrlen>=sizeof(*s));
         ip=(unsigned char *)&s->sin6_addr;
-        ip_len=sizeof(s->sin6_addr);
+        iplen=sizeof(s->sin6_addr);
         check_cn=0;
       }break;
     }
@@ -1879,8 +1880,8 @@ static int op_http_verify_hostname(OpusHTTPStream *_stream,SSL *_ssl_conn){
             A match occurs if the reference identity octet string and the value
              octet strings are identical."*/
           cert_ip=ASN1_STRING_get0_data(name->d.iPAddress);
-          if(ip_len==ASN1_STRING_length(name->d.iPAddress)
-           &&memcmp(ip,cert_ip,ip_len)==0){
+          if(iplen==ASN1_STRING_length(name->d.iPAddress)
+           &&memcmp(ip,cert_ip,iplen)==0){
             ret=1;
             break;
           }
@@ -1941,12 +1942,12 @@ static int op_http_conn_start_tls(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
     struct addrinfo   *addr;
     char              *host;
     unsigned char     *ip;
-    int                ip_len;
+    int                iplen;
     param=SSL_get0_param(_ssl_conn);
     OP_ASSERT(param!=NULL);
     host=_stream->url.host;
     ip=NULL;
-    ip_len=0;
+    iplen=0;
     /*Check to see if the host was specified as a simple IP address.*/
     addr=op_inet_pton(host);
     if(addr!=NULL){
@@ -1956,7 +1957,7 @@ static int op_http_conn_start_tls(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
           s=(struct sockaddr_in *)addr->ai_addr;
           OP_ASSERT(addr->ai_addrlen>=sizeof(*s));
           ip=(unsigned char *)&s->sin_addr;
-          ip_len=sizeof(s->sin_addr);
+          iplen=sizeof(s->sin_addr);
           host=NULL;
         }break;
         case AF_INET6:{
@@ -1964,7 +1965,7 @@ static int op_http_conn_start_tls(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
           s=(struct sockaddr_in6 *)addr->ai_addr;
           OP_ASSERT(addr->ai_addrlen>=sizeof(*s));
           ip=(unsigned char *)&s->sin6_addr;
-          ip_len=sizeof(s->sin6_addr);
+          iplen=sizeof(s->sin6_addr);
           host=NULL;
         }break;
       }
@@ -1972,7 +1973,7 @@ static int op_http_conn_start_tls(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
     /*Always set both host and ip to prevent matching against an old one.
       One of the two will always be NULL, clearing that parameter.*/
     X509_VERIFY_PARAM_set1_host(param,host,0);
-    X509_VERIFY_PARAM_set1_ip(param,ip,ip_len);
+    X509_VERIFY_PARAM_set1_ip(param,ip,iplen);
     if(addr!=NULL)freeaddrinfo(addr);
   }
 # endif
@@ -2086,7 +2087,7 @@ static int op_http_connect_impl(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
   _conn->next=_stream->lru_head;
   _stream->lru_head=_conn;
   op_time_get(_start_time);
-  *&_conn->read_time=*_start_time;
+  _conn->read_time=*_start_time;
   _conn->read_bytes=0;
   _conn->read_rate=0;
   /*Try to start a connection to each protocol.
@@ -2200,7 +2201,7 @@ static int op_http_connect(OpusHTTPStream *_stream,OpusHTTPConn *_conn,
     new_addrs=op_resolve(_stream->connect_host,_stream->connect_port);
     if(OP_LIKELY(new_addrs!=NULL)){
       _addrs=new_addrs;
-      *&_stream->resolve_time=*&resolve_time;
+      _stream->resolve_time=resolve_time;
     }
     else if(OP_LIKELY(_addrs==NULL))return OP_FALSE;
   }
@@ -2718,7 +2719,7 @@ static int op_http_stream_open(OpusHTTPStream *_stream,const char *_url,
     /*Always try to skip re-resolve for proxy connections.*/
     else addrs=&_stream->addr_info;
     op_parsed_url_clear(&_stream->url);
-    *&_stream->url=*&next_url;
+    _stream->url=next_url;
     /*TODO: On servers/proxies that support pipelining, we might be able to
        re-use this connection.*/
     op_http_conn_close(_stream,_stream->conns+0,&_stream->lru_head,1);
@@ -3196,7 +3197,7 @@ static int op_http_stream_seek(void *_stream,opus_int64 _offset,int _whence){
   /*Mark when we deactivated the active connection.*/
   if(ci>=0){
     op_http_conn_read_rate_update(stream->conns+ci);
-    *&seek_time=*&stream->conns[ci].read_time;
+    seek_time=stream->conns[ci].read_time;
   }
   else op_time_get(&seek_time);
   /*If we seeked past the end of the stream, just disable the active
@@ -3422,7 +3423,7 @@ static void *op_url_stream_create_impl(OpusFileCallbacks *_cb,const char *_url,
       _ogg_free(stream);
       return NULL;
     }
-    *_cb=*&OP_HTTP_CALLBACKS;
+    *_cb=OP_HTTP_CALLBACKS;
     return stream;
   }
 #else
@@ -3515,7 +3516,7 @@ void *op_url_stream_vcreate(OpusFileCallbacks *_cb,
   OpusServerInfo *pinfo;
   void *ret;
   ret=op_url_stream_vcreate_impl(_cb,_url,&info,&pinfo,_ap);
-  if(pinfo!=NULL)*pinfo=*&info;
+  if(pinfo!=NULL)*pinfo=info;
   return ret;
 }
 
@@ -3548,7 +3549,7 @@ OggOpusFile *op_vopen_url(const char *_url,int *_error,va_list _ap){
     if(pinfo!=NULL)opus_server_info_clear(&info);
     (*cb.close)(source);
   }
-  else if(pinfo!=NULL)*pinfo=*&info;
+  else if(pinfo!=NULL)*pinfo=info;
   return of;
 }
 
@@ -3578,7 +3579,7 @@ OggOpusFile *op_vtest_url(const char *_url,int *_error,va_list _ap){
     if(pinfo!=NULL)opus_server_info_clear(&info);
     (*cb.close)(source);
   }
-  else if(pinfo!=NULL)*pinfo=*&info;
+  else if(pinfo!=NULL)*pinfo=info;
   return of;
 }
 
