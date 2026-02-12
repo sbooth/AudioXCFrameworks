@@ -8744,106 +8744,106 @@ static const float gru_1_recurrent_bias[192] = {
 #ifndef USE_WEIGHTS_FILE
 const WeightArray pitchdnn_arrays[] = {
 #ifdef WEIGHTS_dense_if_upsampler_1_weights_int8_DEFINED
-{"dense_if_upsampler_1_weights_int8",WEIGHTS_dense_if_upsampler_1_weights_int8_TYPE,sizeof(dense_if_upsampler_1_weights_int8),dense_if_upsampler_1_weights_int8},
+{"dense_if_upsampler_1_weights_int8", WEIGHTS_dense_if_upsampler_1_weights_int8_TYPE,sizeof(dense_if_upsampler_1_weights_int8),dense_if_upsampler_1_weights_int8},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_1_weights_float_DEFINED
-{"dense_if_upsampler_1_weights_float",WEIGHTS_dense_if_upsampler_1_weights_float_TYPE,sizeof(dense_if_upsampler_1_weights_float),dense_if_upsampler_1_weights_float},
+{"dense_if_upsampler_1_weights_float", WEIGHTS_dense_if_upsampler_1_weights_float_TYPE,sizeof(dense_if_upsampler_1_weights_float),dense_if_upsampler_1_weights_float},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_1_subias_DEFINED
-{"dense_if_upsampler_1_subias",WEIGHTS_dense_if_upsampler_1_subias_TYPE,sizeof(dense_if_upsampler_1_subias),dense_if_upsampler_1_subias},
+{"dense_if_upsampler_1_subias", WEIGHTS_dense_if_upsampler_1_subias_TYPE,sizeof(dense_if_upsampler_1_subias),dense_if_upsampler_1_subias},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_1_scale_DEFINED
-{"dense_if_upsampler_1_scale",WEIGHTS_dense_if_upsampler_1_scale_TYPE,sizeof(dense_if_upsampler_1_scale),dense_if_upsampler_1_scale},
+{"dense_if_upsampler_1_scale", WEIGHTS_dense_if_upsampler_1_scale_TYPE,sizeof(dense_if_upsampler_1_scale),dense_if_upsampler_1_scale},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_1_bias_DEFINED
-{"dense_if_upsampler_1_bias",WEIGHTS_dense_if_upsampler_1_bias_TYPE,sizeof(dense_if_upsampler_1_bias),dense_if_upsampler_1_bias},
+{"dense_if_upsampler_1_bias", WEIGHTS_dense_if_upsampler_1_bias_TYPE,sizeof(dense_if_upsampler_1_bias),dense_if_upsampler_1_bias},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_2_weights_int8_DEFINED
-{"dense_if_upsampler_2_weights_int8",WEIGHTS_dense_if_upsampler_2_weights_int8_TYPE,sizeof(dense_if_upsampler_2_weights_int8),dense_if_upsampler_2_weights_int8},
+{"dense_if_upsampler_2_weights_int8", WEIGHTS_dense_if_upsampler_2_weights_int8_TYPE,sizeof(dense_if_upsampler_2_weights_int8),dense_if_upsampler_2_weights_int8},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_2_weights_float_DEFINED
-{"dense_if_upsampler_2_weights_float",WEIGHTS_dense_if_upsampler_2_weights_float_TYPE,sizeof(dense_if_upsampler_2_weights_float),dense_if_upsampler_2_weights_float},
+{"dense_if_upsampler_2_weights_float", WEIGHTS_dense_if_upsampler_2_weights_float_TYPE,sizeof(dense_if_upsampler_2_weights_float),dense_if_upsampler_2_weights_float},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_2_subias_DEFINED
-{"dense_if_upsampler_2_subias",WEIGHTS_dense_if_upsampler_2_subias_TYPE,sizeof(dense_if_upsampler_2_subias),dense_if_upsampler_2_subias},
+{"dense_if_upsampler_2_subias", WEIGHTS_dense_if_upsampler_2_subias_TYPE,sizeof(dense_if_upsampler_2_subias),dense_if_upsampler_2_subias},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_2_scale_DEFINED
-{"dense_if_upsampler_2_scale",WEIGHTS_dense_if_upsampler_2_scale_TYPE,sizeof(dense_if_upsampler_2_scale),dense_if_upsampler_2_scale},
+{"dense_if_upsampler_2_scale", WEIGHTS_dense_if_upsampler_2_scale_TYPE,sizeof(dense_if_upsampler_2_scale),dense_if_upsampler_2_scale},
 #endif
 #ifdef WEIGHTS_dense_if_upsampler_2_bias_DEFINED
-{"dense_if_upsampler_2_bias",WEIGHTS_dense_if_upsampler_2_bias_TYPE,sizeof(dense_if_upsampler_2_bias),dense_if_upsampler_2_bias},
+{"dense_if_upsampler_2_bias", WEIGHTS_dense_if_upsampler_2_bias_TYPE,sizeof(dense_if_upsampler_2_bias),dense_if_upsampler_2_bias},
 #endif
 #ifdef WEIGHTS_dense_downsampler_weights_int8_DEFINED
-{"dense_downsampler_weights_int8",WEIGHTS_dense_downsampler_weights_int8_TYPE,sizeof(dense_downsampler_weights_int8),dense_downsampler_weights_int8},
+{"dense_downsampler_weights_int8", WEIGHTS_dense_downsampler_weights_int8_TYPE,sizeof(dense_downsampler_weights_int8),dense_downsampler_weights_int8},
 #endif
 #ifdef WEIGHTS_dense_downsampler_weights_float_DEFINED
-{"dense_downsampler_weights_float",WEIGHTS_dense_downsampler_weights_float_TYPE,sizeof(dense_downsampler_weights_float),dense_downsampler_weights_float},
+{"dense_downsampler_weights_float", WEIGHTS_dense_downsampler_weights_float_TYPE,sizeof(dense_downsampler_weights_float),dense_downsampler_weights_float},
 #endif
 #ifdef WEIGHTS_dense_downsampler_subias_DEFINED
-{"dense_downsampler_subias",WEIGHTS_dense_downsampler_subias_TYPE,sizeof(dense_downsampler_subias),dense_downsampler_subias},
+{"dense_downsampler_subias", WEIGHTS_dense_downsampler_subias_TYPE,sizeof(dense_downsampler_subias),dense_downsampler_subias},
 #endif
 #ifdef WEIGHTS_dense_downsampler_scale_DEFINED
-{"dense_downsampler_scale",WEIGHTS_dense_downsampler_scale_TYPE,sizeof(dense_downsampler_scale),dense_downsampler_scale},
+{"dense_downsampler_scale", WEIGHTS_dense_downsampler_scale_TYPE,sizeof(dense_downsampler_scale),dense_downsampler_scale},
 #endif
 #ifdef WEIGHTS_dense_downsampler_bias_DEFINED
-{"dense_downsampler_bias",WEIGHTS_dense_downsampler_bias_TYPE,sizeof(dense_downsampler_bias),dense_downsampler_bias},
+{"dense_downsampler_bias", WEIGHTS_dense_downsampler_bias_TYPE,sizeof(dense_downsampler_bias),dense_downsampler_bias},
 #endif
 #ifdef WEIGHTS_dense_final_upsampler_weights_int8_DEFINED
-{"dense_final_upsampler_weights_int8",WEIGHTS_dense_final_upsampler_weights_int8_TYPE,sizeof(dense_final_upsampler_weights_int8),dense_final_upsampler_weights_int8},
+{"dense_final_upsampler_weights_int8", WEIGHTS_dense_final_upsampler_weights_int8_TYPE,sizeof(dense_final_upsampler_weights_int8),dense_final_upsampler_weights_int8},
 #endif
 #ifdef WEIGHTS_dense_final_upsampler_weights_float_DEFINED
-{"dense_final_upsampler_weights_float",WEIGHTS_dense_final_upsampler_weights_float_TYPE,sizeof(dense_final_upsampler_weights_float),dense_final_upsampler_weights_float},
+{"dense_final_upsampler_weights_float", WEIGHTS_dense_final_upsampler_weights_float_TYPE,sizeof(dense_final_upsampler_weights_float),dense_final_upsampler_weights_float},
 #endif
 #ifdef WEIGHTS_dense_final_upsampler_subias_DEFINED
-{"dense_final_upsampler_subias",WEIGHTS_dense_final_upsampler_subias_TYPE,sizeof(dense_final_upsampler_subias),dense_final_upsampler_subias},
+{"dense_final_upsampler_subias", WEIGHTS_dense_final_upsampler_subias_TYPE,sizeof(dense_final_upsampler_subias),dense_final_upsampler_subias},
 #endif
 #ifdef WEIGHTS_dense_final_upsampler_scale_DEFINED
-{"dense_final_upsampler_scale",WEIGHTS_dense_final_upsampler_scale_TYPE,sizeof(dense_final_upsampler_scale),dense_final_upsampler_scale},
+{"dense_final_upsampler_scale", WEIGHTS_dense_final_upsampler_scale_TYPE,sizeof(dense_final_upsampler_scale),dense_final_upsampler_scale},
 #endif
 #ifdef WEIGHTS_dense_final_upsampler_bias_DEFINED
-{"dense_final_upsampler_bias",WEIGHTS_dense_final_upsampler_bias_TYPE,sizeof(dense_final_upsampler_bias),dense_final_upsampler_bias},
+{"dense_final_upsampler_bias", WEIGHTS_dense_final_upsampler_bias_TYPE,sizeof(dense_final_upsampler_bias),dense_final_upsampler_bias},
 #endif
 #ifdef WEIGHTS_conv2d_1_weight_float_DEFINED
-{"conv2d_1_weight_float",WEIGHTS_conv2d_1_weight_float_TYPE,sizeof(conv2d_1_weight_float),conv2d_1_weight_float},
+{"conv2d_1_weight_float", WEIGHTS_conv2d_1_weight_float_TYPE,sizeof(conv2d_1_weight_float),conv2d_1_weight_float},
 #endif
 #ifdef WEIGHTS_conv2d_1_bias_DEFINED
-{"conv2d_1_bias",WEIGHTS_conv2d_1_bias_TYPE,sizeof(conv2d_1_bias),conv2d_1_bias},
+{"conv2d_1_bias", WEIGHTS_conv2d_1_bias_TYPE,sizeof(conv2d_1_bias),conv2d_1_bias},
 #endif
 #ifdef WEIGHTS_conv2d_2_weight_float_DEFINED
-{"conv2d_2_weight_float",WEIGHTS_conv2d_2_weight_float_TYPE,sizeof(conv2d_2_weight_float),conv2d_2_weight_float},
+{"conv2d_2_weight_float", WEIGHTS_conv2d_2_weight_float_TYPE,sizeof(conv2d_2_weight_float),conv2d_2_weight_float},
 #endif
 #ifdef WEIGHTS_conv2d_2_bias_DEFINED
-{"conv2d_2_bias",WEIGHTS_conv2d_2_bias_TYPE,sizeof(conv2d_2_bias),conv2d_2_bias},
+{"conv2d_2_bias", WEIGHTS_conv2d_2_bias_TYPE,sizeof(conv2d_2_bias),conv2d_2_bias},
 #endif
 #ifdef WEIGHTS_gru_1_input_weights_int8_DEFINED
-{"gru_1_input_weights_int8",WEIGHTS_gru_1_input_weights_int8_TYPE,sizeof(gru_1_input_weights_int8),gru_1_input_weights_int8},
+{"gru_1_input_weights_int8", WEIGHTS_gru_1_input_weights_int8_TYPE,sizeof(gru_1_input_weights_int8),gru_1_input_weights_int8},
 #endif
 #ifdef WEIGHTS_gru_1_input_weights_float_DEFINED
-{"gru_1_input_weights_float",WEIGHTS_gru_1_input_weights_float_TYPE,sizeof(gru_1_input_weights_float),gru_1_input_weights_float},
+{"gru_1_input_weights_float", WEIGHTS_gru_1_input_weights_float_TYPE,sizeof(gru_1_input_weights_float),gru_1_input_weights_float},
 #endif
 #ifdef WEIGHTS_gru_1_input_subias_DEFINED
-{"gru_1_input_subias",WEIGHTS_gru_1_input_subias_TYPE,sizeof(gru_1_input_subias),gru_1_input_subias},
+{"gru_1_input_subias", WEIGHTS_gru_1_input_subias_TYPE,sizeof(gru_1_input_subias),gru_1_input_subias},
 #endif
 #ifdef WEIGHTS_gru_1_input_scale_DEFINED
-{"gru_1_input_scale",WEIGHTS_gru_1_input_scale_TYPE,sizeof(gru_1_input_scale),gru_1_input_scale},
+{"gru_1_input_scale", WEIGHTS_gru_1_input_scale_TYPE,sizeof(gru_1_input_scale),gru_1_input_scale},
 #endif
 #ifdef WEIGHTS_gru_1_input_bias_DEFINED
-{"gru_1_input_bias",WEIGHTS_gru_1_input_bias_TYPE,sizeof(gru_1_input_bias),gru_1_input_bias},
+{"gru_1_input_bias", WEIGHTS_gru_1_input_bias_TYPE,sizeof(gru_1_input_bias),gru_1_input_bias},
 #endif
 #ifdef WEIGHTS_gru_1_recurrent_weights_int8_DEFINED
-{"gru_1_recurrent_weights_int8",WEIGHTS_gru_1_recurrent_weights_int8_TYPE,sizeof(gru_1_recurrent_weights_int8),gru_1_recurrent_weights_int8},
+{"gru_1_recurrent_weights_int8", WEIGHTS_gru_1_recurrent_weights_int8_TYPE,sizeof(gru_1_recurrent_weights_int8),gru_1_recurrent_weights_int8},
 #endif
 #ifdef WEIGHTS_gru_1_recurrent_weights_float_DEFINED
-{"gru_1_recurrent_weights_float",WEIGHTS_gru_1_recurrent_weights_float_TYPE,sizeof(gru_1_recurrent_weights_float),gru_1_recurrent_weights_float},
+{"gru_1_recurrent_weights_float", WEIGHTS_gru_1_recurrent_weights_float_TYPE,sizeof(gru_1_recurrent_weights_float),gru_1_recurrent_weights_float},
 #endif
 #ifdef WEIGHTS_gru_1_recurrent_subias_DEFINED
-{"gru_1_recurrent_subias",WEIGHTS_gru_1_recurrent_subias_TYPE,sizeof(gru_1_recurrent_subias),gru_1_recurrent_subias},
+{"gru_1_recurrent_subias", WEIGHTS_gru_1_recurrent_subias_TYPE,sizeof(gru_1_recurrent_subias),gru_1_recurrent_subias},
 #endif
 #ifdef WEIGHTS_gru_1_recurrent_scale_DEFINED
-{"gru_1_recurrent_scale",WEIGHTS_gru_1_recurrent_scale_TYPE,sizeof(gru_1_recurrent_scale),gru_1_recurrent_scale},
+{"gru_1_recurrent_scale", WEIGHTS_gru_1_recurrent_scale_TYPE,sizeof(gru_1_recurrent_scale),gru_1_recurrent_scale},
 #endif
 #ifdef WEIGHTS_gru_1_recurrent_bias_DEFINED
-{"gru_1_recurrent_bias",WEIGHTS_gru_1_recurrent_bias_TYPE,sizeof(gru_1_recurrent_bias),gru_1_recurrent_bias},
+{"gru_1_recurrent_bias", WEIGHTS_gru_1_recurrent_bias_TYPE,sizeof(gru_1_recurrent_bias),gru_1_recurrent_bias},
 #endif
 {NULL,0,0,NULL}
 };

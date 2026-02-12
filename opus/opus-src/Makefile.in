@@ -128,6 +128,7 @@ host_triplet = @host@
 @EXTRA_PROGRAMS_TRUE@noinst_PROGRAMS =  \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_cwrs32$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_dft$(EXEEXT) \
+@EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_mini_kfft$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_entropy$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_laplace$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_mathops$(EXEEXT) \
@@ -145,9 +146,11 @@ host_triplet = @host@
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_padding$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_projection$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	trivial_example$(EXEEXT) $(am__EXEEXT_1) \
-@EXTRA_PROGRAMS_TRUE@	$(am__EXEEXT_2) $(am__EXEEXT_3)
+@EXTRA_PROGRAMS_TRUE@	$(am__EXEEXT_2) $(am__EXEEXT_3) \
+@EXTRA_PROGRAMS_TRUE@	$(am__EXEEXT_4) $(am__EXEEXT_5)
 @EXTRA_PROGRAMS_TRUE@TESTS = celt/tests/test_unit_cwrs32$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_dft$(EXEEXT) \
+@EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_mini_kfft$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_entropy$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_laplace$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_mathops$(EXEEXT) \
@@ -161,7 +164,7 @@ host_triplet = @host@
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_extensions$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_padding$(EXEEXT) \
 @EXTRA_PROGRAMS_TRUE@	tests/test_opus_projection$(EXEEXT) \
-@EXTRA_PROGRAMS_TRUE@	$(am__EXEEXT_4)
+@EXTRA_PROGRAMS_TRUE@	$(am__EXEEXT_6) $(am__EXEEXT_7)
 @ENABLE_LOSSGEN_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_35 = $(LOSSGEN_SOURCES)
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_36 = libarmasm.la
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_37 = libarmasm.la
@@ -171,10 +174,15 @@ host_triplet = @host@
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_41 = libarmasm.la
 @EXTRA_PROGRAMS_TRUE@@OPUS_ARM_EXTERNAL_ASM_TRUE@am__append_42 = libarmasm.la
 @CUSTOM_MODES_TRUE@am__append_43 = include/opus_custom.h
-@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_44 = opus_custom_demo
-@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_45 = fargan_demo dump_data dump_weights_blob
-@ENABLE_DRED_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_46 = tests/test_opus_dred
-@ENABLE_LOSSGEN_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_47 = lossgen_demo
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_44 =  \
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@	opus_custom_demo \
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@	tests/test_opus_custom
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_45 = tests/test_opus_custom
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_46 = fargan_demo dump_data dump_weights_blob dred_compare
+@ENABLE_DRED_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_47 = tests/test_opus_dred
+@ENABLE_LOSSGEN_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_48 = lossgen_demo
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_49 = bwe_demo
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@am__append_50 = qext_compare
 subdir = .
 SUBDIRS =
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -195,11 +203,17 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES = opus.pc opus-uninstalled.pc celt/arm/armopts.s
 CONFIG_CLEAN_VPATH_FILES =
-@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_1 = opus_custom_demo$(EXEEXT)
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_1 = opus_custom_demo$(EXEEXT) \
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@	tests/test_opus_custom$(EXEEXT)
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_2 = fargan_demo$(EXEEXT) \
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	dump_data$(EXEEXT) \
-@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	dump_weights_blob$(EXEEXT)
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	dump_weights_blob$(EXEEXT) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	dred_compare$(EXEEXT)
 @ENABLE_LOSSGEN_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_3 = lossgen_demo$(EXEEXT)
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_4 =  \
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@	bwe_demo$(EXEEXT)
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_5 =  \
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@	qext_compare$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -342,8 +356,8 @@ am__libopus_la_SOURCES_DIST = celt/bands.c celt/celt.c \
 	dnn/dred_rdovae_stats_data.c dnn/dred_encoder.c \
 	dnn/dred_coding.c dnn/dred_decoder.c dnn/osce.c \
 	dnn/osce_features.c dnn/nndsp.c dnn/lace_data.c \
-	dnn/nolace_data.c dnn/x86/x86_dnn_map.c dnn/x86/nnet_sse2.c \
-	dnn/x86/nnet_sse4_1.c dnn/x86/nnet_avx2.c \
+	dnn/nolace_data.c dnn/bbwenet_data.c dnn/x86/x86_dnn_map.c \
+	dnn/x86/nnet_sse2.c dnn/x86/nnet_sse4_1.c dnn/x86/nnet_avx2.c \
 	dnn/arm/arm_dnn_map.c dnn/arm/nnet_dotprod.c \
 	dnn/arm/nnet_neon.c src/opus.c src/opus_decoder.c \
 	src/opus_encoder.c src/extensions.c src/opus_multistream.c \
@@ -493,7 +507,7 @@ am__objects_42 = dnn/dred_rdovae_enc.lo dnn/dred_rdovae_enc_data.lo \
 	dnn/dred_coding.lo dnn/dred_decoder.lo
 @ENABLE_DRED_TRUE@am__objects_43 = $(am__objects_42)
 am__objects_44 = dnn/osce.lo dnn/osce_features.lo dnn/nndsp.lo \
-	dnn/lace_data.lo dnn/nolace_data.lo
+	dnn/lace_data.lo dnn/nolace_data.lo dnn/bbwenet_data.lo
 @ENABLE_OSCE_TRUE@am__objects_45 = $(am__objects_44)
 am__objects_46 = dnn/x86/x86_dnn_map.lo
 @CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_RTCD_TRUE@am__objects_47 = $(am__objects_46)
@@ -527,6 +541,85 @@ libopus_la_OBJECTS = $(am_libopus_la_OBJECTS)
 libopus_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(libopus_la_LDFLAGS) $(LDFLAGS) -o $@
+am__bwe_demo_SOURCES_DIST = dnn/bwe_demo.c
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@am_bwe_demo_OBJECTS =  \
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@	dnn/bwe_demo.$(OBJEXT)
+bwe_demo_OBJECTS = $(am_bwe_demo_OBJECTS)
+am__DEPENDENCIES_2 = dnn/burg.lo dnn/freq.lo dnn/fargan.lo \
+	dnn/fargan_data.lo dnn/lpcnet_enc.lo dnn/lpcnet_plc.lo \
+	dnn/lpcnet_tables.lo dnn/nnet.lo dnn/nnet_default.lo \
+	dnn/plc_data.lo dnn/parse_lpcnet_weights.lo dnn/pitchdnn.lo \
+	dnn/pitchdnn_data.lo
+@ENABLE_DEEP_PLC_TRUE@am__DEPENDENCIES_3 = $(am__DEPENDENCIES_2)
+am__DEPENDENCIES_4 = dnn/dred_rdovae_enc.lo \
+	dnn/dred_rdovae_enc_data.lo dnn/dred_rdovae_dec.lo \
+	dnn/dred_rdovae_dec_data.lo dnn/dred_rdovae_stats_data.lo \
+	dnn/dred_encoder.lo dnn/dred_coding.lo dnn/dred_decoder.lo
+@ENABLE_DRED_TRUE@am__DEPENDENCIES_5 = $(am__DEPENDENCIES_4)
+am__DEPENDENCIES_6 = dnn/osce.lo dnn/osce_features.lo dnn/nndsp.lo \
+	dnn/lace_data.lo dnn/nolace_data.lo dnn/bbwenet_data.lo
+@ENABLE_OSCE_TRUE@am__DEPENDENCIES_7 = $(am__DEPENDENCIES_6)
+am__DEPENDENCIES_8 = dnn/x86/x86_dnn_map.lo
+@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_9 = $(am__DEPENDENCIES_8)
+am__DEPENDENCIES_10 = dnn/x86/nnet_sse2.lo
+@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_SSE2_TRUE@am__DEPENDENCIES_11 = $(am__DEPENDENCIES_10)
+am__DEPENDENCIES_12 = dnn/x86/nnet_sse4_1.lo
+@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_SSE4_1_TRUE@am__DEPENDENCIES_13 = $(am__DEPENDENCIES_12)
+am__DEPENDENCIES_14 = dnn/x86/nnet_avx2.lo
+@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_AVX2_TRUE@am__DEPENDENCIES_15 = $(am__DEPENDENCIES_14)
+am__DEPENDENCIES_16 = dnn/arm/arm_dnn_map.lo
+@CPU_ARM_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_17 = $(am__DEPENDENCIES_16)
+am__DEPENDENCIES_18 = dnn/arm/nnet_dotprod.lo
+@CPU_ARM_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_ARM_DOTPROD_TRUE@am__DEPENDENCIES_19 = $(am__DEPENDENCIES_18)
+am__DEPENDENCIES_20 = dnn/arm/nnet_neon.lo
+@CPU_ARM_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__DEPENDENCIES_21 = $(am__DEPENDENCIES_20)
+am__DEPENDENCIES_22 = $(am__DEPENDENCIES_3) $(am__DEPENDENCIES_5) \
+	$(am__DEPENDENCIES_7) $(am__DEPENDENCIES_9) \
+	$(am__DEPENDENCIES_11) $(am__DEPENDENCIES_13) \
+	$(am__DEPENDENCIES_15) $(am__DEPENDENCIES_17) \
+	$(am__DEPENDENCIES_19) $(am__DEPENDENCIES_21)
+@EXTRA_PROGRAMS_TRUE@am__DEPENDENCIES_23 = $(am__DEPENDENCIES_22)
+am__DEPENDENCIES_24 = celt/x86/x86cpu.lo celt/x86/x86_celt_map.lo
+@CPU_X86_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_25 =  \
+@CPU_X86_TRUE@@HAVE_RTCD_TRUE@	$(am__DEPENDENCIES_24)
+am__DEPENDENCIES_26 = celt/x86/pitch_sse.lo
+@CPU_X86_TRUE@@HAVE_SSE_TRUE@am__DEPENDENCIES_27 =  \
+@CPU_X86_TRUE@@HAVE_SSE_TRUE@	$(am__DEPENDENCIES_26)
+am__DEPENDENCIES_28 = celt/x86/pitch_sse2.lo celt/x86/vq_sse2.lo
+@CPU_X86_TRUE@@HAVE_SSE2_TRUE@am__DEPENDENCIES_29 =  \
+@CPU_X86_TRUE@@HAVE_SSE2_TRUE@	$(am__DEPENDENCIES_28)
+am__DEPENDENCIES_30 = celt/x86/celt_lpc_sse4_1.lo \
+	celt/x86/pitch_sse4_1.lo
+@CPU_X86_TRUE@@HAVE_SSE4_1_TRUE@am__DEPENDENCIES_31 =  \
+@CPU_X86_TRUE@@HAVE_SSE4_1_TRUE@	$(am__DEPENDENCIES_30)
+am__DEPENDENCIES_32 = celt/x86/pitch_avx.lo
+@CPU_X86_TRUE@@HAVE_AVX2_TRUE@am__DEPENDENCIES_33 =  \
+@CPU_X86_TRUE@@HAVE_AVX2_TRUE@	$(am__DEPENDENCIES_32)
+am__DEPENDENCIES_34 = celt/arm/armcpu.lo celt/arm/arm_celt_map.lo
+@CPU_ARM_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_35 =  \
+@CPU_ARM_TRUE@@HAVE_RTCD_TRUE@	$(am__DEPENDENCIES_34)
+am__DEPENDENCIES_36 = celt/arm/celt_neon_intr.lo \
+	celt/arm/pitch_neon_intr.lo
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__DEPENDENCIES_37 =  \
+@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@	$(am__DEPENDENCIES_36)
+am__DEPENDENCIES_38 = celt/arm/celt_fft_ne10.lo \
+	celt/arm/celt_mdct_ne10.lo
+@CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@am__DEPENDENCIES_39 =  \
+@CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@	$(am__DEPENDENCIES_38)
+am__DEPENDENCIES_40 = celt/bands.lo celt/celt.lo celt/celt_encoder.lo \
+	celt/celt_decoder.lo celt/cwrs.lo celt/entcode.lo \
+	celt/entdec.lo celt/entenc.lo celt/kiss_fft.lo celt/laplace.lo \
+	celt/mathops.lo celt/mdct.lo celt/modes.lo celt/pitch.lo \
+	celt/celt_lpc.lo celt/quant_bands.lo celt/rate.lo celt/vq.lo \
+	$(am__DEPENDENCIES_25) $(am__DEPENDENCIES_27) \
+	$(am__DEPENDENCIES_29) $(am__DEPENDENCIES_31) \
+	$(am__DEPENDENCIES_33) $(am__DEPENDENCIES_35) \
+	$(am__DEPENDENCIES_37) $(am__DEPENDENCIES_39)
+@EXTRA_PROGRAMS_TRUE@am__DEPENDENCIES_41 = $(am__DEPENDENCIES_40)
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@bwe_demo_DEPENDENCIES =  \
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__celt_tests_test_unit_cwrs32_SOURCES_DIST =  \
 	celt/tests/test_unit_cwrs32.c
 @EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_cwrs32_OBJECTS =  \
@@ -541,80 +634,9 @@ am__celt_tests_test_unit_dft_SOURCES_DIST =  \
 @EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_dft.$(OBJEXT)
 celt_tests_test_unit_dft_OBJECTS =  \
 	$(am_celt_tests_test_unit_dft_OBJECTS)
-am__DEPENDENCIES_2 = celt/x86/x86cpu.lo celt/x86/x86_celt_map.lo
-@CPU_X86_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_3 =  \
-@CPU_X86_TRUE@@HAVE_RTCD_TRUE@	$(am__DEPENDENCIES_2)
-am__DEPENDENCIES_4 = celt/x86/pitch_sse.lo
-@CPU_X86_TRUE@@HAVE_SSE_TRUE@am__DEPENDENCIES_5 =  \
-@CPU_X86_TRUE@@HAVE_SSE_TRUE@	$(am__DEPENDENCIES_4)
-am__DEPENDENCIES_6 = celt/x86/pitch_sse2.lo celt/x86/vq_sse2.lo
-@CPU_X86_TRUE@@HAVE_SSE2_TRUE@am__DEPENDENCIES_7 =  \
-@CPU_X86_TRUE@@HAVE_SSE2_TRUE@	$(am__DEPENDENCIES_6)
-am__DEPENDENCIES_8 = celt/x86/celt_lpc_sse4_1.lo \
-	celt/x86/pitch_sse4_1.lo
-@CPU_X86_TRUE@@HAVE_SSE4_1_TRUE@am__DEPENDENCIES_9 =  \
-@CPU_X86_TRUE@@HAVE_SSE4_1_TRUE@	$(am__DEPENDENCIES_8)
-am__DEPENDENCIES_10 = celt/x86/pitch_avx.lo
-@CPU_X86_TRUE@@HAVE_AVX2_TRUE@am__DEPENDENCIES_11 =  \
-@CPU_X86_TRUE@@HAVE_AVX2_TRUE@	$(am__DEPENDENCIES_10)
-am__DEPENDENCIES_12 = celt/arm/armcpu.lo celt/arm/arm_celt_map.lo
-@CPU_ARM_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_13 =  \
-@CPU_ARM_TRUE@@HAVE_RTCD_TRUE@	$(am__DEPENDENCIES_12)
-am__DEPENDENCIES_14 = celt/arm/celt_neon_intr.lo \
-	celt/arm/pitch_neon_intr.lo
-@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__DEPENDENCIES_15 =  \
-@CPU_ARM_TRUE@@HAVE_ARM_NEON_INTR_TRUE@	$(am__DEPENDENCIES_14)
-am__DEPENDENCIES_16 = celt/arm/celt_fft_ne10.lo \
-	celt/arm/celt_mdct_ne10.lo
-@CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@am__DEPENDENCIES_17 =  \
-@CPU_ARM_TRUE@@HAVE_ARM_NE10_TRUE@	$(am__DEPENDENCIES_16)
-am__DEPENDENCIES_18 = celt/bands.lo celt/celt.lo celt/celt_encoder.lo \
-	celt/celt_decoder.lo celt/cwrs.lo celt/entcode.lo \
-	celt/entdec.lo celt/entenc.lo celt/kiss_fft.lo celt/laplace.lo \
-	celt/mathops.lo celt/mdct.lo celt/modes.lo celt/pitch.lo \
-	celt/celt_lpc.lo celt/quant_bands.lo celt/rate.lo celt/vq.lo \
-	$(am__DEPENDENCIES_3) $(am__DEPENDENCIES_5) \
-	$(am__DEPENDENCIES_7) $(am__DEPENDENCIES_9) \
-	$(am__DEPENDENCIES_11) $(am__DEPENDENCIES_13) \
-	$(am__DEPENDENCIES_15) $(am__DEPENDENCIES_17)
-@EXTRA_PROGRAMS_TRUE@am__DEPENDENCIES_19 = $(am__DEPENDENCIES_18)
-am__DEPENDENCIES_20 = dnn/burg.lo dnn/freq.lo dnn/fargan.lo \
-	dnn/fargan_data.lo dnn/lpcnet_enc.lo dnn/lpcnet_plc.lo \
-	dnn/lpcnet_tables.lo dnn/nnet.lo dnn/nnet_default.lo \
-	dnn/plc_data.lo dnn/parse_lpcnet_weights.lo dnn/pitchdnn.lo \
-	dnn/pitchdnn_data.lo
-@ENABLE_DEEP_PLC_TRUE@am__DEPENDENCIES_21 = $(am__DEPENDENCIES_20)
-am__DEPENDENCIES_22 = dnn/dred_rdovae_enc.lo \
-	dnn/dred_rdovae_enc_data.lo dnn/dred_rdovae_dec.lo \
-	dnn/dred_rdovae_dec_data.lo dnn/dred_rdovae_stats_data.lo \
-	dnn/dred_encoder.lo dnn/dred_coding.lo dnn/dred_decoder.lo
-@ENABLE_DRED_TRUE@am__DEPENDENCIES_23 = $(am__DEPENDENCIES_22)
-am__DEPENDENCIES_24 = dnn/osce.lo dnn/osce_features.lo dnn/nndsp.lo \
-	dnn/lace_data.lo dnn/nolace_data.lo
-@ENABLE_OSCE_TRUE@am__DEPENDENCIES_25 = $(am__DEPENDENCIES_24)
-am__DEPENDENCIES_26 = dnn/x86/x86_dnn_map.lo
-@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_27 = $(am__DEPENDENCIES_26)
-am__DEPENDENCIES_28 = dnn/x86/nnet_sse2.lo
-@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_SSE2_TRUE@am__DEPENDENCIES_29 = $(am__DEPENDENCIES_28)
-am__DEPENDENCIES_30 = dnn/x86/nnet_sse4_1.lo
-@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_SSE4_1_TRUE@am__DEPENDENCIES_31 = $(am__DEPENDENCIES_30)
-am__DEPENDENCIES_32 = dnn/x86/nnet_avx2.lo
-@CPU_X86_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_AVX2_TRUE@am__DEPENDENCIES_33 = $(am__DEPENDENCIES_32)
-am__DEPENDENCIES_34 = dnn/arm/arm_dnn_map.lo
-@CPU_ARM_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_RTCD_TRUE@am__DEPENDENCIES_35 = $(am__DEPENDENCIES_34)
-am__DEPENDENCIES_36 = dnn/arm/nnet_dotprod.lo
-@CPU_ARM_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_ARM_DOTPROD_TRUE@am__DEPENDENCIES_37 = $(am__DEPENDENCIES_36)
-am__DEPENDENCIES_38 = dnn/arm/nnet_neon.lo
-@CPU_ARM_TRUE@@ENABLE_DEEP_PLC_TRUE@@HAVE_ARM_NEON_INTR_TRUE@am__DEPENDENCIES_39 = $(am__DEPENDENCIES_38)
-am__DEPENDENCIES_40 = $(am__DEPENDENCIES_21) $(am__DEPENDENCIES_23) \
-	$(am__DEPENDENCIES_25) $(am__DEPENDENCIES_27) \
-	$(am__DEPENDENCIES_29) $(am__DEPENDENCIES_31) \
-	$(am__DEPENDENCIES_33) $(am__DEPENDENCIES_35) \
-	$(am__DEPENDENCIES_37) $(am__DEPENDENCIES_39)
-@EXTRA_PROGRAMS_TRUE@am__DEPENDENCIES_41 = $(am__DEPENDENCIES_40)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_dft_DEPENDENCIES =  \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_39)
 am__celt_tests_test_unit_entropy_SOURCES_DIST =  \
@@ -640,8 +662,8 @@ am__celt_tests_test_unit_mathops_SOURCES_DIST =  \
 celt_tests_test_unit_mathops_OBJECTS =  \
 	$(am_celt_tests_test_unit_mathops_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mathops_DEPENDENCIES =  \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_40)
 am__celt_tests_test_unit_mdct_SOURCES_DIST =  \
@@ -651,10 +673,18 @@ am__celt_tests_test_unit_mdct_SOURCES_DIST =  \
 celt_tests_test_unit_mdct_OBJECTS =  \
 	$(am_celt_tests_test_unit_mdct_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mdct_DEPENDENCIES =  \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_41)
+am__celt_tests_test_unit_mini_kfft_SOURCES_DIST =  \
+	celt/tests/test_unit_mini_kfft.c
+@EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_mini_kfft_OBJECTS =  \
+@EXTRA_PROGRAMS_TRUE@	celt/tests/test_unit_mini_kfft.$(OBJEXT)
+celt_tests_test_unit_mini_kfft_OBJECTS =  \
+	$(am_celt_tests_test_unit_mini_kfft_OBJECTS)
+@EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mini_kfft_DEPENDENCIES =  \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__celt_tests_test_unit_rotation_SOURCES_DIST =  \
 	celt/tests/test_unit_rotation.c
 @EXTRA_PROGRAMS_TRUE@am_celt_tests_test_unit_rotation_OBJECTS =  \
@@ -662,8 +692,8 @@ am__celt_tests_test_unit_rotation_SOURCES_DIST =  \
 celt_tests_test_unit_rotation_OBJECTS =  \
 	$(am_celt_tests_test_unit_rotation_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_rotation_DEPENDENCIES =  \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_42)
 am__celt_tests_test_unit_types_SOURCES_DIST =  \
@@ -674,11 +704,17 @@ celt_tests_test_unit_types_OBJECTS =  \
 	$(am_celt_tests_test_unit_types_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_types_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
+am__dred_compare_SOURCES_DIST = dnn/dred_compare.c
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am_dred_compare_OBJECTS = dnn/dred_compare.$(OBJEXT)
+dred_compare_OBJECTS = $(am_dred_compare_OBJECTS)
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dred_compare_DEPENDENCIES = $(am__DEPENDENCIES_23) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__dump_data_SOURCES_DIST = dnn/dump_data.c
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am_dump_data_OBJECTS = dnn/dump_data.$(OBJEXT)
 dump_data_OBJECTS = $(am_dump_data_OBJECTS)
-@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dump_data_DEPENDENCIES = $(am__DEPENDENCIES_41) \
-@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dump_data_DEPENDENCIES = $(am__DEPENDENCIES_23) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__dump_weights_blob_SOURCES_DIST = dnn/write_lpcnet_weights.c
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am_dump_weights_blob_OBJECTS = dnn/dump_weights_blob-write_lpcnet_weights.$(OBJEXT)
@@ -691,8 +727,8 @@ dump_weights_blob_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 am__fargan_demo_SOURCES_DIST = dnn/fargan_demo.c
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@am_fargan_demo_OBJECTS = dnn/fargan_demo.$(OBJEXT)
 fargan_demo_OBJECTS = $(am_fargan_demo_OBJECTS)
-@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@fargan_demo_DEPENDENCIES = $(am__DEPENDENCIES_41) \
-@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@fargan_demo_DEPENDENCIES = $(am__DEPENDENCIES_23) \
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__lossgen_demo_SOURCES_DIST = dnn/lossgen_demo.c dnn/lossgen.c \
 	dnn/lossgen_data.c
@@ -723,6 +759,12 @@ opus_demo_OBJECTS = $(am_opus_demo_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@opus_demo_DEPENDENCIES = libopus.la \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
+am__qext_compare_SOURCES_DIST = src/qext_compare.c
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@am_qext_compare_OBJECTS = src/qext_compare.$(OBJEXT)
+qext_compare_OBJECTS = $(am_qext_compare_OBJECTS)
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@qext_compare_DEPENDENCIES =  \
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@	libopus.la \
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__repacketizer_demo_SOURCES_DIST = src/repacketizer_demo.c
 @EXTRA_PROGRAMS_TRUE@am_repacketizer_demo_OBJECTS =  \
 @EXTRA_PROGRAMS_TRUE@	src/repacketizer_demo.$(OBJEXT)
@@ -847,8 +889,8 @@ am__DEPENDENCIES_62 = silk/CNG.lo silk/code_signs.lo \
 @EXTRA_PROGRAMS_TRUE@am__DEPENDENCIES_63 = $(am__DEPENDENCIES_62)
 @EXTRA_PROGRAMS_TRUE@silk_tests_test_unit_LPC_inv_pred_gain_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_63) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_38)
 am__tests_test_opus_api_SOURCES_DIST = tests/test_opus_api.c \
@@ -859,6 +901,14 @@ tests_test_opus_api_OBJECTS = $(am_tests_test_opus_api_OBJECTS)
 @EXTRA_PROGRAMS_TRUE@tests_test_opus_api_DEPENDENCIES = libopus.la \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
+am__tests_test_opus_custom_SOURCES_DIST = tests/test_opus_custom.c \
+	tests/test_opus_common.h
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am_tests_test_opus_custom_OBJECTS = tests/test_opus_custom.$(OBJEXT)
+tests_test_opus_custom_OBJECTS = $(am_tests_test_opus_custom_OBJECTS)
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@tests_test_opus_custom_DEPENDENCIES =  \
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@	libopus.la \
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1)
 am__tests_test_opus_decode_SOURCES_DIST = tests/test_opus_decode.c \
 	tests/test_opus_common.h
 @EXTRA_PROGRAMS_TRUE@am_tests_test_opus_decode_OBJECTS =  \
@@ -902,8 +952,8 @@ am__DEPENDENCIES_66 = src/opus.lo src/opus_decoder.lo \
 @EXTRA_PROGRAMS_TRUE@tests_test_opus_extensions_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_67) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_63) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_36)
 am__tests_test_opus_padding_SOURCES_DIST = tests/test_opus_padding.c \
@@ -924,8 +974,8 @@ tests_test_opus_projection_OBJECTS =  \
 @EXTRA_PROGRAMS_TRUE@tests_test_opus_projection_DEPENDENCIES =  \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_67) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_63) \
+@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_23) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_41) \
-@EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_19) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) \
 @EXTRA_PROGRAMS_TRUE@	$(am__DEPENDENCIES_1) $(am__append_37)
 am__trivial_example_SOURCES_DIST = doc/trivial_example.c
@@ -972,6 +1022,7 @@ am__depfiles_remade = celt/$(DEPDIR)/bands.Plo celt/$(DEPDIR)/celt.Plo \
 	celt/tests/$(DEPDIR)/test_unit_laplace.Po \
 	celt/tests/$(DEPDIR)/test_unit_mathops.Po \
 	celt/tests/$(DEPDIR)/test_unit_mdct.Po \
+	celt/tests/$(DEPDIR)/test_unit_mini_kfft.Po \
 	celt/tests/$(DEPDIR)/test_unit_rotation.Po \
 	celt/tests/$(DEPDIR)/test_unit_types.Po \
 	celt/x86/$(DEPDIR)/celt_lpc_sse4_1.Plo \
@@ -981,9 +1032,10 @@ am__depfiles_remade = celt/$(DEPDIR)/bands.Plo celt/$(DEPDIR)/celt.Plo \
 	celt/x86/$(DEPDIR)/pitch_sse4_1.Plo \
 	celt/x86/$(DEPDIR)/vq_sse2.Plo \
 	celt/x86/$(DEPDIR)/x86_celt_map.Plo \
-	celt/x86/$(DEPDIR)/x86cpu.Plo dnn/$(DEPDIR)/burg.Plo \
-	dnn/$(DEPDIR)/dred_coding.Plo dnn/$(DEPDIR)/dred_decoder.Plo \
-	dnn/$(DEPDIR)/dred_encoder.Plo \
+	celt/x86/$(DEPDIR)/x86cpu.Plo dnn/$(DEPDIR)/bbwenet_data.Plo \
+	dnn/$(DEPDIR)/burg.Plo dnn/$(DEPDIR)/bwe_demo.Po \
+	dnn/$(DEPDIR)/dred_coding.Plo dnn/$(DEPDIR)/dred_compare.Po \
+	dnn/$(DEPDIR)/dred_decoder.Plo dnn/$(DEPDIR)/dred_encoder.Plo \
 	dnn/$(DEPDIR)/dred_rdovae_dec.Plo \
 	dnn/$(DEPDIR)/dred_rdovae_dec_data.Plo \
 	dnn/$(DEPDIR)/dred_rdovae_enc.Plo \
@@ -1146,10 +1198,11 @@ am__depfiles_remade = celt/$(DEPDIR)/bands.Plo celt/$(DEPDIR)/celt.Plo \
 	src/$(DEPDIR)/opus_multistream_encoder.Plo \
 	src/$(DEPDIR)/opus_projection_decoder.Plo \
 	src/$(DEPDIR)/opus_projection_encoder.Plo \
-	src/$(DEPDIR)/repacketizer.Plo \
+	src/$(DEPDIR)/qext_compare.Po src/$(DEPDIR)/repacketizer.Plo \
 	src/$(DEPDIR)/repacketizer_demo.Po \
 	tests/$(DEPDIR)/opus_encode_regressions.Po \
 	tests/$(DEPDIR)/test_opus_api.Po \
+	tests/$(DEPDIR)/test_opus_custom.Po \
 	tests/$(DEPDIR)/test_opus_decode.Po \
 	tests/$(DEPDIR)/test_opus_dred.Po \
 	tests/$(DEPDIR)/test_opus_encode.Po \
@@ -1186,20 +1239,23 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(libarmasm_la_SOURCES) $(libopus_la_SOURCES) \
-	$(celt_tests_test_unit_cwrs32_SOURCES) \
+	$(bwe_demo_SOURCES) $(celt_tests_test_unit_cwrs32_SOURCES) \
 	$(celt_tests_test_unit_dft_SOURCES) \
 	$(celt_tests_test_unit_entropy_SOURCES) \
 	$(celt_tests_test_unit_laplace_SOURCES) \
 	$(celt_tests_test_unit_mathops_SOURCES) \
 	$(celt_tests_test_unit_mdct_SOURCES) \
+	$(celt_tests_test_unit_mini_kfft_SOURCES) \
 	$(celt_tests_test_unit_rotation_SOURCES) \
-	$(celt_tests_test_unit_types_SOURCES) $(dump_data_SOURCES) \
-	$(dump_weights_blob_SOURCES) $(fargan_demo_SOURCES) \
-	$(lossgen_demo_SOURCES) $(opus_compare_SOURCES) \
-	$(opus_custom_demo_SOURCES) $(opus_demo_SOURCES) \
+	$(celt_tests_test_unit_types_SOURCES) $(dred_compare_SOURCES) \
+	$(dump_data_SOURCES) $(dump_weights_blob_SOURCES) \
+	$(fargan_demo_SOURCES) $(lossgen_demo_SOURCES) \
+	$(opus_compare_SOURCES) $(opus_custom_demo_SOURCES) \
+	$(opus_demo_SOURCES) $(qext_compare_SOURCES) \
 	$(repacketizer_demo_SOURCES) \
 	$(silk_tests_test_unit_LPC_inv_pred_gain_SOURCES) \
 	$(tests_test_opus_api_SOURCES) \
+	$(tests_test_opus_custom_SOURCES) \
 	$(tests_test_opus_decode_SOURCES) \
 	$(tests_test_opus_dred_SOURCES) \
 	$(tests_test_opus_encode_SOURCES) \
@@ -1208,25 +1264,27 @@ SOURCES = $(libarmasm_la_SOURCES) $(libopus_la_SOURCES) \
 	$(tests_test_opus_projection_SOURCES) \
 	$(trivial_example_SOURCES)
 DIST_SOURCES = $(am__libarmasm_la_SOURCES_DIST) \
-	$(am__libopus_la_SOURCES_DIST) \
+	$(am__libopus_la_SOURCES_DIST) $(am__bwe_demo_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_cwrs32_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_dft_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_entropy_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_laplace_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_mathops_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_mdct_SOURCES_DIST) \
+	$(am__celt_tests_test_unit_mini_kfft_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_rotation_SOURCES_DIST) \
 	$(am__celt_tests_test_unit_types_SOURCES_DIST) \
-	$(am__dump_data_SOURCES_DIST) \
+	$(am__dred_compare_SOURCES_DIST) $(am__dump_data_SOURCES_DIST) \
 	$(am__dump_weights_blob_SOURCES_DIST) \
 	$(am__fargan_demo_SOURCES_DIST) \
 	$(am__lossgen_demo_SOURCES_DIST) \
 	$(am__opus_compare_SOURCES_DIST) \
 	$(am__opus_custom_demo_SOURCES_DIST) \
-	$(am__opus_demo_SOURCES_DIST) \
+	$(am__opus_demo_SOURCES_DIST) $(am__qext_compare_SOURCES_DIST) \
 	$(am__repacketizer_demo_SOURCES_DIST) \
 	$(am__silk_tests_test_unit_LPC_inv_pred_gain_SOURCES_DIST) \
 	$(am__tests_test_opus_api_SOURCES_DIST) \
+	$(am__tests_test_opus_custom_SOURCES_DIST) \
 	$(am__tests_test_opus_decode_SOURCES_DIST) \
 	$(am__tests_test_opus_dred_SOURCES_DIST) \
 	$(am__tests_test_opus_encode_SOURCES_DIST) \
@@ -1265,11 +1323,10 @@ am__noinst_HEADERS_DIST = include/opus.h include/opus_multistream.h \
 	silk/arm/NSQ_neon.h silk/fixed/main_FIX.h \
 	silk/fixed/structs_FIX.h \
 	silk/fixed/arm/warped_autocorrelation_FIX_arm.h \
-	silk/fixed/mips/noise_shape_analysis_FIX_mipsr1.h \
 	silk/fixed/mips/warped_autocorrelation_FIX_mipsr1.h \
 	silk/float/main_FLP.h silk/float/structs_FLP.h \
 	silk/float/SigProc_FLP.h silk/mips/macros_mipsr1.h \
-	silk/mips/NSQ_del_dec_mipsr1.h silk/mips/sigproc_fix_mipsr1.h \
+	silk/mips/NSQ_mips.h silk/mips/sigproc_fix_mipsr1.h \
 	celt/arch.h celt/bands.h celt/celt.h celt/cpu_support.h \
 	include/opus_types.h include/opus_defines.h \
 	include/opus_custom.h celt/cwrs.h celt/ecintrin.h \
@@ -1284,13 +1341,13 @@ am__noinst_HEADERS_DIST = include/opus.h include/opus_multistream.h \
 	celt/static_modes_fixed_arm_ne10.h celt/arm/armcpu.h \
 	celt/arm/fixed_armv4.h celt/arm/fixed_armv5e.h \
 	celt/arm/fixed_arm64.h celt/arm/kiss_fft_armv4.h \
-	celt/arm/kiss_fft_armv5e.h celt/arm/pitch_arm.h \
-	celt/arm/fft_arm.h celt/arm/mdct_arm.h celt/mips/celt_mipsr1.h \
-	celt/mips/fixed_generic_mipsr1.h celt/mips/kiss_fft_mipsr1.h \
-	celt/mips/mdct_mipsr1.h celt/mips/pitch_mipsr1.h \
-	celt/mips/vq_mipsr1.h celt/x86/pitch_sse.h celt/x86/vq_sse.h \
-	celt/x86/x86_arch_macros.h celt/x86/x86cpu.h dnn/lpcnet.h \
-	dnn/burg.h dnn/common.h dnn/freq.h dnn/fargan.h \
+	celt/arm/kiss_fft_armv5e.h celt/arm/mathops_arm.h \
+	celt/arm/pitch_arm.h celt/arm/fft_arm.h celt/arm/mdct_arm.h \
+	celt/mips/celt_mipsr1.h celt/mips/fixed_generic_mipsr1.h \
+	celt/mips/kiss_fft_mipsr1.h celt/mips/mdct_mipsr1.h \
+	celt/mips/pitch_mipsr1.h celt/x86/pitch_sse.h \
+	celt/x86/vq_sse.h celt/x86/x86_arch_macros.h celt/x86/x86cpu.h \
+	dnn/lpcnet.h dnn/burg.h dnn/common.h dnn/freq.h dnn/fargan.h \
 	dnn/fargan_data.h dnn/lpcnet_private.h dnn/nnet.h \
 	dnn/plc_data.h dnn/vec.h dnn/vec_avx.h dnn/vec_neon.h \
 	dnn/pitchdnn.h dnn/pitchdnn_data.h dnn/x86/dnn_x86.h \
@@ -1301,8 +1358,8 @@ am__noinst_HEADERS_DIST = include/opus.h include/opus_multistream.h \
 	dnn/dred_rdovae_dec.h dnn/dred_rdovae_dec_data.h \
 	dnn/dred_rdovae_stats_data.h dnn/osce.h dnn/osce_config.h \
 	dnn/osce_structs.h dnn/osce_features.h dnn/nndsp.h \
-	dnn/lace_data.h dnn/nolace_data.h dnn/lossgen.h \
-	dnn/lossgen_data.h
+	dnn/lace_data.h dnn/nolace_data.h dnn/bbwenet_data.h \
+	dnn/lossgen.h dnn/lossgen_data.h
 am__pkginclude_HEADERS_DIST = include/opus.h \
 	include/opus_multistream.h include/opus_types.h \
 	include/opus_defines.h include/opus_projection.h \
@@ -1492,7 +1549,8 @@ am__set_TESTS_bases = \
   bases=`echo $$bases`
 AM_TESTSUITE_SUMMARY_HEADER = ' for $(PACKAGE_STRING)'
 RECHECK_LOGS = $(TEST_LOGS)
-@ENABLE_DRED_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_4 = tests/test_opus_dred$(EXEEXT)
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_6 = tests/test_opus_custom$(EXEEXT)
+@ENABLE_DRED_TRUE@@EXTRA_PROGRAMS_TRUE@am__EXEEXT_7 = tests/test_opus_dred$(EXEEXT)
 TEST_SUITE_LOG = test-suite.log
 TEST_EXTENSIONS = @EXEEXT@ .test
 LOG_DRIVER = $(SHELL) $(top_srcdir)/test-driver
@@ -1600,6 +1658,7 @@ EGREP = @EGREP@
 ETAGS = @ETAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+FILECMD = @FILECMD@
 GREP = @GREP@
 HAVE_ARM_NE10 = @HAVE_ARM_NE10@
 HAVE_DOT = @HAVE_DOT@
@@ -1800,7 +1859,8 @@ dnn/osce.c \
 dnn/osce_features.c \
 dnn/nndsp.c \
 dnn/lace_data.c \
-dnn/nolace_data.c
+dnn/nolace_data.c \
+dnn/bbwenet_data.c
 
 LOSSGEN_SOURCES = \
 dnn/lossgen.c \
@@ -1999,6 +2059,7 @@ celt/arm/fixed_armv5e.h \
 celt/arm/fixed_arm64.h \
 celt/arm/kiss_fft_armv4.h \
 celt/arm/kiss_fft_armv5e.h \
+celt/arm/mathops_arm.h \
 celt/arm/pitch_arm.h \
 celt/arm/fft_arm.h \
 celt/arm/mdct_arm.h \
@@ -2007,7 +2068,6 @@ celt/mips/fixed_generic_mipsr1.h \
 celt/mips/kiss_fft_mipsr1.h \
 celt/mips/mdct_mipsr1.h \
 celt/mips/pitch_mipsr1.h \
-celt/mips/vq_mipsr1.h \
 celt/x86/pitch_sse.h \
 celt/x86/vq_sse.h \
 celt/x86/x86_arch_macros.h \
@@ -2052,7 +2112,8 @@ dnn/osce_structs.h \
 dnn/osce_features.h \
 dnn/nndsp.h \
 dnn/lace_data.h \
-dnn/nolace_data.h
+dnn/nolace_data.h \
+dnn/bbwenet_data.h
 
 LOSSGEN_HEAD = \
 dnn/lossgen.h \
@@ -2094,13 +2155,12 @@ silk/arm/NSQ_neon.h \
 silk/fixed/main_FIX.h \
 silk/fixed/structs_FIX.h \
 silk/fixed/arm/warped_autocorrelation_FIX_arm.h \
-silk/fixed/mips/noise_shape_analysis_FIX_mipsr1.h \
 silk/fixed/mips/warped_autocorrelation_FIX_mipsr1.h \
 silk/float/main_FLP.h \
 silk/float/structs_FLP.h \
 silk/float/SigProc_FLP.h \
 silk/mips/macros_mipsr1.h \
-silk/mips/NSQ_del_dec_mipsr1.h \
+silk/mips/NSQ_mips.h \
 silk/mips/sigproc_fix_mipsr1.h
 
 OPUS_HEAD = \
@@ -2140,6 +2200,8 @@ noinst_HEADERS = $(OPUS_HEAD) $(SILK_HEAD) $(CELT_HEAD) $(LPCNET_HEAD)
 @EXTRA_PROGRAMS_TRUE@tests_test_opus_padding_LDADD = libopus.la $(NE10_LIBS) $(LIBM)
 @EXTRA_PROGRAMS_TRUE@tests_test_opus_dred_SOURCES = tests/test_opus_dred.c tests/test_opus_common.h
 @EXTRA_PROGRAMS_TRUE@tests_test_opus_dred_LDADD = libopus.la $(NE10_LIBS) $(LIBM)
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@tests_test_opus_custom_SOURCES = tests/test_opus_custom.c tests/test_opus_common.h
+@CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@tests_test_opus_custom_LDADD = libopus.la $(NE10_LIBS) $(LIBM)
 @EXTRA_PROGRAMS_TRUE@CELT_OBJ = $(CELT_SOURCES:.c=.lo)
 @EXTRA_PROGRAMS_TRUE@SILK_OBJ = $(SILK_SOURCES:.c=.lo)
 @EXTRA_PROGRAMS_TRUE@LPCNET_OBJ = $(LPCNET_SOURCES:.c=.lo)
@@ -2162,6 +2224,8 @@ noinst_HEADERS = $(OPUS_HEAD) $(SILK_HEAD) $(CELT_HEAD) $(LPCNET_HEAD)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_dft_LDADD = $(CELT_OBJ) \
 @EXTRA_PROGRAMS_TRUE@	$(LPCNET_OBJ) $(NE10_LIBS) $(LIBM) \
 @EXTRA_PROGRAMS_TRUE@	$(am__append_39)
+@EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mini_kfft_SOURCES = celt/tests/test_unit_mini_kfft.c
+@EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_mini_kfft_LDADD = $(LIBM)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_entropy_SOURCES = celt/tests/test_unit_entropy.c
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_entropy_LDADD = $(LIBM)
 @EXTRA_PROGRAMS_TRUE@celt_tests_test_unit_laplace_SOURCES = celt/tests/test_unit_laplace.c
@@ -2184,6 +2248,8 @@ noinst_HEADERS = $(OPUS_HEAD) $(SILK_HEAD) $(CELT_HEAD) $(LPCNET_HEAD)
 @CUSTOM_MODES_TRUE@@EXTRA_PROGRAMS_TRUE@opus_custom_demo_LDADD = libopus.la $(LIBM)
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@fargan_demo_SOURCES = dnn/fargan_demo.c
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@fargan_demo_LDADD = $(LPCNET_OBJ) $(CELT_OBJ) $(LIBM)
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dred_compare_SOURCES = dnn/dred_compare.c
+@ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dred_compare_LDADD = $(LPCNET_OBJ) $(CELT_OBJ) $(LIBM)
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dump_data_SOURCES = dnn/dump_data.c
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dump_data_LDADD = $(LPCNET_OBJ) $(CELT_OBJ) $(LIBM)
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dump_weights_blob_SOURCES = dnn/write_lpcnet_weights.c
@@ -2191,10 +2257,13 @@ noinst_HEADERS = $(OPUS_HEAD) $(SILK_HEAD) $(CELT_HEAD) $(LPCNET_HEAD)
 @ENABLE_DEEP_PLC_TRUE@@EXTRA_PROGRAMS_TRUE@dump_weights_blob_CFLAGS = $(AM_CFLAGS) -DDUMP_BINARY_WEIGHTS
 @ENABLE_LOSSGEN_TRUE@@EXTRA_PROGRAMS_TRUE@lossgen_demo_SOURCES = dnn/lossgen_demo.c $(LOSSGEN_SOURCES)
 @ENABLE_LOSSGEN_TRUE@@EXTRA_PROGRAMS_TRUE@lossgen_demo_LDADD = $(LIBM)
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@bwe_demo_SOURCES = dnn/bwe_demo.c
+@ENABLE_OSCE_TRUE@@EXTRA_PROGRAMS_TRUE@bwe_demo_LDADD = $(LPCNET_OBJ) $(CELT_OBJ) $(LIBM)
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@qext_compare_SOURCES = src/qext_compare.c
+@ENABLE_QEXT_TRUE@@EXTRA_PROGRAMS_TRUE@qext_compare_LDADD = libopus.la $(LIBM)
 EXTRA_DIST = opus.pc.in \
              opus-uninstalled.pc.in \
              opus.m4 \
-             Makefile.mips \
              Makefile.unix \
              CMakeLists.txt \
              cmake/CFeatureCheck.cmake \
@@ -2226,6 +2295,8 @@ EXTRA_DIST = opus.pc.in \
              tests/meson.build \
              doc/meson.build \
              tests/run_vectors.sh \
+             celt/mini_kfft.c \
+             celt/arm/meson.build \
              celt/arm/arm2gnu.pl \
              celt/arm/celt_pitch_xcorr_arm.s
 
@@ -2809,6 +2880,7 @@ dnn/osce_features.lo: dnn/$(am__dirstamp) \
 dnn/nndsp.lo: dnn/$(am__dirstamp) dnn/$(DEPDIR)/$(am__dirstamp)
 dnn/lace_data.lo: dnn/$(am__dirstamp) dnn/$(DEPDIR)/$(am__dirstamp)
 dnn/nolace_data.lo: dnn/$(am__dirstamp) dnn/$(DEPDIR)/$(am__dirstamp)
+dnn/bbwenet_data.lo: dnn/$(am__dirstamp) dnn/$(DEPDIR)/$(am__dirstamp)
 dnn/x86/$(am__dirstamp):
 	@$(MKDIR_P) dnn/x86
 	@: > dnn/x86/$(am__dirstamp)
@@ -2864,6 +2936,12 @@ src/mlp_data.lo: src/$(am__dirstamp) src/$(DEPDIR)/$(am__dirstamp)
 
 libopus.la: $(libopus_la_OBJECTS) $(libopus_la_DEPENDENCIES) $(EXTRA_libopus_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libopus_la_LINK) -rpath $(libdir) $(libopus_la_OBJECTS) $(libopus_la_LIBADD) $(LIBS)
+dnn/bwe_demo.$(OBJEXT): dnn/$(am__dirstamp) \
+	dnn/$(DEPDIR)/$(am__dirstamp)
+
+bwe_demo$(EXEEXT): $(bwe_demo_OBJECTS) $(bwe_demo_DEPENDENCIES) $(EXTRA_bwe_demo_DEPENDENCIES) 
+	@rm -f bwe_demo$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(bwe_demo_OBJECTS) $(bwe_demo_LDADD) $(LIBS)
 celt/tests/$(am__dirstamp):
 	@$(MKDIR_P) celt/tests
 	@: > celt/tests/$(am__dirstamp)
@@ -2906,6 +2984,12 @@ celt/tests/test_unit_mdct.$(OBJEXT): celt/tests/$(am__dirstamp) \
 celt/tests/test_unit_mdct$(EXEEXT): $(celt_tests_test_unit_mdct_OBJECTS) $(celt_tests_test_unit_mdct_DEPENDENCIES) $(EXTRA_celt_tests_test_unit_mdct_DEPENDENCIES) celt/tests/$(am__dirstamp)
 	@rm -f celt/tests/test_unit_mdct$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(celt_tests_test_unit_mdct_OBJECTS) $(celt_tests_test_unit_mdct_LDADD) $(LIBS)
+celt/tests/test_unit_mini_kfft.$(OBJEXT): celt/tests/$(am__dirstamp) \
+	celt/tests/$(DEPDIR)/$(am__dirstamp)
+
+celt/tests/test_unit_mini_kfft$(EXEEXT): $(celt_tests_test_unit_mini_kfft_OBJECTS) $(celt_tests_test_unit_mini_kfft_DEPENDENCIES) $(EXTRA_celt_tests_test_unit_mini_kfft_DEPENDENCIES) celt/tests/$(am__dirstamp)
+	@rm -f celt/tests/test_unit_mini_kfft$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(celt_tests_test_unit_mini_kfft_OBJECTS) $(celt_tests_test_unit_mini_kfft_LDADD) $(LIBS)
 celt/tests/test_unit_rotation.$(OBJEXT): celt/tests/$(am__dirstamp) \
 	celt/tests/$(DEPDIR)/$(am__dirstamp)
 
@@ -2918,6 +3002,12 @@ celt/tests/test_unit_types.$(OBJEXT): celt/tests/$(am__dirstamp) \
 celt/tests/test_unit_types$(EXEEXT): $(celt_tests_test_unit_types_OBJECTS) $(celt_tests_test_unit_types_DEPENDENCIES) $(EXTRA_celt_tests_test_unit_types_DEPENDENCIES) celt/tests/$(am__dirstamp)
 	@rm -f celt/tests/test_unit_types$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(celt_tests_test_unit_types_OBJECTS) $(celt_tests_test_unit_types_LDADD) $(LIBS)
+dnn/dred_compare.$(OBJEXT): dnn/$(am__dirstamp) \
+	dnn/$(DEPDIR)/$(am__dirstamp)
+
+dred_compare$(EXEEXT): $(dred_compare_OBJECTS) $(dred_compare_DEPENDENCIES) $(EXTRA_dred_compare_DEPENDENCIES) 
+	@rm -f dred_compare$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(dred_compare_OBJECTS) $(dred_compare_LDADD) $(LIBS)
 dnn/dump_data.$(OBJEXT): dnn/$(am__dirstamp) \
 	dnn/$(DEPDIR)/$(am__dirstamp)
 
@@ -2964,6 +3054,12 @@ src/opus_demo.$(OBJEXT): src/$(am__dirstamp) \
 opus_demo$(EXEEXT): $(opus_demo_OBJECTS) $(opus_demo_DEPENDENCIES) $(EXTRA_opus_demo_DEPENDENCIES) 
 	@rm -f opus_demo$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(opus_demo_OBJECTS) $(opus_demo_LDADD) $(LIBS)
+src/qext_compare.$(OBJEXT): src/$(am__dirstamp) \
+	src/$(DEPDIR)/$(am__dirstamp)
+
+qext_compare$(EXEEXT): $(qext_compare_OBJECTS) $(qext_compare_DEPENDENCIES) $(EXTRA_qext_compare_DEPENDENCIES) 
+	@rm -f qext_compare$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(qext_compare_OBJECTS) $(qext_compare_LDADD) $(LIBS)
 src/repacketizer_demo.$(OBJEXT): src/$(am__dirstamp) \
 	src/$(DEPDIR)/$(am__dirstamp)
 
@@ -2995,6 +3091,12 @@ tests/test_opus_api.$(OBJEXT): tests/$(am__dirstamp) \
 tests/test_opus_api$(EXEEXT): $(tests_test_opus_api_OBJECTS) $(tests_test_opus_api_DEPENDENCIES) $(EXTRA_tests_test_opus_api_DEPENDENCIES) tests/$(am__dirstamp)
 	@rm -f tests/test_opus_api$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(tests_test_opus_api_OBJECTS) $(tests_test_opus_api_LDADD) $(LIBS)
+tests/test_opus_custom.$(OBJEXT): tests/$(am__dirstamp) \
+	tests/$(DEPDIR)/$(am__dirstamp)
+
+tests/test_opus_custom$(EXEEXT): $(tests_test_opus_custom_OBJECTS) $(tests_test_opus_custom_DEPENDENCIES) $(EXTRA_tests_test_opus_custom_DEPENDENCIES) tests/$(am__dirstamp)
+	@rm -f tests/test_opus_custom$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(tests_test_opus_custom_OBJECTS) $(tests_test_opus_custom_LDADD) $(LIBS)
 tests/test_opus_decode.$(OBJEXT): tests/$(am__dirstamp) \
 	tests/$(DEPDIR)/$(am__dirstamp)
 
@@ -3118,6 +3220,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@celt/tests/$(DEPDIR)/test_unit_laplace.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/tests/$(DEPDIR)/test_unit_mathops.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/tests/$(DEPDIR)/test_unit_mdct.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@celt/tests/$(DEPDIR)/test_unit_mini_kfft.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/tests/$(DEPDIR)/test_unit_rotation.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/tests/$(DEPDIR)/test_unit_types.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/x86/$(DEPDIR)/celt_lpc_sse4_1.Plo@am__quote@ # am--include-marker
@@ -3128,8 +3231,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@celt/x86/$(DEPDIR)/vq_sse2.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/x86/$(DEPDIR)/x86_celt_map.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@celt/x86/$(DEPDIR)/x86cpu.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/bbwenet_data.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/burg.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/bwe_demo.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/dred_coding.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/dred_compare.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/dred_decoder.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/dred_encoder.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@dnn/$(DEPDIR)/dred_rdovae_dec.Plo@am__quote@ # am--include-marker
@@ -3327,10 +3433,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/opus_multistream_encoder.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/opus_projection_decoder.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/opus_projection_encoder.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/qext_compare.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/repacketizer.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@src/$(DEPDIR)/repacketizer_demo.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/opus_encode_regressions.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test_opus_api.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test_opus_custom.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test_opus_decode.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test_opus_dred.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/$(DEPDIR)/test_opus_encode.Po@am__quote@ # am--include-marker
@@ -3757,6 +3865,13 @@ celt/tests/test_unit_dft.log: celt/tests/test_unit_dft$(EXEEXT)
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
 	"$$tst" $(AM_TESTS_FD_REDIRECT)
+celt/tests/test_unit_mini_kfft.log: celt/tests/test_unit_mini_kfft$(EXEEXT)
+	@p='celt/tests/test_unit_mini_kfft$(EXEEXT)'; \
+	b='celt/tests/test_unit_mini_kfft'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
 celt/tests/test_unit_entropy.log: celt/tests/test_unit_entropy$(EXEEXT)
 	@p='celt/tests/test_unit_entropy$(EXEEXT)'; \
 	b='celt/tests/test_unit_entropy'; \
@@ -3844,6 +3959,13 @@ tests/test_opus_padding.log: tests/test_opus_padding$(EXEEXT)
 tests/test_opus_projection.log: tests/test_opus_projection$(EXEEXT)
 	@p='tests/test_opus_projection$(EXEEXT)'; \
 	b='tests/test_opus_projection'; \
+	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
+	--log-file $$b.log --trs-file $$b.trs \
+	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
+	"$$tst" $(AM_TESTS_FD_REDIRECT)
+tests/test_opus_custom.log: tests/test_opus_custom$(EXEEXT)
+	@p='tests/test_opus_custom$(EXEEXT)'; \
+	b='tests/test_opus_custom'; \
 	$(am__check_pre) $(LOG_DRIVER) --test-name "$$f" \
 	--log-file $$b.log --trs-file $$b.trs \
 	$(am__common_driver_flags) $(AM_LOG_DRIVER_FLAGS) $(LOG_DRIVER_FLAGS) -- $(LOG_COMPILE) \
@@ -4194,6 +4316,7 @@ distclean: distclean-recursive
 	-rm -f celt/tests/$(DEPDIR)/test_unit_laplace.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_mathops.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_mdct.Po
+	-rm -f celt/tests/$(DEPDIR)/test_unit_mini_kfft.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_rotation.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_types.Po
 	-rm -f celt/x86/$(DEPDIR)/celt_lpc_sse4_1.Plo
@@ -4204,8 +4327,11 @@ distclean: distclean-recursive
 	-rm -f celt/x86/$(DEPDIR)/vq_sse2.Plo
 	-rm -f celt/x86/$(DEPDIR)/x86_celt_map.Plo
 	-rm -f celt/x86/$(DEPDIR)/x86cpu.Plo
+	-rm -f dnn/$(DEPDIR)/bbwenet_data.Plo
 	-rm -f dnn/$(DEPDIR)/burg.Plo
+	-rm -f dnn/$(DEPDIR)/bwe_demo.Po
 	-rm -f dnn/$(DEPDIR)/dred_coding.Plo
+	-rm -f dnn/$(DEPDIR)/dred_compare.Po
 	-rm -f dnn/$(DEPDIR)/dred_decoder.Plo
 	-rm -f dnn/$(DEPDIR)/dred_encoder.Plo
 	-rm -f dnn/$(DEPDIR)/dred_rdovae_dec.Plo
@@ -4403,10 +4529,12 @@ distclean: distclean-recursive
 	-rm -f src/$(DEPDIR)/opus_multistream_encoder.Plo
 	-rm -f src/$(DEPDIR)/opus_projection_decoder.Plo
 	-rm -f src/$(DEPDIR)/opus_projection_encoder.Plo
+	-rm -f src/$(DEPDIR)/qext_compare.Po
 	-rm -f src/$(DEPDIR)/repacketizer.Plo
 	-rm -f src/$(DEPDIR)/repacketizer_demo.Po
 	-rm -f tests/$(DEPDIR)/opus_encode_regressions.Po
 	-rm -f tests/$(DEPDIR)/test_opus_api.Po
+	-rm -f tests/$(DEPDIR)/test_opus_custom.Po
 	-rm -f tests/$(DEPDIR)/test_opus_decode.Po
 	-rm -f tests/$(DEPDIR)/test_opus_dred.Po
 	-rm -f tests/$(DEPDIR)/test_opus_encode.Po
@@ -4493,6 +4621,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f celt/tests/$(DEPDIR)/test_unit_laplace.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_mathops.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_mdct.Po
+	-rm -f celt/tests/$(DEPDIR)/test_unit_mini_kfft.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_rotation.Po
 	-rm -f celt/tests/$(DEPDIR)/test_unit_types.Po
 	-rm -f celt/x86/$(DEPDIR)/celt_lpc_sse4_1.Plo
@@ -4503,8 +4632,11 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f celt/x86/$(DEPDIR)/vq_sse2.Plo
 	-rm -f celt/x86/$(DEPDIR)/x86_celt_map.Plo
 	-rm -f celt/x86/$(DEPDIR)/x86cpu.Plo
+	-rm -f dnn/$(DEPDIR)/bbwenet_data.Plo
 	-rm -f dnn/$(DEPDIR)/burg.Plo
+	-rm -f dnn/$(DEPDIR)/bwe_demo.Po
 	-rm -f dnn/$(DEPDIR)/dred_coding.Plo
+	-rm -f dnn/$(DEPDIR)/dred_compare.Po
 	-rm -f dnn/$(DEPDIR)/dred_decoder.Plo
 	-rm -f dnn/$(DEPDIR)/dred_encoder.Plo
 	-rm -f dnn/$(DEPDIR)/dred_rdovae_dec.Plo
@@ -4702,10 +4834,12 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f src/$(DEPDIR)/opus_multistream_encoder.Plo
 	-rm -f src/$(DEPDIR)/opus_projection_decoder.Plo
 	-rm -f src/$(DEPDIR)/opus_projection_encoder.Plo
+	-rm -f src/$(DEPDIR)/qext_compare.Po
 	-rm -f src/$(DEPDIR)/repacketizer.Plo
 	-rm -f src/$(DEPDIR)/repacketizer_demo.Po
 	-rm -f tests/$(DEPDIR)/opus_encode_regressions.Po
 	-rm -f tests/$(DEPDIR)/test_opus_api.Po
+	-rm -f tests/$(DEPDIR)/test_opus_custom.Po
 	-rm -f tests/$(DEPDIR)/test_opus_decode.Po
 	-rm -f tests/$(DEPDIR)/test_opus_dred.Po
 	-rm -f tests/$(DEPDIR)/test_opus_encode.Po

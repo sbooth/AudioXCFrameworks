@@ -134,7 +134,7 @@ function(opus_detect_sse COMPILER_SUPPORT_SIMD)
 endfunction()
 
 function(opus_detect_neon COMPILER_SUPPORT_NEON)
-  if(CMAKE_SYSTEM_PROCESSOR MATCHES "(arm|aarch64)")
+  if(CMAKE_SYSTEM_PROCESSOR MATCHES "(arm|aarch64|ARM)")
     message(STATUS "Check NEON support by compiler")
     check_include_file(arm_neon.h HAVE_ARM_NEON_H)
     if(HAVE_ARM_NEON_H)
@@ -166,9 +166,9 @@ function(opus_supports_cpu_detection RUNTIME_CPU_CAPABILITY_DETECTION)
       endif()
     endif()
   elseif(OPUS_CPU_ARM)
-    # ARM cpu detection is implemented for Windows and anything
-    # using a Linux kernel (such as Android).
-    if (CMAKE_SYSTEM_NAME MATCHES "(Windows|Linux|Android)")
+    # ARM cpu detection is implemented for Windows, Linux, Android, FreeBSD
+    # and OpenBSD.
+    if (CMAKE_SYSTEM_NAME MATCHES "(Windows|Linux|Android|FreeBSD|OpenBSD)")
       set(RUNTIME_CPU_CAPABILITY_DETECTION 1 PARENT_SCOPE)
     endif ()
   else()

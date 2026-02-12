@@ -1,17 +1,17 @@
 ## Versions
 
-[libopus 1.5.2](https://www.opus-codec.org/release/stable/2024/04/12/libopus-1_5_2.html)
+[libopus 1.6.1](https://opus-codec.org/release/stable/2026/01/14/libopus-1_6_1.html)
 
-[opusfile 9d718345](https://gitlab.xiph.org/xiph/opusfile/-/tree/9d718345ce03b2fad5d7d28e0bcd1cc69ab2b166)
+[opusfile cc04a82f](https://gitlab.xiph.org/xiph/opusfile/-/tree/cc04a82f7964067da6e3f5dddc7634b833c9402c)
 
-[libopusenc d53a41b5](https://gitlab.xiph.org/xiph/libopusenc/-/tree/d53a41b5ed02eba854d12b6d35bea13a330018d5)
+[libopusenc 0.3](https://opus-codec.org/release/dev/2026/01/03/libopusenc-0_3.html)
 
 ## License
 
-Copyright 2001-2011 Xiph.Org, Skype Limited, Octasic,
+Copyright 2001-2023 Xiph.Org, Skype Limited, Octasic,
                     Jean-Marc Valin, Timothy B. Terriberry,
                     CSIRO, Gregory Maxwell, Mark Borgerding,
-                    Erik de Castro Lopo
+                    Erik de Castro Lopo, Mozilla, Amazon
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
